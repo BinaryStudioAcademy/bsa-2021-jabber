@@ -1,0 +1,17 @@
+env:
+  node: true
+
+extends:
+  - ../.eslintrc.yml
+
+settings:
+  alias:
+    extensions: ['.ts']
+    map:
+      - ['~', './src']
+  import/resolver:
+    node:
+      extensions: ['.ts']
+
+parserOptions:
+  project: ./tsconfig.json

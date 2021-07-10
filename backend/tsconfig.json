@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.json",
+  "include": ["src", "package.json", "package-lock.json"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+    "outDir": "build",
+    "skipLibCheck": true,
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "allowJs": true
+  }
+}

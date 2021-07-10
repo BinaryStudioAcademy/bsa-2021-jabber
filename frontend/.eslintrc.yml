@@ -1,0 +1,24 @@
+env:
+  browser: true
+
+extends:
+  - ../.eslintrc.yml
+  - plugin:react/recommended
+
+plugins:
+  - react
+
+settings:
+  react:
+    version: '17'
+
+rules:
+  '@typescript-eslint/explicit-module-boundary-types':
+    - off
+  jsx-quotes:
+    - error
+    - prefer-double
+  react/prop-types:
+    - off
+  react/react-in-jsx-scope:
+    - off

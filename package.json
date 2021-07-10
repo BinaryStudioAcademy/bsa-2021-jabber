@@ -1,0 +1,48 @@
+{
+  "name": "jabber",
+  "private": "true",
+  "engines": {
+    "node": ">=14 <15",
+    "npm": ">=6 <7"
+  },
+  "scripts": {
+    "lint:editorconfig": "editorconfig-checker",
+    "lint:shared:js": "cd shared && npm run lint:js",
+    "lint:shared": "cd shared && npm run lint",
+    "lint:backend:js": "cd backend && npm run lint:js",
+    "lint:backend": "cd backend && npm run lint",
+    "lint:frontend:css": "cd frontend && npm run lint:css",
+    "lint:frontend:js": "cd frontend && npm run lint:js",
+    "lint:frontend": "cd frontend && npm run lint",
+    "lint:js": "npm run lint:shared:js && npm run lint:backend:js && npm run lint:frontend:js",
+    "lint:css": "npm run lint:frontend:css",
+    "lint": "npm run lint:editorconfig && npm run lint:shared && npm run lint:backend && npm run lint:frontend",
+    "install:shared": "cd shared && npm install --production=false",
+    "install:frontend": "cd frontend && npm install --production=false",
+    "install:backend": "cd backend && npm install --production=false",
+    "install:all": "npm install && npm run install:shared && npm run build:shared && npm run install:frontend && npm run install:backend",
+    "start:frontend": "cd frontend && npm run start",
+    "start:backend": "cd backend && npm run start:dev",
+    "start:dev": "concurrently -k -p \"{name}\" -n \"FRONTEND,BACKEND\" -c \"green,blue\" \"npm:start:frontend\" \"npm:start:backend\"",
+    "build:shared": "cd shared && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "build": "npm run build:frontend && npm run build:backend"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "4.28.2",
+    "@typescript-eslint/parser": "4.28.2",
+    "concurrently": "6.2.0",
+    "editorconfig-checker": "4.0.2",
+    "eslint": "7.30.0",
+    "lint-staged": "11.0.0",
+    "simple-git-hooks": "2.5.1",
+    "stylelint": "13.13.1",
+    "stylelint-config-recommended": "5.0.0",
+    "typescript": "4.3.5"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "dependencies": {}
+}
