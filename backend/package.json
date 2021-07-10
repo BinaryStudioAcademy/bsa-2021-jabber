@@ -13,7 +13,7 @@
     "start:dev": "nodemon --exec ts-node --files -r tsconfig-paths/register ./src/server.ts",
     "start": "node ./src/server.js",
     "build:ts": "tsc && tscpaths -p tsconfig.json --src . --out build",
-    "build:copy": "cp -r shared build && cp -r public build",
+    "build:copy": "cp -r public package.json package-lock.json build",
     "build": "npm run build:ts && npm run build:copy"
   },
   "dependencies": {
@@ -22,6 +22,7 @@
     "jabber-shared": "file:../shared/build",
     "knex": "0.95.6",
     "nanoid": "3.1.23",
+    "objection": "2.2.15",
     "pg": "8.6.0",
     "pino": "6.11.3",
     "ts-node": "10.1.0",
