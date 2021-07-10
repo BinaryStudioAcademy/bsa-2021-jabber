@@ -6,7 +6,7 @@
     "npm": ">=6 <7"
   },
   "scripts": {
-    "move:deploy": "mv backend/dist . && mv backend/node_modules dist && mv frontend/build/* dist/public",
+    "move:deploy": "mv backend/build . && mv backend/node_modules build && mv frontend/build/* build/public",
     "lint:editorconfig": "editorconfig-checker",
     "lint:shared:js": "cd shared && npm run lint:js",
     "lint:shared": "cd shared && npm run lint",
@@ -22,16 +22,16 @@
     "install:frontend": "cd frontend && npm install --production=false",
     "install:backend": "cd backend && npm install --production=false",
     "install:all": "npm install && npm run install:shared && npm run build:shared && npm run install:frontend && npm run install:backend",
-    "start:frontend": "cd frontend && npm run start",
-    "start:backend": "cd backend && npm run start:dev",
-    "start:dev": "concurrently -k -p \"{name}\" -n \"FRONTEND,BACKEND\" -c \"green,blue\" \"npm:start:frontend\" \"npm:start:backend\"",
     "build:shared": "cd shared && npm run build",
     "build:frontend": "cd frontend && npm run build",
     "build:backend": "cd backend && npm run build",
     "build": "npm run build:frontend && npm run build:backend",
-    "prestart": "npm run install:all && npm run build && npm run move:deploy",
-    "start": "npm run start:deploy",
-    "heroku-prebuild": "npm run install:all"
+    "start:frontend": "cd frontend && npm run start",
+    "start:backend": "cd backend && npm run start:dev",
+    "start:dev": "concurrently -k -p \"{name}\" -n \"FRONTEND,BACKEND\" -c \"green,blue\" \"npm:start:frontend\" \"npm:start:backend\"",
+    "start": "cd build && npm run start",
+    "heroku-prebuild": "npm run install:all",
+    "heroku-postbuild": "npm run build && npm run move:deploy"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "4.28.2",

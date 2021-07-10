@@ -12,7 +12,7 @@
     "start:dev": "nodemon --exec ts-node --files -r tsconfig-paths/register ./src/server.ts",
     "start": "node ./src/server.js",
     "build:ts": "tsc && tscpaths -p tsconfig.json --src . --out build",
-    "build:copy": "cp -r shared public package.json package-lock.json build",
+    "build:copy": "cp -r public package.json package-lock.json build",
     "build": "npm run build:ts && npm run build:copy"
   },
   "dependencies": {
