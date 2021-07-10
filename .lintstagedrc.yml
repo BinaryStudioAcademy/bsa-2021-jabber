@@ -1,4 +1,4 @@
-'*,!build': npm run lint:editorconfig
+'*': npm run lint:editorconfig
 'shared/**/*.{ts}': npm run lint:shared:js
 'backend/**/*.{ts}': npm run lint:backend:js
 'frontend/**/*.scss': npm run lint:frontend:css
