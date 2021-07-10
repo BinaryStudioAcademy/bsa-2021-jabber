@@ -1,0 +1,14 @@
+env:
+  node: true
+
+settings:
+  alias:
+    extensions: ['.ts']
+    map:
+      - ['~', './src']
+  import/resolver:
+    node:
+      extensions: ['.ts']
+
+extends:
+  - ../.eslintrc.yml

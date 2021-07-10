@@ -1,0 +1,12 @@
+extends:
+  - ../.stylelintrc.yml
+  - stylelint-config-recommended-scss
+
+plugins:
+  - stylelint-scss
+
+rules:
+    selector-pseudo-class-no-unknown:
+    - true
+    - ignorePseudoClasses:
+      - global
