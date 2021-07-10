@@ -48,9 +48,6 @@ jobs:
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
           heroku_email: ${{ secrets.HEROKU_OWNER_EMAIL }}
           appdir: build
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          DB_DIALECT: pg
 
       # - name: Slack Notification
       #   if: always()
