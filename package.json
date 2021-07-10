@@ -40,12 +40,14 @@
     "editorconfig-checker": "4.0.2",
     "eslint": "7.30.0",
     "lint-staged": "11.0.0",
+    "simple-git-hooks": "2.5.1",
     "stylelint": "13.13.1",
     "stylelint-config-recommended": "5.0.0",
     "typescript": "4.3.5"
   },
   "simple-git-hooks": {
-    "pre-commit": "npx lint-staged"
+    "pre-commit": "npx lint-staged",
+    "preserveUnused": true
   },
   "dependencies": {}
 }
