@@ -1,4 +1,4 @@
-import { join, resolve } from 'path';
+import { join } from 'path';
 import express, { json, urlencoded } from 'express';
 import Knex from 'knex';
 import { Model } from 'objection';
