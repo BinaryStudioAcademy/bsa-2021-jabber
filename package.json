@@ -30,7 +30,8 @@
     "build:backend": "cd backend && npm run build",
     "build": "npm run build:frontend && npm run build:backend",
     "prestart": "npm run install:all && npm run build && npm run move:deploy",
-    "start": "npm run start:deploy"
+    "start": "npm run start:deploy",
+    "heroku-prebuild": "npm run install:all"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "4.28.2",
