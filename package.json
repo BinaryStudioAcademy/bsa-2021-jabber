@@ -21,7 +21,7 @@
     "install:shared": "cd shared && npm install --production=false",
     "install:frontend": "cd frontend && npm install --production=false",
     "install:backend": "cd backend && npm install --production=false",
-    "install:all": "npm install && npm run install:shared && npm run install:frontend && npm run install:backend",
+    "install:all": "npm install && npm run install:shared && npm run build:shared && npm run install:frontend && npm run install:backend",
     "start:frontend": "cd frontend && npm run start",
     "start:backend": "cd backend && npm run start:dev",
     "start:dev": "concurrently -k -p \"{name}\" -n \"FRONTEND,BACKEND\" -c \"green,blue\" \"npm:start:frontend\" \"npm:start:backend\"",
