@@ -16,7 +16,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "1.6.0",
     "clsx": "1.1.1",
-    "jabber-shared": "file:shared",
+    "jabber-shared": "file:../shared/dist",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-redux": "7.2.4",
