@@ -5,7 +5,7 @@ config();
 
 const {
   NODE_ENV,
-  APP_SERVER_PORT,
+  PORT,
   DATABASE_URL,
   DB_POOL_MIN,
   DB_POOL_MAX,
@@ -15,7 +15,7 @@ const {
 const ENV = {
   APP: {
     NODE_ENV: <AppEnvironment>NODE_ENV,
-    SERVER_PORT: APP_SERVER_PORT ?? 3001,
+    SERVER_PORT: PORT,
   },
   DB: {
     CONNECTION_STRING: DATABASE_URL,

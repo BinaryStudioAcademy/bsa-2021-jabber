@@ -1,4 +1,4 @@
-import { join, resolve } from 'path';
+import { join } from 'path';
 import express, { json, urlencoded } from 'express';
 import Knex from 'knex';
 import { Model } from 'objection';
@@ -19,9 +19,9 @@ app.use(urlencoded({ extended: true }));
 
 initApi(app);
 
-app.use(express.static(join(resolve(), '../public')));
+app.use(express.static(join(__dirname, '../public')));
 app.use('*', (_req, res) => {
-  return res.sendFile(join(resolve(), '../public', 'index.html'));
+  return res.sendFile(join(__dirname, '../public', 'index.html'));
 });
 
 app.use(handleError);

@@ -6,20 +6,19 @@
     "npm": ">=6 <7"
   },
   "scripts": {
-    "heroku-postbuild": "npm run migrate",
     "migrate": "knex migrate:latest",
     "lint:js": "npx eslint \"src/**/*.ts\"",
     "lint": "npm run lint:js",
     "start:dev": "nodemon --exec ts-node --files -r tsconfig-paths/register ./src/server.ts",
     "start": "node ./src/server.js",
     "build:ts": "tsc && tscpaths -p tsconfig.json --src . --out build",
-    "build:copy": "cp -r shared public package.json package-lock.json build",
+    "build:copy": "cp -r public package.json package-lock.json build",
     "build": "npm run build:ts && npm run build:copy"
   },
   "dependencies": {
     "dotenv": "10.0.0",
     "express": "4.17.1",
-    "jabber-shared": "file:shared",
+    "jabber-shared": "file:../shared/build",
     "knex": "0.95.6",
     "nanoid": "3.1.23",
     "objection": "2.2.15",
