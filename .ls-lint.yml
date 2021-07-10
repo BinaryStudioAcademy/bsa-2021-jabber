@@ -1,0 +1,18 @@
+ls:
+  .dir: regex:([.a-z]*)([-.][a-z]+)*
+  .scss: regex:([.a-z]*)([-.][a-z]+)*
+  .ts: regex:([.a-z]*)([-.][a-z]+)*
+  backend/src/data/migrations:
+    .ts: snake_case
+
+
+ignore:
+    - node_modules
+    - build
+    - shared/build
+    - shared/node_modules
+    - frontend/build
+    - frontend/node_modules
+    - backend/build
+    - backend/node_modules
+    - .git
