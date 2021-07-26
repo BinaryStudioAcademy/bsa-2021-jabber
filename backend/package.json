@@ -7,6 +7,10 @@
   },
   "scripts": {
     "migrate": "knex migrate:latest",
+    "migrate:up": "./node_modules/knex/bin/cli.js migrate:up",
+    "migrate:down": "./node_modules/knex/bin/cli.js migrate:down",
+    "migrate:make": "./node_modules/knex/bin/cli.js migrate:make",
+    "migrate:rollback": "./node_modules/knex/bin/cli.js migrate:rollback",
     "lint:js": "npx eslint \"src/**/*.ts\"",
     "lint": "npm run lint:js",
     "start:dev": "nodemon --exec ts-node --files -r tsconfig-paths/register ./src/server.ts",
@@ -16,10 +20,12 @@
     "build": "npm run build:ts && npm run build:copy"
   },
   "dependencies": {
+    "date-fns": "^2.23.0",
     "dotenv": "10.0.0",
     "express": "4.17.1",
     "jabber-shared": "file:../shared/build",
     "knex": "0.95.6",
+    "lodash-es": "^4.17.21",
     "nanoid": "3.1.23",
     "objection": "2.2.15",
     "pg": "8.6.0",
@@ -28,8 +34,10 @@
     "typescript": "4.3.5"
   },
   "devDependencies": {
+    "@types/date-fns": "^2.6.0",
     "@types/express": "4.17.13",
     "@types/knex": "0.16.1",
+    "@types/lodash-es": "^4.17.4",
     "@types/node": "14.17.5",
     "@types/pino": "6.3.9",
     "nodemon": "2.0.11",
