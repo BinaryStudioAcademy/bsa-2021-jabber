@@ -8,19 +8,19 @@ class Http {
     options: Partial<HttpOptions> = {},
   ): Promise<T> {
     const { method = HttpMethod.GET, payload = null, contentType } = options;
-    const headers = this._getHeaders(contentType);
+    const headers = this.#getHeaders(contentType);
 
     return fetch(url, {
       method,
       headers,
       body: payload,
     })
-      .then(this._checkStatus)
-      .then((res) => this._parseJSON<T>(res))
-      .catch(this._throwError);
+      .then(this.#checkStatus)
+      .then((res) => this.#parseJSON<T>(res))
+      .catch(this.#throwError);
   }
 
-  _getHeaders(contentType?: ContentType): Headers {
+  #getHeaders(contentType?: ContentType): Headers {
     const headers = new Headers();
 
     if (contentType) {
@@ -30,7 +30,7 @@ class Http {
     return headers;
   }
 
-  _checkStatus(response: Response): Response {
+  #checkStatus(response: Response): Response {
     if (!response.ok) {
       throw new HttpError({
         status: response.status,
@@ -40,11 +40,11 @@ class Http {
     return response;
   }
 
-  _parseJSON<T>(response: Response): Promise<T> {
+  #parseJSON<T>(response: Response): Promise<T> {
     return response.json();
   }
 
-  _throwError(err: Error): never {
+  #throwError(err: Error): never {
     throw err;
   }
 }
