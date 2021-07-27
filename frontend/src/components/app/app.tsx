@@ -1,5 +1,6 @@
+import { ToastContainer } from 'react-toastify';
 import { useLocation } from 'hooks/hooks';
-import { AppRoute } from 'common/enums/enums';
+import { AppRoute, ToastPosition } from 'common/enums/enums';
 import Counter from 'components/counter/counter';
 import SignIn from 'components/sign-in/sign-in';
 import SignUp from 'components/sign-up/sign-up';
@@ -12,6 +13,17 @@ const App: React.FC = () => {
   return (
     <>
       <div className="App">
+        <ToastContainer
+          position={ToastPosition.TOP_RIGHT}
+          autoClose={4000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable={false}
+          pauseOnHover
+        />
         <div>
           <ul className="App-navigation-list">
             <li>
