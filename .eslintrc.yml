@@ -21,6 +21,9 @@ rules:
       - warn
       - error
       - info
+  arrow-parens:
+    - error
+    - always
   '@typescript-eslint/explicit-function-return-type':
     - error
     - allowTypedFunctionExpressions: true

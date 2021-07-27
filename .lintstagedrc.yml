@@ -1,3 +1,5 @@
 '*': npm run lint:editorconfig && npm run lint:fs
-'*.{ts,tsx}': npm run lint:js
-'*.{scss}': npm run lint:css
+'shared/**/*.{ts}': npm run lint:shared:js
+'backend/**/*.{ts}': npm run lint:backend:js
+'frontend/**/*.scss': npm run lint:frontend:css
+'frontend/**/*.{ts,tsx}': npm run lint:frontend:js
