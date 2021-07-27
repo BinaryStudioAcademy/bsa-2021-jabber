@@ -1,2 +1,5 @@
-export { ApiPath } from './api-path.enum';
-export { UsersApiPath } from './users-api-path.enum';
+export {
+  ApiPath,
+  UsersApiPath,
+  AuthApiPath,
+} from 'jabber-shared/common/enums/enums';
