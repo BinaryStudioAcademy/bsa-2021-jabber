@@ -6,12 +6,15 @@ import SignUp from 'components/sign-up/sign-up';
 import { Link, Route, Switch } from 'components/common/common';
 import logo from 'assets/img/logo.svg';
 
+import Header from 'components/header/header';
+
 const App: React.FC = () => {
   const { pathname } = useLocation();
 
   return (
     <>
       <div className="App">
+        <Header></Header>
         <div>
           <ul className="App-navigation-list">
             <li>
