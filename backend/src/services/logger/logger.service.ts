@@ -22,7 +22,7 @@ class Logger {
   }
 
   public error(message: string, stack?: string): void {
-    this.#instance.error({ traceId: this.traceId }, message);
+    this.#instance.error({ traceId: this.#traceId }, message);
 
     if (stack) {
       this.#instance.error(stack);
@@ -30,14 +30,14 @@ class Logger {
   }
 
   public log(message: string): void {
-    return this.#instance.info({ traceId: this.traceId }, message);
+    return this.#instance.info({ traceId: this.#traceId }, message);
   }
 
   public warn(message: string): void {
-    return this.#instance.warn({ traceId: this.traceId }, message);
+    return this.#instance.warn({ traceId: this.#traceId }, message);
   }
 
-  private get traceId(): string | null {
+  get #traceId(): string | null {
     const traceId = this.#asyncStorage
       .getStore()
       ?.get(AppAsyncStorageKey.TRACE_ID) as string | null;
