@@ -1,3 +1,11 @@
+:root {
+  --color-primary-dark: #353535;
+  --color-primary-ligth: #eff0f7;
+  --color-header-background: #1e2c96;
+  --color-button-background: #f3427f;
+  --color-link-active: #ff9643;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -60,9 +68,9 @@ code {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(10px)
+    transform: translateY(10px);
   }
   100% {
-    transform: translateY(0px)
+    transform: translateY(0px);
   }
 }
