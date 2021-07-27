@@ -12,11 +12,11 @@ class User {
     this.#UserModel = UserModel;
   }
 
-  getAll(): Promise<TUser[]> {
+  public getAll(): Promise<TUser[]> {
     return this.#UserModel.query();
   }
 
-  create(payload: UserCreatePayload): Promise<TUser> {
+  public create(payload: UserCreatePayload): Promise<TUser> {
     return this.#UserModel.query().insert(payload);
   }
 }
