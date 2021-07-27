@@ -44,7 +44,7 @@ class Http {
     return response.json();
   }
 
-  _throwError(err: Error): never {
+  private _throwError(err: Error): never {
     throw err;
   }
 }
