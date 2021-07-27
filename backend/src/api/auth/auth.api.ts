@@ -20,6 +20,15 @@ const initAuthApi = ({ apiRouter, authService }: Args): Router => {
 
       return res.json(user).status(HttpCode.CREATED);
     }),
+  ).post(
+    AuthApiPath.SIGN_IN,
+    handleAsyncApi(async (req, res) => {
+      const user = await authService.signIn(req.body.login);
+      if(!user || (user.password !== req.body.password)){
+        return res.json('user not found').status(HttpCode.NOT_FOUND);
+      }
+      return res.json(user).status(HttpCode.OK);
+    }),
   );
 
   return userRouter;
