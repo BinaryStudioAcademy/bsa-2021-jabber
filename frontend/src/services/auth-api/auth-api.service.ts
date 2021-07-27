@@ -21,7 +21,7 @@ class AuthApi {
     this.#apiPrefix = apiPrefix;
   }
 
-  signUp(payload: UserCreatePayload): Promise<User> {
+  public signUp(payload: UserCreatePayload): Promise<User> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.AUTH}${AuthApiPath.SIGN_UP}`,
       {

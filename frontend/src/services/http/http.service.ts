@@ -20,7 +20,7 @@ class Http {
       .catch(this._throwError);
   }
 
-  _getHeaders(contentType?: ContentType): Headers {
+  private _getHeaders(contentType?: ContentType): Headers {
     const headers = new Headers();
 
     if (contentType) {
@@ -30,7 +30,7 @@ class Http {
     return headers;
   }
 
-  _checkStatus(response: Response): Response {
+  private _checkStatus(response: Response): Response {
     if (!response.ok) {
       throw new HttpError({
         status: response.status,
@@ -40,7 +40,7 @@ class Http {
     return response;
   }
 
-  _parseJSON<T>(response: Response): Promise<T> {
+  private _parseJSON<T>(response: Response): Promise<T> {
     return response.json();
   }
 
