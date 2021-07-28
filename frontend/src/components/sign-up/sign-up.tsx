@@ -26,9 +26,7 @@ const SignUp: React.FC = () => {
     dispatch(authActions.signUp(registerPayload));
   };
 
-  const handleChange = ({
-    target,
-  }: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>): void => {
     setRegisterPayload({
       ...registerPayload,
       [target.name]: target.value,

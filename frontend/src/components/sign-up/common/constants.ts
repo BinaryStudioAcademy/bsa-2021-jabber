@@ -6,6 +6,7 @@ const DEFAULT_REGISTER_PAYLOAD: UserCreatePayload = {
   [UserCreatePayloadKey.LAST_NAME]: '',
   [UserCreatePayloadKey.NICKNAME]: '',
   [UserCreatePayloadKey.EMAIL]: '',
+  [UserCreatePayloadKey.PASSWORD]: '',
   [UserCreatePayloadKey.BIRTHDATE]: '',
 };
 

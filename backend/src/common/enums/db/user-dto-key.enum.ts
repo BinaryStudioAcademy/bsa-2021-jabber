@@ -4,6 +4,7 @@ enum UserDTOKey {
   NICKNAME = 'nickname',
   BIRTHDATE = 'birthdate',
   EMAIL = 'email',
+  PASSWORD = 'password',
 }
 
 export { UserDTOKey };

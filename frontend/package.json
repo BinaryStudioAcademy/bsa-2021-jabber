@@ -31,6 +31,7 @@
     "@types/react": "16.14.11",
     "@types/react-dom": "16.9.14",
     "@types/react-redux": "7.1.18",
+    "@types/react-redux-toastr": "7.6.1",
     "@types/react-router-dom": "5.1.8",
     "eslint-plugin-react": "7.24.0",
     "sass": "1.35.2",

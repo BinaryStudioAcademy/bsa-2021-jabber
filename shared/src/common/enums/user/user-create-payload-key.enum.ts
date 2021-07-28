@@ -3,6 +3,7 @@ enum UserCreatePayloadKey {
   LAST_NAME = 'lastName',
   NICKNAME = 'nickname',
   EMAIL = 'email',
+  PASSWORD = 'password',
   BIRTHDATE = 'birthdate',
 }
 

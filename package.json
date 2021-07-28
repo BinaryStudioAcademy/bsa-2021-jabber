@@ -35,7 +35,7 @@
     "heroku-postbuild": "npm run build && npm run move:deploy"
   },
   "devDependencies": {
-    "@ls-lint/ls-lint": "1.9.2",
+    "@ls-lint/ls-lint": "1.10.0",
     "@typescript-eslint/eslint-plugin": "4.28.2",
     "@typescript-eslint/parser": "4.28.2",
     "concurrently": "6.2.0",
