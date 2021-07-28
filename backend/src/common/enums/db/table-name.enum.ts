@@ -1,5 +1,6 @@
 enum TableName {
   USERS = 'users',
+  EPISODES = 'episodes',
   MIGRATIONS = 'migrations',
 }
 
