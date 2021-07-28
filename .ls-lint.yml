@@ -1,7 +1,7 @@
 ls:
-  .dir: lowercase
-  .scss: lowercase
-  .ts: lowercase
+  .dir: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .scss: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .ts: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
   backend/src/data/migrations:
     .ts: snake_case
 
