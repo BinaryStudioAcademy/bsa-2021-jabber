@@ -1,5 +1,5 @@
 import { Knex } from 'knex';
-import { getFormattedISODate } from '../../helpers/helpers';
+import { getFormattedISODate } from '~/helpers/helpers';
 
 const TABLE_NAME = 'podcasts';
 
