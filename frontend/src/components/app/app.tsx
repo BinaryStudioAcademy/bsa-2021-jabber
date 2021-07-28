@@ -3,6 +3,7 @@ import { AppRoute } from 'common/enums/enums';
 import Counter from 'components/counter/counter';
 import SignIn from 'components/sign-in/sign-in';
 import SignUp from 'components/sign-up/sign-up';
+import { Toaster } from 'components/common/common';
 import { Link, Route, Switch } from 'components/common/common';
 import logo from 'assets/img/logo.svg';
 
@@ -12,6 +13,7 @@ const App: React.FC = () => {
   return (
     <>
       <div className="App">
+        <Toaster />
         <div>
           <ul className="App-navigation-list">
             <li>
