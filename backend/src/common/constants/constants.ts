@@ -1,1 +1,1 @@
-export { USER_PASSWORD_SALT_ROUNDS, USER_DEFAULT_PASSWORD } from './user/user';
+export { USER_PASSWORD_SALT_ROUNDS } from './user/user';
