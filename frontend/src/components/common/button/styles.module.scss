@@ -2,15 +2,18 @@
   box-sizing: border-box;
   min-width: 42px;
   padding: 12px 22px;
-  border: 1px solid var(--color-button-background);
   border-radius: 7px;
-  background-color: var(--color-button-background);
-  color: #ffffff;
+  border: 1px solid var(--color-button-background);
   font-family: 'Raleway', sans-serif;
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   transition: all 1s ease;
+}
+
+.primary {
+  background-color: var(--color-button-background);
+  color: #ffffff;
 
   &:hover {
     background-color: var(--color-primary-ligth);
@@ -18,7 +21,7 @@
   }
 }
 
-.buttonLight {
+.light {
   background-color: var(--color-primary-ligth);
   color: var(--color-button-background);
 
@@ -28,29 +31,3 @@
   }
 }
 
-.buttonPlay {
-  width: 42px;
-  height: 42px;
-  padding: 0;
-  border: 1px solid var(--color-link-active);
-  border-radius: 50%;
-  background-color: var(--color-link-active);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  cursor: pointer;
-
-  &::after {
-    position: absolute;
-    content: "►";
-    top: 50%;
-    left: 50%;
-    transform: translate(-40%, -50%);
-  }
-
-  &:hover {
-    background-color: #ffffff;
-    color: var(--color-link-active);
-  }
-}
