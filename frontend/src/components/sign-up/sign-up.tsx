@@ -35,55 +35,76 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <section>
+    <div className={styles.signUpPage}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <fieldset disabled={isFormDisable} className={styles.fieldset}>
-          <div>
+          <div className={styles.formRow}>
             <Input
               label={UserCreatePayloadKey.FIRST_NAME}
               register={register}
               isRequire
             />
-            {errors[UserCreatePayloadKey.FIRST_NAME]}
+            <span className={styles.errorWrapper}>
+              {errors[UserCreatePayloadKey.FIRST_NAME]}
+            </span>
           </div>
-          <div>
+          <div className={styles.formRow}>
             <Input
               label={UserCreatePayloadKey.LAST_NAME}
               register={register}
               isRequire
             />
-            {errors[UserCreatePayloadKey.LAST_NAME]}
+            <span className={styles.errorWrapper}>
+              {errors[UserCreatePayloadKey.LAST_NAME]}
+            </span>
           </div>
-          <div>
+          <div className={styles.formRow}>
             <Input
               label={UserCreatePayloadKey.NICKNAME}
               register={register}
               isRequire
             />
-            {errors[UserCreatePayloadKey.NICKNAME]}
+            <span className={styles.errorWrapper}>
+              {errors[UserCreatePayloadKey.NICKNAME]}
+            </span>
           </div>
-          <div>
+          <div className={styles.formRow}>
             <Input
               label={UserCreatePayloadKey.EMAIL}
               type={InputType.EMAIL}
               register={register}
               isRequire
             />
-            {errors[UserCreatePayloadKey.EMAIL]}
+            <span className={styles.errorWrapper}>
+              {errors[UserCreatePayloadKey.EMAIL]}
+            </span>
           </div>
-          <div>
+          <div className={styles.formRow}>
+            <Input
+              label={UserCreatePayloadKey.PASSWORD}
+              type={InputType.PASSWORD}
+              register={register}
+              isRequire
+            />
+            <span className={styles.errorWrapper}>
+              {errors[UserCreatePayloadKey.PASSWORD]}
+            </span>
+          </div>
+          <div className={styles.formRow}>
             <Input
               label={UserCreatePayloadKey.BIRTHDATE}
               type={InputType.DATE}
               register={register}
               isRequire
             />
-            {errors[UserCreatePayloadKey.BIRTHDATE]}
+            <span className={styles.errorWrapper}>
+              {errors[UserCreatePayloadKey.BIRTHDATE]}
+            </span>
           </div>
           <Button label="Sign Up" type={ButtonType.SUBMIT} />
         </fieldset>
       </form>
-    </section>
+    </div>
   );
 };
 
