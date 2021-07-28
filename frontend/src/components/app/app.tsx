@@ -1,13 +1,10 @@
-import { Toaster } from 'components/common/common';
-import SignUp from 'components/sign-up/sign-up';
+import { Toaster, Header } from 'components/common/common';
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <SignUp />
-      <Toaster />
-    </div>
-  );
-};
+const App: React.FC = () => (
+  <>
+    <Header />
+    <Toaster />
+  </>
+);
 
 export default App;
