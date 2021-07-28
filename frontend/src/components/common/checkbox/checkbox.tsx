@@ -7,7 +7,7 @@ type Props = {
   name: string;
   isRequire?: boolean;
   isDisabled?: boolean;
-  isChecked?: boolean;
+  isChecked: boolean;
 };
 
 const Checkbox: React.FC<Props> = ({
