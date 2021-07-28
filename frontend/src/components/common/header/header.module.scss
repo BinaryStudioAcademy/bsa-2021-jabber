@@ -4,7 +4,6 @@
   align-items: center;
   width: 1900px;
   height: 104px;
-  background-color: var(--color-header-background);
   color: #fff;
   text-align: left;
 }
@@ -40,7 +39,7 @@
 .liNavigation {
   margin-right: 40px;
   cursor: pointer;
-  list-style: none
+  list-style: none;
 }
 
 .userInfo {
@@ -59,7 +58,7 @@
   border-radius: 50%;
 }
 
-.signIn{
+.signIn {
   margin-left: 970px;
 }
 

@@ -2,8 +2,8 @@ import { useAppSelector } from 'hooks/hooks';
 import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
 import { Button, Link } from 'components/common/common';
-import defaultAvatar  from 'assets/img/default-user-avatar.svg';
-import styles from './header.module.css';
+import defaultAvatar from 'assets/img/default-user-avatar.svg';
+import styles from './header.module.scss';
 
 const Header: React.FC = () => {
   const { user } = useAppSelector(({ auth }: RootState) => ({
@@ -25,16 +25,23 @@ const Header: React.FC = () => {
         <li className={styles.liNavigation}>Setting</li>
       </ul>
 
-      {!hasUser ? (
+      {hasUser ? (
         <div className={styles.userInfo}>
-          <Button label="+ Create Podcast" type={ButtonType.BUTTON}/>
+          <Button label="+ Create Podcast" type={ButtonType.BUTTON} />
           <div className={styles.profile}>
-            <img className={styles.profileAvatar} src={defaultAvatar } width="40px" height="40px" alt="avatar" loading="lazy" />
+            <img
+              className={styles.profileAvatar}
+              src={defaultAvatar}
+              width="40px"
+              height="40px"
+              alt="avatar"
+              loading="lazy"
+            />
           </div>
         </div>
       ) : (
-        <div className="signIn">
-          <Link to={AppRoute.SIGN_IN} >
+        <div className={styles.signIn}>
+          <Link to={AppRoute.SIGN_IN} style={styles.signInText}>
             Sign In
           </Link>
         </div>
