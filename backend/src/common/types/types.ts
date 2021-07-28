@@ -1,2 +1,2 @@
 export type { AppAsyncStorage } from './app/app';
-export type { User, UserCreatePayload } from './user/user';
+export type { User, UserCreatePayload, LoginPayload } from './user/user';
