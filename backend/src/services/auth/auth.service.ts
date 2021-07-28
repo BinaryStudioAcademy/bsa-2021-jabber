@@ -13,7 +13,7 @@ class Auth {
     this.#userRepository = userRepository;
   }
 
-  async signUp(payload: UserCreatePayload): Promise<User> {
+  public async signUp(payload: UserCreatePayload): Promise<User> {
     const { password } = payload;
 
     return this.#userRepository.create({

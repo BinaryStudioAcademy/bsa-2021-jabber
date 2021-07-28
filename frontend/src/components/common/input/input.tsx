@@ -1,10 +1,10 @@
+import { Path, UseFormRegister } from 'react-hook-form';
 import { InputType } from 'common/enums/enums';
+import { UserCreatePayload } from 'common/types/types';
 
 type Props = {
-  label: string;
-  value: string;
-  onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
-  name: string;
+  label: Path<UserCreatePayload>;
+  register: UseFormRegister<UserCreatePayload>;
   type?: InputType;
   isRequire?: boolean;
   isDisabled?: boolean;
@@ -15,17 +15,13 @@ const Input: React.FC<Props> = ({
   isRequire = false,
   isDisabled = false,
   label,
-  value,
-  name,
-  onChange,
+  register,
 }) => (
   <label>
     {label}
     <input
       type={type}
-      value={value}
-      name={name}
-      onChange={onChange}
+      {...register(label)}
       required={isRequire}
       disabled={isDisabled}
     />

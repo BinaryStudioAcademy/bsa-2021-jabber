@@ -1,3 +1,4 @@
+import { useForm } from 'react-hook-form';
 import { UserCreatePayload } from 'common/types/types';
 import {
   ButtonType,
@@ -5,97 +6,105 @@ import {
   InputType,
   UserCreatePayloadKey,
 } from 'common/enums/enums';
+import { SignupSchema } from 'validation-schemas/validation-schemas';
+import { useAppSelector, useDispatch } from 'hooks/hooks';
 import { auth as authActions } from 'store/actions';
-import { useAppSelector, useDispatch, useState } from 'hooks/hooks';
-import { Input, Button } from 'components/common/common';
-import { DEFAULT_REGISTER_PAYLOAD } from './common/constants';
+import { Button, Input } from 'components/common/common';
+import { getResolver } from 'helpers/form/form';
+import styles from './styles.module.scss';
+
+const resolver = getResolver<UserCreatePayload>(SignupSchema);
 
 const SignUp: React.FC = () => {
-  const [registerPayload, setRegisterPayload] = useState<UserCreatePayload>(
-    DEFAULT_REGISTER_PAYLOAD,
-  );
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UserCreatePayload>({ resolver });
+
   const { authStatus } = useAppSelector(({ auth }) => ({
     authStatus: auth.dataStatus,
   }));
+
   const dispatch = useDispatch();
 
   const isFormDisable = authStatus === DataStatus.PENDING;
 
-  const handleSubmit = (evt: React.FormEvent): void => {
-    evt.preventDefault();
-    dispatch(authActions.signUp(registerPayload));
-  };
-
-  const handleChange = ({
-    target,
-  }: React.ChangeEvent<HTMLInputElement>): void => {
-    setRegisterPayload({
-      ...registerPayload,
-      [target.name]: target.value,
-    });
+  const onSubmit = (data: UserCreatePayload): void => {
+    dispatch(authActions.signUp(data));
   };
 
   return (
-    <section>
-      <h1>Sign Up ♊️</h1>
-
-      <form onSubmit={handleSubmit}>
-        <p>
-          <Input
-            label="First name"
-            value={registerPayload.firstName}
-            name={UserCreatePayloadKey.FIRST_NAME}
-            isDisabled={isFormDisable}
-            onChange={handleChange}
-            isRequire
-          />
-        </p>
-        <p>
-          <Input
-            label="Last name"
-            value={registerPayload.lastName}
-            name={UserCreatePayloadKey.LAST_NAME}
-            isDisabled={isFormDisable}
-            onChange={handleChange}
-            isRequire
-          />
-        </p>
-        <p>
-          <Input
-            label="Nickname"
-            value={registerPayload.nickname}
-            name={UserCreatePayloadKey.NICKNAME}
-            isDisabled={isFormDisable}
-            onChange={handleChange}
-          />
-        </p>
-        <p>
-          <Input
-            label="Email"
-            value={registerPayload.email}
-            name={UserCreatePayloadKey.EMAIL}
-            type={InputType.EMAIL}
-            isDisabled={isFormDisable}
-            onChange={handleChange}
-            isRequire
-          />
-        </p>
-        <p>
-          <Input
-            label="Birthdate"
-            value={registerPayload.birthdate}
-            name={UserCreatePayloadKey.BIRTHDATE}
-            type={InputType.DATE}
-            isDisabled={isFormDisable}
-            onChange={handleChange}
-            isRequire
-          />
-        </p>
-        <p>
-          <Button type={ButtonType.SUBMIT} label="Sign Up" />
-        </p>
+    <div className={styles.signUpPage}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <fieldset disabled={isFormDisable} className={styles.fieldset}>
+          <div className={styles.formRow}>
+            <Input
+              label={UserCreatePayloadKey.FIRST_NAME}
+              register={register}
+              isRequire
+            />
+            <span className={styles.errorWrapper}>
+              {errors[UserCreatePayloadKey.FIRST_NAME]}
+            </span>
+          </div>
+          <div className={styles.formRow}>
+            <Input
+              label={UserCreatePayloadKey.LAST_NAME}
+              register={register}
+              isRequire
+            />
+            <span className={styles.errorWrapper}>
+              {errors[UserCreatePayloadKey.LAST_NAME]}
+            </span>
+          </div>
+          <div className={styles.formRow}>
+            <Input
+              label={UserCreatePayloadKey.NICKNAME}
+              register={register}
+              isRequire
+            />
+            <span className={styles.errorWrapper}>
+              {errors[UserCreatePayloadKey.NICKNAME]}
+            </span>
+          </div>
+          <div className={styles.formRow}>
+            <Input
+              label={UserCreatePayloadKey.EMAIL}
+              type={InputType.EMAIL}
+              register={register}
+              isRequire
+            />
+            <span className={styles.errorWrapper}>
+              {errors[UserCreatePayloadKey.EMAIL]}
+            </span>
+          </div>
+          <div className={styles.formRow}>
+            <Input
+              label={UserCreatePayloadKey.PASSWORD}
+              type={InputType.PASSWORD}
+              register={register}
+              isRequire
+            />
+            <span className={styles.errorWrapper}>
+              {errors[UserCreatePayloadKey.PASSWORD]}
+            </span>
+          </div>
+          <div className={styles.formRow}>
+            <Input
+              label={UserCreatePayloadKey.BIRTHDATE}
+              type={InputType.DATE}
+              register={register}
+              isRequire
+            />
+            <span className={styles.errorWrapper}>
+              {errors[UserCreatePayloadKey.BIRTHDATE]}
+            </span>
+          </div>
+          <Button label="Sign Up" type={ButtonType.SUBMIT} />
+        </fieldset>
       </form>
-    </section>
+    </div>
   );
 };
 
