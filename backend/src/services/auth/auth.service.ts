@@ -15,6 +15,10 @@ class Auth {
   public signUp(payload: UserCreatePayload): Promise<User> {
     return this.#userRepository.create(payload);
   }
+
+  public signIn(payload: string): Promise<User> {
+    return this.#userRepository.getByLogin(payload);
+  }
 }
 
 export { Auth };
