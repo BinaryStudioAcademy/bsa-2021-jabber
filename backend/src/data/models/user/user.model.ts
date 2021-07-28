@@ -12,6 +12,8 @@ class User extends Abstract {
 
   [UserDTOKey.EMAIL]: string;
 
+  [UserDTOKey.PASSWORD]: string;
+
   static get tableName(): string {
     return TableName.USERS;
   }
