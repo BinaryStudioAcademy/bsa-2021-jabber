@@ -33,8 +33,6 @@ const SignUp: React.FC = () => {
   const onSubmit = (data: UserCreatePayload): void => {
     dispatch(authActions.signUp(data));
   };
-  // eslint-disable-next-line no-console
-  console.log(errors[UserCreatePayloadKey.LAST_NAME]);
 
   return (
     <div className={styles.signUpPage}>
