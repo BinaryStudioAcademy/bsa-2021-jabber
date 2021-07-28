@@ -12,7 +12,7 @@ class User {
     this.#userRepository = userRepository;
   }
 
-  getAll(): Promise<TUser[]> {
+  public getAll(): Promise<TUser[]> {
     return this.#userRepository.getAll();
   }
 }

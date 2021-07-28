@@ -12,7 +12,7 @@ class Auth {
     this.#userRepository = userRepository;
   }
 
-  signUp(payload: UserCreatePayload): Promise<User> {
+  public signUp(payload: UserCreatePayload): Promise<User> {
     return this.#userRepository.create(payload);
   }
 }
