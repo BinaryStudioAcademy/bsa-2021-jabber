@@ -1,12 +1,12 @@
-import { useSelector } from 'hooks/hooks';
+import { useAppSelector } from 'hooks/hooks';
 import { AppRoute, ButtonType } from 'common/enums/enums';
-import { RootState } from '../../../common/types/types';
-import { Button, Link } from '../common';
-import defaultAvatar  from '../../../assets/img/default-user-avatar.svg';
+import { RootState } from 'common/types/types';
+import { Button, Link } from 'components/common/common';
+import defaultAvatar  from 'assets/img/default-user-avatar.svg';
 import styles from './header.module.css';
 
 const Header: React.FC = () => {
-  const { user } = useSelector(({ auth }: RootState) => ({
+  const { user } = useAppSelector(({ auth }: RootState) => ({
     user: auth.user,
   }));
 
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
       </div>
 
       <ul className={styles.navigation}>
-        <li className={` ${styles.liNavigation} ${styles.activeLiNavigation}`}>Podcasts</li>
+        <li className={styles.liNavigation}>Podcasts</li>
         <li className={styles.liNavigation}>Streaming</li>
         <li className={styles.liNavigation}>Setting</li>
       </ul>
