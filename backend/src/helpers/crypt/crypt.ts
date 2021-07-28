@@ -1,1 +1,1 @@
-export { encrypt } from './encrypt/encrypt.helper';
+export { encrypt, cryptCompare } from './encrypt/encrypt.helper';
