@@ -1,6 +1,6 @@
-import { UserCreatePayload, User } from '~/common/types/types';
+import { UserCreatePayload, User, LoginPayload } from '~/common/types/types';
 import { user as userRep } from '~/data/repositories/repositories';
-import { encrypt } from '~/helpers/helpers';
+import { encrypt, cryptCompare } from '~/helpers/helpers';
 
 type Constructor = {
   userRepository: typeof userRep;
@@ -22,8 +22,15 @@ class Auth {
     });
   }
 
-  public signIn(payload: string): Promise<User> {
-    return this.#userRepository.getByLogin(payload);
+  public async signIn(payload: LoginPayload): Promise<User> {
+    const { password, email } = payload;
+    const user = await this.#userRepository.getByEmail(email);
+
+    if (!user || !(await cryptCompare(password, user.password))){
+      return Promise.reject();
+    }
+
+    return Promise.resolve(user);
   }
 }
 
