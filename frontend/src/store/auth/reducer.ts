@@ -1,15 +1,16 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { signUp, User } from './actions';
+import { User } from '../../common/types/types';
+import { signUp } from './actions';
 
 type State = {
   dataStatus: DataStatus;
-  sessionUser: User | null;
+  user: User | null;
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
-  sessionUser: null,
+  user: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {

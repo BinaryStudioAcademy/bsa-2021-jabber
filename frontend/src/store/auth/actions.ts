@@ -11,4 +11,3 @@ const signUp = createAsyncThunk<Promise<User>,UserCreatePayload,AsyncThunkConfig
 });
 
 export { signUp };
-export type { User };

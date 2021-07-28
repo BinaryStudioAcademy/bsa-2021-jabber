@@ -1,8 +1,5 @@
-* {
-  margin: 0;
-}
-
 .container {
+  background-color: var(--color-header-background);
   display: flex;
   align-items: center;
   width: 1900px;
@@ -10,21 +7,19 @@
   background-color: var(--color-header-background);
   color: #fff;
   text-align: left;
-  font-family: 'Raleway';
 }
 
-.LogoContainer {
+.logoContainer {
   display: flex;
   align-items: center;
   font-weight: 500;
   font-size: 15.6024px;
   line-height: 18px;
   letter-spacing: 0.01em;
-
   color: #aeaeae;
   margin-left: 188px;
 }
-.LogoContainerLogo {
+.logoContainerLogo {
   margin-right: 4px;
   width: 22px;
   height: 22px;
@@ -34,7 +29,6 @@
 
 .navigation {
   display: flex;
-  width: 325px;
   height: 21px;
   justify-content: space-between;
   font-style: normal;
@@ -43,14 +37,16 @@
   line-height: 21px;
   margin-left: 170px;
 }
-.spanNavigation {
+.liNavigation {
+  margin-right: 40px;
   cursor: pointer;
+  list-style: none
 }
 
-.activeSpanNavigation {
+.activeLiNavigation {
   color: var(--color-link-active);
 }
-.activeSpanNavigation::after {
+.activeLiNavigation::after {
   content: '';
   display: block;
   margin-top: 6px;
@@ -63,51 +59,13 @@
 .userInfo {
   display: flex;
   align-items: center;
-}
-
-.userInfoCreateButton {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  padding: 12px 22px;
-
-  margin-left: 764px;
-  width: 173px;
-  height: 43px;
-  background-color: var(--color-button-background);
-  border: 1px solid var(--color-button-background);
-  border-radius: 7px;
-
-  cursor: pointer;
-}
-.userInfoCreateButtonText {
-  color: #fff;
-  font-size: 16px;
-  line-height: 19px;
-}
-
-.notifications {
-  position: relative;
-  width: 20px;
-  height: 20px;
-  margin-left: 42px;
-
-  cursor: pointer;
-}
-.notificationActive {
-  width: 10px;
-  height: 10px;
-  background-color: var(--color-link-active);
-  border-radius: 50%;
-  position: absolute;
-  top: 0px;
-  right: 0px;
+  margin-left: 742px;
 }
 
 .profile {
   width: 40px;
   height: 40px;
-  margin-left: 42px;
+  margin-left: 84px;
   cursor: pointer;
 }
 .profileAvatar {

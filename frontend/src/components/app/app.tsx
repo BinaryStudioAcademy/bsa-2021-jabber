@@ -3,10 +3,8 @@ import { AppRoute } from 'common/enums/enums';
 import Counter from 'components/counter/counter';
 import SignIn from 'components/sign-in/sign-in';
 import SignUp from 'components/sign-up/sign-up';
-import { Link, Route, Switch } from 'components/common/common';
+import { Link, Route, Switch, Header } from 'components/common/common';
 import logo from 'assets/img/logo.svg';
-
-import Header from 'components/header/header';
 
 const App: React.FC = () => {
   const { pathname } = useLocation();
