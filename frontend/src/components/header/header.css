@@ -1,11 +1,8 @@
-@import '../../assets/css/variables.scss';
-
 * {
-  box-sizing: border-box;
   margin: 0;
 }
 
-.header {
+.container {
   display: flex;
   align-items: center;
   width: 1900px;
@@ -16,7 +13,7 @@
   font-family: 'Raleway';
 }
 
-.header--logo-container {
+.LogoContainer {
   display: flex;
   align-items: center;
   font-weight: 500;
@@ -27,7 +24,7 @@
   color: #aeaeae;
   margin-left: 188px;
 }
-.header--logo-container--logo {
+.LogoContainerLogo {
   margin-right: 4px;
   width: 22px;
   height: 22px;
@@ -35,7 +32,7 @@
   border-radius: 50%;
 }
 
-.header--navigation {
+.navigation {
   display: flex;
   width: 325px;
   height: 21px;
@@ -46,14 +43,14 @@
   line-height: 21px;
   margin-left: 170px;
 }
-.header--navigation span {
+.spanNavigation {
   cursor: pointer;
 }
 
-.header--navigation--active {
+.activeSpanNavigation {
   color: var(--color-link-active);
 }
-.header--navigation--active::after {
+.activeSpanNavigation::after {
   content: '';
   display: block;
   margin-top: 6px;
@@ -63,12 +60,12 @@
   cursor: auto;
 }
 
-.header--users-info {
+.userInfo {
   display: flex;
   align-items: center;
 }
 
-.header--create-button {
+.userInfoCreateButton {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -83,13 +80,13 @@
 
   cursor: pointer;
 }
-.header--create-button--text {
+.userInfoCreateButtonText {
   color: #fff;
   font-size: 16px;
   line-height: 19px;
 }
 
-.header--notifications {
+.notifications {
   position: relative;
   width: 20px;
   height: 20px;
@@ -97,7 +94,7 @@
 
   cursor: pointer;
 }
-.header--notifications--circle {
+.notificationActive {
   width: 10px;
   height: 10px;
   background-color: var(--color-link-active);
@@ -107,23 +104,26 @@
   right: 0px;
 }
 
-.header--profile {
+.profile {
   width: 40px;
   height: 40px;
   margin-left: 42px;
   cursor: pointer;
 }
-.header--profile-avatar {
+.profileAvatar {
   max-width: 100%;
   max-height: 100%;
   border-radius: 50%;
 }
 
-.header--login-field {
+.signIn{
+  margin-left: 970px;
+}
+
+.signInText {
   text-decoration: none;
   color: white;
   font-weight: 600;
   font-size: 18px;
   line-height: 21px;
-  margin-left: 970px;
 }
