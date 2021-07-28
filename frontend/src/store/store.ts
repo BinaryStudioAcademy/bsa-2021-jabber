@@ -14,8 +14,7 @@ const store = configureStore({
       thunk: {
         extraArgument,
       },
-      handleErrorMiddleware,
-    });
+    }).concat(handleErrorMiddleware);
   },
 });
 
