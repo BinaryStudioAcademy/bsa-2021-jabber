@@ -1,5 +1,4 @@
 import { Knex } from 'knex';
-import { encrypt } from '~/helpers/helpers';
 
 const TABLE_NAME = 'users';
 const COLUMN_NAME = 'password';
