@@ -3,7 +3,7 @@ import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
 import { Button, Link } from 'components/common/common';
 import defaultAvatar from 'assets/img/default-user-avatar.svg';
-import styles from './header.module.scss';
+import styles from './styles.module.scss';
 
 const Header: React.FC = () => {
   const { user } = useAppSelector(({ auth }: RootState) => ({
