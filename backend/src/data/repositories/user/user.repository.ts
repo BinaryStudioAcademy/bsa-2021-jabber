@@ -20,8 +20,8 @@ class User {
     return this.#UserModel.query().insert(payload);
   }
 
-  public getByLogin(payload: string): Promise<TUser> {
-    return this.#UserModel.query().findOne('login', payload);
+  public getByEmail(payload: string): Promise<TUser> {
+    return this.#UserModel.query().findOne('email', payload);
   }
 }
 
