@@ -30,13 +30,17 @@ class Http {
     return headers;
   }
 
-  private checkStatus(response: Response): Response {
+  private async checkStatus(response: Response): Promise<Response> {
     if (!response.ok) {
+      const parsedException = await response.json().catch(() => ({
+        message: response.statusText,
+      }));
+
       throw new HttpError({
         status: response.status,
+        message: parsedException?.message,
       });
     }
-
     return response;
   }
 
