@@ -14,7 +14,7 @@ const App: React.FC = () => {
   return (
     <>
       <div className="App">
-        <Header></Header>
+        <Header />
         <div>
           <ul className="App-navigation-list">
             <li>
