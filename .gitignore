@@ -13,6 +13,9 @@ build
 .DS_Store
 .env
 
+# idea folder
+.idea
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
