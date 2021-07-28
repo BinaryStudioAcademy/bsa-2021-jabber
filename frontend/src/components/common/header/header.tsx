@@ -41,7 +41,7 @@ const Header: React.FC = () => {
         </div>
       ) : (
         <div className={styles.signIn}>
-          <Link to={AppRoute.SIGN_IN} style={styles.signInText}>
+          <Link to={AppRoute.SIGN_IN} className={styles.signInText}>
             Sign In
           </Link>
         </div>
