@@ -21,7 +21,7 @@ class Logger {
     });
   }
 
-  error(message: string, stack?: string): void {
+  public error(message: string, stack?: string): void {
     this.#instance.error({ traceId: this.traceId }, message);
 
     if (stack) {
@@ -29,11 +29,11 @@ class Logger {
     }
   }
 
-  log(message: string): void {
+  public log(message: string): void {
     return this.#instance.info({ traceId: this.traceId }, message);
   }
 
-  warn(message: string): void {
+  public warn(message: string): void {
     return this.#instance.warn({ traceId: this.traceId }, message);
   }
 
