@@ -1,1 +1,1 @@
-export * from './user.constants';
+export { USER_PASSWORD_SALT_ROUNDS, USER_DEFAULT_PASSWORD } from './user/user';

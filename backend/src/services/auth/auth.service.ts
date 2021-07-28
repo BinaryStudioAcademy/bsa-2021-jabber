@@ -1,6 +1,6 @@
 import { UserCreatePayload, User } from '~/common/types/types';
 import { user as userRep } from '~/data/repositories/repositories';
-import { encrypt } from '~/helpers/crypt/crypt';
+import { encrypt } from '~/helpers/helpers';
 
 type Constructor = {
   userRepository: typeof userRep;
