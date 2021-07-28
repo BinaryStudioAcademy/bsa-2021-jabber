@@ -1,4 +1,3 @@
-import { Header } from 'components/common/common';
 import { Toaster } from 'components/common/common';
 
 const App: React.FC = () => {
@@ -6,7 +5,6 @@ const App: React.FC = () => {
     <>
       <div className="App">
         <Toaster />
-        <Header />
       </div>
     </>
   );
