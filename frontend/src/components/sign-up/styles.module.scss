@@ -8,31 +8,47 @@
   background-position: center;
 }
 
+.form {
+  background-color: #eff0f7;
+  border-radius: 5px;
+  padding: 60px;
+  min-width: 480px;
+}
+
+.formLogo {
+  margin-bottom: 45px;
+  width: 140px;
+  height: 50px;
+}
+
+.formTitle {
+  margin: 0 0 10px;
+  color: var(--color-button-background);
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.formSubtitle {
+  margin-bottom: 20px;
+  font-size: 12px;
+  line-height: 14px;
+}
+
 .fieldset {
   display: flex;
   flex-direction: column;
-  width: 310px;
-  gap: 25px;
-  background-color: #eff0f7;
-  border-radius: 5px;
+  gap: 15px;
+  padding: 0;
   border: none;
-  padding: 20px;
+}
+
+// TODO: remove after input component will be done
+.formRow {
+  position: relative;
 
   label {
     display: flex;
     flex-direction: column;
   }
-}
-
-.formRow {
-  position: relative;
-}
-
-.errorWrapper {
-  position: absolute;
-  left: 0;
-  bottom: -30px;
-  line-height: 1;
-  color: var(--color-button-background);
-  font-size: 0.8rem;
 }

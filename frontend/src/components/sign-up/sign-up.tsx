@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { UserCreatePayload } from 'common/types/types';
 import {
+  AppRoute,
   ButtonType,
   DataStatus,
   InputType,
@@ -9,18 +10,15 @@ import {
 import { SignupSchema } from 'validation-schemas/validation-schemas';
 import { useAppSelector, useDispatch } from 'hooks/hooks';
 import { auth as authActions } from 'store/actions';
-import { Button, Input } from 'components/common/common';
+import { Button, Input, Link } from 'components/common/common';
 import { getResolver } from 'helpers/form/form';
+import logo from 'assets/img/logo-dark.svg';
 import styles from './styles.module.scss';
 
 const resolver = getResolver<UserCreatePayload>(SignupSchema);
 
 const SignUp: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<UserCreatePayload>({ resolver });
+  const { register, handleSubmit } = useForm<UserCreatePayload>({ resolver });
 
   const { authStatus } = useAppSelector(({ auth }) => ({
     authStatus: auth.dataStatus,
@@ -36,70 +34,63 @@ const SignUp: React.FC = () => {
 
   return (
     <div className={styles.signUpPage}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <img
+          src={logo}
+          className={styles.formLogo}
+          loading="lazy"
+          alt="Jabber logo"
+        />
+        <h3 className={styles.formTitle}>Sign Up</h3>
+        <div className={styles.formSubtitle}>
+          Already have an account?
+          <Link to={AppRoute.SIGN_IN}>Sign In</Link>
+        </div>
         <fieldset disabled={isFormDisable} className={styles.fieldset}>
           <div className={styles.formRow}>
             <Input
               label={UserCreatePayloadKey.FIRST_NAME}
-              register={register}
+              registerData={register(UserCreatePayloadKey.FIRST_NAME)}
               isRequire
             />
-            <span className={styles.errorWrapper}>
-              {errors[UserCreatePayloadKey.FIRST_NAME]}
-            </span>
           </div>
           <div className={styles.formRow}>
             <Input
-              label={UserCreatePayloadKey.LAST_NAME}
-              register={register}
+              label={'last name'}
+              registerData={register(UserCreatePayloadKey.LAST_NAME)}
               isRequire
             />
-            <span className={styles.errorWrapper}>
-              {errors[UserCreatePayloadKey.LAST_NAME]}
-            </span>
           </div>
           <div className={styles.formRow}>
             <Input
               label={UserCreatePayloadKey.NICKNAME}
-              register={register}
+              registerData={register(UserCreatePayloadKey.NICKNAME)}
               isRequire
             />
-            <span className={styles.errorWrapper}>
-              {errors[UserCreatePayloadKey.NICKNAME]}
-            </span>
           </div>
           <div className={styles.formRow}>
             <Input
               label={UserCreatePayloadKey.EMAIL}
               type={InputType.EMAIL}
-              register={register}
+              registerData={register(UserCreatePayloadKey.EMAIL)}
               isRequire
             />
-            <span className={styles.errorWrapper}>
-              {errors[UserCreatePayloadKey.EMAIL]}
-            </span>
           </div>
           <div className={styles.formRow}>
             <Input
               label={UserCreatePayloadKey.PASSWORD}
               type={InputType.PASSWORD}
-              register={register}
+              registerData={register(UserCreatePayloadKey.PASSWORD)}
               isRequire
             />
-            <span className={styles.errorWrapper}>
-              {errors[UserCreatePayloadKey.PASSWORD]}
-            </span>
           </div>
           <div className={styles.formRow}>
             <Input
               label={UserCreatePayloadKey.BIRTHDATE}
               type={InputType.DATE}
-              register={register}
+              registerData={register(UserCreatePayloadKey.BIRTHDATE)}
               isRequire
             />
-            <span className={styles.errorWrapper}>
-              {errors[UserCreatePayloadKey.BIRTHDATE]}
-            </span>
           </div>
           <Button label="Sign Up" type={ButtonType.SUBMIT} />
         </fieldset>
