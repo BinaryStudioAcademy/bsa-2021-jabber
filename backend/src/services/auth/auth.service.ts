@@ -1,4 +1,4 @@
-import { UserCreatePayload, User, LoginPayload } from '~/common/types/types';
+import { UserCreatePayload, User, SignInPayload } from '~/common/types/types';
 import { user as userRep } from '~/data/repositories/repositories';
 import { encrypt, cryptCompare } from '~/helpers/helpers';
 
@@ -22,7 +22,7 @@ class Auth {
     });
   }
 
-  public async signIn(payload: LoginPayload): Promise<User> {
+  public async signIn(payload: SignInPayload): Promise<User> {
     const { password, email } = payload;
     const user = await this.#userRepository.getByEmail(email);
 
