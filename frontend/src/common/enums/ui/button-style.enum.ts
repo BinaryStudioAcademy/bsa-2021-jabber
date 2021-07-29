@@ -1,6 +1,7 @@
 enum ButtonStyle {
-  PRIMARY = 'primary',
-  LIGHT = 'light',
+  PRIMARY = 'Primary',
+  LIGHT = 'Light',
+  LIGHT_SIGN = 'LightSign',
 }
 
 export { ButtonStyle };
