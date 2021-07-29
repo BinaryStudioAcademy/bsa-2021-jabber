@@ -6,7 +6,7 @@ import { handleAsyncApi } from '~/helpers/helpers';
 type Args = {
   apiRouter: Router;
   episodeService: typeof episodeService
-}
+};
 
 const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
   const episodeRouter = Router();
@@ -16,8 +16,8 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
   episodeRouter.get(
     EpisodesApiPath.ROOT,
     handleAsyncApi(async (_req, res) => {
-      return res.json(await episodeService.getAll()).status(HttpCode.OK)
-    })
+      return res.json(await episodeService.getAll()).status(HttpCode.OK);
+    }),
   );
 
   return episodeRouter;

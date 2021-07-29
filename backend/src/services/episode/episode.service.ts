@@ -1,4 +1,4 @@
-import { Episode as TEpisode, EpisodeCreatePayload } from "~/common/types/types";
+import { Episode as TEpisode, EpisodeCreatePayload } from '~/common/types/types';
 import { episode as episodeRep } from '~/data/repositories/repositories';
 
 type Constructor = {

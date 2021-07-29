@@ -4,4 +4,4 @@ enum EpisodeDTOKey {
   USER_ID = 'userId',
 }
 
-export { EpisodeDTOKey }
+export { EpisodeDTOKey };

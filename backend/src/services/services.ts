@@ -38,5 +38,5 @@ export {
   logger,
   user,
   episode,
-  podcast
+  podcast,
 };

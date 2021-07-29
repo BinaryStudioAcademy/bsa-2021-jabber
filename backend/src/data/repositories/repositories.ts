@@ -12,11 +12,11 @@ const podcast = new Podcast({
 });
 
 const episode = new Episode({
-  EpisodeModel
-})
+  EpisodeModel,
+});
 
 export {
   user,
   episode,
-  podcast
+  podcast,
 };
