@@ -4,3 +4,4 @@ export { default as Input } from './input/input';
 export { default as Link } from './link/link';
 export { default as Toaster } from './toaster/toaster';
 export { default as Header } from './header/header';
+export { default as Checkbox } from './checkbox/checkbox';
