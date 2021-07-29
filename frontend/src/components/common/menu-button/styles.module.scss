@@ -1,0 +1,19 @@
+.filterButton {
+  display: inline-block;
+  height: 30px;
+  width: 110px;
+  background-color: var(--color-primary-ligth);
+  border: none;
+  text-align: left;
+  background-image: url("../../../assets/icons/filter-icon.svg");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 11px;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  cursor: pointer;
+
+  &:hover {
+    color: rgb(0, 66, 149);
+  }
+}

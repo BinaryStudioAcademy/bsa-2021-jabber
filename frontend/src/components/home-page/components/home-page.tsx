@@ -1,13 +1,16 @@
-import React from 'react';
+import { useState } from 'hooks/hooks';
 import Input from '../../common/input/input';
-import Podcast from './podcast';
+import Podcast from '../../common/podcast/podcast';
 import FilterDialog from './filter-dialog';
 import styles from './../styles.module.scss';
-import MenuButton from './button-menu';
+import MenuButton from '../../common/menu-button/button-menu';
+import temporaryCoverImage from '../../../assets/img/temporary-cover.jpg';
 
 const HomePage: React.FC = () => {
 
-  const [showFilterDialog, setShowFilterDialog] = React.useState(false);
+  const podcastsCount = 15;
+
+  const [showFilterDialog, setShowFilterDialog] = useState(false);
 
   const onShowFilterDialog = ():void => {
     setShowFilterDialog(!showFilterDialog);
@@ -29,31 +32,14 @@ const HomePage: React.FC = () => {
         />
       </div>
       <div className={styles.filterBlock}>
-        <MenuButton onClick={onShowFilterDialog} className={styles.filterButton} label="All podcasts"/>
+        <MenuButton onClick={onShowFilterDialog} label="All podcasts"/>
         {showFilterDialog && <FilterDialog />}
       </div>
       <div className={styles.podcastsBlock}>
-        <Podcast />
-        <Podcast />
-        <Podcast />
-        <Podcast />
-        <Podcast />
-        <Podcast />
-        <Podcast />
-        <Podcast />
-        <Podcast />
-        <Podcast />
-        <Podcast />
-        <Podcast />
-        <Podcast />
-        <Podcast />
-        <Podcast />
-        <Podcast />
-        <Podcast />
-        <Podcast />
-        <Podcast />
+        {[...Array(podcastsCount)].map((item, index) => {
+          return <Podcast key={index} cover={temporaryCoverImage} albumTitle="Chill out mixed compilation Chill out" singerName="Summer session Summer session"/>;
+        })}
       </div>
-
     </div>
   );
 };

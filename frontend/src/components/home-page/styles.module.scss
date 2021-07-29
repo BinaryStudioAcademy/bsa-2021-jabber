@@ -14,6 +14,7 @@
   .filterBlock {
     grid-area: filter;
     margin-top: 30px;
+
     ul {
       columns: 3;
     }
@@ -25,26 +26,6 @@
 
     ul li:first-child {
       margin-top: 0;
-    }
-
-    .filterButton {
-      display: inline-block;
-      height: 30px;
-      width: 110px;
-      background-color: var(--color-primary-ligth);
-      border: none;
-      text-align: left;
-      background-image: url("../../assets/img/filter-icon.svg");
-      background-repeat: no-repeat;
-      background-position: right;
-      background-size: 11px;
-      font-weight: 700;
-      color: var(--color-primary-dark);
-      cursor: pointer;
-
-      &:hover {
-        color: rgb(0, 66, 149);
-      }
     }
 
     .filterDialog {
@@ -118,62 +99,5 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     align-items: flex-start;
     grid-gap: 17px;
-
-    .podcast {
-      margin-top: 20px;
-      position: relative;
-      width: 195px;
-      height: 260px;
-      cursor: pointer;
-
-      .layer {
-        position: absolute;
-        margin: 10px 0 0 10px;
-        width: 175px;
-        height: 175px;
-        border-radius: 5px;
-        outline: 10px solid rgba(134, 134, 134, 0.55);
-
-        &:hover {
-          outline: 10px solid rgba(134, 134, 134, 0.71);
-        }
-      }
-
-      .imageBlock img {
-        width: 195px;
-        height: 195px;
-      }
-
-      .albumTitle {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: pre-wrap;
-        min-width: 195px;
-        max-width: 195px;
-        height: 40px;
-        margin-top: 10px;
-      }
-
-      .albumTitle span {
-        font-weight: 700;
-        font-size: 16px;
-        line-height: 19px;
-        font-style: normal;
-        color: var(--color-primary-dark);
-      }
-
-      .singerName {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        min-width: 195px;
-        max-width: 195px;
-      }
-
-      .singerName span {
-        font-weight: 400;
-        font-size: 14px;
-      }
-    }
   }
 }
