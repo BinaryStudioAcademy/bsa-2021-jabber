@@ -1,19 +1,33 @@
-import { useState } from 'hooks/hooks';
+import { PodcastCreatePayload } from 'common/types/types';
+import { DataStatus } from 'common/enums/enums';
+import { podcast as podcastActions } from 'store/actions';
+import { useAppSelector, useDispatch, useState } from 'hooks/hooks';
 import { Input, Button } from 'components/common/common';
 import styles from './styles.module.scss';
 
 const CreatePodcast: React.FC = () => {
-  const [podcastPayload, setPodcastPayload] = useState({
-    name: '',
-    description: '',
-    genre: '',
-  });
+  const [podcastCreatePayload, setPodcastCreatePayload] =
+    useState<PodcastCreatePayload>({
+      name: '',
+      userId: 7,
+    });
+
+  const { createPodcastStatus } = useAppSelector(({ podcast }) => ({
+    createPodcastStatus: podcast.dataStatus,
+  }));
+  const dispatch = useDispatch();
+
+  const isFormDisable = createPodcastStatus === DataStatus.PENDING;
+
+  const handlePostPodcast = (): void => {
+    dispatch(podcastActions.postPodcast(podcastCreatePayload));
+  };
 
   const handleChange = ({
     target,
   }: React.ChangeEvent<HTMLInputElement>): void => {
-    setPodcastPayload({
-      ...podcastPayload,
+    setPodcastCreatePayload({
+      ...podcastCreatePayload,
       [target.name]: target.value,
     });
   };
@@ -26,24 +40,27 @@ const CreatePodcast: React.FC = () => {
             <p>
               <Input
                 label="Name"
+                value={podcastCreatePayload.name}
                 name="name"
-                value={podcastPayload.name}
+                isDisabled={isFormDisable}
                 onChange={handleChange}
               />
             </p>
             <p>
               <Input
                 label="Description"
+                value={''}
                 name="description"
-                value={podcastPayload.description}
+                isDisabled={isFormDisable}
                 onChange={handleChange}
               />
             </p>
             <p>
               <Input
                 label="Genre"
+                value={''}
                 name="genre"
-                value={podcastPayload.genre}
+                isDisabled={isFormDisable}
                 onChange={handleChange}
               />
             </p>
@@ -53,7 +70,7 @@ const CreatePodcast: React.FC = () => {
           </div>
         </div>
         <p>
-          <Button label="Save" />
+          <Button label="Save" onClick={handlePostPodcast} />
         </p>
       </div>
     </div>

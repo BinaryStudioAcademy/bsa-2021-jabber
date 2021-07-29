@@ -1,10 +1,12 @@
 import { ButtonColor, ButtonStyle, ButtonType } from 'common/enums/enums';
 import { getAllowedClasses } from 'helpers/dom/dom';
+import React from 'react';
 import styles from './styles.module.scss';
 
 type Props = {
   label: string;
   type?: ButtonType;
+  onClick?: (evt: React.MouseEvent<HTMLButtonElement>) => void;
   buttonStyle?: ButtonStyle;
   buttonColor?: ButtonColor;
   className?: string;
@@ -14,6 +16,9 @@ const Button: React.FC<Props> = ({
   type = ButtonType.BUTTON,
   buttonStyle = ButtonStyle.PRIMARY,
   buttonColor = ButtonColor.PINK,
+  onClick = (): void => {
+    return;
+  },
   label,
   className,
 }) => (
@@ -25,6 +30,7 @@ const Button: React.FC<Props> = ({
       styles[`style${buttonStyle}`],
       styles[`color${buttonColor}`],
     )}
+    onClick={onClick}
   >
     {label}
   </button>

@@ -1,4 +1,10 @@
-import { ContentType, HttpMethod } from 'common/enums/enums';
+import {
+  ApiPath,
+  ContentType,
+  HttpMethod,
+  PodcastsApiPath,
+} from 'common/enums/enums';
+import { Podcast, PodcastCreatePayload } from 'common/types/types';
 import { Http } from 'services/http/http.service';
 
 type Constructor = {
@@ -15,12 +21,15 @@ class PodcastApi {
     this.#apiPrefix = apiPrefix;
   }
 
-  public postPodcast(payload: any): Promise<any> {
-    return this.#http.load(`${this.#apiPrefix}${'/podcasts'}${'/'}`, {
-      method: HttpMethod.POST,
-      contentType: ContentType.JSON,
-      payload: JSON.stringify(payload),
-    });
+  public postPodcast(payload: PodcastCreatePayload): Promise<Podcast> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}`,
+      {
+        method: HttpMethod.POST,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
+      },
+    );
   }
 }
 
