@@ -3,38 +3,32 @@ import styles from './styles.module.scss';
 
 type Props = {
   label: string;
-  value: string;
   onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
-  type?: InputType;
   isRequire?: boolean;
   isDisabled?: boolean;
-  placeholder?: string;
+  isChecked: boolean;
 };
 
-const Input: React.FC<Props> = ({
-  type = InputType.TEXT,
+const Checkbox: React.FC<Props> = ({
   isRequire = false,
   isDisabled = false,
-  placeholder = '',
+  isChecked = false,
   label,
-  value,
   name,
   onChange,
 }) => (
-  <label className={styles.inputWrapper}>
-    <span className={styles.label}>{label}</span>
+  <label className={styles.checkbox}>
     <input
-      className={styles.input}
-      type={type}
-      value={value}
+      type={InputType.CHECKBOX}
       name={name}
       onChange={onChange}
       required={isRequire}
       disabled={isDisabled}
-      placeholder={placeholder}
+      checked={isChecked}
     />
+    {label}
   </label>
 );
 
-export default Input;
+export default Checkbox;

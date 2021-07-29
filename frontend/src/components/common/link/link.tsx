@@ -3,10 +3,13 @@ import { AppRoute } from 'common/enums/enums';
 
 type Props = {
   to: AppRoute;
+  className?: string;
 };
 
-const Link: React.FC<Props> = ({ children, to }) => (
-  <AppLink to={to}>{children}</AppLink>
+const Link: React.FC<Props> = ({ children, to, className }) => (
+  <AppLink to={to} className={className}>
+    {children}
+  </AppLink>
 );
 
 export default Link;
