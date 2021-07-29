@@ -1,13 +1,17 @@
-import { Toaster } from 'components/common/common';
+import { AppRoute } from 'common/enums/enums';
+import { Switch, Route, Toaster, Header } from 'components/common/common';
+import SignUp from 'components/sign-up/sign-up';
+import SignIn from 'components/sign-in/sign-in';
 
-const App: React.FC = () => {
-  return (
-    <>
-      <div className="App">
-        <Toaster />
-      </div>
-    </>
-  );
-};
+const App: React.FC = () => (
+  <>
+    <Header />
+    <Switch>
+      <Route path={AppRoute.SIGN_IN} component={SignIn} exact />
+      <Route path={AppRoute.SIGN_UP} component={SignUp} exact />
+    </Switch>
+    <Toaster />
+  </>
+);
 
 export default App;
