@@ -4,4 +4,4 @@ export { HttpHeader, HttpMethod } from './http/http';
 export { ContentType } from './file/file';
 export { ButtonType, InputType } from './ui/ui';
 export { UserCreatePayloadKey } from './user/user';
-export { ButtonStyle, ButtonColors } from './ui/ui';
+export { ButtonStyle, ButtonColor } from './ui/ui';

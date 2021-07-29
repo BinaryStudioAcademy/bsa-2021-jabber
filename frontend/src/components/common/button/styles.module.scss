@@ -1,10 +1,7 @@
 .button {
-  box-sizing: border-box;
-  min-width: 42px;
   padding: 12px 22px;
   border-width: 1px;
   border-style: solid;
-  font-family: inherit;
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
@@ -18,7 +15,6 @@
 
 .styleLightSign {
   border-radius: 5px;
-  width: 100%;
 }
 
 .colorPink {

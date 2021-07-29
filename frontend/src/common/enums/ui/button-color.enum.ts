@@ -1,7 +1,7 @@
-enum ButtonColors {
+enum ButtonColor {
   PINK = 'Pink',
   LIGHT_NAVY = 'LightNavy',
   LIGHT_PINK = 'LightPink',
 }
 
-export { ButtonColors };
+export { ButtonColor };
