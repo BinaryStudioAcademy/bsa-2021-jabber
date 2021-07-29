@@ -1,4 +1,4 @@
-import logo from './logo-cut.svg';
+import logo from 'assets/img/logo-cut.svg';
 import styles from './styles.module.scss';
 
 const NotFound: React.FC = () => {

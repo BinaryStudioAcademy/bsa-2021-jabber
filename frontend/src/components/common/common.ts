@@ -5,4 +5,4 @@ export { default as Link } from './link/link';
 export { default as Toaster } from './toaster/toaster';
 export { default as Header } from './header/header';
 export { default as Checkbox } from './checkbox/checkbox';
-export { default as NotFound } from './not-found/notFound';
+export { default as NotFound } from './not-found/not-found';
