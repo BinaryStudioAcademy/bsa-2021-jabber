@@ -3,6 +3,7 @@ enum InputType {
   EMAIL = 'email',
   PASSWORD = 'password',
   DATE = 'date',
+  CHECKBOX = 'checkbox',
 }
 
 export { InputType };

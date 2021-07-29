@@ -6,9 +6,11 @@ import {
   FieldValues,
 } from 'react-hook-form';
 import { InputType, LabelNames } from 'common/enums/enums';
+import styles from './styles.module.scss';
 
 type Props = {
   type?: InputType;
+  placeholder?: string;
   label: LabelNames;
   name: Path<FieldValues>;
   control: Control;
@@ -19,14 +21,20 @@ const Input: React.FC<Props> = ({
   label,
   name,
   control,
+  placeholder = '',
   type = InputType.TEXT,
 }) => {
   const { field } = useController({ name, control });
 
   return (
-    <label>
-      {label}
-      <input {...field} type={type} />
+    <label className={styles.inputWrapper}>
+      <span className={styles.label}>{label}</span>
+      <input
+        {...field}
+        type={type}
+        placeholder={placeholder}
+        className={styles.input}
+      />
     </label>
   );
 };

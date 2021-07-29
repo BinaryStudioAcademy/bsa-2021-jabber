@@ -1,18 +1,23 @@
 .signUpPage {
+  flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   background-image: url('../../assets/img/auth-background.jpg');
   background-size: cover;
   background-position: center;
 }
 
 .form {
-  padding: 60px;
+  padding: 50px;
+  margin-bottom: 0;
   min-width: 480px;
   background-color: var(--color-primary-light);
   border-radius: 5px;
+
+  button {
+    margin-top: 5px;
+  }
 }
 
 .formLogo {
