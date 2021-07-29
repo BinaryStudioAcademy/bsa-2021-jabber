@@ -1,0 +1,22 @@
+.signInBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("./background-image.jpg");
+  background-position: center;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+
+  .fieldset {
+    display: flex;
+    flex-direction: column;
+    width: 450px;
+    gap: 30px;
+    background-color: var(--color-primary-ligth);
+    padding: 50px 58px;
+  }
+}
+
+
+
