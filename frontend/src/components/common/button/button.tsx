@@ -1,12 +1,23 @@
-import { ButtonType } from 'common/enums/enums';
+import { ButtonColor, ButtonStyle, ButtonType } from 'common/enums/enums';
+import { getAllowedClasses } from 'helpers/dom/dom';
+import styles from './styles.module.scss';
 
 type Props = {
   label: string;
   type?: ButtonType;
+  buttonStyle?: ButtonStyle;
+  buttonColor?: ButtonColor;
 };
 
-const Button: React.FC<Props> = ({ type = ButtonType.BUTTON, label }) => (
-  <button type={type}>{label}</button>
+const Button: React.FC<Props> = ({
+  type = ButtonType.BUTTON,
+  label,
+  buttonStyle = ButtonStyle.PRIMARY,
+  buttonColor = ButtonColor.PINK }) => (
+  <button
+    type={type}
+    className={getAllowedClasses(styles.button, styles[`style${buttonStyle}`], styles[`color${buttonColor}`])}
+  >{label}</button>
 );
 
 export default Button;

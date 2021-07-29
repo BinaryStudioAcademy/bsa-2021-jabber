@@ -1,0 +1,51 @@
+.button {
+  padding: 12px 22px;
+  border-width: 1px;
+  border-style: solid;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 1s ease;
+}
+
+.stylePrimary,
+.styleLight {
+  border-radius: 7px;
+}
+
+.styleLightSign {
+  border-radius: 5px;
+}
+
+.colorPink {
+  border-color: var(--color-button-background);
+  background-color: var(--color-button-background);
+  color: #ffffff;
+
+  &:hover {
+    background-color: var(--color-primary-ligth);
+    color: var(--color-button-background);
+  }
+}
+
+.colorLightPink {
+  border-color: var(--color-button-background);
+  background-color: var(--color-primary-ligth);
+  color: var(--color-button-background);
+
+  &:hover {
+    background-color: var(--color-button-background);
+    color: #ffffff;
+  }
+}
+
+.colorLightNavy {
+  border-color: var(--color-header-background);
+  background-color: var(--color-primary-ligth);
+  color: var(--color-header-background);
+
+  &:hover {
+    background-color: var(--color-header-background);
+    color: #ffffff;
+  }
+}
