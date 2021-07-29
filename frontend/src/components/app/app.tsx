@@ -7,8 +7,8 @@ const App: React.FC = () => (
   <>
     <Header />
     <Switch>
-      <Route path={AppRoute.SIGN_IN} component={SignUp} exact />
-      <Route path={AppRoute.SIGN_UP} component={SignIn} exact />
+      <Route path={AppRoute.SIGN_IN} component={SignIn} exact />
+      <Route path={AppRoute.SIGN_UP} component={SignUp} exact />
     </Switch>
     <Toaster />
   </>
