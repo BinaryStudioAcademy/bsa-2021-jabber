@@ -1,10 +1,8 @@
-import Icon from 'components/common/icon/icon';
-
-import { IconName, InputType } from 'common/enums/enums';
+import { InputType } from 'common/enums/enums';
 import styles from './styles.module.scss';
 
 type Props = {
-  label?: string;
+  label: string;
   value: string;
   onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
@@ -12,7 +10,6 @@ type Props = {
   isRequire?: boolean;
   isDisabled?: boolean;
   placeholder?: string;
-  iconName?: IconName;
 };
 
 const Input: React.FC<Props> = ({
@@ -20,13 +17,12 @@ const Input: React.FC<Props> = ({
   isRequire = false,
   isDisabled = false,
   placeholder = '',
-  label = '',
+  label,
   value,
   name,
   onChange,
-  iconName,
 }) => (
-  <label className={styles.input}>
+  <label className={styles.inputWrapper}>
     {label}
     <input
       type={type}
@@ -37,7 +33,6 @@ const Input: React.FC<Props> = ({
       disabled={isDisabled}
       placeholder={placeholder}
     />
-    {iconName ? <Icon iconName={iconName} /> : null}
   </label>
 );
 
