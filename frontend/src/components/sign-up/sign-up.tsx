@@ -7,6 +7,7 @@ import {
   ButtonType,
   DataStatus,
   InputType,
+  LabelNames,
   UserCreatePayloadKey,
 } from 'common/enums/enums';
 import { SignupSchema } from 'validation-schemas/validation-schemas';
@@ -55,40 +56,40 @@ const SignUp: React.FC = () => {
         </div>
         <fieldset disabled={isFormDisable} className={styles.fieldset}>
           <Input
-            label={UserCreatePayloadKey.FIRST_NAME}
+            label={LabelNames.FIRST_NAME}
             name={UserCreatePayloadKey.FIRST_NAME}
             control={control}
             errors={errors}
           />
           <Input
-            label={UserCreatePayloadKey.LAST_NAME}
+            label={LabelNames.LAST_NAME}
             name={UserCreatePayloadKey.LAST_NAME}
             control={control}
             errors={errors}
           />
           <Input
-            label={UserCreatePayloadKey.NICKNAME}
+            label={LabelNames.NICKNAME}
             name={UserCreatePayloadKey.NICKNAME}
             control={control}
             errors={errors}
           />
           <Input
             type={InputType.EMAIL}
-            label={UserCreatePayloadKey.EMAIL}
+            label={LabelNames.EMAIL}
             name={UserCreatePayloadKey.EMAIL}
             control={control}
             errors={errors}
           />
           <Input
             type={InputType.PASSWORD}
-            label={UserCreatePayloadKey.PASSWORD}
+            label={LabelNames.PASSWORD}
             name={UserCreatePayloadKey.PASSWORD}
             control={control}
             errors={errors}
           />
           <Input
             type={InputType.DATE}
-            label={UserCreatePayloadKey.BIRTHDATE}
+            label={LabelNames.BIRTHDATE}
             name={UserCreatePayloadKey.BIRTHDATE}
             control={control}
             errors={errors}
