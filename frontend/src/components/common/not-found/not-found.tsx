@@ -5,16 +5,16 @@ const NotFound: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div>
-      <div className={styles.textWrapper}>
+    <div className={styles.pageWrapper}>
+      <h1 className={styles.textWrapper}>
         <span className={styles.headerText}>404</span>
         <span className={styles.descriptionText}>Page not found</span>
-      </div>
+      </h1>
       <p className={styles.copyRight}>
         <img
           src={logo}
-          width="103"
-          height="35"
+          width="70"
+          height="25"
           loading="lazy"
           alt="Jabber Logo"
           className={styles.copyRight}
