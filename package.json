@@ -8,6 +8,7 @@
   "scripts": {
     "move:deploy": "mv backend/build . && mv backend/node_modules build && mv frontend/build/* build/public",
     "lint:editorconfig": "editorconfig-checker",
+    "lint:fs": "ls-lint",
     "lint:shared:js": "cd shared && npm run lint:js",
     "lint:shared": "cd shared && npm run lint",
     "lint:backend:js": "cd backend && npm run lint:js",
@@ -17,7 +18,7 @@
     "lint:frontend": "cd frontend && npm run lint",
     "lint:js": "npm run lint:shared:js && npm run lint:backend:js && npm run lint:frontend:js",
     "lint:css": "npm run lint:frontend:css",
-    "lint": "npm run lint:editorconfig && npm run lint:shared && npm run lint:backend && npm run lint:frontend",
+    "lint": "npm run lint:editorconfig && npm run lint:fs && npm run lint:shared && npm run lint:backend && npm run lint:frontend",
     "install:shared": "cd shared && npm install --production=false",
     "install:frontend": "cd frontend && npm install --production=false",
     "install:backend": "cd backend && npm install --production=false",
@@ -34,6 +35,7 @@
     "heroku-postbuild": "npm run build && npm run move:deploy"
   },
   "devDependencies": {
+    "@ls-lint/ls-lint": "1.10.0",
     "@typescript-eslint/eslint-plugin": "4.28.2",
     "@typescript-eslint/parser": "4.28.2",
     "concurrently": "6.2.0",
