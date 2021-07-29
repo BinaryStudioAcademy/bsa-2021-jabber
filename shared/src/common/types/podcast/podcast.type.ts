@@ -1,7 +1,7 @@
 type Podcast = {
   id: number;
   name: string;
-  user_id: number;
+  userId: number;
   createdAt: string;
   updatedAt: string;
 };

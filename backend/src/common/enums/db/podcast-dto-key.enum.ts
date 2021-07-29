@@ -1,6 +1,6 @@
 enum PodcastDTOKey {
   NAME = 'name',
-  USER_ID = 'user_id',
+  USER_ID = 'userId',
 }
 
 export { PodcastDTOKey };

@@ -1,4 +1,4 @@
-import { Podcast as TPodcast } from '~/common/types/types';
+import { Podcast as TPodcast, PodcastCreatePayload } from '~/common/types/types';
 import { podcast as podcastRep } from '~/data/repositories/repositories';
 
 type Constructor = {
@@ -16,7 +16,7 @@ class Podcast {
     return this.#podcastRepository.getAll();
   }
 
-  public create(payload: TPodcast): Promise<TPodcast> {
+  public create(payload: PodcastCreatePayload): Promise<TPodcast> {
     return this.#podcastRepository.create(payload);
   }
 }
