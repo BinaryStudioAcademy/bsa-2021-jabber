@@ -1,9 +1,9 @@
 .textWrapper {
-  height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin-top: 250px;
 }
 
 .headerText {
@@ -20,10 +20,15 @@
 }
 
 .copyRight {
-  height: 7vh;
+  margin-top: 150px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: 18px;
   font-weight: 600;
+}
+
+.copyRight img {
+  margin-bottom: 5px;
 }
