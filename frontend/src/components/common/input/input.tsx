@@ -23,8 +23,9 @@ const Input: React.FC<Props> = ({
   onChange,
 }) => (
   <label className={styles.inputWrapper}>
-    {label}
+    <span className={styles.label}>{label}</span>
     <input
+      className={styles.input}
       type={type}
       value={value}
       name={name}
