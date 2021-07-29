@@ -6,6 +6,8 @@ import { Logger } from './logger/logger.service';
 import { Auth } from './auth/auth.service';
 import { User } from './user/user.service';
 import { Podcast } from './podcast/podcast.service';
+import { Episode } from './episode/episode.service';
+import { episode as episodeRepository } from '~/data/repositories/repositories';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -26,4 +28,15 @@ const podcast = new Podcast({
   podcastRepository,
 });
 
-export { auth, appAsyncStorage, logger, user, podcast };
+const episode = new Episode({
+  episodeRepository,
+});
+
+export {
+  auth,
+  appAsyncStorage,
+  logger,
+  user,
+  episode,
+  podcast
+};
