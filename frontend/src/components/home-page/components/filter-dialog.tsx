@@ -17,7 +17,7 @@ const FilterDialog: React.FC = () => {
     <div className={styles.filterDialog}>
       <div className={styles.titleBlock}>
         <span className={styles.filter}>Filter</span>
-        <span className={styles.clear}>Clear All</span>
+        <span className={styles.clear} onClick={():void => setChecked(false)}>Clear All</span>
       </div>
       <div className={styles.filtersBlock}>
         <ul>
