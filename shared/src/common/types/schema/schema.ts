@@ -1,1 +1,1 @@
-export type { Schema } from './shema.type';
+export type { Schema } from 'joi';

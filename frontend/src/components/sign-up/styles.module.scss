@@ -1,6 +1,38 @@
+.signUpPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('../../assets/img/auth-background.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
 .fieldset {
   display: flex;
   flex-direction: column;
-  max-width: 400px;
-  gap: 30px;
+  width: 310px;
+  gap: 25px;
+  background-color: #eff0f7;
+  border-radius: 5px;
+  border: none;
+  padding: 20px;
+
+  label {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.formRow {
+  position: relative;
+}
+
+.errorWrapper {
+  position: absolute;
+  left: 0;
+  bottom: -30px;
+  line-height: 1;
+  color: var(--color-button-background);
+  font-size: 0.8rem;
 }

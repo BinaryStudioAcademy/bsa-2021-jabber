@@ -22,12 +22,12 @@ class Auth {
     });
   }
 
-  public async signIn(payload: SignInPayload): Promise<User> {
+  public async signIn(payload: SignInPayload): Promise<User | null> {
     const { password, email } = payload;
     const user = await this.#userRepository.getByEmail(email);
 
     if (!user || !(await cryptCompare(password, user.password))){
-      return Promise.reject();
+      return Promise.resolve(null);
     }
 
     return Promise.resolve(user);
