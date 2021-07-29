@@ -1,4 +1,5 @@
 import { InputType } from 'common/enums/enums';
+import styles from './styles.module.scss';
 
 type Props = {
   label: string;
@@ -8,18 +9,20 @@ type Props = {
   type?: InputType;
   isRequire?: boolean;
   isDisabled?: boolean;
+  placeholder?: string;
 };
 
 const Input: React.FC<Props> = ({
   type = InputType.TEXT,
   isRequire = false,
   isDisabled = false,
+  placeholder = '',
   label,
   value,
   name,
   onChange,
 }) => (
-  <label>
+  <label className={styles.inputWrapper}>
     {label}
     <input
       type={type}
@@ -28,6 +31,7 @@ const Input: React.FC<Props> = ({
       onChange={onChange}
       required={isRequire}
       disabled={isDisabled}
+      placeholder={placeholder}
     />
   </label>
 );
