@@ -5,7 +5,6 @@ ls:
   backend/src/data/migrations:
     .ts: snake_case
 
-
 ignore:
     - node_modules
     - build
