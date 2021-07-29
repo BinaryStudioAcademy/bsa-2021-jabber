@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { User } from '../../common/types/types';
+import { User } from 'common/types/types';
 import { signUp } from './actions';
 
 type State = {
