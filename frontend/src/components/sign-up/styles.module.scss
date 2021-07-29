@@ -8,31 +8,30 @@
   background-position: center;
 }
 
+.form {
+  background-color: #eff0f7;
+  border-radius: 5px;
+  padding: 20px;
+  width: 325px;
+}
+
 .fieldset {
   display: flex;
   flex-direction: column;
-  width: 310px;
-  gap: 25px;
-  background-color: #eff0f7;
-  border-radius: 5px;
+  gap: 20px;
   border: none;
-  padding: 20px;
+  padding: 0;
+}
+
+.formRow {
+  position: relative;
+
+  h3 {
+    color: var(--color-button-background);
+  }
 
   label {
     display: flex;
     flex-direction: column;
   }
-}
-
-.formRow {
-  position: relative;
-}
-
-.errorWrapper {
-  position: absolute;
-  left: 0;
-  bottom: -30px;
-  line-height: 1;
-  color: var(--color-button-background);
-  font-size: 0.8rem;
 }

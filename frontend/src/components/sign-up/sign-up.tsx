@@ -16,11 +16,7 @@ import styles from './styles.module.scss';
 const resolver = getResolver<UserCreatePayload>(SignupSchema);
 
 const SignUp: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<UserCreatePayload>({ resolver });
+  const { register, handleSubmit } = useForm<UserCreatePayload>({ resolver });
 
   const { authStatus } = useAppSelector(({ auth }) => ({
     authStatus: auth.dataStatus,
@@ -36,7 +32,12 @@ const SignUp: React.FC = () => {
 
   return (
     <div className={styles.signUpPage}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.logoWrapper}>The logo</div>
+        <h3>Sign Up</h3>
+        <div>
+          Already have an account? <a href="#">Sign In</a>
+        </div>
         <fieldset disabled={isFormDisable} className={styles.fieldset}>
           <div className={styles.formRow}>
             <Input
@@ -44,9 +45,6 @@ const SignUp: React.FC = () => {
               register={register}
               isRequire
             />
-            <span className={styles.errorWrapper}>
-              {errors[UserCreatePayloadKey.FIRST_NAME]}
-            </span>
           </div>
           <div className={styles.formRow}>
             <Input
@@ -54,9 +52,6 @@ const SignUp: React.FC = () => {
               register={register}
               isRequire
             />
-            <span className={styles.errorWrapper}>
-              {errors[UserCreatePayloadKey.LAST_NAME]}
-            </span>
           </div>
           <div className={styles.formRow}>
             <Input
@@ -64,9 +59,6 @@ const SignUp: React.FC = () => {
               register={register}
               isRequire
             />
-            <span className={styles.errorWrapper}>
-              {errors[UserCreatePayloadKey.NICKNAME]}
-            </span>
           </div>
           <div className={styles.formRow}>
             <Input
@@ -75,9 +67,6 @@ const SignUp: React.FC = () => {
               register={register}
               isRequire
             />
-            <span className={styles.errorWrapper}>
-              {errors[UserCreatePayloadKey.EMAIL]}
-            </span>
           </div>
           <div className={styles.formRow}>
             <Input
@@ -86,9 +75,6 @@ const SignUp: React.FC = () => {
               register={register}
               isRequire
             />
-            <span className={styles.errorWrapper}>
-              {errors[UserCreatePayloadKey.PASSWORD]}
-            </span>
           </div>
           <div className={styles.formRow}>
             <Input
@@ -97,9 +83,6 @@ const SignUp: React.FC = () => {
               register={register}
               isRequire
             />
-            <span className={styles.errorWrapper}>
-              {errors[UserCreatePayloadKey.BIRTHDATE]}
-            </span>
           </div>
           <Button label="Sign Up" type={ButtonType.SUBMIT} />
         </fieldset>
