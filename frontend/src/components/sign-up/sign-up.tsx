@@ -6,6 +6,7 @@ import {
   AppRoute,
   ButtonType,
   DataStatus,
+  InputPlaceholder,
   InputType,
   LabelNames,
   UserCreatePayloadKey,
@@ -57,18 +58,21 @@ const SignUp: React.FC = () => {
         <fieldset disabled={isFormDisable} className={styles.fieldset}>
           <Input
             label={LabelNames.FIRST_NAME}
+            placeholder={InputPlaceholder.FIRST_NAME}
             name={UserCreatePayloadKey.FIRST_NAME}
             control={control}
             errors={errors}
           />
           <Input
             label={LabelNames.LAST_NAME}
+            placeholder={InputPlaceholder.LAST_NAME}
             name={UserCreatePayloadKey.LAST_NAME}
             control={control}
             errors={errors}
           />
           <Input
             label={LabelNames.NICKNAME}
+            placeholder={InputPlaceholder.NICKNAME}
             name={UserCreatePayloadKey.NICKNAME}
             control={control}
             errors={errors}
@@ -76,6 +80,7 @@ const SignUp: React.FC = () => {
           <Input
             type={InputType.EMAIL}
             label={LabelNames.EMAIL}
+            placeholder={InputPlaceholder.EMAIL}
             name={UserCreatePayloadKey.EMAIL}
             control={control}
             errors={errors}
@@ -83,6 +88,7 @@ const SignUp: React.FC = () => {
           <Input
             type={InputType.PASSWORD}
             label={LabelNames.PASSWORD}
+            placeholder={InputPlaceholder.PASSWORD}
             name={UserCreatePayloadKey.PASSWORD}
             control={control}
             errors={errors}

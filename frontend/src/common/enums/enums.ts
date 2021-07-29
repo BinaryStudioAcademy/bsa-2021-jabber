@@ -7,6 +7,7 @@ export {
   ButtonType,
   IconName,
   InputType,
+  InputPlaceholder,
   LabelNames,
   ButtonStyle,
   ButtonColor,
