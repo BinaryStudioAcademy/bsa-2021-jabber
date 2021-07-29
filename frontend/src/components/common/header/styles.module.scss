@@ -1,71 +1,59 @@
-.container {
-  background-color: var(--color-header-background);
+.header {
   display: flex;
-  align-items: center;
-  width: 1900px;
-  height: 104px;
-  color: #fff;
-  text-align: left;
+  min-height: 105px;
+  background-color: var(--color-header-background);
 }
 
-.logoContainer {
+.headerWrapper {
   display: flex;
   align-items: center;
-  font-weight: 500;
-  font-size: 15.6024px;
-  line-height: 18px;
-  letter-spacing: 0.01em;
-  color: #aeaeae;
-  margin-left: 188px;
-}
-.logoContainerLogo {
-  margin-right: 4px;
-  width: 22px;
-  height: 22px;
-  background-color: #aeaeae;
-  border-radius: 50%;
+  width: 100%;
+  max-width: 1515px;
+  margin: 0 auto;
+  padding: 30px;
 }
 
 .navigation {
   display: flex;
-  height: 21px;
   justify-content: space-between;
+  margin: 0;
+  padding: 0;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 18px;
   line-height: 21px;
-  margin-left: 170px;
-}
-.liNavigation {
-  margin-right: 40px;
-  cursor: pointer;
+  margin-left: 125px;
   list-style: none;
+}
+
+.liNavigation {
+  margin-right: 50px;
+  color: #ffffff;
 }
 
 .userInfo {
   display: flex;
   align-items: center;
-  margin-left: 742px;
+  margin-left: auto;
 }
 
 .profile {
   width: 40px;
   height: 40px;
-  margin-left: 84px;
-  cursor: pointer;
+  margin-left: 40px;
 }
 .profileAvatar {
   border-radius: 50%;
 }
 
 .signIn {
-  margin-left: 970px;
+  margin-left: auto;
 }
 
 .signInText {
   text-decoration: none;
-  color: white;
-  font-weight: 600;
+  color: #ffffff;
+  font-weight: 500;
   font-size: 18px;
   line-height: 21px;
 }
