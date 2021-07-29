@@ -5,6 +5,8 @@ import { AsyncLocalStorage } from './async-storage/async-storage.service';
 import { Logger } from './logger/logger.service';
 import { Auth } from './auth/auth.service';
 import { User } from './user/user.service';
+import { Episode } from './episode/episode.service';
+import { episode as episodeRepository } from '~/data/repositories/repositories';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -21,4 +23,14 @@ const user = new User({
   userRepository,
 });
 
-export { auth, appAsyncStorage, logger, user };
+const episode = new Episode ({
+  episodeRepository,
+});
+
+export { 
+  auth, 
+  appAsyncStorage, 
+  logger, 
+  user,
+  episode 
+};
