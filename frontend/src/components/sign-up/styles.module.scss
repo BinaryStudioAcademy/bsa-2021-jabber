@@ -46,10 +46,4 @@
   padding: 0;
   gap: 15px;
   border: none;
-
-  // TODO: remove after input component will be done
-  label {
-    display: flex;
-    flex-direction: column;
-  }
 }
