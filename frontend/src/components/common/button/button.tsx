@@ -7,17 +7,27 @@ type Props = {
   type?: ButtonType;
   buttonStyle?: ButtonStyle;
   buttonColor?: ButtonColor;
+  className?: string;
 };
 
 const Button: React.FC<Props> = ({
   type = ButtonType.BUTTON,
-  label,
   buttonStyle = ButtonStyle.PRIMARY,
-  buttonColor = ButtonColor.PINK }) => (
+  buttonColor = ButtonColor.PINK,
+  label,
+  className,
+}) => (
   <button
     type={type}
-    className={getAllowedClasses(styles.button, styles[`style${buttonStyle}`], styles[`color${buttonColor}`])}
-  >{label}</button>
+    className={getAllowedClasses(
+      className,
+      styles.button,
+      styles[`style${buttonStyle}`],
+      styles[`color${buttonColor}`],
+    )}
+  >
+    {label}
+  </button>
 );
 
 export default Button;
