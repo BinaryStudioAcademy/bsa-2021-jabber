@@ -1,1 +1,1 @@
-export { SignupSchema } from 'jabber-shared/validation/validation';
+export { SignupSchema, SigninSchema } from 'jabber-shared/validation-schemas/validation-schemas';
