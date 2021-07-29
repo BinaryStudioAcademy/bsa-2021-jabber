@@ -1,7 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { UserCreatePayload } from 'common/types/types';
 import {
+  AppRoute,
   ButtonType,
+  LabelNames,
   DataStatus,
   InputType,
   UserCreatePayloadKey,
@@ -9,18 +11,15 @@ import {
 import { SignupSchema } from 'validation-schemas/validation-schemas';
 import { useAppSelector, useDispatch } from 'hooks/hooks';
 import { auth as authActions } from 'store/actions';
-import { Button, Input } from 'components/common/common';
+import { Button, Input, Link } from 'components/common/common';
 import { getResolver } from 'helpers/form/form';
+import logo from 'assets/img/logo-dark.svg';
 import styles from './styles.module.scss';
 
 const resolver = getResolver<UserCreatePayload>(SignupSchema);
 
 const SignUp: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<UserCreatePayload>({ resolver });
+  const { register, handleSubmit } = useForm<UserCreatePayload>({ resolver });
 
   const { authStatus } = useAppSelector(({ auth }) => ({
     authStatus: auth.dataStatus,
@@ -35,55 +34,69 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <section>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div className={styles.signUpPage}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <img
+          src={logo}
+          className={styles.formLogo}
+          loading="lazy"
+          alt="Jabber logo"
+        />
+        <h3 className={styles.formTitle}>Sign Up</h3>
+        <div className={styles.formSubtitle}>
+          Already have an account?
+          <Link to={AppRoute.SIGN_IN}>Sign In</Link>
+        </div>
         <fieldset disabled={isFormDisable} className={styles.fieldset}>
-          <div>
+          <div className={styles.formRow}>
             <Input
-              label={UserCreatePayloadKey.FIRST_NAME}
-              register={register}
+              label={LabelNames.FIRST_NAME}
+              registerData={register(UserCreatePayloadKey.FIRST_NAME)}
               isRequire
             />
-            {errors[UserCreatePayloadKey.FIRST_NAME]}
           </div>
-          <div>
+          <div className={styles.formRow}>
             <Input
-              label={UserCreatePayloadKey.LAST_NAME}
-              register={register}
+              label={LabelNames.LAST_NAME}
+              registerData={register(UserCreatePayloadKey.LAST_NAME)}
               isRequire
             />
-            {errors[UserCreatePayloadKey.LAST_NAME]}
           </div>
-          <div>
+          <div className={styles.formRow}>
             <Input
-              label={UserCreatePayloadKey.NICKNAME}
-              register={register}
+              label={LabelNames.NICKNAME}
+              registerData={register(UserCreatePayloadKey.NICKNAME)}
               isRequire
             />
-            {errors[UserCreatePayloadKey.NICKNAME]}
           </div>
-          <div>
+          <div className={styles.formRow}>
             <Input
-              label={UserCreatePayloadKey.EMAIL}
+              label={LabelNames.EMAIL}
               type={InputType.EMAIL}
-              register={register}
+              registerData={register(UserCreatePayloadKey.EMAIL)}
               isRequire
             />
-            {errors[UserCreatePayloadKey.EMAIL]}
           </div>
-          <div>
+          <div className={styles.formRow}>
             <Input
-              label={UserCreatePayloadKey.BIRTHDATE}
-              type={InputType.DATE}
-              register={register}
+              label={LabelNames.PASSWORD}
+              type={InputType.PASSWORD}
+              registerData={register(UserCreatePayloadKey.PASSWORD)}
               isRequire
             />
-            {errors[UserCreatePayloadKey.BIRTHDATE]}
+          </div>
+          <div className={styles.formRow}>
+            <Input
+              label={LabelNames.BIRTHDATE}
+              type={InputType.DATE}
+              registerData={register(UserCreatePayloadKey.BIRTHDATE)}
+              isRequire
+            />
           </div>
           <Button label="Sign Up" type={ButtonType.SUBMIT} />
         </fieldset>
       </form>
-    </section>
+    </div>
   );
 };
 
