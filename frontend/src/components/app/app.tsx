@@ -1,8 +1,8 @@
-import { Toaster, NotFound } from 'components/common/common';
+import { Toaster, Header } from 'components/common/common';
 
 const App: React.FC = () => (
   <>
-    <NotFound />
+    <Header />
     <Toaster />
   </>
 );
