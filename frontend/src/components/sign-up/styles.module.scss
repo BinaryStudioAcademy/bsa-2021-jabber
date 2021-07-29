@@ -3,32 +3,30 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-image: url('../../assets/img/signUpIn-background.jpg');
+  background-image: url('../../assets/img/authBackground.jpg');
   background-size: cover;
   background-position: center;
+}
+form {
+  background-color: #EFF0F7;
+  border-radius: 5px;
+  padding: 20px;
+  width: 325px;
 }
 .fieldset {
   display: flex;
   flex-direction: column;
-  width: 310px;
-  gap: 25px;
-  background-color: #EFF0F7;
-  border-radius: 5px;
+  gap: 20px;
   border: none;
-  padding: 20px;
+  padding: 0;
+  h3 {
+    color: var(--color-button-background);
+  }
   .formRow {
     position: relative;
   }
   label {
     display: flex;
     flex-direction: column;
-  }
-  .errorWrapper {
-    position: absolute;
-    left: 0;
-    bottom: -30px;
-    line-height: 1;
-    color: var(--color-button-background);
-    font-size: 0.8rem;
   }
 }
