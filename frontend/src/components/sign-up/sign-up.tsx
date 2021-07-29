@@ -50,21 +50,21 @@ const SignUp: React.FC = () => {
           <div className={styles.formRow}>
             <Input
               label={UserCreatePayloadKey.FIRST_NAME}
-              register={register}
+              registerData={register(UserCreatePayloadKey.FIRST_NAME)}
               isRequire
             />
           </div>
           <div className={styles.formRow}>
             <Input
-              label={UserCreatePayloadKey.LAST_NAME}
-              register={register}
+              label={'last name'}
+              registerData={register(UserCreatePayloadKey.LAST_NAME)}
               isRequire
             />
           </div>
           <div className={styles.formRow}>
             <Input
               label={UserCreatePayloadKey.NICKNAME}
-              register={register}
+              registerData={register(UserCreatePayloadKey.NICKNAME)}
               isRequire
             />
           </div>
@@ -72,7 +72,7 @@ const SignUp: React.FC = () => {
             <Input
               label={UserCreatePayloadKey.EMAIL}
               type={InputType.EMAIL}
-              register={register}
+              registerData={register(UserCreatePayloadKey.EMAIL)}
               isRequire
             />
           </div>
@@ -80,7 +80,7 @@ const SignUp: React.FC = () => {
             <Input
               label={UserCreatePayloadKey.PASSWORD}
               type={InputType.PASSWORD}
-              register={register}
+              registerData={register(UserCreatePayloadKey.PASSWORD)}
               isRequire
             />
           </div>
@@ -88,7 +88,7 @@ const SignUp: React.FC = () => {
             <Input
               label={UserCreatePayloadKey.BIRTHDATE}
               type={InputType.DATE}
-              register={register}
+              registerData={register(UserCreatePayloadKey.BIRTHDATE)}
               isRequire
             />
           </div>
