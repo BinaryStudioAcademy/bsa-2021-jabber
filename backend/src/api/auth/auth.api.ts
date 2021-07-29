@@ -20,7 +20,9 @@ const initAuthApi = ({ apiRouter, authService }: Args): Router => {
 
       return res.json(user).status(HttpCode.CREATED);
     }),
-  ).post(
+  );
+
+  userRouter.post(
     AuthApiPath.SIGN_IN,
     handleAsyncApi(async (req, res) => {
       const user = await authService.signIn(req.body);
