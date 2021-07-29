@@ -30,7 +30,7 @@ const initApi = (app: Router): Router => {
     apiRouter,
     podcastService,
   });
-  
+
   initEpisodesApi({
     apiRouter,
     episodeService,

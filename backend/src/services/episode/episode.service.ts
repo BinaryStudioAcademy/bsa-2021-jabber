@@ -3,13 +3,13 @@ import { episode as episodeRep } from '~/data/repositories/repositories';
 
 type Constructor = {
   episodeRepository: typeof episodeRep;
-}
+};
 
 class Episode {
   #episodeRepository: typeof episodeRep;
 
   constructor({ episodeRepository }: Constructor) {
-    this.#episodeRepository = episodeRepository
+    this.#episodeRepository = episodeRepository;
   }
 
   public getAll(): Promise<TEpisode[]> {
@@ -21,4 +21,4 @@ class Episode {
   }
 }
 
-export { Episode }
+export { Episode };

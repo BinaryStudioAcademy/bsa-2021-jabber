@@ -1,4 +1,4 @@
-import { EpisodeCreatePayloadKey } from '~/common/enums/enums'
+import { EpisodeCreatePayloadKey } from '~/common/enums/enums';
 
 type EpisodeCreatePayload = {
   [EpisodeCreatePayloadKey.NAME]: string;
