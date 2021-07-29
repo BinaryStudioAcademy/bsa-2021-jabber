@@ -1,30 +1,34 @@
-import { UseFormRegisterReturn } from 'react-hook-form';
+import {
+  Control,
+  FieldErrors,
+  useController,
+  Path,
+  FieldValues,
+} from 'react-hook-form';
 import { InputType } from 'common/enums/enums';
 
 type Props = {
-  label: string;
   type?: InputType;
-  isRequire?: boolean;
-  isDisabled?: boolean;
-  registerData?: UseFormRegisterReturn;
+  label: string;
+  name: Path<FieldValues>;
+  control: Control;
+  errors: FieldErrors;
 };
 
 const Input: React.FC<Props> = ({
-  type = InputType.TEXT,
-  isRequire = false,
-  isDisabled = false,
   label,
-  registerData = {},
-}) => (
-  <label>
-    {label}
-    <input
-      type={type}
-      {...registerData}
-      required={isRequire}
-      disabled={isDisabled}
-    />
-  </label>
-);
+  name,
+  control,
+  type = InputType.TEXT,
+}) => {
+  const { field } = useController({ name, control });
+
+  return (
+    <label>
+      {label}
+      <input {...field} type={type} />
+    </label>
+  );
+};
 
 export default Input;

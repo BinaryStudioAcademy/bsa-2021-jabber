@@ -1,4 +1,6 @@
-import { useForm } from 'react-hook-form';
+import { useForm, FieldValues } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import logo from 'assets/img/logo-dark.svg';
 import { UserCreatePayload } from 'common/types/types';
 import {
   AppRoute,
@@ -11,14 +13,19 @@ import { SignupSchema } from 'validation-schemas/validation-schemas';
 import { useAppSelector, useDispatch } from 'hooks/hooks';
 import { auth as authActions } from 'store/actions';
 import { Button, Input, Link } from 'components/common/common';
-import { getResolver } from 'helpers/form/form';
-import logo from 'assets/img/logo-dark.svg';
+import { DEFAULT_REGISTER_PAYLOAD } from './common/constants';
 import styles from './styles.module.scss';
 
-const resolver = getResolver<UserCreatePayload>(SignupSchema);
-
 const SignUp: React.FC = () => {
-  const { register, handleSubmit } = useForm<UserCreatePayload>({ resolver });
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FieldValues>({
+    defaultValues: DEFAULT_REGISTER_PAYLOAD,
+    resolver: joiResolver(SignupSchema),
+    mode: 'onSubmit',
+  });
 
   const { authStatus } = useAppSelector(({ auth }) => ({
     authStatus: auth.dataStatus,
@@ -47,51 +54,45 @@ const SignUp: React.FC = () => {
           <Link to={AppRoute.SIGN_IN}>Sign In</Link>
         </div>
         <fieldset disabled={isFormDisable} className={styles.fieldset}>
-          <div className={styles.formRow}>
-            <Input
-              label={UserCreatePayloadKey.FIRST_NAME}
-              registerData={register(UserCreatePayloadKey.FIRST_NAME)}
-              isRequire
-            />
-          </div>
-          <div className={styles.formRow}>
-            <Input
-              label={'last name'}
-              registerData={register(UserCreatePayloadKey.LAST_NAME)}
-              isRequire
-            />
-          </div>
-          <div className={styles.formRow}>
-            <Input
-              label={UserCreatePayloadKey.NICKNAME}
-              registerData={register(UserCreatePayloadKey.NICKNAME)}
-              isRequire
-            />
-          </div>
-          <div className={styles.formRow}>
-            <Input
-              label={UserCreatePayloadKey.EMAIL}
-              type={InputType.EMAIL}
-              registerData={register(UserCreatePayloadKey.EMAIL)}
-              isRequire
-            />
-          </div>
-          <div className={styles.formRow}>
-            <Input
-              label={UserCreatePayloadKey.PASSWORD}
-              type={InputType.PASSWORD}
-              registerData={register(UserCreatePayloadKey.PASSWORD)}
-              isRequire
-            />
-          </div>
-          <div className={styles.formRow}>
-            <Input
-              label={UserCreatePayloadKey.BIRTHDATE}
-              type={InputType.DATE}
-              registerData={register(UserCreatePayloadKey.BIRTHDATE)}
-              isRequire
-            />
-          </div>
+          <Input
+            label={UserCreatePayloadKey.FIRST_NAME}
+            name={UserCreatePayloadKey.FIRST_NAME}
+            control={control}
+            errors={errors}
+          />
+          <Input
+            label={UserCreatePayloadKey.LAST_NAME}
+            name={UserCreatePayloadKey.LAST_NAME}
+            control={control}
+            errors={errors}
+          />
+          <Input
+            label={UserCreatePayloadKey.NICKNAME}
+            name={UserCreatePayloadKey.NICKNAME}
+            control={control}
+            errors={errors}
+          />
+          <Input
+            type={InputType.EMAIL}
+            label={UserCreatePayloadKey.EMAIL}
+            name={UserCreatePayloadKey.EMAIL}
+            control={control}
+            errors={errors}
+          />
+          <Input
+            type={InputType.PASSWORD}
+            label={UserCreatePayloadKey.PASSWORD}
+            name={UserCreatePayloadKey.PASSWORD}
+            control={control}
+            errors={errors}
+          />
+          <Input
+            type={InputType.DATE}
+            label={UserCreatePayloadKey.BIRTHDATE}
+            name={UserCreatePayloadKey.BIRTHDATE}
+            control={control}
+            errors={errors}
+          />
           <Button label="Sign Up" type={ButtonType.SUBMIT} />
         </fieldset>
       </form>
