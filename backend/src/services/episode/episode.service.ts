@@ -16,7 +16,7 @@ class Episode {
     return this.#episodeRepository.getAll();
   }
 
-  public setEpisode(payload: EpisodeCreatePayload): Promise<TEpisode> {
+  public create(payload: EpisodeCreatePayload): Promise<TEpisode> {
     return this.#episodeRepository.create(payload);
   }
 }
