@@ -35,7 +35,7 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
       return res.json(episode).status(HttpCode.CREATED);
     }),
   );
-  
+
   return episodeRouter;
 };
 
