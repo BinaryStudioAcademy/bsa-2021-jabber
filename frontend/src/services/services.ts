@@ -18,4 +18,4 @@ const podcastApi = new PodcastApi({
 
 const notification = new Notification();
 
-export { authApi, podcastApi, notification };
+export { authApi, notification, podcastApi };

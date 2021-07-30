@@ -1,8 +1,8 @@
 import {
   ApiPath,
+  PodcastsApiPath,
   ContentType,
   HttpMethod,
-  PodcastsApiPath,
 } from 'common/enums/enums';
 import { Podcast, PodcastCreatePayload } from 'common/types/types';
 import { Http } from 'services/http/http.service';
@@ -19,6 +19,15 @@ class PodcastApi {
   constructor({ http, apiPrefix }: Constructor) {
     this.#http = http;
     this.#apiPrefix = apiPrefix;
+  }
+
+  public getAll(): Promise<Podcast[]> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}`,
+      {
+        method: HttpMethod.GET,
+      },
+    );
   }
 
   public create(payload: PodcastCreatePayload): Promise<Podcast> {
