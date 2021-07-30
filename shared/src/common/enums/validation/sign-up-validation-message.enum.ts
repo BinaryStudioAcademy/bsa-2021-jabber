@@ -1,4 +1,4 @@
-import { SignUpValidationRule } from './sign-up-validation-rule';
+import { SignUpValidationRule } from './sign-up-validation-rule.enum';
 
 const SignUpValidationMessage = {
   FIRST_NAME_REQUIRE: 'First name is required',
