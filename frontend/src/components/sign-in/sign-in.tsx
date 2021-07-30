@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { UserSignInPayload } from 'common/types/types';
-import { AppRoute, ButtonType, DataStatus, InputType, LabelNames, UserCreatePayloadKey } from 'common/enums/enums';
+import { AppRoute, ButtonType, DataStatus, InputType, UserSignInPayloadKey } from 'common/enums/enums';
 import { SigninSchema } from 'validation-schemas/validation-schemas';
 import { useAppSelector, useDispatch } from 'hooks/hooks';
 import { auth as authActions } from 'store/actions';
@@ -36,17 +36,17 @@ const SignIn: React.FC = () => {
         <fieldset disabled={ isFormDisable } className={ styles.fieldset }>
           <div className={styles.formRow}>
             <Input
-              label={LabelNames.EMAIL}
+              label={UserSignInPayloadKey.EMAIL}
               type={InputType.EMAIL}
-              registerData={register(UserCreatePayloadKey.EMAIL)}
+              registerData={register(UserSignInPayloadKey.EMAIL)}
               isRequire
             />
           </div>
           <div className={styles.formRow}>
             <Input
-              label={LabelNames.PASSWORD}
+              label={UserSignInPayloadKey.PASSWORD}
               type={InputType.PASSWORD}
-              registerData={register(UserCreatePayloadKey.PASSWORD)}
+              registerData={register(UserSignInPayloadKey.PASSWORD)}
               isRequire
             />
           </div>

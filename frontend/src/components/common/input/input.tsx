@@ -1,9 +1,9 @@
 import { UseFormRegisterReturn } from 'react-hook-form';
-import { InputType, LabelNames } from 'common/enums/enums';
+import { InputType } from 'common/enums/enums';
 import styles from './styles.module.scss';
 
 type Props = {
-  label: LabelNames;
+  label: string;
   type?: InputType;
   isRequire?: boolean;
   isDisabled?: boolean;

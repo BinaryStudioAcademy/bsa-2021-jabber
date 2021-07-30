@@ -3,7 +3,6 @@ import { UserCreatePayload } from 'common/types/types';
 import {
   AppRoute,
   ButtonType,
-  LabelNames,
   DataStatus,
   InputType,
   UserCreatePayloadKey,
@@ -50,28 +49,28 @@ const SignUp: React.FC = () => {
         <fieldset disabled={isFormDisable} className={styles.fieldset}>
           <div className={styles.formRow}>
             <Input
-              label={LabelNames.FIRST_NAME}
+              label={UserCreatePayloadKey.FIRST_NAME}
               registerData={register(UserCreatePayloadKey.FIRST_NAME)}
               isRequire
             />
           </div>
           <div className={styles.formRow}>
             <Input
-              label={LabelNames.LAST_NAME}
+              label={UserCreatePayloadKey.LAST_NAME}
               registerData={register(UserCreatePayloadKey.LAST_NAME)}
               isRequire
             />
           </div>
           <div className={styles.formRow}>
             <Input
-              label={LabelNames.NICKNAME}
+              label={UserCreatePayloadKey.NICKNAME}
               registerData={register(UserCreatePayloadKey.NICKNAME)}
               isRequire
             />
           </div>
           <div className={styles.formRow}>
             <Input
-              label={LabelNames.EMAIL}
+              label={UserCreatePayloadKey.EMAIL}
               type={InputType.EMAIL}
               registerData={register(UserCreatePayloadKey.EMAIL)}
               isRequire
@@ -79,7 +78,7 @@ const SignUp: React.FC = () => {
           </div>
           <div className={styles.formRow}>
             <Input
-              label={LabelNames.PASSWORD}
+              label={UserCreatePayloadKey.PASSWORD}
               type={InputType.PASSWORD}
               registerData={register(UserCreatePayloadKey.PASSWORD)}
               isRequire
@@ -87,7 +86,7 @@ const SignUp: React.FC = () => {
           </div>
           <div className={styles.formRow}>
             <Input
-              label={LabelNames.BIRTHDATE}
+              label={UserCreatePayloadKey.BIRTHDATE}
               type={InputType.DATE}
               registerData={register(UserCreatePayloadKey.BIRTHDATE)}
               isRequire

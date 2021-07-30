@@ -4,7 +4,7 @@ import { HttpError } from '~/exceptions/exceptions';
 import { HttpCode } from '~/common/enums/enums';
 import { formatValidationError } from '~/helpers/helpers';
 
-export const validate = (schema: ValidationSchema): RequestHandler => {
+const validate = (schema: ValidationSchema): RequestHandler => {
   const handler: RequestHandler = (req, _res, next) => {
     const { error } = schema.validate(req.body, {
       abortEarly: false,
@@ -24,3 +24,5 @@ export const validate = (schema: ValidationSchema): RequestHandler => {
 
   return handler;
 };
+
+export { validate }
