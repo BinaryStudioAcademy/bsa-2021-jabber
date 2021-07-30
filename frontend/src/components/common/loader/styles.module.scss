@@ -1,19 +1,20 @@
-.loaderOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+.spinnerContainer {
+  flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0,0,0,.8);
 }
-.loaderImage {
-  animation: loaderRotate 2s infinite linear;
+
+.spinner {
+  border: 10px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 10px solid var(--color-header-background);
+  width: 80px;
+  height: 80px;
+  animation: spin 2s linear infinite;
 }
-@keyframes loaderRotate {
-  100% {
-    transform: rotate(360deg);
-  }
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
