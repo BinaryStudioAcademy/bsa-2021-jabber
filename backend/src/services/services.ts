@@ -5,6 +5,7 @@ import {
   podcast as podcastRepository,
   episode as episodeRepository,
   comment as commentRepository,
+  record as recordRepository,
 } from '~/data/repositories/repositories';
 import { AsyncLocalStorage } from './async-storage/async-storage.service';
 import { Logger } from './logger/logger.service';
@@ -13,6 +14,7 @@ import { User } from './user/user.service';
 import { Podcast } from './podcast/podcast.service';
 import { Episode } from './episode/episode.service';
 import { Comment } from './comment/comment.service';
+import { Record } from './record/record.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -41,6 +43,10 @@ const comment = new Comment({
   commentRepository,
 });
 
+const record = new Record({
+  recordRepository,
+});
+
 export {
   auth,
   appAsyncStorage,
@@ -49,4 +55,5 @@ export {
   episode,
   podcast,
   comment,
+  record,
 };
