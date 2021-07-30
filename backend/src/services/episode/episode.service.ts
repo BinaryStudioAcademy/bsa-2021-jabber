@@ -20,7 +20,7 @@ class Episode {
   public async getById(id: string): Promise<TEpisode> {
     const episode = await this.#episodeRepository.getById(id);
     if (!episode) {
-      throw new HttpError({status: 404, message: 'Episode does not exist!'})
+      throw new HttpError({ status: 404, message: 'Episode does not exist!' });
     }
     return episode;
   }
