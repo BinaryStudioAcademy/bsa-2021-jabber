@@ -5,12 +5,12 @@ import { loadPodcasts } from './actions';
 
 type State = {
   dataStatus: DataStatus;
-  podcasts: Podcast[] | null;
+  podcasts: Podcast[];
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
-  podcasts: null,
+  podcasts: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -18,8 +18,10 @@ const reducer = createReducer(initialState, (builder) => {
     state.dataStatus = DataStatus.PENDING;
   });
   builder.addCase(loadPodcasts.fulfilled, (state, action) => {
+    const { podcasts } = action.payload;
+
     state.dataStatus = DataStatus.FULFILLED;
-    state.podcasts = action.payload;
+    state.podcasts = podcasts;
   });
   builder.addCase(loadPodcasts.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
