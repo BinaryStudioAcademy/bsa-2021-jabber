@@ -1,4 +1,4 @@
-type SignInPayload = {
+type UserSignInPayload = {
   email: string;
   password: string;
 };
