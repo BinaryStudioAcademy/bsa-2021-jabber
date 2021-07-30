@@ -5,9 +5,7 @@ import { HttpCode } from '~/common/enums/enums';
 
 const validateSchema = (schema: ValidationSchema): RequestHandler => {
   const handler: RequestHandler = (req, _res, next) => {
-    const { error } = schema.validate(req.body, {
-      abortEarly: false,
-    });
+    const { error } = schema.validate(req.body);
 
     if (error) {
       throw new HttpError({

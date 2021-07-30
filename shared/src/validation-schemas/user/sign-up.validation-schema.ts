@@ -12,7 +12,7 @@ const signUp = Joi.object<UserCreatePayload>({
     .max(SignUpValidationRule.FIRST_NAME_MAX_LENGTH)
     .required()
     .messages({
-      'any.required': SignUpValidationMessage.FIRST_NAME_REQUIRE,
+      'string.empty': SignUpValidationMessage.FIRST_NAME_REQUIRE,
       'string.min': SignUpValidationMessage.FIRST_NAME_MIN_LENGTH,
       'string.max': SignUpValidationMessage.FIRST_NAME_MAX_LENGTH,
     }),
@@ -21,7 +21,7 @@ const signUp = Joi.object<UserCreatePayload>({
     .max(SignUpValidationRule.LAST_NAME_MAX_LENGTH)
     .required()
     .messages({
-      'any.required': SignUpValidationMessage.LAST_NAME_REQUIRE,
+      'string.empty': SignUpValidationMessage.LAST_NAME_REQUIRE,
       'string.min': SignUpValidationMessage.LAST_NAME_MIN_LENGTH,
       'string.max': SignUpValidationMessage.LAST_NAME_MAX_LENGTH,
     }),
@@ -30,7 +30,7 @@ const signUp = Joi.object<UserCreatePayload>({
     .max(SignUpValidationRule.NICKNAME_MAX_LENGTH)
     .required()
     .messages({
-      'any.required': SignUpValidationMessage.NICKNAME_REQUIRE,
+      'string.empty': SignUpValidationMessage.NICKNAME_REQUIRE,
       'string.min': SignUpValidationMessage.NICKNAME_MIN_LENGTH,
       'string.max': SignUpValidationMessage.NICKNAME_MAX_LENGTH,
     }),
@@ -38,7 +38,7 @@ const signUp = Joi.object<UserCreatePayload>({
     .email({ tlds: { allow: false } })
     .required()
     .messages({
-      'any.required': SignUpValidationMessage.EMAIL_REQUIRE,
+      'string.empty': SignUpValidationMessage.EMAIL_REQUIRE,
       'string.email': SignUpValidationMessage.EMAIL_WRONG,
     }),
   [UserCreatePayloadKey.PASSWORD]: Joi.string()
@@ -46,13 +46,12 @@ const signUp = Joi.object<UserCreatePayload>({
     .max(SignUpValidationRule.PASSWORD_MAX_LENGTH)
     .required()
     .messages({
-      'any.required': SignUpValidationMessage.PASSWORD_REQUIRE,
+      'string.empty': SignUpValidationMessage.PASSWORD_REQUIRE,
       'string.min': SignUpValidationMessage.PASSWORD_MIN_LENGTH,
       'string.max': SignUpValidationMessage.PASSWORD_MAX_LENGTH,
     }),
   [UserCreatePayloadKey.BIRTHDATE]: Joi.date().raw().required().messages({
-    'any.required': SignUpValidationMessage.BIRTHDATE_REQUIRE,
-    'date.base': SignUpValidationMessage.BIRTHDATE_WRONG,
+    'date.base': SignUpValidationMessage.BIRTHDATE_REQUIRE,
   }),
 });
 

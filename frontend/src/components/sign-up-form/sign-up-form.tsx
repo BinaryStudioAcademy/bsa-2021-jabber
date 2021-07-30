@@ -13,11 +13,11 @@ import { Button, Input, Link } from 'components/common/common';
 import { DEFAULT_REGISTER_PAYLOAD } from './common/constants';
 import styles from './styles.module.scss';
 
-type SignUpFormProps = {
+type Props = {
   onSubmit: (payload: UserCreatePayload) => void;
 };
 
-const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit }) => {
+const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
   const { control, handleSubmit, errors } = useAppForm({
     validationSchema: signUpValidationSchema,
     defaultValues: DEFAULT_REGISTER_PAYLOAD,
@@ -30,7 +30,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit }) => {
   const isFormDisable = authStatus === DataStatus.PENDING;
 
   return (
-    <div className={styles.signUpPage}>
+    <div className={styles.signUp}>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <img
           src={logo}

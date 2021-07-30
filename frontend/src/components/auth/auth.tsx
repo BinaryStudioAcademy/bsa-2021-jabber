@@ -3,24 +3,21 @@ import { auth as authActions } from 'store/actions';
 import { UserCreatePayload } from 'common/types/types';
 import SignInForm from 'components/sign-in-form/sign-in-form';
 import SignUpForm from 'components/sign-up-form/sign-up-form';
-import { useDispatch } from 'hooks/hooks';
+import { useDispatch, useLocation } from 'hooks/hooks';
 
-type AuthProps = {
-  screen: AppRoute.SIGN_UP | AppRoute.SIGN_IN;
-};
-
-const Auth: React.FC<AuthProps> = ({ screen }) => {
+const Auth: React.FC = () => {
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
 
-  const handleSignUpSubmit = (data: UserCreatePayload): void => {
-    dispatch(authActions.signUp(data));
+  const handleSignUpSubmit = (payload: UserCreatePayload): void => {
+    dispatch(authActions.signUp(payload));
   };
 
   const handleSignInSubmit = (): void => {
     // handleSignInSubmit
   };
 
-  const getScreen = (): React.ReactElement | null => {
+  const getScreen = (screen: string): React.ReactElement | null => {
     switch (screen) {
       case AppRoute.SIGN_UP: {
         return <SignUpForm onSubmit={handleSignUpSubmit} />;
@@ -29,9 +26,11 @@ const Auth: React.FC<AuthProps> = ({ screen }) => {
         return <SignInForm onSubmit={handleSignInSubmit} />;
       }
     }
+
+    return null;
   };
 
-  return <>{getScreen()}</>;
+  return <>{getScreen(pathname)}</>;
 };
 
 export default Auth;

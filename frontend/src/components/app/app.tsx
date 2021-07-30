@@ -12,12 +12,11 @@ const App: React.FC = () => (
   <>
     <Header />
     <Switch>
-      <Route path={AppRoute.SIGN_UP} exact>
-        <Auth screen={AppRoute.SIGN_UP} />
-      </Route>
-      <Route path={AppRoute.SIGN_IN} exact>
-        <Auth screen={AppRoute.SIGN_IN} />
-      </Route>
+      <Route
+        path={[AppRoute.SIGN_UP, AppRoute.SIGN_IN]}
+        component={Auth}
+        exact
+      />
       <Route path={AppRoute.ANY} component={NotFound} />
     </Switch>
     <Toaster />

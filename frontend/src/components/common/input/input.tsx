@@ -1,3 +1,4 @@
+import { ErrorMessage } from '@hookform/error-message';
 import {
   Control,
   FieldErrors,
@@ -21,6 +22,7 @@ const Input: React.FC<Props> = ({
   label,
   name,
   control,
+  errors,
   placeholder = '',
   type = InputType.TEXT,
 }) => {
@@ -35,6 +37,9 @@ const Input: React.FC<Props> = ({
         placeholder={placeholder}
         className={styles.input}
       />
+      <span className={styles.errorWrapper}>
+        <ErrorMessage errors={errors} name={name} />
+      </span>
     </label>
   );
 };
