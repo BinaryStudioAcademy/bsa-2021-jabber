@@ -40,7 +40,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit }) => {
           loading="lazy"
           alt="Jabber logo"
         />
-        <h3 className={styles.formTitle}>Sign Up</h3>
+        <h1 className={styles.formTitle}>Sign Up</h1>
         <div className={styles.formSubtitle}>
           Already have an account?
           <Link to={AppRoute.SIGN_IN}>Sign In</Link>
