@@ -13,8 +13,8 @@ const SignUpValidationMessage = {
   EMAIL_REQUIRE: 'Email is required',
   EMAIL_WRONG: 'Email is wrong',
   PASSWORD_REQUIRE: 'Password is required',
-  PASSWORD_MIN_LENGTH: `Password must be at least ${SignUpValidationRule.PASSWORD_MAX_LENGTH} characters long`,
-  PASSWORD_MAX_LENGTH: `Password must be at most ${SignUpValidationRule.PASSWORD_MIN_LENGTH} characters long`,
+  PASSWORD_MIN_LENGTH: `Password must be at least ${SignUpValidationRule.PASSWORD_MIN_LENGTH} characters long`,
+  PASSWORD_MAX_LENGTH: `Password must be at most ${SignUpValidationRule.PASSWORD_MAX_LENGTH} characters long`,
   BIRTHDATE_REQUIRE: 'Birthdate is required',
 } as const;
 
