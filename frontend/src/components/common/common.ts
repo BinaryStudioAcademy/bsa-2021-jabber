@@ -6,3 +6,4 @@ export { default as Toaster } from './toaster/toaster';
 export { default as Header } from './header/header';
 export { default as Checkbox } from './checkbox/checkbox';
 export { default as NotFound } from './not-found/not-found';
+export { default as PrivateRoute } from './privateRoute/privateRoute';
