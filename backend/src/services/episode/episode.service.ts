@@ -16,6 +16,10 @@ class Episode {
     return this.#episodeRepository.getAll();
   }
 
+  public getById(id: string): Promise<TEpisode> {
+    return this.#episodeRepository.getById(id);
+  }
+
   public create(payload: EpisodeCreatePayload): Promise<TEpisode> {
     return this.#episodeRepository.create(payload);
   }

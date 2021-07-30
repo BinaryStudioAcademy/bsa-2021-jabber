@@ -20,6 +20,22 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
     }),
   );
 
+  episodeRouter.get(
+    EpisodesApiPath.ID,
+    handleAsyncApi(async (req, res) => {
+      return res.json(await episodeService.getById(req.params.id)).status(HttpCode.OK);
+    }),
+  );
+
+  episodeRouter.post(
+    EpisodesApiPath.ROOT,
+    handleAsyncApi(async (req, res) => {
+      const episode = await episodeService.create(req.body);
+
+      return res.json(episode).status(HttpCode.CREATED);
+    }),
+  );
+
   return episodeRouter;
 };
 
