@@ -1,9 +1,12 @@
-enum SignInValidationMessage {
-  EMAIL_NOT_VALID = 'email is not valid',
-  PASSWORD_NOT_VALID = 'password is not valid',
-  PASSWORD_MIN = 'length password must be at least 3 characters long',
-  EMAIL_REQUIRED = 'email is required',
-  PASSWORD_REQUIRED = 'password is required',
-}
+import {SignInValidationRule} from './sign-in-validation-rule.enam'
+
+const SignInValidationMessage = {
+  EMAIL_WRONG: 'Email is wrong',
+  EMAIL_REQUIRED: 'Email is required',
+  PASSWORD_WRONG: 'Password is wrong',
+  PASSWORD_MIN_LENGTH: `Password must be at least ${ SignInValidationRule.PASSWORD_MIN_LENGTH } characters long`,
+  PASSWORD_MAX_LENGTH: `Password must be at most ${ SignInValidationRule.PASSWORD_MAX_LENGTH } characters long`,
+  PASSWORD_REQUIRED: 'Password is required',
+} as const;
 
 export { SignInValidationMessage };

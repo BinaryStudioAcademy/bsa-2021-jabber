@@ -1,21 +1,23 @@
 import * as Joi from 'joi';
 import { UserSignInPayload } from '../../common/types/types';
-import {SignInValidationMessage, UserSignInPayloadKey} from "~/common/enums/enums";
+import {SignInValidationMessage, SignInValidationRule, UserSignInPayloadKey} from "~/common/enums/enums";
 
 const SigninSchema = Joi.object<UserSignInPayload>({
   [UserSignInPayloadKey.EMAIL]: Joi.string()
     .email({ tlds: { allow: false } })
     .required()
     .messages({
-      'string.email': SignInValidationMessage.EMAIL_NOT_VALID,
+      'string.email': SignInValidationMessage.EMAIL_WRONG,
       'any.required': SignInValidationMessage.EMAIL_REQUIRED,
     }),
   [UserSignInPayloadKey.PASSWORD]: Joi.string()
-    .min(3)
+    .min(SignInValidationRule.PASSWORD_MIN_LENGTH)
+    .max(SignInValidationRule.PASSWORD_MAX_LENGTH)
     .required()
     .messages({
-      'string.base': SignInValidationMessage.PASSWORD_NOT_VALID,
-      'string.min': SignInValidationMessage.PASSWORD_MIN,
+      'string.base': SignInValidationMessage.EMAIL_WRONG,
+      'string.min': SignInValidationMessage.PASSWORD_MIN_LENGTH,
+      'string.max': SignInValidationMessage.PASSWORD_MAX_LENGTH,
       'any.required': SignInValidationMessage.PASSWORD_REQUIRED,
     })
 });
