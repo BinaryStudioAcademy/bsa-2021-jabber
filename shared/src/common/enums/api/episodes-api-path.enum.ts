@@ -1,6 +1,6 @@
 enum EpisodesApiPath {
   ROOT = '/',
-  ID = '/:id',
+  $ID = '/:id',
 }
 
 export { EpisodesApiPath };
