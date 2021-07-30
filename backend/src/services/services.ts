@@ -1,11 +1,16 @@
 import { LogLevel } from '~/common/enums/enums';
 import { AppAsyncStorage } from '~/common/types/types';
-import { user as userRepository, podcast as podcastRepository } from '~/data/repositories/repositories';
+import {
+  user as userRepository,
+  podcast as podcastRepository,
+  episode as episodeRepository,
+} from '~/data/repositories/repositories';
 import { AsyncLocalStorage } from './async-storage/async-storage.service';
 import { Logger } from './logger/logger.service';
 import { Auth } from './auth/auth.service';
 import { User } from './user/user.service';
 import { Podcast } from './podcast/podcast.service';
+import { Episode } from './episode/episode.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -26,4 +31,15 @@ const podcast = new Podcast({
   podcastRepository,
 });
 
-export { auth, appAsyncStorage, logger, user, podcast };
+const episode = new Episode({
+  episodeRepository,
+});
+
+export {
+  auth,
+  appAsyncStorage,
+  logger,
+  user,
+  episode,
+  podcast,
+};
