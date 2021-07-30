@@ -1,45 +1,33 @@
-import { useForm, FieldValues } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import logo from 'assets/img/logo-dark.svg';
 import { UserCreatePayload } from 'common/types/types';
 import {
   AppRoute,
   ButtonType,
   DataStatus,
-  InputPlaceholder,
   InputType,
-  LabelNames,
   UserCreatePayloadKey,
 } from 'common/enums/enums';
-import { SignupSchema } from 'validation-schemas/validation-schemas';
-import { useAppSelector, useDispatch } from 'hooks/hooks';
-import { auth as authActions } from 'store/actions';
+import { signUp as signUpValidationSchema } from 'validation-schemas/validation-schemas';
+import { useAppForm, useAppSelector } from 'hooks/hooks';
 import { Button, Input, Link } from 'components/common/common';
 import { DEFAULT_REGISTER_PAYLOAD } from './common/constants';
 import styles from './styles.module.scss';
 
-const SignUp: React.FC = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FieldValues>({
+type SignUpFormProps = {
+  onSubmit: (payload: UserCreatePayload) => void;
+};
+
+const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit }) => {
+  const { control, handleSubmit, errors } = useAppForm({
+    validationSchema: signUpValidationSchema,
     defaultValues: DEFAULT_REGISTER_PAYLOAD,
-    resolver: joiResolver(SignupSchema),
-    mode: 'onSubmit',
   });
 
   const { authStatus } = useAppSelector(({ auth }) => ({
     authStatus: auth.dataStatus,
   }));
 
-  const dispatch = useDispatch();
-
   const isFormDisable = authStatus === DataStatus.PENDING;
-
-  const onSubmit = (data: UserCreatePayload): void => {
-    dispatch(authActions.signUp(data));
-  };
 
   return (
     <div className={styles.signUpPage}>
@@ -47,6 +35,8 @@ const SignUp: React.FC = () => {
         <img
           src={logo}
           className={styles.formLogo}
+          width="140"
+          height="50"
           loading="lazy"
           alt="Jabber logo"
         />
@@ -57,45 +47,45 @@ const SignUp: React.FC = () => {
         </div>
         <fieldset disabled={isFormDisable} className={styles.fieldset}>
           <Input
-            label={LabelNames.FIRST_NAME}
-            placeholder={InputPlaceholder.FIRST_NAME}
+            label="First name"
+            placeholder="Enter your name"
             name={UserCreatePayloadKey.FIRST_NAME}
             control={control}
             errors={errors}
           />
           <Input
-            label={LabelNames.LAST_NAME}
-            placeholder={InputPlaceholder.LAST_NAME}
+            label="Last name"
+            placeholder="Enter your last name"
             name={UserCreatePayloadKey.LAST_NAME}
             control={control}
             errors={errors}
           />
           <Input
-            label={LabelNames.NICKNAME}
-            placeholder={InputPlaceholder.NICKNAME}
+            label="Nickname"
+            placeholder="Enter your nickname"
             name={UserCreatePayloadKey.NICKNAME}
             control={control}
             errors={errors}
           />
           <Input
             type={InputType.EMAIL}
-            label={LabelNames.EMAIL}
-            placeholder={InputPlaceholder.EMAIL}
+            label="Email"
+            placeholder="Enter your email"
             name={UserCreatePayloadKey.EMAIL}
             control={control}
             errors={errors}
           />
           <Input
             type={InputType.PASSWORD}
-            label={LabelNames.PASSWORD}
-            placeholder={InputPlaceholder.PASSWORD}
+            label="Password"
+            placeholder="Enter your password"
             name={UserCreatePayloadKey.PASSWORD}
             control={control}
             errors={errors}
           />
           <Input
             type={InputType.DATE}
-            label={LabelNames.BIRTHDATE}
+            label="Birthdate"
             name={UserCreatePayloadKey.BIRTHDATE}
             control={control}
             errors={errors}
@@ -107,4 +97,4 @@ const SignUp: React.FC = () => {
   );
 };
 
-export default SignUp;
+export default SignUpForm;

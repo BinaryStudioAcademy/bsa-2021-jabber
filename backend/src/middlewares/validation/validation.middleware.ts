@@ -1,9 +1,9 @@
 import { RequestHandler } from 'express';
-import { Schema } from '~/common/types/types';
+import { ValidationSchema } from '~/common/types/types';
 import { HttpError } from '~/exceptions/exceptions';
 import { HttpCode } from '~/common/enums/enums';
 
-export const validate = (schema: Schema): RequestHandler => {
+const validateSchema = (schema: ValidationSchema): RequestHandler => {
   const handler: RequestHandler = (req, _res, next) => {
     const { error } = schema.validate(req.body, {
       abortEarly: false,
@@ -21,3 +21,5 @@ export const validate = (schema: Schema): RequestHandler => {
 
   return handler;
 };
+
+export { validateSchema };

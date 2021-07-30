@@ -1,4 +1,5 @@
 import { AppRoute } from 'common/enums/enums';
+import Auth from 'components/auth/auth';
 import {
   Switch,
   Route,
@@ -6,15 +7,17 @@ import {
   Header,
   NotFound,
 } from 'components/common/common';
-import SignUp from 'components/sign-up/sign-up';
-import SignIn from 'components/sign-in/sign-in';
 
 const App: React.FC = () => (
   <>
     <Header />
     <Switch>
-      <Route path={AppRoute.SIGN_IN} component={SignIn} exact />
-      <Route path={AppRoute.SIGN_UP} component={SignUp} exact />
+      <Route path={AppRoute.SIGN_UP} exact>
+        <Auth screen={AppRoute.SIGN_UP} />
+      </Route>
+      <Route path={AppRoute.SIGN_IN} exact>
+        <Auth screen={AppRoute.SIGN_IN} />
+      </Route>
       <Route path={AppRoute.ANY} component={NotFound} />
     </Switch>
     <Toaster />

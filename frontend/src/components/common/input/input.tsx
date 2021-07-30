@@ -5,13 +5,13 @@ import {
   Path,
   FieldValues,
 } from 'react-hook-form';
-import { InputType, LabelNames, InputPlaceholder } from 'common/enums/enums';
+import { InputType } from 'common/enums/enums';
 import styles from './styles.module.scss';
 
 type Props = {
   type?: InputType;
-  placeholder?: InputPlaceholder;
-  label: LabelNames;
+  placeholder?: string;
+  label: string;
   name: Path<FieldValues>;
   control: Control;
   errors: FieldErrors;
