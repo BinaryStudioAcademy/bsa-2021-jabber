@@ -1,3 +1,4 @@
+import { ErrorMessage } from '@hookform/error-message';
 import {
   Control,
   FieldErrors,
@@ -11,16 +12,17 @@ import styles from './styles.module.scss';
 type Props = {
   type?: InputType;
   placeholder?: string;
-  label?: string;
+  label: string;
   name: Path<FieldValues>;
   control: Control;
   errors: FieldErrors;
 };
 
 const Input: React.FC<Props> = ({
-  label = '',
+  label,
   name,
   control,
+  errors,
   placeholder = '',
   type = InputType.TEXT,
 }) => {
@@ -35,6 +37,9 @@ const Input: React.FC<Props> = ({
         placeholder={placeholder}
         className={styles.input}
       />
+      <span className={styles.errorWrapper}>
+        <ErrorMessage errors={errors} name={name} />
+      </span>
     </label>
   );
 };

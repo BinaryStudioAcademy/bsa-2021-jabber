@@ -3,6 +3,7 @@ enum TableName {
   EPISODES = 'episodes',
   MIGRATIONS = 'migrations',
   PODCASTS = 'podcasts',
+  COMMENTS = 'comments',
 }
 
 export { TableName };
