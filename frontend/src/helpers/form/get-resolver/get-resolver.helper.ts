@@ -1,9 +1,9 @@
 import { Resolver } from 'react-hook-form';
-import { Schema } from 'common/types/schema/schema';
+import { ValidationSchema } from 'common/types/schema/schema';
 import { formatValidationError } from 'helpers/validation/validation';
 
 export const getResolver = <FormPayload>(
-  shema: Schema,
+  shema: ValidationSchema,
 ): Resolver<FormPayload> => {
   const resolver: Resolver<FormPayload> = (data) => {
     const { error, value } = shema.validate(data, {

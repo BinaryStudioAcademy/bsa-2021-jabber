@@ -1,11 +1,12 @@
 import * as Joi from 'joi';
 import { UserSignInPayload } from '../../common/types/types';
+import {UserCreatePayloadKey} from "~/common/enums/enums";
 
 const SigninSchema = Joi.object<UserSignInPayload>({
-  email: Joi.string()
+  [UserCreatePayloadKey.EMAIL]: Joi.string()
     .email({ tlds: { allow: false } })
     .required(),
-  password: Joi.string().min(3).required(),
+  [UserCreatePayloadKey.PASSWORD]: Joi.string().min(3).required(),
 });
 
 export { SigninSchema };

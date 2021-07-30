@@ -1,1 +1,1 @@
-export type { Schema } from 'jabber-shared/common/types/types';
+export type { ValidationSchema } from 'jabber-shared/common/types/types';
