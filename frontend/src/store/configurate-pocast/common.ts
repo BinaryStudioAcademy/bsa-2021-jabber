@@ -1,5 +1,5 @@
 enum ActionType {
-  POST_PODCAST = 'podcast/post-podcast',
+  POST_PODCAST = 'configurate/create-podcast',
 }
 
 export { ActionType };

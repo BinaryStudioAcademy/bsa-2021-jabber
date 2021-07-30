@@ -1,1 +1,1 @@
-export { createPodcastSchema } from './podcast/podcast';
+export { podcast } from './podcast/podcast';

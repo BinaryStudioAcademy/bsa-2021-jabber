@@ -16,7 +16,7 @@ const App: React.FC = () => (
     <Switch>
       <Route path={AppRoute.SIGN_IN} component={SignIn} exact />
       <Route path={AppRoute.SIGN_UP} component={SignUp} exact />
-      <Route path={AppRoute.CREATE_PODCAST} component={CreatePodcast} exact />
+      <Route path={AppRoute.EDIT_PODCAST} component={CreatePodcast} exact />
       <Route path={AppRoute.ANY} component={NotFound} />
     </Switch>
     <Toaster />

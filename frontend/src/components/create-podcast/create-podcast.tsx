@@ -1,13 +1,13 @@
-import { useForm, FieldValues } from 'react-hook-form';
+import { FieldValues } from 'react-hook-form';
 import { PodcastCreatePayload } from 'common/types/types';
+import { PodcastCreatePayloadKey } from 'common/enums/enums';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { ButtonType, DataStatus } from 'common/enums/enums';
 import { podcast as podcastActions } from 'store/actions';
-import { useAppSelector, useDispatch } from 'hooks/hooks';
+import { useAppSelector, useDispatch, useForm } from 'hooks/hooks';
 import { Input, Button } from 'components/common/common';
 import styles from './styles.module.scss';
-import { PodcastCreatePayloadKey } from 'jabber-shared/common/enums/enums';
-import { createPodcastSchema } from 'validation-schemas/validation-schemas';
+import { podcast as podcastSchema } from 'validation-schemas/validation-schemas';
 import logoCut from 'assets/img/logo-cut.svg';
 
 const CreatePodcast: React.FC = () => {
@@ -20,7 +20,7 @@ const CreatePodcast: React.FC = () => {
       [PodcastCreatePayloadKey.NAME]: '',
       [PodcastCreatePayloadKey.USER_ID]: 7,
     },
-    resolver: joiResolver(createPodcastSchema),
+    resolver: joiResolver(podcastSchema),
     mode: 'onSubmit',
   });
 
