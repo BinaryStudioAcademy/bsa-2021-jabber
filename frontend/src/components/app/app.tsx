@@ -8,6 +8,7 @@ import {
 } from 'components/common/common';
 import SignUp from 'components/sign-up/sign-up';
 import SignIn from 'components/sign-in/sign-in';
+import Loader from '../common/loader/loader';
 
 const App: React.FC = () => (
   <>
@@ -17,6 +18,7 @@ const App: React.FC = () => (
       <Route path={AppRoute.SIGN_UP} component={SignUp} exact />
       <Route path={AppRoute.ANY} component={NotFound} />
     </Switch>
+    <Loader size="large" />
     <Toaster />
   </>
 );
