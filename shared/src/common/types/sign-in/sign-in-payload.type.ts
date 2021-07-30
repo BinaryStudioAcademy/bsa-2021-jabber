@@ -1,6 +1,8 @@
+import { UserSignInPayloadKey } from "~/common/enums/enums";
+
 type UserSignInPayload = {
-  email: string;
-  password: string;
+  [UserSignInPayloadKey.EMAIL]: string;
+  [UserSignInPayloadKey.PASSWORD]: string;
 };
 
 export type { UserSignInPayload };
