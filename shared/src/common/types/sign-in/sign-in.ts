@@ -1,1 +1,1 @@
-export type { SignInPayload } from './sign-in-payload.type';
+export type { UserSignInPayload } from './sign-in-payload.type';

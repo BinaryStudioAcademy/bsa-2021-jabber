@@ -4,7 +4,7 @@ import {
   ContentType,
   HttpMethod,
 } from 'common/enums/enums';
-import { User, UserCreatePayload, SignInPayload } from 'common/types/user/user';
+import { User, UserCreatePayload, UserSignInPayload } from 'common/types/user/user';
 import { Http } from 'services/http/http.service';
 
 type Constructor = {
@@ -32,7 +32,7 @@ class AuthApi {
     );
   }
 
-  public signIn(payload: SignInPayload): Promise<User> {
+  public signIn(payload: UserSignInPayload): Promise<User> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.AUTH}${AuthApiPath.SIGN_IN}`,
       {

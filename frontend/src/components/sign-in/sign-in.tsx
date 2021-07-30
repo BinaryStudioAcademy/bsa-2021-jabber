@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { SignInPayload } from 'common/types/types';
+import { UserSignInPayload } from 'common/types/types';
 import { AppRoute, ButtonType, DataStatus, InputType, LabelNames, UserCreatePayloadKey } from 'common/enums/enums';
 import { SigninSchema } from 'validation-schemas/validation-schemas';
 import { useAppSelector, useDispatch } from 'hooks/hooks';
@@ -10,10 +10,10 @@ import styles from './styles.module.scss';
 import logo from 'assets/img/logo-dark.svg';
 import { Button, Input } from '../common/common';
 
-const resolver = getResolver<SignInPayload>(SigninSchema);
+const resolver = getResolver<UserSignInPayload>(SigninSchema);
 
 const SignIn: React.FC = () => {
-  const { register, handleSubmit } = useForm<SignInPayload>({ resolver });
+  const { register, handleSubmit } = useForm<UserSignInPayload>({ resolver });
 
   const { authStatus } = useAppSelector(({ auth }) => ({
     authStatus: auth.dataStatus,
@@ -23,7 +23,7 @@ const SignIn: React.FC = () => {
 
   const isFormDisable = authStatus === DataStatus.PENDING;
 
-  const onSubmit = (data: SignInPayload): void => {
+  const onSubmit = (data: UserSignInPayload): void => {
     dispatch(authActions.signIn(data));
   };
 

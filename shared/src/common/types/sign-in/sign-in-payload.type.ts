@@ -3,4 +3,4 @@ type UserSignInPayload = {
   password: string;
 };
 
-export type { SignInPayload };
+export type { UserSignInPayload };
