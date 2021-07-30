@@ -1,4 +1,4 @@
-import { Knex } from "knex";
+import { Knex } from 'knex';
 import { getFormattedISODate } from '~/helpers/helpers';
 
 const TABLE_NAME = 'comments';
