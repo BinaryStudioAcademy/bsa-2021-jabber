@@ -9,4 +9,7 @@
 
 .contentLeft {
   flex-grow: 1;
+  .fieldset {
+    border: none;
+  }
 }

@@ -21,7 +21,7 @@ class PodcastApi {
     this.#apiPrefix = apiPrefix;
   }
 
-  public postPodcast(payload: PodcastCreatePayload): Promise<Podcast> {
+  public create(payload: PodcastCreatePayload): Promise<Podcast> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}`,
       {

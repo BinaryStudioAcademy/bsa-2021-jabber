@@ -1,11 +1,14 @@
 import { useForm, FieldValues } from 'react-hook-form';
 import { PodcastCreatePayload } from 'common/types/types';
-// import { joiResolver } from '@hookform/resolvers/joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { ButtonType, DataStatus } from 'common/enums/enums';
 import { podcast as podcastActions } from 'store/actions';
 import { useAppSelector, useDispatch } from 'hooks/hooks';
 import { Input, Button } from 'components/common/common';
 import styles from './styles.module.scss';
+import { PodcastCreatePayloadKey } from 'jabber-shared/common/enums/enums';
+import { createPodcastSchema } from 'validation-schemas/validation-schemas';
+import logoCut from 'assets/img/logo-cut.svg';
 
 const CreatePodcast: React.FC = () => {
   const {
@@ -13,23 +16,23 @@ const CreatePodcast: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FieldValues>({
-    defaultValues: { name: '', userId: 2 },
-
-    // resolver: joiResolver(SignupSchema),
+    defaultValues: {
+      [PodcastCreatePayloadKey.NAME]: '',
+      [PodcastCreatePayloadKey.USER_ID]: 7,
+    },
+    resolver: joiResolver(createPodcastSchema),
     mode: 'onSubmit',
   });
 
-  const { createPodcastStatus } = useAppSelector(({ podcast }) => ({
-    createPodcastStatus: podcast.dataStatus,
+  const { createPodcastStatus } = useAppSelector(({ configuratePodcast }) => ({
+    createPodcastStatus: configuratePodcast.dataStatus,
   }));
   const dispatch = useDispatch();
 
   const isFormDisabled = createPodcastStatus === DataStatus.PENDING;
 
   const onSubmit = (data: PodcastCreatePayload): void => {
-    // eslint-disable-next-line no-console
-    console.log(data);
-    dispatch(podcastActions.postPodcast(data));
+    dispatch(podcastActions.create(data));
   };
 
   return (
@@ -40,7 +43,7 @@ const CreatePodcast: React.FC = () => {
       >
         <div className={styles.content}>
           <div className={styles.contentLeft}>
-            <fieldset disabled={isFormDisabled}>
+            <fieldset disabled={isFormDisabled} className={styles.fieldset}>
               <p>
                 <Input
                   label="Name"
@@ -52,7 +55,7 @@ const CreatePodcast: React.FC = () => {
             </fieldset>
           </div>
           <div>
-            <img src={'https://via.placeholder.com/150'} />
+            <img src={logoCut} />
           </div>
         </div>
         <p>
