@@ -5,3 +5,4 @@ export { HttpCode, HttpHeader, HttpMethod } from './http/http';
 export { UserCreatePayloadKey } from './user/user';
 export { PodcastCreatePayloadKey } from './podcast/podcast';
 export { EpisodeCreatePayloadKey } from './episode/episode';
+export { CommentCreatePayloadKey } from './comment/comment';
