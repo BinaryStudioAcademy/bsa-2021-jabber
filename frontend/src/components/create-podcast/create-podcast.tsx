@@ -1,78 +1,64 @@
+import { useForm, FieldValues } from 'react-hook-form';
 import { PodcastCreatePayload } from 'common/types/types';
-import { DataStatus } from 'common/enums/enums';
+// import { joiResolver } from '@hookform/resolvers/joi';
+import { ButtonType, DataStatus } from 'common/enums/enums';
 import { podcast as podcastActions } from 'store/actions';
-import { useAppSelector, useDispatch, useState } from 'hooks/hooks';
+import { useAppSelector, useDispatch } from 'hooks/hooks';
 import { Input, Button } from 'components/common/common';
 import styles from './styles.module.scss';
 
 const CreatePodcast: React.FC = () => {
-  const [podcastCreatePayload, setPodcastCreatePayload] =
-    useState<PodcastCreatePayload>({
-      name: '',
-      userId: 7,
-    });
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FieldValues>({
+    defaultValues: { name: '', userId: 2 },
+
+    // resolver: joiResolver(SignupSchema),
+    mode: 'onSubmit',
+  });
 
   const { createPodcastStatus } = useAppSelector(({ podcast }) => ({
     createPodcastStatus: podcast.dataStatus,
   }));
   const dispatch = useDispatch();
 
-  const isFormDisable = createPodcastStatus === DataStatus.PENDING;
+  const isFormDisabled = createPodcastStatus === DataStatus.PENDING;
 
-  const handlePostPodcast = (): void => {
-    dispatch(podcastActions.postPodcast(podcastCreatePayload));
-  };
-
-  const handleChange = ({
-    target,
-  }: React.ChangeEvent<HTMLInputElement>): void => {
-    setPodcastCreatePayload({
-      ...podcastCreatePayload,
-      [target.name]: target.value,
-    });
+  const onSubmit = (data: PodcastCreatePayload): void => {
+    // eslint-disable-next-line no-console
+    console.log(data);
+    dispatch(podcastActions.postPodcast(data));
   };
 
   return (
     <div>
-      <div className={styles.createPodcastWrapper}>
+      <form
+        className={styles.createPodcastWrapper}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className={styles.content}>
           <div className={styles.contentLeft}>
-            <p>
-              <Input
-                label="Name"
-                value={podcastCreatePayload.name}
-                name="name"
-                isDisabled={isFormDisable}
-                onChange={handleChange}
-              />
-            </p>
-            <p>
-              <Input
-                label="Description"
-                value={''}
-                name="description"
-                isDisabled={isFormDisable}
-                onChange={handleChange}
-              />
-            </p>
-            <p>
-              <Input
-                label="Genre"
-                value={''}
-                name="genre"
-                isDisabled={isFormDisable}
-                onChange={handleChange}
-              />
-            </p>
+            <fieldset disabled={isFormDisabled}>
+              <p>
+                <Input
+                  label="Name"
+                  name="name"
+                  control={control}
+                  errors={errors}
+                />
+              </p>
+            </fieldset>
           </div>
           <div>
             <img src={'https://via.placeholder.com/150'} />
           </div>
         </div>
         <p>
-          <Button label="Save" onClick={handlePostPodcast} />
+          <Button label="Save" type={ButtonType.SUBMIT} />
         </p>
-      </div>
+      </form>
     </div>
   );
 };

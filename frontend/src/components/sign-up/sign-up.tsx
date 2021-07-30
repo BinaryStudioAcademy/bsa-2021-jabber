@@ -1,43 +1,43 @@
-import { UserCreatePayload } from 'common/types/types';
-import {
-  ButtonType,
-  DataStatus,
-  InputType,
-  UserCreatePayloadKey,
-} from 'common/enums/enums';
-import { auth as authActions } from 'store/actions';
-import { useAppSelector, useDispatch, useState } from 'hooks/hooks';
-import { Input, Button } from 'components/common/common';
-import { DEFAULT_REGISTER_PAYLOAD } from './common/constants';
+// import { UserCreatePayload } from 'common/types/types';
+// import {
+//   ButtonType,
+//   DataStatus,
+//   InputType,
+//   UserCreatePayloadKey,
+// } from 'common/enums/enums';
+// import { auth as authActions } from 'store/actions';
+// import { useAppSelector, useDispatch, useState } from 'hooks/hooks';
+// import { Input, Button } from 'components/common/common';
+// import { DEFAULT_REGISTER_PAYLOAD } from './common/constants';
 
 const SignUp: React.FC = () => {
-  const [registerPayload, setRegisterPayload] = useState<UserCreatePayload>(
-    DEFAULT_REGISTER_PAYLOAD,
-  );
-  const { authStatus } = useAppSelector(({ auth }) => ({
-    authStatus: auth.dataStatus,
-  }));
-  const dispatch = useDispatch();
+  // const [registerPayload, setRegisterPayload] = useState<UserCreatePayload>(
+  //   DEFAULT_REGISTER_PAYLOAD,
+  // );
+  // const { authStatus } = useAppSelector(({ auth }) => ({
+  //   authStatus: auth.dataStatus,
+  // }));
+  // const dispatch = useDispatch();
 
-  const isFormDisable = authStatus === DataStatus.PENDING;
+  // const isFormDisable = authStatus === DataStatus.PENDING;
 
-  const handleSubmit = (evt: React.FormEvent): void => {
-    evt.preventDefault();
-    dispatch(authActions.signUp(registerPayload));
-  };
+  // const handleSubmit = (evt: React.FormEvent): void => {
+  //   evt.preventDefault();
+  //   dispatch(authActions.signUp(registerPayload));
+  // };
 
-  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>): void => {
-    setRegisterPayload({
-      ...registerPayload,
-      [target.name]: target.value,
-    });
-  };
+  // const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>): void => {
+  //   setRegisterPayload({
+  //     ...registerPayload,
+  //     [target.name]: target.value,
+  //   });
+  // };
 
   return (
     <section>
       <h1>Sign Up ♊️</h1>
 
-      <form onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}>
         <p>
           <Input
             label="First name"
@@ -92,7 +92,7 @@ const SignUp: React.FC = () => {
         <p>
           <Button type={ButtonType.SUBMIT} label="Sign Up" />
         </p>
-      </form>
+      </form> */}
     </section>
   );
 };

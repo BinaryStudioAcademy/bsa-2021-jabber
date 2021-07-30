@@ -1,40 +1,42 @@
+import {
+  Control,
+  FieldErrors,
+  useController,
+  Path,
+  FieldValues,
+} from 'react-hook-form';
 import { InputType } from 'common/enums/enums';
 import styles from './styles.module.scss';
 
 type Props = {
-  label: string;
-  value: string;
-  onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
-  name: string;
   type?: InputType;
-  isRequire?: boolean;
-  isDisabled?: boolean;
   placeholder?: string;
+  label?: string;
+  name: Path<FieldValues>;
+  control: Control;
+  errors: FieldErrors;
 };
 
 const Input: React.FC<Props> = ({
-  type = InputType.TEXT,
-  isRequire = false,
-  isDisabled = false,
-  placeholder = '',
-  label,
-  value,
+  label = '',
   name,
-  onChange,
-}) => (
-  <label className={styles.inputWrapper}>
-    <span className={styles.label}>{label}</span>
-    <input
-      className={styles.input}
-      type={type}
-      value={value}
-      name={name}
-      onChange={onChange}
-      required={isRequire}
-      disabled={isDisabled}
-      placeholder={placeholder}
-    />
-  </label>
-);
+  control,
+  placeholder = '',
+  type = InputType.TEXT,
+}) => {
+  const { field } = useController({ name, control });
+
+  return (
+    <label className={styles.inputWrapper}>
+      <span className={styles.label}>{label}</span>
+      <input
+        {...field}
+        type={type}
+        placeholder={placeholder}
+        className={styles.input}
+      />
+    </label>
+  );
+};
 
 export default Input;

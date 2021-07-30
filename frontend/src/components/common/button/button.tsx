@@ -1,6 +1,5 @@
 import { ButtonColor, ButtonStyle, ButtonType } from 'common/enums/enums';
 import { getAllowedClasses } from 'helpers/dom/dom';
-import React from 'react';
 import styles from './styles.module.scss';
 
 type Props = {
