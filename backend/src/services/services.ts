@@ -40,7 +40,6 @@ const episode = new Episode({
   episodeRepository,
 });
 
-
 const comment = new Comment({
   commentRepository,
 });
