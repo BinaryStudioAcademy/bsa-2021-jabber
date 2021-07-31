@@ -1,6 +1,6 @@
 import * as Joi from 'joi';
 import { UserSignInPayload } from '~/common/types/types';
-import {SignInValidationMessage, SignInValidationRule, UserSignInPayloadKey} from "~/common/enums/enums";
+import { SignInValidationMessage, SignInValidationRule, UserSignInPayloadKey } from '~/common/enums/enums';
 
 const signIn = Joi.object<UserSignInPayload>({
   [UserSignInPayloadKey.EMAIL]: Joi.string()
@@ -19,7 +19,7 @@ const signIn = Joi.object<UserSignInPayload>({
       'string.min': SignInValidationMessage.PASSWORD_MIN_LENGTH,
       'string.max': SignInValidationMessage.PASSWORD_MAX_LENGTH,
       'any.required': SignInValidationMessage.PASSWORD_REQUIRED,
-    })
+    }),
 });
 
 export { signIn };

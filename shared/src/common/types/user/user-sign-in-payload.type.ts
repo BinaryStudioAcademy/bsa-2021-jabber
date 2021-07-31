@@ -1,4 +1,4 @@
-import { UserSignInPayloadKey } from "~/common/enums/enums";
+import { UserSignInPayloadKey } from '~/common/enums/enums';
 
 type UserSignInPayload = {
   [UserSignInPayloadKey.EMAIL]: string;

@@ -1,4 +1,4 @@
-import {SignInValidationRule} from './sign-in-validation-rule.enam'
+import { SignInValidationRule } from './sign-in-validation-rule.enam';
 
 const SignInValidationMessage = {
   EMAIL_WRONG: 'Email is wrong',
