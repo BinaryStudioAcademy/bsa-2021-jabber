@@ -35,7 +35,7 @@ class Auth {
 
     const isCryptsEqual = await checkIsCryptsEqual (password, user.password);
     if (!isCryptsEqual) {
-      throw new HttpError({status: HttpCode.BAD_REQUEST, message: ErrorMessage.WRONG_PASSWORD});
+      throw new HttpError({ status: HttpCode.BAD_REQUEST, message: ErrorMessage.WRONG_PASSWORD });
     }
 
     return user;
