@@ -1,6 +1,6 @@
 import { UserCreatePayload, User, SignInPayload } from '~/common/types/types';
 import { user as userRep } from '~/data/repositories/repositories';
-import { encrypt, cryptCompare } from '~/helpers/helpers';
+import { encrypt, checkIsCryptsEqual  } from '~/helpers/helpers';
 import { HttpError } from "~/exceptions/exceptions";
 import { HttpCode } from "~/common/enums/enums";
 
@@ -28,8 +28,8 @@ class Auth {
     const { password, email } = payload;
     const user = await this.#userRepository.getByEmail(email);
 
-    if (!user || !(await cryptCompare(password, user.password))){
-      throw new HttpError({ status: HttpCode.NOT_FOUND, message: 'User not found' })
+    if (!user || !(await checkIsCryptsEqual (password, user.password))){
+      throw new HttpError({ status: HttpCode.NOT_FOUND, message: ErrorMessage.NOT_FOUND })
     }
 
     return user;
