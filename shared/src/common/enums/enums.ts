@@ -5,7 +5,7 @@ export {
   PodcastsApiPath,
   EpisodesApiPath,
   CommentsApiPath,
-  RecordsApiPath,
+  RecordsApiPath
 } from './api/api';
 export { CustomExceptionName } from './exceptions/exceptions';
 export { ContentType } from './file/file';
