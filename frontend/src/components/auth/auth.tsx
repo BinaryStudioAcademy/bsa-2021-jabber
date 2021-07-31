@@ -1,16 +1,19 @@
 import { AppRoute } from 'common/enums/enums';
 import { auth as authActions } from 'store/actions';
-
 import { UserCreatePayload, UserSignInPayload } from 'common/types/types';
-import { SignInForm, SignUpForm } from './components/components';
-
-import { useDispatch, useLocation } from 'hooks/hooks';
+import { useAppSelector, useDispatch, useLocation } from 'hooks/hooks';
+import { Redirect } from 'components/common/common';
 import logo from 'assets/img/logo-dark.svg';
+import { SignInForm, SignUpForm } from './components/components';
 import styles from './styles.module.scss';
 
 const Auth: React.FC = () => {
+  const { user } = useAppSelector(({ auth }) => ({
+    user: auth.user,
+  }));
   const { pathname } = useLocation();
   const dispatch = useDispatch();
+  const hasUser = Boolean(user);
 
   const handleSignUpSubmit = (payload: UserCreatePayload): void => {
     dispatch(authActions.signUp(payload));
@@ -32,6 +35,10 @@ const Auth: React.FC = () => {
 
     return null;
   };
+
+  if (hasUser) {
+    return <Redirect to={AppRoute.ROOT} />;
+  }
 
   return (
     <div className={styles.authPage}>
