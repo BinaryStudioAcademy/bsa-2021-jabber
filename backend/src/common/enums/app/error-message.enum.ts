@@ -1,5 +1,5 @@
 enum ErrorMessage {
-  NOT_FOUND = 'Not Found',
+  NOT_FOUND = 'Entity not found.',
   BAD_REQUEST = 'Bad Request',
   INTERNAL_SERVER_ERROR = 'Internal Server Error',
 }
