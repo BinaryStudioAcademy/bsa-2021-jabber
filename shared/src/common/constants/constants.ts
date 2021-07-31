@@ -1,1 +1,1 @@
-export { DEFAULT_USER_ID } from './user';
+export { DEFAULT_USER_ID } from './user/user';
