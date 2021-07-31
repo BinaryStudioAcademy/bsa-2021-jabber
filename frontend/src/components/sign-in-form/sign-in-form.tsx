@@ -1,59 +1,73 @@
-import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { UserSignInPayload } from 'common/types/types';
-import { AppRoute, ButtonType, DataStatus, InputType, UserSignInPayloadKey } from 'common/enums/enums';
-import { SigninSchema } from 'validation-schemas/validation-schemas';
-import { useAppSelector, useDispatch } from 'hooks/hooks';
-import { auth as authActions } from 'store/actions';
-import { getResolver } from 'helpers/form/form';
+import {
+  AppRoute,
+  ButtonType,
+  DataStatus,
+  InputType,
+  UserSignInPayloadKey,
+} from 'common/enums/enums';
+import { signIn as signInValidationSchema } from 'validation-schemas/validation-schemas';
+import { useAppForm, useAppSelector } from 'hooks/hooks';
 import styles from '../sign-in-form/styles.module.scss';
 import logo from 'assets/img/logo-dark.svg';
 import { Button, Input } from '../common/common';
+import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
 
-const resolver = getResolver<UserSignInPayload>(SigninSchema);
+type Props = {
+  onSubmit: (payload: UserSignInPayload) => void;
+};
 
-const SignIn: React.FC = () => {
-  const { register, handleSubmit } = useForm<UserSignInPayload>({ resolver });
+const SignIn: React.FC<Props> = ({ onSubmit }) => {
+
+  const { control, handleSubmit, errors } = useAppForm({
+    validationSchema: signInValidationSchema,
+    defaultValues: DEFAULT_LOGIN_PAYLOAD,
+  });
 
   const { authStatus } = useAppSelector(({ auth }) => ({
     authStatus: auth.dataStatus,
   }));
 
-  const dispatch = useDispatch();
-
   const isFormDisable = authStatus === DataStatus.PENDING;
 
-  const onSubmit = (data: UserSignInPayload): void => {
-    dispatch(authActions.signIn(data));
-  };
-
   return (
-    <section className={ styles.signInBlock }>
-      <form onSubmit={handleSubmit(onSubmit)} className={ styles.formWrapper }>
-        <img src={ logo } className={ styles.logo } width="103" height="30" loading="lazy" alt="" />
-        <h2 className={styles.title}>Sign In</h2>
-        <div className={styles.subTitle}><p>Don’t have an account? </p><Link to={AppRoute.SIGN_UP}>Sign Up</Link></div>
-        <fieldset disabled={ isFormDisable } className={ styles.fieldset }>
-          <div className={styles.formRow}>
-            <Input
-              label={UserSignInPayloadKey.EMAIL}
-              type={InputType.EMAIL}
-              registerData={register(UserSignInPayloadKey.EMAIL)}
-              isRequire
-            />
-          </div>
-          <div className={styles.formRow}>
-            <Input
-              label={UserSignInPayloadKey.PASSWORD}
-              type={InputType.PASSWORD}
-              registerData={register(UserSignInPayloadKey.PASSWORD)}
-              isRequire
-            />
-          </div>
-          <Button label="Sign In" type={ButtonType.SUBMIT} />
+    <div className={styles.signIn}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <img
+          src={logo}
+          className={styles.formLogo}
+          width="140"
+          height="50"
+          loading="lazy"
+          alt="Jabber logo"
+        />
+        <h1 className={styles.formTitle}>Sign Up</h1>
+        <div className={styles.formSubtitle}>
+          Don’t have an account?
+          <Link to={AppRoute.SIGN_UP}>Sign Up</Link>
+        </div>
+        <fieldset disabled={isFormDisable} className={styles.fieldset}>
+          <Input
+            type={InputType.EMAIL}
+            label="Email"
+            placeholder="Enter your email"
+            name={UserSignInPayloadKey.EMAIL}
+            control={control}
+            errors={errors}
+          />
+          <Input
+            type={InputType.PASSWORD}
+            label="Password"
+            placeholder="Enter your password"
+            name={UserSignInPayloadKey.PASSWORD}
+            control={control}
+            errors={errors}
+          />
+          <Button label="Sign In" type={ButtonType.SUBMIT}/>
         </fieldset>
       </form>
-    </section>
+    </div>
   );
 };
 

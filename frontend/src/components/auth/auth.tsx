@@ -1,6 +1,6 @@
 import { AppRoute } from 'common/enums/enums';
 import { auth as authActions } from 'store/actions';
-import { UserCreatePayload } from 'common/types/types';
+import { UserCreatePayload, UserSignInPayload } from 'common/types/types';
 import SignInForm from 'components/sign-in-form/sign-in-form';
 import SignUpForm from 'components/sign-up-form/sign-up-form';
 import { useDispatch, useLocation } from 'hooks/hooks';
@@ -13,8 +13,8 @@ const Auth: React.FC = () => {
     dispatch(authActions.signUp(payload));
   };
 
-  const handleSignInSubmit = (): void => {
-    // handleSignInSubmit
+  const handleSignInSubmit = (payload: UserSignInPayload): void => {
+    dispatch(authActions.signIn(payload));
   };
 
   const getScreen = (screen: string): React.ReactElement | null => {

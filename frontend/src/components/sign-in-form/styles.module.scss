@@ -1,50 +1,48 @@
-.signInBlock {
+.signIn {
+  flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("../../assets/img/background-auth.jpg");
-  background-position: center;
+  padding: 40px 0;
+  background-image: url('../../assets/img/auth-background.jpg');
   background-size: cover;
-  width: 100%;
-  height: 100%;
+  background-position: center;
+}
 
-  .formWrapper {
-    display: flex;
-    flex-direction: column;
-    width: 480px;
-    background-color: var(--color-primary-light);
-    padding: 50px;
-    border-radius: 7px;
+.form {
+  padding: 50px;
+  margin-bottom: 0;
+  min-width: 480px;
+  background-color: var(--color-primary-light);
+  border-radius: 5px;
 
-    .logo {
-      margin-bottom: 50px;
-    }
-
-    .title {
-      margin: 0;
-      font-size: 24px;
-      color: var(--color-button-background);
-    }
-
-    .subTitle {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 12px;
-
-      p {
-        margin: 0;
-        color: var(--color-primary-dark);
-      }
-
-    }
+  button {
+    margin-top: 5px;
   }
+}
 
-  .fieldset{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    border: none;
-    padding: 20px 0;
-  }
+.formLogo {
+  margin-bottom: 45px;
+}
+
+.formTitle {
+  margin: 0 0 10px;
+  color: var(--color-button-background);
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.formSubtitle {
+  margin-bottom: 20px;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  gap: 15px;
+  border: none;
 }
