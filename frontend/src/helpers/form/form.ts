@@ -1,1 +1,1 @@
-export { getResolver } from './get-resolver/get-resolver.helper';
+export { getResolver } from './get-resolver/get-resolver';
