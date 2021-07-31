@@ -16,6 +16,10 @@ class Episode {
     return this.#EpisodeModel.query();
   }
 
+  public getById(id: string): Promise<TEpisode> {
+    return this.#EpisodeModel.query().findById(id);
+  }
+
   public create(payload: EpisodeCreatePayload): Promise<TEpisode> {
     return this.#EpisodeModel.query().insert(payload);
   }
