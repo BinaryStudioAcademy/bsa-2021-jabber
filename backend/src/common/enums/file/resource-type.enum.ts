@@ -1,8 +1,8 @@
 enum ResourceType {
-  auto = 'auto',
-  image = 'image',
-  video = 'video',
-  raw = 'raw',
+  AUTO = 'auto',
+  IMAGE = 'image',
+  VIDEO = 'video',
+  RAW = 'raw',
 }
 
 export { ResourceType };

@@ -1,12 +1,8 @@
 import cloudinary from 'cloudinary';
 import DatauriParser from 'datauri/parser';
 import { UploadFileResponse } from '~/common/types/types';
-import { ENV, ResourceType } from '~/common/enums/enums';
-
-interface UploadFileProps {
-  file: Express.Multer.File;
-  userId: number;
-}
+import { ENV } from '~/common/enums/enums';
+import { UploadFileProps } from './common/types/types';
 
 class UploadFile {
   constructor() {
@@ -15,13 +11,13 @@ class UploadFile {
     });
   }
 
-  public async uploadFile({ file, userId }: UploadFileProps): Promise<UploadFileResponse> {
+  public async uploadFile({ file, userId, resourceType }: UploadFileProps): Promise<UploadFileResponse> {
     const parser = new DatauriParser();
     const dataUri = parser.format(file.originalname, file.buffer);
     const content = <string>dataUri.content;
     const { url, bytes } = await cloudinary.v2.uploader.upload_large(content, {
       folder: String(userId),
-      resource_type: ResourceType.auto,
+      resource_type: resourceType,
     });
 
     return {
