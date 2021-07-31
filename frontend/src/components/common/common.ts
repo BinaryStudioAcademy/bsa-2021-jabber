@@ -8,3 +8,5 @@ export { default as Checkbox } from './checkbox/checkbox';
 export { default as NotFound } from './not-found/not-found';
 export { default as PrivateRoute } from './private-route/private-route';
 export { default as AuthWrapper } from './auth-wrapper/auth-wrapper';
+export { default as AuthPrivateRouter } from './auth-private-router/auth-private-router';
+export { default as AuthPublicRouter } from './auth-public-router/auth-public-router';
