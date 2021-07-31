@@ -14,8 +14,8 @@ Model.knex(Knex(knexConfig[ENV.APP.NODE_ENV]));
 
 app.use(setTraceId);
 app.use(logRequest);
-app.use(json());
-app.use(urlencoded({ extended: true }));
+app.use(json({ limit: '100mb' }));
+app.use(urlencoded({ extended: true, limit: '100mb' }));
 
 initApi(app);
 
