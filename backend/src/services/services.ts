@@ -15,6 +15,7 @@ import { Podcast } from './podcast/podcast.service';
 import { Episode } from './episode/episode.service';
 import { Comment } from './comment/comment.service';
 import { Record } from './record/record.service';
+import { UploadFile } from './upload-file/upload-file.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -47,6 +48,8 @@ const record = new Record({
   recordRepository,
 });
 
+const uploadFile = new UploadFile();
+
 export {
   auth,
   appAsyncStorage,
@@ -56,4 +59,5 @@ export {
   podcast,
   comment,
   record,
+  uploadFile,
 };
