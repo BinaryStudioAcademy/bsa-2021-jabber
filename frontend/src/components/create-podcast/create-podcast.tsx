@@ -1,27 +1,17 @@
-import { FieldValues } from 'react-hook-form';
 import { PodcastCreatePayload } from 'common/types/types';
-import { PodcastCreatePayloadKey } from 'common/enums/enums';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { ButtonType, DataStatus } from 'common/enums/enums';
 import { podcast as podcastActions } from 'store/actions';
-import { useAppSelector, useDispatch, useForm } from 'hooks/hooks';
+import { useAppForm, useAppSelector, useDispatch } from 'hooks/hooks';
 import { Input, Button } from 'components/common/common';
 import styles from './styles.module.scss';
 import { podcast as podcastSchema } from 'validation-schemas/validation-schemas';
+import { DEFAULT_PODCAST_PAYLOAD } from './common/constants';
 import logoCut from 'assets/img/logo-cut.svg';
 
 const CreatePodcast: React.FC = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FieldValues>({
-    defaultValues: {
-      [PodcastCreatePayloadKey.NAME]: '',
-      [PodcastCreatePayloadKey.USER_ID]: 7,
-    },
-    resolver: joiResolver(podcastSchema),
-    mode: 'onSubmit',
+  const { control, handleSubmit, errors } = useAppForm({
+    validationSchema: podcastSchema,
+    defaultValues: DEFAULT_PODCAST_PAYLOAD,
   });
 
   const { createPodcastStatus } = useAppSelector(({ configuratePodcast }) => ({
@@ -46,7 +36,7 @@ const CreatePodcast: React.FC = () => {
             <fieldset disabled={isFormDisabled} className={styles.fieldset}>
               <p>
                 <Input
-                  label="Name"
+                  label="Podcast name"
                   name="name"
                   control={control}
                   errors={errors}

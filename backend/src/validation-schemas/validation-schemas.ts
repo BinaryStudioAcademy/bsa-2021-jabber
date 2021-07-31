@@ -1,1 +1,4 @@
-export { signUp } from 'jabber-shared/validation-schemas/validation-schemas';
+export {
+  signUp,
+  podcast,
+} from 'jabber-shared/validation-schemas/validation-schemas';
