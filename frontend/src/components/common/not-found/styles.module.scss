@@ -26,6 +26,7 @@
   display: block;
   font-size: 50px;
   font-weight: 600;
+  text-align: center;
 }
 
 .copyRight {
@@ -40,10 +41,4 @@
 
 .copyRight img {
   margin-bottom: 5px;
-}
-
-@media screen and (max-width: 400px) {
-  .descriptionText {
-    font-size: 30px;
-  }
 }
