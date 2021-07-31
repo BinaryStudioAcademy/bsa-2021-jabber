@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import {
   signUp as signUpValidationSchema,
-  signIn as signInValidationSchema
+  signIn as signInValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { ApiPath, HttpCode, AuthApiPath } from '~/common/enums/enums';
 import { handleAsyncApi } from '~/helpers/helpers';

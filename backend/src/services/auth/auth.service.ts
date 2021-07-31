@@ -1,8 +1,8 @@
 import { UserCreatePayload, User, SignInPayload } from '~/common/types/types';
 import { user as userRep } from '~/data/repositories/repositories';
 import { encrypt, checkIsCryptsEqual  } from '~/helpers/helpers';
-import { HttpError } from "~/exceptions/exceptions";
-import { HttpCode } from "~/common/enums/enums";
+import { HttpError } from '~/exceptions/exceptions';
+import { HttpCode, ErrorMessage } from '~/common/enums/enums';
 
 type Constructor = {
   userRepository: typeof userRep;
@@ -29,7 +29,7 @@ class Auth {
     const user = await this.#userRepository.getByEmail(email);
 
     if (!user || !(await checkIsCryptsEqual (password, user.password))){
-      throw new HttpError({ status: HttpCode.NOT_FOUND, message: ErrorMessage.NOT_FOUND })
+      throw new HttpError({ status: HttpCode.NOT_FOUND, message: ErrorMessage.NOT_FOUND });
     }
 
     return user;
