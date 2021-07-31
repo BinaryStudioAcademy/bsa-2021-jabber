@@ -38,7 +38,7 @@ const Input: React.FC<Props> = ({
         className={styles.input}
       />
       <span className={styles.errorWrapper}>
-        <ErrorMessage errors={errors} name={name}/>
+        <ErrorMessage errors={errors} name={name} />
       </span>
     </label>
   );

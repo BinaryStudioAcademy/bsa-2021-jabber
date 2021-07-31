@@ -1,41 +1,14 @@
-.signIn {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 0;
-  background-image: url('../../../../assets/img/auth-background.jpg');
-  background-size: cover;
-  background-position: center;
-}
-
-.form {
-  padding: 50px;
-  margin-bottom: 0;
-  min-width: 480px;
-  background-color: var(--color-primary-light);
-  border-radius: 5px;
-
-  button {
-    margin-top: 5px;
-  }
-}
-
-.link {
-  color: #1E2C96;
-  text-decoration: none;
-}
-
-.formLogo {
-  margin-bottom: 45px;
-}
-
 .formTitle {
   margin: 0 0 10px;
   color: var(--color-button-background);
   font-weight: bold;
   font-size: 24px;
   line-height: 1;
+}
+
+.link {
+  color: #1E2C96;
+  text-decoration: none;
 }
 
 .formSubtitle {
@@ -47,7 +20,12 @@
 .fieldset {
   display: flex;
   flex-direction: column;
+  margin: 0;
   padding: 0;
   gap: 15px;
   border: none;
+}
+
+.button {
+  margin-top: 5px;
 }

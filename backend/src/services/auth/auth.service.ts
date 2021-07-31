@@ -24,7 +24,7 @@ class Auth {
     });
   }
 
-  public async signIn(payload: SignInPayload): Promise<User | null> {
+  public async signIn(payload: SignInPayload): Promise<User | never> {
     const { password, email } = payload;
     const user = await this.#userRepository.getByEmail(email);
 

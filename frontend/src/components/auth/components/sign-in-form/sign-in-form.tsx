@@ -8,8 +8,7 @@ import {
 } from 'common/enums/enums';
 import { signIn as signInValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
-import styles from '../sign-in-form/styles.module.scss';
-import logo from 'assets/img/logo-dark.svg';
+import styles from './styles.module.scss';
 import { Button, Input, Link } from 'components/common/common';
 import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
 
@@ -17,7 +16,7 @@ type Props = {
   onSubmit: (payload: UserSignInPayload) => void;
 };
 
-const SignIn: React.FC<Props> = ({ onSubmit }) => {
+const SignInForm: React.FC<Props> = ({ onSubmit }) => {
 
   const { control, handleSubmit, errors } = useAppForm({
     validationSchema: signInValidationSchema,
@@ -33,14 +32,6 @@ const SignIn: React.FC<Props> = ({ onSubmit }) => {
   return (
     <div className={styles.signIn}>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <img
-          src={logo}
-          className={styles.formLogo}
-          width="140"
-          height="50"
-          loading="lazy"
-          alt="Jabber logo"
-        />
         <h1 className={styles.formTitle}>Sign Up</h1>
         <div className={styles.formSubtitle}>
           Don’t have an account?
@@ -73,4 +64,4 @@ const SignIn: React.FC<Props> = ({ onSubmit }) => {
   );
 };
 
-export default SignIn;
+export default SignInForm;
