@@ -1,7 +1,17 @@
+import { useAppSelector } from 'hooks/hooks';
+import { RootState } from 'common/types/types';
 import styles from './styles.module.scss';
+import { store } from 'store/store';
+import { loadEpisode } from 'store/episodepage/actions';
 
 const Episode: React.FC = () => {
-  // "episodeMock" should be removed when backend services are ready
+  const { episode } = useAppSelector(({ episodepage }: RootState) => ({
+    episode: episodepage.episode,
+  }));
+
+  const hasEpisode = Boolean(episode);
+
+  //episodeMock should be removed
   const episodeMock = {
     podcastsGroup: 'English podcasts',
     name: 'Episode 42',
@@ -12,19 +22,37 @@ const Episode: React.FC = () => {
   return (
     <section className={styles.episode}>
       <section className={styles.episodeHeader}>
-        <div className={styles.description}>
-          <h5>{episodeMock.podcastsGroup}</h5>
-          <h3>{episodeMock.name}</h3>
-          <p>
-            {episodeMock.description}
-          </p>
-        </div>
-        <div className={styles.logo}>
-          <img src={episodeMock.img} alt="Episode logo" />
-        </div>
+        {hasEpisode ? (
+          <>
+            <div className={styles.description}>
+              <h5>{episodeMock.podcastsGroup}</h5>
+              <h3>{episode?.name}</h3>
+              <p>{episodeMock.description}</p>
+            </div>
+            <div className={styles.logo}>
+              <img src={episodeMock.img} alt="logo" />
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={styles.description}>
+              <h5>{episodeMock.podcastsGroup}</h5>
+              <h3>{episodeMock.name}</h3>
+              <p>
+                {episodeMock.description}
+              </p>
+            </div>
+            <div className={styles.logo}>
+              <img src={episodeMock.img} alt="logo" />
+            </div>
+          </>
+        )
+        }
       </section>
     </section>
   );
 };
+
+store.dispatch(loadEpisode(3));
 
 export default Episode;

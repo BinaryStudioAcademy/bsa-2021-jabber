@@ -32,7 +32,7 @@ class EpisodeApi {
 
   public getById(id: number): Promise<Episode> {
     return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.EPISODES}${EpisodesApiPath.$ID}${id}`,
+      `${this.#apiPrefix}${ApiPath.EPISODES}${EpisodesApiPath.ROOT}${id}`,
       {
         method: HttpMethod.GET,
       },
