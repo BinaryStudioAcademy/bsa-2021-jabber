@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { UserSignInPayload } from 'common/types/types';
 import {
   AppRoute,
@@ -11,7 +10,7 @@ import { signIn as signInValidationSchema } from 'validation-schemas/validation-
 import { useAppForm, useAppSelector } from 'hooks/hooks';
 import styles from '../sign-in-form/styles.module.scss';
 import logo from 'assets/img/logo-dark.svg';
-import { Button, Input } from '../common/common';
+import { Button, Input, Link } from 'components/common/common';
 import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
 
 type Props = {
@@ -45,7 +44,10 @@ const SignIn: React.FC<Props> = ({ onSubmit }) => {
         <h1 className={styles.formTitle}>Sign Up</h1>
         <div className={styles.formSubtitle}>
           Don’t have an account?
-          <Link to={AppRoute.SIGN_UP}>Sign Up</Link>
+          <Link to={AppRoute.SIGN_UP} className={styles.link}>
+            {' '}
+            Sign Up
+          </Link>
         </div>
         <fieldset disabled={isFormDisable} className={styles.fieldset}>
           <Input

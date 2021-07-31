@@ -18,15 +18,14 @@ type Props = {
   errors: FieldErrors;
 };
 
-const Input: React.FC<Props> = (
-  {
-    label,
-    name,
-    control,
-    errors,
-    placeholder = '',
-    type = InputType.TEXT,
-  }) => {
+const Input: React.FC<Props> = ({
+  label,
+  name,
+  control,
+  errors,
+  placeholder = '',
+  type = InputType.TEXT,
+}) => {
   const { field } = useController({ name, control });
 
   return (
