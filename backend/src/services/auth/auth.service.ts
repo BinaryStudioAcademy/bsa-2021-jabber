@@ -27,9 +27,15 @@ class Auth {
   public async signIn(payload: SignInPayload): Promise<User | never> {
     const { password, email } = payload;
     const user = await this.#userRepository.getByEmail(email);
+    const hasUser = Boolean(user);
 
-    if (!user || !(await checkIsCryptsEqual (password, user.password))){
-      throw new HttpError({ status: HttpCode.NOT_FOUND, message: ErrorMessage.NOT_FOUND });
+    if (!hasUser) {
+      throw new HttpError({ status: HttpCode.NOT_FOUND, message: ErrorMessage.USER_NOT_FOUND });
+    }
+
+    const isCryptsEqual = await checkIsCryptsEqual (password, user.password);
+    if (!isCryptsEqual) {
+      throw new HttpError({status: HttpCode.BAD_REQUEST, message: ErrorMessage.WRONG_PASSWORD});
     }
 
     return user;
