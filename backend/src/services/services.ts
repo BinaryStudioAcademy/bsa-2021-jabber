@@ -11,6 +11,7 @@ import { Auth } from './auth/auth.service';
 import { User } from './user/user.service';
 import { Podcast } from './podcast/podcast.service';
 import { Episode } from './episode/episode.service';
+import { UploadFile } from './upload-file/upload-file.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -35,6 +36,8 @@ const episode = new Episode({
   episodeRepository,
 });
 
+const uploadFile = new UploadFile();
+
 export {
   auth,
   appAsyncStorage,
@@ -42,4 +45,5 @@ export {
   user,
   episode,
   podcast,
+  uploadFile,
 };
