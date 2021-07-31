@@ -1,16 +1,12 @@
-import cloudinary, { UploadApiOptions } from 'cloudinary';
+import cloudinary from 'cloudinary';
 import DatauriParser from 'datauri/parser';
+import { UploadFileResponse } from '~/common/types/types';
 import { ENV } from '~/common/enums/enums';
-
-interface UploadFileResponse {
-  url: string;
-  bytes: number;
-}
 
 class UploadFile {
   constructor() {
     cloudinary.v2.config({
-      CLOUDINARY_URL: ENV.CLOUDINARY.URL,
+      CLOUDINARY_URL: ENV.UPLOAD.API_URL,
     });
   }
 
@@ -18,11 +14,10 @@ class UploadFile {
     const parser = new DatauriParser();
     const dataUri = parser.format(file.originalname, file.buffer);
     const content = dataUri.content as string;
-    const options: UploadApiOptions = {
+    const { url, bytes } = await cloudinary.v2.uploader.upload_large(content, {
       folder: String(userId),
       resource_type: 'auto',
-    };
-    const { url, bytes } = await cloudinary.v2.uploader.upload_large(content, options);
+    });
 
     return {
       url,

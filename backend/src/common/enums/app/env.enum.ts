@@ -27,8 +27,8 @@ const ENV = {
   API: {
     V1_PREFIX: '/api/v1/',
   },
-  CLOUDINARY: {
-    URL: CLOUDINARY_URL,
+  UPLOAD: {
+    API_URL: CLOUDINARY_URL,
   },
 };
 
