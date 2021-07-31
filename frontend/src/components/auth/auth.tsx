@@ -1,9 +1,10 @@
 import { AppRoute } from 'common/enums/enums';
 import { auth as authActions } from 'store/actions';
 import { UserCreatePayload } from 'common/types/types';
-import SignInForm from 'components/sign-in-form/sign-in-form';
-import SignUpForm from 'components/sign-up-form/sign-up-form';
+import { SignInForm, SignUpForm } from './components/components';
 import { useDispatch, useLocation } from 'hooks/hooks';
+import logo from 'assets/img/logo-dark.svg';
+import styles from './styles.module.scss';
 
 const Auth: React.FC = () => {
   const { pathname } = useLocation();
@@ -30,7 +31,21 @@ const Auth: React.FC = () => {
     return null;
   };
 
-  return <>{getScreen(pathname)}</>;
+  return (
+    <div className={styles.authPage}>
+      <div className={styles.formWrapper}>
+        <img
+          src={logo}
+          className={styles.formLogo}
+          width="140"
+          height="50"
+          loading="lazy"
+          alt="Jabber logo"
+        />
+        {getScreen(pathname)}
+      </div>
+    </div>
+  );
 };
 
 export default Auth;
