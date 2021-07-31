@@ -1,0 +1,31 @@
+.formTitle {
+  margin: 0 0 10px;
+  color: var(--color-button-background);
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.link {
+  color: #1E2C96;
+  text-decoration: none;
+}
+
+.formSubtitle {
+  margin-bottom: 20px;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  gap: 15px;
+  border: none;
+}
+
+.button {
+  margin-top: 5px;
+}

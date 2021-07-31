@@ -5,6 +5,7 @@ export {
   PodcastsApiPath,
   EpisodesApiPath,
   CommentsApiPath,
+  RecordsApiPath,
 } from './api/api';
 export { CustomExceptionName } from './exceptions/exceptions';
 export { ContentType } from './file/file';
@@ -19,3 +20,4 @@ export {
 } from './validation/validation';
 export { EpisodeCreatePayloadKey } from './episode/episode';
 export { CommentCreatePayloadKey } from './comment/comment';
+export { RecordCreatePayloadKey } from './record/record';
