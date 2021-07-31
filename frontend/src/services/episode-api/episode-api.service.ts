@@ -1,6 +1,6 @@
 import {
   ApiPath,
-  // EpisodesApiPath,
+  EpisodesApiPath,
   ContentType,
   HttpMethod,
 } from 'common/enums/enums';
@@ -30,15 +30,14 @@ class EpisodeApi {
     );
   }
 
-  //need to solve problem with getById
-  // public getById(id: number): Promise<Episode> {
-  //   return this.#http.load(
-  //     `${this.#apiPrefix}${ApiPath.EPISODES}${EpisodesApiPath.$ID}`,
-  //     {
-  //       method: HttpMethod.GET
-  //     },
-  //   );
-  // }
+  public getById(id: number): Promise<Episode> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.EPISODES}${EpisodesApiPath.$ID}${id}`,
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
 
   public create(payload: EpisodeCreatePayload): Promise<Episode> {
     return this.#http.load(
