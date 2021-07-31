@@ -7,7 +7,7 @@ import {
   Header,
   NotFound,
 } from 'components/common/common';
-import CreatePodcast from 'components/create-podcast/create-podcast';
+import ConfiguratePodcast from 'components/configurate-podcast/configurate-podcast';
 
 const App: React.FC = () => (
   <>
@@ -18,7 +18,11 @@ const App: React.FC = () => (
         component={Auth}
         exact
       />
-      <Route path={AppRoute.EDIT_PODCAST} component={CreatePodcast} exact />
+      <Route
+        path={AppRoute.POCAST_EDIT_$ID}
+        component={ConfiguratePodcast}
+        exact
+      />
       <Route path={AppRoute.ANY} component={NotFound} />
     </Switch>
     <Toaster />

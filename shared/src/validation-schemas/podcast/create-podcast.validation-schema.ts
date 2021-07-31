@@ -18,12 +18,10 @@ const podcast = Joi.object<PodcastCreatePayload>({
     }),
   [PodcastCreatePayloadKey.USER_ID]: Joi.number()
     .integer()
-    .positive()
     .required()
     .messages({
       'number.required': PodcastValidationMessage.USER_ID_REQUIRE,
       'number.integer': PodcastValidationMessage.USER_ID_NUMBER_FORMAT,
-      'number.positive': PodcastValidationMessage.USER_ID_NUMBER_FORMAT,
     }),
 });
 
