@@ -1,4 +1,4 @@
-.signUp {
+.authPage {
   flex-grow: 1;
   display: flex;
   justify-content: center;
@@ -9,40 +9,14 @@
   background-position: center;
 }
 
-.form {
+.formWrapper {
   padding: 50px;
   margin-bottom: 0;
   min-width: 480px;
   background-color: var(--color-primary-light);
   border-radius: 5px;
-
-  button {
-    margin-top: 5px;
-  }
 }
 
 .formLogo {
   margin-bottom: 45px;
-}
-
-.formTitle {
-  margin: 0 0 10px;
-  color: var(--color-button-background);
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 1;
-}
-
-.formSubtitle {
-  margin-bottom: 20px;
-  font-size: 12px;
-  line-height: 1;
-}
-
-.fieldset {
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  gap: 15px;
-  border: none;
 }

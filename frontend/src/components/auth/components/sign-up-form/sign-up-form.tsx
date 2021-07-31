@@ -1,4 +1,3 @@
-import logo from 'assets/img/logo-dark.svg';
 import { UserCreatePayload } from 'common/types/types';
 import {
   AppRoute,
@@ -32,18 +31,13 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
   return (
     <div className={styles.signUp}>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <img
-          src={logo}
-          className={styles.formLogo}
-          width="140"
-          height="50"
-          loading="lazy"
-          alt="Jabber logo"
-        />
         <h1 className={styles.formTitle}>Sign Up</h1>
         <div className={styles.formSubtitle}>
           Already have an account?
-          <Link to={AppRoute.SIGN_IN}>Sign In</Link>
+          <Link to={AppRoute.SIGN_IN} className={styles.link}>
+            {' '}
+            Sign In
+          </Link>
         </div>
         <fieldset disabled={isFormDisable} className={styles.fieldset}>
           <Input
@@ -90,7 +84,11 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
             control={control}
             errors={errors}
           />
-          <Button label="Sign Up" type={ButtonType.SUBMIT} />
+          <Button
+            label="Sign Up"
+            className={styles.button}
+            type={ButtonType.SUBMIT}
+          />
         </fieldset>
       </form>
     </div>
