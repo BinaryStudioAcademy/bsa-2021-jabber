@@ -4,6 +4,7 @@ enum ApiPath {
   PODCASTS = '/podcasts',
   EPISODES = '/episodes',
   COMMENTS = '/comments',
+  RECORDS = '/comments',
 }
 
 export { ApiPath };
