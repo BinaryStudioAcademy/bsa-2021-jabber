@@ -4,20 +4,19 @@ import {
   Switch,
   Route,
   Toaster,
-  Header,
   NotFound,
+  AuthPublicRouter,
 } from 'components/common/common';
 
 const App: React.FC = () => (
   <>
-    <Header />
     <Switch>
       <Route
         path={[AppRoute.SIGN_UP, AppRoute.SIGN_IN]}
         component={Auth}
         exact
       />
-      <Route path={AppRoute.ANY} component={NotFound} />
+      <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />
     </Switch>
     <Toaster />
   </>
