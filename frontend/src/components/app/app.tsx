@@ -8,6 +8,7 @@ import {
   AuthPrivateRouter,
   AuthPublicRouter,
 } from 'components/common/common';
+import HomePage from 'components/home-page/home-page';
 import ConfiguratePodcast from 'components/configurate-podcast/configurate-podcast';
 
 const App: React.FC = () => (
@@ -23,6 +24,7 @@ const App: React.FC = () => (
         component={ConfiguratePodcast}
         exact
       />
+      <AuthPublicRouter path={AppRoute.ROOT} component={HomePage} exact />
       <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />
     </Switch>
     <Toaster />
