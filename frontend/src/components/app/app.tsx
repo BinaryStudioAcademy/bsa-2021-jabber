@@ -16,7 +16,7 @@ const App: React.FC = () => (
         component={Auth}
         exact
       />
-      <AuthPublicRouter path={AppRoute.ANY} exact component={NotFound} />
+      <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />
     </Switch>
     <Toaster />
   </>
