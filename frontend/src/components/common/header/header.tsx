@@ -23,9 +23,9 @@ const Header: React.FC = () => {
         {hasUser ? (
           <>
             <ul className={styles.navigation}>
-              <li className={styles.liNavigation}>Podcasts</li>
-              <li className={styles.liNavigation}>Streaming</li>
-              <li className={styles.liNavigation}>Setting</li>
+              <Link to={AppRoute.ROOT}>
+                <li className={styles.liNavigation}>Podcasts</li>
+              </Link>
             </ul>
             <div className={styles.userInfo}>
               <Button label="+ Create Podcast" type={ButtonType.BUTTON} />
