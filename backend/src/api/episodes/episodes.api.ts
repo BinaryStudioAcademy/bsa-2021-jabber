@@ -1,7 +1,11 @@
 import { Router } from 'express';
+import {
+  addEpisode as addEpisodeValidationSchema,
+} from '~/validation-schemas/validation-schemas';
 import { ApiPath, HttpCode, EpisodesApiPath } from '~/common/enums/enums';
 import { episode as episodeService } from '~/services/services';
 import { handleAsyncApi } from '~/helpers/helpers';
+import { validateSchema } from '~/middlewares/middlewares';
 
 type Args = {
   apiRouter: Router;
@@ -29,6 +33,7 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
 
   episodeRouter.post(
     EpisodesApiPath.ROOT,
+    validateSchema(addEpisodeValidationSchema),
     handleAsyncApi(async (req, res) => {
       const episode = await episodeService.create(req.body);
       return res.json(episode).status(HttpCode.CREATED);
