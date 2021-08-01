@@ -1,15 +1,19 @@
 import cloudinary from 'cloudinary';
 import { UploadFileResponse } from '~/common/types/types';
-import { ENV, ResourceType } from '~/common/enums/enums';
+import { ResourceType } from '~/common/enums/enums';
 import { UploadFileProps } from './common/types/types';
+
+type Constructor = {
+  storageApiUser: string;
+};
 
 const { config, uploader } = cloudinary.v2;
 const { upload_large: uploadLarge } = uploader;
 
-class UploadFile {
-  constructor() {
+class FileStorage {
+  constructor({ storageApiUser }: Constructor) {
     config({
-      CLOUDINARY_URL: ENV.UPLOAD.API_URL,
+      CLOUDINARY_URL: storageApiUser,
     });
   }
 
@@ -29,4 +33,4 @@ class UploadFile {
     };
   }
 }
-export { UploadFile };
+export { FileStorage };

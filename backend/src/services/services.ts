@@ -1,4 +1,4 @@
-import { LogLevel } from '~/common/enums/enums';
+import { LogLevel, ENV } from '~/common/enums/enums';
 import { AppAsyncStorage } from '~/common/types/types';
 import {
   user as userRepository,
@@ -15,7 +15,7 @@ import { Podcast } from './podcast/podcast.service';
 import { Episode } from './episode/episode.service';
 import { Comment } from './comment/comment.service';
 import { Record } from './record/record.service';
-import { UploadFile } from './upload-file/upload-file.service';
+import { FileStorage } from './file-storage/file-storage.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -48,7 +48,9 @@ const record = new Record({
   recordRepository,
 });
 
-const uploadFile = new UploadFile();
+const fileStorage = new FileStorage({
+  storageApiUser: <string>ENV.UPLOAD.API_URL,
+});
 
 export {
   auth,
@@ -59,5 +61,5 @@ export {
   podcast,
   comment,
   record,
-  uploadFile,
+  fileStorage,
 };
