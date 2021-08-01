@@ -1,7 +1,7 @@
 import { ResourceType } from '~/common/enums/enums';
 
 type UploadFileProps = {
-  file: Express.Multer.File;
+  base64: string;
   userId: number;
   resourceType: ResourceType;
 };

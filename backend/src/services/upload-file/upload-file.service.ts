@@ -1,5 +1,4 @@
 import cloudinary from 'cloudinary';
-import DatauriParser from 'datauri/parser';
 import { UploadFileResponse } from '~/common/types/types';
 import { ENV } from '~/common/enums/enums';
 import { UploadFileProps } from './common/types/types';
@@ -11,11 +10,12 @@ class UploadFile {
     });
   }
 
-  public async uploadFile({ file, userId, resourceType }: UploadFileProps): Promise<UploadFileResponse> {
-    const parser = new DatauriParser();
-    const dataUri = parser.format(file.originalname, file.buffer);
-    const content = <string>dataUri.content;
-    const { url, bytes } = await cloudinary.v2.uploader.upload_large(content, {
+  public async uploadFile({
+    base64,
+    userId,
+    resourceType,
+  }: UploadFileProps): Promise<UploadFileResponse> {
+    const { url, bytes } = await cloudinary.v2.uploader.upload_large(base64, {
       folder: String(userId),
       resource_type: resourceType,
     });
