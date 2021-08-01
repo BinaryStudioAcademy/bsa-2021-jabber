@@ -5,11 +5,15 @@ import {
   user as userService,
   podcast as podcastService,
   episode as episodeService,
+  comment as commentService,
+  record as recordService,
 } from '~/services/services';
 import { initAuthApi } from './auth/auth.api';
 import { initUsersApi } from './users/users.api';
 import { initPodcastsApi } from './podcasts/podcasts.api';
 import { initEpisodesApi } from './episodes/episodes.api';
+import { initCommentsApi } from './comments/comments.api';
+import { initRecordsApi } from './records/records.api';
 
 const initApi = (app: Router): Router => {
   const apiRouter = Router();
@@ -34,6 +38,16 @@ const initApi = (app: Router): Router => {
   initEpisodesApi({
     apiRouter,
     episodeService,
+  });
+
+  initCommentsApi({
+    apiRouter,
+    commentService,
+  });
+
+  initRecordsApi({
+    apiRouter,
+    recordService,
   });
 
   return apiRouter;
