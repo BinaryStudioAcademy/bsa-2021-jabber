@@ -22,7 +22,7 @@ class FileStorage {
     userId,
     resourceType = ResourceType.AUTO,
   }: UploadFileProps): Promise<UploadFileResponse> {
-    const { url, bytes } = await uploadLarge(dataUrl, {
+    const { url, bytes, public_id } = await uploadLarge(dataUrl, {
       folder: String(userId),
       resource_type: resourceType,
     });
@@ -30,6 +30,7 @@ class FileStorage {
     return {
       url,
       bytes,
+      publicId: public_id,
     };
   }
 }
