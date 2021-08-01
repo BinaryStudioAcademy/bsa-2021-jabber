@@ -19,8 +19,8 @@ export {
 export {
   SignUpValidationRule,
   SignUpValidationMessage,
-  AddEpisodeValidationRule,
-  AddEpisodeValidationMessage,
+  EpisodeValidationRule,
+  EpisodeValidationMessage,
   PodcastValidationRule,
   PodcastValidationMessage,
 } from './validation/validation';

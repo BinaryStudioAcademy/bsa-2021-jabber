@@ -1,1 +1,1 @@
-export { addEpisode } from './add/add-episode.validation-schema';
+export { episode } from './episode.validation-schema';
