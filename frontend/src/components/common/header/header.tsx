@@ -23,9 +23,11 @@ const Header: React.FC = () => {
         {hasUser ? (
           <>
             <ul className={styles.navigation}>
-              <Link to={AppRoute.ROOT}>
-                <li className={styles.liNavigation}>Podcasts</li>
-              </Link>
+              <li>
+                <Link to={AppRoute.ROOT} className={styles.liNavigation}>
+                  Podcasts
+                </Link>
+              </li>
             </ul>
             <div className={styles.userInfo}>
               <Button label="+ Create Podcast" type={ButtonType.BUTTON} />
