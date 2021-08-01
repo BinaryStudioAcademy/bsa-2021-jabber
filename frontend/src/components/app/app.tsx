@@ -4,26 +4,26 @@ import {
   Switch,
   Route,
   Toaster,
-  Header,
   NotFound,
+  AuthPrivateRouter,
+  AuthPublicRouter,
 } from 'components/common/common';
 import ConfiguratePodcast from 'components/configurate-podcast/configurate-podcast';
 
 const App: React.FC = () => (
   <>
-    <Header />
     <Switch>
       <Route
         path={[AppRoute.SIGN_UP, AppRoute.SIGN_IN]}
         component={Auth}
         exact
       />
-      <Route
+      <AuthPrivateRouter
         path={AppRoute.POCAST_EDIT_$ID}
-        component={ConfiguratePodcast}
         exact
+        component={ConfiguratePodcast}
       />
-      <Route path={AppRoute.ANY} component={NotFound} />
+      <AuthPublicRouter path={AppRoute.ANY} exact component={NotFound} />
     </Switch>
     <Toaster />
   </>
