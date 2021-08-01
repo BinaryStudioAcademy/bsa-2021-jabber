@@ -4,7 +4,7 @@ import {
   Switch,
   Route,
   Toaster,
-  NotFound,
+  // NotFound,
   AuthPrivateRouter,
   AuthPublicRouter,
 } from 'components/common/common';
@@ -23,7 +23,11 @@ const App: React.FC = () => (
         component={ConfiguratePodcast}
         exact
       />
-      <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />
+      <AuthPublicRouter
+        path={AppRoute.ANY}
+        component={ConfiguratePodcast}
+        exact
+      />
     </Switch>
     <Toaster />
   </>

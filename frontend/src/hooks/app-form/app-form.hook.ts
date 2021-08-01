@@ -9,7 +9,7 @@ import { ValidationSchema } from 'common/types/types';
 import { getFormResolver } from 'helpers/helpers';
 
 type useAppFormProps = {
-  defaultValues: { [key: string]: string | number };
+  defaultValues: { [key: string]: string | number | FileList };
   validationSchema: ValidationSchema;
 };
 
