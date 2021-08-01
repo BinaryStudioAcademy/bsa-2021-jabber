@@ -1,25 +1,25 @@
+import { useDispatch, useParams } from 'hooks/hooks';
+import { configuratePodcast as configuratePodcastActions } from 'store/actions';
 import { PodcastCreatePayload } from 'common/types/types';
-import { podcast as podcastActions } from 'store/actions';
-import { useDispatch } from 'hooks/hooks';
 import { ConfiguratePodcastForm } from './components/components';
 import styles from './styles.module.scss';
-import logoCut from 'assets/img/logo-cut.svg';
 
 const ConfiguratePodcast: React.FC = () => {
+  const { id } = useParams<any>();
   const dispatch = useDispatch();
 
+  const isEdit = Boolean(id);
+
   const handleCreatePodcast = (payload: PodcastCreatePayload): void => {
-    dispatch(podcastActions.create(payload));
+    dispatch(configuratePodcastActions.create(payload));
   };
 
   return (
     <div className={styles.podcast}>
-      <div className={styles.podcastForm}>
-        <ConfiguratePodcastForm onSubmit={handleCreatePodcast} />;
-      </div>
-      <div>
-        <img src={logoCut} width="320" height="195" loading="lazy" alt="" />
-      </div>
+      <h2>
+        {isEdit ? 'Edit' : 'Create'} Podcast {id ?? ''}
+      </h2>
+      <ConfiguratePodcastForm onSubmit={handleCreatePodcast} />;
     </div>
   );
 };

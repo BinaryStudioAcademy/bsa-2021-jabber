@@ -1,3 +1,4 @@
+import { PodcastCreatePayloadKey } from 'common/enums/enums';
 import { PodcastCreatePayload } from 'common/types/types';
 import { ButtonType, DataStatus } from 'common/enums/enums';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
@@ -27,10 +28,11 @@ const ConfiguratePodcastForm: React.FC<Props> = ({ onSubmit }) => {
       <fieldset disabled={isFormDisabled} className={styles.fieldset}>
         <p>
           <Input
-            label="Podcast name"
-            name="name"
+            name={PodcastCreatePayloadKey.NAME}
             control={control}
             errors={errors}
+            label="Podcast name"
+            placeholder="Name"
           />
         </p>
         <Button label="Save" type={ButtonType.SUBMIT} />
