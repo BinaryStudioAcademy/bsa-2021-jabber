@@ -23,8 +23,8 @@ const Header: React.FC = () => {
         {hasUser ? (
           <>
             <ul className={styles.navigation}>
-              <li>
-                <Link to={AppRoute.ROOT} className={styles.liNavigation}>
+              <li className={styles.liNavigation}>
+                <Link to={AppRoute.ROOT} className={styles.link}>
                   Podcasts
                 </Link>
               </li>
