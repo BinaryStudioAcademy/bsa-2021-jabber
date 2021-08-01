@@ -1,5 +1,4 @@
 import { AppRoute } from 'common/enums/enums';
-import Auth from 'components/auth/auth';
 import {
   Switch,
   Route,
@@ -8,7 +7,8 @@ import {
   AuthPrivateRouter,
   AuthPublicRouter,
 } from 'components/common/common';
-import HomePage from 'components/home-page/home-page';
+import Auth from 'components/auth/auth';
+import HomePage from 'components/homepage/homepage';
 import ConfiguratePodcast from 'components/configurate-podcast/configurate-podcast';
 
 const App: React.FC = () => (
@@ -20,7 +20,7 @@ const App: React.FC = () => (
         exact
       />
       <AuthPrivateRouter
-        path={AppRoute.POCAST_EDIT_$ID}
+        path={AppRoute.PODCAST_EDIT_$ID}
         component={ConfiguratePodcast}
         exact
       />
