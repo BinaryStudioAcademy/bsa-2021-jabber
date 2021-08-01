@@ -5,19 +5,19 @@ import styles from './styles.module.scss';
 type Props = {
   label: string;
   type?: ButtonType;
+  onClick?: (evt: React.MouseEvent<HTMLButtonElement>) => void;
   buttonStyle?: ButtonStyle;
   buttonColor?: ButtonColor;
   className?: string;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 const Button: React.FC<Props> = ({
   type = ButtonType.BUTTON,
   buttonStyle = ButtonStyle.PRIMARY,
   buttonColor = ButtonColor.PINK,
+  onClick,
   label,
   className,
-  onClick,
 }) => (
   <button
     type={type}

@@ -1,6 +1,8 @@
 import { Router } from 'express';
+import { podcast as podcastValidationSchema } from '~/validation-schemas/validation-schemas';
 import { ApiPath, HttpCode, PodcastsApiPath } from '~/common/enums/enums';
 import { handleAsyncApi } from '~/helpers/helpers';
+import { validateSchema } from '~/middlewares/middlewares';
 import { podcast as podcastService } from '~/services/services';
 
 type Args = {
@@ -22,8 +24,11 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
 
   podcastRouter.post(
     PodcastsApiPath.ROOT,
+    validateSchema(podcastValidationSchema),
     handleAsyncApi(async (req, res) => {
-      return res.json(await podcastService.create(req.body)).status(HttpCode.CREATED);
+      return res
+        .json(await podcastService.create(req.body))
+        .status(HttpCode.CREATED);
     }),
   );
 
