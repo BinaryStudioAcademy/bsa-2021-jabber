@@ -1,18 +1,14 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
 import { episode as episodeActions } from 'store/actions';
+import { EpisodeParamType } from 'common/types/types';
 import styles from './styles.module.scss';
-
-interface ParamTypes {
-  id: string
-}
 
 const Episode: React.FC = () => {
   const dispatch = useDispatch();
-  const { id } = useParams<ParamTypes>();
+  const { id } = useParams<EpisodeParamType>();
 
   const { episode } = useAppSelector(({ episode }: RootState) => ({
-    //rename, bad readable
     episode: episode.episode,
   }));
 
@@ -28,9 +24,9 @@ const Episode: React.FC = () => {
         {hasEpisode ? (
           <>
             <div className={styles.description}>
-              <h1>English podcasts</h1>
+              <h1>There will be a podcast group here.</h1>
               <h3>{episode?.name}</h3>
-              <p>Aliens send Rick, Morty and Jerry into an alternate reality, and Rick tries to get them out as oblivious Jerry pitches a marketing slogan for apples.</p>
+              <p>There will be a episode description here.</p>
             </div>
             <div className={styles.logo}>
               <img src="#" width="280" height="280" loading="lazy" alt={episode?.name} />
@@ -40,7 +36,7 @@ const Episode: React.FC = () => {
           <h1>There is no such episode</h1>
         )}
       </section>
-    </div >
+    </div>
   );
 };
 

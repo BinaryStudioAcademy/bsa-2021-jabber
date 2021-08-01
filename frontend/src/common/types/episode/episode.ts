@@ -1,1 +1,1 @@
-export type { Episode, EpisodeCreatePayload } from 'jabber-shared/common/types/types';
+export type { Episode, EpisodeCreatePayload, EpisodeParamType } from 'jabber-shared/common/types/types';
