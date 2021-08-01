@@ -10,6 +10,7 @@ const {
   DB_POOL_MIN,
   DB_POOL_MAX,
   DB_DIALECT,
+  CLOUDINARY_URL,
 } = process.env;
 
 const ENV = {
@@ -25,6 +26,9 @@ const ENV = {
   },
   API: {
     V1_PREFIX: '/api/v1/',
+  },
+  UPLOAD: {
+    API_URL: CLOUDINARY_URL,
   },
 };
 
