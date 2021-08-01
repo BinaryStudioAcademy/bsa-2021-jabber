@@ -1,1 +1,1 @@
-export { signUp } from 'jabber-shared/validation-schemas/validation-schemas';
+export { signUp, addEpisode } from 'jabber-shared/validation-schemas/validation-schemas';

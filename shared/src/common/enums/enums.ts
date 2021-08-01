@@ -15,6 +15,8 @@ export { PodcastCreatePayloadKey } from './podcast/podcast';
 export {
   SignUpValidationRule,
   SignUpValidationMessage,
+  AddEpisodeValidationRule,
+  AddEpisodeValidationMessage,
 } from './validation/validation';
 export { EpisodeCreatePayloadKey } from './episode/episode';
 export { CommentCreatePayloadKey } from './comment/comment';
