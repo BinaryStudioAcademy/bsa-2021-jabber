@@ -2,6 +2,7 @@ export { ApiPath, UsersApiPath, AuthApiPath, PodcastsApiPath, EpisodesApiPath } 
 export { AppRoute, ENV, DataStatus } from './app/app';
 export { HttpHeader, HttpMethod } from './http/http';
 export { ContentType } from './file/file';
+export { PodcastCreatePayloadKey } from './podcast/podcast';
 export { UserCreatePayloadKey, UserSignInPayloadKey } from './user/user';
 export {
   ButtonType,
