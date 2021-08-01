@@ -19,6 +19,10 @@ class User {
   public create(payload: UserCreatePayload): Promise<TUser> {
     return this.#UserModel.query().insert(payload);
   }
+
+  public getByEmail(payload: string): Promise<TUser> {
+    return this.#UserModel.query().findOne('email', payload);
+  }
 }
 
 export { User };

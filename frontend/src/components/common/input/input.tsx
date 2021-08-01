@@ -1,35 +1,47 @@
+import { ErrorMessage } from '@hookform/error-message';
+import {
+  Control,
+  FieldErrors,
+  useController,
+  Path,
+  FieldValues,
+} from 'react-hook-form';
 import { InputType } from 'common/enums/enums';
+import styles from './styles.module.scss';
 
 type Props = {
-  label: string;
-  value: string;
-  onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
-  name: string;
   type?: InputType;
-  isRequire?: boolean;
-  isDisabled?: boolean;
+  placeholder?: string;
+  label: string;
+  name: Path<FieldValues>;
+  control: Control;
+  errors: FieldErrors;
 };
 
 const Input: React.FC<Props> = ({
-  type = InputType.TEXT,
-  isRequire = false,
-  isDisabled = false,
   label,
-  value,
   name,
-  onChange,
-}) => (
-  <label>
-    {label}
-    <input
-      type={type}
-      value={value}
-      name={name}
-      onChange={onChange}
-      required={isRequire}
-      disabled={isDisabled}
-    />
-  </label>
-);
+  control,
+  errors,
+  placeholder = '',
+  type = InputType.TEXT,
+}) => {
+  const { field } = useController({ name, control });
+
+  return (
+    <label className={styles.inputWrapper}>
+      <span className={styles.label}>{label}</span>
+      <input
+        {...field}
+        type={type}
+        placeholder={placeholder}
+        className={styles.input}
+      />
+      <span className={styles.errorWrapper}>
+        <ErrorMessage errors={errors} name={name} />
+      </span>
+    </label>
+  );
+};
 
 export default Input;

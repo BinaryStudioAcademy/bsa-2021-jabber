@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { rootReducer } from './root-reducer';
-import { authApi } from 'services/services';
+import { authApi, podcastApi } from 'services/services';
+import { handleError as handleErrorMiddleware } from 'middlewares/middlewares';
 
 const extraArgument = {
   authApi,
+  podcastApi,
 };
 
 const store = configureStore({
@@ -13,7 +15,7 @@ const store = configureStore({
       thunk: {
         extraArgument,
       },
-    });
+    }).concat(handleErrorMiddleware);
   },
 });
 
