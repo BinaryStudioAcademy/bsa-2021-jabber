@@ -31,7 +31,7 @@ const episode = Joi.object<EpisodeCreatePayload>({
       'number.integer': EpisodeValidationMessage.PODCAST_ID_NUMBER_FORMAT,
     }),
   [EpisodeCreatePayloadKey.TYPE]: Joi.string()
-    .valid(...Object.values(EpisodeTypeKey))
+    .valid(...Object.values(EpisodeTypeKey)),
 });
 
 export { episode };
