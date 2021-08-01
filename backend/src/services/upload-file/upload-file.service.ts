@@ -13,7 +13,7 @@ class UploadFile {
     });
   }
 
-  public async uploadFile({
+  public async upload({
     dataUrl,
     userId,
     resourceType = ResourceType.AUTO,
