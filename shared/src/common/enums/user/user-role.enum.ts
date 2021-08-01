@@ -1,6 +1,6 @@
 enum UserRole {
-  user = 'user',
-  master = 'master',
+  USER = 'user',
+  MASTER = 'master',
 }
 
 export { UserRole };
