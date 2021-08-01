@@ -5,6 +5,7 @@ type Episode = {
   podcastId: number;
   createdAt: string;
   updatedAt: string;
+  type: string;
 };
 
 export type { Episode };

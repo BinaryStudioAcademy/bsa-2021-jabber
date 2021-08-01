@@ -2,7 +2,7 @@ import * as Joi from 'joi';
 import {
   EpisodeValidationRule,
   EpisodeValidationMessage,
-  EpisodeCreatePayloadKey,
+  EpisodeCreatePayloadKey, EpisodeTypeKey,
 } from '~/common/enums/enums';
 import { EpisodeCreatePayload } from '~/common/types/types';
 
@@ -30,6 +30,8 @@ const episode = Joi.object<EpisodeCreatePayload>({
       'number.required': EpisodeValidationMessage.PODCAST_ID_REQUIRE,
       'number.integer': EpisodeValidationMessage.PODCAST_ID_NUMBER_FORMAT,
     }),
+  [EpisodeCreatePayloadKey.TYPE]: Joi.string()
+    .valid(...Object.values(EpisodeTypeKey))
 });
 
 export { episode };

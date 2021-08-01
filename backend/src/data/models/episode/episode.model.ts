@@ -8,6 +8,8 @@ class Episode extends Abstract {
 
   [EpisodeDTOKey.PODCAST_ID]: number;
 
+  [EpisodeDTOKey.TYPE]: string;
+
   static get tableName(): string {
     return TableName.EPISODES;
   }
