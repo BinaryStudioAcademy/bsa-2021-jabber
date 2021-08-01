@@ -18,7 +18,7 @@ const PrivateRoute: React.FC<Props> = ({
   const hasUser = Boolean(user);
 
   if (!hasUser) {
-    <Redirect to={redirectTo} />;
+    return <Redirect to={redirectTo} />;
   }
 
   return <Route {...otherProps} />;
