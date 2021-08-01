@@ -15,7 +15,7 @@ const Episode: React.FC = () => {
   const { episode } = useAppSelector(({ episodepage }: RootState) => ({
     episode: episodepage.episode,
   }));
-  
+
   const hasEpisode = Boolean(episode);
 
   const episodeMock = {
@@ -23,7 +23,7 @@ const Episode: React.FC = () => {
     img: 'https://i.pinimg.com/474x/19/28/de/1928deaa3f4ba47822a5c1723f4b930f.jpg',
     description: 'Aliens send Rick, Morty and Jerry into an alternate reality, and Rick tries to get them out as oblivious Jerry pitches a marketing slogan for apples.',
   };
-  
+
   return (
     <section className={styles.episode}>
       <section className={styles.episodeHeader}>
