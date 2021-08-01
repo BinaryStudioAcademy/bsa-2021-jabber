@@ -1,0 +1,10 @@
+.list {
+  padding: 15px 0 25px 0;
+  margin: 0;
+  list-style-type: none;
+  display: grid;
+  grid-template-rows: 0.1fr 0.1fr 0.1fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  align-items: flex-start;
+  grid-gap: 17px;
+}
