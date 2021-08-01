@@ -1,3 +1,5 @@
+import { EpisodeType } from '~/common/enums/enums';
+
 type Episode = {
   id: number;
   name: string;
@@ -5,7 +7,7 @@ type Episode = {
   podcastId: number;
   createdAt: string;
   updatedAt: string;
-  type: string;
+  type: EpisodeType;
 };
 
 export type { Episode };

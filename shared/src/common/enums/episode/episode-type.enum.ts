@@ -1,7 +1,7 @@
-enum EpisodeTypeKey {
+enum EpisodeType {
   PUBLIC = 'public',
   PRIVATE = 'private',
   UNLISTED = 'unlisted',
 }
 
-export { EpisodeTypeKey };
+export { EpisodeType };

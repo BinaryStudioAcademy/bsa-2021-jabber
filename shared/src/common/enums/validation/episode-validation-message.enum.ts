@@ -8,6 +8,7 @@ const EpisodeValidationMessage = {
   USER_ID_NUMBER_FORMAT: 'User id must be an integer',
   PODCAST_ID_REQUIRE: 'Podcast id is required',
   PODCAST_ID_NUMBER_FORMAT: 'Podcast id must be an integer',
+  TYPE_REQUIRE: 'Episode type is required',
 } as const;
 
 export { EpisodeValidationMessage };
