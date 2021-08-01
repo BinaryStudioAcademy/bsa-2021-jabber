@@ -1,0 +1,179 @@
+.playerRewindSeconds {
+  position: absolute;
+
+  left: 50%;
+  top: 62%;
+
+  transform: translate(-50%, -50%);
+
+  color: #fff;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.playerCommonBtn {
+  transition: opacity ease 0.08s;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.playerMainBtn {
+  width: 40px;
+  height: 40px;
+
+  position: relative;
+
+  border-radius: 4px;
+  background-color: #fff;
+
+  & svg {
+    height: 20px;
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    fill: #404040;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.playerPlayBtn {
+  & svg {
+    left: 52%;
+  }
+}
+
+.playerNextBtn,
+.playerPreviousBtn {
+  height: 20px;
+  opacity: 0.7;
+  fill: #fff;
+}
+
+.playerRewindBtn {
+  position: relative;
+  opacity: 0.5;
+
+  svg {
+    fill: #fff;
+    height: 23px;
+  }
+}
+
+.playerVolumeBtn {
+  fill: #f3427f;
+  height: 20px;
+}
+
+:global {
+  .rhap {
+    &_container {
+      background-color: transparent;
+      box-shadow: none;
+    }
+
+    &_progress-indicator,
+    &_volume-indicator,
+    &_progress-filled {
+      background-color: #f3427f;
+    }
+
+    &_progress {
+      &-container {
+        margin: 0 calc(5px + 1%);
+      }
+
+      &-indicator {
+        margin-left: -4.5px;
+        width: 9px;
+        height: 9px;
+        top: -2px;
+      }
+    }
+
+    &_volume {
+      &-container {
+        flex-basis: 160px;
+      }
+
+      &-controls {
+        flex: 1 0;
+        margin-left: 15px;
+      }
+
+      &-bar {
+        height: 3px;
+
+        &-area {
+          width: 85%;
+          padding: 0 6px;
+
+          height: 27px;
+          border-radius: 50%;
+          overflow: hidden;
+        }
+      }
+
+      &-indicator {
+        width: 7px;
+        height: 7px;
+        top: -2px;
+
+        &:before {
+          content: '';
+
+          display: block;
+          width: 160px;
+          height: 3.5px;
+
+          position: absolute;
+          right: 0;
+          top: 50%;
+
+          transform: translate(-3.5px, -50%);
+          background-color: #f3427f;
+        }
+      }
+    }
+
+    &_time {
+      color: #f4f5f8;
+      line-height: 135%;
+    }
+
+    &_current-time {
+      width: 55;
+      text-align: center;
+    }
+
+    &_skip-button {
+      order: 2;
+
+      &:first-child {
+        margin-right: 22px;
+        margin-left: 36px;
+      }
+
+      &:last-child {
+        margin-left: 22px;
+        margin-right: 36px;
+      }
+    }
+
+    &_rewind-button {
+      order: 1;
+    }
+
+    &_play-pause-button {
+      order: 2;
+    }
+
+    &_forward-button {
+      order: 3;
+    }
+  }
+}
