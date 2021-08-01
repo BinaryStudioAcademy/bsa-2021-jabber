@@ -5,7 +5,7 @@ const COLUMN_NAME = 'description';
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.table(TABLE_NAME, (table) => {
-    table.string(COLUMN_NAME).notNullable();
+    table.text(COLUMN_NAME).notNullable();
   });
 }
 
