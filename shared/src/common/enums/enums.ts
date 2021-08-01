@@ -19,6 +19,8 @@ export {
 export {
   SignUpValidationRule,
   SignUpValidationMessage,
+  PodcastValidationRule,
+  PodcastValidationMessage,
 } from './validation/validation';
 export { EpisodeCreatePayloadKey } from './episode/episode';
 export { CommentCreatePayloadKey } from './comment/comment';

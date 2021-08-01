@@ -5,8 +5,10 @@ import {
   Route,
   Toaster,
   NotFound,
+  AuthPrivateRouter,
   AuthPublicRouter,
 } from 'components/common/common';
+import ConfiguratePodcast from 'components/configurate-podcast/configurate-podcast';
 
 const App: React.FC = () => (
   <>
@@ -14,6 +16,11 @@ const App: React.FC = () => (
       <Route
         path={[AppRoute.SIGN_UP, AppRoute.SIGN_IN]}
         component={Auth}
+        exact
+      />
+      <AuthPrivateRouter
+        path={AppRoute.POCAST_EDIT_$ID}
+        component={ConfiguratePodcast}
         exact
       />
       <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />
