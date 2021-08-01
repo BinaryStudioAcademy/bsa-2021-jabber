@@ -10,12 +10,4 @@ const loadEpisode = createAsyncThunk<Episode, number, AsyncThunkConfig>
   return episode;
 });
 
-const loadEpisodes = createAsyncThunk<Episode[], undefined, AsyncThunkConfig>
-(ActionType.LOAD_EPISODES, async (_args, { extra }) => {
-  const { episodeApi } = extra;
-  const episodes = await episodeApi.getAll();
-
-  return episodes;
-});
-
-export { loadEpisode, loadEpisodes };
+export { loadEpisode };

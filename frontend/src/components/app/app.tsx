@@ -1,5 +1,6 @@
 import { AppRoute } from 'common/enums/enums';
 import Auth from 'components/auth/auth';
+import Episode from 'components/episode/episode';
 import {
   Switch,
   Route,
@@ -16,6 +17,7 @@ const App: React.FC = () => (
         component={Auth}
         exact
       />
+      <Route exact path="/episode/:id" component={Episode} />
       <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />
     </Switch>
     <Toaster />
