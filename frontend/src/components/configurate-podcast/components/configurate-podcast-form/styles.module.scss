@@ -1,15 +1,3 @@
-.createPodcastWrapper {
-  max-width: 1515px;
-  margin: 0 auto;
-}
-
-.content {
-  display: flex;
-}
-
-.contentLeft {
-  flex-grow: 1;
-  .fieldset {
-    border: none;
-  }
+.fieldset {
+  border: none;
 }

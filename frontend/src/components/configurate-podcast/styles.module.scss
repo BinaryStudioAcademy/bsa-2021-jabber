@@ -1,0 +1,10 @@
+.podcast {
+  max-width: 1515px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  gap: 15px;
+  .podcastForm {
+    flex-grow: 1;
+  }
+}

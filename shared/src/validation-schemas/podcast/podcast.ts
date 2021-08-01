@@ -1,1 +1,1 @@
-export { podcast } from './create-podcast.validation-schema';
+export { podcast } from './podcast.validation-schema';
