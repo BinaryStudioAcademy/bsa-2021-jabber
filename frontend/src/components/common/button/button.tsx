@@ -8,6 +8,7 @@ type Props = {
   buttonStyle?: ButtonStyle;
   buttonColor?: ButtonColor;
   className?: string;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 const Button: React.FC<Props> = ({
@@ -16,9 +17,11 @@ const Button: React.FC<Props> = ({
   buttonColor = ButtonColor.PINK,
   label,
   className,
+  onClick,
 }) => (
   <button
     type={type}
+    onClick={onClick}
     className={getAllowedClasses(
       className,
       styles.button,

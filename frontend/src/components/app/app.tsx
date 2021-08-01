@@ -8,7 +8,7 @@ import {
 } from 'components/common/common';
 import SignUp from 'components/sign-up/sign-up';
 import SignIn from 'components/sign-in/sign-in';
-import HomePage from 'components/home-page/components/home-page';
+import HomePage from 'components/home-page/home-page';
 
 const App: React.FC = () => (
   <>
@@ -16,7 +16,7 @@ const App: React.FC = () => (
     <Switch>
       <Route path={AppRoute.SIGN_IN} component={SignIn} exact />
       <Route path={AppRoute.SIGN_UP} component={SignUp} exact />
-      <Route path={AppRoute.HOME} component={HomePage} exact />
+      <Route path={AppRoute.ROOT} component={HomePage} exact />
       <Route path={AppRoute.ANY} component={NotFound} />
     </Switch>
     <Toaster />
