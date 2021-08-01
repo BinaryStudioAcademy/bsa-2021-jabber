@@ -1,9 +1,9 @@
 import { ResourceType } from '~/common/enums/enums';
 
 type UploadFileProps = {
-  base64: string;
+  dataUrl: string;
   userId: number;
-  resourceType: ResourceType;
+  resourceType?: ResourceType;
 };
 
 export type { UploadFileProps };

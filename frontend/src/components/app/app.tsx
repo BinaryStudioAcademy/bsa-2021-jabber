@@ -20,10 +20,10 @@ const App: React.FC = () => (
       />
       <AuthPrivateRouter
         path={AppRoute.POCAST_EDIT_$ID}
-        exact
         component={ConfiguratePodcast}
+        exact
       />
-      <AuthPublicRouter path={AppRoute.ANY} exact component={NotFound} />
+      <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />
     </Switch>
     <Toaster />
   </>

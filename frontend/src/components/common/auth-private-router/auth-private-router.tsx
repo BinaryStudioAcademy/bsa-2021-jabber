@@ -1,23 +1,19 @@
-import { RouteProps, RouteComponentProps } from 'react-router-dom';
+import { RouteProps } from 'react-router-dom';
 import { AuthWrapper, PrivateRoute } from 'components/common/common';
 
-type Props = RouteProps & {
-  component: React.ComponentType<RouteComponentProps<Record<string, string | undefined>>>;
-};
+type Props = {
+  component: React.ElementType;
+} & RouteProps;
 
 const AuthPrivateRouter: React.FC<Props> = ({ ...otherProps }) => {
-  const { component: Component } = otherProps;
+  const Component: React.ElementType = otherProps.component;
 
-  return (
-    <PrivateRoute
-      {...otherProps}
-      render={(props): React.ReactNode => (
-        <AuthWrapper>
-          <Component {...props} />
-        </AuthWrapper>
-      )}
-    />
+  const WrappedComponent = (): JSX.Element => (
+    <AuthWrapper>
+      <Component />
+    </AuthWrapper>
   );
-};
 
+  return <PrivateRoute {...otherProps} component={WrappedComponent} />;
+};
 export default AuthPrivateRouter;
