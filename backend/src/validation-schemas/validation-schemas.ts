@@ -1,4 +1,5 @@
 export {
+  episode,
   podcast,
   signUp,
   signIn,
