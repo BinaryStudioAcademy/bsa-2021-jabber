@@ -1,1 +1,1 @@
-export type { User, UserCreatePayload, SignInPayload } from 'jabber-shared/common/types/types';
+export type { User, UserCreatePayload, UserSignInPayload } from 'jabber-shared/common/types/types';
