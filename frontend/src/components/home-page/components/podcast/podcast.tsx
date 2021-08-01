@@ -1,39 +1,24 @@
 import styles from './styles.module.scss';
-
-interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {}
+import { Podcast as TPodcast } from 'common/types/types';
 
 type Props = {
-  cover: string;
-  albumTitle: string;
-  singerName: string
-  alt: string;
-  width?: string;
-  height?: string;
-  loading?: ImageProps;
+  podcast: TPodcast;
 };
 
 const Podcast: React.FC<Props> = ({
-  cover,
-  albumTitle,
-  singerName,
-  alt,
-  width,
-  height,
-}, { loading }: ImageProps) => (
-  <div className={styles.podcast}>
+  podcast,
+}) => (
+  <li className={styles.podcast}>
     <div className={styles.imageBlock}>
       <div className={styles.layer}> </div>
-      <img src={cover} alt={alt} width={width} height={height} loading={loading}/>
+      <img src="" loading="lazy"/>
     </div>
     <div className={styles.descriptionBlock}>
       <div className={styles.albumTitle}>
-        <span>{albumTitle}</span>
-      </div>
-      <div className={styles.singerName}>
-        <span>{singerName}</span>
+        <span>{ podcast.name } </span>
       </div>
     </div>
-  </div>
+  </li>
 );
 
 export default Podcast;
