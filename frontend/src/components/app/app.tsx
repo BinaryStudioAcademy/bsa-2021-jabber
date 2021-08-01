@@ -1,13 +1,15 @@
 import { AppRoute } from 'common/enums/enums';
 import Auth from 'components/auth/auth';
-import Episode from 'components/episode/episode';
 import {
   Switch,
   Route,
   Toaster,
   NotFound,
+  AuthPrivateRouter,
   AuthPublicRouter,
 } from 'components/common/common';
+import HomePage from 'components/home-page/home-page';
+import ConfiguratePodcast from 'components/configurate-podcast/configurate-podcast';
 
 const App: React.FC = () => (
   <>
@@ -17,7 +19,12 @@ const App: React.FC = () => (
         component={Auth}
         exact
       />
-      <Route exact path="/episode/:id" component={Episode} />
+      <AuthPrivateRouter
+        path={AppRoute.POCAST_EDIT_$ID}
+        component={ConfiguratePodcast}
+        exact
+      />
+      <AuthPublicRouter path={AppRoute.ROOT} component={HomePage} exact />
       <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />
     </Switch>
     <Toaster />
