@@ -8,6 +8,7 @@ import { UserCreatePayload } from '~/common/types/types';
 
 const signUp = Joi.object<UserCreatePayload>({
   [UserCreatePayloadKey.FIRST_NAME]: Joi.string()
+    .trim()
     .min(SignUpValidationRule.FIRST_NAME_MIN_LENGTH)
     .max(SignUpValidationRule.FIRST_NAME_MAX_LENGTH)
     .required()
@@ -17,6 +18,7 @@ const signUp = Joi.object<UserCreatePayload>({
       'string.max': SignUpValidationMessage.FIRST_NAME_MAX_LENGTH,
     }),
   [UserCreatePayloadKey.LAST_NAME]: Joi.string()
+    .trim()
     .min(SignUpValidationRule.LAST_NAME_MIN_LENGTH)
     .max(SignUpValidationRule.LAST_NAME_MAX_LENGTH)
     .required()
@@ -26,6 +28,7 @@ const signUp = Joi.object<UserCreatePayload>({
       'string.max': SignUpValidationMessage.LAST_NAME_MAX_LENGTH,
     }),
   [UserCreatePayloadKey.NICKNAME]: Joi.string()
+    .trim()
     .min(SignUpValidationRule.NICKNAME_MIN_LENGTH)
     .max(SignUpValidationRule.NICKNAME_MAX_LENGTH)
     .required()
