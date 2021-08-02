@@ -2,7 +2,7 @@ import { NavLink as AppLink } from 'react-router-dom';
 import { AppRoute } from 'common/enums/enums';
 
 type Props = {
-  to: AppRoute;
+  to: AppRoute | string;
   className?: string;
 };
 
