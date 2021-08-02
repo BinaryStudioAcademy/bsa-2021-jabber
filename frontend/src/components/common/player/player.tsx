@@ -6,6 +6,7 @@ import styles from './styles.module.scss';
 
 type Props = {
   src: string;
+  skipTime?: number;
   onClickPrevious?: () => void;
   onClickNext?: () => void;
 };
@@ -15,10 +16,9 @@ type Ref = {
 };
 
 const MILLISECONDS_IN_SECOND = 1000;
-const SKIP_IN_MILLISECONDS = 15000;
 
 const Player = forwardRef<Ref, Props>(
-  ({ src, onClickNext, onClickPrevious }, ref) => {
+  ({ src, skipTime = 15000, onClickNext, onClickPrevious }, ref) => {
     const playerRef = useRef<H5AudioPlayer>(null);
 
     useImperativeHandle(ref, () => ({
@@ -35,8 +35,8 @@ const Player = forwardRef<Ref, Props>(
         src={src}
         showSkipControls={true}
         progressJumpSteps={{
-          backward: SKIP_IN_MILLISECONDS,
-          forward: SKIP_IN_MILLISECONDS,
+          backward: skipTime,
+          forward: skipTime,
         }}
         customAdditionalControls={[]}
         onClickNext={onClickNext}
@@ -99,7 +99,7 @@ const Player = forwardRef<Ref, Props>(
               )}
             >
               <span className={styles.playerRewindSeconds}>
-                {SKIP_IN_MILLISECONDS / MILLISECONDS_IN_SECOND}
+                {skipTime / MILLISECONDS_IN_SECOND}
               </span>
               <svg viewBox="0 0 18 23" xmlns="http://www.w3.org/2000/svg">
                 <path d="M9 4.6V1.22612C9 0.778011 8.45594 0.556149 8.14258 0.876471L3.71705 5.40035C3.52694 5.59469 3.52694 5.90531 3.71705 6.09965L8.14258 10.6235C8.45594 10.9439 9 10.722 9 10.2739V6C12.7238 6 16.5 9.9935 16.5 13.8C16.5 17.6065 12.7238 21.5 9 21.5C5.30883 21.5 1.56608 17.6743 1.50086 13.8999C1.49991 13.8447 1.45523 13.8 1.4 13.8H0C0 18.883 4.0275 23 9 23C13.9725 23 18 18.883 18 13.8C18 8.717 13.9725 4.6 9 4.6Z" />
@@ -113,7 +113,7 @@ const Player = forwardRef<Ref, Props>(
               )}
             >
               <span className={styles.playerRewindSeconds}>
-                {SKIP_IN_MILLISECONDS / MILLISECONDS_IN_SECOND}
+                {skipTime / MILLISECONDS_IN_SECOND}
               </span>
               <svg viewBox="0 0 18 23" xmlns="http://www.w3.org/2000/svg">
                 <path d="M9 4.6V1.22612C9 0.778011 9.54406 0.556149 9.85742 0.876471L14.283 5.40035C14.4731 5.59469 14.4731 5.90531 14.283 6.09965L9.85742 10.6235C9.54406 10.9439 9 10.722 9 10.2739V6C5.27625 6 1.5 9.9935 1.5 13.8C1.5 17.6065 5.27625 21.5 9 21.5C12.6912 21.5 16.4339 17.6743 16.4991 13.8999C16.5001 13.8447 16.5448 13.8 16.6 13.8H18C18 18.883 13.9725 23 9 23C4.0275 23 0 18.883 0 13.8C0 8.717 4.0275 4.6 9 4.6Z" />
