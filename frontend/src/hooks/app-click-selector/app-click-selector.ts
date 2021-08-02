@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState, useRef } from 'hooks/hooks';
 
 type VisibleHookType = {
   ref: React.RefObject<HTMLDivElement>;
@@ -7,15 +7,15 @@ type VisibleHookType = {
 };
 
 const useVisible = (isInitialIsVisible: boolean): VisibleHookType => {
-  const [isVisible, setIsVisible] = React.useState<boolean>(isInitialIsVisible);
-  const ref = React.useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState<boolean>(isInitialIsVisible);
+  const ref = useRef<HTMLDivElement>(null);
   const handleClickOutside = (evt: MouseEvent): void => {
     const element = evt.target as HTMLElement;
     if (ref.current && !ref.current.contains(element)) {
       setIsVisible(false);
     }
   };
-  React.useEffect(() => {
+  useEffect(() => {
     document.addEventListener('click', handleClickOutside, {
       capture: true,
     });
