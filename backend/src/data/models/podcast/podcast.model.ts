@@ -6,6 +6,8 @@ class Podcast extends Abstract {
 
   [PodcastDTOKey.USER_ID]: number;
 
+  [PodcastDTOKey.IMAGE_ID]: number | null;
+
   static get tableName(): string {
     return TableName.PODCASTS;
   }
