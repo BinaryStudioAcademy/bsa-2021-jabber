@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { Episode } from 'common/types/types';
-import { loadEpisode } from './actions';
+import { createEpisode } from './actions';
 
 type State = {
   dataStatus: DataStatus;
@@ -14,14 +14,14 @@ const initialState: State = {
 };
 
 const reducer = createReducer(initialState, (builder) => {
-  builder.addCase(loadEpisode.pending, (state) => {
+  builder.addCase(createEpisode.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
   });
-  builder.addCase(loadEpisode.fulfilled, (state, action) => {
+  builder.addCase(createEpisode.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.episode = action.payload;
   });
-  builder.addCase(loadEpisode.rejected, (state) => {
+  builder.addCase(createEpisode.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
 });

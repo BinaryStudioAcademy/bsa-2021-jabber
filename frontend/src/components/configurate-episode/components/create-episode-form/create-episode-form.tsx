@@ -22,6 +22,8 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
 
   const isFormDisable = dataStatus === DataStatus.PENDING;
 
+  const episodeTypes = Object.values(EpisodeType);
+
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisable} className={styles.fieldset}>
@@ -42,8 +44,8 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
           errors={errors}
         />
         <Select
-          selectItems={[EpisodeType.PUBLIC, EpisodeType.PRIVATE, EpisodeType.UNLISTED]}
-          label={'Type'}
+          options={episodeTypes}
+          label="Type"
           name={EpisodeCreatePayloadKey.TYPE}
           control={control}
           errors={errors}

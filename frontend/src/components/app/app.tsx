@@ -27,7 +27,7 @@ const App: React.FC = () => (
         exact
       />
 
-      <AuthPublicRouter path={AppRoute.EPISODE_CREATE} component={ConfigurateEpisode} exact />
+      <AuthPublicRouter path={AppRoute.PODCAST_$ID_EPISODE_EDIT_$ID} component={ConfigurateEpisode} exact />
       <AuthPublicRouter path={AppRoute.PODCAST_$ID_EPISODE_$ID} component={Episode} exact />
       <AuthPublicRouter path={AppRoute.ROOT} component={Homepage} exact />
       <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />

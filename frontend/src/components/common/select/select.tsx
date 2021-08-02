@@ -10,7 +10,7 @@ import {
 import styles from './styles.module.scss';
 
 type Props = {
-  selectItems: Array<string>,
+  options: string[],
   placeholder?: string;
   label: string;
   name: Path<FieldValues>;
@@ -19,7 +19,7 @@ type Props = {
 };
 
 const Select: React.FC<Props> = ({
-  selectItems = [],
+  options,
   label,
   name,
   control,
@@ -34,7 +34,7 @@ const Select: React.FC<Props> = ({
         {...field}
         className={styles.input}
       >
-        { selectItems.map((item: string) => <option key={item}>{ item }</option>) }
+        {options.map((item: string) => <option key={item}>{ item }</option>)}
       </select>
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />
