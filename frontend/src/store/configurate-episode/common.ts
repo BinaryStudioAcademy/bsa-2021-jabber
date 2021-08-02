@@ -1,5 +1,5 @@
 enum ActionType {
-  CREATE_EPISODE = 'episodes/create-episode',
+  CREATE_EPISODE = 'configurate-episode/create-episode',
 }
 
 export { ActionType };
