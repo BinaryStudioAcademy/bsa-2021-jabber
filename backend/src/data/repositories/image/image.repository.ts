@@ -5,7 +5,7 @@ type Constructor = {
   ImageModel: typeof ImageM;
 };
 
-class Podcast {
+class Image {
   #ImageModel: typeof ImageM;
 
   constructor({ ImageModel }: Constructor) {
@@ -17,4 +17,4 @@ class Podcast {
   }
 }
 
-export { Podcast };
+export { Image };

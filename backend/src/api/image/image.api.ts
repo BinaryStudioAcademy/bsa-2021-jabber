@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ApiPath, HttpCode, FilesApiPath } from '~/common/enums/enums';
+import { ApiPath, HttpCode, ImagesApiPath } from '~/common/enums/enums';
 import { handleAsyncApi } from '~/helpers/helpers';
 import { fileStorage as fileStorageService } from '~/services/services';
 
@@ -11,10 +11,10 @@ type Args = {
 const initFileApi = ({ apiRouter, fileStorageService }: Args): Router => {
   const fileRouter = Router();
 
-  apiRouter.use(ApiPath.FILES, fileRouter);
+  apiRouter.use(ApiPath.IMAGES, fileRouter);
 
   fileRouter.post(
-    FilesApiPath.ROOT,
+    ImagesApiPath.ROOT,
     handleAsyncApi(async (req, res) => {
       return res
         .json(await fileStorageService.upload(req.body))

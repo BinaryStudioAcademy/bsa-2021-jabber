@@ -3,7 +3,7 @@ export {
   UsersApiPath,
   AuthApiPath,
   PodcastsApiPath,
-  FilesApiPath,
+  ImagesApiPath,
   EpisodesApiPath,
   CommentsApiPath,
   RecordsApiPath,
