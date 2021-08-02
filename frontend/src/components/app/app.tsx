@@ -8,8 +8,9 @@ import {
   AuthPublicRouter,
 } from 'components/common/common';
 import Auth from 'components/auth/auth';
-import HomePage from 'components/homepage/homepage';
+import Homepage from 'components/homepage/homepage';
 import ConfiguratePodcast from 'components/configurate-podcast/configurate-podcast';
+import Episode from 'components/episode/episode';
 
 const App: React.FC = () => (
   <>
@@ -24,7 +25,8 @@ const App: React.FC = () => (
         component={ConfiguratePodcast}
         exact
       />
-      <AuthPublicRouter path={AppRoute.ROOT} component={HomePage} exact />
+      <AuthPublicRouter path={AppRoute.PODCAST_$ID_EPISODE_$ID} component={Episode} exact />
+      <AuthPublicRouter path={AppRoute.ROOT} component={Homepage} exact />
       <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />
     </Switch>
     <Toaster />

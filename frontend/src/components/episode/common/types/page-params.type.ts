@@ -1,5 +1,6 @@
 type PageParams = {
-  id: string;
+  podcastId: string;
+  episodeId: string;
 };
 
 export type { PageParams };
