@@ -1,11 +1,16 @@
 import jwt from 'jsonwebtoken';
 import { ENV } from '~/common/enums/enums';
-import { Data } from './common/types/types';
+import { TokenPayload } from '~/common/types/types';
 
 class Token {
+  #secret: string;
 
-  create(data: Data): string {
-    return jwt.sign(data, <string>ENV.JWT.SECRET, {});
+  constructor() {
+    this.#secret = String(ENV.JWT.SECRET);
+  }
+
+  create(data: TokenPayload): string {
+    return jwt.sign(data, this.#secret, {});
   }
 }
 

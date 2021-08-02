@@ -7,4 +7,4 @@ export type { Comment, CommentCreatePayload } from './comment/comment';
 export type { Record, RecordCreatePayload } from './record/record';
 export type { UploadFileResponse } from './file/file';
 export type { SignResponse } from './sign/sign';
-
+export type { TokenPayload } from './token/token';
