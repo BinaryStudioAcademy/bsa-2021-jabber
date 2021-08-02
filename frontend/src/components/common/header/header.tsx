@@ -50,7 +50,18 @@ const Header: React.FC = () => {
                   alt="avatar"
                   loading="lazy"
                 />
-                {isVisible ? <UserMenu /> : ''}
+                {isVisible ? (
+                  <div className={styles.dropDown}>
+                    <div className={styles.dropDownList}>
+                      <div className={styles.dropDownListElement}>
+                        + Add Podcast
+                      </div>
+                    </div>
+                    <div className={styles.dropDownArrow}></div>
+                  </div>
+                ) : (
+                  ''
+                )}
               </div>
             </div>
           </>
@@ -63,17 +74,6 @@ const Header: React.FC = () => {
         )}
       </div>
     </header>
-  );
-};
-
-const UserMenu: React.FC = () => {
-  return (
-    <div className={styles.dropDown}>
-      <div className={styles.dropDownList}>
-        <div className={styles.dropDownListElement}>+ Add Podcast</div>
-      </div>
-      <div className={styles.dropDownArrow}></div>
-    </div>
   );
 };
 
