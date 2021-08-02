@@ -1,7 +1,12 @@
 import { Router } from 'express';
+import { image as imageValidationSchema } from '~/validation-schemas/validation-schemas';
 import { ApiPath, HttpCode, ImagesApiPath } from '~/common/enums/enums';
 import { handleAsyncApi } from '~/helpers/helpers';
-import { fileStorage as fileStorageService } from '~/services/services';
+import { validateSchema } from '~/middlewares/middlewares';
+import {
+  fileStorage as fileStorageService,
+  image as imageService,
+} from '~/services/services';
 
 type Args = {
   apiRouter: Router;
@@ -15,9 +20,12 @@ const initFileApi = ({ apiRouter, fileStorageService }: Args): Router => {
 
   fileRouter.post(
     ImagesApiPath.ROOT,
+    validateSchema(imageValidationSchema),
     handleAsyncApi(async (req, res) => {
+      const { url, publicId } = await fileStorageService.upload(req.body);
+
       return res
-        .json(await fileStorageService.upload(req.body))
+        .json(await imageService.create({ url, publicId }))
         .status(HttpCode.CREATED);
     }),
   );

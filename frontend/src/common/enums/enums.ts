@@ -4,7 +4,7 @@ export {
   AuthApiPath,
   PodcastsApiPath,
   EpisodesApiPath,
-  FilesApiPath,
+  ImagesApiPath,
 } from './api/api';
 export { AppRoute, ENV, DataStatus, StorageKey } from './app/app';
 export { HttpHeader, HttpMethod } from './http/http';

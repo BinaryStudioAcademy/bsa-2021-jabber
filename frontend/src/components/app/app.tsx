@@ -8,7 +8,7 @@ import {
   AuthPublicRouter,
 } from 'components/common/common';
 import Auth from 'components/auth/auth';
-// import Homepage from 'components/homepage/homepage';
+import Homepage from 'components/homepage/homepage';
 import ConfiguratePodcast from 'components/configurate-podcast/configurate-podcast';
 import Episode from 'components/episode/episode';
 
@@ -30,11 +30,7 @@ const App: React.FC = () => (
         component={Episode}
         exact
       />
-      <AuthPublicRouter
-        path={AppRoute.ROOT}
-        component={ConfiguratePodcast}
-        exact
-      />
+      <AuthPublicRouter path={AppRoute.ROOT} component={Homepage} exact />
       <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />
     </Switch>
     <Toaster />

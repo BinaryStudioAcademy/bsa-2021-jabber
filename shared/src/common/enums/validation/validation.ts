@@ -5,4 +5,5 @@ export { SignUpValidationRule } from './sign-up-validation-rule.enum';
 export { EpisodeValidationMessage } from './episode-validation-message.enum';
 export { EpisodeValidationRule } from './episode-validation-rule.enum';
 export { PodcastValidationMessage } from './podcast-validation-message.enum';
+export { ImageValidationMessage } from './image-validation-message.enum';
 export { PodcastValidationRule } from './podcast-validation-rule.enum';
