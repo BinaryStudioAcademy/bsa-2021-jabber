@@ -1,12 +1,14 @@
 import { join } from 'path';
 import express, { json, urlencoded } from 'express';
 import Knex from 'knex';
+import passport from 'passport';
 import { Model } from 'objection';
 import { ENV } from '~/common/enums/enums';
 import { initApi } from '~/api/api';
 import { logger } from '~/services/services';
 import { setTraceId, logRequest, handleError } from '~/middlewares/middlewares';
 import knexConfig from '../knexfile';
+import '~/config/passport.config';
 
 const app = express();
 
@@ -16,6 +18,8 @@ app.use(setTraceId);
 app.use(logRequest);
 app.use(json({ limit: '100mb' }));
 app.use(urlencoded({ extended: true, limit: '100mb' }));
+
+app.use(passport.initialize());
 
 initApi(app);
 

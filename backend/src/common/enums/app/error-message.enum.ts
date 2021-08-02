@@ -4,6 +4,7 @@ enum ErrorMessage {
   INTERNAL_SERVER_ERROR = 'Internal Server Error',
   USER_NOT_FOUND = 'User not found',
   WRONG_PASSWORD = 'Wrong password',
+  BAD_TOKEN = 'Token is invalid',
 }
 
 export { ErrorMessage };
