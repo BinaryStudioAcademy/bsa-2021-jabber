@@ -11,10 +11,10 @@ const PodcastsList: React.FC<Props> = ({ podcasts }) => {
 
   return (
     <ul className={styles.list}>
-      {hasPodcasts ? podcasts.map((it) => (
+      { hasPodcasts ? podcasts.map((it) => (
         <Podcast podcast={it} key={it.id}/>
       )) :
-        <span className={styles.oopsMessage}> Oops! There&apos;s nothing here </span>}
+        <span className={styles.oopsMessage}>Oops! There&apos;s nothing here</span> }
     </ul>
   );
 };
