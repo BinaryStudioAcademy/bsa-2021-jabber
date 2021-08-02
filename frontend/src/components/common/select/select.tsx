@@ -24,7 +24,6 @@ const Select: React.FC<Props> = ({
   name,
   control,
   errors,
-  placeholder = '',
 }) => {
   const { field } = useController({ name, control });
 
@@ -33,7 +32,6 @@ const Select: React.FC<Props> = ({
       <span className={styles.label}>{label}</span>
       <select
         {...field}
-        placeholder={placeholder}
         className={styles.input}
       >
         { selectItems.map((item: string) => <option key={item}>{ item }</option>) }
