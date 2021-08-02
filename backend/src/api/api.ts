@@ -7,7 +7,7 @@ import {
   episode as episodeService,
   comment as commentService,
   record as recordService,
-  uploadFile as uploadFileService,
+  fileStorage as fileStorageService,
 } from '~/services/services';
 import { initAuthApi } from './auth/auth.api';
 import { initUsersApi } from './users/users.api';
@@ -54,7 +54,7 @@ const initApi = (app: Router): Router => {
 
   initFileApi({
     apiRouter,
-    uploadFileService,
+    fileStorageService,
   });
 
   return apiRouter;

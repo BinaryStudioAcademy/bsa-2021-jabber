@@ -1,14 +1,14 @@
-import { TableName, PodcastDTOKey } from '~/common/enums/enums';
+import { TableName, ImageDTOKey } from '~/common/enums/enums';
 import { Abstract } from '../abstract/abstract.model';
 
-class Podcast extends Abstract {
-  [PodcastDTOKey.NAME]: string;
+class Image extends Abstract {
+  [ImageDTOKey.URL]: string;
 
-  [PodcastDTOKey.USER_ID]: number;
+  [ImageDTOKey.PUBLIC_ID]: string;
 
   static get tableName(): string {
-    return TableName.PODCASTS;
+    return TableName.IMAGES;
   }
 }
 
-export { Podcast };
+export { Image };

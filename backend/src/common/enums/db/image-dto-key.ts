@@ -1,6 +1,6 @@
-enum PodcastDTOKey {
+enum ImageDTOKey {
   PUBLIC_ID = 'publicId',
   URL = 'url',
 }
 
-export { PodcastDTOKey };
+export { ImageDTOKey };

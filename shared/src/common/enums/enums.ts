@@ -32,3 +32,4 @@ export {
 export { EpisodeCreatePayloadKey, EpisodeType } from './episode/episode';
 export { CommentCreatePayloadKey } from './comment/comment';
 export { RecordCreatePayloadKey } from './record/record';
+export { ImageCreatePayloadKey } from './image/image';
