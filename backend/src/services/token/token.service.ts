@@ -1,12 +1,15 @@
 import jwt from 'jsonwebtoken';
-import { ENV } from '~/common/enums/enums';
 import { TokenPayload } from '~/common/types/types';
+
+type Constructor = {
+  secret: string;
+};
 
 class Token {
   #secret: string;
 
-  constructor() {
-    this.#secret = String(ENV.JWT.SECRET);
+  constructor({ secret }: Constructor) {
+    this.#secret = secret;
   }
 
   create(data: TokenPayload): string {

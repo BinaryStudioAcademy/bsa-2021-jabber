@@ -20,7 +20,9 @@ import { Token } from './token/token.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
-const token = new Token();
+const token = new Token({
+  secret: <string>ENV.JWT.SECRET,
+});
 
 const logger = new Logger({
   logLevel: LogLevel.DEBUG,
