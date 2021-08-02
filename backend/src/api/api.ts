@@ -4,7 +4,6 @@ import {
   auth as authService,
   user as userService,
   podcast as podcastService,
-  image as imageService,
   episode as episodeService,
   comment as commentService,
   record as recordService,

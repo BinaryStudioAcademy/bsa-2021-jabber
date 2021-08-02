@@ -5,15 +5,19 @@ import { Model } from 'objection';
 import { ENV } from '~/common/enums/enums';
 import { initApi } from '~/api/api';
 import { logger } from '~/services/services';
-import { setTraceId, logRequest, handleError } from '~/middlewares/middlewares';
+import {
+  setTraceId as setTraceIdMiddleware,
+  logRequest as logRequestMiddleware,
+  handleError as handleErrorMiddleware,
+} from '~/middlewares/middlewares';
 import knexConfig from '../knexfile';
 
 const app = express();
 
 Model.knex(Knex(knexConfig[ENV.APP.NODE_ENV]));
 
-app.use(setTraceId);
-app.use(logRequest);
+app.use(setTraceIdMiddleware);
+app.use(logRequestMiddleware);
 app.use(json({ limit: '100mb' }));
 app.use(urlencoded({ extended: true, limit: '100mb' }));
 
@@ -24,7 +28,7 @@ app.use('*', (_req, res) => {
   return res.sendFile(join(__dirname, '../public', 'index.html'));
 });
 
-app.use(handleError);
+app.use(handleErrorMiddleware);
 
 const server = app.listen(ENV.APP.SERVER_PORT, () => {
   logger.log(

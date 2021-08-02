@@ -11,6 +11,7 @@ const Homepage: React.FC = () => {
     dataStatus: homepage.dataStatus,
   }));
   const dispatch = useDispatch();
+  const hasPodcasts = Boolean(podcasts.length);
 
   useEffect(() => {
     dispatch(homepageActions.loadPodcasts());
@@ -23,7 +24,10 @@ const Homepage: React.FC = () => {
   return (
     <main className={styles.main}>
       <h2 className={styles.title}>All podcasts</h2>
-      <PodcastList podcasts={podcasts} />
+      { hasPodcasts ?
+        <PodcastList podcasts={podcasts}/> :
+        <span className={styles.oopsMessage}>Oops! There&apos;s nothing here</span>
+      }
     </main>
   );
 };
