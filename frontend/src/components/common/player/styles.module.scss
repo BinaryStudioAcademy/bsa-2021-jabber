@@ -1,3 +1,5 @@
+$primary_color: #f3427f;
+
 .playerRewindSeconds {
   position: absolute;
 
@@ -70,8 +72,46 @@
 }
 
 .playerVolumeBtn {
-  fill: #f3427f;
+  fill: $primary_color;
   height: 20px;
+}
+
+.playerRateBtn {
+  margin-left: 20px;
+
+  height: 26px;
+  width: 36px;
+
+  position: relative;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+
+  & span {
+    position: absolute;
+
+    left: 50%;
+    top: 75%;
+
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    font-weight: bold;
+    color: $primary_color;
+  }
+
+  & svg {
+    position: absolute;
+    transform: translate(-50%, -50%);
+
+    left: 50%;
+    top: 40%;
+
+    fill: $primary_color;
+
+    &:nth-child(2) {
+      transform-origin: bottom center;
+    }
+  }
 }
 
 :global {
@@ -84,7 +124,7 @@
     &_progress-indicator,
     &_volume-indicator,
     &_progress-filled {
-      background-color: #f3427f;
+      background-color: $primary_color;
     }
 
     &_progress {
@@ -146,7 +186,7 @@
           top: 50%;
 
           transform: translate(-3.5px, -50%);
-          background-color: #f3427f;
+          background-color: $primary_color;
         }
 
         &:hover {
