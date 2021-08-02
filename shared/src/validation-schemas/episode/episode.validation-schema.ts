@@ -6,6 +6,8 @@ import {
 } from '~/common/enums/enums';
 import { EpisodeCreatePayload } from '~/common/types/types';
 
+const episodeTypes = Object.values(EpisodeType)
+
 const episode = Joi.object<EpisodeCreatePayload>({
   [EpisodeCreatePayloadKey.NAME]: Joi.string()
     .min(EpisodeValidationRule.EPISODE_NAME_MIN_LENGTH)
@@ -31,7 +33,7 @@ const episode = Joi.object<EpisodeCreatePayload>({
       'number.integer': EpisodeValidationMessage.PODCAST_ID_NUMBER_FORMAT,
     }),
   [EpisodeCreatePayloadKey.TYPE]: Joi.string()
-    .valid(...Object.values(EpisodeType))
+    .valid(...episodeTypes)
     .required()
     .messages({
       'string.empty': EpisodeValidationMessage.TYPE_REQUIRE,

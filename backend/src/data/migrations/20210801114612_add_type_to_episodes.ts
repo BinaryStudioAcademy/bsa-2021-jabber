@@ -1,11 +1,19 @@
 import { Knex } from 'knex';
 
+const EpisodeType = {
+  PUBLIC: 'public',
+  PRIVATE: 'private',
+  UNLISTED: 'unlisted',
+} as const;
+
 const TABLE_NAME = 'episodes';
 const COLUMN_NAME = 'type';
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.table(TABLE_NAME, (table) => {
-    table.enu(COLUMN_NAME, ['public', 'private', 'unlisted']).defaultTo('public');
+    table
+      .enum(COLUMN_NAME, [EpisodeType.PUBLIC, EpisodeType.PRIVATE, EpisodeType.UNLISTED])
+      .defaultTo(EpisodeType.PUBLIC);
   });
 }
 
