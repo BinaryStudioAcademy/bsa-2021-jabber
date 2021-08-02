@@ -1,14 +1,29 @@
 import { HttpError } from 'exceptions/exceptions';
-import { ContentType, HttpHeader, HttpMethod } from 'common/enums/enums';
+import { HttpHeader, HttpMethod, StorageKey } from 'common/enums/enums';
 import { HttpOptions } from 'common/types/types';
+import { Storage, GetHeadersProps } from './common/types/types';
+
+type Constructor = {
+  storage: Storage;
+};
 
 class Http {
+  #storage: Storage;
+
+  constructor({ storage }: Constructor) {
+    this.#storage = storage;
+  }
+
   load<T = unknown>(
     url: string,
     options: Partial<HttpOptions> = {},
   ): Promise<T> {
-    const { method = HttpMethod.GET, payload = null, contentType } = options;
-    const headers = this.getHeaders(contentType);
+    const { method = HttpMethod.GET, payload = null, contentType, hasAuth = true,
+    } = options;
+    const headers = this.getHeaders({
+      contentType,
+      hasAuth,
+    });
 
     return fetch(url, {
       method,
@@ -20,11 +35,17 @@ class Http {
       .catch(this.throwError);
   }
 
-  private getHeaders(contentType?: ContentType): Headers {
+  private getHeaders({ contentType, hasAuth }: GetHeadersProps): Headers {
     const headers = new Headers();
 
     if (contentType) {
       headers.append(HttpHeader.CONTENT_TYPE, contentType);
+    }
+
+    if (hasAuth) {
+      const token = this.#storage.getItem(StorageKey.TOKEN);
+
+      headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token}`);
     }
 
     return headers;
