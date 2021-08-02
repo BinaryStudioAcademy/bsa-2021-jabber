@@ -16,8 +16,13 @@ import { Episode } from './episode/episode.service';
 import { Comment } from './comment/comment.service';
 import { Record } from './record/record.service';
 import { FileStorage } from './file-storage/file-storage.service';
+import { Token } from './token/token.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
+
+const token = new Token({
+  secret: <string>ENV.JWT.SECRET,
+});
 
 const logger = new Logger({
   logLevel: LogLevel.DEBUG,
@@ -26,6 +31,7 @@ const logger = new Logger({
 
 const auth = new Auth({
   userRepository,
+  tokenService: token,
 });
 
 const user = new User({
@@ -62,4 +68,5 @@ export {
   comment,
   record,
   fileStorage,
+  token,
 };
