@@ -50,7 +50,7 @@ const Header: React.FC = () => {
                   alt="avatar"
                   loading="lazy"
                 />
-                {isVisible ? (
+                {isVisible && (
                   <div className={styles.dropDown}>
                     <div className={styles.dropDownList}>
                       <div className={styles.dropDownListElement}>
@@ -59,8 +59,6 @@ const Header: React.FC = () => {
                     </div>
                     <div className={styles.dropDownArrow}></div>
                   </div>
-                ) : (
-                  ''
                 )}
               </div>
             </div>
