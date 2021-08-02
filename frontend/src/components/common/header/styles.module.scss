@@ -46,6 +46,7 @@
   width: 43px;
   margin-left: 40px;
   position: relative;
+  cursor: pointer;
 }
 .profileAvatar {
   border-radius: 50%;
@@ -98,6 +99,7 @@
   border-radius: 5px;
   margin: 5px 0;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .dropDownListElement:hover {
