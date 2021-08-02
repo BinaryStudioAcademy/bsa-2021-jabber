@@ -1,14 +1,15 @@
 import { HttpError } from 'exceptions/exceptions';
 import { HttpHeader, HttpMethod, StorageKey } from 'common/enums/enums';
 import { HttpOptions } from 'common/types/types';
-import { Storage, GetHeadersProps } from './common/types/types';
+import { GetHeadersProps } from './common/types/types';
+import { storage as storageService } from '../services';
 
 type Constructor = {
-  storage: Storage;
+  storage: typeof storageService;
 };
 
 class Http {
-  #storage: Storage;
+  #storage: typeof storageService;
 
   constructor({ storage }: Constructor) {
     this.#storage = storage;

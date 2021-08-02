@@ -1,18 +1,22 @@
 import { UserCreatePayload, UserSignInPayload, SignResponse } from '~/common/types/types';
 import { user as userRep } from '~/data/repositories/repositories';
-import { encrypt, checkIsCryptsEqual, createToken } from '~/helpers/helpers';
+import { encrypt, checkIsCryptsEqual } from '~/helpers/helpers';
 import { HttpError } from '~/exceptions/exceptions';
 import { HttpCode, ErrorMessage } from '~/common/enums/enums';
+import { token } from '../services';
 
 type Constructor = {
   userRepository: typeof userRep;
+  tokenService: typeof token;
 };
 
 class Auth {
   #userRepository: typeof userRep;
+  #tokenService: typeof token;
 
-  constructor({ userRepository }: Constructor) {
+  constructor({ userRepository, tokenService }: Constructor) {
     this.#userRepository = userRepository;
+    this.#tokenService = tokenService;
   }
 
   public async signUp(payload: UserCreatePayload): Promise<SignResponse> {
@@ -21,7 +25,9 @@ class Auth {
       ...payload,
       password: await encrypt(password),
     });
-    const token = createToken(user.createdAt);
+    const token = this.#tokenService.create({
+      userId: user.id,
+    });
 
     return {
       token,
@@ -32,7 +38,9 @@ class Auth {
   public async signIn(payload: UserSignInPayload): Promise<SignResponse> {
     const { password, email } = payload;
     const user = await this.#userRepository.getByEmail(email);
-    const token = createToken(user.createdAt);
+    const token = this.#tokenService.create({
+      userId: user.id,
+    });
 
     const hasUser = Boolean(user);
 

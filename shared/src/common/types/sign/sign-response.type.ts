@@ -2,7 +2,7 @@ import { User } from '../types';
 
 type SignResponse = {
   token: string;
-  user: User | never;
+  user: User;
 };
 
 export type { SignResponse };

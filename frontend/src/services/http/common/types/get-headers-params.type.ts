@@ -1,7 +1,7 @@
 import { ContentType } from 'common/enums/enums';
 
 type GetHeadersProps = {
-  contentType: ContentType | undefined;
+  contentType?: ContentType;
   hasAuth: boolean;
 };
 
