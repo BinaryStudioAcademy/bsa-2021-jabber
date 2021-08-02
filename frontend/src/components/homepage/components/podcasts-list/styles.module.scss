@@ -5,4 +5,11 @@
   margin: 0;
   padding: 0;
   list-style: none;
+
+  .oopsMessage {
+    color: var(--color-header-background);
+    font-size: 22px;
+    margin: 250px auto;
+    font-weight: bold;
+  }
 }

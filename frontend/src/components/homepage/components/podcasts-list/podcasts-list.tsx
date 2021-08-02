@@ -8,6 +8,7 @@ type Props = {
 
 const PodcastsList: React.FC<Props> = ({ podcasts }) => (
   <ul className={styles.list}>
+    { podcasts.length === 0 && <span className={ styles.oopsMessage }> Oops! There&apos;s nothing here </span> }
     {podcasts.map((it) => (
       <Podcast podcast={it} key={it.id} />
     ))}
