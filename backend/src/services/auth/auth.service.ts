@@ -1,6 +1,6 @@
-import { UserCreatePayload, User, UserSignInPayload } from '~/common/types/types';
+import { UserCreatePayload, UserSignInPayload, SignResponse } from '~/common/types/types';
 import { user as userRep } from '~/data/repositories/repositories';
-import { encrypt, checkIsCryptsEqual } from '~/helpers/helpers';
+import { encrypt, checkIsCryptsEqual, createToken } from '~/helpers/helpers';
 import { HttpError } from '~/exceptions/exceptions';
 import { HttpCode, ErrorMessage } from '~/common/enums/enums';
 
@@ -15,18 +15,25 @@ class Auth {
     this.#userRepository = userRepository;
   }
 
-  public async signUp(payload: UserCreatePayload): Promise<User> {
+  public async signUp(payload: UserCreatePayload): Promise<SignResponse> {
     const { password } = payload;
-
-    return this.#userRepository.create({
+    const user = await this.#userRepository.create({
       ...payload,
       password: await encrypt(password),
     });
+    const token = createToken(user.createdAt);
+
+    return {
+      token,
+      user,
+    };
   }
 
-  public async signIn(payload: UserSignInPayload): Promise<User | never> {
+  public async signIn(payload: UserSignInPayload): Promise<SignResponse> {
     const { password, email } = payload;
     const user = await this.#userRepository.getByEmail(email);
+    const token = createToken(user.createdAt);
+
     const hasUser = Boolean(user);
 
     if (!hasUser) {
@@ -45,7 +52,10 @@ class Auth {
       });
     }
 
-    return user;
+    return {
+      token,
+      user,
+    };
   }
 }
 
