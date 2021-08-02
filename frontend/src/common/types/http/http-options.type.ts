@@ -4,7 +4,7 @@ type HttpOptions = {
   method: HttpMethod;
   contentType: ContentType;
   payload: BodyInit | null;
-  data?: FormData;
+  hasAuth: boolean;
 };
 
 export type { HttpOptions };

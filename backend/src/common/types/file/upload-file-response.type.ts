@@ -1,7 +1,7 @@
 type UploadFileResponse = {
   url: string;
   bytes: number;
-  public_id: string;
+  publicId: string;
 };
 
 export type { UploadFileResponse };

@@ -5,8 +5,16 @@ import { PodcastApi } from './podcast-api/podcast-api.service';
 import { ImageApi } from './image-api/image-api.service';
 import { Notification } from './notification/notification.service';
 import { Datauri } from './datauri/datauri.service';
+import { EpisodeApi } from './episode-api/episode-api.service';
+import { Storage } from './storage/storage.service';
 
-const http = new Http();
+const storage = new Storage({
+  storage: localStorage,
+});
+
+const http = new Http({
+  storage,
+});
 
 const datauri = new Datauri();
 
@@ -26,6 +34,19 @@ const imageApi = new ImageApi({
   apiPrefix: ENV.API_PATH,
 });
 
+const episodeApi = new EpisodeApi({
+  http,
+  apiPrefix: ENV.API_PATH,
+});
+
 const notification = new Notification();
 
-export { authApi, notification, podcastApi, imageApi, datauri };
+export {
+  authApi,
+  notification,
+  podcastApi,
+  episodeApi,
+  storage,
+  imageApi,
+  datauri,
+};

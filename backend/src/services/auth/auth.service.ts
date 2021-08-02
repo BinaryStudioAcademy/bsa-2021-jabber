@@ -1,32 +1,47 @@
-import { UserCreatePayload, User, UserSignInPayload } from '~/common/types/types';
+import { UserCreatePayload, UserSignInPayload, SignResponse } from '~/common/types/types';
 import { user as userRep } from '~/data/repositories/repositories';
 import { encrypt, checkIsCryptsEqual } from '~/helpers/helpers';
 import { HttpError } from '~/exceptions/exceptions';
 import { HttpCode, ErrorMessage } from '~/common/enums/enums';
+import { token } from '../services';
 
 type Constructor = {
   userRepository: typeof userRep;
+  tokenService: typeof token;
 };
 
 class Auth {
   #userRepository: typeof userRep;
+  #tokenService: typeof token;
 
-  constructor({ userRepository }: Constructor) {
+  constructor({ userRepository, tokenService }: Constructor) {
     this.#userRepository = userRepository;
+    this.#tokenService = tokenService;
   }
 
-  public async signUp(payload: UserCreatePayload): Promise<User> {
+  public async signUp(payload: UserCreatePayload): Promise<SignResponse> {
     const { password } = payload;
-
-    return this.#userRepository.create({
+    const user = await this.#userRepository.create({
       ...payload,
       password: await encrypt(password),
     });
+    const token = this.#tokenService.create({
+      userId: user.id,
+    });
+
+    return {
+      token,
+      user,
+    };
   }
 
-  public async signIn(payload: UserSignInPayload): Promise<User | never> {
+  public async signIn(payload: UserSignInPayload): Promise<SignResponse> {
     const { password, email } = payload;
     const user = await this.#userRepository.getByEmail(email);
+    const token = this.#tokenService.create({
+      userId: user.id,
+    });
+
     const hasUser = Boolean(user);
 
     if (!hasUser) {
@@ -45,7 +60,10 @@ class Auth {
       });
     }
 
-    return user;
+    return {
+      token,
+      user,
+    };
   }
 }
 
