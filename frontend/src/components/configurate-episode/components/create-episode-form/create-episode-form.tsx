@@ -1,14 +1,9 @@
 import { EpisodeCreatePayload } from 'common/types/types';
-import {
-  ButtonType,
-  DataStatus,
-  InputType,
-  EpisodeCreatePayloadKey,
-} from 'common/enums/enums';
+import { ButtonType, DataStatus, EpisodeCreatePayloadKey, EpisodeType, InputType } from 'common/enums/enums';
 import { episode as createEpisodeValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
 import styles from './styles.module.scss';
-import { Button, Input } from 'components/common/common';
+import { Button, Input, Select } from 'components/common/common';
 import { DEFAULT_CREATE_EPISODE_PAYLOAD } from './common/constants';
 
 type Props = {
@@ -43,6 +38,13 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
           label="Description"
           placeholder="Enter episode description"
           name={EpisodeCreatePayloadKey.DESCRIPTION}
+          control={control}
+          errors={errors}
+        />
+        <Select
+          selectItems={[EpisodeType.PUBLIC, EpisodeType.PRIVATE, EpisodeType.UNLISTED]}
+          label={'Type'}
+          name={EpisodeCreatePayloadKey.TYPE}
           control={control}
           errors={errors}
         />
