@@ -8,7 +8,7 @@ const Episode: React.FC = () => {
   const { id } = useParams<PageParams>();
 
   const { episodeInfo } = useAppSelector(({ episode }) => ({
-    episodeInfo: episode.episodeInfo,
+    episodeInfo: episode.episode,
   }));
 
   useEffect(() => {

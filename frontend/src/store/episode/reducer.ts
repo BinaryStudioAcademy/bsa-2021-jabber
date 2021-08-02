@@ -5,12 +5,12 @@ import { loadEpisode } from './actions';
 
 type State = {
   dataStatus: DataStatus;
-  episodeInfo: Episode | null;
+  episode: Episode | null;
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
-  episodeInfo: null,
+  episode: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -19,7 +19,7 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadEpisode.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
-    state.episodeInfo = action.payload;
+    state.episode = action.payload;
   });
   builder.addCase(loadEpisode.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
