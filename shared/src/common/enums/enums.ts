@@ -28,6 +28,6 @@ export {
   PodcastValidationRule,
   PodcastValidationMessage,
 } from './validation/validation';
-export { EpisodeCreatePayloadKey } from './episode/episode';
+export { EpisodeCreatePayloadKey, EpisodeType } from './episode/episode';
 export { CommentCreatePayloadKey } from './comment/comment';
 export { RecordCreatePayloadKey } from './record/record';
