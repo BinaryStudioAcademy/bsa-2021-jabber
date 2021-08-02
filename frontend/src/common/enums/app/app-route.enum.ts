@@ -7,6 +7,7 @@ enum AppRoute {
   PODCASTS_EDIT = '/podcasts/edit',
   PODCASTS_EDIT_$ID = '/podcasts/edit/:id?',
   PODCASTS_$ID_EPISODES_$ID  = '/podcasts/:podcastId/episodes/:episodeId',
+  PODCAST_$ID_EPISODE_EDIT_$ID = '/podcasts/:podcastId/episode/edit/:episodeId?',
   ANY = '*',
 }
 
