@@ -5,6 +5,7 @@ type EpisodeCreatePayload = {
   [EpisodeCreatePayloadKey.USER_ID]: number;
   [EpisodeCreatePayloadKey.PODCAST_ID]: number;
   [EpisodeCreatePayloadKey.TYPE]: EpisodeType;
+  [EpisodeCreatePayloadKey.DESCRIPTION]: string;
 };
 
 export type { EpisodeCreatePayload };

@@ -8,6 +8,7 @@ type Episode = {
   createdAt: string;
   updatedAt: string;
   type: EpisodeType;
+  description: string;
 };
 
 export type { Episode };
