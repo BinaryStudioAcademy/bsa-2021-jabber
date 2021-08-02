@@ -38,6 +38,14 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
           control={control}
           errors={errors}
         />
+        <Input
+          type={InputType.TEXT}
+          label="Description"
+          placeholder="Enter episode description"
+          name={EpisodeCreatePayloadKey.DESCRIPTION}
+          control={control}
+          errors={errors}
+        />
         <Button label="Upload" type={ButtonType.SUBMIT} />
       </fieldset>
     </form>

@@ -10,7 +10,7 @@ import {
 import Auth from 'components/auth/auth';
 import Homepage from 'components/homepage/homepage';
 import ConfiguratePodcast from 'components/configurate-podcast/configurate-podcast';
-import ConfigurateEpisode from 'components/create-episode/episode';
+import ConfigurateEpisode from 'components/configurate-episode/configurate-episode';
 import Episode from 'components/episode/episode';
 
 const App: React.FC = () => (

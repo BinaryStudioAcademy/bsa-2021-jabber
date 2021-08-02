@@ -5,7 +5,7 @@ import { EpisodeCreatePayload } from 'common/types/types';
 import { PageParams } from './common/types/types';
 import { CreateEpisodeForm } from './components/components';
 
-const Episode: React.FC = () => {
+const ConfigurateEpisode: React.FC = () => {
   const { episodeId } = useParams<PageParams>();
   const dispatch = useDispatch();
 
@@ -24,4 +24,4 @@ const Episode: React.FC = () => {
   );
 };
 
-export default Episode;
+export default ConfigurateEpisode;
