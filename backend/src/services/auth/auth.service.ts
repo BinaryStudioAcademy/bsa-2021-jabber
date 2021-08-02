@@ -1,6 +1,8 @@
-import { UserCreatePayload, User } from '~/common/types/types';
+import { UserCreatePayload, User, UserSignInPayload } from '~/common/types/types';
 import { user as userRep } from '~/data/repositories/repositories';
-import { encrypt } from '~/helpers/helpers';
+import { encrypt, checkIsCryptsEqual } from '~/helpers/helpers';
+import { HttpError } from '~/exceptions/exceptions';
+import { HttpCode, ErrorMessage } from '~/common/enums/enums';
 
 type Constructor = {
   userRepository: typeof userRep;
@@ -20,6 +22,30 @@ class Auth {
       ...payload,
       password: await encrypt(password),
     });
+  }
+
+  public async signIn(payload: UserSignInPayload): Promise<User | never> {
+    const { password, email } = payload;
+    const user = await this.#userRepository.getByEmail(email);
+    const hasUser = Boolean(user);
+
+    if (!hasUser) {
+      throw new HttpError({
+        status: HttpCode.NOT_FOUND,
+        message: ErrorMessage.USER_NOT_FOUND,
+      });
+    }
+
+    const isCryptsEqual = await checkIsCryptsEqual(password, user.password);
+
+    if (!isCryptsEqual) {
+      throw new HttpError({
+        status: HttpCode.BAD_REQUEST,
+        message: ErrorMessage.WRONG_PASSWORD,
+      });
+    }
+
+    return user;
   }
 }
 

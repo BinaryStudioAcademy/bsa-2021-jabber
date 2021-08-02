@@ -1,21 +1,29 @@
 import { AppRoute } from 'common/enums/enums';
+import Auth from 'components/auth/auth';
 import {
   Switch,
   Route,
   Toaster,
-  Header,
   NotFound,
+  AuthPrivateRouter,
+  AuthPublicRouter,
 } from 'components/common/common';
-import SignUp from 'components/sign-up/sign-up';
-import SignIn from 'components/sign-in/sign-in';
+import ConfiguratePodcast from 'components/configurate-podcast/configurate-podcast';
 
 const App: React.FC = () => (
   <>
-    <Header />
     <Switch>
-      <Route path={AppRoute.SIGN_IN} component={SignIn} exact />
-      <Route path={AppRoute.SIGN_UP} component={SignUp} exact />
-      <Route path={AppRoute.ANY} component={NotFound} />
+      <Route
+        path={[AppRoute.SIGN_UP, AppRoute.SIGN_IN]}
+        component={Auth}
+        exact
+      />
+      <AuthPrivateRouter
+        path={AppRoute.POCAST_EDIT_$ID}
+        component={ConfiguratePodcast}
+        exact
+      />
+      <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />
     </Switch>
     <Toaster />
   </>
