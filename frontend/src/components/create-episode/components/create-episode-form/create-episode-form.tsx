@@ -21,8 +21,8 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
     defaultValues: DEFAULT_CREATE_EPISODE_PAYLOAD,
   } );
 
-  const { dataStatus } = useAppSelector(({ episodepage }) => ({
-    dataStatus: episodepage.dataStatus,
+  const { dataStatus } = useAppSelector(({ episode }) => ({
+    dataStatus: episode.dataStatus,
   }));
 
   const isFormDisable = dataStatus === DataStatus.PENDING;

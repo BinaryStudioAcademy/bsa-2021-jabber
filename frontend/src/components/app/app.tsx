@@ -9,6 +9,7 @@ import {
   AuthPublicRouter,
 } from 'components/common/common';
 import ConfiguratePodcast from 'components/configurate-podcast/configurate-podcast';
+import Episode from 'components/create-episode/episode';
 
 const App: React.FC = () => (
   <>
@@ -23,6 +24,7 @@ const App: React.FC = () => (
         component={ConfiguratePodcast}
         exact
       />
+      <AuthPublicRouter path={AppRoute.EPISODE_CREATE_$ID} component={Episode} exact />
       <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />
     </Switch>
     <Toaster />

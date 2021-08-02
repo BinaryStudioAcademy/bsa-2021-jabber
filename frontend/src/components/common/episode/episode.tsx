@@ -1,6 +1,6 @@
 import { useAppSelector, useDispatch, useLocation, useEffect } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
-import { episodepage as episodeActions } from 'store/actions';
+import { episode as episodeActions } from 'store/actions';
 import styles from './styles.module.scss';
 
 const Episode: React.FC = () => {
@@ -12,8 +12,8 @@ const Episode: React.FC = () => {
     dispatch(episodeActions.loadEpisode(episodeId));
   }, []);
 
-  const { episode } = useAppSelector(({ episodepage }: RootState) => ({
-    episode: episodepage.episode,
+  const { episode } = useAppSelector(({ episode }: RootState) => ({
+    episode: episode.episode,
   }));
 
   const hasEpisode = Boolean(episode);
