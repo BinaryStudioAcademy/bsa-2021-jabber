@@ -3,6 +3,7 @@ import { Http } from './http/http.service';
 import { AuthApi } from './auth-api/auth-api.service';
 import { PodcastApi } from './podcast-api/podcast-api.service';
 import { Notification } from './notification/notification.service';
+import { Storage } from './storage/storage.service';
 
 const http = new Http();
 
@@ -18,4 +19,8 @@ const podcastApi = new PodcastApi({
 
 const notification = new Notification();
 
-export { authApi, notification, podcastApi };
+const storage = new Storage({
+  storage: localStorage,
+});
+
+export { authApi, notification, podcastApi, storage };
