@@ -3,6 +3,7 @@ import H5AudioPlayer from 'react-h5-audio-player';
 import { useRef, useImperativeHandle } from 'hooks/hooks';
 import 'react-h5-audio-player/lib/styles.css';
 import styles from './styles.module.scss';
+import { getAllowedClasses } from 'helpers/dom/dom';
 
 type Props = {
   src: string;
@@ -44,11 +45,11 @@ const Player = forwardRef<Ref, Props>(
         customIcons={{
           play: (
             <div
-              className={[
+              className={getAllowedClasses([
                 styles.playerCommonBtn,
                 styles.playerMainBtn,
                 styles.playerPlayBtn,
-              ].join(' ')}
+              ])}
             >
               <svg viewBox="0 0 14 20" xmlns="http://www.w3.org/2000/svg">
                 <path d="M13.5383 9.38518L1.23076 0.154505C0.999989 -0.0208782 0.686147 -0.0485703 0.426149 0.0821977C0.164614 0.212966 0 0.479117 0 0.769883L0 19.2312C0 19.522 0.164614 19.7882 0.424611 19.9189C0.533841 19.9728 0.652301 20.0005 0.769223 20.0005C0.932298 20.0005 1.09537 19.9482 1.23076 19.8466L13.5383 10.6159C13.7322 10.4713 13.846 10.2421 13.846 10.0006C13.846 9.75903 13.7322 9.5298 13.5383 9.38518Z" />
@@ -57,9 +58,10 @@ const Player = forwardRef<Ref, Props>(
           ),
           pause: (
             <div
-              className={[styles.playerCommonBtn, styles.playerMainBtn].join(
-                ' ',
-              )}
+              className={getAllowedClasses([
+                styles.playerCommonBtn,
+                styles.playerMainBtn,
+              ])}
             >
               <svg viewBox="0 0 18 20" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6.08339 0H1.91675C1.22757 0 0.666748 0.56082 0.666748 1.25V18.75C0.666748 19.4392 1.22757 20 1.91675 20H6.08343C6.77261 20 7.33343 19.4392 7.33343 18.75V1.25C7.33339 0.56082 6.77257 0 6.08339 0Z" />
@@ -70,9 +72,10 @@ const Player = forwardRef<Ref, Props>(
           next: (
             <svg
               viewBox="0 0 20 20"
-              className={[styles.playerCommonBtn, styles.playerNextBtn].join(
-                ' ',
-              )}
+              className={getAllowedClasses([
+                styles.playerCommonBtn,
+                styles.playerNextBtn,
+              ])}
               xmlns="http://www.w3.org/2000/svg"
             >
               <path d="M13.5383 9.38518L1.23076 0.154505C0.999989 -0.0208782 0.686147 -0.0485703 0.426149 0.0821977C0.164614 0.212966 0 0.479117 0 0.769883L0 19.2312C0 19.522 0.164614 19.7882 0.424611 19.9189C0.533841 19.9728 0.652301 20.0005 0.769223 20.0005C0.932298 20.0005 1.09537 19.9482 1.23076 19.8466L13.5383 10.6159C13.7322 10.4713 13.846 10.2421 13.846 10.0006C13.846 9.75903 13.7322 9.5298 13.5383 9.38518Z" />
@@ -82,10 +85,10 @@ const Player = forwardRef<Ref, Props>(
           previous: (
             <svg
               viewBox="0 0 20 20"
-              className={[
+              className={getAllowedClasses([
                 styles.playerCommonBtn,
                 styles.playerPreviousBtn,
-              ].join(' ')}
+              ])}
               xmlns="http://www.w3.org/2000/svg"
             >
               <path d="M6.46168 10.6148L18.7692 19.8455C19 20.0209 19.3139 20.0486 19.5739 19.9178C19.8354 19.787 20 19.5209 20 19.2301L20 0.768761C20 0.477993 19.8354 0.211842 19.5754 0.0810737C19.4662 0.0272274 19.3477 -0.000463543 19.2308 -0.000463553C19.0677 -0.000463567 18.9046 0.0518435 18.7692 0.153381L6.46168 9.38406C6.26784 9.52867 6.15399 9.7579 6.15399 9.99944C6.15399 10.241 6.26784 10.4702 6.46168 10.6148Z" />
@@ -94,9 +97,10 @@ const Player = forwardRef<Ref, Props>(
           ),
           rewind: (
             <div
-              className={[styles.playerCommonBtn, styles.playerRewindBtn].join(
-                ' ',
-              )}
+              className={getAllowedClasses([
+                styles.playerCommonBtn,
+                styles.playerRewindBtn,
+              ])}
             >
               <span className={styles.playerRewindSeconds}>
                 {skipTime / MILLISECONDS_IN_SECOND}
@@ -108,9 +112,10 @@ const Player = forwardRef<Ref, Props>(
           ),
           forward: (
             <div
-              className={[styles.playerCommonBtn, styles.playerRewindBtn].join(
-                ' ',
-              )}
+              className={getAllowedClasses([
+                styles.playerCommonBtn,
+                styles.playerRewindBtn,
+              ])}
             >
               <span className={styles.playerRewindSeconds}>
                 {skipTime / MILLISECONDS_IN_SECOND}
