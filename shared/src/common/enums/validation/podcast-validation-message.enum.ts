@@ -6,6 +6,9 @@ const PodcastValidationMessage = {
   PODCAST_NAME_MAX_LENGTH: `Podcast name must be at most ${PodcastValidationRule.PODCAST_NAME_MAX_LENGTH} characters long`,
   USER_ID_REQUIRE: 'User id required',
   USER_ID_NUMBER_FORMAT: 'User id must be an integer',
+  PODCAST_DESCRIPTION_REQUIRE: 'Podcast description is required',
+  PODCAST_DESCRIPTION_MIN_LENGTH: `Podcast description must be at least ${PodcastValidationRule.PODCAST_DESCRIPTION_MIN_LENGTH} character long`,
+  PODCAST_DESCRIPTION_MAX_LENGTH: `Podcast description must be at most ${PodcastValidationRule.PODCAST_DESCRIPTION_MAX_LENGTH} characters long`,
 } as const;
 
 export { PodcastValidationMessage };
