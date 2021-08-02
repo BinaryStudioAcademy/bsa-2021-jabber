@@ -37,6 +37,7 @@ const episode = Joi.object<EpisodeCreatePayload>({
     .required()
     .messages({
       'string.empty': EpisodeValidationMessage.TYPE_REQUIRE,
+    }),
   [EpisodeCreatePayloadKey.DESCRIPTION]: Joi.string()
     .min(EpisodeValidationRule.EPISODE_DESCRIPTION_MIN_LENGTH)
     .max(EpisodeValidationRule.EPISODE_DESCRIPTION_MAX_LENGTH)
