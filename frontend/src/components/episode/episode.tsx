@@ -25,7 +25,7 @@ const Episode: React.FC = () => {
             <div className={styles.description}>
               <h1>There will be a podcast group here.</h1>
               <h3>{episodeInfo?.name}</h3>
-              <p>There will be a episode description here.</p>
+              <p>{episodeInfo?.description}</p>
             </div>
             <div className={styles.logo}>
               <img src="#" width="280" height="280" loading="lazy" alt={episodeInfo?.name} />
