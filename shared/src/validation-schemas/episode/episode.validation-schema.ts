@@ -6,7 +6,7 @@ import {
 } from '~/common/enums/enums';
 import { EpisodeCreatePayload } from '~/common/types/types';
 
-const episodeTypes = Object.values(EpisodeType)
+const episodeTypes = Object.values(EpisodeType);
 
 const episode = Joi.object<EpisodeCreatePayload>({
   [EpisodeCreatePayloadKey.NAME]: Joi.string()
