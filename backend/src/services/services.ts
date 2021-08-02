@@ -32,6 +32,7 @@ const logger = new Logger({
 const auth = new Auth({
   userRepository,
   tokenService: token,
+  secret: <string>ENV.JWT.SECRET,
 });
 
 const user = new User({

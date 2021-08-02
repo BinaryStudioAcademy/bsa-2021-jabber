@@ -4,19 +4,24 @@ import { encrypt, checkIsCryptsEqual } from '~/helpers/helpers';
 import { HttpError } from '~/exceptions/exceptions';
 import { HttpCode, ErrorMessage } from '~/common/enums/enums';
 import { token } from '../services';
+import { User as TUser } from '~/common/types/types';
+import jwt from 'jsonwebtoken';
 
 type Constructor = {
   userRepository: typeof userRep;
   tokenService: typeof token;
+  secret: string;
 };
 
 class Auth {
   #userRepository: typeof userRep;
   #tokenService: typeof token;
+  #secret: string;
 
-  constructor({ userRepository, tokenService }: Constructor) {
+  constructor({ userRepository, tokenService, secret }: Constructor) {
     this.#userRepository = userRepository;
     this.#tokenService = tokenService;
+    this.#secret = secret;
   }
 
   public async signUp(payload: UserCreatePayload): Promise<SignResponse> {
@@ -65,6 +70,25 @@ class Auth {
       user,
     };
   }
+
+  public getDecodedAccessToken(token: string): any {
+    const decodedToken = jwt.verify(token, this.#secret, (err, decode) => {
+      if (err) {
+        throw new HttpError({
+          status: HttpCode.INTERNAL_SERVER_ERROR,
+          message: ErrorMessage.INTERNAL_SERVER_ERROR,
+        });
+      }
+      return decode;
+    })
+    return decodedToken;
+  };
+
+  public async getByToken(token: string): Promise<TUser> {
+    const decodedToken = this.getDecodedAccessToken(token);
+    const user = await this.#userRepository.getById(decodedToken.userId)
+    return user;
+  };
 }
 
 export { Auth };

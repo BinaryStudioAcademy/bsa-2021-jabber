@@ -3,10 +3,11 @@ import {
   signUp as signUpValidationSchema,
   signIn as signInValidationSchema,
 } from '~/validation-schemas/validation-schemas';
-import { ApiPath, HttpCode, AuthApiPath } from '~/common/enums/enums';
+import { ApiPath, HttpCode, AuthApiPath, ENV } from '~/common/enums/enums';
 import { handleAsyncApi } from '~/helpers/helpers';
 import { validateSchema } from '~/middlewares/middlewares';
 import { auth as authService } from '~/services/services';
+import jwt from 'jsonwebtoken';
 
 type Args = {
   apiRouter: Router;
@@ -35,6 +36,15 @@ const initAuthApi = ({ apiRouter, authService }: Args): Router => {
       const user = await authService.signIn(req.body);
 
       return res.json(user).status(HttpCode.OK);
+    }),
+  );
+
+  userRouter.get(
+    '/me',
+    handleAsyncApi(async (req, res) => {
+      const token = req.headers.authorization?.split(' ')[1];
+      const user = await authService.getByToken(String(token));
+      res.status(200).send(user);
     }),
   );
 
