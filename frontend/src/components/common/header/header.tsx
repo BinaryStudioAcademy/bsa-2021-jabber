@@ -1,4 +1,4 @@
-import { useAppSelector } from 'hooks/hooks';
+import { useAppSelector, useVisible } from 'hooks/hooks';
 import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
 import { Button, Link } from 'components/common/common';
@@ -12,6 +12,12 @@ const Header: React.FC = () => {
   }));
 
   const hasUser = Boolean(user);
+
+  const { ref, isVisible, setIsVisible } = useVisible(false);
+
+  const handleMenutoggle = (): void => {
+    setIsVisible(!isVisible);
+  };
 
   return (
     <header className={styles.header}>
@@ -31,7 +37,11 @@ const Header: React.FC = () => {
             </ul>
             <div className={styles.userInfo}>
               <Button label="+ Create Podcast" type={ButtonType.BUTTON} />
-              <div className={styles.profile}>
+              <div
+                className={styles.profile}
+                ref={ref}
+                onClick={(): void => handleMenutoggle()}
+              >
                 <img
                   className={styles.profileAvatar}
                   src={defaultAvatar}
@@ -40,6 +50,7 @@ const Header: React.FC = () => {
                   alt="avatar"
                   loading="lazy"
                 />
+                {isVisible ? <UserMenu /> : ''}
               </div>
             </div>
           </>
@@ -52,6 +63,17 @@ const Header: React.FC = () => {
         )}
       </div>
     </header>
+  );
+};
+
+const UserMenu: React.FC = () => {
+  return (
+    <div className={styles.dropDown}>
+      <div className={styles.dropDownList}>
+        <div className={styles.dropDownListElement}>+ Add Podcast</div>
+      </div>
+      <div className={styles.dropDownArrow}></div>
+    </div>
   );
 };
 
