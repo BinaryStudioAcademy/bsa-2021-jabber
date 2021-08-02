@@ -11,6 +11,7 @@ const {
   DB_POOL_MAX,
   DB_DIALECT,
   CLOUDINARY_URL,
+  SECRET_KEY,
 } = process.env;
 
 const ENV = {
@@ -29,6 +30,9 @@ const ENV = {
   },
   UPLOAD: {
     API_URL: CLOUDINARY_URL,
+  },
+  JWT: {
+    SECRET: SECRET_KEY,
   },
 };
 

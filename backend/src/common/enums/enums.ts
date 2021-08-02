@@ -11,3 +11,4 @@ export { AppAsyncStorageKey, AppEnvironment, ENV, LogLevel, ErrorMessage } from 
 export { TableName, UserDTOKey, AbstractDTOKey, PodcastDTOKey, EpisodeDTOKey, CommentDTOKey, RecordDTOKey } from './db/db';
 export { HttpCode } from './http/http';
 export { ResourceType } from './file/file';
+export { EpisodeType } from './episode/episode-type.enum';
