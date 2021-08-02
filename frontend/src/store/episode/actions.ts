@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Episode, AsyncThunkConfig } from 'common/types/types';
+import { Episode, AsyncThunkConfig, EpisodeCreatePayload } from 'common/types/types';
 import { ActionType } from './common';
 
 const loadEpisode = createAsyncThunk<Episode, number, AsyncThunkConfig>
@@ -18,4 +18,12 @@ const loadEpisodes = createAsyncThunk<Episode[], undefined, AsyncThunkConfig>
   return episodes;
 });
 
-export { loadEpisode, loadEpisodes };
+const createEpisode = createAsyncThunk<Episode, EpisodeCreatePayload, AsyncThunkConfig>
+(ActionType.CREATE_EPISODE, async (createEpisodePayload, { extra }) => {
+  const { episodeApi } = extra;
+  const episodes = await episodeApi.create(createEpisodePayload);
+
+  return episodes;
+});
+
+export { loadEpisode, loadEpisodes, createEpisode };
