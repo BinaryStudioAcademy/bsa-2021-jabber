@@ -15,7 +15,7 @@ const Podcast: React.FC<Props> = ({ podcast }) => (
       <img src={DEFAULT_PODCAST_IMG} width="195" height="195" loading="lazy" />
     </p>
     <h3 className={styles.title}>
-      <Link to={`${AppRoute.PODCAST}/${podcast.id}`} className={styles.link}>{podcast.name}</Link>
+      <Link to={`${AppRoute.PODCASTS}/${podcast.id}`} className={styles.link}>{podcast.name}</Link>
     </h3>
   </li>
 );

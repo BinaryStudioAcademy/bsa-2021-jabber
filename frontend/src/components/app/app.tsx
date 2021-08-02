@@ -27,7 +27,7 @@ const App: React.FC = () => (
         exact
       />
       <AuthPublicRouter path={AppRoute.PODCAST_$ID_EPISODE_$ID} component={Episode} exact />
-      <AuthPublicRouter path={AppRoute.PODCAST_$ID} component={Podcast} exact />
+      <AuthPublicRouter path={AppRoute.PODCASTS_$ID} component={Podcast} exact />
       <AuthPublicRouter path={AppRoute.ROOT} component={Homepage} exact />
       <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />
     </Switch>
