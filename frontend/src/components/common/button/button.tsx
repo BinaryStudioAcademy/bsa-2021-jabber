@@ -21,13 +21,13 @@ const Button: React.FC<Props> = ({
 }) => (
   <button
     type={type}
+    onClick={onClick}
     className={getAllowedClasses(
       className,
       styles.button,
       styles[`style${buttonStyle}`],
       styles[`color${buttonColor}`],
     )}
-    onClick={onClick}
   >
     {label}
   </button>

@@ -1,5 +1,4 @@
 import { AppRoute } from 'common/enums/enums';
-import Auth from 'components/auth/auth';
 import {
   Switch,
   Route,
@@ -8,8 +7,11 @@ import {
   AuthPrivateRouter,
   AuthPublicRouter,
 } from 'components/common/common';
+import Auth from 'components/auth/auth';
+import Homepage from 'components/homepage/homepage';
 import ConfiguratePodcast from 'components/configurate-podcast/configurate-podcast';
-import Episode from 'components/create-episode/episode';
+import ConfigurateEpisode from 'components/create-episode/episode';
+import Episode from 'components/episode/episode';
 
 const App: React.FC = () => (
   <>
@@ -20,11 +22,14 @@ const App: React.FC = () => (
         exact
       />
       <AuthPrivateRouter
-        path={AppRoute.POCAST_EDIT_$ID}
+        path={AppRoute.PODCAST_EDIT_$ID}
         component={ConfiguratePodcast}
         exact
       />
-      <AuthPublicRouter path={AppRoute.EPISODE_CREATE_$ID} component={Episode} exact />
+
+      <AuthPublicRouter path={AppRoute.EPISODE_CREATE} component={ConfigurateEpisode} exact />
+      <AuthPublicRouter path={AppRoute.PODCAST_$ID_EPISODE_$ID} component={Episode} exact />
+      <AuthPublicRouter path={AppRoute.ROOT} component={Homepage} exact />
       <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />
     </Switch>
     <Toaster />
