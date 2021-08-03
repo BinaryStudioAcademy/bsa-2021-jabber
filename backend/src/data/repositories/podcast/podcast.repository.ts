@@ -20,10 +20,7 @@ class Podcast {
   }
 
   public create(payload: PodcastCreateDTOPayload): Promise<TPodcast> {
-    return this.#PodcastModel
-      .query()
-      .insert(payload)
-      .withGraphFetched('imageRel');
+    return this.#PodcastModel.query().insert(payload).withGraphFetched('image');
   }
 
   public getById(id: string): Promise<TPodcast> {
