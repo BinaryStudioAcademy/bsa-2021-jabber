@@ -8,7 +8,7 @@ export {
   RecordsApiPath,
 } from './api/api';
 export { CustomExceptionName } from './exceptions/exceptions';
-export { ContentType } from './file/file';
+export { ContentType, ImageFileExtension, ImageFileType } from './file/file';
 export { HttpCode, HttpHeader, HttpMethod } from './http/http';
 export {
   UserCreatePayloadKey,
@@ -31,3 +31,4 @@ export {
 export { EpisodeCreatePayloadKey, EpisodeType } from './episode/episode';
 export { CommentCreatePayloadKey } from './comment/comment';
 export { RecordCreatePayloadKey } from './record/record';
+export { ImageCreatePayloadKey } from './image/image';
