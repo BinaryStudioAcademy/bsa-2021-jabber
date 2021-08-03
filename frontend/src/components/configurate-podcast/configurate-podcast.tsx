@@ -1,28 +1,29 @@
 import { useDispatch, useParams, useEffect, useAppSelector } from 'hooks/hooks';
 import { configuratePodcast as configuratePodcastActions } from 'store/actions';
-import { PodcastEditPayload, PodcastCreatePayload } from 'common/types/types';
+import { Podcast, PodcastCreatePayload } from 'common/types/types';
 import { PageParams } from './common/types/types';
 import { ConfiguratePodcastForm } from './components/components';
 import styles from './styles.module.scss';
-import { parserForEditPodcast } from '../../helpers/helpers';
 
 const ConfiguratePodcast: React.FC = () => {
   const { id } = useParams<PageParams>();
   const dispatch = useDispatch();
 
-  const { editablePodcast } = useAppSelector(({ configuratePodcast }) => ({
-    editablePodcast: configuratePodcast.editablePodcast,
+  const { podcast } = useAppSelector(({ configuratePodcast }) => ({
+    podcast: configuratePodcast.podcast,
   }));
 
   const isEdit = Boolean(id);
 
-  const handleCreatePodcast = (payload: PodcastCreatePayload): void => {
-    dispatch(configuratePodcastActions.create(payload));
+  const handleFormSubmit = (payload: PodcastCreatePayload): void => {
+    isEdit ? dispatch(configuratePodcastActions.edit(payload)) : dispatch(configuratePodcastActions.create(payload));
   };
 
-  const handleEditPodcast = (payload: PodcastEditPayload): void => {
-    dispatch(configuratePodcastActions.edit( { id: Number(id), payload } ));
-  };
+  const mapPodcastToFormPayload = (podcast: Podcast): PodcastCreatePayload => ({
+    name: podcast.name,
+    description: podcast.description,
+    userId: podcast.userId,
+  });
 
   useEffect(() => {
     if (isEdit) {
@@ -36,10 +37,10 @@ const ConfiguratePodcast: React.FC = () => {
         {isEdit ? 'Edit' : 'Create'} Podcast {id ?? ''}
       </h2>
       {(isEdit)
-        ? editablePodcast && <ConfiguratePodcastForm
-          onSubmit={handleEditPodcast}
-          payload={parserForEditPodcast(editablePodcast)}/>
-        : <ConfiguratePodcastForm onSubmit={handleCreatePodcast}/>
+        ? podcast && <ConfiguratePodcastForm
+          onSubmit={handleFormSubmit}
+          payload={mapPodcastToFormPayload(podcast)}/>
+        : <ConfiguratePodcastForm onSubmit={handleFormSubmit}/>
       }
     </div>
   );

@@ -3,7 +3,6 @@ import {
   AsyncThunkConfig,
   Podcast,
   PodcastCreatePayload,
-  PodcastEditActionPayloadType,
   User,
 } from 'common/types/types';
 import { ActionType } from './common';
@@ -20,12 +19,20 @@ const create = createAsyncThunk<Podcast, PodcastCreatePayload, AsyncThunkConfig>
   return podcast;
 });
 
-const edit = createAsyncThunk<Podcast, PodcastEditActionPayloadType, AsyncThunkConfig>
-(ActionType.EDIT_PODCAST, async ( { id, payload }, { extra }) => {
+const edit = createAsyncThunk<Podcast | null, PodcastCreatePayload, AsyncThunkConfig>
+(ActionType.EDIT_PODCAST, async ( payload, { getState, extra }) => {
+  const { configuratePodcast } = getState();
   const { podcastApi } = extra;
-  const podcast = await podcastApi.edit(id, payload);
+  if(configuratePodcast.podcast){
+    const payloadPodcast = {
+      ...configuratePodcast.podcast,
+      ...payload,
+    };
+    const podcast = await podcastApi.edit(payloadPodcast);
 
-  return podcast;
+    return podcast;
+  }
+  return null;
 });
 
 const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>

@@ -4,7 +4,7 @@ import {
   ContentType,
   HttpMethod,
 } from 'common/enums/enums';
-import { Podcast, PodcastCreatePayload, PodcastEditPayload } from 'common/types/types';
+import { Podcast, PodcastCreatePayload } from 'common/types/types';
 import { Http } from 'services/http/http.service';
 
 type Constructor = {
@@ -50,9 +50,9 @@ class PodcastApi {
     );
   }
 
-  public edit(id: number, payload: PodcastEditPayload): Promise<Podcast> {
+  public edit(payload: Podcast): Promise<Podcast> {
     return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}${id}`,
+      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}${payload.id}`,
       {
         method: HttpMethod.PUT,
         contentType: ContentType.JSON,

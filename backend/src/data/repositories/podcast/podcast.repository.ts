@@ -24,7 +24,7 @@ class Podcast {
     return this.#PodcastModel.query().insert(payload);
   }
 
-  public update(id: string, payload: PodcastCreatePayload): Promise<TPodcast> {
+  public update(id: string, payload: TPodcast): Promise<TPodcast> {
     return this.#PodcastModel.query().updateAndFetchById(id, payload);
   }
 }

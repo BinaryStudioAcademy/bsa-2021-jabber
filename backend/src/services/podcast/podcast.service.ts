@@ -31,7 +31,7 @@ class Podcast {
     return this.#podcastRepository.create(payload);
   }
 
-  public update(id: string, payload: PodcastCreatePayload): Promise<TPodcast> {
+  public update(id: string, payload: TPodcast): Promise<TPodcast> {
     return this.#podcastRepository.update(id, payload);
   }
 }

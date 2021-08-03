@@ -6,13 +6,11 @@ import { create, edit, loadPodcast } from './actions';
 type State = {
   dataStatus: DataStatus;
   podcast: Podcast | null;
-  editablePodcast: Podcast | null
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
   podcast: null,
-  editablePodcast: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -32,7 +30,6 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(edit.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.podcast = action.payload;
-    state.editablePodcast = null;
   });
   builder.addCase(edit.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
@@ -42,7 +39,7 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadPodcast.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
-    state.editablePodcast = action.payload;
+    state.podcast = action.payload;
   });
   builder.addCase(loadPodcast.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
