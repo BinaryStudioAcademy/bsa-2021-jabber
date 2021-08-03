@@ -9,7 +9,6 @@ type Podcast = {
   createdAt: string;
   updatedAt: string;
   description: string;
-  imageId: number | null;
 };
 
 export type { Podcast };

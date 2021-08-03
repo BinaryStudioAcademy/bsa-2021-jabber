@@ -24,14 +24,15 @@ const create = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
   },
 );
 
-const edit = createAsyncThunk<Podcast | null, PodcastCreatePayload, AsyncThunkConfig>
-(ActionType.EDIT_PODCAST, async ( payload, { getState, extra }) => {
+const edit = createAsyncThunk<Podcast | null, PodcastFormPayload, AsyncThunkConfig>
+(ActionType.EDIT_PODCAST, async ( podcastPayload, { getState, extra }) => {
   const { configuratePodcast } = getState();
   const { podcastApi } = extra;
   if(configuratePodcast.podcast){
     const payloadPodcast = {
       ...configuratePodcast.podcast,
-      ...payload,
+      ...podcastPayload,
+      image: null,
     };
     const podcast = await podcastApi.edit(payloadPodcast);
 
