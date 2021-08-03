@@ -50,19 +50,19 @@ const Header: React.FC = () => {
                     alt="avatar"
                     loading="lazy"
                   />
-                  {isVisible && (
-                    <div className={styles.dropDown}>
-                      <ul className={styles.dropDownList}>
-                        <li className={styles.dropDownListElement}>
-                          <Link to={AppRoute.PODCAST} className={styles.link}>
-                            + Add Podcast
-                          </Link>
-                        </li>
-                      </ul>
-                      <div className={styles.dropDownArrow}></div>
-                    </div>
-                  )}
                 </button>
+                {isVisible && (
+                  <div className={styles.dropDown}>
+                    <ul className={styles.dropDownList}>
+                      <li className={styles.dropDownListElement}>
+                        <Link to={AppRoute.PODCAST} className={styles.link}>
+                          + Add Podcast
+                        </Link>
+                      </li>
+                    </ul>
+                    <div className={styles.dropDownArrow}></div>
+                  </div>
+                )}
               </div>
             </div>
           </>
