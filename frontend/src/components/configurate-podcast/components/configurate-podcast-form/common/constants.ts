@@ -4,6 +4,7 @@ import { DEFAULT_USER_ID } from 'common/constants/constants';
 
 const DEFAULT_PODCAST_PAYLOAD: PodcastCreatePayload = {
   [PodcastCreatePayloadKey.NAME]: '',
+  [PodcastCreatePayloadKey.DESCRIPTION]: '',
   [PodcastCreatePayloadKey.USER_ID]: DEFAULT_USER_ID,
 };
 

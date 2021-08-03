@@ -9,12 +9,13 @@ import { DEFAULT_PODCAST_PAYLOAD } from './common/constants';
 
 type Props = {
   onSubmit: (payload: PodcastCreatePayload) => void;
+  payload?: PodcastCreatePayload;
 };
 
-const ConfiguratePodcastForm: React.FC<Props> = ({ onSubmit }) => {
+const ConfiguratePodcastForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_PODCAST_PAYLOAD  }) => {
   const { control, handleSubmit, errors } = useAppForm({
     validationSchema: podcastSchema,
-    defaultValues: DEFAULT_PODCAST_PAYLOAD,
+    defaultValues: payload,
   });
 
   const { createPodcastStatus } = useAppSelector(({ configuratePodcast }) => ({
@@ -33,6 +34,13 @@ const ConfiguratePodcastForm: React.FC<Props> = ({ onSubmit }) => {
             errors={errors}
             label="Podcast name"
             placeholder="Name"
+          />
+          <Input
+            name={PodcastCreatePayloadKey.DESCRIPTION}
+            control={control}
+            errors={errors}
+            label="Podcast description"
+            placeholder="Description"
           />
         </p>
         <Button label="Save" type={ButtonType.SUBMIT} />

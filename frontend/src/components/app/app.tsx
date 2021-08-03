@@ -4,7 +4,6 @@ import {
   Route,
   Toaster,
   NotFound,
-  AuthPrivateRouter,
   AuthPublicRouter,
 } from 'components/common/common';
 import Auth from 'components/auth/auth';
@@ -22,7 +21,7 @@ const App: React.FC = () => (
         component={Auth}
         exact
       />
-      <AuthPrivateRouter
+      <AuthPublicRouter
         path={AppRoute.PODCASTS_EDIT_$ID}
         component={ConfiguratePodcast}
         exact
