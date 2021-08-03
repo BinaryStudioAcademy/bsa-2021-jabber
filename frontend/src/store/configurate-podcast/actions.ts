@@ -6,7 +6,6 @@ import {
 } from 'common/types/types';
 import { ActionType } from './common';
 
-// prettier-ignore
 const create = createAsyncThunk<Podcast, PodcastCreatePayload, AsyncThunkConfig>
 (ActionType.CREATE_PODCAST, async (podcastPayload, { extra }) => {
   const { podcastApi } = extra;
