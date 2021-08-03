@@ -3,6 +3,6 @@ const RateStep = {
   NORMAL: 1,
   FAST: 1.5,
   VERY_FAST: 2,
-};
+} as const;
 
 export { RateStep };
