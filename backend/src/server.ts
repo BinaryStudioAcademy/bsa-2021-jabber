@@ -3,10 +3,16 @@ import express, { json, urlencoded } from 'express';
 import Knex from 'knex';
 import passport from 'passport';
 import { Model } from 'objection';
-import { ENV } from '~/common/enums/enums';
+import { ENV, ApiPath } from '~/common/enums/enums';
 import { initApi } from '~/api/api';
 import { logger, passport as passportService } from '~/services/services';
-import { setTraceId, logRequest, handleError } from '~/middlewares/middlewares';
+import {
+  setTraceId,
+  logRequest,
+  handleError,
+  authorization as authorizationMiddleware,
+} from '~/middlewares/middlewares';
+import { ROUTES_WHITE_LIST } from './common/constants/constants';
 import knexConfig from '../knexfile';
 
 const app = express();
@@ -20,6 +26,10 @@ app.use(urlencoded({ extended: true, limit: '100mb' }));
 
 app.use(passport.initialize());
 passportService.init(passport);
+app.use(
+  ENV.API.V1_PREFIX + ApiPath.AUTH,
+  authorizationMiddleware(ROUTES_WHITE_LIST),
+);
 
 initApi(app);
 

@@ -5,7 +5,11 @@ import {
 } from '~/validation-schemas/validation-schemas';
 import { ApiPath, HttpCode, AuthApiPath } from '~/common/enums/enums';
 import { handleAsyncApi } from '~/helpers/helpers';
-import { validateSchema } from '~/middlewares/middlewares';
+import {
+  validateSchema,
+  authentication as authenticationMiddleware,
+  registration as registrationMiddleware,
+} from '~/middlewares/middlewares';
 import { auth as authService } from '~/services/services';
 
 type Args = {
@@ -20,6 +24,7 @@ const initAuthApi = ({ apiRouter, authService }: Args): Router => {
 
   userRouter.post(
     AuthApiPath.SIGN_UP,
+    registrationMiddleware,
     validateSchema(signUpValidationSchema),
     handleAsyncApi(async (req, res) => {
       const user = await authService.signUp(req.body);
@@ -30,6 +35,7 @@ const initAuthApi = ({ apiRouter, authService }: Args): Router => {
 
   userRouter.post(
     AuthApiPath.SIGN_IN,
+    authenticationMiddleware,
     validateSchema(signInValidationSchema),
     handleAsyncApi(async (req, res) => {
       const user = await authService.signIn(req.body);

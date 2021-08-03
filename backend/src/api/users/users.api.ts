@@ -2,7 +2,6 @@ import { Router } from 'express';
 import { ApiPath, HttpCode, UsersApiPath } from '~/common/enums/enums';
 import { handleAsyncApi } from '~/helpers/helpers';
 import { user as userService } from '~/services/services';
-import { jwt as jwtMiddleware } from '~/middlewares/middlewares';
 
 type Args = {
   apiRouter: Router;
@@ -16,7 +15,6 @@ const initUsersApi = ({ apiRouter, userService }: Args): Router => {
 
   userRouter.get(
     UsersApiPath.ROOT,
-    jwtMiddleware,
     handleAsyncApi(async (_req, res) => {
       return res.json(await userService.getAll()).status(HttpCode.OK);
     }),
