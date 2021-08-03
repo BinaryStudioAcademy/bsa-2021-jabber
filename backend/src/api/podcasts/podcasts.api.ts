@@ -22,6 +22,13 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
     }),
   );
 
+  podcastRouter.get(
+    PodcastsApiPath.$ID,
+    handleAsyncApi(async (req, res) => {
+      return res.send(await podcastService.getById(req.params.id)).status(HttpCode.OK);
+    }),
+  );
+
   podcastRouter.post(
     PodcastsApiPath.ROOT,
     validateSchemaMiddleware(podcastValidationSchema),

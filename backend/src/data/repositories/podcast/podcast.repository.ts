@@ -25,6 +25,10 @@ class Podcast {
       .insert(payload)
       .withGraphFetched('imageRel');
   }
+
+  public getById(id: string): Promise<TPodcast> {
+    return this.#PodcastModel.query().findById(id);
+  }
 }
 
 export { Podcast };

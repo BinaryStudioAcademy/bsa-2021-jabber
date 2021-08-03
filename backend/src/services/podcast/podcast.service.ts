@@ -7,6 +7,9 @@ import {
   image as imageRep,
 } from '~/data/repositories/repositories';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
+import { HttpError } from '~/exceptions/exceptions';
+import { HttpCode } from '~/common/enums/enums';
+import { ErrorMessage } from '~/common/enums/app/error-message.enum';
 
 type Constructor = {
   podcastRepository: typeof podcastRep;
@@ -62,6 +65,17 @@ class Podcast {
     };
 
     return this.#podcastRepository.create(podcastPayload);
+  }
+
+  public async getById(id: string): Promise<TPodcast> {
+    const podcast = await this.#podcastRepository.getById(id);
+    if (!podcast) {
+      throw new HttpError({
+        status: HttpCode.NOT_FOUND,
+        message: ErrorMessage.PODCAST_NOT_FOUND,
+      });
+    }
+    return podcast;
   }
 }
 
