@@ -16,8 +16,16 @@ class Podcast {
     return this.#PodcastModel.query();
   }
 
+  public getById(id: string): Promise<TPodcast> {
+    return this.#PodcastModel.query().findById(id);
+  }
+
   public create(payload: PodcastCreatePayload): Promise<TPodcast> {
     return this.#PodcastModel.query().insert(payload);
+  }
+
+  public update(id: string, payload: PodcastCreatePayload): Promise<TPodcast> {
+    return this.#PodcastModel.query().updateAndFetchById(id, payload);
   }
 }
 
