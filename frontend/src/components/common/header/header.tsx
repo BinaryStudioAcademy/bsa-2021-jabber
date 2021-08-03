@@ -15,7 +15,7 @@ const Header: React.FC = () => {
 
   const { ref, isVisible, setIsVisible } = useVisible(false);
 
-  const handleMenutoggle = (): void => {
+  const handleMenuToggle = (): void => {
     setIsVisible(!isVisible);
   };
 
@@ -37,29 +37,32 @@ const Header: React.FC = () => {
             </ul>
             <div className={styles.userInfo}>
               <Button label="+ Create Podcast" type={ButtonType.BUTTON} />
-              <div
-                className={styles.profile}
-                ref={ref}
-                onClick={(): void => handleMenutoggle()}
-              >
-                <img
-                  className={styles.profileAvatar}
-                  src={defaultAvatar}
-                  width="40px"
-                  height="40px"
-                  alt="avatar"
-                  loading="lazy"
-                />
-                {isVisible && (
-                  <div className={styles.dropDown}>
-                    <div className={styles.dropDownList}>
-                      <div className={styles.dropDownListElement}>
-                        + Add Podcast
-                      </div>
+              <div className={styles.profile} ref={ref}>
+                <button
+                  className={styles.usersButtonWrapper}
+                  onClick={handleMenuToggle}
+                >
+                  <img
+                    className={styles.profileAvatar}
+                    src={defaultAvatar}
+                    width="40px"
+                    height="40px"
+                    alt="avatar"
+                    loading="lazy"
+                  />
+                  {isVisible && (
+                    <div className={styles.dropDown}>
+                      <ul className={styles.dropDownList}>
+                        <li className={styles.dropDownListElement}>
+                          <Link to={AppRoute.PODCAST} className={styles.link}>
+                            + Add Podcast
+                          </Link>
+                        </li>
+                      </ul>
+                      <div className={styles.dropDownArrow}></div>
                     </div>
-                    <div className={styles.dropDownArrow}></div>
-                  </div>
-                )}
+                  )}
+                </button>
               </div>
             </div>
           </>
