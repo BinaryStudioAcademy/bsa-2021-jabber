@@ -37,7 +37,7 @@ type Ref = {
 
 const Player = forwardRef<Ref, Props>(
   ({ src, skipTime = 15000, onClickNext, onClickPrevious }, ref) => {
-    const playerRef = useRef<H5AudioPlayer>(null);
+    const playerRef = useRef<H5AudioPlayer | null>(null);
     const [rateIndex, setRateIndex] = useState(3);
 
     useImperativeHandle(ref, () => ({
