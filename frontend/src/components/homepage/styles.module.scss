@@ -3,6 +3,13 @@
   display: flex;
   flex-direction: column;
   padding: 30px;
+
+  .oopsMessage {
+    color: var(--color-header-background);
+    font-size: 22px;
+    margin: 250px auto;
+    font-weight: bold;
+  }
 }
 
 .title {

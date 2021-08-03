@@ -1,5 +1,5 @@
 enum ActionType {
-  LOAD_EPISODE = 'episode/load-episode',
+  LOAD_EPISODE = 'episodes/load-episode',
 }
 
 export { ActionType };

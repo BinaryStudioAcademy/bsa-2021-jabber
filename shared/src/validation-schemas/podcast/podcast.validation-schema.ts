@@ -23,6 +23,15 @@ const podcast = Joi.object<PodcastCreatePayload>({
       'number.required': PodcastValidationMessage.USER_ID_REQUIRE,
       'number.integer': PodcastValidationMessage.USER_ID_NUMBER_FORMAT,
     }),
+  [PodcastCreatePayloadKey.DESCRIPTION]: Joi.string()
+    .min(PodcastValidationRule.PODCAST_DESCRIPTION_MIN_LENGTH)
+    .max(PodcastValidationRule.PODCAST_DESCRIPTION_MAX_LENGTH)
+    .required()
+    .messages({
+      'string.empty': PodcastValidationMessage.PODCAST_DESCRIPTION_REQUIRE,
+      'string.min': PodcastValidationMessage.PODCAST_DESCRIPTION_MIN_LENGTH,
+      'string.max': PodcastValidationMessage.PODCAST_DESCRIPTION_MAX_LENGTH,
+    }),
 });
 
 export { podcast };
