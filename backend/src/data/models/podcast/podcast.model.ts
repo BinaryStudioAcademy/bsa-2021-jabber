@@ -8,6 +8,8 @@ class Podcast extends Abstract {
 
   [PodcastDTOKey.IMAGE_ID]: number | null;
 
+  [PodcastDTOKey.DESCRIPTION]: string;
+
   static get tableName(): string {
     return TableName.PODCASTS;
   }

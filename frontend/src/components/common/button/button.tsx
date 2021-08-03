@@ -1,4 +1,4 @@
-import { AppRoute, ButtonColor, ButtonStyle, ButtonType } from 'common/enums/enums';
+import { ButtonColor, ButtonStyle, ButtonType } from 'common/enums/enums';
 import { getAllowedClasses } from 'helpers/dom/dom';
 import styles from './styles.module.scss';
 
@@ -9,7 +9,6 @@ type Props = {
   buttonStyle?: ButtonStyle;
   buttonColor?: ButtonColor;
   className?: string;
-  href?: string | AppRoute;
 };
 
 const Button: React.FC<Props> = ({

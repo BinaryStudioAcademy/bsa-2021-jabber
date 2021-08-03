@@ -8,6 +8,8 @@ class Record extends Abstract {
 
   [RecordDTOKey.EPISODE_ID]: number;
 
+  [RecordDTOKey.PUBLIC_ID]: string;
+
   static get tableName(): string {
     return TableName.RECORDS;
   }

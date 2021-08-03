@@ -12,3 +12,4 @@ export { TableName, UserDTOKey, AbstractDTOKey, PodcastDTOKey, EpisodeDTOKey, Co
 export { HttpCode } from './http/http';
 export { ResourceType } from './file/file';
 export { EpisodeType } from './episode/episode-type.enum';
+export { StrategyName } from './strategy/strategy';
