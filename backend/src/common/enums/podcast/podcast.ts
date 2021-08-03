@@ -1,6 +1,5 @@
 export {
   PodcastPayloadKey,
-  PodcastValidationRule,
   PodcastValidationMessage,
+  PodcastValidationRule,
 } from 'jabber-shared/common/enums/enums';
-

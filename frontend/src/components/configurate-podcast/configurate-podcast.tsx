@@ -1,12 +1,8 @@
-import { useDispatch, useParams, useEffect, useAppSelector, useState } from 'hooks/hooks';
+import { useDispatch, useParams, useEffect, useAppSelector } from 'hooks/hooks';
 import { configuratePodcast as configuratePodcastActions } from 'store/actions';
-import { Podcast, PodcastCreatePayload } from 'common/types/types';
+import { Podcast, PodcastFormPayload } from 'common/types/types';
 import { PageParams } from './common/types/types';
-import { getDataUrl } from 'helpers/helpers';
-import {
-  ConfiguratePodcastForm,
-  ConfiguratePodcastImage,
-} from './components/components';
+import { ConfiguratePodcastForm } from './components/components';
 import styles from './styles.module.scss';
 
 const ConfiguratePodcast: React.FC = () => {
@@ -19,20 +15,21 @@ const ConfiguratePodcast: React.FC = () => {
 
   const isEdit = Boolean(id);
 
-  const handleFormSubmit = (payload: PodcastCreatePayload): void => {
+  const handleFormSubmit = (payload: PodcastFormPayload): void => {
     isEdit ? dispatch(configuratePodcastActions.edit(payload)) : dispatch(configuratePodcastActions.create(payload));
   };
-  const [imageSrc, setImageSrc] = useState('');
 
-  const handleCreateCover = async (file: File): Promise<void> => {
-    setImageSrc(await getDataUrl(file));
-  };
-
-  const mapPodcastToFormPayload = (podcast: Podcast): PodcastCreatePayload => ({
+  const mapPodcastToFormPayload = (podcast: Podcast): PodcastFormPayload => ({
     name: podcast.name,
     description: podcast.description,
-    userId: podcast.userId,
+    image: null,
   });
+
+  useEffect(() => {
+    if (isEdit) {
+      dispatch(configuratePodcastActions.loadPodcast(Number(id)));
+    }
+  }, []);
 
   useEffect(() => {
     if (isEdit) {
@@ -45,22 +42,13 @@ const ConfiguratePodcast: React.FC = () => {
       <h2>
         {isEdit ? 'Edit' : 'Create'} Podcast {id ?? ''}
       </h2>
-      <div className={styles.forms}>
-        <div className={styles.formLeft}>
-          {(isEdit)
-            ? podcast && <ConfiguratePodcastForm
-              onSubmit={handleFormSubmit}
-              payload={mapPodcastToFormPayload(podcast)}/>
-            : <ConfiguratePodcastForm onSubmit={handleFormSubmit}/>
-          }
-        </div>
-        <div className={styles.formRight}>
-          <ConfiguratePodcastImage
-            onSubmit={handleCreateCover}
-            imageSrc={imageSrc}
-          />
-        </div>
-      </div>
+
+      {(isEdit)
+        ? podcast && <ConfiguratePodcastForm
+          onSubmit={handleFormSubmit}
+          payload={mapPodcastToFormPayload(podcast)}/>
+        : <ConfiguratePodcastForm onSubmit={handleFormSubmit}/>
+      }
     </div>
   );
 };

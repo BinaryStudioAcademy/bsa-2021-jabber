@@ -1,8 +1,9 @@
-import * as Joi from 'joi';
+import { Joi } from '~/helpers/helpers';
 import {
   EpisodeValidationRule,
   EpisodeValidationMessage,
-  EpisodeCreatePayloadKey, EpisodeType,
+  EpisodeCreatePayloadKey,
+  EpisodeType,
 } from '~/common/enums/enums';
 import { EpisodeCreatePayload } from '~/common/types/types';
 

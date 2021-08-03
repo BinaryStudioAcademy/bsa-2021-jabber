@@ -10,6 +10,8 @@ class Podcast extends Abstract {
 
   [PodcastDTOKey.IMAGE_ID]: number | null;
 
+  [PodcastDTOKey.IMAGE]: Image | null;
+
   [PodcastDTOKey.DESCRIPTION]: string;
 
   static get tableName(): string {
@@ -17,7 +19,7 @@ class Podcast extends Abstract {
   }
 
   static relationMappings = {
-    imageRel: {
+    image: {
       relation: Model.HasOneRelation,
       modelClass: Image,
       join: {
