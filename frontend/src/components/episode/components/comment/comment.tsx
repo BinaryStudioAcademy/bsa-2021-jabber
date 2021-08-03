@@ -14,7 +14,7 @@ const Comment: React.FC<Props> = ({ comment }) => (
       <img src={DEFAULT_AVATAR} width="40" height="40" loading="lazy" alt={`${comment.userId}`}/>
     </div>
     <div className={styles.intro}>
-      <p className={styles.userName}>{comment.userId}&nbsp;<span>at</span>&nbsp;{getFormattedDate(new Date(comment.createdAt), 'HH:mm')}</p>
+      <p className={styles.userName}>{comment.user.firstName}&nbsp;<span>at</span>&nbsp;{getFormattedDate(new Date(comment.createdAt), 'HH:mm')}</p>
       <p className={styles.text}>{comment.text}</p>
     </div>
     <div className={styles.date}>{getDistanceToDateNow(new Date(comment.createdAt), Date.now())} ago</div>
