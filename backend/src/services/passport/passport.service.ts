@@ -35,47 +35,42 @@ class Passport {
 
   private getLoginStrategy(): passportJwt.Strategy {
     return (
-      StrategyName.LOGIN,
       new this.#LocalStrategy({
         usernameField: 'email',
-      },
-      async (email, password, done) => {
+      }, async (username, password, done) => {
         try {
-          const user = await this.#userRepository.getByEmail(email);
+          const user = await this.#userRepository.getByEmail(username);
           if (!user) {
             return done({
               status: HttpCode.UNAUTHORIZED,
-              messages: [ErrorMessage.USER_NOT_FOUND],
+              message: ErrorMessage.USER_NOT_FOUND,
             },
             false,
             );
           }
 
-          return (await checkIsCryptsEqual(user.password, password))
+          return (await checkIsCryptsEqual(password, user.password))
             ? done(null, user)
             : done({
               status: HttpCode.UNAUTHORIZED,
-              messages: [ErrorMessage.WRONG_PASSWORD],
+              message: ErrorMessage.WRONG_PASSWORD,
             },
             false,
             );
         } catch (err) {
           return done(err);
         }
-      },
-      )
+      })
     );
   }
 
   private getRegisterStrategy(): passportJwt.Strategy {
     return (
-      StrategyName.REGISTER,
       new this.#LocalStrategy({
         passReqToCallback: true,
         usernameField: 'email',
         passwordField: 'password',
-      },
-      async ({ body }, _username, _password, done) => {
+      }, async ({ body }, _username, _password, done) => {
         try {
           const user = await userRepository.getByEmail(body.email);
           if (user) {
@@ -88,8 +83,7 @@ class Passport {
         } catch (err) {
           return done(err);
         }
-      },
-      )
+      })
     );
   }
 
@@ -115,16 +109,10 @@ class Passport {
     );
   }
 
-  private getAllStrategy(): passportJwt.Strategy[] {
-    return [
-      this.getLoginStrategy(),
-      this.getRegisterStrategy(),
-      this.getJwtStrategy(),
-    ];
-  }
-
   public init(passport: PassportStatic): void {
-    this.getAllStrategy().forEach((strategy) => passport.use(strategy));
+    passport.use(this.getJwtStrategy());
+    passport.use(StrategyName.LOGIN, this.getLoginStrategy());
+    passport.use(StrategyName.REGISTER, this.getRegisterStrategy());
   }
 }
 
