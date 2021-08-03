@@ -1,15 +1,11 @@
-import { Podcast as TPodcast } from '~/common/types/types';
+import {
+  Podcast as TPodcast,
+  PodcastCreateDTOPayload,
+} from '~/common/types/types';
 import { PodcastModel as PodcastM } from '~/data/models/models';
 
 type Constructor = {
   PodcastModel: typeof PodcastM;
-};
-
-type PodcastCreateDTOPayload = {
-  name: string;
-  userId: number;
-  imageId: number | null;
-  description: string;
 };
 
 class Podcast {

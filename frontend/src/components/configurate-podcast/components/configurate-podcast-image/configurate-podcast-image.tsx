@@ -8,6 +8,8 @@ type Props = {
   imageSrc: string;
 };
 
+const fileMask = Object.values(ImageFileExtension).join(', ');
+
 const ConfiguratePodcastImage: React.FC<Props> = ({ onSubmit, imageSrc }) => {
   const { createPodcastStatus } = useAppSelector(({ configuratePodcast }) => ({
     createPodcastStatus: configuratePodcast.dataStatus,
@@ -22,8 +24,6 @@ const ConfiguratePodcastImage: React.FC<Props> = ({ onSubmit, imageSrc }) => {
       onSubmit(file);
     }
   };
-
-  const fileMask = Object.values(ImageFileExtension).join(', ');
 
   return (
     <form>
