@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import H5AudioPlayer, { RHAP_UI } from 'react-h5-audio-player';
+import { FIRST_ARRAY_IDX } from 'jabber-shared/common/constants/constants';
 import {
   useState,
   useEffect,
@@ -12,7 +13,6 @@ import { getAllowedClasses } from 'helpers/dom/dom';
 import {
   ARRAY_SHIFT,
   DEFAULT_SKIP_TIME,
-  FIRST_ITEM_IN_ARRAY,
   MILLISECONDS_IN_SECOND,
 } from './common/constants';
 import { getRatePointerStyle } from './common/helpers';
@@ -71,11 +71,11 @@ const Player = forwardRef<Ref, Props>(
     }, [rateIndex]);
 
     const handleChangeRate = useCallback(() => {
-      if (rateIndex === rateSteps.length - ARRAY_SHIFT) {
-        setRateIndex(FIRST_ITEM_IN_ARRAY);
-      } else {
-        setRateIndex(rateIndex + ARRAY_SHIFT);
-      }
+      setRateIndex(
+        rateIndex === rateSteps.length - ARRAY_SHIFT
+          ? FIRST_ARRAY_IDX
+          : rateIndex + ARRAY_SHIFT,
+      );
     }, [rateIndex]);
 
     return (
