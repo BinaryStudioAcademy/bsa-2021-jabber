@@ -1,1 +1,1 @@
-export { PodcastCreatePayloadKey } from 'jabber-shared/common/enums/enums';
+export { PodcastCreatePayloadKey, PodcastEditPayloadKey } from 'jabber-shared/common/enums/enums';
