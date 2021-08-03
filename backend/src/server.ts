@@ -3,7 +3,7 @@ import express, { json, urlencoded } from 'express';
 import Knex from 'knex';
 import passport from 'passport';
 import { Model } from 'objection';
-import { ENV, ApiPath } from '~/common/enums/enums';
+import { ENV } from '~/common/enums/enums';
 import { ROUTES_WHITE_LIST } from './common/constants/constants';
 import { initApi } from '~/api/api';
 import { logger, passport as passportService } from '~/services/services';
@@ -27,7 +27,7 @@ app.use(urlencoded({ extended: true, limit: '100mb' }));
 app.use(passport.initialize());
 passportService.init(passport);
 app.use(
-  ENV.API.V1_PREFIX + ApiPath.AUTH,
+  ENV.API.V1_PREFIX,
   authorizationMiddleware(ROUTES_WHITE_LIST),
 );
 
