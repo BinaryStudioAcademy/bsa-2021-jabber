@@ -19,7 +19,6 @@ class Podcast {
     return this.#podcastRepository.getAll();
   }
 
-
   public async getById(id: string): Promise<TPodcast> {
     const podcast = await this.#podcastRepository.getById(id);
     if (!podcast) {
