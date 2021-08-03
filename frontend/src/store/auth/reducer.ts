@@ -44,7 +44,6 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(getCurrentUser.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
-  
 });
 
 export { reducer };

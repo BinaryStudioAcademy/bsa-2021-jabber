@@ -45,7 +45,7 @@ class AuthApi {
 
   public getCurrentUser(): Promise<User> {
     return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.AUTH}`,
+      `${this.#apiPrefix}${ApiPath.AUTH}${AuthApiPath.CURRENT_USER}`,
       {
         method: HttpMethod.GET,
       },

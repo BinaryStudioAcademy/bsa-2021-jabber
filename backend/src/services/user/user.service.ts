@@ -17,9 +17,9 @@ class User {
   public async getById(id: string): Promise<TUser> {
     const user = await this.#userRepository.getById(id);
     if (!user) {
-      throw new HttpError({ 
-        status: HttpCode.NOT_FOUND, 
-        message: ErrorMessage.NOT_FOUND 
+      throw new HttpError({
+        status: HttpCode.NOT_FOUND,
+        message: ErrorMessage.NOT_FOUND,
       });
     }
     return user;

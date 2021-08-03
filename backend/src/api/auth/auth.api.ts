@@ -6,7 +6,7 @@ import {
 import { ApiPath, HttpCode, AuthApiPath } from '~/common/enums/enums';
 import { handleAsyncApi } from '~/helpers/helpers';
 import { validateSchema as validateSchemaMiddleware } from '~/middlewares/middlewares';
-import { auth as authService } from '~/services/services';
+import { auth as authService, token as tokenService } from '~/services/services';
 
 type Args = {
   apiRouter: Router;
@@ -39,10 +39,10 @@ const initAuthApi = ({ apiRouter, authService }: Args): Router => {
   );
 
   userRouter.get(
-    AuthApiPath.ROOT,
+    AuthApiPath.CURRENT_USER,
     handleAsyncApi(async (req, res) => {
       const token = req.headers.authorization?.split(' ')[1];
-      const user = await authService.getByToken(String(token));
+      const user = await tokenService.getByToken(String(token));
       res.status(200).send(user);
     }),
   );
