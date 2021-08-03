@@ -1,6 +1,7 @@
 import { ButtonColor, ButtonStyle, ButtonType } from 'common/enums/enums';
 import { getAllowedClasses } from 'helpers/dom/dom';
 import styles from './styles.module.scss';
+import { Link } from 'components/common/common';
 
 type Props = {
   label: string;
@@ -9,6 +10,7 @@ type Props = {
   buttonStyle?: ButtonStyle;
   buttonColor?: ButtonColor;
   className?: string;
+  href?: string;
 };
 
 const Button: React.FC<Props> = ({
@@ -18,6 +20,7 @@ const Button: React.FC<Props> = ({
   onClick,
   label,
   className,
+  href,
 }) => (
   <button
     type={type}
@@ -29,7 +32,7 @@ const Button: React.FC<Props> = ({
       styles[`color${buttonColor}`],
     )}
   >
-    {label}
+    {href ? <Link to={href}>{label}</Link> : label}
   </button>
 );
 
