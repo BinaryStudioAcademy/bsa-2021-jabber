@@ -30,6 +30,15 @@ class PodcastApi {
     );
   }
 
+  public getById(id: number): Promise<Podcast> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}${id}`,
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
+
   public create(payload: PodcastCreatePayload): Promise<Podcast> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}`,
