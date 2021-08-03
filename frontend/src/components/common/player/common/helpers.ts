@@ -26,8 +26,8 @@ const getRateStepAngle = (rateIndex: number): number => {
   return 0;
 };
 
-export const getRatePointerStyle = (
-  rateIndex: number,
-): { transform: string } => ({
+const getRatePointerStyle = (rateIndex: number): { transform: string } => ({
   transform: `translate(-50%, -50%) rotate(${getRateStepAngle(rateIndex)}deg)`,
 });
+
+export { getRatePointerStyle };
