@@ -34,7 +34,7 @@ class Token {
         message: ErrorMessage.UNAUTHORIZED_TOKEN,
       });
     }
-    const user = await this.#userRepository.getById(String(decoded.userId));
+    const user = await this.#userRepository.getById(Number(decoded.userId));
 
     return user;
   }

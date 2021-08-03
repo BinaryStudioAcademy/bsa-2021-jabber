@@ -16,10 +16,6 @@ class User {
     return this.#UserModel.query();
   }
 
-  public getById(id: string): Promise<TUser> {
-    return this.#UserModel.query().findById(id);
-  }
-
   public create(payload: UserCreatePayload): Promise<TUser> {
     return this.#UserModel.query().insert(payload);
   }
