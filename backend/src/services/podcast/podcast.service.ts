@@ -1,5 +1,8 @@
 import { Podcast as TPodcast, PodcastCreatePayload } from '~/common/types/types';
 import { podcast as podcastRep } from '~/data/repositories/repositories';
+import { HttpCode } from '~/common/enums/enums';
+import { ErrorMessage } from '~/common/enums/app/error-message.enum';
+import { HttpError } from "~/exceptions/exceptions";
 
 type Constructor = {
   podcastRepository: typeof podcastRep;
@@ -16,8 +19,20 @@ class Podcast {
     return this.#podcastRepository.getAll();
   }
 
+  public getById(id: string): Promise<TPodcast> {
+    const podcast = this.#podcastRepository.getById(id);
+    if (!podcast) {
+      throw new HttpError({ status: HttpCode.NOT_FOUND, message: ErrorMessage.NOT_FOUND });
+    }
+    return podcast;
+  }
+
   public create(payload: PodcastCreatePayload): Promise<TPodcast> {
     return this.#podcastRepository.create(payload);
+  }
+
+  public update(id: string, payload: PodcastCreatePayload): Promise<TPodcast> {
+    return this.#podcastRepository.update(id, payload);
   }
 }
 
