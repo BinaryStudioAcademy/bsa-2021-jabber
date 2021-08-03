@@ -91,63 +91,63 @@ const Player = forwardRef<Ref, Props>(
         customIcons={{
           next: (
             <NextIcon
-              className={getAllowedClasses([
+              className={getAllowedClasses(
                 styles.playerCommonBtn,
                 styles.playerNextBtn,
-              ])}
+              )}
             />
           ),
           previous: (
             <PreviousIcon
-              className={getAllowedClasses([
+              className={getAllowedClasses(
                 styles.playerCommonBtn,
                 styles.playerPreviousBtn,
-              ])}
+              )}
             />
           ),
           volume: (
             <VolumeIcon
-              className={getAllowedClasses([
+              className={getAllowedClasses(
                 styles.playerCommonBtn,
                 styles.playerVolumeBtn,
-              ])}
+              )}
             />
           ),
           volumeMute: (
             <MuteIcon
-              className={getAllowedClasses([
+              className={getAllowedClasses(
                 styles.playerCommonBtn,
                 styles.playerVolumeBtn,
-              ])}
+              )}
             />
           ),
           play: (
             <div
-              className={getAllowedClasses([
+              className={getAllowedClasses(
                 styles.playerCommonBtn,
                 styles.playerMainBtn,
                 styles.playerPlayBtn,
-              ])}
+              )}
             >
               <PlayIcon />
             </div>
           ),
           pause: (
             <div
-              className={getAllowedClasses([
+              className={getAllowedClasses(
                 styles.playerCommonBtn,
                 styles.playerMainBtn,
-              ])}
+              )}
             >
               <PauseIcon />
             </div>
           ),
           rewind: (
             <div
-              className={getAllowedClasses([
+              className={getAllowedClasses(
                 styles.playerCommonBtn,
                 styles.playerRewindBtn,
-              ])}
+              )}
             >
               <span className={styles.playerRewindSeconds}>
                 {skipTime / MILLISECONDS_IN_SECOND}
@@ -157,10 +157,10 @@ const Player = forwardRef<Ref, Props>(
           ),
           forward: (
             <div
-              className={getAllowedClasses([
+              className={getAllowedClasses(
                 styles.playerCommonBtn,
                 styles.playerRewindBtn,
-              ])}
+              )}
             >
               <span className={styles.playerRewindSeconds}>
                 {skipTime / MILLISECONDS_IN_SECOND}
