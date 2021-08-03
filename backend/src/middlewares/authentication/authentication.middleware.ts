@@ -1,5 +1,6 @@
 import passport from 'passport';
+import { StrategyName } from '~/common/enums/enums';
 
-const authentication = passport.authenticate('login', { session: false });
+const authentication = passport.authenticate(StrategyName.LOGIN, { session: false });
 
 export { authentication };
