@@ -30,14 +30,14 @@ const ConfiguratePodcastForm: React.FC<Props> = ({ onSubmit }) => {
           name={PodcastCreatePayloadKey.NAME}
           control={control}
           errors={errors}
-          label="Podcast name"
+          label="Podcast Name"
           placeholder="Name"
         />
         <Input
           name={PodcastCreatePayloadKey.DESCRIPTION}
           control={control}
           errors={errors}
-          label="Description"
+          label="Podcast Description"
           placeholder="Description"
         />
         <Button label="Save" type={ButtonType.SUBMIT} />

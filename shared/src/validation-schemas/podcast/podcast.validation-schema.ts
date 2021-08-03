@@ -8,7 +8,7 @@ import {
 import { PodcastCreatePayload } from '~/common/types/types';
 
 const imagePattern = new RegExp(
-  `^data:image\/(${ImageFileType.JPEG}|${ImageFileType.PNG}|${ImageFileType.SVG});base64,.*`,
+  `^data:image/(${ImageFileType.JPEG}|${ImageFileType.PNG}|${ImageFileType.SVG});base64,.*`,
 );
 
 const podcast = Joi.object<PodcastCreatePayload>({
@@ -38,14 +38,10 @@ const podcast = Joi.object<PodcastCreatePayload>({
       'string.max': PodcastValidationMessage.PODCAST_DESCRIPTION_MAX_LENGTH,
     }),
   [PodcastCreatePayloadKey.IMG_DATA_URL]: [
-    Joi.string()
-      .uri()
-      // .pattern(/^data:image\/(jpeg|png|svg\+xml);base64,.*/)
-      .pattern(imagePattern)
-      .messages({
-        'string.uri': PodcastValidationMessage.DATA_URL_FORMAT,
-        'string.pattern': PodcastValidationMessage.DATA_URL_FORMAT,
-      }),
+    Joi.string().uri().pattern(imagePattern).messages({
+      'string.uri': PodcastValidationMessage.DATA_URL_FORMAT,
+      'string.pattern': PodcastValidationMessage.DATA_URL_FORMAT,
+    }),
     Joi.any().equal(''),
   ],
 });
