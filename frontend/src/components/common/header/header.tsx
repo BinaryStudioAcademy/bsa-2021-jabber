@@ -1,4 +1,4 @@
-import { useAppSelector } from 'hooks/hooks';
+import { useAppSelector, useVisible } from 'hooks/hooks';
 import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
 import { Button, Link } from 'components/common/common';
@@ -12,6 +12,12 @@ const Header: React.FC = () => {
   }));
 
   const hasUser = Boolean(user);
+
+  const { ref, isVisible, setIsVisible } = useVisible(false);
+
+  const handleMenuToggle = (): void => {
+    setIsVisible(!isVisible);
+  };
 
   return (
     <header className={styles.header}>
@@ -31,15 +37,32 @@ const Header: React.FC = () => {
             </ul>
             <div className={styles.userInfo}>
               <Button label="+ Create Podcast" type={ButtonType.BUTTON} />
-              <div className={styles.profile}>
-                <img
-                  className={styles.profileAvatar}
-                  src={defaultAvatar}
-                  width="40px"
-                  height="40px"
-                  alt="avatar"
-                  loading="lazy"
-                />
+              <div className={styles.profile} ref={ref}>
+                <button
+                  className={styles.usersButtonWrapper}
+                  onClick={handleMenuToggle}
+                >
+                  <img
+                    className={styles.profileAvatar}
+                    src={defaultAvatar}
+                    width="40px"
+                    height="40px"
+                    alt="avatar"
+                    loading="lazy"
+                  />
+                </button>
+                {isVisible && (
+                  <div className={styles.dropDown}>
+                    <ul className={styles.dropDownList}>
+                      <li className={styles.dropDownListElement}>
+                        <Link to={AppRoute.PODCASTS_EDIT} className={styles.link}>
+                          + Add Podcast
+                        </Link>
+                      </li>
+                    </ul>
+                    <div className={styles.dropDownArrow}></div>
+                  </div>
+                )}
               </div>
             </div>
           </>

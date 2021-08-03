@@ -8,6 +8,8 @@ class Comment extends Abstract {
 
   [CommentDTOKey.EPISODE_ID]: number;
 
+  [CommentDTOKey.TIMESTAMP]: number;
+
   static get tableName(): string {
     return TableName.COMMENTS;
   }

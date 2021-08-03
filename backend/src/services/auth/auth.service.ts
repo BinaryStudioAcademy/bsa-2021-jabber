@@ -1,4 +1,8 @@
-import { UserCreatePayload, UserSignInPayload, SignResponse } from '~/common/types/types';
+import {
+  UserCreatePayload,
+  UserSignInPayload,
+  SignResponse,
+} from '~/common/types/types';
 import { user as userRep } from '~/data/repositories/repositories';
 import { encrypt, checkIsCryptsEqual } from '~/helpers/helpers';
 import { HttpError } from '~/exceptions/exceptions';
@@ -38,9 +42,6 @@ class Auth {
   public async signIn(payload: UserSignInPayload): Promise<SignResponse> {
     const { password, email } = payload;
     const user = await this.#userRepository.getByEmail(email);
-    const token = this.#tokenService.create({
-      userId: user.id,
-    });
 
     const hasUser = Boolean(user);
 
@@ -59,6 +60,10 @@ class Auth {
         message: ErrorMessage.WRONG_PASSWORD,
       });
     }
+
+    const token = this.#tokenService.create({
+      userId: user.id,
+    });
 
     return {
       token,
