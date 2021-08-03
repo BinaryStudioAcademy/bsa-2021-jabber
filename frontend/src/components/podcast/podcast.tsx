@@ -2,8 +2,6 @@ import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import { podcast as podcastActions } from 'store/actions';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
-import { Button } from '../common/common';
-import { AppRoute } from '../../common/enums/app/app-route.enum';
 
 const Podcast: React.FC = () => {
   const dispatch = useDispatch();
@@ -23,7 +21,7 @@ const Podcast: React.FC = () => {
         <>
           <div className={styles.descriptionWrapper}>
             <h1 className={styles.title}>{podcast.name}</h1>
-            <p className={styles.createdWrapper}>{podcast.createdAt}</p>
+            <p className={styles.description}>{podcast.description}</p>
           </div>
           <p className={styles.logoWrapper}>
             <img
@@ -36,8 +34,7 @@ const Podcast: React.FC = () => {
           </p>
         </>
       ) : (
-
-        <h1 className={styles.notFound}>Oops. There is no such podcast <Button href={AppRoute.SIGN_IN} label={'123'} /></h1>
+        <h1 className={styles.notFound}>Oops. There is no such podcast</h1>
       )}
     </main>
   );
