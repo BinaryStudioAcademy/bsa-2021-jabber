@@ -6,11 +6,9 @@
   font-weight: 700;
   cursor: pointer;
   transition: all 1s ease;
-}
-
-a {
-  display: inline-block;
+  display: block;
   text-decoration: none;
+  text-align: center;
 }
 
 .stylePrimary,
