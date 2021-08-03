@@ -5,6 +5,7 @@ enum ErrorMessage {
   USER_NOT_FOUND = 'User not found',
   WRONG_PASSWORD = 'Wrong password',
   BAD_TOKEN = 'Token is invalid',
+  EMAIL_IS_ALREADY_TAKEN = 'Email is already taken',
 }
 
 export { ErrorMessage };
