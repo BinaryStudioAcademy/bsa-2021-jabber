@@ -80,7 +80,6 @@ const Player = forwardRef<Ref, Props>(
 
     return (
       <H5AudioPlayer
-        className={styles.player}
         ref={playerRef}
         src={src}
         showSkipControls={true}
