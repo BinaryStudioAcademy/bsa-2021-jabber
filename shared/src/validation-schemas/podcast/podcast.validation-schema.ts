@@ -3,8 +3,13 @@ import {
   PodcastValidationRule,
   PodcastValidationMessage,
   PodcastCreatePayloadKey,
+  ImageFileType,
 } from '~/common/enums/enums';
 import { PodcastCreatePayload } from '~/common/types/types';
+
+const imagePattern = new RegExp(
+  `^data:image/(${ImageFileType.JPEG}|${ImageFileType.PNG}|${ImageFileType.SVG});base64,.*`,
+);
 
 const podcast = Joi.object<PodcastCreatePayload>({
   [PodcastCreatePayloadKey.NAME]: Joi.string()
@@ -32,6 +37,13 @@ const podcast = Joi.object<PodcastCreatePayload>({
       'string.min': PodcastValidationMessage.PODCAST_DESCRIPTION_MIN_LENGTH,
       'string.max': PodcastValidationMessage.PODCAST_DESCRIPTION_MAX_LENGTH,
     }),
+  [PodcastCreatePayloadKey.IMG_DATA_URL]: [
+    Joi.string().uri().pattern(imagePattern).messages({
+      'string.uri': PodcastValidationMessage.DATA_URL_FORMAT,
+      'string.pattern': PodcastValidationMessage.DATA_URL_FORMAT,
+    }),
+    Joi.any().equal(''),
+  ],
 });
 
 export { podcast };

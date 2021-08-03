@@ -31,10 +31,4 @@ const episodeApi = new EpisodeApi({
 
 const notification = new Notification();
 
-export {
-  authApi,
-  notification,
-  podcastApi,
-  episodeApi,
-  storage,
-};
+export { authApi, notification, podcastApi, episodeApi, storage };
