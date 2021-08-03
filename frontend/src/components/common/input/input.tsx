@@ -37,8 +37,8 @@ const Input: React.FC<Props> = ({
         <textarea
           {...field}
           placeholder={placeholder}
-          className={styles.input}
-        ></textarea>
+          className={styles.textarea}
+        />
       ) : (
         <input
           {...field}
