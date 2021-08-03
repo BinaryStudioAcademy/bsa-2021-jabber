@@ -15,13 +15,13 @@ const ConfiguratePodcast: React.FC = () => {
 
   const isEdit = Boolean(id);
 
+  const [imageSrc, setImageSrc] = useState('');
+
   const handleCreatePodcast = (payload: PodcastCreatePayload): void => {
     dispatch(
       configuratePodcastActions.create({ ...payload, imgDataUrl: imageSrc }),
     );
   };
-
-  const [imageSrc, setImageSrc] = useState('');
 
   const handleCreateCover = async (file: File): Promise<void> => {
     setImageSrc(await getDataUrl(file));
