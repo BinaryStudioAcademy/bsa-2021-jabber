@@ -5,8 +5,9 @@ import {
   MIDDLE_RATE_STEP_ANGLE_IN_DEGREES,
 } from './constants';
 
+const rateSteps = Object.values(RateStep);
+
 const getRateStepAngle = (rateIndex: number): number => {
-  const rateSteps = Object.values(RateStep);
   const middleRateIndex = rateSteps.indexOf(RateStep.NORMAL);
 
   if (rateIndex > middleRateIndex) {
