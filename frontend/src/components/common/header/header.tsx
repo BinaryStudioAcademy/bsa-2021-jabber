@@ -55,7 +55,7 @@ const Header: React.FC = () => {
                   <div className={styles.dropDown}>
                     <ul className={styles.dropDownList}>
                       <li className={styles.dropDownListElement}>
-                        <Link to={AppRoute.PODCAST} className={styles.link}>
+                        <Link to={AppRoute.PODCASTS_EDIT} className={styles.link}>
                           + Add Podcast
                         </Link>
                       </li>
