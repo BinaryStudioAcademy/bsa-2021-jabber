@@ -1,8 +1,15 @@
-import { Podcast as TPodcast, PodcastCreatePayload } from '~/common/types/types';
+import { Podcast as TPodcast } from '~/common/types/types';
 import { PodcastModel as PodcastM } from '~/data/models/models';
 
 type Constructor = {
   PodcastModel: typeof PodcastM;
+};
+
+type PodcastRecordPayload = {
+  name: string;
+  userId: number;
+  imageId: number | null;
+  description: string;
 };
 
 class Podcast {
@@ -16,8 +23,11 @@ class Podcast {
     return this.#PodcastModel.query();
   }
 
-  public create(payload: PodcastCreatePayload): Promise<TPodcast> {
-    return this.#PodcastModel.query().insert(payload);
+  public create(payload: PodcastRecordPayload): Promise<TPodcast> {
+    return this.#PodcastModel
+      .query()
+      .insert(payload)
+      .withGraphFetched('imageRel');
   }
 }
 

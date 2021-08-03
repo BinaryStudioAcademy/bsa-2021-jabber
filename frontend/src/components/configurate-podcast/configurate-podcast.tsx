@@ -1,7 +1,8 @@
-import { useDispatch, useParams } from 'hooks/hooks';
+import { useDispatch, useParams, useState } from 'hooks/hooks';
 import { configuratePodcast as configuratePodcastActions } from 'store/actions';
 import { PodcastCreatePayload } from 'common/types/types';
 import { PageParams } from './common/types/types';
+import { datauri } from 'services/services';
 import {
   ConfiguratePodcastForm,
   ConfiguratePodcastImage,
@@ -15,11 +16,15 @@ const ConfiguratePodcast: React.FC = () => {
   const isEdit = Boolean(id);
 
   const handleCreatePodcast = (payload: PodcastCreatePayload): void => {
-    dispatch(configuratePodcastActions.create(payload));
+    dispatch(
+      configuratePodcastActions.create({ ...payload, imgDataUrl: imageSrc }),
+    );
   };
 
-  const handleCreateCover = (file: File): void => {
-    dispatch(configuratePodcastActions.createCover(file));
+  const [imageSrc, setImageSrc] = useState('');
+
+  const handleCreateCover = async (file: File): Promise<void> => {
+    setImageSrc(await datauri.getDatauri(file));
   };
 
   return (
@@ -32,7 +37,10 @@ const ConfiguratePodcast: React.FC = () => {
           <ConfiguratePodcastForm onSubmit={handleCreatePodcast} />;
         </div>
         <div className={styles.formRight}>
-          <ConfiguratePodcastImage onSubmit={handleCreateCover} />
+          <ConfiguratePodcastImage
+            onSubmit={handleCreateCover}
+            imageSrc={imageSrc}
+          />
         </div>
       </div>
     </div>

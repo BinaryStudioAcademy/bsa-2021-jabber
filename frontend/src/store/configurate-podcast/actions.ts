@@ -1,12 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   AsyncThunkConfig,
-  Image,
   Podcast,
   PodcastCreatePayload,
 } from 'common/types/types';
 import { ActionType } from './common';
 
+// prettier-ignore
 const create = createAsyncThunk<Podcast, PodcastCreatePayload, AsyncThunkConfig>
 (ActionType.CREATE_PODCAST, async (podcastPayload, { extra }) => {
   const { podcastApi } = extra;
@@ -15,12 +15,4 @@ const create = createAsyncThunk<Podcast, PodcastCreatePayload, AsyncThunkConfig>
   return podcast;
 });
 
-const createCover = createAsyncThunk<Image, File, AsyncThunkConfig>
-(ActionType.CREATE_COVER, async (imageFile, { extra }) => {
-  const { imageApi } = extra;
-  const cover = await imageApi.uploadImage(imageFile);
-
-  return cover;
-});
-
-export { create, createCover };
+export { create };

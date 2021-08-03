@@ -13,7 +13,6 @@ import { Logger } from './logger/logger.service';
 import { Auth } from './auth/auth.service';
 import { User } from './user/user.service';
 import { Podcast } from './podcast/podcast.service';
-import { Image } from './image/image.service';
 import { Episode } from './episode/episode.service';
 import { Comment } from './comment/comment.service';
 import { Record } from './record/record.service';
@@ -40,10 +39,6 @@ const user = new User({
   userRepository,
 });
 
-const podcast = new Podcast({
-  podcastRepository,
-});
-
 const episode = new Episode({
   episodeRepository,
 });
@@ -56,12 +51,14 @@ const record = new Record({
   recordRepository,
 });
 
-const image = new Image({
-  imageRepository,
-});
-
 const fileStorage = new FileStorage({
   storageApiUser: <string>ENV.UPLOAD.API_URL,
+});
+
+const podcast = new Podcast({
+  podcastRepository,
+  imageRepository,
+  fileStorage,
 });
 
 export {
@@ -71,7 +68,6 @@ export {
   user,
   episode,
   podcast,
-  image,
   comment,
   record,
   fileStorage,

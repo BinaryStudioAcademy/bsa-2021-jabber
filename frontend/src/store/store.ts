@@ -3,7 +3,6 @@ import { rootReducer } from './root-reducer';
 import {
   authApi,
   podcastApi,
-  imageApi,
   episodeApi,
   storage as storageService,
 } from 'services/services';
@@ -12,7 +11,6 @@ import { handleError as handleErrorMiddleware } from 'middlewares/middlewares';
 const extraArgument = {
   authApi,
   podcastApi,
-  imageApi,
   episodeApi,
   storageService,
 };

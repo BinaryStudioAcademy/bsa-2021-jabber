@@ -32,6 +32,16 @@ const podcast = Joi.object<PodcastCreatePayload>({
       'string.min': PodcastValidationMessage.PODCAST_DESCRIPTION_MIN_LENGTH,
       'string.max': PodcastValidationMessage.PODCAST_DESCRIPTION_MAX_LENGTH,
     }),
+  [PodcastCreatePayloadKey.IMG_DATA_URL]: [
+    Joi.string()
+      .uri()
+      .pattern(/^data:image\/(jpeg|png|svg\+xml);base64,.*/)
+      .messages({
+        'string.uri': PodcastValidationMessage.DATA_URL_FORMAT,
+        'string.pattern': PodcastValidationMessage.DATA_URL_FORMAT,
+      }),
+    Joi.any().equal(''),
+  ],
 });
 
 export { podcast };

@@ -3,6 +3,5 @@ export {
   UsersApiPath,
   AuthApiPath,
   PodcastsApiPath,
-  ImagesApiPath,
   EpisodesApiPath,
 } from 'jabber-shared/common/enums/enums';

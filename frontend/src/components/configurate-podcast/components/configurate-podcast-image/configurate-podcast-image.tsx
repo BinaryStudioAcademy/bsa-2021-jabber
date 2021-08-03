@@ -1,26 +1,22 @@
-import { useAppSelector, useRef } from 'hooks/hooks';
+import { useAppSelector } from 'hooks/hooks';
 import { DataStatus } from 'common/enums/enums';
 import styles from './styles.module.scss';
 import logoCut from 'assets/img/logo-cut.svg';
 
 type Props = {
   onSubmit: (file: File) => void;
+  imageSrc: string;
 };
 
-const ConfiguratePodcastImage: React.FC<Props> = ({ onSubmit }) => {
-  const { createCoverStatus, cover } = useAppSelector(
-    ({ configuratePodcast }) => ({
-      createCoverStatus: configuratePodcast.dataStatus,
-      cover: configuratePodcast.image,
-    }),
-  );
+const ConfiguratePodcastImage: React.FC<Props> = ({ onSubmit, imageSrc }) => {
+  const { createPodcastStatus } = useAppSelector(({ configuratePodcast }) => ({
+    createPodcastStatus: configuratePodcast.dataStatus,
+  }));
 
-  const isFormDisabled = createCoverStatus === DataStatus.PENDING;
+  const isFormDisabled = createPodcastStatus === DataStatus.PENDING;
 
-  const inputFileRef = useRef(null);
-  const handleCoverUpload = (): void => {
-    const inputFile = inputFileRef.current as unknown as HTMLInputElement;
-    const file = inputFile?.files?.[0];
+  const handleCoverUpload = (evt: React.FormEvent<HTMLInputElement>): void => {
+    const file = evt.currentTarget?.files?.[0];
 
     if (file) {
       onSubmit(file);
@@ -31,16 +27,17 @@ const ConfiguratePodcastImage: React.FC<Props> = ({ onSubmit }) => {
     <form>
       <fieldset disabled={isFormDisabled} className={styles.fieldset}>
         <img
-          src={cover ? cover.url : logoCut}
+          src={imageSrc ? imageSrc : logoCut}
           width={195}
           height={195}
           loading="lazy"
           alt="image"
         />
-        <input type="file" ref={inputFileRef} />
-        <button type="button" onClick={handleCoverUpload}>
-          Upload Cover
-        </button>
+        <input
+          type="file"
+          accept=".jpg, .png, .svg"
+          onChange={handleCoverUpload}
+        />
       </fieldset>
     </form>
   );

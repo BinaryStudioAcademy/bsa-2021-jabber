@@ -2,7 +2,6 @@ import { ENV } from 'common/enums/enums';
 import { Http } from './http/http.service';
 import { AuthApi } from './auth-api/auth-api.service';
 import { PodcastApi } from './podcast-api/podcast-api.service';
-import { ImageApi } from './image-api/image-api.service';
 import { Notification } from './notification/notification.service';
 import { Datauri } from './datauri/datauri.service';
 import { EpisodeApi } from './episode-api/episode-api.service';
@@ -28,12 +27,6 @@ const podcastApi = new PodcastApi({
   apiPrefix: ENV.API_PATH,
 });
 
-const imageApi = new ImageApi({
-  http,
-  datauri,
-  apiPrefix: ENV.API_PATH,
-});
-
 const episodeApi = new EpisodeApi({
   http,
   apiPrefix: ENV.API_PATH,
@@ -41,12 +34,4 @@ const episodeApi = new EpisodeApi({
 
 const notification = new Notification();
 
-export {
-  authApi,
-  notification,
-  podcastApi,
-  episodeApi,
-  storage,
-  imageApi,
-  datauri,
-};
+export { authApi, notification, podcastApi, episodeApi, storage, datauri };
