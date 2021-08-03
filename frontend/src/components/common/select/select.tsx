@@ -1,11 +1,5 @@
 import { ErrorMessage } from '@hookform/error-message';
-import {
-  Control,
-  FieldErrors,
-  useController,
-  Path,
-  FieldValues,
-} from 'react-hook-form';
+import { Control, FieldErrors, Path, FieldValues } from 'react-hook-form';
 
 import styles from './styles.module.scss';
 
@@ -18,17 +12,24 @@ type Props = {
   errors: FieldErrors;
 };
 
+import SelectReact from 'react-select';
+
 const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
-  const { field } = useController({ name, control });
+  const optionsItems = options.map((item, index) => {
+    return { value: index, label: item };
+  });
 
   return (
     <label className={styles.inputWrapper}>
       <span className={styles.label}>{label}</span>
-      <select {...field} className={styles.input}>
-        {options.map((item: string) => (
-          <option key={item}>{item}</option>
-        ))}
-      </select>
+      <SelectReact
+        defaultValue={optionsItems[0]}
+        control={control}
+        options={optionsItems}
+        className={styles.input}
+        isSearchable={false}
+        name={name}
+      />
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />
       </span>

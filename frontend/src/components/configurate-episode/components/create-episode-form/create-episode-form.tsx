@@ -11,10 +11,10 @@ type Props = {
 };
 
 const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
-  const { control, handleSubmit, errors } = useAppForm( {
+  const { control, handleSubmit, errors } = useAppForm({
     validationSchema: createEpisodeValidationSchema,
     defaultValues: DEFAULT_CREATE_EPISODE_PAYLOAD,
-  } );
+  });
 
   const { dataStatus } = useAppSelector(({ episode }) => ({
     dataStatus: episode.dataStatus,
