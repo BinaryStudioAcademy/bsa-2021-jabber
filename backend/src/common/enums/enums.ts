@@ -22,6 +22,7 @@ export {
   EpisodeDTOKey,
   CommentDTOKey,
   RecordDTOKey,
+  ImageDTOKey,
 } from './db/db';
 export { HttpCode } from './http/http';
 export { ResourceType } from './file/file';
