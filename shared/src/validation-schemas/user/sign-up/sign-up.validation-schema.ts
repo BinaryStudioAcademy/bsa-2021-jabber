@@ -59,8 +59,8 @@ const signUp = Joi.object<UserCreatePayload>({
     .less('now')
     .message(SignUpValidationMessage.BIRTHDATE_LESS_THEN)
     .messages({
-    'date.base': SignUpValidationMessage.BIRTHDATE_REQUIRE,
-  }),
+      'date.base': SignUpValidationMessage.BIRTHDATE_REQUIRE,
+    }),
 });
 
 export { signUp };
