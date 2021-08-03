@@ -27,22 +27,20 @@ const ConfiguratePodcastForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_P
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisabled} className={styles.fieldset}>
-        <p>
-          <Input
-            name={PodcastCreatePayloadKey.NAME}
-            control={control}
-            errors={errors}
-            label="Podcast name"
-            placeholder="Name"
-          />
-          <Input
-            name={PodcastCreatePayloadKey.DESCRIPTION}
-            control={control}
-            errors={errors}
-            label="Podcast description"
-            placeholder="Description"
-          />
-        </p>
+        <Input
+          name={PodcastCreatePayloadKey.NAME}
+          control={control}
+          errors={errors}
+          label="Podcast Name"
+          placeholder="Name"
+        />
+        <Input
+          name={PodcastCreatePayloadKey.DESCRIPTION}
+          control={control}
+          errors={errors}
+          label="Podcast Description"
+          placeholder="Description"
+        />
         <Button label="Save" type={ButtonType.SUBMIT} />
       </fieldset>
     </form>

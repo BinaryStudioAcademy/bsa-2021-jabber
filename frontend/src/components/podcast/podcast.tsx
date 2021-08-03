@@ -21,7 +21,7 @@ const Podcast: React.FC = () => {
         <>
           <div className={styles.descriptionWrapper}>
             <h1 className={styles.title}>{podcast.name}</h1>
-            <p className={styles.createdWrapper}>{podcast.createdAt}</p>
+            <p className={styles.description}>{podcast.description}</p>
           </div>
           <p className={styles.logoWrapper}>
             <img

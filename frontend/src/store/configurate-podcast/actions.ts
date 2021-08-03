@@ -4,13 +4,18 @@ import {
   Podcast,
   PodcastCreatePayload,
   PodcastEditActionPayloadType,
+  User,
 } from 'common/types/types';
 import { ActionType } from './common';
 
 const create = createAsyncThunk<Podcast, PodcastCreatePayload, AsyncThunkConfig>
-(ActionType.CREATE_PODCAST, async (podcastPayload, { extra }) => {
+(ActionType.CREATE_PODCAST, async (podcastPayload, { getState, extra }) => {
   const { podcastApi } = extra;
-  const podcast = await podcastApi.create(podcastPayload);
+  const { auth } = getState();
+  const podcast = await podcastApi.create({
+    ...podcastPayload,
+    userId: (<User>auth.user).id,
+  });
 
   return podcast;
 });
