@@ -22,7 +22,7 @@ class Podcast {
   public async getById(id: string): Promise<TPodcast> {
     const podcast = await this.#podcastRepository.getById(id);
     if (!podcast) {
-      throw new HttpError({ status: HttpCode.NOT_FOUND, message: ErrorMessage.NOT_FOUND });
+      throw new HttpError({ status: HttpCode.NOT_FOUND, message: ErrorMessage.PODCAST_NOT_FOUND });
     }
     return podcast;
   }

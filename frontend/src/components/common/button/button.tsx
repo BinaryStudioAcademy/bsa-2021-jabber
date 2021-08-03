@@ -1,6 +1,6 @@
 import { ButtonColor, ButtonStyle, ButtonType } from 'common/enums/enums';
-import { Link } from 'components/common/common';
-import ButtonElement from './button-element';
+import { getAllowedClasses } from 'helpers/dom/dom';
+import styles from './styles.module.scss';
 
 type Props = {
   label: string;
@@ -9,24 +9,28 @@ type Props = {
   buttonStyle?: ButtonStyle;
   buttonColor?: ButtonColor;
   className?: string;
-  href?: string;
 };
 
 const Button: React.FC<Props> = ({
-  href,
-  ...other
-}) => {
-
-  return (
-    <>
-      {href
-        ? <Link to={href}>
-          <ButtonElement {...other} />
-        </Link>
-        : <ButtonElement {...other} />
-      }
-    </>
-  );
-};
+  type = ButtonType.BUTTON,
+  buttonStyle = ButtonStyle.PRIMARY,
+  buttonColor = ButtonColor.PINK,
+  onClick,
+  label,
+  className,
+}) => (
+  <button
+    type={type}
+    onClick={onClick}
+    className={getAllowedClasses(
+      className,
+      styles.button,
+      styles[`style${buttonStyle}`],
+      styles[`color${buttonColor}`],
+    )}
+  >
+    {label}
+  </button>
+);
 
 export default Button;
