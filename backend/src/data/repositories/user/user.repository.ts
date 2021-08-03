@@ -27,6 +27,9 @@ class User {
   public getByEmail(payload: string): Promise<TUser> {
     return this.#UserModel.query().findOne('email', payload);
   }
-}
+
+  public getById(payload: number): Promise<TUser> {
+    return this.#UserModel.query().findOne('id', payload);
+  }}
 
 export { User };

@@ -1,3 +1,5 @@
+import passportJwt from 'passport-jwt';
+import { Strategy as LocalStrategy } from 'passport-local';
 import { LogLevel, ENV } from '~/common/enums/enums';
 import { AppAsyncStorage } from '~/common/types/types';
 import {
@@ -6,6 +8,7 @@ import {
   episode as episodeRepository,
   comment as commentRepository,
   record as recordRepository,
+  image as imageRepository,
 } from '~/data/repositories/repositories';
 import { AsyncLocalStorage } from './async-storage/async-storage.service';
 import { Logger } from './logger/logger.service';
@@ -17,6 +20,7 @@ import { Comment } from './comment/comment.service';
 import { Record } from './record/record.service';
 import { FileStorage } from './file-storage/file-storage.service';
 import { Token } from './token/token.service';
+import { Passport } from './passport/passport.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -39,10 +43,6 @@ const user = new User({
   userRepository,
 });
 
-const podcast = new Podcast({
-  podcastRepository,
-});
-
 const episode = new Episode({
   episodeRepository,
 });
@@ -59,6 +59,19 @@ const fileStorage = new FileStorage({
   storageApiUser: <string>ENV.UPLOAD.API_URL,
 });
 
+const podcast = new Podcast({
+  podcastRepository,
+  imageRepository,
+  fileStorage,
+});
+
+const passport = new Passport({
+  secret: <string>ENV.JWT.SECRET,
+  passportJwt,
+  LocalStrategy,
+  userRepository,
+});
+
 export {
   auth,
   appAsyncStorage,
@@ -70,4 +83,5 @@ export {
   record,
   fileStorage,
   token,
+  passport,
 };
