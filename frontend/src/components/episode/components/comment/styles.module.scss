@@ -1,0 +1,41 @@
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 15px;
+  font-size: 12px;
+}
+
+.avatarWrapper {
+  width: 40px;
+  margin-right: 15px;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+.intro {
+  max-width: 70%;
+  p {
+    margin: 0;
+  }
+}
+
+.userName {
+  display: flex;
+  color: rgba(53, 53, 53, 0.5);
+  font-weight: 600;
+  span {
+    color: rgba(53, 53, 53, 0.3);
+  }
+}
+
+.text {
+  font-weight: 500;
+}
+
+.date {
+  width: 150px;
+  text-align: right;
+  margin-left: auto;
+  color: rgba(53, 53, 53, 0.5);
+  font-weight: 600;
+}
