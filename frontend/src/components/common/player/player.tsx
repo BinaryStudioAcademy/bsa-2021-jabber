@@ -7,8 +7,6 @@ import {
   useCallback,
   useImperativeHandle,
 } from 'hooks/hooks';
-import 'react-h5-audio-player/lib/styles.css';
-import styles from './styles.module.scss';
 import { getAllowedClasses } from 'helpers/dom/dom';
 import { getRatePointerStyle } from './common/helpers';
 import { MILLISECONDS_IN_SECOND, RATE_STEPS } from './common/constants';
@@ -23,6 +21,9 @@ import { ReactComponent as VolumeIcon } from 'assets/img/player/volume.svg';
 import { ReactComponent as MuteIcon } from 'assets/img/player/mute.svg';
 import { ReactComponent as RateScaleIcon } from 'assets/img/player/rateScale.svg';
 import { ReactComponent as RatePointerIcon } from 'assets/img/player/ratePointer.svg';
+
+import 'react-h5-audio-player/lib/styles.css';
+import styles from './styles.module.scss';
 
 type Props = {
   src: string;
@@ -66,6 +67,7 @@ const Player = forwardRef<Ref, Props>(
 
     return (
       <H5AudioPlayer
+        className={styles.player}
         ref={playerRef}
         src={src}
         showSkipControls={true}

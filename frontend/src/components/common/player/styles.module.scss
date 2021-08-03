@@ -1,4 +1,6 @@
-$primary_color: #f3427f;
+.player {
+  --primary-color: #f3427f;
+}
 
 .playerRewindSeconds {
   position: absolute;
@@ -72,7 +74,7 @@ $primary_color: #f3427f;
 }
 
 .playerVolumeBtn {
-  fill: $primary_color;
+  fill: var(--primary-color);
   height: 20px;
 }
 
@@ -96,7 +98,7 @@ $primary_color: #f3427f;
     transform: translate(-50%, -50%);
     font-size: 12px;
     font-weight: bold;
-    color: $primary_color;
+    color: var(--primary-color);
   }
 
   & svg {
@@ -106,7 +108,7 @@ $primary_color: #f3427f;
     left: 50%;
     top: 40%;
 
-    fill: $primary_color;
+    fill: var(--primary-color);
 
     &:nth-child(2) {
       transform-origin: bottom center;
@@ -124,7 +126,7 @@ $primary_color: #f3427f;
     &_progress-indicator,
     &_volume-indicator,
     &_progress-filled {
-      background-color: $primary_color;
+      background-color: var(--primary-color);
     }
 
     &_progress {
@@ -186,7 +188,7 @@ $primary_color: #f3427f;
           top: 50%;
 
           transform: translate(-3.5px, -50%);
-          background-color: $primary_color;
+          background-color: var(--primary-color);
         }
 
         &:hover {
