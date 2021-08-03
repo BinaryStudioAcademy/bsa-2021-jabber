@@ -13,16 +13,16 @@ import { getAllowedClasses } from 'helpers/dom/dom';
 import { getRatePointerStyle } from './common/helpers';
 import { MILLISECONDS_IN_SECOND, RATE_STEPS } from './common/constants';
 
-import { ReactComponent as PlayIcon } from '../../../assets/img/player/play.svg';
-import { ReactComponent as PauseIcon } from '../../../assets/img/player/pause.svg';
-import { ReactComponent as NextIcon } from '../../../assets/img/player/next.svg';
-import { ReactComponent as PreviousIcon } from '../../../assets/img/player/previous.svg';
-import { ReactComponent as RewindIcon } from '../../../assets/img/player/rewind.svg';
-import { ReactComponent as ForwardIcon } from '../../../assets/img/player/forward.svg';
-import { ReactComponent as VolumeIcon } from '../../../assets/img/player/volume.svg';
-import { ReactComponent as MuteIcon } from '../../../assets/img/player/mute.svg';
-import { ReactComponent as RateScaleIcon } from '../../../assets/img/player/rateScale.svg';
-import { ReactComponent as RatePointerIcon } from '../../../assets/img/player/ratePointer.svg';
+import { ReactComponent as PlayIcon } from 'assets/img/player/play.svg';
+import { ReactComponent as PauseIcon } from 'assets/img/player/pause.svg';
+import { ReactComponent as NextIcon } from 'assets/img/player/next.svg';
+import { ReactComponent as PreviousIcon } from 'assets/img/player/previous.svg';
+import { ReactComponent as RewindIcon } from 'assets/img/player/rewind.svg';
+import { ReactComponent as ForwardIcon } from 'assets/img/player/forward.svg';
+import { ReactComponent as VolumeIcon } from 'assets/img/player/volume.svg';
+import { ReactComponent as MuteIcon } from 'assets/img/player/mute.svg';
+import { ReactComponent as RateScaleIcon } from 'assets/img/player/rateScale.svg';
+import { ReactComponent as RatePointerIcon } from 'assets/img/player/ratePointer.svg';
 
 type Props = {
   src: string;
