@@ -4,7 +4,7 @@ import {
   ContentType,
   HttpMethod,
 } from 'common/enums/enums';
-import { UserCreatePayload, UserSignInPayload, SignResponse } from 'common/types/types';
+import { UserCreatePayload, UserSignInPayload, SignResponse, User } from 'common/types/types';
 import { Http } from 'services/http/http.service';
 
 type Constructor = {
@@ -39,6 +39,15 @@ class AuthApi {
         method: HttpMethod.POST,
         contentType: ContentType.JSON,
         payload: JSON.stringify(payload),
+      },
+    );
+  }
+
+  public getCurrentUser(): Promise<User> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.AUTH}`,
+      {
+        method: HttpMethod.GET,
       },
     );
   }

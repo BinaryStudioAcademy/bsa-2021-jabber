@@ -75,8 +75,8 @@ class Auth {
     const decodedToken = jwt.verify(token, this.#secret, (err, decode) => {
       if (err) {
         throw new HttpError({
-          status: HttpCode.INTERNAL_SERVER_ERROR,
-          message: ErrorMessage.INTERNAL_SERVER_ERROR,
+          status: HttpCode.UNAUTHORIZED,
+          message: ErrorMessage.UNAUTHORIZED_TOKEN,
         });
       }
       return decode;
@@ -86,7 +86,17 @@ class Auth {
 
   public async getByToken(token: string): Promise<TUser> {
     const decodedToken = this.getDecodedAccessToken(token);
-    const user = await this.#userRepository.getById(decodedToken.userId)
+    const user = await this.#userRepository.getById(decodedToken.userId);
+
+    const hasUser = Boolean(user);
+
+    if (!hasUser) {
+      throw new HttpError({
+        status: HttpCode.NOT_FOUND,
+        message: ErrorMessage.USER_NOT_FOUND,
+      });
+    }
+    
     return user;
   };
 }
