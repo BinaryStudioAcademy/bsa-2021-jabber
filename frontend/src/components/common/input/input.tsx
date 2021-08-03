@@ -7,6 +7,7 @@ import {
   FieldValues,
 } from 'react-hook-form';
 import { InputType } from 'common/enums/enums';
+import { getAllowedClasses } from 'helpers/dom/dom';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -37,7 +38,7 @@ const Input: React.FC<Props> = ({
         <textarea
           {...field}
           placeholder={placeholder}
-          className={styles.textarea}
+          className={getAllowedClasses(styles.input, styles.textarea)}
         />
       ) : (
         <input
