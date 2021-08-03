@@ -25,15 +25,7 @@
 }
 
 .textarea {
-  display: block;
-  padding: 11px 40px;
-  border: none;
-  border-radius: 7px;
-  outline: none;
-
-  &::placeholder {
-    color: rgb(40 40 40 / 50%);
-  }
+  resize: none;
 }
 
 .errorWrapper {
