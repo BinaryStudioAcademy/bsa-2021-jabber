@@ -22,6 +22,13 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
     }),
   );
 
+  podcastRouter.get(
+    PodcastsApiPath.$ID,
+    handleAsyncApi(async (_req, res) => {
+      return res.json(await podcastService.getById(_req.params.id)).status(HttpCode.OK);
+    }),
+  );
+
   podcastRouter.post(
     PodcastsApiPath.ROOT,
     validateSchemaMiddleware(podcastValidationSchema),
@@ -29,6 +36,16 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
       return res
         .json(await podcastService.create(req.body))
         .status(HttpCode.CREATED);
+    }),
+  );
+
+  podcastRouter.put(
+    PodcastsApiPath.$ID,
+    validateSchemaMiddleware(podcastValidationSchema),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await podcastService.update(req.params.id, req.body))
+        .status(HttpCode.OK);
     }),
   );
 
