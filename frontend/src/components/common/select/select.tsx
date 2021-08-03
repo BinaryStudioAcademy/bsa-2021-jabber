@@ -1,6 +1,6 @@
+import SelectReact from 'react-select';
 import { ErrorMessage } from '@hookform/error-message';
 import { Control, FieldErrors, Path, FieldValues } from 'react-hook-form';
-
 import styles from './styles.module.scss';
 
 type Props = {
@@ -11,8 +11,6 @@ type Props = {
   control: Control;
   errors: FieldErrors;
 };
-
-import SelectReact from 'react-select';
 
 const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
   const optionsItems = options.map((item, index) => {
