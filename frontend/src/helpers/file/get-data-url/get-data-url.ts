@@ -1,7 +1,27 @@
-const getDataUrl = async (file: File): Promise<string> => {
-  return new Promise((resolve) => {
+const getDataUrl = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
-    fileReader.onload = (): void => resolve(<string>fileReader.result);
+
+    fileReader.addEventListener(
+      'load',
+      () => {
+        resolve(<string>fileReader.result);
+      },
+      {
+        once: true,
+      },
+    );
+
+    fileReader.addEventListener(
+      'error',
+      () => {
+        reject(fileReader.error);
+      },
+      {
+        once: true,
+      },
+    );
+
     fileReader.readAsDataURL(file);
   });
 };

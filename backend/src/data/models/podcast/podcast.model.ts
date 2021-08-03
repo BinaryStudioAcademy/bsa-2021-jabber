@@ -16,18 +16,16 @@ class Podcast extends Abstract {
     return TableName.PODCASTS;
   }
 
-  static get relationMappings(): any {
-    return {
-      imageRel: {
-        relation: Model.HasOneRelation,
-        modelClass: Image,
-        join: {
-          from: 'podcasts.image_id',
-          to: 'images.id',
-        },
+  static relationMappings = {
+    imageRel: {
+      relation: Model.HasOneRelation,
+      modelClass: Image,
+      join: {
+        from: 'podcasts.image_id',
+        to: 'images.id',
       },
-    };
-  }
+    },
+  };
 }
 
 export { Podcast };

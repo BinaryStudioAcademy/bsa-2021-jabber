@@ -1,5 +1,5 @@
 import { useAppSelector } from 'hooks/hooks';
-import { DataStatus } from 'common/enums/enums';
+import { DataStatus, ImageFileExtension } from 'common/enums/enums';
 import styles from './styles.module.scss';
 import logoCut from 'assets/img/logo-cut.svg';
 
@@ -16,12 +16,14 @@ const ConfiguratePodcastImage: React.FC<Props> = ({ onSubmit, imageSrc }) => {
   const isFormDisabled = createPodcastStatus === DataStatus.PENDING;
 
   const handleCoverUpload = (evt: React.FormEvent<HTMLInputElement>): void => {
-    const file = evt.currentTarget?.files?.[0];
+    const [file] = evt.currentTarget?.files ?? [];
 
     if (file) {
       onSubmit(file);
     }
   };
+
+  const fileMask = Object.values(ImageFileExtension).join(', ');
 
   return (
     <form>
@@ -33,11 +35,7 @@ const ConfiguratePodcastImage: React.FC<Props> = ({ onSubmit, imageSrc }) => {
           loading="lazy"
           alt="image"
         />
-        <input
-          type="file"
-          accept=".jpg, .png, .svg"
-          onChange={handleCoverUpload}
-        />
+        <input type="file" accept={fileMask} onChange={handleCoverUpload} />
       </fieldset>
     </form>
   );

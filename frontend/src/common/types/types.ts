@@ -3,6 +3,5 @@ export type { User, UserCreatePayload, UserSignInPayload } from './user/user';
 export type { HttpOptions } from './http/http';
 export type { ValidationSchema } from './validation-schema/validation-schema';
 export type { Podcast, PodcastCreatePayload } from './podcast/podcast';
-export type { Image } from './image/image';
 export type { Episode, EpisodeCreatePayload } from './episode/episode';
 export type { SignResponse } from './sign/sign';

@@ -5,7 +5,7 @@ type Constructor = {
   PodcastModel: typeof PodcastM;
 };
 
-type PodcastRecordPayload = {
+type PodcastCreateDTOPayload = {
   name: string;
   userId: number;
   imageId: number | null;
@@ -23,7 +23,7 @@ class Podcast {
     return this.#PodcastModel.query();
   }
 
-  public create(payload: PodcastRecordPayload): Promise<TPodcast> {
+  public create(payload: PodcastCreateDTOPayload): Promise<TPodcast> {
     return this.#PodcastModel
       .query()
       .insert(payload)

@@ -1,1 +1,4 @@
-export { ContentType } from 'jabber-shared/common/enums/enums';
+export {
+  ContentType,
+  ImageFileExtension,
+} from 'jabber-shared/common/enums/enums';

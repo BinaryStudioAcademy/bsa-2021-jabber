@@ -3,8 +3,13 @@ import {
   PodcastValidationRule,
   PodcastValidationMessage,
   PodcastCreatePayloadKey,
+  ImageFileType,
 } from '~/common/enums/enums';
 import { PodcastCreatePayload } from '~/common/types/types';
+
+const imagePattern = new RegExp(
+  `^data:image\/(${ImageFileType.JPEG}|${ImageFileType.PNG}|${ImageFileType.SVG});base64,.*`,
+);
 
 const podcast = Joi.object<PodcastCreatePayload>({
   [PodcastCreatePayloadKey.NAME]: Joi.string()
@@ -35,7 +40,8 @@ const podcast = Joi.object<PodcastCreatePayload>({
   [PodcastCreatePayloadKey.IMG_DATA_URL]: [
     Joi.string()
       .uri()
-      .pattern(/^data:image\/(jpeg|png|svg\+xml);base64,.*/)
+      // .pattern(/^data:image\/(jpeg|png|svg\+xml);base64,.*/)
+      .pattern(imagePattern)
       .messages({
         'string.uri': PodcastValidationMessage.DATA_URL_FORMAT,
         'string.pattern': PodcastValidationMessage.DATA_URL_FORMAT,
