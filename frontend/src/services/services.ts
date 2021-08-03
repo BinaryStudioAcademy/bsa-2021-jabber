@@ -3,7 +3,6 @@ import { Http } from './http/http.service';
 import { AuthApi } from './auth-api/auth-api.service';
 import { PodcastApi } from './podcast-api/podcast-api.service';
 import { Notification } from './notification/notification.service';
-import { Datauri } from './datauri/datauri.service';
 import { EpisodeApi } from './episode-api/episode-api.service';
 import { Storage } from './storage/storage.service';
 
@@ -14,8 +13,6 @@ const storage = new Storage({
 const http = new Http({
   storage,
 });
-
-const datauri = new Datauri();
 
 const authApi = new AuthApi({
   http,
@@ -34,4 +31,4 @@ const episodeApi = new EpisodeApi({
 
 const notification = new Notification();
 
-export { authApi, notification, podcastApi, episodeApi, storage, datauri };
+export { authApi, notification, podcastApi, episodeApi, storage };

@@ -1,10 +1,6 @@
 export type { User, UserCreatePayload, UserSignInPayload } from './user/user';
 export type { Podcast, PodcastCreatePayload } from './podcast/podcast';
-export type {
-  Image,
-  ImageCreatePayload,
-  ImageUploadPayload,
-} from './image/image';
+export type { Image, ImageCreatePayload } from './image/image';
 export type { ValidationSchema } from './validation-schema/validation-schema';
 export type { Episode, EpisodeCreatePayload } from './episode/episode';
 export type { Comment, CommentCreatePayload } from './comment/comment';

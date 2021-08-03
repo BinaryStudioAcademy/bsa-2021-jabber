@@ -27,9 +27,8 @@ export {
   EpisodeValidationMessage,
   PodcastValidationRule,
   PodcastValidationMessage,
-  ImageValidationMessage,
 } from './validation/validation';
 export { EpisodeCreatePayloadKey, EpisodeType } from './episode/episode';
 export { CommentCreatePayloadKey } from './comment/comment';
 export { RecordCreatePayloadKey } from './record/record';
-export { ImageCreatePayloadKey, ImageUploadKey } from './image/image';
+export { ImageCreatePayloadKey } from './image/image';

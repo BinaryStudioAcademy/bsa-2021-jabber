@@ -1,4 +1,1 @@
-export type {
-  Image,
-  ImageUploadPayload,
-} from 'jabber-shared/common/types/types';
+export type { Image } from 'jabber-shared/common/types/types';

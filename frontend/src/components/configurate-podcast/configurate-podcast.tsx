@@ -2,7 +2,7 @@ import { useDispatch, useParams, useState } from 'hooks/hooks';
 import { configuratePodcast as configuratePodcastActions } from 'store/actions';
 import { PodcastCreatePayload } from 'common/types/types';
 import { PageParams } from './common/types/types';
-import { datauri } from 'services/services';
+import { getDataUrl } from 'helpers/helpers';
 import {
   ConfiguratePodcastForm,
   ConfiguratePodcastImage,
@@ -24,7 +24,7 @@ const ConfiguratePodcast: React.FC = () => {
   const [imageSrc, setImageSrc] = useState('');
 
   const handleCreateCover = async (file: File): Promise<void> => {
-    setImageSrc(await datauri.getDatauri(file));
+    setImageSrc(await getDataUrl(file));
   };
 
   return (
