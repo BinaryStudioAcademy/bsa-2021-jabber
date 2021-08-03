@@ -16,7 +16,7 @@ class Podcast extends Abstract {
     return TableName.PODCASTS;
   }
 
-  static get relationMappings() {
+  static get relationMappings(): any {
     return {
       imageRel: {
         relation: Model.HasOneRelation,
