@@ -1,6 +1,7 @@
-import { ButtonColor, ButtonStyle, ButtonType } from 'common/enums/enums';
+import { AppRoute, ButtonColor, ButtonStyle, ButtonType } from 'common/enums/enums';
 import { getAllowedClasses } from 'helpers/dom/dom';
 import styles from './styles.module.scss';
+import { Link } from '../common';
 
 type Props = {
   label: string;
@@ -9,6 +10,7 @@ type Props = {
   buttonStyle?: ButtonStyle;
   buttonColor?: ButtonColor;
   className?: string;
+  href?: AppRoute | string;
 };
 
 const Button: React.FC<Props> = ({
@@ -18,19 +20,37 @@ const Button: React.FC<Props> = ({
   onClick,
   label,
   className,
-}) => (
-  <button
-    type={type}
-    onClick={onClick}
-    className={getAllowedClasses(
-      className,
-      styles.button,
-      styles[`style${buttonStyle}`],
-      styles[`color${buttonColor}`],
-    )}
-  >
-    {label}
-  </button>
-);
+  href,
+}) => {
+
+  return (
+    <>
+      {!href
+        ? <button
+          type={type}
+          onClick={onClick}
+          className={getAllowedClasses(
+            className,
+            styles.button,
+            styles[`style${buttonStyle}`],
+            styles[`color${buttonColor}`],
+          )}
+        >
+          {label}
+        </button>
+        : <Link
+          className={getAllowedClasses(
+            className,
+            styles.button,
+            styles[`style${buttonStyle}`],
+            styles[`color${buttonColor}`],
+          )}
+          to={href}
+        >
+          {label}
+        </Link>}
+    </>
+  );
+};
 
 export default Button;

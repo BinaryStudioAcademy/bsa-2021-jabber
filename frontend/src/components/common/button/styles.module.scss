@@ -8,6 +8,11 @@
   transition: all 1s ease;
 }
 
+a {
+  display: inline-block;
+  text-decoration: none;
+}
+
 .stylePrimary,
 .styleLight {
   border-radius: 7px;
