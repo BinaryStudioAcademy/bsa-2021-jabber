@@ -38,7 +38,7 @@ const editPodcast = Joi.object<Podcast>({
     .required(),
   [PodcastEditPayloadKey.ID]: Joi.number()
     .required(),
-  [PodcastEditPayloadKey.IMAGE_ID]: Joi.number().allow(null)
+  [PodcastEditPayloadKey.IMAGE_ID]: Joi.number().allow(null),
 });
 
 export { editPodcast };
