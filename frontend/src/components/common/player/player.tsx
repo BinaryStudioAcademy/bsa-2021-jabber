@@ -8,8 +8,15 @@ import {
   useImperativeHandle,
 } from 'hooks/hooks';
 import { getAllowedClasses } from 'helpers/dom/dom';
+
+import {
+  ARRAY_SHIFT,
+  DEFAULT_SKIP_TIME,
+  FIRST_ITEM_IN_ARRAY,
+  MILLISECONDS_IN_SECOND,
+} from './common/constants';
 import { getRatePointerStyle } from './common/helpers';
-import { MILLISECONDS_IN_SECOND, RATE_STEPS } from './common/constants';
+import { RateStep } from './common/enums';
 
 import { ReactComponent as PlayIcon } from 'assets/img/player/play.svg';
 import { ReactComponent as PauseIcon } from 'assets/img/player/pause.svg';
@@ -36,10 +43,18 @@ type Ref = {
   setCurrentTime: (seconds: number) => void;
 };
 
+const rateSteps = Object.values(RateStep);
+
 const Player = forwardRef<Ref, Props>(
-  ({ src, skipTime = 15000, onClickNext, onClickPrevious }, ref) => {
+  (
+    { src, skipTime = DEFAULT_SKIP_TIME, onClickNext, onClickPrevious },
+    ref,
+  ) => {
     const playerRef = useRef<H5AudioPlayer | null>(null);
-    const [rateIndex, setRateIndex] = useState(3);
+
+    const [rateIndex, setRateIndex] = useState(
+      rateSteps.indexOf(RateStep.NORMAL),
+    );
 
     useImperativeHandle(ref, () => ({
       setCurrentTime: (seconds: number): void => {
@@ -51,17 +66,15 @@ const Player = forwardRef<Ref, Props>(
 
     useEffect(() => {
       if (playerRef.current && playerRef.current.audio.current) {
-        playerRef.current.audio.current.playbackRate = Number(
-          RATE_STEPS[rateIndex],
-        );
+        playerRef.current.audio.current.playbackRate = rateSteps[rateIndex];
       }
     }, [rateIndex]);
 
     const handleChangeRate = useCallback(() => {
-      if (rateIndex === RATE_STEPS.length - 1) {
-        setRateIndex(0);
+      if (rateIndex === rateSteps.length - ARRAY_SHIFT) {
+        setRateIndex(FIRST_ITEM_IN_ARRAY);
       } else {
-        setRateIndex(rateIndex + 1);
+        setRateIndex(rateIndex + ARRAY_SHIFT);
       }
     }, [rateIndex]);
 
@@ -81,13 +94,13 @@ const Player = forwardRef<Ref, Props>(
         customVolumeControls={[
           RHAP_UI.VOLUME,
           <button
-            key={Date.now()}
+            key={`playback-rate-btn-${Date.now()}`}
             className={styles.playerRateBtn}
             onClick={handleChangeRate}
           >
             <RateScaleIcon />
             <RatePointerIcon style={getRatePointerStyle(rateIndex)} />
-            <span>{RATE_STEPS[rateIndex]}</span>
+            <span>{rateSteps[rateIndex]}</span>
           </button>,
         ]}
         customIcons={{

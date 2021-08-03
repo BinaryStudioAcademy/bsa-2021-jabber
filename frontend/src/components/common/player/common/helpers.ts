@@ -1,29 +1,36 @@
+import { RateStep } from './enums';
 import {
+  ARRAY_SHIFT,
   MAX_RATE_STEP_ANGLE_IN_DEGREES,
-  MIDDLE_RATE_STEP,
-  RATE_STEPS,
+  MIDDLE_RATE_STEP_ANGLE_IN_DEGREES,
 } from './constants';
 
 const getRateStepAngle = (rateIndex: number): number => {
-  const middleRateIndex = RATE_STEPS.map(Number).indexOf(MIDDLE_RATE_STEP);
+  const rateSteps = Object.values(RateStep);
+  const middleRateIndex = rateSteps.indexOf(RateStep.NORMAL);
 
   if (rateIndex > middleRateIndex) {
-    const stepsCountAfterMiddleRate = RATE_STEPS.length - middleRateIndex - 1;
+    const stepsCountAfterMiddleRate =
+      rateSteps.length - middleRateIndex - ARRAY_SHIFT;
+
     return (
       (MAX_RATE_STEP_ANGLE_IN_DEGREES / stepsCountAfterMiddleRate) *
-      (rateIndex - middleRateIndex)
+        (rateIndex - middleRateIndex) +
+      MIDDLE_RATE_STEP_ANGLE_IN_DEGREES
     );
   }
 
   if (rateIndex < middleRateIndex) {
     const stepsCountBeforeMiddleRate = middleRateIndex;
+
     return (
       -(MAX_RATE_STEP_ANGLE_IN_DEGREES / stepsCountBeforeMiddleRate) *
-      (stepsCountBeforeMiddleRate - rateIndex)
+        (stepsCountBeforeMiddleRate - rateIndex) +
+      MIDDLE_RATE_STEP_ANGLE_IN_DEGREES
     );
   }
 
-  return 0;
+  return MIDDLE_RATE_STEP_ANGLE_IN_DEGREES;
 };
 
 const getRatePointerStyle = (rateIndex: number): { transform: string } => ({
