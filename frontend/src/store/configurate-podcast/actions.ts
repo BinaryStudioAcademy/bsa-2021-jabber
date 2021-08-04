@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getDataUrl } from 'helpers/helpers';
+import { getDataUrl, parseFile } from 'helpers/helpers';
 import {
   AsyncThunkConfig,
   Podcast,
@@ -13,7 +13,7 @@ const create = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
   async (podcastPayload, { getState, extra }) => {
     const { podcastApi } = extra;
     const { auth } = getState();
-    const [file] = podcastPayload.image ?? [];
+    const file = parseFile(podcastPayload.image);
 
     return podcastApi.create({
       userId: (<User>auth.user).id,
@@ -24,25 +24,23 @@ const create = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
   },
 );
 
-const edit = createAsyncThunk<Podcast | null, PodcastFormPayload, AsyncThunkConfig>
-(ActionType.EDIT_PODCAST, async ( podcastPayload, { getState, extra }) => {
-  const { podcastApi } = extra;
-  const { configuratePodcast } = getState();
-  const [file] = podcastPayload.image ?? [];
-  if (configuratePodcast.podcast) {
+const edit = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
+  ActionType.EDIT_PODCAST,
+  async (podcastPayload, { getState, extra }) => {
+    const { podcastApi } = extra;
+    const { configuratePodcast } = getState();
+    const file = parseFile(podcastPayload.image);
+    const updatePodcast = <Podcast>configuratePodcast.podcast;
     const payloadEditPodcast = {
-      ...configuratePodcast.podcast,
+      ...updatePodcast,
       name: podcastPayload.name,
       description: podcastPayload.description,
       imageDataUrl: file ? await getDataUrl(file) : null,
     };
-
     const podcast = await podcastApi.edit(payloadEditPodcast);
 
     return podcast;
-  }
-  return null;
-});
+  });
 
 const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>
 (ActionType.LOAD_PODCAST, async (id, { extra }) => {

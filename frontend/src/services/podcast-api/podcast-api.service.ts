@@ -4,9 +4,8 @@ import {
   ContentType,
   HttpMethod,
 } from 'common/enums/enums';
-import { Podcast, PodcastCreatePayload } from 'common/types/types';
+import { Podcast, PodcastCreatePayload, PodcastEditPayload } from 'common/types/types';
 import { Http } from 'services/http/http.service';
-import { PodcastEditPayload } from 'common/types/types';
 
 type Constructor = {
   http: Http;

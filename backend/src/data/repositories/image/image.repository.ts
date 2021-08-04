@@ -15,6 +15,10 @@ class Image {
   public create(payload: ImageCreatePayload): Promise<TImage> {
     return this.#ImageModel.query().insert(payload);
   }
+
+  public delete(payload: number): Promise<number> {
+    return this.#ImageModel.query().deleteById(payload);
+  }
 }
 
 export { Image };

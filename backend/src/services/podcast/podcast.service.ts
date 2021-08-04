@@ -93,11 +93,15 @@ class Podcast {
       imageId: imageId,
     };
 
+    let deleteImageId: number | null = null;
+
     if (imageDataUrl) {
       const { url, publicId } = await this.#fileStorage.upload({
         dataUrl: imageDataUrl,
         userId,
       });
+
+      deleteImageId = imageId;
 
       const image = await this.#imageRepository.create({
         url,
@@ -107,7 +111,13 @@ class Podcast {
       updatePodcast.imageId = image.id;
     }
 
-    return this.#podcastRepository.update(id, updatePodcast);
+    const podcast = await this.#podcastRepository.update(id, updatePodcast);
+
+    if (deleteImageId) {
+      await this.#imageRepository.delete(deleteImageId);
+    }
+
+    return podcast
   }
 }
 
