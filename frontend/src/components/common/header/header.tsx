@@ -64,6 +64,14 @@ const Header: React.FC = () => {
                           + Add Podcast
                         </Link>
                       </li>
+                      <li className={styles.dropDownListElement}>
+                        <Link
+                          to={AppRoute.EPISODE_EDIT}
+                          className={styles.link}
+                        >
+                          + Add Episode
+                        </Link>
+                      </li>
                     </ul>
                     <div className={styles.dropDownArrow}></div>
                   </div>
