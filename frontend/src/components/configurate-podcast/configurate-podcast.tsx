@@ -1,12 +1,8 @@
-import { useDispatch, useParams, useState } from 'hooks/hooks';
+import { useDispatch, useParams } from 'hooks/hooks';
 import { configuratePodcast as configuratePodcastActions } from 'store/actions';
-import { PodcastCreatePayload } from 'common/types/types';
+import { PodcastFormPayload } from 'common/types/types';
 import { PageParams } from './common/types/types';
-import { getDataUrl } from 'helpers/helpers';
-import {
-  ConfiguratePodcastForm,
-  ConfiguratePodcastImage,
-} from './components/components';
+import { ConfiguratePodcastForm } from './components/components';
 import styles from './styles.module.scss';
 
 const ConfiguratePodcast: React.FC = () => {
@@ -15,16 +11,8 @@ const ConfiguratePodcast: React.FC = () => {
 
   const isEdit = Boolean(id);
 
-  const [imageSrc, setImageSrc] = useState('');
-
-  const handleCreatePodcast = (payload: PodcastCreatePayload): void => {
-    dispatch(
-      configuratePodcastActions.create({ ...payload, imgDataUrl: imageSrc }),
-    );
-  };
-
-  const handleCreateCover = async (file: File): Promise<void> => {
-    setImageSrc(await getDataUrl(file));
+  const handleSubmit = (payload: PodcastFormPayload): void => {
+    dispatch(configuratePodcastActions.create(payload));
   };
 
   return (
@@ -32,17 +20,7 @@ const ConfiguratePodcast: React.FC = () => {
       <h2>
         {isEdit ? 'Edit' : 'Create'} Podcast {id ?? ''}
       </h2>
-      <div className={styles.forms}>
-        <div className={styles.formLeft}>
-          <ConfiguratePodcastForm onSubmit={handleCreatePodcast} />;
-        </div>
-        <div className={styles.formRight}>
-          <ConfiguratePodcastImage
-            onSubmit={handleCreateCover}
-            imageSrc={imageSrc}
-          />
-        </div>
-      </div>
+      <ConfiguratePodcastForm onSubmit={handleSubmit} />;
     </div>
   );
 };

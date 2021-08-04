@@ -23,4 +23,13 @@ const signIn = createAsyncThunk<User, UserSignInPayload, AsyncThunkConfig>
   return user;
 });
 
-export { signUp, signIn };
+const getCurrentUser = createAsyncThunk<User, undefined, AsyncThunkConfig>
+(ActionType.LOAD_USER, async (_args, { extra }) => {
+  const { authApi } = extra;
+
+  const user = await authApi.getCurrentUser();
+
+  return user;
+});
+
+export { signUp, signIn, getCurrentUser };

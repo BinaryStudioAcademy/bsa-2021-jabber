@@ -7,8 +7,12 @@ export {
 } from './api/api';
 export { AppRoute, ENV, DataStatus, StorageKey } from './app/app';
 export { HttpHeader, HttpMethod } from './http/http';
-export { ContentType, ImageFileExtension } from './file/file';
-export { PodcastCreatePayloadKey } from './podcast/podcast';
+export { ContentType, FileExtension } from './file/file';
+export {
+  PodcastPayloadKey,
+  PodcastValidationRule,
+  PodcastValidationMessage,
+} from './podcast/podcast';
 export { EpisodeCreatePayloadKey, EpisodeType } from './episode/episode';
 export { UserCreatePayloadKey, UserSignInPayloadKey } from './user/user';
 export {

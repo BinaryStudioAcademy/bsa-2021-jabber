@@ -1,5 +1,6 @@
 import {
   Podcast as TPodcast,
+  PodcastCreateDTOPayload,
   PodcastCreatePayload,
 } from '~/common/types/types';
 import {
@@ -40,31 +41,30 @@ class Podcast {
     name,
     userId,
     description,
-    imgDataUrl,
+    imageDataUrl,
   }: PodcastCreatePayload): Promise<TPodcast> {
-    let imageId = null;
+    const newPodcast: PodcastCreateDTOPayload = {
+      name,
+      userId,
+      description,
+      imageId: null,
+    };
 
-    if (imgDataUrl) {
+    if (imageDataUrl) {
       const { url, publicId } = await this.#fileStorage.upload({
-        dataUrl: imgDataUrl,
+        dataUrl: imageDataUrl,
         userId,
       });
 
-      const imagePayload = { url, publicId };
+      const image = await this.#imageRepository.create({
+        url,
+        publicId,
+      });
 
-      const image = await this.#imageRepository.create(imagePayload);
-
-      imageId = image.id;
+      newPodcast.imageId = image.id;
     }
 
-    const podcastPayload = {
-      name,
-      userId,
-      imageId,
-      description,
-    };
-
-    return this.#podcastRepository.create(podcastPayload);
+    return this.#podcastRepository.create(newPodcast);
   }
 
   public async getById(id: string): Promise<TPodcast> {
