@@ -26,7 +26,6 @@ const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
 const token = new Token({
   secret: <string>ENV.JWT.SECRET,
-  userRepository,
 });
 
 const logger = new Logger({
@@ -41,6 +40,7 @@ const auth = new Auth({
 
 const user = new User({
   userRepository,
+  tokenService: token,
 });
 
 const episode = new Episode({
