@@ -29,7 +29,7 @@ const edit = createAsyncThunk<Podcast | null, PodcastFormPayload, AsyncThunkConf
   const { podcastApi } = extra;
   const { configuratePodcast } = getState();
   const [file] = podcastPayload.image ?? [];
-  if(configuratePodcast.podcast){
+  if (configuratePodcast.podcast) {
     const payloadEditPodcast = {
       ...configuratePodcast.podcast,
       name: podcastPayload.name,
