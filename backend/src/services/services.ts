@@ -83,6 +83,7 @@ export {
   logger,
   user,
   episode,
+  showNotes,
   podcast,
   comment,
   record,

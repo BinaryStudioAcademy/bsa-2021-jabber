@@ -3,8 +3,6 @@ import {
   ShowNotesCreatePayload,
 } from '~/common/types/types';
 import { showNotes as showNotesRep } from '~/data/repositories/repositories';
-import { HttpCode, HttpError } from '../../../../shared/build';
-import { ErrorMessage } from '~/common/enums/app/error-message.enum';
 
 type Constructor = {
   showNotesRepository: typeof showNotesRep;

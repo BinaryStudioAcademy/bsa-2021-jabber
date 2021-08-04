@@ -31,16 +31,16 @@ const episode = new Episode({
   EpisodeModel,
 });
 
+const showNotes = new ShowNotes({
+  ShowNotesModel,
+});
+
 const comment = new Comment({
   CommentModel,
 });
 
 const record = new Record({
   RecordModel,
-});
-
-const showNotes = new ShowNotes({
-  ShowNotesModel,
 });
 
 export { user, episode, podcast, image, comment, record, showNotes };
