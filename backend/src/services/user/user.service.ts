@@ -4,7 +4,6 @@ import { ErrorMessage, HttpCode } from '~/common/enums/enums';
 import { HttpError } from '~/exceptions/exceptions';
 import { token } from '../services';
 
-
 type Constructor = {
   userRepository: typeof userRep;
   tokenService: typeof token;

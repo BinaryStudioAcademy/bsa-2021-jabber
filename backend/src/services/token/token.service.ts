@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { TokenPayload } from '~/common/types/types';
 
-
 type Constructor = {
   secret: string;
 };
