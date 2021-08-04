@@ -29,18 +29,10 @@ const edit = createAsyncThunk<Podcast | null, PodcastFormPayload, AsyncThunkConf
   const { podcastApi } = extra;
   const { configuratePodcast } = getState();
   const [file] = podcastPayload.image ?? [];
-  /* eslint-disable no-console */
-  console.log(configuratePodcast);
-  /* eslint-enable no-console */
   if(configuratePodcast.podcast){
     const payloadEditPodcast = {
-      id: configuratePodcast.podcast.id,
+      ...configuratePodcast.podcast,
       name: podcastPayload.name,
-      userId: configuratePodcast.podcast.userId,
-      imageId: configuratePodcast.podcast.imageId,
-      image: configuratePodcast.podcast.image,
-      createdAt: configuratePodcast.podcast.createdAt,
-      updatedAt: configuratePodcast.podcast.updatedAt,
       description: podcastPayload.description,
       imageDataUrl: file ? await getDataUrl(file) : null,
     };
