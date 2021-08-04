@@ -10,7 +10,7 @@ import {
   authentication as authenticationMiddleware,
   registration as registrationMiddleware,
 } from '~/middlewares/middlewares';
-import { auth as authService } from '~/services/services';
+import { auth as authService, user as userService } from '~/services/services';
 
 type Args = {
   apiRouter: Router;
@@ -41,6 +41,14 @@ const initAuthApi = ({ apiRouter, authService }: Args): Router => {
       const user = await authService.signIn(req.body);
 
       return res.json(user).status(HttpCode.OK);
+    }),
+  );
+
+  userRouter.get(
+    AuthApiPath.CURRENT_USER,
+    handleAsyncApi(async (req, res) => {
+      const [, token] = <string[]>req.headers.authorization?.split(' ');
+      res.send(await userService.getByToken(String(token))).status(HttpCode.OK);
     }),
   );
 

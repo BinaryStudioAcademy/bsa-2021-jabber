@@ -1,6 +1,14 @@
-import { UserModel, PodcastModel, EpisodeModel, CommentModel, RecordModel } from '~/data/models/models';
+import {
+  UserModel,
+  PodcastModel,
+  EpisodeModel,
+  CommentModel,
+  RecordModel,
+  ImageModel,
+} from '~/data/models/models';
 import { User } from './user/user.repository';
 import { Podcast } from './podcast/podcast.repository';
+import { Image } from './image/image.repository';
 import { Episode } from './episode/episode.repository';
 import { Comment } from './comment/comment.repository';
 import { Record } from './record/record.repository';
@@ -11,6 +19,10 @@ const user = new User({
 
 const podcast = new Podcast({
   PodcastModel,
+});
+
+const image = new Image({
+  ImageModel,
 });
 
 const episode = new Episode({
@@ -25,10 +37,4 @@ const record = new Record({
   RecordModel,
 });
 
-export {
-  user,
-  episode,
-  podcast,
-  comment,
-  record,
-};
+export { user, episode, podcast, image, comment, record };

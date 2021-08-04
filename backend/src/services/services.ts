@@ -8,6 +8,7 @@ import {
   episode as episodeRepository,
   comment as commentRepository,
   record as recordRepository,
+  image as imageRepository,
 } from '~/data/repositories/repositories';
 import { AsyncLocalStorage } from './async-storage/async-storage.service';
 import { Logger } from './logger/logger.service';
@@ -39,10 +40,7 @@ const auth = new Auth({
 
 const user = new User({
   userRepository,
-});
-
-const podcast = new Podcast({
-  podcastRepository,
+  tokenService: token,
 });
 
 const episode = new Episode({
@@ -59,6 +57,12 @@ const record = new Record({
 
 const fileStorage = new FileStorage({
   storageApiUser: <string>ENV.UPLOAD.API_URL,
+});
+
+const podcast = new Podcast({
+  podcastRepository,
+  imageRepository,
+  fileStorage,
 });
 
 const passport = new Passport({

@@ -2,7 +2,13 @@ import { PassportStatic } from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import passportJwt from 'passport-jwt';
 import { user as userRepository } from '~/data/repositories/repositories';
-import { HttpCode, ErrorMessage, StrategyName } from '~/common/enums/enums';
+import {
+  HttpCode,
+  ErrorMessage,
+  StrategyName,
+  UserSignInPayloadKey,
+  UserCreatePayloadKey,
+} from '~/common/enums/enums';
 import { checkIsCryptsEqual } from '~/helpers/helpers';
 
 type Constructor = {
@@ -34,79 +40,93 @@ class Passport {
   }
 
   private getLoginStrategy(): passportJwt.Strategy {
-    return (
-      new this.#LocalStrategy({
-        usernameField: 'email',
-      }, async (username, password, done) => {
+    return new this.#LocalStrategy(
+      {
+        usernameField: UserSignInPayloadKey.EMAIL,
+      },
+      async (email, password, done) => {
         try {
-          const user = await this.#userRepository.getByEmail(username);
+          const user = await this.#userRepository.getByEmail(email);
           if (!user) {
-            return done({
-              status: HttpCode.UNAUTHORIZED,
-              message: ErrorMessage.USER_NOT_FOUND,
-            },
-            false,
+            return done(
+              {
+                status: HttpCode.UNAUTHORIZED,
+                message: ErrorMessage.USER_NOT_FOUND,
+              },
+              false,
             );
           }
 
-          return (await checkIsCryptsEqual(password, user.password))
+          const isCryptsEqual = await checkIsCryptsEqual(
+            password,
+            user.password,
+          );
+
+          return isCryptsEqual
             ? done(null, user)
-            : done({
-              status: HttpCode.UNAUTHORIZED,
-              message: ErrorMessage.WRONG_PASSWORD,
-            },
-            false,
+            : done(
+              {
+                status: HttpCode.UNAUTHORIZED,
+                message: ErrorMessage.WRONG_PASSWORD,
+              },
+              false,
             );
         } catch (err) {
           return done(err);
         }
-      })
+      },
     );
   }
 
   private getRegisterStrategy(): passportJwt.Strategy {
-    return (
-      new this.#LocalStrategy({
+    return new this.#LocalStrategy(
+      {
         passReqToCallback: true,
-        usernameField: 'email',
-        passwordField: 'password',
-      }, async ({ body }, _username, _password, done) => {
+        usernameField: UserCreatePayloadKey.EMAIL,
+        passwordField: UserCreatePayloadKey.PASSWORD,
+      },
+      async ({ body }, _username, _password, done) => {
         try {
           const user = await userRepository.getByEmail(body.email);
+
           if (user) {
-            return done({
-              status: HttpCode.UNAUTHORIZED,
-              message: ErrorMessage.EMAIL_IS_ALREADY_TAKEN,
-            }, null);
+            return done(
+              {
+                status: HttpCode.UNAUTHORIZED,
+                message: ErrorMessage.EMAIL_IS_ALREADY_TAKEN,
+              },
+              null,
+            );
           }
+
           return done(null, { body });
         } catch (err) {
           return done(err);
         }
-      })
+      },
     );
   }
 
   private getJwtStrategy(): passportJwt.Strategy {
-    return (
-      new this.#JwtStrategy(this.#options,
-        async ({ userId }, done) => {
-          try {
-            const user = await this.#userRepository.getById(userId);
+    return new this.#JwtStrategy(this.#options, async ({ userId }, done) => {
+      try {
+        const user = await this.#userRepository.getById(userId);
 
-            if (user) {
-              return done(null, user);
-            }
+        if (user) {
+          return done(null, user);
+        }
 
-            return done({
-              status: HttpCode.UNAUTHORIZED,
-              message: ErrorMessage.BAD_TOKEN,
-            }, null);
-          } catch (err) {
-            return done(err);
-          }
-        })
-    );
+        return done(
+          {
+            status: HttpCode.UNAUTHORIZED,
+            message: ErrorMessage.BAD_TOKEN,
+          },
+          null,
+        );
+      } catch (err) {
+        return done(err);
+      }
+    });
   }
 
   public init(passport: PassportStatic): void {
