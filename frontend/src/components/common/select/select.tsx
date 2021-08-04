@@ -12,16 +12,20 @@ type Props = {
   errors: FieldErrors;
 };
 
+type Options = {
+  label: string;
+  value: string;
+};
+
 const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
-  const optionsItems = options.map((item, index) => {
-    return { value: index, label: item };
+  const optionsItems:Options[] = options.map((item, index) => {
+    return { label: item, value: index.toString() };
   });
 
   return (
     <label className={styles.inputWrapper}>
       <span className={styles.label}>{label}</span>
       <SelectReact
-        defaultValue={optionsItems[0]}
         control={control}
         options={optionsItems}
         className={styles.input}
