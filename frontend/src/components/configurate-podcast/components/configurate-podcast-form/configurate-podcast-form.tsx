@@ -15,7 +15,7 @@ import { DEFAULT_PODCAST_PAYLOAD } from './common/constants';
 
 type Props = {
   onSubmit: (payload: PodcastFormPayload) => void;
-  payload?: PodcastFormPayload
+  payload: PodcastFormPayload | undefined
 };
 
 const acceptExtension = getFileExtensions(

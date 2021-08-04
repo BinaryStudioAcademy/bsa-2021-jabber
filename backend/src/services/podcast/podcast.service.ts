@@ -1,7 +1,9 @@
 import {
   Podcast as TPodcast,
   PodcastCreateDTOPayload,
+  PodcastEditDTOPayload,
   PodcastCreatePayload,
+  PodcastEditPayload,
 } from '~/common/types/types';
 import {
   podcast as podcastRep,
@@ -78,8 +80,34 @@ class Podcast {
     return podcast;
   }
 
-  public update(id: string, payload: TPodcast): Promise<TPodcast> {
-    return this.#podcastRepository.update(id, payload);
+  public async update(id: string, {
+    name,
+    userId,
+    description,
+    imageId,
+    imageDataUrl,
+  }: PodcastEditPayload): Promise<TPodcast> {
+    const updatePodcast: PodcastEditDTOPayload = {
+      name,
+      description,
+      imageId: imageId,
+    };
+
+    if (imageDataUrl) {
+      const { url, publicId } = await this.#fileStorage.upload({
+        dataUrl: imageDataUrl,
+        userId,
+      });
+
+      const image = await this.#imageRepository.create({
+        url,
+        publicId,
+      });
+
+      updatePodcast.imageId = image.id;
+    }
+
+    return this.#podcastRepository.update(id, updatePodcast);
   }
 }
 

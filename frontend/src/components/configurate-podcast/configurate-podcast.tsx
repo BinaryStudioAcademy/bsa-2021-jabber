@@ -9,15 +9,12 @@ const ConfiguratePodcast: React.FC = () => {
   const { id } = useParams<PageParams>();
   const dispatch = useDispatch();
 
-  const { podcast } = useAppSelector(({ configuratePodcast }) => ({
+  const { podcast, dataStatus } = useAppSelector(({ configuratePodcast }) => ({
     podcast: configuratePodcast.podcast,
+    dataStatus: configuratePodcast.dataStatus,
   }));
 
   const isEdit = Boolean(id);
-
-  const handleFormSubmit = (payload: PodcastFormPayload): void => {
-    isEdit ? dispatch(configuratePodcastActions.edit(payload)) : dispatch(configuratePodcastActions.create(payload));
-  };
 
   const mapPodcastToFormPayload = (podcast: Podcast): PodcastFormPayload => ({
     name: podcast.name,
@@ -25,11 +22,13 @@ const ConfiguratePodcast: React.FC = () => {
     image: null,
   });
 
-  useEffect(() => {
-    if (isEdit) {
-      dispatch(configuratePodcastActions.loadPodcast(Number(id)));
-    }
-  }, []);
+  const handleFormSubmit = (payload: PodcastFormPayload): void => {
+    isEdit
+      ? dispatch(configuratePodcastActions.edit(payload))
+      : dispatch(configuratePodcastActions.create(payload));
+  };
+
+  const mapPodcast = podcast ? mapPodcastToFormPayload(podcast) : undefined;
 
   useEffect(() => {
     if (isEdit) {
@@ -42,13 +41,7 @@ const ConfiguratePodcast: React.FC = () => {
       <h2>
         {isEdit ? 'Edit' : 'Create'} Podcast {id ?? ''}
       </h2>
-
-      {(isEdit)
-        ? podcast && <ConfiguratePodcastForm
-          onSubmit={handleFormSubmit}
-          payload={mapPodcastToFormPayload(podcast)}/>
-        : <ConfiguratePodcastForm onSubmit={handleFormSubmit}/>
-      }
+      {(!(dataStatus === 'pending')) && <ConfiguratePodcastForm onSubmit={handleFormSubmit} payload={mapPodcast}/>}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import {
   podcastCreate as podcastCreateValidationSchema,
-  editPodcast as editPodcastValidationSchema,
+  podcastEdit as editPodcastValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { ApiPath, HttpCode, PodcastsApiPath } from '~/common/enums/enums';
 import { handleAsyncApi } from '~/helpers/helpers';

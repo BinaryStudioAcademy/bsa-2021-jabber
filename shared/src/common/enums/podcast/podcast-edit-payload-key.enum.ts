@@ -6,6 +6,7 @@ enum PodcastEditPayloadKey {
   CREATE_AT = 'createdAt',
   ID = 'id',
   IMAGE_ID = 'imageId',
+  IMAGE_DATA_URL = 'imageDataUrl',
 }
 
 export { PodcastEditPayloadKey };

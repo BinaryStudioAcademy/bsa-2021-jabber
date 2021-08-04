@@ -6,6 +6,7 @@ import {
 } from 'common/enums/enums';
 import { Podcast, PodcastCreatePayload } from 'common/types/types';
 import { Http } from 'services/http/http.service';
+import { PodcastEditPayload } from 'common/types/types';
 
 type Constructor = {
   http: Http;
@@ -50,7 +51,7 @@ class PodcastApi {
     );
   }
 
-  public edit(payload: Podcast): Promise<Podcast> {
+  public edit(payload: PodcastEditPayload): Promise<Podcast> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}${payload.id}`,
       {
