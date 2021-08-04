@@ -4,6 +4,7 @@ export {
   AuthApiPath,
   PodcastsApiPath,
   EpisodesApiPath,
+  CommentsApiPath,
 } from './api/api';
 export { AppRoute, ENV, DataStatus, StorageKey } from './app/app';
 export { HttpHeader, HttpMethod } from './http/http';
@@ -22,3 +23,4 @@ export {
   ButtonStyle,
   ButtonColor,
 } from './ui/ui';
+

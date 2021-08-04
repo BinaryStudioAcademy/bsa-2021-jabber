@@ -19,6 +19,10 @@ class Comment {
   public create(payload: CommentCreatePayload): Promise<TComment> {
     return this.#CommentModel.query().insert(payload);
   }
+
+  public getAllCommentsByEpisodeId(id: string): Promise<TComment[]> {
+    return this.#CommentModel.query().where('episode_id', id);
+  }
 }
 
 export { Comment };

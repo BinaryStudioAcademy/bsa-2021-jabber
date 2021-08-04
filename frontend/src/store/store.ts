@@ -4,6 +4,7 @@ import {
   authApi,
   podcastApi,
   episodeApi,
+  commentApi,
   storage as storageService,
 } from 'services/services';
 import { handleError as handleErrorMiddleware } from 'middlewares/middlewares';
@@ -12,6 +13,7 @@ const extraArgument = {
   authApi,
   podcastApi,
   episodeApi,
+  commentApi,
   storageService,
 };
 

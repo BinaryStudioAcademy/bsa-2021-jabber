@@ -8,8 +8,9 @@ type Props = {
 
 const CommentsList: React.FC<Props> = ({ comments }) => {
   return (
-    <>
+    <div className={styles.commentsWrapper}>
       <input name="comment" type="text" placeholder="Write a comment"/>
+      <h3>Comments</h3>
       {
         comments.length
           ? <ul className={styles.list}>
@@ -19,7 +20,7 @@ const CommentsList: React.FC<Props> = ({ comments }) => {
           </ul>
           : <div>There&apos;s no comments yet.</div>
       }
-    </>
+    </div>
   );
 };
 
