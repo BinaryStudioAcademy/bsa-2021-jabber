@@ -40,6 +40,7 @@ const auth = new Auth({
 
 const user = new User({
   userRepository,
+  tokenService: token,
 });
 
 const episode = new Episode({

@@ -15,7 +15,7 @@ const Homepage: React.FC = () => {
 
   useEffect(() => {
     dispatch(homepageActions.loadPodcasts());
-  }, [dispatch]);
+  }, []);
 
   if (dataStatus === DataStatus.PENDING) {
     return <Loader />;
@@ -24,10 +24,13 @@ const Homepage: React.FC = () => {
   return (
     <main className={styles.main}>
       <h2 className={styles.title}>All podcasts</h2>
-      { hasPodcasts ?
-        <PodcastList podcasts={podcasts}/> :
-        <span className={styles.oopsMessage}>Oops! There&apos;s nothing here</span>
-      }
+      {hasPodcasts ? (
+        <PodcastList podcasts={podcasts} />
+      ) : (
+        <span className={styles.oopsMessage}>
+          Oops! There&apos;s nothing here
+        </span>
+      )}
     </main>
   );
 };
