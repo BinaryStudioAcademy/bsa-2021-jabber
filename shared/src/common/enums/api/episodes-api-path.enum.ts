@@ -1,7 +1,7 @@
 enum EpisodesApiPath {
   ROOT = '/',
   $ID = '/:id',
-  TIMESTAMP = '/timestamp'
+  TIMESTAMP = '/timestamp',
 }
 
 export { EpisodesApiPath };

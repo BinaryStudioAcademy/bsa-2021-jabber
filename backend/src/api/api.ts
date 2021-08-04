@@ -39,7 +39,7 @@ const initApi = (app: Router): Router => {
   initEpisodesApi({
     apiRouter,
     episodeService,
-    showNotesService
+    showNotesService,
   });
 
   initCommentsApi({

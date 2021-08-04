@@ -32,7 +32,7 @@ const initEpisodesApi = ({ apiRouter, episodeService, showNotesService }: Args):
       const timestamps = await showNotesService.getAllTimeNotesByEpisodeId(req.params.id);
       const response = {
         ...episode,
-        timestamps
+        timestamps,
       };
       return res.send(response).status(HttpCode.OK);
     }),

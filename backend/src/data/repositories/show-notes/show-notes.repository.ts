@@ -17,7 +17,7 @@ class ShowNotes {
   }
 
   public getAllTimeNotesByEpisodeId(id: string): Promise<TShowNotes[]> {
-    return this.#ShowNotesModel.query().where('episode_id', id).returning("*");
+    return this.#ShowNotesModel.query().where('episode_id', id).returning('*');
   }
 }
 
