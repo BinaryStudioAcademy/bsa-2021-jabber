@@ -5,6 +5,7 @@ import {
   CommentModel,
   RecordModel,
   ImageModel,
+  ShowNotesModel,
 } from '~/data/models/models';
 import { User } from './user/user.repository';
 import { Podcast } from './podcast/podcast.repository';
@@ -12,6 +13,7 @@ import { Image } from './image/image.repository';
 import { Episode } from './episode/episode.repository';
 import { Comment } from './comment/comment.repository';
 import { Record } from './record/record.repository';
+import { ShowNotes } from './showNotes/showNotes.repository';
 
 const user = new User({
   UserModel,
@@ -37,4 +39,8 @@ const record = new Record({
   RecordModel,
 });
 
-export { user, episode, podcast, image, comment, record };
+const showNotes = new ShowNotes({
+  ShowNotesModel,
+});
+
+export { user, episode, podcast, image, comment, record, showNotes };

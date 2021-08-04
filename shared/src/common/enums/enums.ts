@@ -29,6 +29,7 @@ export {
   PodcastValidationMessage,
 } from './validation/validation';
 export { EpisodeCreatePayloadKey, EpisodeType } from './episode/episode';
+export { ShowNotesCreatePayloadKey } from './show-notes/show-notes';
 export { CommentCreatePayloadKey } from './comment/comment';
 export { RecordCreatePayloadKey } from './record/record';
 export { ImageCreatePayloadKey } from './image/image';
