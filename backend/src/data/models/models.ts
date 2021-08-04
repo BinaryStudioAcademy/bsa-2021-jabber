@@ -4,4 +4,4 @@ export { Episode as EpisodeModel } from './episode/episode.model';
 export { Comment as CommentModel } from './comment/comment.model';
 export { Record as RecordModel } from './record/record.model';
 export { Image as ImageModel } from './image/image.model';
-export { ShowNotes as ShowNotesModel } from './show-notes/showNotes.model';
+export { ShowNotes as ShowNotesModel } from './show-notes/show-notes.model';
