@@ -7,6 +7,7 @@ import {
 
 const podcast = Joi.object({
   [PodcastPayloadKey.NAME]: Joi.string()
+    .trim()
     .min(PodcastValidationRule.PODCAST_NAME_MIN_LENGTH)
     .max(PodcastValidationRule.PODCAST_NAME_MAX_LENGTH)
     .required()
@@ -16,6 +17,7 @@ const podcast = Joi.object({
       'string.max': PodcastValidationMessage.PODCAST_NAME_MAX_LENGTH,
     }),
   [PodcastPayloadKey.DESCRIPTION]: Joi.string()
+    .trim()
     .min(PodcastValidationRule.PODCAST_DESCRIPTION_MIN_LENGTH)
     .max(PodcastValidationRule.PODCAST_DESCRIPTION_MAX_LENGTH)
     .required()
