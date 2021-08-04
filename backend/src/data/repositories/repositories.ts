@@ -13,7 +13,7 @@ import { Image } from './image/image.repository';
 import { Episode } from './episode/episode.repository';
 import { Comment } from './comment/comment.repository';
 import { Record } from './record/record.repository';
-import { ShowNotes } from './show-notes/show-notes.repository';
+import { ShowNotes } from './shownotes/shownotes.repository';
 
 const user = new User({
   UserModel,

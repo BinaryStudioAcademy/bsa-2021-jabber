@@ -17,7 +17,7 @@ import { Auth } from './auth/auth.service';
 import { User } from './user/user.service';
 import { Podcast } from './podcast/podcast.service';
 import { Episode } from './episode/episode.service';
-import { ShowNotes } from './show-notes/show-notes.service';
+import { ShowNotes } from './shownotes/shownotes.service';
 import { Comment } from './comment/comment.service';
 import { Record } from './record/record.service';
 import { FileStorage } from './file-storage/file-storage.service';
