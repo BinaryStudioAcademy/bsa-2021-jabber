@@ -37,10 +37,9 @@ const edit = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
       description: podcastPayload.description,
       imageDataUrl: file ? await getDataUrl(file) : null,
     };
+    const podcast = await podcastApi.edit(payloadEditPodcast);
 
-    const podcast2 = await podcastApi.edit(payloadEditPodcast);
-
-    return podcast2;
+    return podcast;
   });
 
 const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>
