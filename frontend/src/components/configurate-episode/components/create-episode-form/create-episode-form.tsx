@@ -1,4 +1,4 @@
-import { EpisodeCreatePayload } from 'common/types/types';
+import { EpisodeCreatePayload, Option } from 'common/types/types';
 import { ButtonType, DataStatus, EpisodeCreatePayloadKey, EpisodeType, InputType } from 'common/enums/enums';
 import { episode as createEpisodeValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
@@ -22,7 +22,9 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
 
   const isFormDisable = dataStatus === DataStatus.PENDING;
 
-  const episodeTypes = Object.values(EpisodeType);
+  const selectOptions:Option[] = Object.values(EpisodeType).map((item)=>{
+    return { label: item, value: item };
+  });
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -44,7 +46,7 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
           errors={errors}
         />
         <Select
-          options={episodeTypes}
+          options={selectOptions}
           label="Type"
           name={EpisodeCreatePayloadKey.TYPE}
           control={control}

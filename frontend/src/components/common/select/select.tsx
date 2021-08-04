@@ -1,10 +1,11 @@
 import SelectReact from 'react-select';
+import { Option } from 'common/types/types';
 import { ErrorMessage } from '@hookform/error-message';
 import { Control, FieldErrors, Path, FieldValues } from 'react-hook-form';
 import styles from './styles.module.scss';
 
 type Props = {
-  options: string[];
+  options: Option[];
   placeholder?: string;
   label: string;
   name: Path<FieldValues>;
@@ -12,22 +13,13 @@ type Props = {
   errors: FieldErrors;
 };
 
-type Options = {
-  label: string;
-  value: string;
-};
-
 const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
-  const optionsItems:Options[] = options.map((item, index) => {
-    return { label: item, value: index.toString() };
-  });
-
   return (
     <label className={styles.inputWrapper}>
       <span className={styles.label}>{label}</span>
       <SelectReact
         control={control}
-        options={optionsItems}
+        options={options}
         className={styles.input}
         isSearchable={false}
         name={name}
