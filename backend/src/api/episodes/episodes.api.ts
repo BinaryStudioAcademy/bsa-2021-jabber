@@ -28,7 +28,7 @@ const initEpisodesApi = ({ apiRouter, episodeService, showNotesService }: Args):
   episodeRouter.get(
     EpisodesApiPath.$ID,
     handleAsyncApi(async (req, res) => {
-      let episode = await episodeService.getById(req.params.id);
+      const episode = await episodeService.getById(req.params.id);
       const timestamps = await showNotesService.getAllTimeNotesByEpisodeId(req.params.id);
       const response = {
         ...episode,
