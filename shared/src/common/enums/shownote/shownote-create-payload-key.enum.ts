@@ -1,7 +1,7 @@
-enum ShowNotesDTOKey {
+enum ShownoteCreatePayloadKey {
   NAME = 'name',
   EPISODE_ID = 'episodeId',
   TIMESTAMP = 'timestamp',
 }
 
-export { ShowNotesDTOKey };
+export { ShownoteCreatePayloadKey };

@@ -1,4 +1,4 @@
-type ShowNotes = {
+type Shownote = {
   id: number;
   name: string;
   timestamp: number;
@@ -7,4 +7,4 @@ type ShowNotes = {
   updatedAt: string;
 };
 
-export type { ShowNotes };
+export type { Shownote };

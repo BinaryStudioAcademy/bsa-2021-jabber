@@ -1,7 +1,7 @@
 import { Knex } from 'knex';
 import { getFormattedISODate } from '~/helpers/helpers';
 
-const TABLE_NAME = 'shownotes';
+const TABLE_NAME = 'shownote';
 
 export async function up(knex: Knex): Promise<void> {
   const dateNowISO = getFormattedISODate(new Date());

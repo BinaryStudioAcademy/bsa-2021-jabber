@@ -3,17 +3,17 @@ import {
   episode as EpisodeValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { ApiPath, HttpCode, EpisodesApiPath } from '~/common/enums/enums';
-import { episode as episodeService, showNotes as showNotesService } from '~/services/services';
+import { episode as episodeService, shownote as shownoteService } from '~/services/services';
 import { handleAsyncApi } from '~/helpers/helpers';
 import { validateSchema as validateSchemaMiddleware } from '~/middlewares/middlewares';
 
 type Args = {
   apiRouter: Router;
   episodeService: typeof episodeService,
-  showNotesService: typeof showNotesService
+  shownoteService: typeof shownoteService
 };
 
-const initEpisodesApi = ({ apiRouter, episodeService, showNotesService }: Args): Router => {
+const initEpisodesApi = ({ apiRouter, episodeService, shownoteService }: Args): Router => {
   const episodeRouter = Router();
 
   apiRouter.use(ApiPath.EPISODES, episodeRouter);
@@ -29,7 +29,7 @@ const initEpisodesApi = ({ apiRouter, episodeService, showNotesService }: Args):
     EpisodesApiPath.$ID,
     handleAsyncApi(async (req, res) => {
       const episode = await episodeService.getById(req.params.id);
-      const timestamps = await showNotesService.getAllTimeNotesByEpisodeId(req.params.id);
+      const timestamps = await shownoteService.getAllTimeNotesByEpisodeId(req.params.id);
       const response = {
         ...episode,
         timestamps,
@@ -50,7 +50,7 @@ const initEpisodesApi = ({ apiRouter, episodeService, showNotesService }: Args):
   episodeRouter.post(
     EpisodesApiPath.TIMESTAMP,
     handleAsyncApi(async (req, res) => {
-      const timestamp = await showNotesService.create(req.body);
+      const timestamp = await shownoteService.create(req.body);
       return res.json(timestamp).status(HttpCode.CREATED);
     }),
   );
