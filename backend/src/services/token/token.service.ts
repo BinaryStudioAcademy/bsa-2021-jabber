@@ -15,6 +15,10 @@ class Token {
   create(data: TokenPayload): string {
     return jwt.sign(data, this.#secret, {});
   }
+
+  public decode<T>(token: string): T {
+    return <T>jwt.decode(token);
+  }
 }
 
 export { Token };

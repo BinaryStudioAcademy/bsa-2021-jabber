@@ -25,6 +25,11 @@ export {
   ImageDTOKey,
 } from './db/db';
 export { HttpCode } from './http/http';
+export {
+  PodcastPayloadKey,
+  PodcastValidationMessage,
+  PodcastValidationRule,
+} from './podcast/podcast';
 export { ResourceType } from './file/file';
 export { EpisodeType } from './episode/episode-type.enum';
 export { StrategyName } from './strategy/strategy';

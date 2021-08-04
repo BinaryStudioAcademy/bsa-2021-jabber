@@ -1,5 +1,6 @@
 import { useMemo, useTable } from 'hooks/hooks';
 import { Column } from 'react-table';
+import styles from './styles.module.scss';
 
 const EpisodeTable: React.FC = () => {
   const data: Array<any> = useMemo(
@@ -7,6 +8,7 @@ const EpisodeTable: React.FC = () => {
       {
         index: '1',
         full_name: 'Tesla',
+        user_name: 'John Dou',
         genre: 'Technologies',
         order: 'Episode 1',
         time: '50:12',
@@ -14,6 +16,7 @@ const EpisodeTable: React.FC = () => {
       {
         index: '2',
         full_name: 'New car',
+        user_name: 'John Dou',
         genre: 'Technologies',
         order: 'Episode 2',
         time: '34:23',
@@ -21,6 +24,7 @@ const EpisodeTable: React.FC = () => {
       {
         index: '1',
         full_name: 'Tesla',
+        user_name: 'John Dou',
         genre: 'Technologies',
         order: 'Episode 1',
         time: '50:12',
@@ -28,6 +32,7 @@ const EpisodeTable: React.FC = () => {
       {
         index: '2',
         full_name: 'New car',
+        user_name: 'John Dou',
         genre: 'Technologies',
         order: 'Episode 2',
         time: '34:23',
@@ -44,7 +49,12 @@ const EpisodeTable: React.FC = () => {
       },
       {
         Header: 'Name and Host',
-        accessor: 'full_name',
+        accessor: (row: any): any => {
+          return row.user_name + row.full_name + row.time;
+        },
+        Cell: ({ value }): string => {
+          return value;
+        },
       },
       {
         Header: 'Genre',
@@ -69,7 +79,7 @@ const EpisodeTable: React.FC = () => {
 
   return (
     // apply the table props
-    <table {...getTableProps()}>
+    <table {...getTableProps()} className={styles.table}>
       <thead>
         {
           // Loop over the header rows
@@ -81,10 +91,12 @@ const EpisodeTable: React.FC = () => {
                 headerGroup.headers.map((column, i) => (
                   // Apply the header cell props
                   <th {...column.getHeaderProps()} key={i}>
-                    {
-                      // Render the header
-                      column.render('Header')
-                    }
+                    <span>
+                      {
+                        // Render the header
+                        column.render('Header')
+                      }
+                    </span>
                   </th>
                 ))
               }

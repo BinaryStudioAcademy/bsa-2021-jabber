@@ -1,19 +1,32 @@
-import { PodcastCreatePayloadKey } from 'common/enums/enums';
-import { PodcastCreatePayload } from 'common/types/types';
-import { ButtonType, DataStatus } from 'common/enums/enums';
+import { getFileExtensions } from 'helpers/helpers';
+import {
+  PodcastPayloadKey,
+  ButtonType,
+  DataStatus,
+  InputType,
+  FileExtension,
+} from 'common/enums/enums';
+import { PodcastFormPayload } from 'common/types/types';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
 import { Input, Button } from 'components/common/common';
-import { podcast as podcastSchema } from 'validation-schemas/validation-schemas';
+import { podcastCreate as podcastCreateSchema } from 'validation-schemas/validation-schemas';
 import styles from './styles.module.scss';
 import { DEFAULT_PODCAST_PAYLOAD } from './common/constants';
 
 type Props = {
-  onSubmit: (payload: PodcastCreatePayload) => void;
+  onSubmit: (payload: PodcastFormPayload) => void;
 };
 
+const acceptExtension = getFileExtensions(
+  FileExtension.JPEG,
+  FileExtension.JPG,
+  FileExtension.PNG,
+  FileExtension.SVG,
+);
+
 const ConfiguratePodcastForm: React.FC<Props> = ({ onSubmit }) => {
-  const { control, handleSubmit, errors } = useAppForm({
-    validationSchema: podcastSchema,
+  const { control, handleSubmit, errors, register } = useAppForm({
+    validationSchema: podcastCreateSchema,
     defaultValues: DEFAULT_PODCAST_PAYLOAD,
   });
 
@@ -24,21 +37,27 @@ const ConfiguratePodcastForm: React.FC<Props> = ({ onSubmit }) => {
   const isFormDisabled = createPodcastStatus === DataStatus.PENDING;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisabled} className={styles.fieldset}>
         <Input
-          name={PodcastCreatePayloadKey.NAME}
+          name={PodcastPayloadKey.NAME}
           control={control}
           errors={errors}
           label="Podcast Name"
           placeholder="Name"
         />
         <Input
-          name={PodcastCreatePayloadKey.DESCRIPTION}
+          name={PodcastPayloadKey.DESCRIPTION}
           control={control}
           errors={errors}
           label="Podcast Description"
           placeholder="Description"
+          hasMultipleRows
+        />
+        <input
+          {...register(PodcastPayloadKey.IMAGE)}
+          accept={acceptExtension}
+          type={InputType.FILE}
         />
         <Button label="Save" type={ButtonType.SUBMIT} />
       </fieldset>
