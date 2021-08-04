@@ -1,4 +1,6 @@
-import { LogLevel } from '~/common/enums/enums';
+import passportJwt from 'passport-jwt';
+import { Strategy as LocalStrategy } from 'passport-local';
+import { LogLevel, ENV } from '~/common/enums/enums';
 import { AppAsyncStorage } from '~/common/types/types';
 import {
   user as userRepository,
@@ -6,6 +8,7 @@ import {
   episode as episodeRepository,
   comment as commentRepository,
   record as recordRepository,
+  image as imageRepository,
 } from '~/data/repositories/repositories';
 import { AsyncLocalStorage } from './async-storage/async-storage.service';
 import { Logger } from './logger/logger.service';
@@ -15,9 +18,15 @@ import { Podcast } from './podcast/podcast.service';
 import { Episode } from './episode/episode.service';
 import { Comment } from './comment/comment.service';
 import { Record } from './record/record.service';
-import { UploadFile } from './upload-file/upload-file.service';
+import { FileStorage } from './file-storage/file-storage.service';
+import { Token } from './token/token.service';
+import { Passport } from './passport/passport.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
+
+const token = new Token({
+  secret: <string>ENV.JWT.SECRET,
+});
 
 const logger = new Logger({
   logLevel: LogLevel.DEBUG,
@@ -26,14 +35,12 @@ const logger = new Logger({
 
 const auth = new Auth({
   userRepository,
+  tokenService: token,
 });
 
 const user = new User({
   userRepository,
-});
-
-const podcast = new Podcast({
-  podcastRepository,
+  tokenService: token,
 });
 
 const episode = new Episode({
@@ -48,7 +55,22 @@ const record = new Record({
   recordRepository,
 });
 
-const uploadFile = new UploadFile();
+const fileStorage = new FileStorage({
+  storageApiUser: <string>ENV.UPLOAD.API_URL,
+});
+
+const podcast = new Podcast({
+  podcastRepository,
+  imageRepository,
+  fileStorage,
+});
+
+const passport = new Passport({
+  secret: <string>ENV.JWT.SECRET,
+  passportJwt,
+  LocalStrategy,
+  userRepository,
+});
 
 export {
   auth,
@@ -59,5 +81,7 @@ export {
   podcast,
   comment,
   record,
-  uploadFile,
+  fileStorage,
+  token,
+  passport,
 };

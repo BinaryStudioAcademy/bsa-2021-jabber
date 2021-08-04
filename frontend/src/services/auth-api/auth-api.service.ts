@@ -4,7 +4,7 @@ import {
   ContentType,
   HttpMethod,
 } from 'common/enums/enums';
-import { User, UserCreatePayload, UserSignInPayload } from 'common/types/user/user';
+import { UserCreatePayload, UserSignInPayload, SignResponse, User } from 'common/types/types';
 import { Http } from 'services/http/http.service';
 
 type Constructor = {
@@ -21,7 +21,7 @@ class AuthApi {
     this.#apiPrefix = apiPrefix;
   }
 
-  public signUp(payload: UserCreatePayload): Promise<User> {
+  public signUp(payload: UserCreatePayload): Promise<SignResponse> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.AUTH}${AuthApiPath.SIGN_UP}`,
       {
@@ -32,13 +32,22 @@ class AuthApi {
     );
   }
 
-  public signIn(payload: UserSignInPayload): Promise<User> {
+  public signIn(payload: UserSignInPayload): Promise<SignResponse> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.AUTH}${AuthApiPath.SIGN_IN}`,
       {
         method: HttpMethod.POST,
         contentType: ContentType.JSON,
         payload: JSON.stringify(payload),
+      },
+    );
+  }
+
+  public getCurrentUser(): Promise<User> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.AUTH}${AuthApiPath.CURRENT_USER}`,
+      {
+        method: HttpMethod.GET,
       },
     );
   }

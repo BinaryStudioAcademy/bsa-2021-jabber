@@ -5,8 +5,12 @@ import {
 } from '~/validation-schemas/validation-schemas';
 import { ApiPath, HttpCode, AuthApiPath } from '~/common/enums/enums';
 import { handleAsyncApi } from '~/helpers/helpers';
-import { validateSchema } from '~/middlewares/middlewares';
-import { auth as authService } from '~/services/services';
+import {
+  validateSchema as validateSchemaMiddleware,
+  authentication as authenticationMiddleware,
+  registration as registrationMiddleware,
+} from '~/middlewares/middlewares';
+import { auth as authService, user as userService } from '~/services/services';
 
 type Args = {
   apiRouter: Router;
@@ -20,7 +24,8 @@ const initAuthApi = ({ apiRouter, authService }: Args): Router => {
 
   userRouter.post(
     AuthApiPath.SIGN_UP,
-    validateSchema(signUpValidationSchema),
+    registrationMiddleware,
+    validateSchemaMiddleware(signUpValidationSchema),
     handleAsyncApi(async (req, res) => {
       const user = await authService.signUp(req.body);
 
@@ -30,11 +35,20 @@ const initAuthApi = ({ apiRouter, authService }: Args): Router => {
 
   userRouter.post(
     AuthApiPath.SIGN_IN,
-    validateSchema(signInValidationSchema),
+    authenticationMiddleware,
+    validateSchemaMiddleware(signInValidationSchema),
     handleAsyncApi(async (req, res) => {
       const user = await authService.signIn(req.body);
 
       return res.json(user).status(HttpCode.OK);
+    }),
+  );
+
+  userRouter.get(
+    AuthApiPath.CURRENT_USER,
+    handleAsyncApi(async (req, res) => {
+      const [, token] = <string[]>req.headers.authorization?.split(' ');
+      res.send(await userService.getByToken(String(token))).status(HttpCode.OK);
     }),
   );
 

@@ -1,0 +1,31 @@
+name: Continuous Integration
+
+env:
+  NODE_VERSION: 14.17.0
+
+on:
+  pull_request:
+    branches:
+      - development
+      - production
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
+
+      - name: Setup NodeJS v${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Dependencies
+        run: |
+          npm run install:all
+
+      - name: Build Dependencies
+        run: |
+          npm run build

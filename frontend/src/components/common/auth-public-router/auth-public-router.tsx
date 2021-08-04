@@ -6,16 +6,16 @@ type Props = {
   component: React.ElementType;
 } & RouteProps;
 
-const AuthPublicRouter: React.FC<Props> = ({ ...otherProps }) => {
-  const Component: React.ElementType = otherProps.component;
+const AuthPublicRouter: React.FC<Props> = ({ component, ...otherProps }) => {
+  const Component: React.ElementType = component;
 
-  const WrappedComponent = (): JSX.Element => (
+  const handleRender = (): JSX.Element  => (
     <AuthWrapper>
       <Component />
     </AuthWrapper>
   );
 
-  return <Route {...otherProps} component={WrappedComponent} />;
+  return <Route {...otherProps} render={handleRender} />;
 };
 
 export default AuthPublicRouter;

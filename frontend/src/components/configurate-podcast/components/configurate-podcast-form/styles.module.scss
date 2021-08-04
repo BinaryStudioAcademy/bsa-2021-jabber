@@ -1,0 +1,12 @@
+.form {
+  flex-grow: 1;
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  border: none;
+  gap: 15px;
+}

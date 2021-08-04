@@ -1,0 +1,68 @@
+import { getFileExtensions } from 'helpers/helpers';
+import {
+  PodcastPayloadKey,
+  ButtonType,
+  DataStatus,
+  InputType,
+  FileExtension,
+} from 'common/enums/enums';
+import { PodcastFormPayload } from 'common/types/types';
+import { useAppForm, useAppSelector } from 'hooks/hooks';
+import { Input, Button } from 'components/common/common';
+import { podcastCreate as podcastCreateSchema } from 'validation-schemas/validation-schemas';
+import styles from './styles.module.scss';
+import { DEFAULT_PODCAST_PAYLOAD } from './common/constants';
+
+type Props = {
+  onSubmit: (payload: PodcastFormPayload) => void;
+};
+
+const acceptExtension = getFileExtensions(
+  FileExtension.JPEG,
+  FileExtension.JPG,
+  FileExtension.PNG,
+  FileExtension.SVG,
+);
+
+const ConfiguratePodcastForm: React.FC<Props> = ({ onSubmit }) => {
+  const { control, handleSubmit, errors, register } = useAppForm({
+    validationSchema: podcastCreateSchema,
+    defaultValues: DEFAULT_PODCAST_PAYLOAD,
+  });
+
+  const { createPodcastStatus } = useAppSelector(({ configuratePodcast }) => ({
+    createPodcastStatus: configuratePodcast.dataStatus,
+  }));
+
+  const isFormDisabled = createPodcastStatus === DataStatus.PENDING;
+
+  return (
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <fieldset disabled={isFormDisabled} className={styles.fieldset}>
+        <Input
+          name={PodcastPayloadKey.NAME}
+          control={control}
+          errors={errors}
+          label="Podcast Name"
+          placeholder="Name"
+        />
+        <Input
+          name={PodcastPayloadKey.DESCRIPTION}
+          control={control}
+          errors={errors}
+          label="Podcast Description"
+          placeholder="Description"
+          hasMultipleRows
+        />
+        <input
+          {...register(PodcastPayloadKey.IMAGE)}
+          accept={acceptExtension}
+          type={InputType.FILE}
+        />
+        <Button label="Save" type={ButtonType.SUBMIT} />
+      </fieldset>
+    </form>
+  );
+};
+
+export default ConfiguratePodcastForm;

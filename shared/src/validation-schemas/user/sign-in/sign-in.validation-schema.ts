@@ -1,4 +1,4 @@
-import * as Joi from 'joi';
+import { Joi } from '~/helpers/helpers';
 import { UserSignInPayload } from '~/common/types/types';
 import { SignInValidationMessage, SignInValidationRule, UserSignInPayloadKey } from '~/common/enums/enums';
 

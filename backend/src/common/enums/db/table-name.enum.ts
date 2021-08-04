@@ -5,6 +5,7 @@ enum TableName {
   PODCASTS = 'podcasts',
   COMMENTS = 'comments',
   RECORDS = 'records',
+  IMAGES = 'images',
 }
 
 export { TableName };
