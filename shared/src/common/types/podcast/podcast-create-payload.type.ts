@@ -1,8 +1,9 @@
-import { PodcastCreatePayloadKey } from '~/common/enums/enums';
+import { PodcastPayloadKey } from '~/common/enums/enums';
+import { PodcastPayload } from './podcast-payload.type';
 
-type PodcastCreatePayload = {
-  [PodcastCreatePayloadKey.NAME]: string;
-  [PodcastCreatePayloadKey.USER_ID]: number;
+type PodcastCreatePayload = PodcastPayload & {
+  [PodcastPayloadKey.IMAGE_DATA_URL]: string | null;
+  [PodcastPayloadKey.USER_ID]: number;
 };
 
 export type { PodcastCreatePayload };

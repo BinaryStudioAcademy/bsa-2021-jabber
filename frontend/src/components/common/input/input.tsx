@@ -7,6 +7,7 @@ import {
   FieldValues,
 } from 'react-hook-form';
 import { InputType } from 'common/enums/enums';
+import { getAllowedClasses } from 'helpers/dom/dom';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -16,6 +17,7 @@ type Props = {
   name: Path<FieldValues>;
   control: Control;
   errors: FieldErrors;
+  hasMultipleRows?: boolean;
 };
 
 const Input: React.FC<Props> = ({
@@ -25,18 +27,28 @@ const Input: React.FC<Props> = ({
   errors,
   placeholder = '',
   type = InputType.TEXT,
+  hasMultipleRows = false,
 }) => {
   const { field } = useController({ name, control });
 
   return (
     <label className={styles.inputWrapper}>
       <span className={styles.label}>{label}</span>
-      <input
-        {...field}
-        type={type}
-        placeholder={placeholder}
-        className={styles.input}
-      />
+      {hasMultipleRows ? (
+        <textarea
+          {...field}
+          placeholder={placeholder}
+          className={getAllowedClasses(styles.input, styles.textarea)}
+        />
+      ) : (
+        <input
+          {...field}
+          type={type}
+          placeholder={placeholder}
+          className={styles.input}
+        />
+      )}
+
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />
       </span>
