@@ -1,10 +1,10 @@
-import { PodcastCreatePayloadKey } from 'common/enums/enums';
-import { PodcastCreatePayload } from 'common/types/types';
-import { DEFAULT_USER_ID } from 'common/constants/constants';
+import { PodcastPayloadKey } from 'common/enums/enums';
+import { PodcastFormPayload } from 'common/types/types';
 
-const DEFAULT_PODCAST_PAYLOAD: PodcastCreatePayload = {
-  [PodcastCreatePayloadKey.NAME]: '',
-  [PodcastCreatePayloadKey.USER_ID]: DEFAULT_USER_ID,
+const DEFAULT_PODCAST_PAYLOAD: PodcastFormPayload = {
+  [PodcastPayloadKey.NAME]: '',
+  [PodcastPayloadKey.DESCRIPTION]: '',
+  [PodcastPayloadKey.IMAGE]: null,
 };
 
 export { DEFAULT_PODCAST_PAYLOAD };

@@ -16,6 +16,7 @@ const SignUpValidationMessage = {
   PASSWORD_MIN_LENGTH: `Password must be at least ${SignUpValidationRule.PASSWORD_MIN_LENGTH} characters long`,
   PASSWORD_MAX_LENGTH: `Password must be at most ${SignUpValidationRule.PASSWORD_MAX_LENGTH} characters long`,
   BIRTHDATE_REQUIRE: 'Birthdate is required',
+  BIRTHDATE_LESS_THEN: 'Birthdate can not be future date',
 } as const;
 
 export { SignUpValidationMessage };

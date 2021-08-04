@@ -1,1 +1,1 @@
-export { PodcastCreatePayloadKey } from './podcast-create-payload-key.enum';
+export { PodcastPayloadKey } from './podcast-payload-key.enum';

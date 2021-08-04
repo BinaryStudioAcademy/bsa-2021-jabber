@@ -1,6 +1,8 @@
 enum EpisodeValidationRule {
   EPISODE_NAME_MIN_LENGTH = 1,
   EPISODE_NAME_MAX_LENGTH = 20,
+  EPISODE_DESCRIPTION_MIN_LENGTH = 15,
+  EPISODE_DESCRIPTION_MAX_LENGTH = 100,
 }
 
 export { EpisodeValidationRule };
