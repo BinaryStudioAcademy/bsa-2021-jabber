@@ -1,11 +1,12 @@
+import React from 'react';
 import { useAppSelector, useDispatch, useVisible } from 'hooks/hooks';
 import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
 import { Button, Link } from 'components/common/common';
+import { auth as authActions } from 'store/actions';
 import defaultAvatar from 'assets/img/default-user-avatar.svg';
 import logo from 'assets/img/logo.svg';
 import styles from './styles.module.scss';
-import { auth as authActions } from 'store/actions';
 
 const Header: React.FC = () => {
   const { user } = useAppSelector(({ auth }: RootState) => ({
@@ -20,7 +21,8 @@ const Header: React.FC = () => {
     setIsVisible(!isVisible);
   };
 
-  const handleUserExit = (): void => {
+  const handleUserExit = (evt: React.MouseEvent): void => {
+    evt.preventDefault();
     dispatch(authActions.resetUser());
   };
 

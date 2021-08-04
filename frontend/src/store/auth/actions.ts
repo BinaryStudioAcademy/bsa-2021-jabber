@@ -1,8 +1,7 @@
-import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { UserCreatePayload, AsyncThunkConfig, User, UserSignInPayload } from 'common/types/types';
 import { StorageKey } from 'common/enums/enums';
 import { ActionType } from './common';
-import { storage as storageService } from 'services/services';
 
 const signUp = createAsyncThunk<User, UserCreatePayload, AsyncThunkConfig>
 (ActionType.SIGN_UP, async (registerPayload, { extra }) => {
@@ -33,13 +32,15 @@ const getCurrentUser = createAsyncThunk<User, undefined, AsyncThunkConfig>
   return user;
 });
 
-const resetUser = createAction(ActionType.RESET_USER, () => {
+const resetUser = createAsyncThunk<null, undefined, AsyncThunkConfig>
+(ActionType.RESET_USER, async (_args, { extra }) => {
+  const { storageService } = extra;
+
   storageService.clear();
-  return {
-    payload: {
-      user: null,
-    },
-  };
+
+  const user = null;
+
+  return user;
 });
 
 export { signUp, signIn, getCurrentUser, resetUser };
