@@ -5,7 +5,6 @@ import { Button, Link } from 'components/common/common';
 import defaultAvatar from 'assets/img/default-user-avatar.svg';
 import logo from 'assets/img/logo.svg';
 import styles from './styles.module.scss';
-import { storage as storageService } from 'services/services';
 import { auth as authActions } from 'store/actions';
 
 const Header: React.FC = () => {
@@ -22,7 +21,6 @@ const Header: React.FC = () => {
   };
 
   const handleUserExit = (): void => {
-    storageService.clear();
     dispatch(authActions.resetUser());
   };
 
@@ -69,8 +67,14 @@ const Header: React.FC = () => {
                           + Add Podcast
                         </Link>
                       </li>
-                      <li className={styles.dropDownListElement} onClick={handleUserExit}>
-                        Exit
+                      <li className={styles.dropDownListElement}>
+                        <Link
+                          to={AppRoute.ROOT}
+                          className={styles.link}
+                          onClick={handleUserExit}
+                        >
+                          Exit
+                        </Link>
                       </li>
                     </ul>
                     <div className={styles.dropDownArrow}></div>

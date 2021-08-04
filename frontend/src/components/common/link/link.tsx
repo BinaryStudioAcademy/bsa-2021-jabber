@@ -4,10 +4,11 @@ import { AppRoute } from 'common/enums/enums';
 type Props = {
   to: AppRoute | string;
   className?: string;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 };
 
-const Link: React.FC<Props> = ({ children, to, className }) => (
-  <AppLink to={to} className={className}>
+const Link: React.FC<Props> = ({ children, to, className, onClick }) => (
+  <AppLink to={to} className={className} onClick={onClick}>
     {children}
   </AppLink>
 );
