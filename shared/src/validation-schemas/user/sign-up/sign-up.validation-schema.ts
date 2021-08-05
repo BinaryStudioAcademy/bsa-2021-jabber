@@ -38,6 +38,7 @@ const signUp = Joi.object<UserCreatePayload>({
       'string.max': SignUpValidationMessage.NICKNAME_MAX_LENGTH,
     }),
   [UserCreatePayloadKey.EMAIL]: Joi.string()
+    .trim()
     .email({ tlds: { allow: false } })
     .required()
     .messages({
@@ -45,6 +46,7 @@ const signUp = Joi.object<UserCreatePayload>({
       'string.email': SignUpValidationMessage.EMAIL_WRONG,
     }),
   [UserCreatePayloadKey.PASSWORD]: Joi.string()
+    .trim()
     .min(SignUpValidationRule.PASSWORD_MIN_LENGTH)
     .max(SignUpValidationRule.PASSWORD_MAX_LENGTH)
     .required()
