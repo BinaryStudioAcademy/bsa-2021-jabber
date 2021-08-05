@@ -7,7 +7,7 @@ import styles from './styles.module.scss';
 
 const Episode: React.FC = () => {
   const dispatch = useDispatch();
-  const { episodeId } = useParams<PageParams>();
+  const { id } = useParams<PageParams>();
 
   const { episode, comments } = useAppSelector(({ episode, comments }) => ({
     episode: episode.episode,
@@ -15,8 +15,8 @@ const Episode: React.FC = () => {
   }));
 
   useEffect(() => {
-    dispatch(episodeActions.loadEpisode(Number(episodeId)));
-    dispatch(commentActions.loadCommentsByEpisodeId(Number(episodeId)));
+    dispatch(commentActions.loadCommentsByEpisodeId(Number(id)));
+    dispatch(episodeActions.loadEpisode(Number(id)));
   }, []);
 
   return (

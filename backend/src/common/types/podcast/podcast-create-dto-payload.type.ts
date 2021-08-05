@@ -5,4 +5,4 @@ type PodcastCreateDTOPayload = {
   description: string;
 };
 
-export { PodcastCreateDTOPayload };
+export type { PodcastCreateDTOPayload };
