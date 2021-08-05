@@ -5,14 +5,14 @@ import styles from './styles.module.scss';
 
 const Episode: React.FC = () => {
   const dispatch = useDispatch();
-  const { episodeId } = useParams<PageParams>();
+  const { id } = useParams<PageParams>();
 
   const { episode } = useAppSelector(({ episode }) => ({
     episode: episode.episode,
   }));
 
   useEffect(() => {
-    dispatch(episodeActions.loadEpisode(Number(episodeId)));
+    dispatch(episodeActions.loadEpisode(Number(id)));
   }, []);
 
   return (

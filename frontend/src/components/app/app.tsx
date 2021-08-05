@@ -53,18 +53,18 @@ const App: React.FC = () => {
           exact
         />
         <AuthPublicRouter
-          path={AppRoute.PODCAST_$ID_EPISODE_EDIT_$ID}
+          path={AppRoute.PODCASTS_$ID}
+          component={Podcast}
+          exact
+        />
+        <AuthPublicRouter
+          path={AppRoute.EPISODE_EDIT_$ID}
           component={ConfigurateEpisode}
           exact
         />
         <AuthPublicRouter
-          path={AppRoute.PODCASTS_$ID_EPISODES_$ID}
+          path={AppRoute.EPISODES_$ID}
           component={Episode}
-          exact
-        />
-        <AuthPublicRouter
-          path={AppRoute.PODCASTS_$ID}
-          component={Podcast}
           exact
         />
         <AuthPublicRouter path={AppRoute.ROOT} component={Homepage} exact />
