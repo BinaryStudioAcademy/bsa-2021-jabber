@@ -8,8 +8,8 @@ import { handleAsyncApi } from '~/helpers/helpers';
 import { validateSchema as validateSchemaMiddleware } from '~/middlewares/middlewares';
 
 type Args = {
-  apiRouter: Router,
-  episodeService: typeof episodeService,
+  apiRouter: Router;
+  episodeService: typeof episodeService;
 };
 
 const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
