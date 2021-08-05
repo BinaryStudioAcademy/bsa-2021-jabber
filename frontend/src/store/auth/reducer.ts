@@ -44,15 +44,9 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(getCurrentUser.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
-  builder.addCase(resetUser.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
-  });
-  builder.addCase(resetUser.fulfilled, (state, action) => {
+  builder.addCase(resetUser.fulfilled, (state) => {
     state.dataStatus = DataStatus.IDLE;
-    state.user = action.payload;
-  });
-  builder.addCase(resetUser.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
+    state.user = null;
   });
 });
 
