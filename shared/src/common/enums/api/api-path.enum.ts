@@ -1,5 +1,4 @@
 enum ApiPath {
-  ROOT = '/',
   AUTH = '/auth',
   USERS = '/users',
   PODCASTS = '/podcasts',

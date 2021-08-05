@@ -23,6 +23,7 @@ app.use(setTraceIdMiddleware);
 app.use(logRequestMiddleware);
 app.use(json({ limit: '100mb' }));
 app.use(urlencoded({ extended: true, limit: '100mb' }));
+
 app.use(passport.initialize());
 passportService.init(passport);
 app.use(
