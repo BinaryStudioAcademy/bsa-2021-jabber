@@ -36,9 +36,7 @@ class RecordAudio {
   }
 
   public resume(): void {
-    if (this.#recorder?.state === RecordStatus.PAUSED) {
-      this.#recorder?.resume();
-    }
+    this.#recorder?.resume();
   }
 
   public stop(): string {
