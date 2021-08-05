@@ -66,7 +66,7 @@ const Header: React.FC = () => {
                       </li>
                       <li className={styles.dropDownListElement}>
                         <Link
-                          to={AppRoute.PODCAST_$ID_EPISODE_EDIT}
+                          to={AppRoute.EPISODE_EDIT}
                           className={styles.link}
                         >
                           + Add Episode
