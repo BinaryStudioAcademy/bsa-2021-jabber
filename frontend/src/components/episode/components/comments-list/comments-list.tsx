@@ -9,7 +9,7 @@ type Props = {
 const CommentsList: React.FC<Props> = ({ comments }) => {
   return (
     <div className={styles.commentsWrapper}>
-      <input name="comment" type="text" placeholder="Write a comment"/>
+      {/* <input name="comment" type="text" placeholder="Write a comment"/> */}
       <h3>Comments</h3>
       {
         comments.length

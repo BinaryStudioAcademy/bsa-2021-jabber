@@ -16,7 +16,7 @@ const Episode: React.FC = () => {
 
   useEffect(() => {
     dispatch(episodeActions.loadEpisode(Number(episodeId)));
-    dispatch(commentActions.loadComments());
+    dispatch(commentActions.loadCommentsByEpisodeId(Number(episodeId)));
   }, []);
 
   return (

@@ -27,6 +27,15 @@ const initCommentsApi = ({ apiRouter, commentService }: Args): Router => {
     }),
   );
 
+  commentRouter.get(
+    CommentsApiPath.EPISODE,
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await commentService.getAllCommentsByEpisodeId(Number(req.params.id)))
+        .status(HttpCode.OK);
+    }),
+  );
+
   return commentRouter;
 };
 

@@ -10,4 +10,12 @@ const loadComments = createAsyncThunk<Comment[], undefined, AsyncThunkConfig>
   return comments;
 });
 
-export { loadComments };
+const loadCommentsByEpisodeId = createAsyncThunk<Comment[], number, AsyncThunkConfig>
+(ActionType.LOAD_COMMENTS_BY_EPISODE_ID, async (episodeId, { extra }) => {
+  const { commentApi } = extra;
+  const comments = await commentApi.getAllCommentsByEpisodeId(episodeId);
+
+  return comments;
+});
+
+export { loadComments, loadCommentsByEpisodeId };
