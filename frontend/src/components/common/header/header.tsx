@@ -36,7 +36,9 @@ const Header: React.FC = () => {
               </li>
             </ul>
             <div className={styles.userInfo}>
-              <Button label="+ Create Podcast" type={ButtonType.BUTTON} />
+              <Link to={AppRoute.PODCASTS_EDIT} className={styles.link}>
+                <Button label="+ Create Podcast" type={ButtonType.BUTTON} />
+              </Link>
               <div className={styles.profile} ref={ref}>
                 <button
                   className={styles.usersButtonWrapper}
@@ -60,6 +62,14 @@ const Header: React.FC = () => {
                           className={styles.link}
                         >
                           + Add Podcast
+                        </Link>
+                      </li>
+                      <li className={styles.dropDownListElement}>
+                        <Link
+                          to={AppRoute.PODCAST_$ID_EPISODE_EDIT}
+                          className={styles.link}
+                        >
+                          + Add Episode
                         </Link>
                       </li>
                     </ul>
