@@ -1,59 +1,46 @@
 import { useMemo, useTable } from 'hooks/hooks';
 import { Column } from 'react-table';
+
+import { EpisodeItem } from '../common/types/types';
 import styles from './styles.module.scss';
 
-const EpisodeTable: React.FC = () => {
-  const data: Array<any> = useMemo(
-    () => [
-      {
-        index: '1',
-        full_name: 'Tesla',
-        user_name: 'John Dou',
-        genre: 'Technologies',
-        order: 'Episode 1',
-        time: '50:12',
-      },
-      {
-        index: '2',
-        full_name: 'New car',
-        user_name: 'John Dou',
-        genre: 'Technologies',
-        order: 'Episode 2',
-        time: '34:23',
-      },
-      {
-        index: '1',
-        full_name: 'Tesla',
-        user_name: 'John Dou',
-        genre: 'Technologies',
-        order: 'Episode 1',
-        time: '50:12',
-      },
-      {
-        index: '2',
-        full_name: 'New car',
-        user_name: 'John Dou',
-        genre: 'Technologies',
-        order: 'Episode 2',
-        time: '34:23',
-      },
-    ],
-    [],
-  );
+type Props = {
+  episodes?: EpisodeItem[];
+};
 
-  const columns: Array<Column> = useMemo(
+type EpisodeDescription = {
+  episodeName: string;
+  authorName: string;
+};
+
+const EpisodeTable: React.FC<Props> = ({ episodes = [] }) => {
+  const data: EpisodeItem[] = useMemo(() => episodes, [episodes]);
+
+  const columns: Column<EpisodeItem>[] = useMemo(
     () => [
       {
         Header: '#',
-        accessor: 'index', // accessor is the "key" in the data
+        accessor: (_originalRow, rowIndex): string => String(rowIndex),
       },
       {
         Header: 'Name and Host',
-        accessor: (row: any): any => {
-          return row.user_name + row.full_name + row.time;
+        accessor: (row: EpisodeItem): EpisodeDescription => {
+          return {
+            episodeName: row.episodeName,
+            authorName: `${row.userFirstName} ${row.userLastName}`,
+          };
         },
-        Cell: ({ value }): string => {
-          return value;
+        Cell: function myFunc({
+          value,
+        }: {
+          value: EpisodeDescription;
+        }): JSX.Element {
+          return (
+            <>
+              <div className={styles.episodeName}>{value.episodeName}</div>
+              <div className={styles.authorName}>{value.authorName}</div>
+            </>
+          );
         },
       },
       {
@@ -77,63 +64,38 @@ const EpisodeTable: React.FC = () => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
 
-  return (
-    // apply the table props
+  return data.length ? (
     <table {...getTableProps()} className={styles.table}>
       <thead>
-        {
-          // Loop over the header rows
-          headerGroups.map((headerGroup, i) => (
-            // Apply the header row props
-            <tr {...headerGroup.getHeaderGroupProps()} key={i}>
-              {
-                // Loop over the headers in each row
-                headerGroup.headers.map((column, i) => (
-                  // Apply the header cell props
-                  <th {...column.getHeaderProps()} key={i}>
-                    <span>
-                      {
-                        // Render the header
-                        column.render('Header')
-                      }
-                    </span>
-                  </th>
-                ))
-              }
-            </tr>
-          ))
-        }
+        {headerGroups.map((headerGroup, i) => (
+          <tr {...headerGroup.getHeaderGroupProps()} key={i}>
+            {headerGroup.headers.map((column, i) => (
+              <th {...column.getHeaderProps()} key={i}>
+                <span>{column.render('Header')}</span>
+              </th>
+            ))}
+          </tr>
+        ))}
       </thead>
-      {/* Apply the table body props */}
       <tbody {...getTableBodyProps()}>
-        {
-          // Loop over the table rows
-          rows.map((row, i) => {
-            // Prepare the row for display
-            prepareRow(row);
-            return (
-              // Apply the row props
-              <tr {...row.getRowProps()} key={i}>
-                {
-                  // Loop over the rows cells
-                  row.cells.map((cell, i) => {
-                    // Apply the cell props
-                    return (
-                      <td {...cell.getCellProps()} key={i}>
-                        {
-                          // Render the cell contents
-                          cell.render('Cell')
-                        }
-                      </td>
-                    );
-                  })
-                }
-              </tr>
-            );
-          })
-        }
+        {rows.map((row, i) => {
+          prepareRow(row);
+          return (
+            <tr {...row.getRowProps()} key={i} className={styles.episodeRow}>
+              {row.cells.map((cell, i) => {
+                return (
+                  <td {...cell.getCellProps()} key={i}>
+                    {cell.render('Cell')}
+                  </td>
+                );
+              })}
+            </tr>
+          );
+        })}
       </tbody>
     </table>
+  ) : (
+    <h1 className={styles.notFound}>Oops. There is no any episode</h1>
   );
 };
 

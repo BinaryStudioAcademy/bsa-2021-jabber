@@ -3,18 +3,34 @@
   border-spacing: 0;
   th {
     text-align: left;
-    padding-bottom: 30px;
+    padding: 15px 0 30px;
     span {
       color: var(--color-primary-dark);
       opacity: 0.5;
     }
+    &:first-child {
+      padding-left: 15px;
+    }
     &:last-child {
       text-align: right;
+      padding-right: 15px;
     }
   }
   td {
+    &:first-child {
+      padding-left: 15px;
+    }
     &:last-child {
       text-align: right;
+      padding-right: 15px;
     }
+  }
+  .episodeName {
+    margin-bottom: 5px;
+    font-weight: 700;
+  }
+  .episodeRow {
+    height: 52px;
+    cursor: pointer;
   }
 }
