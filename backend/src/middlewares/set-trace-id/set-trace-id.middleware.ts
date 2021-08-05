@@ -1,12 +1,12 @@
 import { RequestHandler } from 'express';
 import { appAsyncStorage, token } from '~/services/services';
-import { getRandomId, extractJwtToken } from '~/helpers/helpers';
+import { getRandomId, extractAuthToken } from '~/helpers/helpers';
 import { AppAsyncStorageKey } from '~/common/enums/enums';
 import { TokenPayload } from '~/common/types/types';
 
 const setTraceId: RequestHandler = async (req, _res, next) => {
   const bearerToken = req.headers.authorization
-    ? extractJwtToken(req.headers.authorization)
+    ? extractAuthToken(req.headers.authorization)
     : null;
 
   const payload = bearerToken

@@ -1,1 +1,1 @@
-export { extractJwtToken } from './extract-jwt-token/extract-jwt-token.helper';
+export { extractAuthToken } from './extract-auth-token/extract-auth-token.helper';

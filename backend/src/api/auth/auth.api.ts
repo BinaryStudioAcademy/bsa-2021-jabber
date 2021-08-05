@@ -4,7 +4,7 @@ import {
   signIn as signInValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { ApiPath, HttpCode, AuthApiPath } from '~/common/enums/enums';
-import { handleAsyncApi, extractJwtToken } from '~/helpers/helpers';
+import { handleAsyncApi, extractAuthToken } from '~/helpers/helpers';
 import {
   validateSchema as validateSchemaMiddleware,
   authentication as authenticationMiddleware,
@@ -48,7 +48,7 @@ const initAuthApi = ({ apiRouter, authService }: Args): Router => {
     AuthApiPath.CURRENT_USER,
     handleAsyncApi(async (req, res) => {
       const token = req.headers.authorization
-        ? extractJwtToken(req.headers.authorization)
+        ? extractAuthToken(req.headers.authorization)
         : null;
 
       res.send(await userService.getByToken(String(token))).status(HttpCode.OK);
