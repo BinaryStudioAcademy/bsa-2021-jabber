@@ -3,17 +3,16 @@ import {
   episode as EpisodeValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { ApiPath, HttpCode, EpisodesApiPath } from '~/common/enums/enums';
-import { episode as episodeService, shownote as shownoteService } from '~/services/services';
+import { episode as episodeService } from '~/services/services';
 import { handleAsyncApi } from '~/helpers/helpers';
 import { validateSchema as validateSchemaMiddleware } from '~/middlewares/middlewares';
 
 type Args = {
-  apiRouter: Router;
+  apiRouter: Router,
   episodeService: typeof episodeService,
-  shownoteService: typeof shownoteService
 };
 
-const initEpisodesApi = ({ apiRouter, episodeService, shownoteService }: Args): Router => {
+const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
   const episodeRouter = Router();
 
   apiRouter.use(ApiPath.EPISODES, episodeRouter);

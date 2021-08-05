@@ -5,7 +5,6 @@ import {
   user as userService,
   podcast as podcastService,
   episode as episodeService,
-  shownote as shownoteService,
   comment as commentService,
   record as recordService,
 } from '~/services/services';
@@ -39,7 +38,6 @@ const initApi = (app: Router): Router => {
   initEpisodesApi({
     apiRouter,
     episodeService,
-    shownoteService,
   });
 
   initCommentsApi({
