@@ -50,7 +50,7 @@ class PodcastApi {
     );
   }
 
-  public edit(payload: PodcastEditPayload): Promise<Podcast> {
+  public update(payload: PodcastEditPayload): Promise<Podcast> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}${payload.id}`,
       {

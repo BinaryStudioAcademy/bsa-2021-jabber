@@ -2,10 +2,12 @@ import { useDispatch, useParams, useEffect, useAppSelector } from 'hooks/hooks';
 import { configuratePodcast as configuratePodcastActions } from 'store/actions';
 import { PodcastFormPayload } from 'common/types/types';
 import { PageParams } from './common/types/types';
+
 import { ConfiguratePodcastForm } from './components/components';
 import styles from './styles.module.scss';
-import { mapPodcastToFormPayload } from 'helpers/helpers';
+import { mapPodcastToFormPayload } from './helpers/helpers';
 import { Loader } from 'components/common/common';
+import { DataStatus } from 'common/enums/enums';
 
 const ConfiguratePodcast: React.FC = () => {
   const { id } = useParams<PageParams>();
@@ -37,7 +39,7 @@ const ConfiguratePodcast: React.FC = () => {
       <h2>
         {isEdit ? 'Edit' : 'Create'} Podcast {id ?? ''}
       </h2>
-      {(dataStatus === 'pending')
+      {(dataStatus === DataStatus.PENDING)
         ? <Loader />
         : <ConfiguratePodcastForm onSubmit={handleFormSubmit} payload={mapPodcast}/>}
     </div>
