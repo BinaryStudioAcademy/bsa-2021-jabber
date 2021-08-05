@@ -23,14 +23,15 @@ const Podcast: React.FC = () => {
             <h1 className={styles.title}>{podcast.name}</h1>
             <p className={styles.description}>{podcast.description}</p>
           </div>
-          <p className={styles.logoWrapper}>
+          <div className={styles.logoWrapper}>
             <img
               src={podcast.image?.url}
-              className={styles.image}
+              width="280px"
+              height="280px"
               loading="lazy"
               alt={podcast.name}
             />
-          </p>
+          </div>
         </>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such podcast</h1>
