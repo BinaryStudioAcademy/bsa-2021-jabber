@@ -24,7 +24,7 @@ export {
   RecordDTOKey,
   ImageDTOKey,
 } from './db/db';
-export { HttpCode } from './http/http';
+export { HttpCode, HttpMethod } from './http/http';
 export {
   PodcastPayloadKey,
   PodcastValidationMessage,
