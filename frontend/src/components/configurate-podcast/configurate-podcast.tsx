@@ -2,7 +2,6 @@ import { useDispatch, useParams, useEffect, useAppSelector } from 'hooks/hooks';
 import { configuratePodcast as configuratePodcastActions } from 'store/actions';
 import { PodcastFormPayload } from 'common/types/types';
 import { PageParams } from './common/types/types';
-
 import { ConfiguratePodcastForm } from './components/components';
 import styles from './styles.module.scss';
 import { mapPodcastToFormPayload } from './helpers/helpers';
