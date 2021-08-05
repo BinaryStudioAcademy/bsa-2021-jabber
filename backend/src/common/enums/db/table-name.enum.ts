@@ -1,7 +1,7 @@
 enum TableName {
   USERS = 'users',
   EPISODES = 'episodes',
-  SHOW_NOTES = 'show_notes',
+  SHOWNOTES = 'shownotes',
   MIGRATIONS = 'migrations',
   PODCASTS = 'podcasts',
   COMMENTS = 'comments',

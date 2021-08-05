@@ -28,13 +28,7 @@ const initEpisodesApi = ({ apiRouter, episodeService, shownoteService }: Args): 
   episodeRouter.get(
     EpisodesApiPath.$ID,
     handleAsyncApi(async (req, res) => {
-      const episode = await episodeService.getById(req.params.id);
-      const timestamps = await shownoteService.getAllTimeNotesByEpisodeId(req.params.id);
-      const response = {
-        ...episode,
-        timestamps,
-      };
-      return res.send(response).status(HttpCode.OK);
+      return res.send(await episodeService.getById(req.params.id)).status(HttpCode.OK);
     }),
   );
 
@@ -44,14 +38,6 @@ const initEpisodesApi = ({ apiRouter, episodeService, shownoteService }: Args): 
     handleAsyncApi(async (req, res) => {
       const episode = await episodeService.create(req.body);
       return res.json(episode).status(HttpCode.CREATED);
-    }),
-  );
-
-  episodeRouter.post(
-    EpisodesApiPath.TIMESTAMP,
-    handleAsyncApi(async (req, res) => {
-      const timestamp = await shownoteService.create(req.body);
-      return res.json(timestamp).status(HttpCode.CREATED);
     }),
   );
 

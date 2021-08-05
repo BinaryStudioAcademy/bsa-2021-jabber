@@ -16,7 +16,7 @@ class Shownote {
     return this.#ShownoteModel.query().insert(payload);
   }
 
-  public getAllTimeNotesByEpisodeId(id: string): Promise<TShownote[]> {
+  public getAllByEpisodeId(id: string): Promise<TShownote[]> {
     return this.#ShownoteModel.query().where('episode_id', id).returning('*');
   }
 }

@@ -19,8 +19,8 @@ class Shownote {
     return this.#shownoteRepository.create(payload);
   }
 
-  public async getAllTimeNotesByEpisodeId(id: string): Promise<TShownote[]> {
-    return await this.#shownoteRepository.getAllTimeNotesByEpisodeId(id);
+  public async getAllByEpisodeId(id: string): Promise<TShownote[]> {
+    return await this.#shownoteRepository.getAllByEpisodeId(id);
   }
 }
 

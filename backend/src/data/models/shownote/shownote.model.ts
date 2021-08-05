@@ -9,7 +9,7 @@ class Shownote extends Abstract {
   [ShownoteDTOKey.TIMESTAMP]: number;
 
   static get tableName(): string {
-    return TableName.SHOW_NOTES;
+    return TableName.SHOWNOTES;
   }
 }
 
