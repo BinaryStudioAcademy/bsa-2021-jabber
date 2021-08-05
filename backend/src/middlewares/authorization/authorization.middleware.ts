@@ -6,6 +6,10 @@ const authorization = (routesWhiteList: string[] = []) => (
   res: Response,
   next: NextFunction,
 ): void => {
+  console.log('+++++ROUTES_WHITE_LIST++++++')
+  console.log(routesWhiteList)
+  console.log(req.path)
+  console.log('-----ROUTES_WHITE_LIST------')
   routesWhiteList.some((route) => route === req.path)
     ? next()
     : jwtMiddleWare(req, res, next);
