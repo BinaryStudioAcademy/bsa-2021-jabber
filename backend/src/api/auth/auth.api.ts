@@ -47,9 +47,7 @@ const initAuthApi = ({ apiRouter, authService }: Args): Router => {
   userRouter.get(
     AuthApiPath.CURRENT_USER,
     handleAsyncApi(async (req, res) => {
-      const token = req.headers.authorization
-        ? extractAuthToken(req.headers.authorization)
-        : null;
+      const token = extractAuthToken(req.headers.authorization);
 
       res.send(await userService.getByToken(String(token))).status(HttpCode.OK);
     }),

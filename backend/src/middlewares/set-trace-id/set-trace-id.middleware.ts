@@ -5,9 +5,7 @@ import { AppAsyncStorageKey } from '~/common/enums/enums';
 import { TokenPayload } from '~/common/types/types';
 
 const setTraceId: RequestHandler = async (req, _res, next) => {
-  const bearerToken = req.headers.authorization
-    ? extractAuthToken(req.headers.authorization)
-    : null;
+  const bearerToken = extractAuthToken(req.headers.authorization);
 
   const payload = bearerToken
     ? token.decode<TokenPayload | null>(bearerToken)
