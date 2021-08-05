@@ -32,4 +32,11 @@ const getCurrentUser = createAsyncThunk<User, undefined, AsyncThunkConfig>
   return user;
 });
 
-export { signUp, signIn, getCurrentUser };
+const resetUser = createAsyncThunk<void, undefined, AsyncThunkConfig>
+(ActionType.RESET_USER, async (_args, { extra }) => {
+  const { storageService } = extra;
+
+  storageService.removeItem(StorageKey.TOKEN);
+});
+
+export { signUp, signIn, getCurrentUser, resetUser };
