@@ -25,9 +25,8 @@ const Podcast: React.FC = () => {
           </div>
           <p className={styles.logoWrapper}>
             <img
-              src="#"
-              width="280"
-              height="280"
+              src={podcast.image?.url}
+              className={styles.image}
               loading="lazy"
               alt={podcast.name}
             />

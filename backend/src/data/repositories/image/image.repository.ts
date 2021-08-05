@@ -15,6 +15,13 @@ class Image {
   public create(payload: ImageCreatePayload): Promise<TImage> {
     return this.#ImageModel.query().insert(payload);
   }
+
+  public get(id: number | null): Promise<TImage> | null {
+    if (!id) {
+      return null;
+    }
+    return this.#ImageModel.query().findById(id);
+  }
 }
 
 export { Image };
