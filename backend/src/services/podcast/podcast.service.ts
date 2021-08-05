@@ -117,7 +117,7 @@ class Podcast {
       await this.#imageRepository.delete(deleteImageId);
     }
 
-    return podcast
+    return podcast;
   }
 }
 
