@@ -31,13 +31,12 @@ const edit = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
     const { configuratePodcast } = getState();
     const file = getFileFromFileList(podcastPayload.image);
     const updatePodcast = <Podcast>configuratePodcast.podcast;
-    const payloadEditPodcast = {
+    const podcast = await podcastApi.update({
       ...updatePodcast,
       name: podcastPayload.name,
       description: podcastPayload.description,
       imageDataUrl: file ? await getDataUrl(file) : null,
-    };
-    const podcast = await podcastApi.update(payloadEditPodcast);
+    });
 
     return podcast;
   });
