@@ -28,7 +28,7 @@ const initCommentsApi = ({ apiRouter, commentService }: Args): Router => {
   );
 
   commentRouter.get(
-    CommentsApiPath.EPISODE,
+    CommentsApiPath.EPISODE_ID,
     handleAsyncApi(async (req, res) => {
       return res
         .json(await commentService.getAllCommentsByEpisodeId(Number(req.params.id)))
