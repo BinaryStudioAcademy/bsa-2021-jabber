@@ -1,7 +1,9 @@
-import { useAppSelector, useVisible } from 'hooks/hooks';
+import React from 'react';
+import { useAppSelector, useDispatch, useVisible } from 'hooks/hooks';
 import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
 import { Button, Link } from 'components/common/common';
+import { auth as authActions } from 'store/actions';
 import defaultAvatar from 'assets/img/default-user-avatar.svg';
 import logo from 'assets/img/logo.svg';
 import styles from './styles.module.scss';
@@ -10,13 +12,18 @@ const Header: React.FC = () => {
   const { user } = useAppSelector(({ auth }: RootState) => ({
     user: auth.user,
   }));
-
   const hasUser = Boolean(user);
 
+  const dispatch = useDispatch();
   const { ref, isVisible, setIsVisible } = useVisible(false);
 
   const handleMenuToggle = (): void => {
     setIsVisible(!isVisible);
+  };
+
+  const handleUserExit = (evt: React.MouseEvent): void => {
+    evt.preventDefault();
+    dispatch(authActions.resetUser());
   };
 
   return (
@@ -70,6 +77,15 @@ const Header: React.FC = () => {
                           className={styles.link}
                         >
                           + Add Episode
+                        </Link>
+                      </li>
+                      <li className={styles.dropDownListElement}>
+                        <Link
+                          to={AppRoute.ROOT}
+                          className={styles.link}
+                          onClick={handleUserExit}
+                        >
+                          Exit
                         </Link>
                       </li>
                     </ul>

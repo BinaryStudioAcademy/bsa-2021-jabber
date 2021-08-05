@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { signUp, signIn, getCurrentUser } from './actions';
+import { signUp, signIn, getCurrentUser, resetUser } from './actions';
 import { User } from 'common/types/types';
 
 type State = {
@@ -43,6 +43,10 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(getCurrentUser.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(resetUser.fulfilled, (state) => {
+    state.dataStatus = DataStatus.IDLE;
+    state.user = null;
   });
 });
 
