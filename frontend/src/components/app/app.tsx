@@ -14,6 +14,7 @@ import ConfiguratePodcast from 'components/configurate-podcast/configurate-podca
 import ConfigurateEpisode from 'components/configurate-episode/configurate-episode';
 import Episode from 'components/episode/episode';
 import Podcast from 'components/podcast/podcast';
+import PodcastLive from 'components/podcast-live/podcast-live';
 import { useDispatch, useEffect, useAppSelector } from 'hooks/hooks';
 import { storage } from 'services/services';
 import { auth as authActions } from 'store/actions';
@@ -55,6 +56,11 @@ const App: React.FC = () => {
         <AuthPublicRouter
           path={AppRoute.PODCASTS_$ID}
           component={Podcast}
+          exact
+        />
+        <AuthPublicRouter
+          path={AppRoute.PODCASTS_$ID_LIVE}
+          component={PodcastLive}
           exact
         />
         <AuthPublicRouter
