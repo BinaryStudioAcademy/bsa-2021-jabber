@@ -17,7 +17,7 @@ class Podcast {
   }
 
   public getAll(): Promise<TPodcast[]> {
-    return this.#PodcastModel.query();
+    return this.#PodcastModel.query().withGraphJoined('image');
   }
 
   public create(payload: PodcastCreateDTOPayload): Promise<TPodcast> {
