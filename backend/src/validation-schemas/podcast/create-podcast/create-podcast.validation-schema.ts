@@ -3,6 +3,7 @@ import { podcast } from 'jabber-shared/validation-schemas/validation-schemas';
 import {
   PodcastPayloadKey,
   PodcastValidationMessage,
+  PodcastType,
 } from '~/common/enums/enums';
 
 const podcastCreate = podcast.keys({
@@ -16,6 +17,7 @@ const podcastCreate = podcast.keys({
     }),
     Joi.any().equal(null),
   ],
+  [PodcastPayloadKey.TYPE]: Joi.string().valid(...Object.values(PodcastType)),
 });
 
 export { podcastCreate };
