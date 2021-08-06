@@ -1,6 +1,6 @@
 import { Knex } from 'knex';
 
-const PodcastsType = {
+const PodcastType = {
   PUBLIC: 'public',
   PRIVATE: 'private',
   UNLISTED: 'unlisted',
@@ -12,8 +12,8 @@ const COLUMN_NAME = 'type';
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.table(TABLE_NAME, (table) => {
     table
-      .enum(COLUMN_NAME, [PodcastsType.PUBLIC, PodcastsType.PRIVATE, PodcastsType.UNLISTED])
-      .defaultTo(PodcastsType.PUBLIC);
+      .enum(COLUMN_NAME, [PodcastType.PUBLIC, PodcastType.PRIVATE, PodcastType.UNLISTED])
+      .defaultTo(PodcastType.PUBLIC);
   });
 }
 
