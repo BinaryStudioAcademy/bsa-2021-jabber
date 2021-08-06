@@ -6,6 +6,8 @@ import {
   PodcastType,
 } from '~/common/enums/enums';
 
+const podcastType = Object.values(PodcastType);
+
 const podcastCreate = podcast.keys({
   [PodcastPayloadKey.USER_ID]: Joi.number().integer().required().messages({
     'number.required': PodcastValidationMessage.USER_ID_REQUIRE,
@@ -17,7 +19,7 @@ const podcastCreate = podcast.keys({
     }),
     Joi.any().equal(null),
   ],
-  [PodcastPayloadKey.TYPE]: Joi.string().valid(...Object.values(PodcastType)),
+  [PodcastPayloadKey.TYPE]: Joi.string().valid(...podcastType),
 });
 
 export { podcastCreate };
