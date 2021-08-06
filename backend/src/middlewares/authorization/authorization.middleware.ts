@@ -1,12 +1,8 @@
 import { Response, Request, NextFunction } from 'express';
 import { jwt as jwtMiddleWare } from '../jwt/jwt.middleware';
+import { WhiteRoute } from '~/common/types/types';
 
-type WhiteRoute = {
-  path: string;
-  allowedMethods: string[]
-};
-
-const authorization = (routesWhiteList: Array<WhiteRoute> = []) => (
+const authorization = (routesWhiteList: WhiteRoute[] = []) => (
   req: Request,
   res: Response,
   next: NextFunction,

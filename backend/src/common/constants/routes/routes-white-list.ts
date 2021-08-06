@@ -1,6 +1,7 @@
 import { AuthApiPath, ApiPath, PodcastsApiPath, EpisodesApiPath, HttpMethod } from '~/common/enums/enums';
+import { WhiteRoute } from '~/common/types/types';
 
-const ROUTES_WHITE_LIST = [
+const ROUTES_WHITE_LIST: WhiteRoute[] = [
   {
     path: `${ApiPath.AUTH}${AuthApiPath.SIGN_IN}`,
     allowedMethods: [HttpMethod.GET, HttpMethod.POST],
