@@ -1,19 +1,19 @@
 import { Response, Request, NextFunction } from 'express';
 import { jwt as jwtMiddleWare } from '../jwt/jwt.middleware';
 
-const authorization = (routesWhiteList: Map<string, Array<string>>) => (
+type WhiteRoute = {
+  path: string;
+  allowedMethods: string[]
+};
+
+const authorization = (routesWhiteList: Array<WhiteRoute>) => (
   req: Request,
   res: Response,
   next: NextFunction,
 ): void => {
-  if (routesWhiteList) {
-    const availableHttpMethods = routesWhiteList.get(req.path);
-    if (availableHttpMethods && availableHttpMethods.some((method) => method === req.method)) {
-      next();
-      return;
-    }
-  }
-
-  jwtMiddleWare(req, res, next);
+  routesWhiteList.some((route) => route.path === req.path &&
+    route.allowedMethods.some((method) => method === req.method))
+    ? next()
+    : jwtMiddleWare(req, res, next);
 };
 export { authorization };
