@@ -1,0 +1,27 @@
+.datePikerWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  font-weight: 500;
+
+  .label {
+    margin: 0 0 5px;
+    font-size: 12px;
+  }
+
+  .datePicker{
+    display: block;
+    width: 100%;
+    padding: 11px 40px;
+    border: none;
+    border-radius: 7px;
+    outline: none;
+  }
+
+  .errorWrapper {
+    color: var(--color-button-background);
+    min-height: 18px;
+    margin-top: 5px;
+  }
+}
