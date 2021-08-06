@@ -15,7 +15,7 @@ export {
   UserSignInPayloadKey,
   UserRole,
 } from './user/user';
-export { PodcastPayloadKey } from './podcast/podcast';
+export { PodcastPayloadKey, PodcastType } from './podcast/podcast';
 export {
   SignInValidationRule,
   SignInValidationMessage,

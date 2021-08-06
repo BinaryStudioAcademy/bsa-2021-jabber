@@ -1,4 +1,5 @@
 import { Image } from '~/common/types/image/image.type';
+import { PodcastType } from '~/common/enums/enums';
 
 type Podcast = {
   id: number;
@@ -9,6 +10,7 @@ type Podcast = {
   createdAt: string;
   updatedAt: string;
   description: string;
+  type: PodcastType;
 };
 
 export type { Podcast };

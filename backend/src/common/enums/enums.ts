@@ -29,6 +29,7 @@ export {
   PodcastPayloadKey,
   PodcastValidationMessage,
   PodcastValidationRule,
+  PodcastType,
 } from './podcast/podcast';
 export { ResourceType } from './file/file';
 export { EpisodeType } from './episode/episode-type.enum';
