@@ -20,6 +20,7 @@ export {
   AbstractDTOKey,
   PodcastDTOKey,
   EpisodeDTOKey,
+  ShownoteDTOKey,
   CommentDTOKey,
   RecordDTOKey,
   ImageDTOKey,
@@ -32,6 +33,7 @@ export {
 } from './podcast/podcast';
 export { ResourceType } from './file/file';
 export { EpisodeType } from './episode/episode-type.enum';
+export { ShownoteCreatePayloadKey } from './shownote/shownote.enum';
 export { StrategyName } from './strategy/strategy';
 export {
   UserRole,
