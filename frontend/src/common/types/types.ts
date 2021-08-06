@@ -5,3 +5,4 @@ export type { ValidationSchema } from './validation-schema/validation-schema';
 export type { Podcast, PodcastCreatePayload } from './podcast/podcast';
 export type { Episode, EpisodeCreatePayload } from './episode/episode';
 export type { SignResponse } from './sign/sign';
+export type { SearchPayload } from './search/search';

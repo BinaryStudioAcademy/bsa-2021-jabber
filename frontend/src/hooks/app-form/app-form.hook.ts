@@ -7,10 +7,12 @@ import {
 } from 'react-hook-form';
 import { ValidationSchema } from 'common/types/types';
 import { getFormResolver } from 'helpers/helpers';
+import { Events } from 'common/enums/enums';
 
 type useAppFormProps = {
   defaultValues: { [key: string]: string | number };
-  validationSchema: ValidationSchema;
+  validationSchema?: ValidationSchema;
+  modeAction?: Events.ON_SUBMIT | Events.ON_CHANGE;
 };
 
 type useAppFormReturn = {
@@ -22,8 +24,9 @@ type useAppFormReturn = {
 const useAppForm = ({
   validationSchema,
   defaultValues,
+  modeAction = Events.ON_SUBMIT,
 }: useAppFormProps): useAppFormReturn => {
-  const resolver = getFormResolver(validationSchema);
+  const resolver = validationSchema ? getFormResolver(validationSchema) : undefined;
 
   const {
     control,
@@ -32,7 +35,7 @@ const useAppForm = ({
   } = useForm<FieldValues>({
     defaultValues,
     resolver,
-    mode: 'onSubmit',
+    mode: modeAction,
   });
 
   return { control, errors, handleSubmit };

@@ -6,7 +6,8 @@ import {
   Path,
   FieldValues,
 } from 'react-hook-form';
-import { InputType } from 'common/enums/enums';
+import { IconName, InputType } from 'common/enums/enums';
+import { getAllowedClasses } from 'helpers/dom/dom';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -16,6 +17,8 @@ type Props = {
   name: Path<FieldValues>;
   control: Control;
   errors: FieldErrors;
+  icon?: IconName;
+  className?: string;
 };
 
 const Input: React.FC<Props> = ({
@@ -25,6 +28,8 @@ const Input: React.FC<Props> = ({
   errors,
   placeholder = '',
   type = InputType.TEXT,
+  icon = IconName.INVISIBLE,
+  className,
 }) => {
   const { field } = useController({ name, control });
 
@@ -35,7 +40,11 @@ const Input: React.FC<Props> = ({
         {...field}
         type={type}
         placeholder={placeholder}
-        className={styles.input}
+        className={getAllowedClasses(
+          className,
+          styles.input,
+          styles[icon],
+        )}
       />
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />
