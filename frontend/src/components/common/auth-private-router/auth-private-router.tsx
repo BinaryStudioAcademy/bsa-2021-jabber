@@ -5,15 +5,15 @@ type Props = {
   component: React.ElementType;
 } & RouteProps;
 
-const AuthPrivateRouter: React.FC<Props> = ({ ...otherProps }) => {
-  const Component: React.ElementType = otherProps.component;
+const AuthPrivateRouter: React.FC<Props> = ({ component, ...otherProps }) => {
+  const Component: React.ElementType = component;
 
-  const WrappedComponent = (): JSX.Element => (
+  const handleRender = (): JSX.Element => (
     <AuthWrapper>
       <Component />
     </AuthWrapper>
   );
 
-  return <PrivateRoute {...otherProps} component={WrappedComponent} />;
+  return <PrivateRoute {...otherProps} render={handleRender} />;
 };
 export default AuthPrivateRouter;

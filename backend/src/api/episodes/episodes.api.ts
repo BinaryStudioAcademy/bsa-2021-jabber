@@ -5,11 +5,11 @@ import {
 import { ApiPath, HttpCode, EpisodesApiPath } from '~/common/enums/enums';
 import { episode as episodeService } from '~/services/services';
 import { handleAsyncApi } from '~/helpers/helpers';
-import { validateSchema } from '~/middlewares/middlewares';
+import { validateSchema as validateSchemaMiddleware } from '~/middlewares/middlewares';
 
 type Args = {
   apiRouter: Router;
-  episodeService: typeof episodeService
+  episodeService: typeof episodeService;
 };
 
 const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
@@ -33,7 +33,7 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
 
   episodeRouter.post(
     EpisodesApiPath.ROOT,
-    validateSchema(EpisodeValidationSchema),
+    validateSchemaMiddleware(EpisodeValidationSchema),
     handleAsyncApi(async (req, res) => {
       const episode = await episodeService.create(req.body);
       return res.json(episode).status(HttpCode.CREATED);

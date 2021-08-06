@@ -17,6 +17,7 @@ type Props = {
   name: Path<FieldValues>;
   control: Control;
   errors: FieldErrors;
+  hasMultipleRows?: boolean;
   icon?: IconName;
   className?: string;
 };
@@ -28,6 +29,7 @@ const Input: React.FC<Props> = ({
   errors,
   placeholder = '',
   type = InputType.TEXT,
+  hasMultipleRows = false,
   icon = IconName.INVISIBLE,
   className,
 }) => {
@@ -36,16 +38,23 @@ const Input: React.FC<Props> = ({
   return (
     <label className={styles.inputWrapper}>
       <span className={styles.label}>{label}</span>
-      <input
-        {...field}
-        type={type}
-        placeholder={placeholder}
-        className={getAllowedClasses(
-          className,
-          styles.input,
-          styles[icon],
-        )}
-      />
+      {hasMultipleRows ? (
+        <textarea
+          {...field}
+          placeholder={placeholder}
+          className={getAllowedClasses(styles.input, styles.textarea)}
+        />
+      ) : (
+        <input
+          {...field}
+          type={type}
+          placeholder={placeholder}
+          className={getAllowedClasses(
+            className,
+            styles.input,
+            styles[icon],
+          )}
+        />)}
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />
       </span>

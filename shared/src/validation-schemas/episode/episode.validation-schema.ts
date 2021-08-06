@@ -1,8 +1,9 @@
-import * as Joi from 'joi';
+import { Joi } from '~/helpers/helpers';
 import {
   EpisodeValidationRule,
   EpisodeValidationMessage,
-  EpisodeCreatePayloadKey, EpisodeType,
+  EpisodeCreatePayloadKey,
+  EpisodeType,
 } from '~/common/enums/enums';
 import { EpisodeCreatePayload } from '~/common/types/types';
 
@@ -10,6 +11,7 @@ const episodeTypes = Object.values(EpisodeType);
 
 const episode = Joi.object<EpisodeCreatePayload>({
   [EpisodeCreatePayloadKey.NAME]: Joi.string()
+    .trim()
     .min(EpisodeValidationRule.EPISODE_NAME_MIN_LENGTH)
     .max(EpisodeValidationRule.EPISODE_NAME_MAX_LENGTH)
     .required()
@@ -39,6 +41,7 @@ const episode = Joi.object<EpisodeCreatePayload>({
       'string.empty': EpisodeValidationMessage.TYPE_REQUIRE,
     }),
   [EpisodeCreatePayloadKey.DESCRIPTION]: Joi.string()
+    .trim()
     .min(EpisodeValidationRule.EPISODE_DESCRIPTION_MIN_LENGTH)
     .max(EpisodeValidationRule.EPISODE_DESCRIPTION_MAX_LENGTH)
     .required()

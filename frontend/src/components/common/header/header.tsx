@@ -1,7 +1,9 @@
-import { useAppSelector } from 'hooks/hooks';
+import React from 'react';
+import { useAppSelector, useDispatch, useVisible } from 'hooks/hooks';
 import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
 import { Button, Link } from 'components/common/common';
+import { auth as authActions } from 'store/actions';
 import defaultAvatar from 'assets/img/default-user-avatar.svg';
 import logo from 'assets/img/logo.svg';
 import styles from './styles.module.scss';
@@ -10,8 +12,19 @@ const Header: React.FC = () => {
   const { user } = useAppSelector(({ auth }: RootState) => ({
     user: auth.user,
   }));
-
   const hasUser = Boolean(user);
+
+  const dispatch = useDispatch();
+  const { ref, isVisible, setIsVisible } = useVisible(false);
+
+  const handleMenuToggle = (): void => {
+    setIsVisible(!isVisible);
+  };
+
+  const handleUserExit = (evt: React.MouseEvent): void => {
+    evt.preventDefault();
+    dispatch(authActions.resetUser());
+  };
 
   return (
     <header className={styles.header}>
@@ -30,16 +43,55 @@ const Header: React.FC = () => {
               </li>
             </ul>
             <div className={styles.userInfo}>
-              <Button label="+ Create Podcast" type={ButtonType.BUTTON} />
-              <div className={styles.profile}>
-                <img
-                  className={styles.profileAvatar}
-                  src={defaultAvatar}
-                  width="40px"
-                  height="40px"
-                  alt="avatar"
-                  loading="lazy"
-                />
+              <Link to={AppRoute.PODCASTS_EDIT} className={styles.link}>
+                <Button label="+ Create Podcast" type={ButtonType.BUTTON} />
+              </Link>
+              <div className={styles.profile} ref={ref}>
+                <button
+                  className={styles.usersButtonWrapper}
+                  onClick={handleMenuToggle}
+                >
+                  <img
+                    className={styles.profileAvatar}
+                    src={defaultAvatar}
+                    width="40px"
+                    height="40px"
+                    alt="avatar"
+                    loading="lazy"
+                  />
+                </button>
+                {isVisible && (
+                  <div className={styles.dropDown}>
+                    <ul className={styles.dropDownList}>
+                      <li className={styles.dropDownListElement}>
+                        <Link
+                          to={AppRoute.PODCASTS_EDIT}
+                          className={styles.link}
+                        >
+                          + Add Podcast
+                        </Link>
+                      </li>
+                      <li className={styles.dropDownListElement}>
+                        <Link
+                          to={AppRoute.EPISODE_EDIT}
+                          className={styles.link}
+                        >
+                          + Add Episode
+                        </Link>
+                      </li>
+                      <li className={styles.dropDownListElement}>
+                        <Link
+                          to={AppRoute.ROOT}
+                          className={styles.link}
+                          onClick={handleUserExit}
+                        >
+                          Exit
+                        </Link>
+                      </li>
+                    </ul>
+                    <div className={styles.dropDownArrow}></div>
+                  </div>
+                )}
               </div>
             </div>
           </>

@@ -1,4 +1,8 @@
-import { Podcast as TPodcast, PodcastCreatePayload } from '~/common/types/types';
+import {
+  Podcast as TPodcast,
+  PodcastCreateDTOPayload,
+  PodcastEditDTOPayload,
+} from '~/common/types/types';
 import { PodcastModel as PodcastM } from '~/data/models/models';
 
 type Constructor = {
@@ -16,8 +20,16 @@ class Podcast {
     return this.#PodcastModel.query();
   }
 
-  public create(payload: PodcastCreatePayload): Promise<TPodcast> {
-    return this.#PodcastModel.query().insert(payload);
+  public create(payload: PodcastCreateDTOPayload): Promise<TPodcast> {
+    return this.#PodcastModel.query().insert(payload).withGraphFetched('image');
+  }
+
+  public getById(id: string): Promise<TPodcast> {
+    return this.#PodcastModel.query().findById(id);
+  }
+
+  public update(id: string, payload: PodcastEditDTOPayload): Promise<TPodcast> {
+    return this.#PodcastModel.query().updateAndFetchById(id, payload);
   }
 }
 

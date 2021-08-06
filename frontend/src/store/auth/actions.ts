@@ -23,4 +23,20 @@ const signIn = createAsyncThunk<User, UserSignInPayload, AsyncThunkConfig>
   return user;
 });
 
-export { signUp, signIn };
+const getCurrentUser = createAsyncThunk<User, undefined, AsyncThunkConfig>
+(ActionType.LOAD_USER, async (_args, { extra }) => {
+  const { authApi } = extra;
+
+  const user = await authApi.getCurrentUser();
+
+  return user;
+});
+
+const resetUser = createAsyncThunk<void, undefined, AsyncThunkConfig>
+(ActionType.RESET_USER, async (_args, { extra }) => {
+  const { storageService } = extra;
+
+  storageService.removeItem(StorageKey.TOKEN);
+});
+
+export { signUp, signIn, getCurrentUser, resetUser };

@@ -4,7 +4,7 @@ import {
   ContentType,
   HttpMethod,
 } from 'common/enums/enums';
-import { Podcast, PodcastCreatePayload } from 'common/types/types';
+import { Podcast, PodcastCreatePayload, PodcastEditPayload } from 'common/types/types';
 import { Http } from 'services/http/http.service';
 
 type Constructor = {
@@ -30,11 +30,31 @@ class PodcastApi {
     );
   }
 
+  public getById(id: number): Promise<Podcast> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}${id}`,
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
+
   public create(payload: PodcastCreatePayload): Promise<Podcast> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}`,
       {
         method: HttpMethod.POST,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
+      },
+    );
+  }
+
+  public update(payload: PodcastEditPayload): Promise<Podcast> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}${payload.id}`,
+      {
+        method: HttpMethod.PUT,
         contentType: ContentType.JSON,
         payload: JSON.stringify(payload),
       },

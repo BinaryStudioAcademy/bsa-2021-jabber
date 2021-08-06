@@ -1,13 +1,13 @@
-import * as Joi from 'joi';
+import { Joi } from '~/helpers/helpers';
 import {
   PodcastValidationRule,
   PodcastValidationMessage,
-  PodcastCreatePayloadKey,
+  PodcastPayloadKey,
 } from '~/common/enums/enums';
-import { PodcastCreatePayload } from '~/common/types/types';
 
-const podcast = Joi.object<PodcastCreatePayload>({
-  [PodcastCreatePayloadKey.NAME]: Joi.string()
+const podcast = Joi.object({
+  [PodcastPayloadKey.NAME]: Joi.string()
+    .trim()
     .min(PodcastValidationRule.PODCAST_NAME_MIN_LENGTH)
     .max(PodcastValidationRule.PODCAST_NAME_MAX_LENGTH)
     .required()
@@ -16,12 +16,15 @@ const podcast = Joi.object<PodcastCreatePayload>({
       'string.min': PodcastValidationMessage.PODCAST_NAME_MIN_LENGTH,
       'string.max': PodcastValidationMessage.PODCAST_NAME_MAX_LENGTH,
     }),
-  [PodcastCreatePayloadKey.USER_ID]: Joi.number()
-    .integer()
+  [PodcastPayloadKey.DESCRIPTION]: Joi.string()
+    .trim()
+    .min(PodcastValidationRule.PODCAST_DESCRIPTION_MIN_LENGTH)
+    .max(PodcastValidationRule.PODCAST_DESCRIPTION_MAX_LENGTH)
     .required()
     .messages({
-      'number.required': PodcastValidationMessage.USER_ID_REQUIRE,
-      'number.integer': PodcastValidationMessage.USER_ID_NUMBER_FORMAT,
+      'string.empty': PodcastValidationMessage.PODCAST_DESCRIPTION_REQUIRE,
+      'string.min': PodcastValidationMessage.PODCAST_DESCRIPTION_MIN_LENGTH,
+      'string.max': PodcastValidationMessage.PODCAST_DESCRIPTION_MAX_LENGTH,
     }),
 });
 

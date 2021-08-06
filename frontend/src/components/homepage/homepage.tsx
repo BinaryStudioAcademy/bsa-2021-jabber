@@ -18,7 +18,7 @@ const Homepage: React.FC = () => {
 
   useEffect(() => {
     dispatch(homepageActions.loadPodcasts());
-  }, [ dispatch ]);
+  }, []);
 
   const handleChange = (searchValue: SearchPayload): void => {
     const { search } = searchValue;
