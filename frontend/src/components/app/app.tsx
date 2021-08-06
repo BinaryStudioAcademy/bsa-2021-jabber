@@ -4,9 +4,9 @@ import {
   Route,
   Toaster,
   NotFound,
-  AuthPrivateRouter,
   AuthPublicRouter,
   Loader,
+  AuthPrivateRouter,
 } from 'components/common/common';
 import Auth from 'components/auth/auth';
 import Homepage from 'components/homepage/homepage';
