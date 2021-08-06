@@ -6,7 +6,7 @@ type WhiteRoute = {
   allowedMethods: string[]
 };
 
-const authorization = (routesWhiteList: Array<WhiteRoute>) => (
+const authorization = (routesWhiteList: Array<WhiteRoute> = []) => (
   req: Request,
   res: Response,
   next: NextFunction,
