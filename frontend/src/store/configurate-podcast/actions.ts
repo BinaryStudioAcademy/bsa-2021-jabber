@@ -19,6 +19,7 @@ const create = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
       userId: (<User>auth.user).id,
       description: podcastPayload.description,
       name: podcastPayload.name,
+      type: podcastPayload.type,
       imageDataUrl: file ? await getDataUrl(file) : null,
     });
   },
