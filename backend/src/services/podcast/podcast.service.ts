@@ -75,10 +75,6 @@ class Podcast {
         message: ErrorMessage.PODCAST_NOT_FOUND,
       });
     }
-
-    const image = await this.#imageRepository.get(podcast.imageId);
-
-    podcast.image = image;
     return podcast;
   }
 }

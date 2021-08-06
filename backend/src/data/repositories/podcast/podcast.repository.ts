@@ -1,3 +1,4 @@
+import { url } from 'inspector';
 import {
   Podcast as TPodcast,
   PodcastCreateDTOPayload,
@@ -24,7 +25,7 @@ class Podcast {
   }
 
   public getById(id: string): Promise<TPodcast> {
-    return this.#PodcastModel.query().findById(id);
+    return this.#PodcastModel.query().findById(id).withGraphJoined('image');
   }
 }
 
