@@ -12,4 +12,5 @@ const authorization = (routesWhiteList: WhiteRoute[] = []) => (
     ? next()
     : jwtMiddleWare(req, res, next);
 };
+
 export { authorization };
