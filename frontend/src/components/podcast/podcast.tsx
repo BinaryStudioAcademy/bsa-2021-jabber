@@ -24,14 +24,17 @@ const Podcast: React.FC = () => {
             <h1 className={styles.title}>{podcast.name}</h1>
             <p className={styles.description}>{podcast.description}</p>
           </div>
-          <div className={styles.logoWrapper}>
-            <img
-              src={podcast.image?.url ? podcast.image?.url : DEFAULT_IMAGE}
-              width="280"
-              height="280"
-              loading="lazy"
-              alt={podcast.name}
-            />
+          <div className={styles.wrapper}>
+            <div className={styles.imageWrapper}>
+              <img
+                src={podcast.image?.url ? podcast.image?.url : DEFAULT_IMAGE}
+                className={styles.podcastImage}
+                width="280"
+                height="280"
+                loading="lazy"
+                alt={podcast.name}
+              />
+            </div>
           </div>
         </>
       ) : (

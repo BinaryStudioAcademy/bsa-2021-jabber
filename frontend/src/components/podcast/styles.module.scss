@@ -8,7 +8,7 @@
 }
 
 .descriptionWrapper {
-  flex-grow: 0.6;
+  flex-grow: 2;
 }
 
 .title {
@@ -21,20 +21,55 @@
   margin: 0;
 }
 
-.logoWrapper {
-  flex-grow: 0.4;
+.wrapper {
+  margin-right: 100px;
   display: flex;
-  height: 280px;
   justify-content: center;
-  margin: 0;
-}
+  position: relative;
 
-.logo {
-  border: 2px solid #e9e9e9;
+  &:before {
+    background-image: url('../../assets/img/corner.svg');
+    background-position: right top;
+    background-repeat: no-repeat;
+    background-size: 0 0;
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    margin: -1px 0 -36px 1px;
+    padding-bottom: 36px;
+    width: 100%;
+    transition: transform 0.5s ease, background-size 0.5s 0.15s ease;
+    z-index: 20;
+  }
+
+  .imageWrapper {
+    margin: 0 0 10px;
+    border-radius: 5px;
+    outline: 10px solid rgba(134, 134, 134, 0.55);
+    outline-offset: -10px;
+    transition: transform 0.2s ease;
+    height: 280px;
+  }
+
+  &:hover {
+    &:before {
+      background-size: 36px 36px;
+      transform: translateY(-8px);
+    }
+
+    .imageWrapper {
+      outline: 10px solid rgba(134, 134, 134, 0.71);
+      transform: translateY(-8px);
+    }
+  }
 }
 
 .notFound {
   flex-grow: 1;
   text-align: center;
   margin: 0;
+}
+
+.podcastImage {
+  height: 100%;
 }
