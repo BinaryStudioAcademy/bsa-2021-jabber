@@ -4,12 +4,12 @@ import { pauseRecord, resumeRecord, startRecord, stopRecord } from './actions';
 
 type State = {
   recordStatus: RecordStatus;
-  dataUrl: string;
+  audioDataUrl: string;
 };
 
 const initialState: State = {
   recordStatus: RecordStatus.INACTIVE,
-  dataUrl: '',
+  audioDataUrl: '',
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -24,7 +24,7 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(stopRecord.fulfilled, (state, action) => {
     state.recordStatus = RecordStatus.INACTIVE;
-    state.dataUrl = action.payload;
+    state.audioDataUrl = action.payload;
   });
 });
 

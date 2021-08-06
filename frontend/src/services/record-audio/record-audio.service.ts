@@ -23,8 +23,8 @@ class RecordAudio {
     };
   }
 
-  private onError(e: MediaStreamError): void {
-    this.#notificationService.error('Error', <string>e.message);
+  private onError(err: MediaStreamError): void {
+    this.#notificationService.error('Error', <string>err.message);
   }
 
   public start(): void {
@@ -44,6 +44,7 @@ class RecordAudio {
       this.#recorder?.stop();
       const audioBlob = new Blob(this.#audioChunks);
       this.#audioDataUrl = URL.createObjectURL(audioBlob);
+      this.#audioChunks = [];
     }
     return this.#audioDataUrl;
   }
@@ -52,7 +53,7 @@ class RecordAudio {
     navigator.getUserMedia(
       { audio: true },
       (stream) => this.onSuccess(stream),
-      (e) => this.onError(e));
+      (err) => this.onError(err));
   }
 }
 

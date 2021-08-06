@@ -15,7 +15,7 @@ const PodcastLive: React.FC = () => {
     dispatch(recordActions.initRecord());
   }, []);
 
-  const handleRecord = (): void => {
+  const handleStart = (): void => {
     dispatch(recordActions.startRecord());
   };
 
@@ -43,7 +43,7 @@ const PodcastLive: React.FC = () => {
         <Button
           label="&#9210;"
           buttonColor={ButtonColor.LIGHT_NAVY}
-          onClick={handleRecord} />
+          onClick={handleStart} />
         {!isPaused
           ? <Button
             label="&#9208;"
@@ -53,7 +53,6 @@ const PodcastLive: React.FC = () => {
             label="&#9654;"
             buttonColor={ButtonColor.LIGHT_NAVY}
             onClick={handleResume} />}
-
         <Button
           label="&#9209;"
           buttonColor={ButtonColor.LIGHT_NAVY}
