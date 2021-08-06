@@ -5,6 +5,7 @@ import {
   podcastApi,
   episodeApi,
   storage as storageService,
+  recordAudio as recordAudioService,
 } from 'services/services';
 import { handleError as handleErrorMiddleware } from 'middlewares/middlewares';
 
@@ -13,6 +14,7 @@ const extraArgument = {
   podcastApi,
   episodeApi,
   storageService,
+  recordAudioService,
 };
 
 const store = configureStore({

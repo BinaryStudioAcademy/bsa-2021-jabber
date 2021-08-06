@@ -1,0 +1,16 @@
+.root {
+  padding: 30px;
+
+  h3 {
+    text-align: center;
+  }
+
+  .buttonRow {
+    display: flex;
+    justify-content: center;
+
+    button + button {
+      margin-left: 10px;
+    }
+  }
+}
