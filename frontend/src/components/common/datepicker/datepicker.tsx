@@ -9,6 +9,7 @@ import {
 } from 'react-hook-form';
 import 'react-datepicker/dist/react-datepicker.css';
 import styles from './styles.module.scss';
+import React from 'react';
 
 type Props = {
   label: string;
@@ -26,6 +27,10 @@ const Datepicker: React.FC<Props> = ({
 
   const { field } = useController({ name, control });
 
+  const handleDateChange = (data: Date): void => {
+    field.onChange(data);
+  };
+
   return (
     <label className={styles.datePikerWrapper}>
       <span className={styles.label}>{label}</span>
@@ -36,7 +41,7 @@ const Datepicker: React.FC<Props> = ({
         dateFormat="dd/MM/yyyy"
         className={styles.datePicker}
         selected={field.value}
-        onChange={(date): void => field.onChange(date)}
+        onChange={handleDateChange}
       />
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />
