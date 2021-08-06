@@ -20,8 +20,12 @@ class Comment {
     return this.#CommentModel.query().insert(payload);
   }
 
-  public getAllCommentsByEpisodeId(id: number): Promise<TComment[]> {
+  public getAllByEpisodeId(id: number): Promise<TComment[]> {
     return this.#CommentModel.query().where('episode_id', id);
+  }
+
+  public getById(id: string): Promise<TComment> {
+    return this.#CommentModel.query().findOne(id);
   }
 }
 

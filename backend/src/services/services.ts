@@ -49,6 +49,7 @@ const episode = new Episode({
 
 const comment = new Comment({
   commentRepository,
+  userRepository,
 });
 
 const record = new Record({
