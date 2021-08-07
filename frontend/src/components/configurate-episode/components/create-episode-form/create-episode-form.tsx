@@ -1,21 +1,21 @@
-import { EpisodeCreatePayload, Option } from 'common/types/types';
+import { EpisodeFormPayload, Option } from 'common/types/types';
 import { getFileExtensions, getOptions } from 'helpers/helpers';
 import {
   ButtonType,
   DataStatus,
-  EpisodeCreatePayloadKey,
+  EpisodePayloadKey,
   EpisodeType,
   InputType,
   FileExtension,
 } from 'common/enums/enums';
-import { episode as createEpisodeValidationSchema } from 'validation-schemas/validation-schemas';
+import { episodeCreate as createEpisodeValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
 import styles from './styles.module.scss';
 import { Button, Input, Select } from 'components/common/common';
 import { DEFAULT_CREATE_EPISODE_PAYLOAD } from './common/constants';
 
 type Props = {
-  onSubmit: (payload: EpisodeCreatePayload) => void;
+  onSubmit: (payload: EpisodeFormPayload) => void;
 };
 
 const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
@@ -36,9 +36,6 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
   const isFormDisable = dataStatus === DataStatus.PENDING;
 
   const selectOptions:Option[] = getOptions(Object.values(EpisodeType));
-  /* eslint-disable no-console */
-  console.log(errors);
-  /* eslint-enable no-console */
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisable} className={styles.fieldset}>
@@ -46,7 +43,7 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
           type={InputType.TEXT}
           label="Name"
           placeholder="Enter episode name"
-          name={EpisodeCreatePayloadKey.NAME}
+          name={EpisodePayloadKey.NAME}
           control={control}
           errors={errors}
         />
@@ -54,19 +51,19 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
           type={InputType.TEXT}
           label="Description"
           placeholder="Enter episode description"
-          name={EpisodeCreatePayloadKey.DESCRIPTION}
+          name={EpisodePayloadKey.DESCRIPTION}
           control={control}
           errors={errors}
         />
         <Select
           options={selectOptions}
           label="Type"
-          name={EpisodeCreatePayloadKey.TYPE}
+          name={EpisodePayloadKey.TYPE}
           control={control}
           errors={errors}
         />
         <input
-          {...register(EpisodeCreatePayloadKey.RECORD)}
+          {...register(EpisodePayloadKey.RECORD)}
           accept={acceptExtension}
           type={InputType.FILE}
         />
