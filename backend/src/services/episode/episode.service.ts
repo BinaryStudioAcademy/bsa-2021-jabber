@@ -48,7 +48,7 @@ class Episode {
       description,
       podcastId,
       type,
-      userId
+      userId,
     });
 
     if (recordDataUrl) {
