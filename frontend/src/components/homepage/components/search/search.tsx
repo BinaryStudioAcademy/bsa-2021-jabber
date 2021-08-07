@@ -3,7 +3,7 @@ import { useAppForm } from 'hooks/hooks';
 import { DEFAULT_SEARCH_PAYLOAD } from './common/constants';
 import { SearchPayload } from 'common/types/types';
 import { IconName } from 'common/enums/ui/ui';
-import { Events } from 'common/enums/enums';
+import { FormEvent } from 'common/enums/enums';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -17,7 +17,7 @@ const Search: React.FC<Props> = ({ onChange }) => {
     errors,
   } = useAppForm({
     defaultValues: DEFAULT_SEARCH_PAYLOAD,
-    modeAction: Events.ON_CHANGE,
+    modeAction: FormEvent.ON_CHANGE,
   });
 
   return (

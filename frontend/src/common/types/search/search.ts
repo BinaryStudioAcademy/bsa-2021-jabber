@@ -1,1 +1,1 @@
-export type { SearchPayload } from 'jabber-shared/common/types/types';
+export type { SearchPayload } from './search-payload.type';

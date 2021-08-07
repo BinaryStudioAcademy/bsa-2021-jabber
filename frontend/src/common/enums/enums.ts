@@ -24,4 +24,4 @@ export {
 } from './ui/ui';
 export { RecordStatus } from './record/record';
 export { SearchPayloadKey } from './search/search';
-export { Events } from './form/events';
+export { FormEvent } from './form/form-event';
