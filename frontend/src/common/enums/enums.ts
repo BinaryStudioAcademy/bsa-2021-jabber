@@ -12,6 +12,7 @@ export {
   PodcastPayloadKey,
   PodcastValidationRule,
   PodcastValidationMessage,
+  PodcastType,
 } from './podcast/podcast';
 export { EpisodeCreatePayloadKey, EpisodeType } from './episode/episode';
 export { UserCreatePayloadKey, UserSignInPayloadKey } from './user/user';
