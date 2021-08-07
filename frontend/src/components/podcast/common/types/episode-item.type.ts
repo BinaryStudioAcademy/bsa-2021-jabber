@@ -7,4 +7,6 @@ type EpisodeItem = {
   time: string;
 };
 
-export type { EpisodeItem };
+type ITableData = EpisodeItem;
+
+export type { ITableData };

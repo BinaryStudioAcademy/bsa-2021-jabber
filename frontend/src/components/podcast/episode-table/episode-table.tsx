@@ -1,70 +1,25 @@
 import { useMemo, useTable } from 'hooks/hooks';
 import { Column } from 'react-table';
 
-import { EpisodeItem } from '../common/types/types';
+import { ITableData } from '../common/types/types';
 import styles from './styles.module.scss';
 
 type Props = {
-  episodes?: EpisodeItem[];
+  columns: Column[];
+  data?: ITableData[];
 };
 
-type EpisodeDescription = {
-  episodeName: string;
-  authorName: string;
-};
+const EpisodeTable: React.FC<Props> = ({ columns, data = [] }) => {
+  const dataMemoized: ITableData[] = useMemo(() => data, [data]);
 
-const EpisodeTable: React.FC<Props> = ({ episodes = [] }) => {
-  const data: EpisodeItem[] = useMemo(() => episodes, [episodes]);
+  const columnT = columns as unknown as Column<ITableData>[];
 
-  const columns: Column<EpisodeItem>[] = useMemo(
-    () => [
-      {
-        Header: '#',
-        accessor: (_originalRow, rowIndex): string => String(rowIndex),
-      },
-      {
-        Header: 'Name and Host',
-        accessor: (row: EpisodeItem): EpisodeDescription => {
-          return {
-            episodeName: row.episodeName,
-            authorName: `${row.userFirstName} ${row.userLastName}`,
-          };
-        },
-        Cell: function myFunc({
-          value,
-        }: {
-          value: EpisodeDescription;
-        }): JSX.Element {
-          return (
-            <>
-              <div className={styles.episodeName}>{value.episodeName}</div>
-              <div className={styles.authorName}>{value.authorName}</div>
-            </>
-          );
-        },
-      },
-      {
-        Header: 'Genre',
-        accessor: 'genre',
-      },
-      {
-        Header: 'Episode',
-        accessor: 'order',
-      },
-      {
-        Header: 'Time',
-        accessor: 'time',
-      },
-    ],
-    [],
-  );
-
-  const tableInstance = useTable({ columns, data });
+  const tableInstance = useTable({ columns: columnT, data: dataMemoized });
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
 
-  return data.length ? (
+  return dataMemoized.length ? (
     <table {...getTableProps()} className={styles.table}>
       <thead>
         {headerGroups.map((headerGroup, i) => (
