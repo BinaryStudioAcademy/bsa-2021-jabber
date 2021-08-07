@@ -12,3 +12,4 @@ export { default as AuthPrivateRouter } from './auth-private-router/auth-private
 export { default as AuthPublicRouter } from './auth-public-router/auth-public-router';
 export { default as Loader } from './loader/loader';
 export { default as Select } from './select/select';
+export { default as Datepiker } from './datepicker/datepicker';

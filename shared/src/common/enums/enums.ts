@@ -15,7 +15,7 @@ export {
   UserSignInPayloadKey,
   UserRole,
 } from './user/user';
-export { PodcastPayloadKey } from './podcast/podcast';
+export { PodcastPayloadKey, PodcastType } from './podcast/podcast';
 export {
   SignInValidationRule,
   SignInValidationMessage,
@@ -29,6 +29,7 @@ export {
   PodcastValidationMessage,
 } from './validation/validation';
 export { EpisodeCreatePayloadKey, EpisodeType } from './episode/episode';
+export { ShownoteCreatePayloadKey } from './shownote/shownote';
 export { CommentCreatePayloadKey } from './comment/comment';
 export { RecordCreatePayloadKey } from './record/record';
 export { ImageCreatePayloadKey } from './image/image';

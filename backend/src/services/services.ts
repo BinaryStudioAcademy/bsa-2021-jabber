@@ -6,6 +6,7 @@ import {
   user as userRepository,
   podcast as podcastRepository,
   episode as episodeRepository,
+  shownote as shownoteRepository,
   comment as commentRepository,
   record as recordRepository,
   image as imageRepository,
@@ -16,6 +17,7 @@ import { Auth } from './auth/auth.service';
 import { User } from './user/user.service';
 import { Podcast } from './podcast/podcast.service';
 import { Episode } from './episode/episode.service';
+import { Shownote } from './shownote/shownote.service';
 import { Comment } from './comment/comment.service';
 import { Record } from './record/record.service';
 import { FileStorage } from './file-storage/file-storage.service';
@@ -53,6 +55,10 @@ const episode = new Episode({
   fileStorage,
 });
 
+const shownote = new Shownote({
+  shownoteRepository,
+});
+
 const comment = new Comment({
   commentRepository,
 });
@@ -80,6 +86,7 @@ export {
   logger,
   user,
   episode,
+  shownote,
   podcast,
   comment,
   record,

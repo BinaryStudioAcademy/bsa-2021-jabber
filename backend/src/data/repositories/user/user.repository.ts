@@ -20,12 +20,12 @@ class User {
     return this.#UserModel.query().insert(payload);
   }
 
-  public getByEmail(payload: string): Promise<TUser> {
-    return this.#UserModel.query().findOne('email', payload);
+  public getByEmail(email: string): Promise<TUser> {
+    return this.#UserModel.query().findOne('email', email);
   }
 
-  public getById(payload: number): Promise<TUser> {
-    return this.#UserModel.query().findOne('id', payload);
+  public getById(id: number): Promise<TUser> {
+    return this.#UserModel.query().findById(id);
   }}
 
 export { User };

@@ -8,7 +8,7 @@ import {
 } from 'common/enums/enums';
 import { signUp as signUpValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
-import { Button, Input, Link } from 'components/common/common';
+import { Button, Input, Link, Datepiker } from 'components/common/common';
 import { DEFAULT_REGISTER_PAYLOAD } from './common/constants';
 import styles from './styles.module.scss';
 
@@ -76,8 +76,7 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
           control={control}
           errors={errors}
         />
-        <Input
-          type={InputType.DATE}
+        <Datepiker
           label="Birthdate"
           name={UserCreatePayloadKey.BIRTHDATE}
           control={control}

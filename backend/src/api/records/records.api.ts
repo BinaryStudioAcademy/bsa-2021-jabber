@@ -5,7 +5,7 @@ import { handleAsyncApi } from '~/helpers/helpers';
 
 type Args = {
   apiRouter: Router;
-  recordService: typeof recordService
+  recordService: typeof recordService;
 };
 
 const initRecordsApi = ({ apiRouter, recordService }: Args): Router => {
