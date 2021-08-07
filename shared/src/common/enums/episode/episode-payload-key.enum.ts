@@ -1,4 +1,4 @@
-enum EpisodeCreatePayloadKey {
+enum EpisodePayloadKey {
   NAME = 'name',
   USER_ID = 'userId',
   PODCAST_ID = 'podcastId',
@@ -8,4 +8,4 @@ enum EpisodeCreatePayloadKey {
   RECORD_DATA_URL = 'recordDataUrl',
 }
 
-export { EpisodeCreatePayloadKey };
+export { EpisodePayloadKey };
