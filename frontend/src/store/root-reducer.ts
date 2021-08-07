@@ -5,7 +5,6 @@ import { reducer as homepage } from './homepage/reducer';
 import { reducer as toastrReducer } from 'react-redux-toastr';
 import { reducer as episode } from './episode/reducer';
 import { reducer as podcast } from './podcast/reducer';
-import { reducer as comments } from './comment/reducer';
 
 const rootReducer = {
   auth,
@@ -14,7 +13,6 @@ const rootReducer = {
   homepage,
   episode,
   podcast,
-  comments,
   toastr: toastrReducer,
 };
 

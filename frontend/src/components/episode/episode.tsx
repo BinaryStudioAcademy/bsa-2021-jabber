@@ -2,16 +2,16 @@ import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import { episode as episodeActions } from 'store/actions';
 import { PageParams } from './common/types/types';
 import CommentsList from './components/comments-list/comments-list';
-import { comment as commentActions } from 'store/actions';
+import * as commentActions from 'store/comment/actions';
 import styles from './styles.module.scss';
 
 const Episode: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
 
-  const { episode, comments } = useAppSelector(({ episode, comments }) => ({
+  const { episode, comments } = useAppSelector(({ episode }) => ({
     episode: episode.episode,
-    comments: comments.comments,
+    comments: episode.comments,
   }));
 
   useEffect(() => {
@@ -42,7 +42,13 @@ const Episode: React.FC = () => {
           <h1 className={styles.notFound}>Oops. There is no such episode</h1>
         )}
       </main>
-      <CommentsList comments={comments}/>
+      <div className={styles.commentsWrapper}>
+        {
+          comments.length
+            ? <CommentsList comments={comments}/>
+            : <div>There&apos;s no comment yet.</div>
+        }
+      </div>
     </>
   );
 };

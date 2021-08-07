@@ -23,8 +23,8 @@ class Comment extends Abstract {
       relation: Model.HasOneRelation,
       modelClass: User,
       join: {
-        from: 'comment.userId',
-        to: 'user.id',
+        from: 'comments.userId',
+        to: 'users.id',
       },
     },
   };
