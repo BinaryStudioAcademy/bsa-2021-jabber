@@ -22,12 +22,9 @@ class EpisodeApi {
   }
 
   public getAll(): Promise<Episode[]> {
-    return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.EPISODES}`,
-      {
-        method: HttpMethod.GET,
-      },
-    );
+    return this.#http.load(`${this.#apiPrefix}${ApiPath.EPISODES}`, {
+      method: HttpMethod.GET,
+    });
   }
 
   public getById(id: number): Promise<Episode> {
@@ -39,15 +36,21 @@ class EpisodeApi {
     );
   }
 
-  public create(payload: EpisodeCreatePayload): Promise<Episode> {
+  public getByPodcastId(id: number): Promise<Episode[]> {
     return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.EPISODES}`,
+      `${this.#apiPrefix}${ApiPath.EPISODES}${EpisodesApiPath.PODCAST}${id}`,
       {
-        method: HttpMethod.POST,
-        contentType: ContentType.JSON,
-        payload: JSON.stringify(payload),
+        method: HttpMethod.GET,
       },
     );
+  }
+
+  public create(payload: EpisodeCreatePayload): Promise<Episode> {
+    return this.#http.load(`${this.#apiPrefix}${ApiPath.EPISODES}`, {
+      method: HttpMethod.POST,
+      contentType: ContentType.JSON,
+      payload: JSON.stringify(payload),
+    });
   }
 }
 

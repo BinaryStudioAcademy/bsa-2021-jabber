@@ -35,7 +35,7 @@ const Podcast: React.FC = () => {
               />
             </p>
           </div>
-          <EpisodeTable />
+          <EpisodeTable podcast={podcast} />
         </>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such podcast</h1>
