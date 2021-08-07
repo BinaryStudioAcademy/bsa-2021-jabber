@@ -4,7 +4,12 @@ import {
   ContentType,
   HttpMethod,
 } from 'common/enums/enums';
-import { UserCreatePayload, UserSignInPayload, SignResponse, User } from 'common/types/types';
+import {
+  UserCreatePayload,
+  UserSignInPayload,
+  SignResponse,
+  User,
+} from 'common/types/types';
 import { Http } from 'services/http/http.service';
 
 type Constructor = {
@@ -28,6 +33,7 @@ class AuthApi {
         method: HttpMethod.POST,
         contentType: ContentType.JSON,
         payload: JSON.stringify(payload),
+        hasAuth: false,
       },
     );
   }
@@ -39,6 +45,7 @@ class AuthApi {
         method: HttpMethod.POST,
         contentType: ContentType.JSON,
         payload: JSON.stringify(payload),
+        hasAuth: false,
       },
     );
   }

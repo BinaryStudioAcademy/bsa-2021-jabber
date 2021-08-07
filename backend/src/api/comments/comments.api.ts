@@ -5,7 +5,7 @@ import { handleAsyncApi } from '~/helpers/helpers';
 
 type Args = {
   apiRouter: Router;
-  commentService: typeof commentService
+  commentService: typeof commentService;
 };
 
 const initCommentsApi = ({ apiRouter, commentService }: Args): Router => {

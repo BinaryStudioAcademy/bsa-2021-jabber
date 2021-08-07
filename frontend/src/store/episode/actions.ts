@@ -10,4 +10,12 @@ const loadEpisode = createAsyncThunk<Episode, number, AsyncThunkConfig>
   return episode;
 });
 
-export { loadEpisode };
+const loadEpisodesByPodcastId = createAsyncThunk<Episode[], number, AsyncThunkConfig>
+(ActionType.LOAD_EPISODES_BY_PODCAST_ID, async (id, { extra }) => {
+  const { episodeApi } = extra;
+  const episodes = await episodeApi.getByPodcastId(id);
+
+  return episodes;
+});
+
+export { loadEpisode, loadEpisodesByPodcastId };
