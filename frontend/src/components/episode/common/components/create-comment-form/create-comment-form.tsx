@@ -1,7 +1,7 @@
-import { CommentCreatePayloadKey, ButtonType } from 'common/enums/enums';
+import { CommentCreatePayloadKey, ButtonType, AppRoute } from 'common/enums/enums';
 import { CommentCreatePayload, User } from 'common/types/types';
 import { useAppForm } from 'hooks/hooks';
-import { Input, Button } from 'components/common/common';
+import { Input, Button, Link } from 'components/common/common';
 import { comment as commentCreateValidationSchema } from 'validation-schemas/validation-schemas';
 import { DEFAULT_CREATE_COMMENT_PAYLOAD } from './common/constants';
 import styles from './styles.module.scss';
@@ -30,12 +30,26 @@ const CreateCommentForm: React.FC<Props> = ({ user, onSubmit }) => {
               label=""
               placeholder="Write a comment"
             />
-            <Button label="Save" type={ButtonType.SUBMIT} />
+            <Button label="Add comment" type={ButtonType.SUBMIT} />
           </fieldset>
         </form >)
         : (
-          <div>
-            <span>You need to sign in or sign up to write comment</span>
+          <div className={styles.noAuth}>
+            <span>
+              You need to
+              <Link to={AppRoute.SIGN_IN} className={styles.link}>
+                {' '}
+                Sign In
+                {' '}
+              </Link>
+              or
+              <Link to={AppRoute.SIGN_UP} className={styles.link}>
+                {' '}
+                Sign Up
+                {' '}
+              </Link>
+              to write a comment
+            </span>
           </div>
         )}
     </>
