@@ -1,11 +1,11 @@
 import { WhiteRoute } from '~/common/types/types';
 
-const checkIsRouteWhite = (splitedWhiteRoute: string[], splitedRequestRoute: string[]):boolean => {
-  let isRouteWhite = false;
-  splitedWhiteRoute.forEach((whiteRouteItem) => {
-    if (splitedRequestRoute.indexOf(whiteRouteItem) !== -1) isRouteWhite = true;
-  });
-  return isRouteWhite;
+const checkIsRouteWhite = (splitedWhiteRoute: string[], splitedRequestRoute: string[]): boolean => {
+  for (let i = 0; i < splitedWhiteRoute.length; i++) {
+    const isRouteWhite = splitedRequestRoute.some((requestRouteItem) => requestRouteItem === splitedWhiteRoute[i]);
+    if (isRouteWhite) return true;
+  }
+  return false;
 };
 
 const checkIsMethodAllowed = (allowedMethods: string[], requestMethod: string):boolean => {
