@@ -10,7 +10,6 @@ const PodcastValidationMessage = {
   PODCAST_DESCRIPTION_MIN_LENGTH: `Podcast description must be at least ${PodcastValidationRule.PODCAST_DESCRIPTION_MIN_LENGTH} character long`,
   PODCAST_DESCRIPTION_MAX_LENGTH: `Podcast description must be at most ${PodcastValidationRule.PODCAST_DESCRIPTION_MAX_LENGTH} characters long`,
   DATA_URL_FORMAT: 'Cover image must be valid jpeg, png or svg file',
-  TYPE_REQUIRE: 'Podcast type is required',
 } as const;
 
 export { PodcastValidationMessage };

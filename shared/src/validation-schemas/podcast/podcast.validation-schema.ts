@@ -2,10 +2,8 @@ import { Joi } from '~/helpers/helpers';
 import {
   PodcastValidationRule,
   PodcastValidationMessage,
-  PodcastPayloadKey, PodcastType,
+  PodcastPayloadKey,
 } from '~/common/enums/enums';
-
-const podcastTypes = Object.values(PodcastType);
 
 const podcast = Joi.object({
   [PodcastPayloadKey.NAME]: Joi.string()
@@ -27,12 +25,6 @@ const podcast = Joi.object({
       'string.empty': PodcastValidationMessage.PODCAST_DESCRIPTION_REQUIRE,
       'string.min': PodcastValidationMessage.PODCAST_DESCRIPTION_MIN_LENGTH,
       'string.max': PodcastValidationMessage.PODCAST_DESCRIPTION_MAX_LENGTH,
-    }),
-  [PodcastPayloadKey.TYPE]: Joi.string()
-    .valid(...podcastTypes)
-    .required()
-    .messages({
-      'string.empty': PodcastValidationMessage.TYPE_REQUIRE,
     }),
 });
 
