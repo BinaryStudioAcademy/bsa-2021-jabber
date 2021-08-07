@@ -6,6 +6,7 @@ import { CommentApi } from './comment-api/comment-api.service';
 import { Notification } from './notification/notification.service';
 import { EpisodeApi } from './episode-api/episode-api.service';
 import { Storage } from './storage/storage.service';
+import { RecordAudio } from './record-audio/record-audio.service';
 
 const storage = new Storage({
   storage: localStorage,
@@ -37,4 +38,16 @@ const commentApi = new CommentApi({
 
 const notification = new Notification();
 
-export { authApi, notification, podcastApi, episodeApi, commentApi, storage };
+const recordAudio = new RecordAudio({
+  notificationService: notification,
+});
+
+export {
+  authApi,
+  notification,
+  podcastApi,
+  episodeApi,
+  storage,
+  commentApi,
+  recordAudio,
+};

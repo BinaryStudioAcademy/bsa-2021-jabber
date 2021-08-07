@@ -6,6 +6,7 @@ export type {
   Podcast,
   PodcastFormPayload,
   PodcastCreatePayload,
+  PodcastEditPayload,
 } from './podcast/podcast';
 export type { Episode, EpisodeCreatePayload } from './episode/episode';
 export type { SignResponse } from './sign/sign';

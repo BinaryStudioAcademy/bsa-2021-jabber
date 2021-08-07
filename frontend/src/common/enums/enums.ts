@@ -13,6 +13,7 @@ export {
   PodcastPayloadKey,
   PodcastValidationRule,
   PodcastValidationMessage,
+  PodcastType,
 } from './podcast/podcast';
 export { EpisodeCreatePayloadKey, EpisodeType } from './episode/episode';
 export { UserCreatePayloadKey, UserSignInPayloadKey } from './user/user';
@@ -24,3 +25,4 @@ export {
   ButtonColor,
 } from './ui/ui';
 export { DateFormatType } from './date/date';
+export { RecordStatus } from './record/record';
