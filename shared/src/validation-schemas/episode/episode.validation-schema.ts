@@ -50,6 +50,12 @@ const episode = Joi.object<EpisodeCreatePayload>({
       'string.min': EpisodeValidationMessage.EPISODE_DESCRIPTION_MIN_LENGTH,
       'string.max': EpisodeValidationMessage.EPISODE_DESCRIPTION_MAX_LENGTH,
     }),
+  [EpisodeCreatePayloadKey.RECORD_DATA_URL]: [
+    Joi.string().uri().messages({
+      'string.uri': EpisodeValidationMessage.DATA_URL_FORMAT,
+    }),
+    Joi.any().equal(null),
+  ]
 });
 
 export { episode };
