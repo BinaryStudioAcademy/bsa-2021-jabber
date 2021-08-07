@@ -23,7 +23,8 @@ const Homepage: React.FC = () => {
   const handleChange = (searchValue: SearchPayload): void => {
     const { search } = searchValue;
     const filtered = filterPodcasts(search);
-    search === '' ? setFilter(podcasts) : setFilter(filtered);
+    const payload = !search ? podcasts : filtered;
+    setFilter(payload);
   };
 
   const filterPodcasts = (search: string): Array<Podcast> => {
