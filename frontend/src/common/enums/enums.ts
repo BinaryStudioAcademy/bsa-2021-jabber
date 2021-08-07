@@ -23,3 +23,4 @@ export {
   ButtonStyle,
   ButtonColor,
 } from './ui/ui';
+export { RecordStatus } from './record/record';

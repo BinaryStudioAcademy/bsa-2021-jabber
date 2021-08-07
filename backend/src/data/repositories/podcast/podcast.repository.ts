@@ -1,6 +1,7 @@
 import {
   Podcast as TPodcast,
   PodcastCreateDTOPayload,
+  PodcastEditDTOPayload,
 } from '~/common/types/types';
 import { PodcastModel as PodcastM } from '~/data/models/models';
 
@@ -25,6 +26,10 @@ class Podcast {
 
   public getById(id: string): Promise<TPodcast> {
     return this.#PodcastModel.query().findById(id);
+  }
+
+  public update(id: string, payload: PodcastEditDTOPayload): Promise<TPodcast> {
+    return this.#PodcastModel.query().updateAndFetchById(id, payload);
   }
 }
 

@@ -9,7 +9,7 @@ import { validateSchema as validateSchemaMiddleware } from '~/middlewares/middle
 
 type Args = {
   apiRouter: Router;
-  episodeService: typeof episodeService
+  episodeService: typeof episodeService;
 };
 
 const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
