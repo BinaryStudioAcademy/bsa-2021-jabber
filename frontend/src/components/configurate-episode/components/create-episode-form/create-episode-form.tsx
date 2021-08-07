@@ -1,6 +1,13 @@
 import { EpisodeCreatePayload, Option } from 'common/types/types';
-import { getOptions } from 'helpers/helpers';
-import { ButtonType, DataStatus, EpisodeCreatePayloadKey, EpisodeType, InputType } from 'common/enums/enums';
+import { getFileExtensions, getOptions } from 'helpers/helpers';
+import {
+  ButtonType,
+  DataStatus,
+  EpisodeCreatePayloadKey,
+  EpisodeType,
+  InputType,
+  FileExtension,
+} from 'common/enums/enums';
 import { episode as createEpisodeValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
 import styles from './styles.module.scss';
@@ -12,7 +19,7 @@ type Props = {
 };
 
 const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
-  const { control, handleSubmit, errors } = useAppForm({
+  const { control, handleSubmit, errors, register } = useAppForm({
     validationSchema: createEpisodeValidationSchema,
     defaultValues: DEFAULT_CREATE_EPISODE_PAYLOAD,
   });
@@ -21,10 +28,17 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
     dataStatus: episode.dataStatus,
   }));
 
+  const acceptExtension = getFileExtensions(
+    FileExtension.MP3,
+    FileExtension.WAV,
+  );
+
   const isFormDisable = dataStatus === DataStatus.PENDING;
 
   const selectOptions:Option[] = getOptions(Object.values(EpisodeType));
-
+  /* eslint-disable no-console */
+  console.log(errors);
+  /* eslint-enable no-console */
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisable} className={styles.fieldset}>
@@ -50,6 +64,11 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
           name={EpisodeCreatePayloadKey.TYPE}
           control={control}
           errors={errors}
+        />
+        <input
+          {...register(EpisodeCreatePayloadKey.RECORD)}
+          accept={acceptExtension}
+          type={InputType.FILE}
         />
         <Button label="Upload" type={ButtonType.SUBMIT} />
       </fieldset>
