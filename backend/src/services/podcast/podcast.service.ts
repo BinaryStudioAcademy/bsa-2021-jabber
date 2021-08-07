@@ -1,7 +1,9 @@
 import {
   Podcast as TPodcast,
   PodcastCreateDTOPayload,
+  PodcastEditDTOPayload,
   PodcastCreatePayload,
+  PodcastEditPayload,
 } from '~/common/types/types';
 import {
   podcast as podcastRep,
@@ -42,12 +44,14 @@ class Podcast {
     userId,
     description,
     imageDataUrl,
+    type,
   }: PodcastCreatePayload): Promise<TPodcast> {
     const newPodcast: PodcastCreateDTOPayload = {
       name,
       userId,
       description,
       imageId: null,
+      type,
     };
 
     if (imageDataUrl) {
@@ -75,6 +79,46 @@ class Podcast {
         message: ErrorMessage.PODCAST_NOT_FOUND,
       });
     }
+    return podcast;
+  }
+
+  public async update(id: string, {
+    name,
+    userId,
+    description,
+    imageId,
+    imageDataUrl,
+  }: PodcastEditPayload): Promise<TPodcast> {
+    const updatePodcast: PodcastEditDTOPayload = {
+      name,
+      description,
+      imageId: imageId,
+    };
+
+    let deleteImageId: number | null = null;
+
+    if (imageDataUrl) {
+      const { url, publicId } = await this.#fileStorage.upload({
+        dataUrl: imageDataUrl,
+        userId,
+      });
+
+      deleteImageId = imageId;
+
+      const image = await this.#imageRepository.create({
+        url,
+        publicId,
+      });
+
+      updatePodcast.imageId = image.id;
+    }
+
+    const podcast = await this.#podcastRepository.update(id, updatePodcast);
+
+    if (deleteImageId) {
+      await this.#imageRepository.delete(deleteImageId);
+    }
+
     return podcast;
   }
 }
