@@ -1,5 +1,5 @@
 enum DateFormatType {
-  HH_mm = 'HH:mm',
+  HOURES_MINUTES = 'HH:mm',
 }
 
 export { DateFormatType };

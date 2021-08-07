@@ -9,7 +9,7 @@ type Props = {
 };
 
 const Comment: React.FC<Props> = ({ comment }) => {
-  const time = getFormattedDate(new Date(comment.createdAt), DateFormatType.HH_mm);
+  const time = getFormattedDate(new Date(comment.createdAt), DateFormatType.HOURES_MINUTES);
   const distance = getDistanceToDateNow(new Date(comment.createdAt), Date.now());
   return (
     <li className={styles.wrapper}>

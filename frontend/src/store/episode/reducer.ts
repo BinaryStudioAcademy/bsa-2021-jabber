@@ -1,8 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { Episode, Comment } from 'common/types/types';
-import { loadEpisode } from './actions';
-import { loadCommentsByEpisodeId } from '../comment/actions';
+import { loadEpisode, loadCommentsByEpisodeId } from './actions';
 
 type State = {
   dataStatus: DataStatus;

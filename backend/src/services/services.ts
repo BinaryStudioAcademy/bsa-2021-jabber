@@ -55,7 +55,6 @@ const shownote = new Shownote({
 
 const comment = new Comment({
   commentRepository,
-  userRepository,
 });
 
 const record = new Record({

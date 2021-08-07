@@ -2,7 +2,6 @@ import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import { episode as episodeActions } from 'store/actions';
 import { PageParams } from './common/types/types';
 import CommentsList from './components/comments-list/comments-list';
-import * as commentActions from 'store/comment/actions';
 import styles from './styles.module.scss';
 
 const Episode: React.FC = () => {
@@ -15,7 +14,7 @@ const Episode: React.FC = () => {
   }));
 
   useEffect(() => {
-    dispatch(commentActions.loadCommentsByEpisodeId(Number(id)));
+    dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisode(Number(id)));
   }, []);
 
