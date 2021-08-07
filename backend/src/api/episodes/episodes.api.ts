@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import {
-  episode as EpisodeValidationSchema,
+  episodeCreate as EpisodeValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { ApiPath, HttpCode, EpisodesApiPath } from '~/common/enums/enums';
 import { episode as episodeService } from '~/services/services';

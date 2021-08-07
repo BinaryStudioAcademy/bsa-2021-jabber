@@ -1,1 +1,1 @@
-export { episode } from 'jabber-shared/validation-schemas/validation-schemas';
+export { episodeCreate } from './create-episode/create-podcast.validation-schema';

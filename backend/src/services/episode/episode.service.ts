@@ -41,9 +41,15 @@ class Episode {
   }
 
   public async create(payload: EpisodeCreatePayload): Promise<TEpisode> {
-    const { userId, recordDataUrl } = payload;
+    const { userId, recordDataUrl, type, description, name, podcastId } = payload;
 
-    const episode = await this.#episodeRepository.create(payload);
+    const episode = await this.#episodeRepository.create({
+      name,
+      description,
+      podcastId,
+      type,
+      userId
+    });
 
     if (recordDataUrl) {
       const { url, publicId, bytes } = await this.#fileStorage.upload({
