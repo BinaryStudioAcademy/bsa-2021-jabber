@@ -1,7 +1,7 @@
 import { SearchPayloadKey } from '~/common/enums/enums';
 
 type SearchPayload = {
-  [SearchPayloadKey.SEARCH]: string;
-}
+  [SearchPayloadKey.SEARCH]: string
+};
 
 export type { SearchPayload };
