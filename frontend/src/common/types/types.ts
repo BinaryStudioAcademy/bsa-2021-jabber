@@ -11,3 +11,4 @@ export type {
 export type { Episode, EpisodeCreatePayload } from './episode/episode';
 export type { SignResponse } from './sign/sign';
 export type { Option } from './ui/option';
+export type { CommentCreatePayload, Comment } from './comment/comment';

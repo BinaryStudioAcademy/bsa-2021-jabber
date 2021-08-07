@@ -1,5 +1,6 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import { episode as episodeActions } from 'store/actions';
+import { CreateCommentForm } from './common/components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 
@@ -7,8 +8,9 @@ const Episode: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
 
-  const { episode } = useAppSelector(({ episode }) => ({
+  const { episode, user } = useAppSelector(({ episode, auth }) => ({
     episode: episode.episode,
+    user: auth.user,
   }));
 
   useEffect(() => {
@@ -36,6 +38,10 @@ const Episode: React.FC = () => {
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such episode</h1>
       )}
+      <CreateCommentForm
+        user={user}
+        onSubmit={handleCreateComment}
+      />
     </main>
   );
 };

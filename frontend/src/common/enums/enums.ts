@@ -24,3 +24,4 @@ export {
   ButtonColor,
 } from './ui/ui';
 export { RecordStatus } from './record/record';
+export { CommentCreatePayloadKey } from './comment/comment';
