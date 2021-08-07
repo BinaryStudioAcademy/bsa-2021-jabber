@@ -1,8 +1,13 @@
 import SelectReact from 'react-select';
 import { Option } from 'common/types/types';
 import { ErrorMessage } from '@hookform/error-message';
-import { Control, FieldErrors, Path, FieldValues } from 'react-hook-form';
-import { Controller } from 'react-hook-form';
+import {
+  Control,
+  FieldErrors,
+  Path,
+  FieldValues,
+  useController,
+} from 'react-hook-form';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -15,16 +20,11 @@ type Props = {
 };
 
 const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
+  const { field } = useController({ name, control });
   return (
     <label className={styles.inputWrapper}>
       <span className={styles.label}>{label}</span>
-      <Controller
-        name={name}
-        control={control}
-        render={({ field }): any => (
-          <SelectReact {...field} options={options} />
-        )}
-      />
+      <SelectReact {...field} options={options} {...field} />
 
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />
