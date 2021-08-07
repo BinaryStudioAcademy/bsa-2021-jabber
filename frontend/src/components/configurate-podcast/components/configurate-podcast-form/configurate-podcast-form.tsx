@@ -26,6 +26,8 @@ const acceptExtension = getFileExtensions(
   FileExtension.SVG,
 );
 
+const selectOptions:Option[] = getOptions(Object.values(PodcastType));
+
 const ConfiguratePodcastForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_PODCAST_PAYLOAD }) => {
   const { control, handleSubmit, errors, register } = useAppForm({
     validationSchema: podcastCreateSchema,
@@ -37,8 +39,6 @@ const ConfiguratePodcastForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_P
   }));
 
   const isFormDisabled = createPodcastStatus === DataStatus.PENDING;
-
-  const selectOptions:Option[] = getOptions(Object.values(PodcastType));
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
