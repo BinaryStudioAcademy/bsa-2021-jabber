@@ -41,3 +41,4 @@ export {
   UserSignInPayloadKey,
   UserCreatePayloadKey,
 } from './user/user';
+export { CommentCreatePayloadKey, CommentValidationMessage } from './comment/comment';

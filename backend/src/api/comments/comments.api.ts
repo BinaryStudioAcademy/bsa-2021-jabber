@@ -1,8 +1,14 @@
 import { Router } from 'express';
 import { ApiPath, HttpCode, CommentsApiPath, HttpMethod } from '~/common/enums/enums';
+import {
+  commentCreate as commentCreateValidationSchema,
+} from '~/validation-schemas/validation-schemas';
+import {
+  validateSchema as validateSchemaMiddleware,
+  checkAuth as checkAuthMiddleware,
+} from '~/middlewares/middlewares';
 import { comment as commentService } from '~/services/services';
 import { handleAsyncApi } from '~/helpers/helpers';
-import { checkAuth as checkAuthMiddleware } from '~/middlewares/middlewares';
 
 type Args = {
   apiRouter: Router;
@@ -24,6 +30,7 @@ const initCommentsApi = ({ apiRouter, commentService }: Args): Router => {
   commentRouter.post(
     CommentsApiPath.ROOT,
     checkAuthMiddleware(HttpMethod.POST),
+    validateSchemaMiddleware(commentCreateValidationSchema),
     handleAsyncApi(async (req, res) => {
       return res.json(await commentService.create(req.body)).status(HttpCode.CREATED);
     }),
