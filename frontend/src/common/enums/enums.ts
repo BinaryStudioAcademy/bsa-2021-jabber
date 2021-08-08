@@ -26,3 +26,4 @@ export {
 } from './ui/ui';
 export { DateFormatType } from './date/date';
 export { RecordStatus } from './record/record';
+export { CommentCreatePayloadKey } from './comment/comment';
