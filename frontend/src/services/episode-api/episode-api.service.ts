@@ -41,7 +41,7 @@ class EpisodeApi {
 
   public getAllByPodcastId(id: number): Promise<Episode[]> {
     return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.EPISODES}${EpisodesApiPath.PODCAST}${id}`,
+      `${this.#apiPrefix}${ApiPath.EPISODES}${EpisodesApiPath.PODCAST}/${id}`,
       {
         method: HttpMethod.GET,
       },

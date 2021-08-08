@@ -1,19 +1,20 @@
 import { Column } from 'react-table';
 
-const getColumns = (columnsScheme: Record<string, string>): Column[] => {
+const getColumns = (): Column[] => {
   const columns: Column[] = [
     {
       Header: '#',
       accessor: (_originalRow, rowIndex): string => String(rowIndex),
     },
+    {
+      Header: 'Name and Host',
+      accessor: 'name',
+    },
+    {
+      Header: 'Episode',
+      accessor: 'description',
+    },
   ];
-
-  Object.keys(columnsScheme).forEach((key) => {
-    columns.push({
-      Header: columnsScheme[key],
-      accessor: key,
-    });
-  });
 
   return columns;
 };

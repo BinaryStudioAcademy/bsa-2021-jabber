@@ -33,8 +33,8 @@ class Episode {
     return episode;
   }
 
-  public async getAllByPodcastId(id: string): Promise<TEpisode[]> {
-    return await this.#episodeRepository.getAllByPodcastId(id);
+  public getAllByPodcastId(id: string): Promise<TEpisode[]> {
+    return this.#episodeRepository.getAllByPodcastId(id);
   }
 
   public create(payload: EpisodeCreatePayload): Promise<TEpisode> {
