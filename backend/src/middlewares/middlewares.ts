@@ -4,5 +4,5 @@ export { handleError } from './handle-error/handle-error.middleware';
 export { validateSchema } from './validation/validation.middleware';
 export { jwt } from './jwt/jwt.middleware';
 export { authentication } from './authentication/authentication.middleware';
-export { checkAuth } from './authorization/authorization.middleware';
+export { checkAuth } from './authorization/check-auth.middleware';
 export { registration } from './registration/registration.middleware';
