@@ -1,4 +1,7 @@
-import { Comment as TComment, CommentCreatePayload } from '~/common/types/types';
+import {
+  Comment as TComment,
+  CommentCreatePayload,
+} from '~/common/types/types';
 import { comment as commentRep } from '~/data/repositories/repositories';
 
 type Constructor = {
@@ -16,7 +19,7 @@ class Comment {
     return this.#commentRepository.getAll();
   }
 
-  public async create(payload: CommentCreatePayload): Promise<TComment> {
+  public create(payload: CommentCreatePayload): Promise<TComment> {
     return this.#commentRepository.create(payload);
   }
 

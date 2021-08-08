@@ -50,7 +50,7 @@ class CommentApi {
     );
   }
 
-  public getAllCommentsByEpisodeId(episodeId: number): Promise<Comment[]> {
+  public getAllByEpisodeId(episodeId: number): Promise<Comment[]> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.COMMENTS}${CommentsApiPath.EPISODE}/${episodeId}`,
       {
