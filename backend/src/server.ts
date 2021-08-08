@@ -4,14 +4,12 @@ import Knex from 'knex';
 import passport from 'passport';
 import { Model } from 'objection';
 import { ENV } from '~/common/enums/enums';
-import { ROUTES_WHITE_LIST } from './common/constants/constants';
 import { initApi } from '~/api/api';
 import { logger, passport as passportService } from '~/services/services';
 import {
   setTraceId as setTraceIdMiddleware,
   logRequest as logRequestMiddleware,
   handleError as handleErrorMiddleware,
-  authorization as authorizationMiddleware,
 } from '~/middlewares/middlewares';
 import knexConfig from '../knexfile';
 
@@ -26,10 +24,6 @@ app.use(urlencoded({ extended: true, limit: '100mb' }));
 
 app.use(passport.initialize());
 passportService.init(passport);
-app.use(
-  ENV.API.V1_PREFIX,
-  authorizationMiddleware(ROUTES_WHITE_LIST),
-);
 
 initApi(app);
 
