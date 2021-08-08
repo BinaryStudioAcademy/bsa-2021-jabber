@@ -33,7 +33,7 @@ export {
   PodcastType,
 } from './podcast/podcast';
 export { ResourceType } from './file/file';
-export { EpisodeType } from './episode/episode-type.enum';
+export { EpisodeType, EpisodeStatus } from './episode/episode';
 export { ShownoteCreatePayloadKey } from './shownote/shownote.enum';
 export { StrategyName } from './strategy/strategy';
 export {

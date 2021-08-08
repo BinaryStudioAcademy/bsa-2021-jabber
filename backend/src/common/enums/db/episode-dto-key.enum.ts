@@ -4,6 +4,7 @@ enum EpisodeDTOKey {
   USER_ID = 'userId',
   TYPE = 'type',
   DESCRIPTION = 'description',
+  STATUS = 'status',
 }
 
 export { EpisodeDTOKey };
