@@ -8,4 +8,4 @@ docker-compose -f ./__tests__/docker-compose.tests.yml up -d
 
 sleep 35
 
-npm run test:api
+npm run test

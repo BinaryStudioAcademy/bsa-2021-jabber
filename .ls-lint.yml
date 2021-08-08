@@ -15,5 +15,6 @@ ignore:
   - frontend/node_modules
   - backend/build
   - backend/node_modules
-  - .git
   - __tests__
+  - __tests__/node_modules
+  - .git

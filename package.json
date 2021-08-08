@@ -19,6 +19,8 @@
     "lint:js": "npm run lint:shared:js && npm run lint:backend:js && npm run lint:frontend:js",
     "lint:css": "npm run lint:frontend:css",
     "lint": "npm run lint:editorconfig && npm run lint:fs && npm run lint:shared && npm run lint:backend && npm run lint:frontend",
+    "test:api": "cd __tests__ && npm run test",
+    "test": "npm run test:api",
     "install:shared": "cd shared && npm install --production=false",
     "install:frontend": "cd frontend && npm install --production=false",
     "install:backend": "cd backend && npm install --production=false",
@@ -32,8 +34,7 @@
     "start:dev": "concurrently -k -p \"{name}\" -n \"FRONTEND,BACKEND\" -c \"green,blue\" \"npm:start:frontend\" \"npm:start:backend\"",
     "start": "cd build && npm run start",
     "heroku-prebuild": "npm run install:all",
-    "heroku-postbuild": "npm run build && npm run move:deploy",
-    "test:api": "cd __tests__ && npm run test"
+    "heroku-postbuild": "npm run build && npm run move:deploy"
   },
   "devDependencies": {
     "@ls-lint/ls-lint": "1.10.0",

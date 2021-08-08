@@ -15,5 +15,3 @@ RUN npm install
 EXPOSE 3001
 
 ENTRYPOINT [ "sh", "backend.entry.sh" ]
-
-

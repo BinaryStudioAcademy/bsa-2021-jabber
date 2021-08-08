@@ -7,6 +7,6 @@
     "test": "node newman.config.js"
   },
   "dependencies": {
-    "newman": "^5.2.4"
+    "newman": "5.2.4"
   }
 }
