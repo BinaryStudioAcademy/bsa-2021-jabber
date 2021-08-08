@@ -7,4 +7,3 @@ export {
   getFileFromFileList,
 } from './file/file';
 export { Joi } from './validation-schema/validation-schema';
-export { getTableColumns } from './table/table';

@@ -1,11 +1,10 @@
 import { useTable } from 'hooks/hooks';
 import { Column } from 'react-table';
-
 import styles from './styles.module.scss';
 
 type Props = {
   columns: Column[];
-  data?: unknown[];
+  data: unknown[];
 };
 
 const Table: React.FC<Props> = ({ columns, data = [] }) => {
