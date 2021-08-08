@@ -38,7 +38,7 @@ const reducer = createReducer(initialState, (builder) => {
     state.dataStatus = DataStatus.REJECTED;
   });
   builder.addCase(createComment.fulfilled, (state, action) => {
-    state.comments.push(action.payload);
+    state.comments.unshift(action.payload);
   });
 });
 
