@@ -1,29 +1,19 @@
 import { WhiteRoute } from '~/common/types/types';
-
-const checkIsRouteWhite = (splitedWhiteRoute: string[], splitedRequestRoute: string[]): boolean => {
-  for (let i = 0; i < splitedWhiteRoute.length; i++) {
-    const isRouteWhite = splitedRequestRoute.some((requestRouteItem) => requestRouteItem === splitedWhiteRoute[i]);
-    if (isRouteWhite) return true;
-  }
-  return false;
-};
-
-const checkIsMethodAllowed = (allowedMethods: string[], requestMethod: string):boolean => {
-  return allowedMethods.some((method) => method === requestMethod);
-};
+import { HttpMethod } from '~/common/enums/enums';
 
 const checkUserAccess = (
-  routesWhiteList:WhiteRoute[],
+  routesWhiteList: WhiteRoute[],
   requestRoute: string,
   requestMethod: string,
-):boolean => {
-  const splitedRequestRoute = requestRoute.split('/').filter((e) => e);
+): boolean => {
+  if (requestMethod === HttpMethod.GET) return true;
+
   for (let i = 0; i < routesWhiteList.length; i++) {
-    const splitedWhiteRoute = routesWhiteList[i].path.split('/').filter((e) => e);
-    const isRouteWhite = checkIsRouteWhite(splitedWhiteRoute, splitedRequestRoute);
-    const isMethodAllowed = checkIsMethodAllowed(routesWhiteList[i].allowedMethods, requestMethod);
+    const isRouteWhite = routesWhiteList[i].path === requestRoute;
+    const isMethodAllowed = routesWhiteList[i].allowedMethods.some((method) => method === requestMethod);
     if (isRouteWhite && isMethodAllowed) return true;
   }
+
   return false;
 };
 
