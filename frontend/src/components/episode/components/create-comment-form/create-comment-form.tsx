@@ -21,7 +21,7 @@ const CreateCommentForm: React.FC<Props> = ({ user, onSubmit }) => {
   return (
     <>
       {isAuth
-        ? (<form className={styles.form} onSubmit={handleSubmit(onSubmit)} >
+        ? (<form onSubmit={handleSubmit(onSubmit)} >
           <fieldset className={styles.fieldset}>
             <Input
               name={CommentCreatePayloadKey.TEXT}
