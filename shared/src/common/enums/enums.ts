@@ -27,6 +27,8 @@ export {
   EpisodeValidationMessage,
   PodcastValidationRule,
   PodcastValidationMessage,
+  ShownoteValidationRule,
+  ShownoteValidationMessage,
 } from './validation/validation';
 export { EpisodeCreatePayloadKey, EpisodeType } from './episode/episode';
 export { ShownoteCreatePayloadKey } from './shownote/shownote';
