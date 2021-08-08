@@ -6,7 +6,7 @@
     background-position: right top;
     background-repeat: no-repeat;
     background-size: 0 0;
-    content: "";
+    content: '';
     pointer-events: none;
     position: absolute;
     margin: -1px 0 -36px 1px;
@@ -22,6 +22,7 @@
     outline: 10px solid rgba(134, 134, 134, 0.55);
     outline-offset: -10px;
     transition: transform 0.2s ease;
+    height: 195px;
   }
 
   &:hover {
@@ -53,4 +54,8 @@
     left: 0;
     content: '';
   }
+}
+
+.podcastImage {
+  height: 100%;
 }

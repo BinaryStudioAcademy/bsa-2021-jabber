@@ -3,9 +3,12 @@ import {
   podcastCreate as podcastCreateValidationSchema,
   podcastEdit as editPodcastValidationSchema,
 } from '~/validation-schemas/validation-schemas';
-import { ApiPath, HttpCode, PodcastsApiPath } from '~/common/enums/enums';
+import { ApiPath, HttpCode, PodcastsApiPath, HttpMethod } from '~/common/enums/enums';
 import { handleAsyncApi } from '~/helpers/helpers';
-import { validateSchema as validateSchemaMiddleware } from '~/middlewares/middlewares';
+import {
+  checkAuth as checkAuthMiddleware,
+  validateSchema as validateSchemaMiddleware,
+} from '~/middlewares/middlewares';
 import { podcast as podcastService } from '~/services/services';
 
 type Args = {
@@ -36,6 +39,7 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
 
   podcastRouter.post(
     PodcastsApiPath.ROOT,
+    checkAuthMiddleware(HttpMethod.POST),
     validateSchemaMiddleware(podcastCreateValidationSchema),
     handleAsyncApi(async (req, res) => {
       return res
@@ -46,6 +50,7 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
 
   podcastRouter.put(
     PodcastsApiPath.$ID,
+    checkAuthMiddleware(HttpMethod.PUT),
     validateSchemaMiddleware(editPodcastValidationSchema),
     handleAsyncApi(async (req, res) => {
       return res

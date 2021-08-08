@@ -5,6 +5,7 @@ import {
 } from 'store/actions';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
+import defaultImage from 'assets/img/default-podcast-image.jpeg';
 import styles from './styles.module.scss';
 
 const Podcast: React.FC = () => {
@@ -35,15 +36,18 @@ const Podcast: React.FC = () => {
               <h1 className={styles.title}>{podcast.name}</h1>
               <p className={styles.description}>{podcast.description}</p>
             </div>
-            <p className={styles.logoWrapper}>
-              <img
-                src="#"
-                width="280"
-                height="280"
-                loading="lazy"
-                alt={podcast.name}
-              />
-            </p>
+            <div className={styles.wrapper}>
+              <div className={styles.imageWrapper}>
+                <img
+                  src={podcast.image?.url ?? defaultImage}
+                  className={styles.podcastImage}
+                  width="280"
+                  height="280"
+                  loading="lazy"
+                  alt={podcast.name}
+                />
+              </div>
+            </div>
           </div>
           <EpisodeTable episodes={episodes} />
         </>
