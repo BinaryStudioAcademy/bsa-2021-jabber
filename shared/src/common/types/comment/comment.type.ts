@@ -1,3 +1,5 @@
+import { User } from '../user/user.type';
+
 type Comment = {
   id: number;
   text: string;
@@ -5,6 +7,7 @@ type Comment = {
   episodeId: number;
   createdAt: string;
   updatedAt: string;
+  user: User;
 };
 
 export type { Comment };
