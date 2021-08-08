@@ -1,10 +1,13 @@
-.episode {
+.root {
   flex-grow: 1;
-  display: flex;
   max-width: 1515px;
   width: 100%;
   margin: 0 auto;
   padding: 30px;
+
+  .episode {
+    display: flex;
+  }
 }
 
 .descriptionWrapper {
@@ -36,4 +39,11 @@
   flex-grow: 1;
   text-align: center;
   margin: 0;
+}
+
+.commentsWrapper {
+  max-width: 1515px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 30px;
 }
