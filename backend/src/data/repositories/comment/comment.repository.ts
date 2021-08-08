@@ -13,11 +13,19 @@ class Comment {
   }
 
   public getAll(): Promise<TComment[]> {
-    return this.#CommentModel.query();
+    return this.#CommentModel.query().withGraphFetched('user');
   }
 
   public create(payload: CommentCreatePayload): Promise<TComment> {
-    return this.#CommentModel.query().insert(payload);
+    return this.#CommentModel.query().insert(payload).withGraphFetched('user');
+  }
+
+  public getAllByEpisodeId(id: number): Promise<TComment[]> {
+    return this.#CommentModel.query().where('episode_id', id).withGraphFetched('user');
+  }
+
+  public getById(id: string): Promise<TComment> {
+    return this.#CommentModel.query().findOne(id).withGraphFetched('user');
   }
 }
 
