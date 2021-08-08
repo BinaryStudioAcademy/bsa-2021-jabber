@@ -23,11 +23,8 @@ class Episode {
     return this.#EpisodeModel.query().findById(id);
   }
 
-  public getByPodcastId(id: string): Promise<TEpisode[]> {
-    return this.#EpisodeModel
-      .query()
-      .where('podcast_id', id)
-      .orderBy('created_at');
+  public getAllByPodcastId(id: string): Promise<TEpisode[]> {
+    return this.#EpisodeModel.query().where('podcast_id', id);
   }
 
   public create(payload: EpisodeCreatePayload): Promise<TEpisode> {

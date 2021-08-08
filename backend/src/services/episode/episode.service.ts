@@ -27,20 +27,14 @@ class Episode {
     if (!episode) {
       throw new HttpError({
         status: HttpCode.NOT_FOUND,
-        message: ErrorMessage.NOT_FOUND,
+        message: ErrorMessage.EPISODE_NOT_FOUND,
       });
     }
     return episode;
   }
 
-  public async getByPodcastId(id: string): Promise<TEpisode[]> {
-    const episodes = await this.#episodeRepository.getByPodcastId(id);
-    if (!episodes) {
-      throw new HttpError({
-        status: HttpCode.NOT_FOUND,
-        message: ErrorMessage.NOT_FOUND,
-      });
-    }
+  public async getAllByPodcastId(id: string): Promise<TEpisode[]> {
+    const episodes = await this.#episodeRepository.getAllByPodcastId(id);
     return episodes;
   }
 

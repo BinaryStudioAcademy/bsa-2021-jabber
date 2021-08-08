@@ -1,28 +1,23 @@
-import { useMemo, useTable } from 'hooks/hooks';
+import { useTable } from 'hooks/hooks';
 import { Column } from 'react-table';
 
-import { ITableData } from 'common/types/types';
 import styles from './styles.module.scss';
 
 type Props = {
   columns: Column[];
-  data?: ITableData[];
+  data?: unknown[];
 };
 
 const Table: React.FC<Props> = ({ columns, data = [] }) => {
-  const dataMemoized: ITableData[] = useMemo(() => data, [data]);
-  const columnsTyped = columns as unknown as Column<ITableData>[];
-  const columnsMemoized = useMemo(() => columnsTyped, [columnsTyped]);
-
   const tableInstance = useTable({
-    columns: columnsMemoized,
-    data: dataMemoized,
+    columns: columns as Column<Record<string, string>>[],
+    data: data as Record<string, string>[],
   });
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
 
-  return dataMemoized.length ? (
+  return (
     <table {...getTableProps()} className={styles.table}>
       <thead>
         {headerGroups.map((headerGroup, i) => (
@@ -52,8 +47,6 @@ const Table: React.FC<Props> = ({ columns, data = [] }) => {
         })}
       </tbody>
     </table>
-  ) : (
-    <h1 className={styles.notFound}>Oops. There is no any episode</h1>
   );
 };
 

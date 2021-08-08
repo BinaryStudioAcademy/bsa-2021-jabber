@@ -1,6 +1,6 @@
 import { Column } from 'react-table';
 
-const getTableColumns = (columnsScheme: any[]): Column[] => {
+const getTableColumns = (columnsScheme: Record<string, string>[]): Column[] => {
   const columns: Column[] = [
     {
       Header: '#',

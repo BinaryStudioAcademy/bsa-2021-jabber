@@ -36,7 +36,7 @@ class EpisodeApi {
     );
   }
 
-  public getByPodcastId(id: number): Promise<Episode[]> {
+  public getAllByPodcastId(id: number): Promise<Episode[]> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.EPISODES}${EpisodesApiPath.PODCAST}${id}`,
       {

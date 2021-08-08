@@ -6,13 +6,13 @@ import { loadEpisode, loadEpisodesByPodcastId } from './actions';
 type State = {
   dataStatus: DataStatus;
   episode: Episode | null;
-  episodes: Episode[] | null;
+  episodes: Episode[];
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
   episode: null,
-  episodes: null,
+  episodes: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {

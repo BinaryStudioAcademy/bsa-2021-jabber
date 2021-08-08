@@ -13,7 +13,7 @@ const loadEpisode = createAsyncThunk<Episode, number, AsyncThunkConfig>
 const loadEpisodesByPodcastId = createAsyncThunk<Episode[], number, AsyncThunkConfig>
 (ActionType.LOAD_EPISODES_BY_PODCAST_ID, async (id, { extra }) => {
   const { episodeApi } = extra;
-  const episodes = await episodeApi.getByPodcastId(id);
+  const episodes = await episodeApi.getAllByPodcastId(id);
 
   return episodes;
 });
