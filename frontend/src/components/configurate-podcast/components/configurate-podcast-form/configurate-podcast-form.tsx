@@ -70,7 +70,6 @@ const ConfiguratePodcastForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_P
           accept={acceptExtension}
           type={InputType.FILE}
         />
-        <p>{errors.image?.message}</p>
         <Button label="Save" type={ButtonType.SUBMIT} />
       </fieldset>
     </form>
