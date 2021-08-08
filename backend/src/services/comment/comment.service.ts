@@ -16,8 +16,12 @@ class Comment {
     return this.#commentRepository.getAll();
   }
 
-  public create(payload: CommentCreatePayload): Promise<TComment> {
+  public async create(payload: CommentCreatePayload): Promise<TComment> {
     return this.#commentRepository.create(payload);
+  }
+
+  public getAllByEpisodeId(id: number): Promise<TComment[]> {
+    return this.#commentRepository.getAllByEpisodeId(id);
   }
 }
 

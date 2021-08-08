@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Episode, AsyncThunkConfig } from 'common/types/types';
+import { Episode, Comment, AsyncThunkConfig } from 'common/types/types';
 import { ActionType } from './common';
 
 const loadEpisode = createAsyncThunk<Episode, number, AsyncThunkConfig>
@@ -10,4 +10,12 @@ const loadEpisode = createAsyncThunk<Episode, number, AsyncThunkConfig>
   return episode;
 });
 
-export { loadEpisode };
+const loadCommentsByEpisodeId = createAsyncThunk<Comment[], number, AsyncThunkConfig>
+(ActionType.LOAD_COMMENTS_BY_EPISODE_ID, async (episodeId, { extra }) => {
+  const { commentApi } = extra;
+  const comments = await commentApi.getAllCommentsByEpisodeId(episodeId);
+
+  return comments;
+});
+
+export { loadEpisode, loadCommentsByEpisodeId };

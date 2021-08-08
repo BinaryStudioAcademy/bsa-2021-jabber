@@ -20,6 +20,22 @@ const initCommentsApi = ({ apiRouter, commentService }: Args): Router => {
     }),
   );
 
+  commentRouter.post(
+    CommentsApiPath.ROOT,
+    handleAsyncApi(async (req, res) => {
+      return res.json(await commentService.create(req.body)).status(HttpCode.CREATED);
+    }),
+  );
+
+  commentRouter.get(
+    CommentsApiPath.EPISODE_ID,
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await commentService.getAllByEpisodeId(Number(req.params.id)))
+        .status(HttpCode.OK);
+    }),
+  );
+
   return commentRouter;
 };
 
