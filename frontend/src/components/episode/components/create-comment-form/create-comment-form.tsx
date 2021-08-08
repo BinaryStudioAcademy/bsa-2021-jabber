@@ -18,41 +18,50 @@ const CreateCommentForm: React.FC<Props> = ({ user, onSubmit }) => {
   });
   const isAuth = Boolean(user);
 
+  if (!isAuth) {
+    return (
+      <div className={styles.noAuth}>
+        <span>
+          You need to
+          <Link
+            to={AppRoute.SIGN_IN}
+            className={styles.link}
+          >
+            {' '}
+            Sign In
+            {' '}
+          </Link>
+          or
+          <Link
+            to={AppRoute.SIGN_UP}
+            className={styles.link}
+          >
+            {' '}
+            Sign Up
+            {' '}
+          </Link>
+          to write a comment
+        </span>
+      </div>
+    );
+  }
+
   return (
-    <>
-      {isAuth
-        ? (<form onSubmit={handleSubmit(onSubmit)} >
-          <fieldset className={styles.fieldset}>
-            <Input
-              name={CommentCreatePayloadKey.TEXT}
-              control={control}
-              errors={errors}
-              label=""
-              placeholder="Write a comment"
-            />
-            <Button label="Add comment" type={ButtonType.SUBMIT} />
-          </fieldset>
-        </form >)
-        : (
-          <div className={styles.noAuth}>
-            <span>
-              You need to
-              <Link to={AppRoute.SIGN_IN} className={styles.link}>
-                {' '}
-                Sign In
-                {' '}
-              </Link>
-              or
-              <Link to={AppRoute.SIGN_UP} className={styles.link}>
-                {' '}
-                Sign Up
-                {' '}
-              </Link>
-              to write a comment
-            </span>
-          </div>
-        )}
-    </>
+    <form onSubmit={handleSubmit(onSubmit)} >
+      <fieldset className={styles.fieldset}>
+        <Input
+          name={CommentCreatePayloadKey.TEXT}
+          control={control}
+          errors={errors}
+          label=""
+          placeholder="Write a comment"
+        />
+        <Button
+          label="Add comment"
+          type={ButtonType.SUBMIT}
+        />
+      </fieldset>
+    </form >
   );
 };
 
