@@ -45,12 +45,13 @@ const user = new User({
   tokenService: token,
 });
 
-const episode = new Episode({
-  episodeRepository,
-});
-
 const shownote = new Shownote({
   shownoteRepository,
+});
+
+const episode = new Episode({
+  episodeRepository,
+  shownoteService: shownote,
 });
 
 const comment = new Comment({
