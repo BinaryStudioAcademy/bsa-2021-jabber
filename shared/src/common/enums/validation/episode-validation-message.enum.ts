@@ -12,6 +12,7 @@ const EpisodeValidationMessage = {
   EPISODE_DESCRIPTION_REQUIRE: 'Episode description is required',
   EPISODE_DESCRIPTION_MIN_LENGTH: `Episode DESCRIPTION must be at least ${EpisodeValidationRule.EPISODE_DESCRIPTION_MIN_LENGTH} character long`,
   EPISODE_DESCRIPTION_MAX_LENGTH: `Episode DESCRIPTION must be at most ${EpisodeValidationRule.EPISODE_DESCRIPTION_MAX_LENGTH} characters long`,
+  DATA_URL_FORMAT: 'Cover image must be valid jpeg, png or svg file',
 } as const;
 
 export { EpisodeValidationMessage };

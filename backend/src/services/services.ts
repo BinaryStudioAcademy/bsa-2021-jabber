@@ -45,10 +45,6 @@ const user = new User({
   tokenService: token,
 });
 
-const episode = new Episode({
-  episodeRepository,
-});
-
 const shownote = new Shownote({
   shownoteRepository,
 });
@@ -63,6 +59,12 @@ const record = new Record({
 
 const fileStorage = new FileStorage({
   storageApiUser: <string>ENV.UPLOAD.API_URL,
+});
+
+const episode = new Episode({
+  episodeRepository,
+  imageRepository,
+  fileStorage,
 });
 
 const podcast = new Podcast({

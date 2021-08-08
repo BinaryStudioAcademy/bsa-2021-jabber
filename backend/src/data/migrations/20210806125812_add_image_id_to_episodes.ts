@@ -1,4 +1,4 @@
-import { Knex } from "knex";
+import { Knex } from 'knex';
 
 const TABLE_NAME = 'episodes';
 const COLUMN_NAME = 'image_id';

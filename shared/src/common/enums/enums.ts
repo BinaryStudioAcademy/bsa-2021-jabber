@@ -28,7 +28,7 @@ export {
   PodcastValidationRule,
   PodcastValidationMessage,
 } from './validation/validation';
-export { EpisodeCreatePayloadKey, EpisodeType } from './episode/episode';
+export { EpisodePayloadKey, EpisodeType } from './episode/episode';
 export { ShownoteCreatePayloadKey } from './shownote/shownote';
 export { CommentCreatePayloadKey } from './comment/comment';
 export { RecordCreatePayloadKey } from './record/record';

@@ -2,6 +2,8 @@ import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import { podcast as podcastActions } from 'store/actions';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
+import { Link } from 'components/common/common';
+import { AppRoute } from 'common/enums/enums';
 
 const Podcast: React.FC = () => {
   const dispatch = useDispatch();
@@ -32,6 +34,9 @@ const Podcast: React.FC = () => {
               alt={podcast.name}
             />
           </p>
+          <Link to={`${AppRoute.PODCASTS}/${id}${AppRoute.EPISODE_EDIT}`} >
+            Add Episode
+          </Link>
         </>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such podcast</h1>
