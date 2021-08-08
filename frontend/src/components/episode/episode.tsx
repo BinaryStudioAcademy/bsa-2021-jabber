@@ -1,7 +1,7 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import { episode as episodeActions } from 'store/actions';
 import { CreateCommentForm, CommentsList } from './components/components';
-import { CommentCreatePayload } from 'common/types/types';
+import { CommentFormCreatePayload } from 'common/types/types';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 
@@ -21,7 +21,7 @@ const Episode: React.FC = () => {
     dispatch(episodeActions.loadEpisode(Number(id)));
   }, []);
 
-  const handleCreateComment = (payload: CommentCreatePayload): void => {
+  const handleCreateComment = (payload: CommentFormCreatePayload): void => {
     dispatch(episodeActions.createComment(payload));
   };
 
