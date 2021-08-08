@@ -37,7 +37,7 @@ export {
   EpisodeType,
   EpisodeValidationMessage,
   EpisodePayloadKey,
-} from './episode/episode-type.enum';
+} from './episode/episode';
 export { ShownoteCreatePayloadKey } from './shownote/shownote.enum';
 export { StrategyName } from './strategy/strategy';
 export {

@@ -1,12 +1,11 @@
 import { EpisodeFormPayload, Option } from 'common/types/types';
-import { getFileExtensions, getOptions } from 'helpers/helpers';
+import { getOptions } from 'helpers/helpers';
 import {
   ButtonType,
   DataStatus,
   EpisodePayloadKey,
   EpisodeType,
   InputType,
-  FileExtension,
 } from 'common/enums/enums';
 import { episodeCreate as createEpisodeValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
@@ -16,9 +15,10 @@ import { DEFAULT_CREATE_EPISODE_PAYLOAD } from './common/constants';
 
 type Props = {
   onSubmit: (payload: EpisodeFormPayload) => void;
+  acceptAudioExtension: string;
 };
 
-const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
+const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, acceptAudioExtension }) => {
   const { control, handleSubmit, errors, register } = useAppForm({
     validationSchema: createEpisodeValidationSchema,
     defaultValues: DEFAULT_CREATE_EPISODE_PAYLOAD,
@@ -27,11 +27,6 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
   const { dataStatus } = useAppSelector(({ episode }) => ({
     dataStatus: episode.dataStatus,
   }));
-
-  const acceptExtension = getFileExtensions(
-    FileExtension.MP3,
-    FileExtension.WAV,
-  );
 
   const isFormDisable = dataStatus === DataStatus.PENDING;
 
@@ -64,7 +59,7 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
         />
         <input
           {...register(EpisodePayloadKey.RECORD)}
-          accept={acceptExtension}
+          accept={acceptAudioExtension}
           type={InputType.FILE}
         />
         <Button label="Upload" type={ButtonType.SUBMIT} />
