@@ -1,0 +1,3 @@
+const DEFAULT_EPISODE_ID = -1;
+
+export { DEFAULT_EPISODE_ID };
