@@ -3,18 +3,21 @@ import { episode as episodeActions } from 'store/actions';
 import { CreateCommentForm } from './common/components/components';
 import { CommentCreatePayload } from 'common/types/types';
 import { PageParams } from './common/types/types';
+import CommentsList from './components/comments-list/comments-list';
 import styles from './styles.module.scss';
 
 const Episode: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
 
-  const { episode, user } = useAppSelector(({ episode, auth }) => ({
+  const { episode, comments, user } = useAppSelector(({ episode, auth }) => ({
     episode: episode.episode,
+    comments: episode.comments,
     user: auth.user,
   }));
 
   useEffect(() => {
+    dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisode(Number(id)));
   }, []);
 
@@ -48,6 +51,13 @@ const Episode: React.FC = () => {
         user={user}
         onSubmit={handleCreateComment}
       />
+      <div className={styles.commentsWrapper}>
+        {
+          comments.length
+            ? <CommentsList comments={comments} />
+            : <div>There&apos;s no comment yet.</div>
+        }
+      </div>
     </main>
   );
 };
