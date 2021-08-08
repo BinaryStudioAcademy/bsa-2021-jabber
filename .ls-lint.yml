@@ -7,12 +7,13 @@ ls:
     .ts: snake_case
 
 ignore:
-    - node_modules
-    - build
-    - shared/build
-    - shared/node_modules
-    - frontend/build
-    - frontend/node_modules
-    - backend/build
-    - backend/node_modules
-    - .git
+  - node_modules
+  - build
+  - shared/build
+  - shared/node_modules
+  - frontend/build
+  - frontend/node_modules
+  - backend/build
+  - backend/node_modules
+  - .git
+  - __tests__
