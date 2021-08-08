@@ -4,8 +4,10 @@ import {
   EpisodeValidationMessage,
   EpisodeCreatePayloadKey,
   EpisodeType,
+  ShownoteCreatePayloadKey,
 } from '~/common/enums/enums';
 import { EpisodeCreatePayload } from '~/common/types/types';
+import { shownote as ShownoteValidationSchema } from '../shownote/shownote';
 
 const episodeTypes = Object.values(EpisodeType);
 
@@ -39,6 +41,18 @@ const episode = Joi.object<EpisodeCreatePayload>({
     .required()
     .messages({
       'string.empty': EpisodeValidationMessage.TYPE_REQUIRE,
+    }),
+  [EpisodeCreatePayloadKey.SHOWNOTES]: Joi.array()
+    .items(ShownoteValidationSchema)
+    .unique(
+      (a, b) =>
+        a[ShownoteCreatePayloadKey.TIMESTAMP] ===
+        b[ShownoteCreatePayloadKey.TIMESTAMP],
+    )
+    .required()
+    .messages({
+      'array.required': EpisodeValidationMessage.SHOWNOTES_REQUIRE,
+      'array.unique': EpisodeValidationMessage.SHOWNOTE_DUPLICATE,
     }),
   [EpisodeCreatePayloadKey.DESCRIPTION]: Joi.string()
     .trim()
