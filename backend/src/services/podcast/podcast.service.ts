@@ -44,12 +44,14 @@ class Podcast {
     userId,
     description,
     imageDataUrl,
+    type,
   }: PodcastCreatePayload): Promise<TPodcast> {
     const newPodcast: PodcastCreateDTOPayload = {
       name,
       userId,
       description,
       imageId: null,
+      type,
     };
 
     if (imageDataUrl) {

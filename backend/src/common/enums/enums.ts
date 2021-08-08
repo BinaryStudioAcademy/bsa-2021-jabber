@@ -25,11 +25,12 @@ export {
   RecordDTOKey,
   ImageDTOKey,
 } from './db/db';
-export { HttpCode } from './http/http';
+export { HttpCode, HttpMethod } from './http/http';
 export {
   PodcastPayloadKey,
   PodcastValidationMessage,
   PodcastValidationRule,
+  PodcastType,
 } from './podcast/podcast';
 export { ResourceType } from './file/file';
 export { EpisodeType } from './episode/episode-type.enum';
