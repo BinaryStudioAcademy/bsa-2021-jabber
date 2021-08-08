@@ -21,10 +21,7 @@ class Comment {
   }
 
   public getAllByEpisodeId(id: number): Promise<TComment[]> {
-    return this.#CommentModel.query()
-      .where('episode_id', id)
-      .withGraphFetched('user')
-      .orderBy('created_at', 'desc');
+    return this.#CommentModel.query().where('episode_id', id).withGraphFetched('user');
   }
 
   public getById(id: string): Promise<TComment> {
