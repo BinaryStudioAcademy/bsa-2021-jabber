@@ -22,7 +22,6 @@ const Episode: React.FC = () => {
   }, []);
 
   const handleCreateComment = (payload: CommentCreatePayload): void => {
-    payload.episodeId = Number(id);
     dispatch(episodeActions.createComment(payload));
   };
 
