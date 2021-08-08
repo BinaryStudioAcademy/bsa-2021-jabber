@@ -1,0 +1,12 @@
+{
+  "name": "backend_tests",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "npm install",
+    "test": "node newman.config.js"
+  },
+  "dependencies": {
+    "newman": "^5.2.4"
+  }
+}

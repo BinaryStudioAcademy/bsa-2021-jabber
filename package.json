@@ -32,7 +32,8 @@
     "start:dev": "concurrently -k -p \"{name}\" -n \"FRONTEND,BACKEND\" -c \"green,blue\" \"npm:start:frontend\" \"npm:start:backend\"",
     "start": "cd build && npm run start",
     "heroku-prebuild": "npm run install:all",
-    "heroku-postbuild": "npm run build && npm run move:deploy"
+    "heroku-postbuild": "npm run build && npm run move:deploy",
+    "test:api": "cd __tests__ && npm run test"
   },
   "devDependencies": {
     "@ls-lint/ls-lint": "1.10.0",
