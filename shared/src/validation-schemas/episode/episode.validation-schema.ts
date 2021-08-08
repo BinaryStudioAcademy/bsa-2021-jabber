@@ -7,7 +7,7 @@ import {
   ShownoteCreatePayloadKey,
 } from '~/common/enums/enums';
 import { EpisodeCreatePayload } from '~/common/types/types';
-import { shownote as ShownoteValidationSchema } from '../shownote/shownote';
+import { shownote as shownoteValidationSchema } from '../shownote/shownote';
 
 const episodeTypes = Object.values(EpisodeType);
 
@@ -43,7 +43,7 @@ const episode = Joi.object<EpisodeCreatePayload>({
       'string.empty': EpisodeValidationMessage.TYPE_REQUIRE,
     }),
   [EpisodeCreatePayloadKey.SHOWNOTES]: Joi.array()
-    .items(ShownoteValidationSchema)
+    .items(shownoteValidationSchema)
     .unique(
       (a, b) =>
         a[ShownoteCreatePayloadKey.TIMESTAMP] ===

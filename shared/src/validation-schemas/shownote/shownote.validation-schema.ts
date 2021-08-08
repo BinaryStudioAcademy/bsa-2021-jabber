@@ -16,13 +16,6 @@ const shownote = Joi.object({
       'string.min': ShownoteValidationMessage.SHOWNOTE_NAME_MIN_LENGTH,
       'string.max': ShownoteValidationMessage.SHOWNOTE_NAME_MAX_LENGTH,
     }),
-  [ShownoteCreatePayloadKey.EPISODE_ID]: Joi.number()
-    .integer()
-    .required()
-    .messages({
-      'number.required': ShownoteValidationMessage.EPISODE_ID_REQUIRE,
-      'number.integer': ShownoteValidationMessage.EPISODE_ID_NUMBER_FORMAT,
-    }),
   [ShownoteCreatePayloadKey.TIMESTAMP]: Joi.number()
     .integer()
     .min(ShownoteValidationRule.TIMESTAMP_MIN_VALUE)
