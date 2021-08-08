@@ -14,6 +14,7 @@ const Episode: React.FC = () => {
     comments: episode.comments,
     user: auth.user,
   }));
+  const hasUser = Boolean(user);
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
@@ -47,15 +48,12 @@ const Episode: React.FC = () => {
         <h1 className={styles.notFound}>Oops. There is no such episode</h1>
       )}
       <div className={styles.commentsWrapper}>
-        <CreateCommentForm
-          user={user}
+        {hasUser && <CreateCommentForm
           onSubmit={handleCreateComment}
-        />
-        {
-          comments.length
-            ? <CommentsList comments={comments} />
-            : <div>There&apos;s no comment yet.</div>
-        }
+        />}
+        {comments.length
+          ? <CommentsList comments={comments} />
+          : <div>There&apos;s no comment yet.</div>}
       </div>
     </main>
   );
