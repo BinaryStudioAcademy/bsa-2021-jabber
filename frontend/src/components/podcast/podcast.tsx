@@ -1,7 +1,7 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import { podcast as podcastActions } from 'store/actions';
 import { PageParams } from './common/types/types';
-import defaultImage from 'assets/img/default_podcast_image.jpeg';
+import defaultImage from 'assets/img/default-podcast-image.jpeg';
 import styles from './styles.module.scss';
 
 const Podcast: React.FC = () => {
