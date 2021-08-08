@@ -1,6 +1,9 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
-import { podcast as podcastActions } from 'store/actions';
-import EpisodeTable from './episode-table/episode-table';
+import {
+  podcast as podcastActions,
+  episode as episodeActions,
+} from 'store/actions';
+import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 
@@ -8,13 +11,20 @@ const Podcast: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
 
-  const { podcast } = useAppSelector(({ podcast }) => ({
+  const { podcast, episodes } = useAppSelector(({ podcast, episode }) => ({
     podcast: podcast.podcast,
+    episodes: episode.episodes,
   }));
 
   useEffect(() => {
     dispatch(podcastActions.loadPodcast(Number(id)));
   }, []);
+
+  useEffect(() => {
+    if (podcast) {
+      dispatch(episodeActions.loadEpisodesByPodcastId(podcast.id));
+    }
+  }, [podcast]);
 
   return (
     <main className={styles.podcast}>
@@ -35,7 +45,7 @@ const Podcast: React.FC = () => {
               />
             </p>
           </div>
-          <EpisodeTable podcast={podcast} />
+          <EpisodeTable episodes={episodes} />
         </>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such podcast</h1>

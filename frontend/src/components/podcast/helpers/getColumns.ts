@@ -1,6 +1,6 @@
 import { Column } from 'react-table';
 
-const getTableColumns = (columnsScheme: Record<string, string>[]): Column[] => {
+const getColumns = (columnsScheme: Record<string, string>): Column[] => {
   const columns: Column[] = [
     {
       Header: '#',
@@ -8,13 +8,14 @@ const getTableColumns = (columnsScheme: Record<string, string>[]): Column[] => {
     },
   ];
 
-  columnsScheme.forEach((column) => {
+  Object.keys(columnsScheme).forEach((key) => {
     columns.push({
-      Header: column.Header,
-      accessor: column.accessor,
+      Header: columnsScheme[key],
+      accessor: key,
     });
   });
+
   return columns;
 };
 
-export { getTableColumns };
+export { getColumns };

@@ -34,8 +34,7 @@ class Episode {
   }
 
   public async getAllByPodcastId(id: string): Promise<TEpisode[]> {
-    const episodes = await this.#episodeRepository.getAllByPodcastId(id);
-    return episodes;
+    return await this.#episodeRepository.getAllByPodcastId(id);
   }
 
   public create(payload: EpisodeCreatePayload): Promise<TEpisode> {
