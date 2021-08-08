@@ -1,5 +1,9 @@
 import { HttpCode } from '~/common/enums/enums';
-import { Episode as TEpisode, EpisodeCreatePayload } from '~/common/types/types';
+import {
+  Episode as TEpisode,
+  EpisodeCreatePayload,
+  EpisodeEditPayload,
+} from '~/common/types/types';
 import { episode as episodeRep } from '~/data/repositories/repositories';
 import { HttpError } from '~/exceptions/exceptions';
 import { ErrorMessage } from '~/common/enums/enums';
@@ -29,6 +33,10 @@ class Episode {
 
   public create(payload: EpisodeCreatePayload): Promise<TEpisode> {
     return this.#episodeRepository.create(payload);
+  }
+
+  public async update(id: string, payload: EpisodeEditPayload): Promise<TEpisode> {
+    return await this.#episodeRepository.update(id, payload);
   }
 }
 

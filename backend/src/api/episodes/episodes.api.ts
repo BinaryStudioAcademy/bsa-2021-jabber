@@ -44,6 +44,17 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
     }),
   );
 
+  episodeRouter.put(
+    EpisodesApiPath.$ID,
+    checkAuthMiddleware(HttpMethod.PUT),
+    // validateSchemaMiddleware(EpisodeValidationSchema),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await episodeService.update(req.params.id, req.body))
+        .status(HttpCode.OK);
+    }),
+  );
+
   return episodeRouter;
 };
 
