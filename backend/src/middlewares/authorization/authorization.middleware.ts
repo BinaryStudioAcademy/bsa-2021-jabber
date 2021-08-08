@@ -1,16 +1,19 @@
-import { Response, Request, NextFunction } from 'express';
+import { Response, Request, NextFunction, RequestHandler } from 'express';
 import { jwt as jwtMiddleWare } from '../jwt/jwt.middleware';
-import { WhiteRoute } from '~/common/types/types';
-import { checkUserAccess } from '~/helpers/helpers';
+import { HttpMethod } from '~/common/enums/enums';
 
-const authorization = (routesWhiteList: WhiteRoute[] = []) => (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-): void => {
-  checkUserAccess(routesWhiteList, req.path, req.method)
-    ? next()
-    : jwtMiddleWare(req, res, next);
+const checkAuth = (...methods: HttpMethod[]): RequestHandler => {
+  const handler: RequestHandler = (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): void => {
+    methods.some((method) => method === req.method)
+      ? jwtMiddleWare(req, res, next)
+      : next();
+  };
+
+  return handler;
 };
 
-export { authorization };
+export { checkAuth };
