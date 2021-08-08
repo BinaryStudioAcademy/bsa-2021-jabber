@@ -3,7 +3,10 @@ import {
   PodcastValidationRule,
   PodcastValidationMessage,
   PodcastPayloadKey,
+  PodcastType,
 } from '~/common/enums/enums';
+
+const podcastType = Object.values(PodcastType);
 
 const podcast = Joi.object({
   [PodcastPayloadKey.NAME]: Joi.string()
@@ -26,6 +29,7 @@ const podcast = Joi.object({
       'string.min': PodcastValidationMessage.PODCAST_DESCRIPTION_MIN_LENGTH,
       'string.max': PodcastValidationMessage.PODCAST_DESCRIPTION_MAX_LENGTH,
     }),
+  [PodcastPayloadKey.TYPE]: Joi.string().valid(...podcastType),
 });
 
 export { podcast };
