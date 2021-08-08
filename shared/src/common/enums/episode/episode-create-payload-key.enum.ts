@@ -3,6 +3,7 @@ enum EpisodeCreatePayloadKey {
   USER_ID = 'userId',
   PODCAST_ID = 'podcastId',
   TYPE = 'type',
+  SHOWNOTES = 'shownotes',
   DESCRIPTION = 'description',
 }
 
