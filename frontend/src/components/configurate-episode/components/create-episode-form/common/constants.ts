@@ -3,9 +3,7 @@ import { EpisodeCreatePayload } from 'common/types/types';
 import {
   DEFAULT_USER_ID,
   DEFAULT_PODCAST_ID,
-  DEFAULT_EPISODE_ID,
 } from 'common/constants/constants';
-import { ShownoteCreatePayload } from 'jabber-shared/common/types/types';
 import { ShownoteCreatePayloadKey } from 'jabber-shared/common/enums/enums';
 
 const DEFAULT_CREATE_EPISODE_PAYLOAD: EpisodeCreatePayload = {
@@ -17,9 +15,8 @@ const DEFAULT_CREATE_EPISODE_PAYLOAD: EpisodeCreatePayload = {
   [EpisodeCreatePayloadKey.TYPE]: EpisodeType.PUBLIC,
 };
 
-const DEFAULT_CREATE_SHOWNOTE_PAYLOAD: ShownoteCreatePayload = {
+const DEFAULT_CREATE_SHOWNOTE_PAYLOAD = {
   [ShownoteCreatePayloadKey.NAME]: '',
-  [ShownoteCreatePayloadKey.EPISODE_ID]: DEFAULT_EPISODE_ID,
   [ShownoteCreatePayloadKey.TIMESTAMP]: 0,
 };
 
