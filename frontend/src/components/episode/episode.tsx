@@ -1,9 +1,8 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import { episode as episodeActions } from 'store/actions';
-import { CreateCommentForm } from './common/components/components';
+import { CreateCommentForm, CommentsList } from './components/components';
 import { CommentCreatePayload } from 'common/types/types';
 import { PageParams } from './common/types/types';
-import CommentsList from './components/comments-list/comments-list';
 import styles from './styles.module.scss';
 
 const Episode: React.FC = () => {
@@ -23,7 +22,7 @@ const Episode: React.FC = () => {
 
   const handleCreateComment = (payload: CommentCreatePayload): void => {
     payload.episodeId = Number(id);
-    //dispatch(commentActions.createComment(payload));
+    dispatch(episodeActions.createComment(payload));
   };
 
   return (
@@ -47,11 +46,11 @@ const Episode: React.FC = () => {
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such episode</h1>
       )}
-      <CreateCommentForm
-        user={user}
-        onSubmit={handleCreateComment}
-      />
       <div className={styles.commentsWrapper}>
+        <CreateCommentForm
+          user={user}
+          onSubmit={handleCreateComment}
+        />
         {
           comments.length
             ? <CommentsList comments={comments} />

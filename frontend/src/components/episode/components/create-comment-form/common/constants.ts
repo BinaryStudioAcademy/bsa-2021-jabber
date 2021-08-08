@@ -6,6 +6,7 @@ const DEFAULT_CREATE_COMMENT_PAYLOAD: CommentCreatePayload = {
   [CommentCreatePayloadKey.TEXT]: '',
   [CommentCreatePayloadKey.USER_ID]: DEFAULT_USER_ID,
   [CommentCreatePayloadKey.EPISODE_ID]: DEFAULT_EPISODE_ID,
+  [CommentCreatePayloadKey.TIMESTAMP]: 0,
 };
 
 export { DEFAULT_CREATE_COMMENT_PAYLOAD };

@@ -1,7 +1,14 @@
 .fieldset {
+  display: flex;
+  align-items: flex-start;
   border: none;
   margin: 0;
   padding: 0;
+
+  label {
+    flex-grow: 1;
+    margin: -4px 30px 0 0;
+  }
 }
 
 .link {
@@ -10,7 +17,7 @@
 }
 
 .noAuth {
-  min-height: 120px;
+  min-height: 65px;
   display: flex;
   align-items: center;
   justify-content: center;

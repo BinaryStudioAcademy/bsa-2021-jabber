@@ -29,6 +29,9 @@ const comment = Joi.object<CommentCreatePayload>({
       'number.required': CommentValidationMessage.EPISODE_ID_REQUIRE,
       'number.integer': CommentValidationMessage.EPISODE_ID_NUMBER_FORMAT,
     }),
+  [CommentCreatePayloadKey.TIMESTAMP]: Joi.number()
+    .integer()
+    .required(),
 });
 
 export { comment };
