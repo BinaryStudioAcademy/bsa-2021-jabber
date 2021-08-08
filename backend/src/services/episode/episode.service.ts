@@ -32,14 +32,14 @@ class Episode {
     if (!episode) {
       throw new HttpError({
         status: HttpCode.NOT_FOUND,
-        message: ErrorMessage.NOT_FOUND,
+        message: ErrorMessage.EPISODE_NOT_FOUND,
       });
     }
     return episode;
   }
 
   public async create(payload: EpisodeCreatePayload): Promise<TEpisode> {
-    const episodePayload = {
+    const episode = await this.#episodeRepository.create({
       [EpisodeCreatePayloadKey.NAME]: payload[EpisodeCreatePayloadKey.NAME],
       [EpisodeCreatePayloadKey.USER_ID]:
         payload[EpisodeCreatePayloadKey.USER_ID],
@@ -48,17 +48,13 @@ class Episode {
       [EpisodeCreatePayloadKey.TYPE]: payload[EpisodeCreatePayloadKey.TYPE],
       [EpisodeCreatePayloadKey.DESCRIPTION]:
         payload[EpisodeCreatePayloadKey.DESCRIPTION],
-    } as EpisodeCreatePayload;
+    } as EpisodeCreatePayload);
 
-    const episode = await this.#episodeRepository.create(episodePayload);
     const shownotes = payload[EpisodeCreatePayloadKey.SHOWNOTES];
 
-    for (const shownote of shownotes) {
-      await this.#shownoteService.create({
-        ...shownote,
-        episodeId: episode.id,
-      });
-    }
+    await this.#shownoteService.create(
+      ...shownotes.map((shownote) => ({ ...shownote, episodeId: episode.id })),
+    );
 
     return episode;
   }
