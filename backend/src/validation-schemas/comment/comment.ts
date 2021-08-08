@@ -1,1 +1,1 @@
-export { comment } from 'jabber-shared/validation-schemas/validation-schemas';
+export { commentCreate } from './create-comment/create-comment.validation-schema';

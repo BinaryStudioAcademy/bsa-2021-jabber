@@ -1,5 +1,5 @@
 import { CommentCreatePayloadKey, ButtonType } from 'common/enums/enums';
-import { CommentCreatePayload } from 'common/types/types';
+import { CommentFormCreatePayload } from 'common/types/types';
 import { useAppForm } from 'hooks/hooks';
 import { Input, Button } from 'components/common/common';
 import { comment as commentCreateValidationSchema } from 'validation-schemas/validation-schemas';
@@ -7,7 +7,7 @@ import { DEFAULT_CREATE_COMMENT_PAYLOAD } from './common/constants';
 import styles from './styles.module.scss';
 
 type Props = {
-  onSubmit: (payload: CommentCreatePayload) => void;
+  onSubmit: (payload: CommentFormCreatePayload) => void;
 };
 
 const CreateCommentForm: React.FC<Props> = ({ onSubmit }) => {

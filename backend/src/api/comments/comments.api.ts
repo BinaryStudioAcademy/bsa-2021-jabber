@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { ApiPath, HttpCode, CommentsApiPath } from '~/common/enums/enums';
 import {
-  comment as commentCreateValidationSchema,
+  commentCreate as commentCreateValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { validateSchema as validateSchemaMiddleware } from '~/middlewares/middlewares';
 import { comment as commentService } from '~/services/services';
