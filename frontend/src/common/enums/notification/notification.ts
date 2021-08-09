@@ -1,1 +1,2 @@
-export { NotificationMessage, NotificationTitle } from 'jabber-shared/common/enums/enums';
+export { NotificationMessage } from './notification-message.enum';
+export { NotificationTitle } from './notification-title.enum';

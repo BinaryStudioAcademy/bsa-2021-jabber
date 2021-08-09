@@ -53,6 +53,3 @@ const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>
 });
 
 export { create, edit, loadPodcast };
-
-// this.#notificationService.success('Success!', 'The podcast has been created');
-// this.#notificationService.success('Success!', 'The podcast has been updated');
