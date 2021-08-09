@@ -1,4 +1,4 @@
-import {EpisodePayloadKey, EpisodeStatus, EpisodeType} from '~/common/enums/enums';
+import { EpisodePayloadKey, EpisodeStatus, EpisodeType } from '~/common/enums/enums';
 
 type EpisodePayload = {
   [EpisodePayloadKey.NAME]: string;
