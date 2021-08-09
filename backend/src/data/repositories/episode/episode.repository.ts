@@ -2,7 +2,7 @@ import { EpisodeModel as EpisodeM } from '~/data/models/models';
 import {
   Episode as TEpisode,
   EpisodeCreateDTOPayload,
-  EpisodeEditPayload,
+  EpisodeEditDTOPayload,
 } from '~/common/types/types';
 
 type Constructor = {
@@ -28,7 +28,7 @@ class Episode {
     return this.#EpisodeModel.query().insert(payload);
   }
 
-  public update(id: string, payload: EpisodeEditPayload): Promise<TEpisode> {
+  public update(id: string, payload: EpisodeEditDTOPayload): Promise<TEpisode> {
     return this.#EpisodeModel.query().updateAndFetchById(id, payload);
   }
 }

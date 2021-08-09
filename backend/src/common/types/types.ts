@@ -14,6 +14,7 @@ export type {
   EpisodeCreatePayload,
   EpisodeEditPayload,
   EpisodeCreateDTOPayload,
+  EpisodeEditDTOPayload,
 } from './episode/episode';
 export type { Shownote, ShownoteCreatePayload } from './shownote/shownote';
 export type { Comment, CommentCreatePayload } from './comment/comment';

@@ -69,7 +69,29 @@ class Episode {
   }
 
   public async update(id: string, payload: EpisodeEditPayload): Promise<TEpisode> {
-    return await this.#episodeRepository.update(id, payload);
+    const { recordDataUrl, type, description, name, userId } = payload;
+
+    const episode = await this.#episodeRepository.update(id, {
+      name,
+      description,
+      type,
+    });
+
+    if (recordDataUrl) {
+      const { url, publicId, bytes } = await this.#fileStorage.upload({
+        dataUrl: recordDataUrl,
+        userId: userId,
+      });
+
+      await this.#recordRepository.create({
+        fileUrl: url,
+        publicId,
+        episodeId: episode.id,
+        fileSize: bytes,
+      });
+    }
+
+    return episode;
   }
 }
 
