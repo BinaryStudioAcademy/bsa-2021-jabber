@@ -24,7 +24,7 @@ const createEpisode = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkCo
     type: createEpisodePayload.type,
     userId: (<User>auth.user).id,
     recordDataUrl: file ? await getDataUrl(file) : null,
-    imageDataUrl: file ? await getDataUrl(imgFile) : null,
+    imageDataUrl: imgFile ? await getDataUrl(imgFile) : null,
   });
 
   return episodes;
