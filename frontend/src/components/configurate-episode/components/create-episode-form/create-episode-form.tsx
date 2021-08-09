@@ -9,10 +9,10 @@ import {
 } from 'common/enums/enums';
 import { episode as createEpisodeValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
-import styles from './styles.module.scss';
 import { Button, Input, Select } from 'components/common/common';
 import { DEFAULT_CREATE_EPISODE_PAYLOAD } from './common/constants';
 import ShownoteInputList from './components/shownote-input-list/shownote-input-list';
+import styles from './styles.module.scss';
 
 type Props = {
   onSubmit: (payload: EpisodeCreatePayload) => void;

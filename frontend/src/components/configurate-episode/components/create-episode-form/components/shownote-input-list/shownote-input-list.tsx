@@ -1,3 +1,4 @@
+import { DeepMap, FieldError, Control, FieldValues } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import {
   ButtonColor,
@@ -7,8 +8,6 @@ import {
 } from 'common/enums/enums';
 import { Button, Input } from 'components/common/common';
 import { useCallback, useFieldArray } from 'hooks/hooks';
-import { DeepMap, FieldError } from 'react-hook-form';
-import { Control, FieldValues } from 'react-hook-form';
 import { DEFAULT_SHOWNOTE_PAYLOAD } from '../../common/constants';
 import styles from './styles.module.scss';
 
