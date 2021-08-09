@@ -8,6 +8,7 @@ import {
   FieldValues,
   useController,
 } from 'react-hook-form';
+import getCurrentValue from './helpers/getCurrentValue';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -26,9 +27,7 @@ const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
     field.onChange(option?.value);
   };
 
-  const getCurrentValue = (options: Option[], value: string): Option | null => {
-    return options.find((it) => it.value === value) ?? null;
-  };
+  const currentValue = getCurrentValue(options, field.value);
 
   return (
     <label className={styles.inputWrapper}>
@@ -36,7 +35,7 @@ const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
       <SelectReact
         {...field}
         options={options}
-        value={getCurrentValue(options,field.value)}
+        value={currentValue}
         onChange={handleSelectChange}
       />
       <span className={styles.errorWrapper}>
