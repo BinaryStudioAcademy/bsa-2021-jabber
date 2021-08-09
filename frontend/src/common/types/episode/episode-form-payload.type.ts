@@ -5,6 +5,7 @@ import {
 } from 'jabber-shared/common/types/types';
 
 type EpisodeFormPayload = EpisodePayload & {
+  [EpisodePayloadKey.IMAGE]: FileList | null;
   [EpisodePayloadKey.RECORD]: FileList | null;
   [EpisodePayloadKey.SHOWNOTES]: ShownotePayload[];
 };

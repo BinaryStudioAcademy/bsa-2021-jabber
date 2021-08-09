@@ -56,6 +56,7 @@ const shownote = new Shownote({
 const episode = new Episode({
   episodeRepository,
   shownoteService: shownote,
+  imageRepository,
   recordRepository,
   fileStorage,
 });

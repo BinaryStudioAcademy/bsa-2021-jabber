@@ -20,6 +20,12 @@ const episodeCreate = episodeCreateCommon.keys({
     }),
     Joi.any().equal(null),
   ],
+  [EpisodePayloadKey.IMAGE_DATA_URL]: [
+    Joi.string().uri().messages({
+      'string.uri': EpisodeValidationMessage.DATA_URL_FORMAT_IMG,
+    }),
+    Joi.any().equal(null),
+  ],
 });
 
 export { episodeCreate };
