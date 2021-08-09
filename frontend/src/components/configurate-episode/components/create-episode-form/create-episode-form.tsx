@@ -19,6 +19,12 @@ type Props = {
   payload?: EpisodeFormPayload;
 };
 
+const acceptExtension = getFileExtensions(
+  FileExtension.JPEG,
+  FileExtension.JPG,
+  FileExtension.PNG,
+  FileExtension.SVG,
+);
 const acceptAudioExtension = getFileExtensions(
   FileExtension.MP3,
   FileExtension.WAV,
@@ -37,6 +43,7 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
   const isFormDisable = dataStatus === DataStatus.PENDING;
 
   const selectOptions: Option[] = getOptions(Object.values(EpisodeType));
+
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisable} className={styles.fieldset}>
@@ -63,11 +70,22 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
           control={control}
           errors={errors}
         />
-        <input
-          {...register(EpisodePayloadKey.RECORD)}
-          accept={acceptAudioExtension}
-          type={InputType.FILE}
-        />
+        <label>
+          Image
+          <input
+            {...register(EpisodePayloadKey.IMAGE)}
+            accept={acceptExtension}
+            type={InputType.FILE}
+          />
+        </label>
+        <label>
+          Record
+          <input
+            {...register(EpisodePayloadKey.RECORD)}
+            accept={acceptAudioExtension}
+            type={InputType.FILE}
+          />
+        </label>
         <Button label="Save" type={ButtonType.SUBMIT} />
       </fieldset>
     </form>

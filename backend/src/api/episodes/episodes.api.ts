@@ -31,7 +31,18 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
   episodeRouter.get(
     EpisodesApiPath.$ID,
     handleAsyncApi(async (req, res) => {
-      return res.send(await episodeService.getById(req.params.id)).status(HttpCode.OK);
+      return res
+        .send(await episodeService.getById(req.params.id))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  episodeRouter.get(
+    EpisodesApiPath.PODCAST_$ID,
+    handleAsyncApi(async (req, res) => {
+      return res
+        .send(await episodeService.getAllByPodcastId(req.params.id))
+        .status(HttpCode.OK);
     }),
   );
 

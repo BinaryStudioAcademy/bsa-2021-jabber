@@ -6,10 +6,12 @@ enum AppRoute {
   PODCASTS_$ID = '/podcasts/:id',
   PODCASTS_EDIT = '/podcasts/edit',
   PODCASTS_EDIT_$ID = '/podcasts/edit/:id?',
+  PODCASTS_$ID_EPISODEs_EDIT = '/podcasts/:podcastId/episodes/edit',
+  PODCASTS_$ID_EPISODES_EDIT_$ID = '/podcasts/:podcastId/episodes/edit/:id?',
   PODCASTS_$ID_LIVE = '/podcasts/:id/live',
   EPISODES_$ID = '/episodes/:id',
-  EPISODE_EDIT = '/episode/edit',
-  EPISODE_EDIT_$ID = '/episode/edit/:id?',
+  EPISODES_EDIT = '/episodes/edit',
+  EPISODES_EDIT_$ID = '/episodes/edit/:id?',
   ANY = '*',
 }
 

@@ -51,6 +51,7 @@ const user = new User({
 
 const episode = new Episode({
   episodeRepository,
+  imageRepository,
   recordRepository,
   fileStorage,
 });

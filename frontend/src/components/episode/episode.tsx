@@ -1,6 +1,8 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import { episode as episodeActions } from 'store/actions';
 import { CreateCommentForm, CommentsList } from './components/components';
+import { Loader } from 'components/common/common';
+import { DataStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
@@ -9,11 +11,14 @@ const Episode: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
 
-  const { episode, comments, user } = useAppSelector(({ episode, auth }) => ({
-    episode: episode.episode,
-    comments: episode.comments,
-    user: auth.user,
-  }));
+  const { episode, dataStatus, comments, user } = useAppSelector(
+    ({ episode, auth }) => ({
+      dataStatus: episode.dataStatus,
+      episode: episode.episode,
+      comments: episode.comments,
+      user: auth.user,
+    }),
+  );
   const hasUser = Boolean(user);
 
   useEffect(() => {
@@ -24,6 +29,10 @@ const Episode: React.FC = () => {
   const handleCreateComment = (payload: CommentFormCreatePayload): void => {
     dispatch(episodeActions.createComment(payload));
   };
+
+  if (dataStatus === DataStatus.PENDING) {
+    return <Loader />;
+  }
 
   return (
     <main className={styles.root}>
@@ -47,12 +56,12 @@ const Episode: React.FC = () => {
         <h1 className={styles.notFound}>Oops. There is no such episode</h1>
       )}
       <div className={styles.commentsWrapper}>
-        {hasUser && <CreateCommentForm
-          onSubmit={handleCreateComment}
-        />}
-        {comments.length
-          ? <CommentsList comments={comments} />
-          : <div>There&apos;s no comment yet.</div>}
+        {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
+        {comments.length ? (
+          <CommentsList comments={comments} />
+        ) : (
+          <div>There&apos;s no comment yet.</div>
+        )}
       </div>
     </main>
   );
