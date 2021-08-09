@@ -1,9 +1,8 @@
-import { ShownoteCreatePayloadKey } from '~/common/enums/enums';
+import { ShownotePayloadKey } from '~/common/enums/enums';
+import { ShownotePayload } from './shownote-payload.type';
 
-type ShownoteCreatePayload = {
-  [ShownoteCreatePayloadKey.NAME]: string;
-  [ShownoteCreatePayloadKey.EPISODE_ID]: number;
-  [ShownoteCreatePayloadKey.TIMESTAMP]: number;
+type ShownoteCreatePayload = ShownotePayload & {
+  [ShownotePayloadKey.EPISODE_ID]: number;
 };
 
 export type { ShownoteCreatePayload };

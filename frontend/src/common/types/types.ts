@@ -9,5 +9,6 @@ export type {
   PodcastEditPayload,
 } from './podcast/podcast';
 export type { Episode, EpisodeCreatePayload } from './episode/episode';
+export type { Shownote, ShownotePayload } from './shownote/shownote';
 export type { SignResponse } from './sign/sign';
 export type { Option } from './ui/option';
