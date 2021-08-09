@@ -6,7 +6,8 @@ enum EpisodePayloadKey {
   DESCRIPTION = 'description',
   IMAGE = 'image',
   IMAGE_DATA_URL = 'imageDataUrl',
-  IMAGE_ID = 'imageId',
+  RECORD = 'record',
+  RECORD_DATA_URL = 'recordDataUrl',
 }
 
 export { EpisodePayloadKey };

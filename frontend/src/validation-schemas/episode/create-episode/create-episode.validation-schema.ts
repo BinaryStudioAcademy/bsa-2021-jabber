@@ -4,6 +4,7 @@ import { EpisodePayloadKey } from 'common/enums/enums';
 
 const episodeCreate = episode.keys({
   [EpisodePayloadKey.IMAGE]: Joi.object().allow(null),
+  [EpisodePayloadKey.RECORD]: Joi.object().required(),
 });
 
 export { episodeCreate };

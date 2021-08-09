@@ -8,10 +8,10 @@ export type {
   PodcastCreatePayload,
   PodcastEditPayload,
 } from './podcast/podcast';
-export type { 
-  Episode, 
-  EpisodeCreatePayload, 
-  EpisodeFormPayload, 
+export type {
+  Episode,
+  EpisodeCreatePayload,
+  EpisodeFormPayload,
 } from './episode/episode';
 export type { SignResponse } from './sign/sign';
 export type { CommentCreatePayload, Comment, CommentFormCreatePayload } from './comment/comment';

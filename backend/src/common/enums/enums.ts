@@ -35,8 +35,8 @@ export {
 export { ResourceType } from './file/file';
 export {
   EpisodeType,
-  EpisodePayloadKey,
   EpisodeValidationMessage,
+  EpisodePayloadKey,
 } from './episode/episode';
 export { ShownoteCreatePayloadKey } from './shownote/shownote.enum';
 export { StrategyName } from './strategy/strategy';

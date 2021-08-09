@@ -19,13 +19,6 @@ const episode = Joi.object({
       'string.min': EpisodeValidationMessage.EPISODE_NAME_MIN_LENGTH,
       'string.max': EpisodeValidationMessage.EPISODE_NAME_MAX_LENGTH,
     }),
-  [EpisodePayloadKey.PODCAST_ID]: Joi.number()
-    .integer()
-    .required()
-    .messages({
-      'number.required': EpisodeValidationMessage.PODCAST_ID_REQUIRE,
-      'number.integer': EpisodeValidationMessage.PODCAST_ID_NUMBER_FORMAT,
-    }),
   [EpisodePayloadKey.TYPE]: Joi.string()
     .valid(...episodeTypes)
     .required()

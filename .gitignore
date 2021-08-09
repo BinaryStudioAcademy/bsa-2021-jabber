@@ -5,6 +5,8 @@ node_modules
 
 # testing
 coverage
+newman
+__tests__/newman
 
 # production
 build

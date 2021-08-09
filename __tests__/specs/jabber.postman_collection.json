@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "31c9568e-d762-41de-8069-86df51beb788",
+		"name": "jabber",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "[auth] sign-up new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"Body Validation\", function () {\r",
+							"    pm.expect(res).to.have.keys([\"token\", \"user\"])\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"test\",\r\n    \"lastName\": \"test\",\r\n    \"nickname\": \"test nickname\",\r\n    \"email\": \"test0@test.com\",\r\n    \"password\": \"Pa55word\",\r\n    \"birthdate\": \"11/11/2000\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v1/auth/sign-up",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[auth] sign-in",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const req = {\r",
+							"    url: \"http://localhost:3001/api/v1/auth/sign-up\",\r",
+							"    method: \"POST\",\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/json',\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: \"raw\",\r",
+							"        raw: JSON.stringify({\r",
+							"            \"firstName\": \"test1\",\r",
+							"            \"lastName\": \"test1\",\r",
+							"            \"nickname\": \"test1 nickname\",\r",
+							"            \"email\": \"test_test6@test.com\",\r",
+							"            \"password\": \"Pa55word\",\r",
+							"            \"birthdate\": \"11/11/2000\"\r",
+							"        })\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.sendRequest(req, (error, response) => {\r",
+							"    if (error) {\r",
+							"        console.log(error);\r",
+							"    }\r",
+							"    pm.test('precondition response validation', () => {\r",
+							"        pm.expect(error).to.equal(null);\r",
+							"        pm.expect(response).to.have.property('code', 200);\r",
+							"        pm.expect(response).to.have.property('status', 'OK');\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"Body Validation\", function () {\r",
+							"    pm.expect(res).to.have.keys([\"token\", \"user\"])\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"test_test6@test.com\",\r\n    \"password\": \"Pa55word\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v1/auth/sign-in",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"sign-in"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

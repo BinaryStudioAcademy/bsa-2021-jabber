@@ -10,11 +10,7 @@ const ConfigurateEpisode: React.FC = () => {
     dispatch(configurateEpisodeActions.createEpisode(payload));
   };
 
-  return (
-    <div>
-      <CreateEpisodeForm onSubmit={handleCreateEpisode}/>
-    </div>
-  );
+  return <CreateEpisodeForm onSubmit={handleCreateEpisode} />;
 };
 
 export default ConfigurateEpisode;

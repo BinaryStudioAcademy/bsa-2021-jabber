@@ -6,6 +6,7 @@ const DEFAULT_CREATE_EPISODE_PAYLOAD: EpisodeFormPayload = {
   [EpisodePayloadKey.DESCRIPTION]: '',
   [EpisodePayloadKey.TYPE]: EpisodeType.PUBLIC,
   [EpisodePayloadKey.IMAGE]: null,
+  [EpisodePayloadKey.RECORD]: null,
 };
 
 export { DEFAULT_CREATE_EPISODE_PAYLOAD };
