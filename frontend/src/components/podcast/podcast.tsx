@@ -38,6 +38,7 @@ const Podcast: React.FC = () => {
             <div className={styles.descriptionWrapper}>
               <h1 className={styles.title}>{podcast.name}</h1>
               <p className={styles.description}>{podcast.description}</p>
+              <p className={styles.type}>Type: {podcast.type}</p>
             </div>
             <div className={styles.wrapper}>
               <p className={styles.imageWrapper}>
