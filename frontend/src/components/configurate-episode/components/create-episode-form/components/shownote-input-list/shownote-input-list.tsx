@@ -2,7 +2,7 @@ import { DeepMap, FieldError, Control, FieldValues } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import {
   ButtonColor,
-  EpisodeCreatePayloadKey,
+  EpisodePayloadKey,
   InputType,
   ShownotePayloadKey,
 } from 'common/enums/enums';
@@ -19,7 +19,7 @@ type Props = {
 const ShownoteInputList: React.FC<Props> = ({ control, errors }) => {
   const { fields, append, remove } = useFieldArray({
     control,
-    name: EpisodeCreatePayloadKey.SHOWNOTES,
+    name: EpisodePayloadKey.SHOWNOTES,
   });
 
   const handleAddShownote = useCallback((): void => {
@@ -44,7 +44,7 @@ const ShownoteInputList: React.FC<Props> = ({ control, errors }) => {
               label="Name"
               placeholder="Enter show-note name"
               name={
-                `${EpisodeCreatePayloadKey.SHOWNOTES}[${index}].${ShownotePayloadKey.NAME}` as 'shownotes[x].name'
+                `${EpisodePayloadKey.SHOWNOTES}[${index}].${ShownotePayloadKey.NAME}` as 'shownotes[x].name'
               }
               control={control}
               errors={errors}
@@ -54,7 +54,7 @@ const ShownoteInputList: React.FC<Props> = ({ control, errors }) => {
               label="Timestamp"
               placeholder="Enter show-note timestamp"
               name={
-                `${EpisodeCreatePayloadKey.SHOWNOTES}[${index}].${ShownotePayloadKey.TIMESTAMP}` as 'shownotes[x].timestamp'
+                `${EpisodePayloadKey.SHOWNOTES}[${index}].${ShownotePayloadKey.TIMESTAMP}` as 'shownotes[x].timestamp'
               }
               control={control}
               errors={errors}
@@ -62,7 +62,7 @@ const ShownoteInputList: React.FC<Props> = ({ control, errors }) => {
             <div className={styles.errorWrapper}>
               <ErrorMessage
                 errors={errors}
-                name={`${EpisodeCreatePayloadKey.SHOWNOTES}[${index}]`}
+                name={`${EpisodePayloadKey.SHOWNOTES}[${index}]`}
               />
             </div>
             <Button
