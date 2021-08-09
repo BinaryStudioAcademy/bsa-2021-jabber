@@ -20,6 +20,10 @@ class Episode {
     return this.#EpisodeModel.query().findById(id);
   }
 
+  public getAllByPodcastId(id: string): Promise<TEpisode[]> {
+    return this.#EpisodeModel.query().where('podcast_id', id);
+  }
+
   public create(payload: EpisodeCreateDTOPayload): Promise<TEpisode> {
     return this.#EpisodeModel.query().insert(payload).withGraphFetched('image');
   }

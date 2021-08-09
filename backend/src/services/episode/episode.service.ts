@@ -42,7 +42,7 @@ class Episode {
     if (!episode) {
       throw new HttpError({
         status: HttpCode.NOT_FOUND,
-        message: ErrorMessage.NOT_FOUND,
+        message: ErrorMessage.EPISODE_NOT_FOUND,
       });
     }
     return episode;
@@ -97,6 +97,10 @@ class Episode {
     }
 
     return episode;
+  }
+
+  public getAllByPodcastId(id: string): Promise<TEpisode[]> {
+    return this.#episodeRepository.getAllByPodcastId(id);
   }
 }
 

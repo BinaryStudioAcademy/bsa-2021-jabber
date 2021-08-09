@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Podcast, AsyncThunkConfig } from 'common/types/types';
+import { Podcast, AsyncThunkConfig, Episode } from 'common/types/types';
 import { ActionType } from './common';
 
 const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>(
@@ -12,4 +12,12 @@ const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>(
   },
 );
 
-export { loadPodcast };
+const loadEpisodesByPodcastId = createAsyncThunk<Episode[], number, AsyncThunkConfig>
+(ActionType.LOAD_PODCAST_EPISODES, async (id, { extra }) => {
+  const { episodeApi } = extra;
+  const episodes = await episodeApi.getAllByPodcastId(id);
+
+  return episodes;
+});
+
+export { loadPodcast, loadEpisodesByPodcastId };
