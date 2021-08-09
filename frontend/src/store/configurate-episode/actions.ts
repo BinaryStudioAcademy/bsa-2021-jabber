@@ -8,10 +8,11 @@ import {
 import { getFileFromFileList, getDataUrl } from 'helpers/helpers';
 import { ActionType } from './common';
 import { DEFAULT_PODCAST_ID } from 'common/constants/constants';
+import { NotificationMessage, NotificationTitle } from 'common/enums/enums';
 
 const createEpisode = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkConfig>
 (ActionType.CREATE_EPISODE, async (createEpisodePayload, { getState, extra }) => {
-  const { episodeApi } = extra;
+  const { episodeApi, notificationService } = extra;
   const { auth } = getState();
 
   const file = getFileFromFileList(createEpisodePayload.record);
@@ -27,6 +28,7 @@ const createEpisode = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkCo
     imageDataUrl: imgFile ? await getDataUrl(imgFile) : null,
   });
 
+  notificationService.success(NotificationTitle.SUCCESS, `The episode ${NotificationMessage.SUCCESS_CREATED}`);
   return episodes;
 });
 
