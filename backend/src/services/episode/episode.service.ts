@@ -72,7 +72,7 @@ class Episode {
     };
 
     if (imageDataUrl) {
-      const {url, publicId} = await this.#fileStorage.upload({
+      const { url, publicId } = await this.#fileStorage.upload({
         dataUrl: imageDataUrl,
         userId,
       });
@@ -87,7 +87,7 @@ class Episode {
     const episode = await this.#episodeRepository.create(newEpisode);
 
     if (recordDataUrl) {
-      const {url, publicId, bytes} = await this.#fileStorage.upload({
+      const { url, publicId, bytes } = await this.#fileStorage.upload({
         dataUrl: recordDataUrl,
         userId,
       });

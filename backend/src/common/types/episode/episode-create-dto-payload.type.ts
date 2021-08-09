@@ -1,4 +1,4 @@
-import {EpisodeStatus, EpisodeType} from '~/common/enums/enums';
+import { EpisodeStatus, EpisodeType } from '~/common/enums/enums';
 
 type EpisodeCreateDTOPayload = {
   name: string;
