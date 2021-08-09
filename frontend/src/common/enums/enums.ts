@@ -23,3 +23,4 @@ export {
   ButtonColor,
 } from './ui/ui';
 export { RecordStatus } from './record/record';
+export { ShownotePayloadKey } from './shownote/shownote';

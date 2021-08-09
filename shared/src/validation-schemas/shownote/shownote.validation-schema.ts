@@ -1,12 +1,12 @@
 import { Joi } from '~/helpers/helpers';
 import {
-  ShownoteCreatePayloadKey,
+  ShownotePayloadKey,
   ShownoteValidationMessage,
   ShownoteValidationRule,
 } from '~/common/enums/enums';
 
 const shownote = Joi.object({
-  [ShownoteCreatePayloadKey.NAME]: Joi.string()
+  [ShownotePayloadKey.NAME]: Joi.string()
     .trim()
     .min(ShownoteValidationRule.SHOWNOTE_NAME_MIN_LENGTH)
     .max(ShownoteValidationRule.SHOWNOTE_NAME_MAX_LENGTH)
@@ -16,7 +16,7 @@ const shownote = Joi.object({
       'string.min': ShownoteValidationMessage.SHOWNOTE_NAME_MIN_LENGTH,
       'string.max': ShownoteValidationMessage.SHOWNOTE_NAME_MAX_LENGTH,
     }),
-  [ShownoteCreatePayloadKey.TIMESTAMP]: Joi.number()
+  [ShownotePayloadKey.TIMESTAMP]: Joi.number()
     .integer()
     .min(ShownoteValidationRule.TIMESTAMP_MIN_VALUE)
     .required()

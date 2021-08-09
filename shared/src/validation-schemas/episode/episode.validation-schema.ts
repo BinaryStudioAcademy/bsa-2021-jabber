@@ -4,7 +4,7 @@ import {
   EpisodeValidationMessage,
   EpisodeCreatePayloadKey,
   EpisodeType,
-  ShownoteCreatePayloadKey,
+  ShownotePayloadKey,
 } from '~/common/enums/enums';
 import { EpisodeCreatePayload } from '~/common/types/types';
 import { shownote as shownoteValidationSchema } from '../shownote/shownote';
@@ -46,8 +46,7 @@ const episode = Joi.object<EpisodeCreatePayload>({
     .items(shownoteValidationSchema)
     .unique(
       (a, b) =>
-        a[ShownoteCreatePayloadKey.TIMESTAMP] ===
-        b[ShownoteCreatePayloadKey.TIMESTAMP],
+        a[ShownotePayloadKey.TIMESTAMP] === b[ShownotePayloadKey.TIMESTAMP],
     )
     .required()
     .messages({
