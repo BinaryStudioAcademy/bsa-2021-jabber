@@ -4,6 +4,7 @@ enum EpisodePayloadKey {
   PODCAST_ID = 'podcastId',
   TYPE = 'type',
   DESCRIPTION = 'description',
+  STATUS = 'status',
   IMAGE = 'image',
   IMAGE_DATA_URL = 'imageDataUrl',
   RECORD = 'record',

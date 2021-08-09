@@ -24,6 +24,7 @@ const Podcast: React.FC<Props> = ({ podcast }) => (
         {podcast.name}
       </Link>
     </h3>
+    <p className={styles.type}>Type: {podcast.type}</p>
   </li>
 );
 

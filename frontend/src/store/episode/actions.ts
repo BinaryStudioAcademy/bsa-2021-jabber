@@ -37,8 +37,4 @@ const createComment = createAsyncThunk<Comment, CommentFormCreatePayload, AsyncT
   return comment;
 });
 
-export {
-  loadEpisode,
-  loadCommentsByEpisodeId,
-  createComment,
-};
+export { loadEpisode, loadCommentsByEpisodeId, createComment };

@@ -49,13 +49,14 @@ class Episode {
   }
 
   public async create({
-    userId, 
-    recordDataUrl, 
-    imageDataUrl, 
-    type, 
-    description, 
-    name, 
+    userId,
+    recordDataUrl,
+    imageDataUrl,
+    type,
+    description,
+    name,
     podcastId,
+    status,
   }: EpisodeCreatePayload): Promise<TEpisode> {
 
     const newEpisode: EpisodeCreateDTOPayload = {
@@ -64,6 +65,7 @@ class Episode {
       description,
       name,
       podcastId,
+      status,
       imageId: null,
     };
 

@@ -5,7 +5,6 @@ export {
   PodcastsApiPath,
   EpisodesApiPath,
   CommentsApiPath,
-  RecordsApiPath,
 } from './api/api';
 export { AppRoute, ENV, DataStatus, StorageKey } from './app/app';
 export { HttpHeader, HttpMethod } from './http/http';
@@ -16,7 +15,7 @@ export {
   PodcastValidationMessage,
   PodcastType,
 } from './podcast/podcast';
-export { EpisodePayloadKey, EpisodeType } from './episode/episode';
+export { EpisodePayloadKey, EpisodeType, EpisodeStatus } from './episode/episode';
 export { UserCreatePayloadKey, UserSignInPayloadKey } from './user/user';
 export {
   ButtonType,
