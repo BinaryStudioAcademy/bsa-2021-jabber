@@ -4,6 +4,7 @@ export {
   AuthApiPath,
   PodcastsApiPath,
   EpisodesApiPath,
+  CommentsApiPath,
 } from './api/api';
 export { AppRoute, ENV, DataStatus, StorageKey } from './app/app';
 export { HttpHeader, HttpMethod } from './http/http';
@@ -14,7 +15,7 @@ export {
   PodcastValidationMessage,
   PodcastType,
 } from './podcast/podcast';
-export { EpisodeCreatePayloadKey, EpisodeType } from './episode/episode';
+export { EpisodePayloadKey, EpisodeType } from './episode/episode';
 export { UserCreatePayloadKey, UserSignInPayloadKey } from './user/user';
 export {
   ButtonType,
@@ -23,4 +24,6 @@ export {
   ButtonStyle,
   ButtonColor,
 } from './ui/ui';
+export { DateFormatType } from './date/date';
 export { RecordStatus } from './record/record';
+export { CommentCreatePayloadKey } from './comment/comment';
