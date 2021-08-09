@@ -13,7 +13,7 @@ const ConfigurateEpisode: React.FC = () => {
 
   return (
     <div>
-      <CreateEpisodeForm onSubmit={handleCreateEpisode}/>
+      <CreateEpisodeForm onSubmit={handleCreateEpisode} />
     </div>
   );
 };

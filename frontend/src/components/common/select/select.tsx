@@ -9,6 +9,7 @@ import {
   useController,
 } from 'react-hook-form';
 import styles from './styles.module.scss';
+import { useState } from 'react';
 
 type Props = {
   options: Option[];
@@ -21,11 +22,22 @@ type Props = {
 
 const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
   const { field } = useController({ name, control });
+
+  const [val, setVal] = useState(options[0]);
+
   return (
     <label className={styles.inputWrapper}>
       <span className={styles.label}>{label}</span>
-      <SelectReact {...field} options={options} {...field} />
-
+      <SelectReact
+        {...field}
+        options={options}
+        value={val}
+        onChange={(event: any): void => {
+          setVal(event);
+          console.warn(event);
+          field.onChange(event.label);
+        }}
+      />
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />
       </span>
