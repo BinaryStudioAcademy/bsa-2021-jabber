@@ -16,14 +16,6 @@ const loadEpisode = createAsyncThunk<Episode, number, AsyncThunkConfig>
   return episode;
 });
 
-const loadEpisodesByPodcastId = createAsyncThunk<Episode[], number, AsyncThunkConfig>
-(ActionType.LOAD_EPISODES_BY_PODCAST_ID, async (id, { extra }) => {
-  const { episodeApi } = extra;
-  const episodes = await episodeApi.getAllByPodcastId(id);
-
-  return episodes;
-});
-
 const loadCommentsByEpisodeId = createAsyncThunk<Comment[], number, AsyncThunkConfig>
 (ActionType.LOAD_COMMENTS_BY_EPISODE_ID, async (episodeId, { extra }) => {
   const { commentApi } = extra;
@@ -45,4 +37,4 @@ const createComment = createAsyncThunk<Comment, CommentFormCreatePayload, AsyncT
   return comment;
 });
 
-export { loadEpisode, loadCommentsByEpisodeId, createComment, loadEpisodesByPodcastId };
+export { loadEpisode, loadCommentsByEpisodeId, createComment };

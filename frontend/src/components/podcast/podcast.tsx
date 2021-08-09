@@ -1,7 +1,6 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import {
   podcast as podcastActions,
-  episode as episodeActions,
 } from 'store/actions';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
@@ -12,9 +11,9 @@ const Podcast: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
 
-  const { podcast, episodes } = useAppSelector(({ podcast, episode }) => ({
+  const { podcast, episodes } = useAppSelector(({ podcast }) => ({
     podcast: podcast.podcast,
-    episodes: episode.episodes,
+    episodes: podcast.episodes,
   }));
 
   useEffect(() => {
@@ -23,7 +22,7 @@ const Podcast: React.FC = () => {
 
   useEffect(() => {
     if (podcast) {
-      dispatch(episodeActions.loadEpisodesByPodcastId(podcast.id));
+      dispatch(podcastActions.loadEpisodesByPodcastId(podcast.id));
     }
   }, [podcast]);
 

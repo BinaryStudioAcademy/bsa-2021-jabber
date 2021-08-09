@@ -5,14 +5,12 @@ import {
   loadEpisode,
   loadCommentsByEpisodeId,
   createComment,
-  loadEpisodesByPodcastId,
 } from './actions';
 
 type State = {
   dataStatus: DataStatus;
   commentDataStatus: DataStatus;
   episode: Episode | null;
-  episodes: Episode[];
   comments: Comment[];
 };
 
@@ -20,7 +18,6 @@ const initialState: State = {
   dataStatus: DataStatus.IDLE,
   commentDataStatus: DataStatus.IDLE,
   episode: null,
-  episodes: [],
   comments: [],
 };
 
@@ -33,17 +30,6 @@ const reducer = createReducer(initialState, (builder) => {
     state.episode = action.payload;
   });
   builder.addCase(loadEpisode.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
-  });
-
-  builder.addCase(loadEpisodesByPodcastId.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
-  });
-  builder.addCase(loadEpisodesByPodcastId.fulfilled, (state, action) => {
-    state.dataStatus = DataStatus.FULFILLED;
-    state.episodes = action.payload;
-  });
-  builder.addCase(loadEpisodesByPodcastId.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
 
