@@ -16,6 +16,10 @@ class Image {
     return this.#ImageModel.query().insert(payload);
   }
 
+  public getById(id: number): Promise<TImage> {
+    return this.#ImageModel.query().findById(id);
+  }
+
   public delete(id: number): Promise<number> {
     return this.#ImageModel.query().deleteById(id);
   }
