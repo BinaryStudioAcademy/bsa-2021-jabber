@@ -1,18 +1,25 @@
-import { EpisodeCreatePayload, Option } from 'common/types/types';
+import { EpisodeFormPayload, Option } from 'common/types/types';
 import { getOptions } from 'helpers/helpers';
-import { ButtonType, DataStatus, EpisodeCreatePayloadKey, EpisodeType, InputType } from 'common/enums/enums';
-import { episode as createEpisodeValidationSchema } from 'validation-schemas/validation-schemas';
+import {
+  ButtonType,
+  DataStatus,
+  EpisodePayloadKey,
+  EpisodeType,
+  InputType,
+} from 'common/enums/enums';
+import { episodeCreate as createEpisodeValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
 import styles from './styles.module.scss';
 import { Button, Input, Select } from 'components/common/common';
 import { DEFAULT_CREATE_EPISODE_PAYLOAD } from './common/constants';
 
 type Props = {
-  onSubmit: (payload: EpisodeCreatePayload) => void;
+  onSubmit: (payload: EpisodeFormPayload) => void;
+  acceptAudioExtension: string;
 };
 
-const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
-  const { control, handleSubmit, errors } = useAppForm({
+const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, acceptAudioExtension }) => {
+  const { control, handleSubmit, errors, register } = useAppForm({
     validationSchema: createEpisodeValidationSchema,
     defaultValues: DEFAULT_CREATE_EPISODE_PAYLOAD,
   });
@@ -24,7 +31,6 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
   const isFormDisable = dataStatus === DataStatus.PENDING;
 
   const selectOptions:Option[] = getOptions(Object.values(EpisodeType));
-
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisable} className={styles.fieldset}>
@@ -32,7 +38,7 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
           type={InputType.TEXT}
           label="Name"
           placeholder="Enter episode name"
-          name={EpisodeCreatePayloadKey.NAME}
+          name={EpisodePayloadKey.NAME}
           control={control}
           errors={errors}
         />
@@ -40,16 +46,21 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
           type={InputType.TEXT}
           label="Description"
           placeholder="Enter episode description"
-          name={EpisodeCreatePayloadKey.DESCRIPTION}
+          name={EpisodePayloadKey.DESCRIPTION}
           control={control}
           errors={errors}
         />
         <Select
           options={selectOptions}
           label="Type"
-          name={EpisodeCreatePayloadKey.TYPE}
+          name={EpisodePayloadKey.TYPE}
           control={control}
           errors={errors}
+        />
+        <input
+          {...register(EpisodePayloadKey.RECORD)}
+          accept={acceptAudioExtension}
+          type={InputType.FILE}
         />
         <Button label="Upload" type={ButtonType.SUBMIT} />
       </fieldset>
