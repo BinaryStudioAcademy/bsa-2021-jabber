@@ -8,8 +8,9 @@ import {
   FieldValues,
   useController,
 } from 'react-hook-form';
+import { useState } from 'hooks/hooks';
+import { FIRST_ARRAY_IDX } from 'jabber-shared/common/constants/constants';
 import styles from './styles.module.scss';
-import { useState } from 'react';
 
 type Props = {
   options: Option[];
@@ -23,7 +24,7 @@ type Props = {
 const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
   const { field } = useController({ name, control });
 
-  const [val, setVal] = useState(options[0]);
+  const [val, setVal] = useState(options[FIRST_ARRAY_IDX]);
 
   const changeHandler = (event: Option | null): void => {
     if(event){
