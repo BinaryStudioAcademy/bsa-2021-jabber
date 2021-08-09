@@ -7,7 +7,12 @@ export type {
 } from './podcast/podcast';
 export type { Image, ImageCreatePayload } from './image/image';
 export type { ValidationSchema } from './validation-schema/validation-schema';
-export type { Episode, EpisodeCreatePayload, EpisodeEditPayload } from './episode/episode';
+export type {
+  Episode,
+  EpisodeCreatePayload,
+  EpisodeEditPayload,
+  EpisodePayload,
+} from './episode/episode';
 export type { Shownote, ShownoteCreatePayload } from './shownote/shownote';
 export type { Comment, CommentCreatePayload } from './comment/comment';
 export type { Record, RecordCreatePayload } from './record/record';
