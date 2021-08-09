@@ -6,3 +6,5 @@ type EpisodeCreatePayload = EpisodePayload & {
   [EpisodePayloadKey.PODCAST_ID]: number;
   [EpisodePayloadKey.RECORD_DATA_URL]: string | null;
 };
+
+export type { EpisodeCreatePayload };
