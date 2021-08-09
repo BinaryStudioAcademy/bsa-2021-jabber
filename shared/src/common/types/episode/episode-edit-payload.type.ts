@@ -1,9 +1,8 @@
-import { EpisodePayloadKey, EpisodeType } from '~/common/enums/enums';
+import { EpisodePayloadKey } from '~/common/enums/enums';
+import { EpisodePayload } from './episode-payload.type';
 
-type EpisodeEditPayload = {
-  [EpisodePayloadKey.NAME]: string;
-  [EpisodePayloadKey.DESCRIPTION]: string;
-  [EpisodePayloadKey.TYPE]: EpisodeType;
+type EpisodeEditPayload = EpisodePayload & {
+  [EpisodePayloadKey.RECORD_DATA_URL]: string | null;
 };
 
 export type { EpisodeEditPayload };
