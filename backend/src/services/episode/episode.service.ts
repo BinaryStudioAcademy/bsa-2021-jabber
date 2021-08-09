@@ -65,8 +65,6 @@ class Episode {
       description,
       name,
       podcastId,
-      type,
-      userId,
       status,
       imageId: null,
     };
