@@ -5,6 +5,7 @@ import {
   podcastApi,
   episodeApi,
   commentApi,
+  recordApi,
   storage as storageService,
   recordAudio as recordAudioService,
 } from 'services/services';
@@ -15,6 +16,7 @@ const extraArgument = {
   podcastApi,
   episodeApi,
   commentApi,
+  recordApi,
   storageService,
   recordAudioService,
 };

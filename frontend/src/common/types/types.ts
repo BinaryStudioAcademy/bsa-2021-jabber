@@ -16,3 +16,4 @@ export type {
 export type { SignResponse } from './sign/sign';
 export type { CommentCreatePayload, Comment, CommentFormCreatePayload } from './comment/comment';
 export type { Option } from './ui/option';
+export type { Record } from './record/record';

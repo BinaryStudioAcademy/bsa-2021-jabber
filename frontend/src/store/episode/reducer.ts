@@ -1,12 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { Episode, Comment } from 'common/types/types';
-import { loadEpisode, loadCommentsByEpisodeId, createComment } from './actions';
+import { Episode, Comment, Record } from 'common/types/types';
+import { loadEpisode, loadCommentsByEpisodeId, createComment, loadRecordByEpisodeId } from './actions';
 
 type State = {
   dataStatus: DataStatus;
   commentDataStatus: DataStatus;
   episode: Episode | null;
+  record: Record | null;
   comments: Comment[];
 };
 
@@ -14,6 +15,7 @@ const initialState: State = {
   dataStatus: DataStatus.IDLE,
   commentDataStatus: DataStatus.IDLE,
   episode: null,
+  record: null,
   comments: [],
 };
 
@@ -48,6 +50,16 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(createComment.rejected, (state) => {
     state.commentDataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(loadRecordByEpisodeId.pending, (state) => {
+    state.dataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(loadRecordByEpisodeId.fulfilled, (state, action) => {
+    state.dataStatus = DataStatus.FULFILLED;
+    state.record = action.payload;
+  });
+  builder.addCase(loadRecordByEpisodeId.rejected, (state) => {
+    state.dataStatus = DataStatus.REJECTED;
   });
 });
 

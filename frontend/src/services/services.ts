@@ -7,6 +7,7 @@ import { Notification } from './notification/notification.service';
 import { EpisodeApi } from './episode-api/episode-api.service';
 import { Storage } from './storage/storage.service';
 import { RecordAudio } from './record-audio/record-audio.service';
+import { RecordApi } from './record-api/record-api.service';
 
 const storage = new Storage({
   storage: localStorage,
@@ -42,6 +43,11 @@ const recordAudio = new RecordAudio({
   notificationService: notification,
 });
 
+const recordApi = new RecordApi({
+  http,
+  apiPrefix: ENV.API_PATH,
+});
+
 export {
   authApi,
   notification,
@@ -50,4 +56,5 @@ export {
   storage,
   commentApi,
   recordAudio,
+  recordApi,
 };

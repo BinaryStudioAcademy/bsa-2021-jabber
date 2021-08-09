@@ -19,6 +19,10 @@ class Record {
   public create(payload: RecordCreatePayload): Promise<TRecord> {
     return this.#RecordModel.query().insert(payload);
   }
+
+  public getByEpisodeId(id: string): Promise<TRecord> {
+    return this.#RecordModel.query().findOne('episode_id', '=', id);
+  }
 }
 
 export { Record };

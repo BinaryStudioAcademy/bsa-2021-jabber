@@ -32,6 +32,7 @@ type Props = {
   skipTime?: number;
   onClickPrevious?: () => void;
   onClickNext?: () => void;
+  setRef?: (ref: H5AudioPlayer | null) => void;
 };
 
 const rateSteps = Object.values(RateStep);
@@ -42,12 +43,17 @@ const Player: React.FC<Props> = ({
   skipTime = DEFAULT_SKIP_TIME,
   onClickNext,
   onClickPrevious,
+  setRef = Function.prototype,
 }) => {
   const playerRef = useRef<H5AudioPlayer | null>(null);
 
   const [rateIndex, setRateIndex] = useState(
     rateSteps.indexOf(RateStep.NORMAL),
   );
+
+  useEffect(() => {
+    setRef(playerRef.current);
+  }, []);
 
   useEffect(() => {
     if (playerRef.current && playerRef.current.audio.current) {
