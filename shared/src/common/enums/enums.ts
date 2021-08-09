@@ -36,3 +36,4 @@ export { CommentCreatePayloadKey } from './comment/comment';
 export { RecordCreatePayloadKey } from './record/record';
 export { ImageCreatePayloadKey } from './image/image';
 export { DateFormatType } from './date/date';
+export { NotificationMessage, NotificationTitle } from './notification/notification';
