@@ -64,7 +64,7 @@ const App: React.FC = () => {
           exact
         />
         <AuthPublicRouter
-          path={AppRoute.EPISODE_EDIT_$ID}
+          path={AppRoute.PODCASTS_$ID_EPISODES_EDIT_$ID}
           component={ConfigurateEpisode}
           exact
         />

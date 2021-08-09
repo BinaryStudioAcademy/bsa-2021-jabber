@@ -69,16 +69,22 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
           control={control}
           errors={errors}
         />
-        <input
-          {...register(EpisodePayloadKey.IMAGE)}
-          accept={acceptExtension}
-          type={InputType.FILE}
-        />
-        <input
-          {...register(EpisodePayloadKey.RECORD)}
-          accept={acceptAudioExtension}
-          type={InputType.FILE}
-        />
+        <label>
+          Image
+          <input
+            {...register(EpisodePayloadKey.IMAGE)}
+            accept={acceptExtension}
+            type={InputType.FILE}
+          />
+        </label>
+        <label>
+          Record
+          <input
+            {...register(EpisodePayloadKey.RECORD)}
+            accept={acceptAudioExtension}
+            type={InputType.FILE}
+          />
+        </label>
         <Button label="Save" type={ButtonType.SUBMIT} />
       </fieldset>
     </form>

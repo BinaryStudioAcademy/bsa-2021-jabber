@@ -11,12 +11,14 @@ const Episode: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
 
-  const { episode, dataStatus, comments, user } = useAppSelector(({ episode, auth }) => ({
-    dataStatus: episode.dataStatus,
-    episode: episode.episode,
-    comments: episode.comments,
-    user: auth.user,
-  }));
+  const { episode, dataStatus, comments, user } = useAppSelector(
+    ({ episode, auth }) => ({
+      dataStatus: episode.dataStatus,
+      episode: episode.episode,
+      comments: episode.comments,
+      user: auth.user,
+    }),
+  );
   const hasUser = Boolean(user);
 
   useEffect(() => {
@@ -54,12 +56,12 @@ const Episode: React.FC = () => {
         <h1 className={styles.notFound}>Oops. There is no such episode</h1>
       )}
       <div className={styles.commentsWrapper}>
-        {hasUser && <CreateCommentForm
-          onSubmit={handleCreateComment}
-        />}
-        {comments.length
-          ? <CommentsList comments={comments} />
-          : <div>There&apos;s no comment yet.</div>}
+        {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
+        {comments.length ? (
+          <CommentsList comments={comments} />
+        ) : (
+          <div>There&apos;s no comment yet.</div>
+        )}
       </div>
     </main>
   );
