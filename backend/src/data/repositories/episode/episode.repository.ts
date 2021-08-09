@@ -25,7 +25,7 @@ class Episode {
   }
 
   public create(payload: EpisodeCreateDTOPayload): Promise<TEpisode> {
-    return this.#EpisodeModel.query().insert(payload);
+    return this.#EpisodeModel.query().insert(payload).withGraphFetched('image');
   }
 }
 

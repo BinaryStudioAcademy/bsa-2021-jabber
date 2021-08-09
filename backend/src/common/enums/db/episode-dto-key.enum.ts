@@ -4,6 +4,8 @@ enum EpisodeDTOKey {
   USER_ID = 'userId',
   TYPE = 'type',
   DESCRIPTION = 'description',
+  IMAGE_ID = 'imageId',
+  IMAGE = 'image',
 }
 
 export { EpisodeDTOKey };
