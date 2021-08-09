@@ -25,6 +25,13 @@ const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
 
   const [val, setVal] = useState(options[0]);
 
+  const changeHandler = (event: Option | null): void => {
+    if(event){
+      setVal(event);
+      field.onChange(event.label);
+    }    
+  };
+
   return (
     <label className={styles.inputWrapper}>
       <span className={styles.label}>{label}</span>
@@ -32,10 +39,7 @@ const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
         {...field}
         options={options}
         value={val}
-        onChange={(event: any): void => {
-          setVal(event);
-          field.onChange(event.label);
-        }}
+        onChange={changeHandler}
       />
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />
