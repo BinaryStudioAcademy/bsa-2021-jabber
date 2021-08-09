@@ -8,7 +8,16 @@ export type {
   PodcastCreatePayload,
   PodcastEditPayload,
 } from './podcast/podcast';
-export type { Episode, EpisodeCreatePayload } from './episode/episode';
+export type {
+  Episode,
+  EpisodeCreatePayload,
+  EpisodeFormPayload,
+} from './episode/episode';
 export type { Shownote, ShownotePayload } from './shownote/shownote';
 export type { SignResponse } from './sign/sign';
+export type {
+  CommentCreatePayload,
+  Comment,
+  CommentFormCreatePayload,
+} from './comment/comment';
 export type { Option } from './ui/option';

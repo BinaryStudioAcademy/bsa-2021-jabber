@@ -3,6 +3,7 @@ import {
   PodcastCreateDTOPayload,
   PodcastEditDTOPayload,
 } from '~/common/types/types';
+import { PodcastType } from '~/common/enums/enums';
 import { PodcastModel as PodcastM } from '~/data/models/models';
 
 type Constructor = {
@@ -17,7 +18,7 @@ class Podcast {
   }
 
   public getAll(): Promise<TPodcast[]> {
-    return this.#PodcastModel.query();
+    return this.#PodcastModel.query().where('type', PodcastType.PUBLIC).withGraphJoined('image');
   }
 
   public create(payload: PodcastCreateDTOPayload): Promise<TPodcast> {
@@ -25,7 +26,7 @@ class Podcast {
   }
 
   public getById(id: string): Promise<TPodcast> {
-    return this.#PodcastModel.query().findById(id);
+    return this.#PodcastModel.query().findById(id).withGraphJoined('image');
   }
 
   public update(id: string, payload: PodcastEditDTOPayload): Promise<TPodcast> {

@@ -1,21 +1,16 @@
-import { EpisodeCreatePayload, ShownotePayload } from 'common/types/types';
 import {
-  EpisodeCreatePayloadKey,
+  EpisodePayloadKey,
   EpisodeType,
   ShownotePayloadKey,
 } from 'common/enums/enums';
-import {
-  DEFAULT_USER_ID,
-  DEFAULT_PODCAST_ID,
-} from 'common/constants/constants';
+import { EpisodeFormPayload, ShownotePayload } from 'common/types/types';
 
-const DEFAULT_CREATE_EPISODE_PAYLOAD: EpisodeCreatePayload = {
-  [EpisodeCreatePayloadKey.NAME]: '',
-  [EpisodeCreatePayloadKey.DESCRIPTION]: '',
-  [EpisodeCreatePayloadKey.SHOWNOTES]: [],
-  [EpisodeCreatePayloadKey.USER_ID]: DEFAULT_USER_ID,
-  [EpisodeCreatePayloadKey.PODCAST_ID]: DEFAULT_PODCAST_ID,
-  [EpisodeCreatePayloadKey.TYPE]: EpisodeType.PUBLIC,
+const DEFAULT_CREATE_EPISODE_PAYLOAD: EpisodeFormPayload = {
+  [EpisodePayloadKey.NAME]: '',
+  [EpisodePayloadKey.DESCRIPTION]: '',
+  [EpisodePayloadKey.SHOWNOTES]: [],
+  [EpisodePayloadKey.TYPE]: EpisodeType.PUBLIC,
+  [EpisodePayloadKey.RECORD]: null,
 };
 
 const DEFAULT_SHOWNOTE_PAYLOAD: ShownotePayload = {

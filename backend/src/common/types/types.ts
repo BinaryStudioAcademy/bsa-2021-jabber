@@ -9,7 +9,11 @@ export type {
 } from './podcast/podcast';
 export type { Image, ImageCreatePayload } from './image/image';
 export type { ValidationSchema } from './validation-schema/validation-schema';
-export type { Episode, EpisodeCreatePayload } from './episode/episode';
+export type {
+  Episode,
+  EpisodeCreatePayload,
+  EpisodeCreateDTOPayload,
+} from './episode/episode';
 export type {
   Shownote,
   ShownotePayload,
