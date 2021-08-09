@@ -5,7 +5,6 @@ import {
   Comment,
   CommentFormCreatePayload,
   AsyncThunkConfig,
-  Record,
 } from 'common/types/types';
 import { ActionType } from './common';
 
@@ -38,17 +37,8 @@ const createComment = createAsyncThunk<Comment, CommentFormCreatePayload, AsyncT
   return comment;
 });
 
-const loadRecordByEpisodeId = createAsyncThunk<Record, number, AsyncThunkConfig>
-(ActionType.LOAD_RECORD_BY_EPISODE_ID, async (episodeId, { extra }) => {
-  const { recordApi } = extra;
-  const record = await recordApi.getByEpisodeId(episodeId);
-
-  return record;
-});
-
 export {
   loadEpisode,
   loadCommentsByEpisodeId,
   createComment,
-  loadRecordByEpisodeId,
 };

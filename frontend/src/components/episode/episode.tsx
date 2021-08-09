@@ -20,19 +20,17 @@ const Episode: React.FC = () => {
   const { id } = useParams<PageParams>();
   const [player, setPlayer] = useState<H5AudioPlayer | null>(null);
 
-  const { episode, comments, user, record, dataStatus } = useAppSelector(
+  const { episode, comments, user, dataStatus } = useAppSelector(
     ({ episode, auth }) => ({
       dataStatus: episode.dataStatus,
       episode: episode.episode,
       comments: episode.comments,
-      record: episode.record,
       user: auth.user,
     }),
   );
   const hasUser = Boolean(user);
 
   useEffect(() => {
-    dispatch(episodeActions.loadRecordByEpisodeId(Number(id)));
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisode(Number(id)));
   }, []);
@@ -73,11 +71,8 @@ const Episode: React.FC = () => {
               />
             </p>
           </div>
-          {record ? (
-            <Player
-              src={record.fileUrl}
-              setRef={setPlayer}
-            />
+          {episode.record ? (
+            <Player src={episode.record.fileUrl} setRef={setPlayer} />
           ) : null}
         </>
       ) : (

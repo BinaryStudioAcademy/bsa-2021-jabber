@@ -20,15 +20,6 @@ const initRecordsApi = ({ apiRouter, recordService }: Args): Router => {
     }),
   );
 
-  recordRouter.get(
-    RecordsApiPath.EPISODE_$ID,
-    handleAsyncApi(async (req, res) => {
-      return res
-        .json(await recordService.getByEpisodeId(req.params.id))
-        .status(HttpCode.OK);
-    }),
-  );
-
   return recordRouter;
 };
 
