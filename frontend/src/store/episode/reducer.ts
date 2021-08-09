@@ -5,7 +5,7 @@ import { loadEpisode, loadCommentsByEpisodeId, createComment } from './actions';
 
 type State = {
   dataStatus: DataStatus;
-  commentDataStatus: DataStatus,
+  commentDataStatus: DataStatus;
   episode: Episode | null;
   comments: Comment[];
 };
