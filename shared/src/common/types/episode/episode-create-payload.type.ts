@@ -4,6 +4,7 @@ import { EpisodePayload } from './episode-payload.type';
 type EpisodeCreatePayload = EpisodePayload & {
   [EpisodePayloadKey.USER_ID]: number;
   [EpisodePayloadKey.PODCAST_ID]: number;
+  [EpisodePayloadKey.IMAGE_DATA_URL]: string | null;
   [EpisodePayloadKey.RECORD_DATA_URL]: string | null;
 };
 

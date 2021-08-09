@@ -1,18 +1,21 @@
 import { HttpCode } from '~/common/enums/enums';
 import {
   Episode as TEpisode,
+  EpisodeCreateDTOPayload,
   EpisodeCreatePayload,
 } from '~/common/types/types';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
 import {
   episode as episodeRep,
   record as recordRep,
+  image as imageRep,
 } from '~/data/repositories/repositories';
 import { HttpError } from '~/exceptions/exceptions';
 import { ErrorMessage } from '~/common/enums/enums';
 
 type Constructor = {
   episodeRepository: typeof episodeRep;
+  imageRepository: typeof imageRep;
   recordRepository: typeof recordRep;
   fileStorage: FileStorage;
 };
@@ -21,11 +24,13 @@ class Episode {
   #episodeRepository: typeof episodeRep;
   #fileStorage: FileStorage;
   #recordRepository: typeof recordRep;
+  #imageRepository: typeof imageRep;
 
-  constructor({ episodeRepository, fileStorage, recordRepository }: Constructor) {
+  constructor({ episodeRepository, fileStorage, recordRepository, imageRepository }: Constructor) {
     this.#episodeRepository = episodeRepository;
     this.#fileStorage = fileStorage;
     this.#recordRepository = recordRepository;
+    this.#imageRepository = imageRepository;
   }
 
   public getAll(): Promise<TEpisode[]> {
@@ -43,16 +48,39 @@ class Episode {
     return episode;
   }
 
-  public async create(payload: EpisodeCreatePayload): Promise<TEpisode> {
-    const { userId, recordDataUrl, type, description, name, podcastId } = payload;
+  public async create({
+    userId, 
+    recordDataUrl, 
+    imageDataUrl, 
+    type, 
+    description, 
+    name, 
+    podcastId,
+  }: EpisodeCreatePayload): Promise<TEpisode> {
 
-    const episode = await this.#episodeRepository.create({
-      name,
-      description,
-      podcastId,
-      type,
+    const newEpisode: EpisodeCreateDTOPayload = {
       userId,
-    });
+      type,
+      description,
+      name,
+      podcastId,
+      imageId: null,
+    };
+
+    if (imageDataUrl) {
+      const { url, publicId } = await this.#fileStorage.upload({
+        dataUrl: imageDataUrl,
+        userId,
+      });
+
+      const image = await this.#imageRepository.create({
+        url,
+        publicId,
+      });
+      newEpisode.imageId = image.id;
+    }
+
+    const episode = await this.#episodeRepository.create(newEpisode);
 
     if (recordDataUrl) {
       const { url, publicId, bytes } = await this.#fileStorage.upload({
