@@ -36,6 +36,7 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
   const isFormDisable = dataStatus === DataStatus.PENDING;
 
   const selectOptions: Option[] = getOptions(Object.values(EpisodeType));
+
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisable} className={styles.fieldset}>
