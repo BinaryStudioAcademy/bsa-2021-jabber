@@ -8,7 +8,7 @@ import {
   FieldValues,
   useController,
 } from 'react-hook-form';
-import getCurrentValue from './helpers/getCurrentValue';
+import getCurrentValue from './helpers/get_current_value';
 import styles from './styles.module.scss';
 
 type Props = {
