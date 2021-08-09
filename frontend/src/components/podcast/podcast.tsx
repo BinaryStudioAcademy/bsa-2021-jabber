@@ -8,7 +8,8 @@ import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 
 const Podcast: React.FC = () => {
-  const { podcast, episodes, dataStatus } = useAppSelector(({ podcast }) => ({
+  const { userId, podcast, episodes, dataStatus } = useAppSelector(({ podcast, auth }) => ({
+    userId: auth.user?.id,
     podcast: podcast.podcast,
     episodes: podcast.episodes,
     dataStatus: podcast.dataStatus,
@@ -50,11 +51,13 @@ const Podcast: React.FC = () => {
                   alt={podcast.name}
                 />
               </p>
-              <Link
-                to={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
-              >
-                Add episode
-              </Link>
+              {podcast.userId === userId && (
+                <Link
+                  to={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
+                >
+                  Add episode
+                </Link>
+              )}
             </div>
           </div>
           <EpisodeTable episodes={episodes} />
