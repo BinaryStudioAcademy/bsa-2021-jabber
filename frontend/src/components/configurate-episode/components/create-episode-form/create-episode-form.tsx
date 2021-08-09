@@ -7,6 +7,7 @@ import {
   EpisodeType,
   InputType,
   FileExtension,
+  EpisodeStatus,
 } from 'common/enums/enums';
 import { episodeCreate as createEpisodeValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
@@ -35,7 +36,8 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
 
   const isFormDisable = dataStatus === DataStatus.PENDING;
 
-  const selectOptions: Option[] = getOptions(Object.values(EpisodeType));
+  const selectTypeOptions: Option[] = getOptions(Object.values(EpisodeType));
+  const selectStatusOptions: Option[] = getOptions(Object.values(EpisodeStatus));
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisable} className={styles.fieldset}>
@@ -56,9 +58,16 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
           errors={errors}
         />
         <Select
-          options={selectOptions}
+          options={selectTypeOptions}
           label="Type"
           name={EpisodePayloadKey.TYPE}
+          control={control}
+          errors={errors}
+        />
+        <Select
+          options={selectStatusOptions}
+          label="Status"
+          name={EpisodePayloadKey.STATUS}
           control={control}
           errors={errors}
         />

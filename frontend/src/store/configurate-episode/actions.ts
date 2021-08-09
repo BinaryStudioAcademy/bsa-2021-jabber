@@ -18,6 +18,7 @@ const createEpisode = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkCo
     name: createEpisodePayload.name,
     description: createEpisodePayload.description,
     podcastId: DEFAULT_PODCAST_ID,
+    status: createEpisodePayload.status,
     type: createEpisodePayload.type,
     userId: (<User>auth.user).id,
     recordDataUrl: file ? await getDataUrl(file) : null,
