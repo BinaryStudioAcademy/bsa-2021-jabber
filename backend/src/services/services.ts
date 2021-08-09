@@ -54,6 +54,7 @@ const episode = new Episode({
   imageRepository,
   recordRepository,
   fileStorage,
+  podcastRepository,
 });
 
 const shownote = new Shownote({

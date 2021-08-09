@@ -89,6 +89,14 @@ class Podcast {
     imageId,
     imageDataUrl,
   }: PodcastEditPayload): Promise<TPodcast> {
+    const { userId: podcastOwnerId } = await this.#podcastRepository.getById(id);
+    if (userId !== podcastOwnerId) {
+      throw new HttpError({
+        status: HttpCode.UNAUTHORIZED,
+        message: ErrorMessage.NOT_YOURS_PODCAST,
+      });
+    }
+
     const updatePodcast: PodcastEditDTOPayload = {
       name,
       description,

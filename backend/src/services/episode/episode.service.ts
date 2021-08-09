@@ -9,6 +9,7 @@ import {
   episode as episodeRep,
   record as recordRep,
   image as imageRep,
+  podcast as podcastRep,
 } from '~/data/repositories/repositories';
 import { HttpError } from '~/exceptions/exceptions';
 import { ErrorMessage } from '~/common/enums/enums';
@@ -18,6 +19,7 @@ type Constructor = {
   imageRepository: typeof imageRep;
   recordRepository: typeof recordRep;
   fileStorage: FileStorage;
+  podcastRepository: typeof podcastRep;
 };
 
 class Episode {
@@ -25,12 +27,14 @@ class Episode {
   #fileStorage: FileStorage;
   #recordRepository: typeof recordRep;
   #imageRepository: typeof imageRep;
+  #podcastRepository: typeof podcastRep;
 
-  constructor({ episodeRepository, fileStorage, recordRepository, imageRepository }: Constructor) {
+  constructor({ episodeRepository, fileStorage, recordRepository, imageRepository, podcastRepository }: Constructor) {
     this.#episodeRepository = episodeRepository;
     this.#fileStorage = fileStorage;
     this.#recordRepository = recordRepository;
     this.#imageRepository = imageRepository;
+    this.#podcastRepository = podcastRepository;
   }
 
   public getAll(): Promise<TEpisode[]> {
@@ -49,12 +53,12 @@ class Episode {
   }
 
   public async create({
-    userId, 
-    recordDataUrl, 
-    imageDataUrl, 
-    type, 
-    description, 
-    name, 
+    userId,
+    recordDataUrl,
+    imageDataUrl,
+    type,
+    description,
+    name,
     podcastId,
   }: EpisodeCreatePayload): Promise<TEpisode> {
 
@@ -66,6 +70,13 @@ class Episode {
       podcastId,
       imageId: null,
     };
+    const { userId: podcastOwnerId } = await this.#podcastRepository.getById(String(podcastId));
+    if (userId !== podcastOwnerId) {
+      throw new HttpError({
+        status: HttpCode.UNAUTHORIZED,
+        message: ErrorMessage.NOT_YOURS_PODCAST,
+      });
+    }
 
     if (imageDataUrl) {
       const { url, publicId } = await this.#fileStorage.upload({
