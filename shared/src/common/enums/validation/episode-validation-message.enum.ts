@@ -12,6 +12,7 @@ const EpisodeValidationMessage = {
   EPISODE_DESCRIPTION_REQUIRE: 'Episode description is required',
   EPISODE_DESCRIPTION_MIN_LENGTH: `Episode DESCRIPTION must be at least ${EpisodeValidationRule.EPISODE_DESCRIPTION_MIN_LENGTH} character long`,
   EPISODE_DESCRIPTION_MAX_LENGTH: `Episode DESCRIPTION must be at most ${EpisodeValidationRule.EPISODE_DESCRIPTION_MAX_LENGTH} characters long`,
+  STATUS_REQUIRE: 'Episode status is required',
 } as const;
 
 export { EpisodeValidationMessage };
