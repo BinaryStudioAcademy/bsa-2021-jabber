@@ -2,7 +2,9 @@ import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import {
   podcast as podcastActions,
 } from 'store/actions';
+import { DataStatus } from 'common/enums/enums';
 import { EpisodeTable } from './components/components';
+import { Loader } from 'components/common/common';
 import { PageParams } from './common/types/types';
 import defaultImage from 'assets/img/default-podcast-image.jpeg';
 import styles from './styles.module.scss';
@@ -11,9 +13,10 @@ const Podcast: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
 
-  const { podcast, episodes } = useAppSelector(({ podcast }) => ({
+  const { podcast, episodes, dataStatus } = useAppSelector(({ podcast }) => ({
     podcast: podcast.podcast,
     episodes: podcast.episodes,
+    dataStatus: podcast.dataStatus,
   }));
 
   useEffect(() => {
@@ -26,6 +29,10 @@ const Podcast: React.FC = () => {
     }
   }, [podcast]);
 
+  if (dataStatus === DataStatus.PENDING) {
+    return <Loader />;
+  }
+  
   return (
     <main className={styles.podcast}>
       {podcast ? (
