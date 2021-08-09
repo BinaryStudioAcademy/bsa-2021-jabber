@@ -41,7 +41,7 @@ class Episode {
   }
 
   public async create(payload: EpisodeCreatePayload): Promise<TEpisode> {
-    const { userId, recordDataUrl, type, description, name, podcastId } = payload;
+    const { userId, recordDataUrl, type, description, name, podcastId, status } = payload;
 
     const episode = await this.#episodeRepository.create({
       name,
@@ -49,6 +49,7 @@ class Episode {
       podcastId,
       type,
       userId,
+      status,
     });
 
     if (recordDataUrl) {
