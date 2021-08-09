@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    container_name: db
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: jabber_test
+    ports:
+      - 5432:5432
+    volumes:
+      - pg_data:/var/lib/postgresql/data:rw
+
+  backend:
+    image: backend:latest
+    container_name: backend
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+      DATABASE_URL: postgres://postgres:postgres@db:5432/jabber_test
+      CLOUDINARY_URL: cloudinary://my_fake_key:my_fake_secret@my_fake_cloud_name
+      SECRET_KEY: secretkey
+      DB_DIALECT: pg
+      DB_POOL_MIN: 2
+      DB_POOL_MAX: 10
+    ports:
+      - 3001:3001
+    depends_on:
+      - db
+
+volumes:
+  pg_data:

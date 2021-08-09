@@ -1,0 +1,28 @@
+name: Backend Tests
+
+env:
+  NODE_VERSION: 14.17.1
+
+on:
+  pull_request:
+    branches:
+      - development
+
+jobs:
+  backend-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
+
+      - name: Setup NodeJS v${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Run API tests
+        run: |
+          bash ./__tests__/start.all.sh
+        env:
+          FORCE_COLOR: 1

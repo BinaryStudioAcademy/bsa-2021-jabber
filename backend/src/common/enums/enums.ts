@@ -33,7 +33,12 @@ export {
   PodcastType,
 } from './podcast/podcast';
 export { ResourceType } from './file/file';
-export { EpisodeType, EpisodeStatus } from './episode/episode';
+export {
+  EpisodeType,
+  EpisodeValidationMessage,
+  EpisodePayloadKey,
+  EpisodeStatus
+} from './episode/episode';
 export { ShownoteCreatePayloadKey } from './shownote/shownote.enum';
 export { StrategyName } from './strategy/strategy';
 export {
