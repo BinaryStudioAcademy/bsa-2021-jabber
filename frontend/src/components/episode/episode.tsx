@@ -8,6 +8,8 @@ import {
 } from 'hooks/hooks';
 import { episode as episodeActions } from 'store/actions';
 import { CreateCommentForm, CommentsList } from './components/components';
+import { Loader } from 'components/common/common';
+import { DataStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
@@ -18,8 +20,9 @@ const Episode: React.FC = () => {
   const { id } = useParams<PageParams>();
   const [player, setPlayer] = useState<H5AudioPlayer | null>(null);
 
-  const { episode, comments, user, record } = useAppSelector(
+  const { episode, comments, user, record, dataStatus } = useAppSelector(
     ({ episode, auth }) => ({
+      dataStatus: episode.dataStatus,
       episode: episode.episode,
       comments: episode.comments,
       record: episode.record,
@@ -46,6 +49,10 @@ const Episode: React.FC = () => {
       }),
     );
   };
+
+  if (dataStatus === DataStatus.PENDING) {
+    return <Loader />;
+  }
 
   return (
     <main className={styles.root}>

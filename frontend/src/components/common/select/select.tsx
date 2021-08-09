@@ -1,7 +1,14 @@
 import SelectReact from 'react-select';
 import { Option } from 'common/types/types';
 import { ErrorMessage } from '@hookform/error-message';
-import { Control, FieldErrors, Path, FieldValues } from 'react-hook-form';
+import {
+  Control,
+  FieldErrors,
+  Path,
+  FieldValues,
+  useController,
+} from 'react-hook-form';
+import { getCurrentValue } from './helpers/helpers';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -14,15 +21,22 @@ type Props = {
 };
 
 const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
+  const { field } = useController({ name, control });
+
+  const handleSelectChange = (option: Option | null): void => {
+    field.onChange(option?.value);
+  };
+
+  const currentValue = getCurrentValue(options, field.value);
+
   return (
     <label className={styles.inputWrapper}>
       <span className={styles.label}>{label}</span>
       <SelectReact
-        control={control}
+        {...field}
         options={options}
-        className={styles.input}
-        isSearchable={false}
-        name={name}
+        value={currentValue}
+        onChange={handleSelectChange}
       />
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />

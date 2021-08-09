@@ -1,5 +1,5 @@
 import H5AudioPlayer, { RHAP_UI } from 'react-h5-audio-player';
-import { FIRST_ARRAY_IDX } from 'jabber-shared/common/constants/constants';
+import { FIRST_ARRAY_IDX } from 'common/constants/constants';
 import { useState, useEffect, useRef, useCallback } from 'hooks/hooks';
 import { getAllowedClasses } from 'helpers/dom/dom';
 

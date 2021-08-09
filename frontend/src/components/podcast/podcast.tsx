@@ -1,20 +1,20 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
-import {
-  podcast as podcastActions,
-} from 'store/actions';
+import { podcast as podcastActions } from 'store/actions';
+import { AppRoute, DataStatus } from 'common/enums/enums';
+import defaultImage from 'assets/img/default-podcast-image.jpeg';
+import { Link, Loader } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
-import defaultImage from 'assets/img/default-podcast-image.jpeg';
 import styles from './styles.module.scss';
 
 const Podcast: React.FC = () => {
-  const dispatch = useDispatch();
-  const { id } = useParams<PageParams>();
-
-  const { podcast, episodes } = useAppSelector(({ podcast }) => ({
+  const { podcast, episodes, dataStatus } = useAppSelector(({ podcast }) => ({
     podcast: podcast.podcast,
     episodes: podcast.episodes,
+    dataStatus: podcast.dataStatus,
   }));
+  const dispatch = useDispatch();
+  const { id } = useParams<PageParams>();
 
   useEffect(() => {
     dispatch(podcastActions.loadPodcast(Number(id)));
@@ -26,6 +26,10 @@ const Podcast: React.FC = () => {
     }
   }, [podcast]);
 
+  if (dataStatus === DataStatus.PENDING) {
+    return <Loader />;
+  }
+
   return (
     <main className={styles.podcast}>
       {podcast ? (
@@ -36,7 +40,7 @@ const Podcast: React.FC = () => {
               <p className={styles.description}>{podcast.description}</p>
             </div>
             <div className={styles.wrapper}>
-              <div className={styles.imageWrapper}>
+              <p className={styles.imageWrapper}>
                 <img
                   src={podcast.image?.url ?? defaultImage}
                   className={styles.podcastImage}
@@ -45,7 +49,12 @@ const Podcast: React.FC = () => {
                   loading="lazy"
                   alt={podcast.name}
                 />
-              </div>
+              </p>
+              <Link
+                to={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
+              >
+                Add episode
+              </Link>
             </div>
           </div>
           <EpisodeTable episodes={episodes} />

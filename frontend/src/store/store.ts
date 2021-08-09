@@ -8,6 +8,7 @@ import {
   recordApi,
   storage as storageService,
   recordAudio as recordAudioService,
+  notification as notificationService,
 } from 'services/services';
 import { handleError as handleErrorMiddleware } from 'middlewares/middlewares';
 
@@ -19,6 +20,7 @@ const extraArgument = {
   recordApi,
   storageService,
   recordAudioService,
+  notificationService,
 };
 
 const store = configureStore({
