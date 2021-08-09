@@ -7,7 +7,6 @@ import { episode as episodeRep } from '~/data/repositories/repositories';
 import { shownote } from '~/services/services';
 import { HttpError } from '~/exceptions/exceptions';
 import { ErrorMessage } from '~/common/enums/enums';
-import { EpisodeCreatePayloadKey } from 'jabber-shared/common/enums/enums';
 
 type Constructor = {
   episodeRepository: typeof episodeRep;
@@ -40,21 +39,19 @@ class Episode {
 
   public async create(payload: EpisodeCreatePayload): Promise<TEpisode> {
     const episode = await this.#episodeRepository.create({
-      [EpisodeCreatePayloadKey.NAME]: payload[EpisodeCreatePayloadKey.NAME],
-      [EpisodeCreatePayloadKey.USER_ID]:
-        payload[EpisodeCreatePayloadKey.USER_ID],
-      [EpisodeCreatePayloadKey.PODCAST_ID]:
-        payload[EpisodeCreatePayloadKey.PODCAST_ID],
-      [EpisodeCreatePayloadKey.TYPE]: payload[EpisodeCreatePayloadKey.TYPE],
-      [EpisodeCreatePayloadKey.DESCRIPTION]:
-        payload[EpisodeCreatePayloadKey.DESCRIPTION],
+      name: payload.name,
+      userId: payload.userId,
+      podcastId: payload.podcastId,
+      type: payload.type,
+      description: payload.description,
     } as EpisodeCreatePayload);
 
-    const shownotes = payload[EpisodeCreatePayloadKey.SHOWNOTES];
+    const shownotes = payload.shownotes.map((shownote) => ({
+      ...shownote,
+      episodeId: episode.id,
+    }));
 
-    await this.#shownoteService.create(
-      ...shownotes.map((shownote) => ({ ...shownote, episodeId: episode.id })),
-    );
+    await this.#shownoteService.create(...shownotes);
 
     return episode;
   }
