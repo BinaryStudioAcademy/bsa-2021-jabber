@@ -42,7 +42,7 @@ class Episode {
     }
     return episode;
   }
-  
+
   public async create(payload: EpisodeCreatePayload): Promise<TEpisode> {
     const { userId, recordDataUrl, type, description, name, podcastId } = payload;
 
