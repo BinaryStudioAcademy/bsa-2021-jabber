@@ -3,8 +3,8 @@ import {
   PodcastCreateDTOPayload,
   PodcastEditDTOPayload,
 } from '~/common/types/types';
-import { PodcastModel as PodcastM } from '~/data/models/models';
 import { PodcastType } from '~/common/enums/enums';
+import { PodcastModel as PodcastM } from '~/data/models/models';
 
 type Constructor = {
   PodcastModel: typeof PodcastM;
