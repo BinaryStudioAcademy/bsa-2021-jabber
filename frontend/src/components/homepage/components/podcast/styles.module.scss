@@ -1,6 +1,15 @@
 .wrapper {
   position: relative;
 
+  .title {
+    margin: 0;
+  }
+
+  .type {
+    margin: 0px;
+    color: #555;
+  }
+
   &:before {
     background-image: url('../../../../assets/img/corner.svg');
     background-position: right top;
@@ -36,15 +45,6 @@
       transform: translateY(-8px);
     }
   }
-}
-
-.title {
-  margin: 0;
-}
-
-.type {
-  margin: 0;
-  color: #555;
 }
 
 .link {
