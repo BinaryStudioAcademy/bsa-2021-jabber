@@ -19,6 +19,9 @@ type Props = {
   onSubmit: (payload: EpisodeFormPayload) => void;
 };
 
+const selectTypeOptions: Option[] = getOptions(Object.values(EpisodeType));
+const selectStatusOptions: Option[] = getOptions(Object.values(EpisodeStatus));
+
 const acceptExtension = getFileExtensions(
   FileExtension.JPEG,
   FileExtension.JPG,
@@ -42,8 +45,6 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
 
   const isFormDisable = dataStatus === DataStatus.PENDING;
 
-  const selectTypeOptions: Option[] = getOptions(Object.values(EpisodeType));
-  const selectStatusOptions: Option[] = getOptions(Object.values(EpisodeStatus));
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisable} className={styles.fieldset}>
