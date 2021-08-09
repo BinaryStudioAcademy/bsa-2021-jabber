@@ -8,8 +8,6 @@ import {
   FieldValues,
   useController,
 } from 'react-hook-form';
-import { useState } from 'hooks/hooks';
-import { FIRST_ARRAY_IDX } from 'jabber-shared/common/constants/constants';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -24,13 +22,12 @@ type Props = {
 const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
   const { field } = useController({ name, control });
 
-  const [val, setVal] = useState(options[FIRST_ARRAY_IDX]);
+  const handleSelectChange = (option: Option | null):void => {
+    field.onChange(option?.value);
+  };
 
-  const changeHandler = (event: Option | null): void => {
-    if(event){
-      setVal(event);
-      field.onChange(event.label);
-    }    
+  const getCurrentValue = (options: Option[], value: string): Option | null => {
+    return options.find((it) => it.value === value) ?? null;
   };
 
   return (
@@ -39,8 +36,8 @@ const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
       <SelectReact
         {...field}
         options={options}
-        value={val}
-        onChange={changeHandler}
+        value={getCurrentValue(options,field.value)}
+        onChange={handleSelectChange}
       />
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />
