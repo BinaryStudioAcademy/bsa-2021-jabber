@@ -1,31 +1,31 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { DEFAULT_PODCAST_ID } from 'common/constants/constants';
 import {
   Episode,
   AsyncThunkConfig,
   EpisodeFormPayload,
   User,
-  Podcast,
 } from 'common/types/types';
 import { getFileFromFileList, getDataUrl } from 'helpers/helpers';
 import { ActionType } from './common';
 
 const createEpisode = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkConfig>
-(ActionType.CREATE_EPISODE, async (createEpisodePayload, { getState, extra }) => {
-  const { episodeApi } = extra;
-  const { auth, podcast } = getState();
+(ActionType.CREATE_EPISODE,
+  async (episodePayload, { getState, extra }) => {
+    const { episodeApi } = extra;
+    const { auth } = getState();
+    const file = getFileFromFileList(episodePayload.image);
 
-  const file = getFileFromFileList(createEpisodePayload.image);
+    const episode = await episodeApi.create({
+      name: episodePayload.name,
+      description: episodePayload.description,
+      podcastId: DEFAULT_PODCAST_ID,
+      type: episodePayload.type,
+      userId: (<User>auth.user).id,
+      imageDataUrl: file ? await getDataUrl(file) : null,
+    });
 
-  const episodes = await episodeApi.create({
-    name: createEpisodePayload.name,
-    description: createEpisodePayload.description,
-    podcastId: (<Podcast>podcast.podcast).id,
-    type: createEpisodePayload.type,
-    userId: (<User>auth.user).id,
-    imageDataUrl: file ? await getDataUrl(file) : null,
+    return episode;
   });
-
-  return episodes;
-});
 
 export { createEpisode };
