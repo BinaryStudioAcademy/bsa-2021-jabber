@@ -57,7 +57,12 @@ const Podcast: React.FC = () => {
               </Link>
             </div>
           </div>
-          <EpisodeTable episodes={episodes} />
+          {
+            episodes.length
+              ? <EpisodeTable episodes={episodes} />
+              : <div className={styles.placeholder}>There are no episodes in this podcast yet.</div>
+          }
+          
         </>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such podcast</h1>
