@@ -20,7 +20,7 @@ const ConfigurateEpisode: React.FC = () => {
       <h2>
         {isEdit ? 'Edit' : 'Create'} Episode {id ?? ''}
       </h2>
-      <CreateEpisodeForm onSubmit={handleCreateEpisode} />;
+      <CreateEpisodeForm onSubmit={handleCreateEpisode} />
     </div>
   );
 };
