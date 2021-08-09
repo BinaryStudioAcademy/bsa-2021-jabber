@@ -25,7 +25,7 @@ const ConfiguratePodcast: React.FC = () => {
       : dispatch(configuratePodcastActions.create(payload));
   };
 
-  const mapPodcast = podcast ? mapPodcastToFormPayload(podcast) : undefined;
+  const mappedPodcast = podcast ? mapPodcastToFormPayload(podcast) : undefined;
 
   useEffect(() => {
     if (isEdit) {
@@ -38,9 +38,14 @@ const ConfiguratePodcast: React.FC = () => {
       <h2>
         {isEdit ? 'Edit' : 'Create'} Podcast {id ?? ''}
       </h2>
-      {(dataStatus === DataStatus.PENDING)
-        ? <Loader />
-        : <ConfiguratePodcastForm onSubmit={handleFormSubmit} payload={mapPodcast}/>}
+      {dataStatus === DataStatus.PENDING ? (
+        <Loader />
+      ) : (
+        <ConfiguratePodcastForm
+          onSubmit={handleFormSubmit}
+          payload={mappedPodcast}
+        />
+      )}
     </div>
   );
 };

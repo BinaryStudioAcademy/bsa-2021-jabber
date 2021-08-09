@@ -1,0 +1,6 @@
+
+{
+  "Exclude": [
+    "__test__/specs/**.json"
+  ]
+}

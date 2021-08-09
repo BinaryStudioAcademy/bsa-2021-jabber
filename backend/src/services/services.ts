@@ -40,6 +40,10 @@ const auth = new Auth({
   tokenService: token,
 });
 
+const fileStorage = new FileStorage({
+  storageApiUser: <string>ENV.UPLOAD.API_URL,
+});
+
 const user = new User({
   userRepository,
   tokenService: token,
@@ -47,6 +51,9 @@ const user = new User({
 
 const episode = new Episode({
   episodeRepository,
+  imageRepository,
+  recordRepository,
+  fileStorage,
 });
 
 const shownote = new Shownote({
@@ -59,10 +66,6 @@ const comment = new Comment({
 
 const record = new Record({
   recordRepository,
-});
-
-const fileStorage = new FileStorage({
-  storageApiUser: <string>ENV.UPLOAD.API_URL,
 });
 
 const podcast = new Podcast({

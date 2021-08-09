@@ -13,3 +13,4 @@ export { default as AuthPublicRouter } from './auth-public-router/auth-public-ro
 export { default as Loader } from './loader/loader';
 export { default as Select } from './select/select';
 export { default as Datepiker } from './datepicker/datepicker';
+export { default as Table } from './table/table';

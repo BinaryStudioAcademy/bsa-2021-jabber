@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import {
-  episode as EpisodeValidationSchema,
+  episodeCreate as episodeCreateValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { ApiPath, HttpCode, EpisodesApiPath, HttpMethod } from '~/common/enums/enums';
 import { episode as episodeService } from '~/services/services';
@@ -30,14 +30,25 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
   episodeRouter.get(
     EpisodesApiPath.$ID,
     handleAsyncApi(async (req, res) => {
-      return res.send(await episodeService.getById(req.params.id)).status(HttpCode.OK);
+      return res
+        .send(await episodeService.getById(req.params.id))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  episodeRouter.get(
+    EpisodesApiPath.PODCAST_$ID,
+    handleAsyncApi(async (req, res) => {
+      return res
+        .send(await episodeService.getAllByPodcastId(req.params.id))
+        .status(HttpCode.OK);
     }),
   );
 
   episodeRouter.post(
     EpisodesApiPath.ROOT,
     checkAuthMiddleware(HttpMethod.POST),
-    validateSchemaMiddleware(EpisodeValidationSchema),
+    validateSchemaMiddleware(episodeCreateValidationSchema),
     handleAsyncApi(async (req, res) => {
       const episode = await episodeService.create(req.body);
       return res.json(episode).status(HttpCode.CREATED);
