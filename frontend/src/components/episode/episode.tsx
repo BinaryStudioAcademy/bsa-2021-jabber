@@ -41,6 +41,7 @@ const Episode: React.FC = () => {
           <div className={styles.descriptionWrapper}>
             <h1 className={styles.title}>{episode.name}</h1>
             <p className={styles.description}>{episode.description}</p>
+            <p className={styles.type}>Type: {episode.type}</p>
           </div>
           <p className={styles.logoWrapper}>
             <img
