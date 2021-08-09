@@ -1,0 +1,33 @@
+.title {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+
+  & button {
+    margin-left: 16px;
+    padding: 2px 10px;
+    font-weight: 600;
+  }
+}
+
+.inputList {
+  margin: 0;
+  list-style: none;
+
+  & button {
+    padding: 4px 10px;
+    font-weight: 600;
+  }
+}
+
+.listItem {
+  margin-bottom: 25px;
+}
+
+.errorWrapper {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-button-background);
+  margin-bottom: 7px;
+}
