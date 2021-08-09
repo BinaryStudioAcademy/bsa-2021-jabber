@@ -37,7 +37,7 @@ const ConfigurateEpisode: React.FC = () => {
   return (
     <div>
       <h2>
-        {isEdit ? 'Edit' : 'Create'} Episode {episode?.name ?? ''}
+        {isEdit ? 'Edit' : 'Create'} Episode: {episode?.name ?? ''}
       </h2>
       {isLoading
         ? <Loader />

@@ -5,7 +5,7 @@ import {
   HttpMethod,
 } from 'common/enums/enums';
 import { Http } from 'services/http/http.service';
-import { Episode, EpisodeCreatePayload } from 'common/types/types';
+import { Episode, EpisodeCreatePayload, EpisodeEditPayload } from 'common/types/types';
 
 type Constructor = {
   http: Http;
@@ -44,6 +44,17 @@ class EpisodeApi {
       `${this.#apiPrefix}${ApiPath.EPISODES}${EpisodesApiPath.ROOT}`,
       {
         method: HttpMethod.POST,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
+      },
+    );
+  }
+
+  public update(id: number, payload: EpisodeEditPayload): Promise<Episode> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.EPISODES}${EpisodesApiPath.ROOT}${id}`,
+      {
+        method: HttpMethod.PUT,
         contentType: ContentType.JSON,
         payload: JSON.stringify(payload),
       },
