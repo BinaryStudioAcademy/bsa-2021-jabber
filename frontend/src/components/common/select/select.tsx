@@ -34,7 +34,6 @@ const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
         value={val}
         onChange={(event: any): void => {
           setVal(event);
-          console.warn(event);
           field.onChange(event.label);
         }}
       />
