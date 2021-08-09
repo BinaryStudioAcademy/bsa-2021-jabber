@@ -19,6 +19,7 @@ const Episode: React.FC = () => {
       user: auth.user,
     }),
   );
+
   const hasUser = Boolean(user);
 
   useEffect(() => {
@@ -42,6 +43,7 @@ const Episode: React.FC = () => {
             <h1 className={styles.title}>{episode.name}</h1>
             <p className={styles.description}>{episode.description}</p>
             <p className={styles.type}>Type: {episode.type}</p>
+            <p className={styles.type}>Status: {episode.status}</p>
           </div>
           <p className={styles.logoWrapper}>
             <img

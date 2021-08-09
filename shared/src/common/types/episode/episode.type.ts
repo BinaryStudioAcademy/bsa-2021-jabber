@@ -7,6 +7,7 @@ type Episode = {
   userId: number;
   imageId: number | null;
   image: Image | null;
+  status: string;
   podcastId: number;
   createdAt: string;
   updatedAt: string;
