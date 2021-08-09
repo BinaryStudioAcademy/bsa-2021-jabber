@@ -8,7 +8,7 @@ import {
   FieldValues,
   useController,
 } from 'react-hook-form';
-import getCurrentValue from './helpers/get-current-value';
+import { getCurrentValue } from './helpers/helpers';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -23,7 +23,7 @@ type Props = {
 const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
   const { field } = useController({ name, control });
 
-  const handleSelectChange = (option: Option | null):void => {
+  const handleSelectChange = (option: Option | null): void => {
     field.onChange(option?.value);
   };
 
