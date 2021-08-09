@@ -1,8 +1,5 @@
 import { EpisodeModel as EpisodeM } from '~/data/models/models';
-import {
-  Episode as TEpisode,
-  EpisodeCreatePayload,
-} from '~/common/types/types';
+import { Episode as TEpisode, EpisodeCreateDTOPayload } from '~/common/types/types';
 
 type Constructor = {
   EpisodeModel: typeof EpisodeM;
@@ -27,7 +24,7 @@ class Episode {
     return this.#EpisodeModel.query().where('podcast_id', id);
   }
 
-  public create(payload: EpisodeCreatePayload): Promise<TEpisode> {
+  public create(payload: EpisodeCreateDTOPayload): Promise<TEpisode> {
     return this.#EpisodeModel.query().insert(payload);
   }
 }
