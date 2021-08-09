@@ -15,7 +15,7 @@ export {
   PodcastValidationMessage,
   PodcastType,
 } from './podcast/podcast';
-export { EpisodePayloadKey, EpisodeType } from './episode/episode';
+export { EpisodePayloadKey, EpisodeType, EpisodeStatus } from './episode/episode';
 export { UserCreatePayloadKey, UserSignInPayloadKey } from './user/user';
 export {
   ButtonType,
