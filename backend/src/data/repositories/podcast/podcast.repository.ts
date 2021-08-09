@@ -4,6 +4,7 @@ import {
   PodcastEditDTOPayload,
 } from '~/common/types/types';
 import { PodcastModel as PodcastM } from '~/data/models/models';
+import { PodcastType } from '~/common/enums/enums';
 
 type Constructor = {
   PodcastModel: typeof PodcastM;
@@ -17,7 +18,7 @@ class Podcast {
   }
 
   public getAll(): Promise<TPodcast[]> {
-    return this.#PodcastModel.query().where('type', 'public').withGraphJoined('image');
+    return this.#PodcastModel.query().where('type', PodcastType.PUBLIC).withGraphJoined('image');
   }
 
   public create(payload: PodcastCreateDTOPayload): Promise<TPodcast> {
