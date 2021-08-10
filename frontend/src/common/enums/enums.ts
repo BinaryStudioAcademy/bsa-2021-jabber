@@ -26,5 +26,6 @@ export {
 } from './ui/ui';
 export { DateFormatType } from './date/date';
 export { RecordStatus } from './record/record';
+export { ShownotePayloadKey } from './shownote/shownote';
 export { CommentCreatePayloadKey } from './comment/comment';
 export { NotificationMessage, NotificationTitle } from './notification/notification';

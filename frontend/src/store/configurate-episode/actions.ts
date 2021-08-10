@@ -21,6 +21,7 @@ const createEpisode = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkCo
   const episodes = await episodeApi.create({
     name: createEpisodePayload.name,
     description: createEpisodePayload.description,
+    shownotes: createEpisodePayload.shownotes,
     podcastId: DEFAULT_PODCAST_ID,
     status: createEpisodePayload.status,
     type: createEpisodePayload.type,
