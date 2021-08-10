@@ -7,8 +7,6 @@ const UserPage: React.FC = () => {
     user: auth.user,
   }));
 
-  console.warn(user);
-
   const hasUser = Boolean(user);
 
   if (!hasUser) {
