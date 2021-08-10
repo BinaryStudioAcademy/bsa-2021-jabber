@@ -16,6 +16,13 @@ const episodeEdit = episode.keys({
     }),
     Joi.any().equal(null),
   ],
+  [EpisodePayloadKey.IMAGE_DATA_URL]: [
+    Joi.string().uri().messages({
+      'string.uri': EpisodeValidationMessage.DATA_URL_FORMAT,
+    }),
+    Joi.any().equal(null),
+  ],
+  [EpisodePayloadKey.IMAGE_ID]: Joi.number().integer().allow(null),
 });
 
 export { episodeEdit };

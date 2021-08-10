@@ -100,26 +100,58 @@ class Episode {
   }
 
   public async update(id: string, payload: EpisodeEditPayload): Promise<TEpisode> {
-    const { recordDataUrl, type, description, name, userId } = payload;
+    const { recordDataUrl, imageDataUrl, type, description, name, userId, imageId } = payload;
+    const episodeId = Number(id);
+    let newImageId: number | null = null;
+
+    if (recordDataUrl) {
+      const { url, publicId, bytes } = await this.#fileStorage.upload({
+        dataUrl: recordDataUrl,
+        userId,
+      });
+
+      await this.#recordRepository.create({
+        publicId,
+        episodeId,
+        fileUrl: url,
+        fileSize: bytes,
+      });
+
+      const oldRecords = await this.#recordRepository.getByEpisodeId(episodeId);
+      const { id, publicId: oldRecordPublicId } = oldRecords[0];
+
+      if (id) {
+        await this.#fileStorage.delete(oldRecordPublicId);
+        await this.#recordRepository.delete(id);
+      }
+    }
+
+    if (imageDataUrl) {
+      const { url, publicId } = await this.#fileStorage.upload({
+        dataUrl: imageDataUrl,
+        userId,
+      });
+
+      const image = await this.#imageRepository.create({
+        url,
+        publicId,
+      });
+
+      newImageId = image.id;
+    }
 
     const episode = await this.#episodeRepository.update(id, {
       name,
       description,
       type,
+      imageId: newImageId ?? imageId,
     });
 
-    if (recordDataUrl) {
-      const { url, publicId, bytes } = await this.#fileStorage.upload({
-        dataUrl: recordDataUrl,
-        userId: userId,
-      });
+    if (imageId) {
+      const oldImage = await this.#imageRepository.getById(imageId);
 
-      await this.#recordRepository.create({
-        fileUrl: url,
-        publicId,
-        episodeId: episode.id,
-        fileSize: bytes,
-      });
+      await this.#imageRepository.delete(oldImage.id);
+      await this.#fileStorage.delete(oldImage.publicId);
     }
 
     return episode;

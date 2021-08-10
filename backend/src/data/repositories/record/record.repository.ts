@@ -19,6 +19,14 @@ class Record {
   public create(payload: RecordCreatePayload): Promise<TRecord> {
     return this.#RecordModel.query().insert(payload);
   }
+
+  public getByEpisodeId(id: number): Promise<TRecord[]> {
+    return this.#RecordModel.query().where('episode_id', id);
+  }
+
+  public delete(id: number): Promise<number> {
+    return this.#RecordModel.query().deleteById(id);
+  }
 }
 
 export { Record };

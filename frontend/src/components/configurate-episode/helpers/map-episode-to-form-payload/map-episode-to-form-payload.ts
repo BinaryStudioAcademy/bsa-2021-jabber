@@ -5,6 +5,7 @@ const mapEpisodeToFormPayload = (episode: Episode): EpisodeFormPayload => ({
   description: episode.description,
   record: null,
   type: episode.type,
+  image: null,
 });
 
 export { mapEpisodeToFormPayload };
