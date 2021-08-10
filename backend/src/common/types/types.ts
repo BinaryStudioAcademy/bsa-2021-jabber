@@ -12,7 +12,9 @@ export type { ValidationSchema } from './validation-schema/validation-schema';
 export type {
   Episode,
   EpisodeCreatePayload,
+  EpisodeEditPayload,
   EpisodeCreateDTOPayload,
+  EpisodeEditDTOPayload,
 } from './episode/episode';
 export type {
   Shownote,

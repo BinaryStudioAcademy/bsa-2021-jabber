@@ -1,5 +1,9 @@
 import { EpisodeModel as EpisodeM } from '~/data/models/models';
-import { Episode as TEpisode, EpisodeCreateDTOPayload } from '~/common/types/types';
+import {
+  Episode as TEpisode,
+  EpisodeCreateDTOPayload,
+  EpisodeEditDTOPayload,
+} from '~/common/types/types';
 
 type Constructor = {
   EpisodeModel: typeof EpisodeM;
@@ -26,6 +30,10 @@ class Episode {
 
   public create(payload: EpisodeCreateDTOPayload): Promise<TEpisode> {
     return this.#EpisodeModel.query().insert(payload).withGraphFetched('image');
+  }
+
+  public update(id: string, payload: EpisodeEditDTOPayload): Promise<TEpisode> {
+    return this.#EpisodeModel.query().updateAndFetchById(id, payload);
   }
 }
 
