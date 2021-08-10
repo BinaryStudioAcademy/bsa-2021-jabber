@@ -40,6 +40,9 @@ const Header: React.FC = () => {
                 <Link to={AppRoute.ROOT} className={styles.link}>
                   Podcasts
                 </Link>
+                <Link to={AppRoute.USER_PAGE} className={styles.link}>
+                  My Profile
+                </Link>
               </li>
             </ul>
             <div className={styles.userInfo}>
