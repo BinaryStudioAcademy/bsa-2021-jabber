@@ -51,7 +51,7 @@ const Podcast: React.FC = () => {
                   alt={podcast.name}
                 />
               </p>
-              {podcast.userId && userId && (
+              {podcast.userId === userId && (
                 <Link
                   to={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
                 >
