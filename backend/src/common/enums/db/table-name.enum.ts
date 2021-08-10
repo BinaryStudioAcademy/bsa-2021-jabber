@@ -7,7 +7,7 @@ enum TableName {
   COMMENTS = 'comments',
   RECORDS = 'records',
   IMAGES = 'images',
-  NOTIFICATIONS = 'notification',
+  NOTIFICATIONS = 'notifications',
 }
 
 export { TableName };
