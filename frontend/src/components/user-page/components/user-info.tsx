@@ -8,16 +8,26 @@ type Props = {
 const UserInfo: React.FC<Props> = ({ user }) => {
   return (
     <div>
-      <p className={styles.title}>First Name:</p>
-      <p className={styles.userInfo}>{user?.firstName}</p>
-      <p className={styles.title}>Last Name:</p>
-      <p className={styles.userInfo}>{user?.lastName}</p>
-      <p className={styles.title}>Nickname:</p>
-      <p className={styles.userInfo}>{user?.nickname}</p>
-      <p className={styles.title}>Email:</p>
-      <p className={styles.userInfo}>{user?.email}</p>
-      <p className={styles.title}>Bio:</p>
-      <p className={styles.userInfo}> </p>
+      <div className={styles.infoBlock}>
+        <span className={styles.title}>First Name:</span>
+        <span className={styles.userInfo}>{user?.firstName}</span>
+      </div>
+      <div className={styles.infoBlock}>
+        <span className={styles.title}>Last Name:</span>
+        <span className={styles.userInfo}>{user?.lastName}</span>
+      </div>
+      <div className={styles.infoBlock}>
+        <span className={styles.title}>Nickname:</span>
+        <span className={styles.userInfo}>{user?.nickname}</span>
+      </div>
+      <div className={styles.infoBlock}>
+        <span className={styles.title}>Email:</span>
+        <span className={styles.userInfo}>{user?.email}</span>
+      </div>
+      <div className={styles.infoBlock}>
+        <span className={styles.title}>Bio:</span>
+        <span className={styles.userInfo}> </span>
+      </div>
     </div>
   );
 };
