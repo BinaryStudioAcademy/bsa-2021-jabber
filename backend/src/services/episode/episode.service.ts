@@ -120,7 +120,16 @@ class Episode {
   }
 
   public async update(id: string, payload: EpisodeEditPayload): Promise<TEpisode> {
-    const { recordDataUrl, imageDataUrl, type, description, name, userId, imageId } = payload;
+    const {
+      recordDataUrl,
+      imageDataUrl,
+      type,
+      description,
+      name,
+      userId,
+      imageId,
+      status,
+    } = payload;
     const episodeId = Number(id);
     let newImageId: number | null = null;
 
@@ -164,6 +173,7 @@ class Episode {
       name,
       description,
       type,
+      status,
       imageId: newImageId ?? imageId,
     });
 

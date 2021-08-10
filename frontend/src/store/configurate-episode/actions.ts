@@ -52,6 +52,7 @@ const editEpisode = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkConf
       imageDataUrl: imgFile ? await getDataUrl(imgFile) : null,
       userId: (<User>auth.user).id,
       imageId: (<Episode>configurateEpisode.episode).imageId,
+      status: editEpisodePayload.status,
     });
 
     return episode;
