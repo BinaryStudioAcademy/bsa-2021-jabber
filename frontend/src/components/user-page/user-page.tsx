@@ -1,6 +1,5 @@
 import { useAppSelector } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
-import { UserInfo } from './components/user-info';
 import styles from './styles.module.scss';
 
 const UserPage: React.FC = () => {
@@ -13,20 +12,12 @@ const UserPage: React.FC = () => {
   if (!hasUser) {
     return (
       <div className={styles.containerUserNotFound}>
-        <h1 className={styles.userNotFound}>Not User Found</h1>
+        <h1>Not User Found</h1>
       </div>
     );
   }
 
-  return (
-    <div className={styles.container}>
-      <img src="" width="256" height="256" />
-
-      <div className={styles.userInformation}>
-        <UserInfo user={user} />
-      </div>
-    </div>
-  );
+  return <div className={styles.container}></div>;
 };
 
 export default UserPage;
