@@ -24,6 +24,7 @@ export {
   CommentDTOKey,
   RecordDTOKey,
   ImageDTOKey,
+  NotificationDTOKey,
 } from './db/db';
 export { HttpCode, HttpMethod } from './http/http';
 export {
