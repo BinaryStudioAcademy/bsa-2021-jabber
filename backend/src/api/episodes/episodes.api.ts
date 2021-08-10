@@ -7,6 +7,7 @@ import { episode as episodeService } from '~/services/services';
 import { handleAsyncApi } from '~/helpers/helpers';
 import {
   checkAuth as checkAuthMiddleware,
+  checkUserOwner as checkUserOwnerMiddleware,
   validateSchema as validateSchemaMiddleware,
 } from '~/middlewares/middlewares';
 
@@ -48,6 +49,7 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
   episodeRouter.post(
     EpisodesApiPath.ROOT,
     checkAuthMiddleware(HttpMethod.POST),
+    checkUserOwnerMiddleware(),
     validateSchemaMiddleware(episodeCreateValidationSchema),
     handleAsyncApi(async (req, res) => {
       const episode = await episodeService.create(req.body);

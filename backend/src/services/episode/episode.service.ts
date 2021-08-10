@@ -36,6 +36,7 @@ class Episode {
     recordRepository,
     imageRepository,
   }: Constructor) {
+
     this.#episodeRepository = episodeRepository;
     this.#shownoteService = shownoteService;
     this.#fileStorage = fileStorage;
