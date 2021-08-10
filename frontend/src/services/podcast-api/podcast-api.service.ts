@@ -30,6 +30,15 @@ class PodcastApi {
     );
   }
 
+  public getByTitle(value: string): Promise<Podcast[]> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.SEARCH_BY_TITLE}?title=${value}`,
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
+
   public getById(id: number): Promise<Podcast> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}${id}`,

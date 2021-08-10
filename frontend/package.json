@@ -19,6 +19,7 @@
     "@reduxjs/toolkit": "1.6.0",
     "clsx": "1.1.1",
     "jabber-shared": "file:../shared/build",
+    "lodash": "^4.17.21",
     "react": "17.0.2",
     "react-datepicker": "4.1.1",
     "react-dom": "17.0.2",
@@ -33,6 +34,7 @@
   },
   "devDependencies": {
     "@types/dom-mediacapture-record": "1.0.10",
+    "@types/lodash": "^4.14.172",
     "@types/node": "12.20.16",
     "@types/react": "16.14.11",
     "@types/react-datepicker": "4.1.4",

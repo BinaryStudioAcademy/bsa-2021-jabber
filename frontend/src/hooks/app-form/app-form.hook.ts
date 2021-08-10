@@ -14,7 +14,7 @@ import { FormEvent } from 'common/enums/enums';
 type useAppFormProps = {
   defaultValues: Record<string, unknown>;
   validationSchema?: ValidationSchema;
-  modeAction?: FormEvent.ON_SUBMIT | FormEvent.ON_CHANGE;
+  modeAction?: FormEvent;
 };
 
 type useAppFormReturn = {

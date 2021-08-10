@@ -1,10 +1,11 @@
 import { DataStatus } from 'common/enums/enums';
 import { Loader } from 'components/common/common';
-import { useAppSelector, useDispatch, useEffect, useState } from 'hooks/hooks';
+import { useAppSelector, useCallback, useDispatch, useEffect, useState } from 'hooks/hooks';
 import { homepage as homepageActions } from 'store/actions';
 import { PodcastList, Search } from './components/components';
-import { Podcast, SearchPayload } from 'common/types/types';
+import { SearchPayload } from './components/search/common/types/search';
 import styles from './styles.module.scss';
+import _ from 'lodash';
 
 const Homepage: React.FC = () => {
   const { podcasts, dataStatus } = useAppSelector(({ homepage }) => ({
@@ -14,26 +15,18 @@ const Homepage: React.FC = () => {
   const dispatch = useDispatch();
   const hasPodcasts = Boolean(podcasts.length);
 
-  const [filter, setFilter] = useState<Array<Podcast>>(podcasts);
+  const [text, setText] = useState<string>('');
 
   useEffect(() => {
     dispatch(homepageActions.loadPodcasts());
   }, []);
 
-  const handleChange = (searchValue: SearchPayload): void => {
-    const { search } = searchValue;
-    const filtered = filterPodcasts(search);
-    const payload = !search ? podcasts : filtered;
-    setFilter(payload);
-  };
+  const debounceValue = useCallback(_.debounce((value) =>
+    (dispatch(homepageActions.searchPodcasts(value))), 1000), []);
 
-  const filterPodcasts = (search: string): Array<Podcast> => {
-    const searchText = search.toLowerCase().split(' ').join('');
-    return podcasts
-      .filter((it) => it.name.split(' ')
-        .join('')
-        .toLowerCase()
-        .includes(searchText));
+  const handleChange = ({ search }: SearchPayload): void => {
+    setText(search);
+    debounceValue(search);
   };
 
   if (dataStatus === DataStatus.PENDING) {
@@ -44,10 +37,11 @@ const Homepage: React.FC = () => {
     <main className={styles.main}>
       <Search
         onChange={(value): void => handleChange(value)}
+        value={text}
       />
       <h2 className={styles.title}>All podcasts</h2>
       { hasPodcasts ?
-        <PodcastList podcasts={filter}/> :
+        <PodcastList podcasts={podcasts}/> :
         <span className={styles.oopsMessage}>Oops! There&apos;s nothing here</span>
       }
     </main>

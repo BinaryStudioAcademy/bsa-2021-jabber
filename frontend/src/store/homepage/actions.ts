@@ -10,4 +10,15 @@ const loadPodcasts = createAsyncThunk<Podcast[], undefined, AsyncThunkConfig>
   return podcasts;
 });
 
-export { loadPodcasts };
+const searchPodcasts = createAsyncThunk<Podcast[], string, AsyncThunkConfig>
+(ActionType.SEARCH_PODCASTS, async (title, { extra }) => {
+  const { podcastApi } = extra;
+  const podcasts = await podcastApi.getByTitle(title);
+
+  return podcasts;
+});
+
+export {
+  loadPodcasts,
+  searchPodcasts,
+};

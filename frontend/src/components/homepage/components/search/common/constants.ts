@@ -1,5 +1,5 @@
-import { SearchPayloadKey } from 'common/enums/enums';
-import { SearchPayload } from 'common/types/types';
+import { SearchPayloadKey } from './enums/search';
+import { SearchPayload } from './types/search';
 
 const DEFAULT_SEARCH_PAYLOAD: SearchPayload = {
   [SearchPayloadKey.SEARCH]: '',
