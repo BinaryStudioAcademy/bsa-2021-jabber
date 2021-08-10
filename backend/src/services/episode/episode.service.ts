@@ -70,13 +70,6 @@ class Episode {
       podcastId,
       imageId: null,
     };
-    const { userId: podcastOwnerId } = await this.#podcastRepository.getById(String(podcastId));
-    if (userId !== podcastOwnerId) {
-      throw new HttpError({
-        status: HttpCode.UNAUTHORIZED,
-        message: ErrorMessage.NOT_YOURS_PODCAST,
-      });
-    }
 
     if (imageDataUrl) {
       const { url, publicId } = await this.#fileStorage.upload({

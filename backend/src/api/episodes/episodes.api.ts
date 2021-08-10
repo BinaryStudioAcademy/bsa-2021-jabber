@@ -2,13 +2,14 @@ import { Router } from 'express';
 import {
   episodeCreate as episodeCreateValidationSchema,
 } from '~/validation-schemas/validation-schemas';
-import { ApiPath, HttpCode, EpisodesApiPath, HttpMethod } from '~/common/enums/enums';
+import { ApiPath, HttpCode, EpisodesApiPath, HttpMethod, ErrorMessage } from '~/common/enums/enums';
 import { episode as episodeService } from '~/services/services';
-import { handleAsyncApi } from '~/helpers/helpers';
+import { checkUserOwner, handleAsyncApi } from '~/helpers/helpers';
 import {
   checkAuth as checkAuthMiddleware,
   validateSchema as validateSchemaMiddleware,
 } from '~/middlewares/middlewares';
+import { HttpError } from '~/exceptions/exceptions';
 
 type Args = {
   apiRouter: Router;
@@ -48,6 +49,15 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
   episodeRouter.post(
     EpisodesApiPath.ROOT,
     checkAuthMiddleware(HttpMethod.POST),
+    function (req, res, next) {
+      if (checkUserOwner(req.body.podcastId, req.user?.id)) {
+        next();
+      }
+      throw new HttpError({
+        status: HttpCode.UNAUTHORIZED,
+        message: ErrorMessage.NOT_YOURS_PODCAST,
+      });
+    },
     validateSchemaMiddleware(episodeCreateValidationSchema),
     handleAsyncApi(async (req, res) => {
       const episode = await episodeService.create(req.body);

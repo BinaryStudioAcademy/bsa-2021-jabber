@@ -3,13 +3,14 @@ import {
   podcastCreate as podcastCreateValidationSchema,
   podcastEdit as editPodcastValidationSchema,
 } from '~/validation-schemas/validation-schemas';
-import { ApiPath, HttpCode, PodcastsApiPath, HttpMethod } from '~/common/enums/enums';
-import { handleAsyncApi } from '~/helpers/helpers';
+import { ApiPath, HttpCode, PodcastsApiPath, HttpMethod, ErrorMessage } from '~/common/enums/enums';
+import { checkUserOwner, handleAsyncApi } from '~/helpers/helpers';
 import {
   checkAuth as checkAuthMiddleware,
   validateSchema as validateSchemaMiddleware,
 } from '~/middlewares/middlewares';
 import { podcast as podcastService } from '~/services/services';
+import { HttpError } from '~/exceptions/exceptions';
 
 type Args = {
   apiRouter: Router;
@@ -51,6 +52,15 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
   podcastRouter.put(
     PodcastsApiPath.$ID,
     checkAuthMiddleware(HttpMethod.PUT),
+    function (req, res, next) {
+      if (checkUserOwner(req.params.id, req.user?.id)) {
+        next();
+      }
+      throw new HttpError({
+        status: HttpCode.UNAUTHORIZED,
+        message: ErrorMessage.NOT_YOURS_PODCAST,
+      });
+    },
     validateSchemaMiddleware(editPodcastValidationSchema),
     handleAsyncApi(async (req, res) => {
       return res
