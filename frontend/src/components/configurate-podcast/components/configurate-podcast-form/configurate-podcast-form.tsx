@@ -1,21 +1,22 @@
-import { getFileExtensions } from 'helpers/helpers';
+import { getFileExtensions, getOptions } from 'helpers/helpers';
 import {
   PodcastPayloadKey,
   ButtonType,
   DataStatus,
   InputType,
   FileExtension,
+  PodcastType,
 } from 'common/enums/enums';
-import { PodcastFormPayload } from 'common/types/types';
+import { Option, PodcastFormPayload } from 'common/types/types';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
-import { Input, Button } from 'components/common/common';
+import { Input, Button, Select } from 'components/common/common';
 import { podcastCreate as podcastCreateSchema } from 'validation-schemas/validation-schemas';
 import styles from './styles.module.scss';
 import { DEFAULT_PODCAST_PAYLOAD } from './common/constants';
 
 type Props = {
   onSubmit: (payload: PodcastFormPayload) => void;
-  payload?: PodcastFormPayload
+  payload?: PodcastFormPayload;
 };
 
 const acceptExtension = getFileExtensions(
@@ -25,7 +26,12 @@ const acceptExtension = getFileExtensions(
   FileExtension.SVG,
 );
 
-const ConfiguratePodcastForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_PODCAST_PAYLOAD }) => {
+const selectOptions: Option[] = getOptions(Object.values(PodcastType));
+
+const ConfiguratePodcastForm: React.FC<Props> = ({
+  onSubmit,
+  payload = DEFAULT_PODCAST_PAYLOAD,
+}) => {
   const { control, handleSubmit, errors, register } = useAppForm({
     validationSchema: podcastCreateSchema,
     defaultValues: payload,
@@ -54,6 +60,13 @@ const ConfiguratePodcastForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_P
           label="Podcast Description"
           placeholder="Description"
           hasMultipleRows
+        />
+        <Select
+          options={selectOptions}
+          label="Type"
+          name={PodcastPayloadKey.TYPE}
+          control={control}
+          errors={errors}
         />
         <input
           {...register(PodcastPayloadKey.IMAGE)}

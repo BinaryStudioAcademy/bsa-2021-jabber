@@ -127,6 +127,8 @@ class Podcast {
     const podcast = await this.#podcastRepository.update(id, updatePodcast);
 
     if (deleteImageId) {
+      const { publicId } = await this.#imageRepository.getById(deleteImageId);
+      await this.#fileStorage.delete(publicId);
       await this.#imageRepository.delete(deleteImageId);
     }
 

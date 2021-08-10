@@ -24,8 +24,9 @@ export {
   CommentDTOKey,
   RecordDTOKey,
   ImageDTOKey,
+  NotificationDTOKey,
 } from './db/db';
-export { HttpCode } from './http/http';
+export { HttpCode, HttpMethod } from './http/http';
 export {
   PodcastPayloadKey,
   PodcastValidationMessage,
@@ -33,11 +34,20 @@ export {
   PodcastType,
 } from './podcast/podcast';
 export { ResourceType } from './file/file';
-export { EpisodeType } from './episode/episode-type.enum';
-export { ShownoteCreatePayloadKey } from './shownote/shownote.enum';
+export {
+  EpisodeType,
+  EpisodeValidationMessage,
+  EpisodePayloadKey,
+  EpisodeStatus,
+} from './episode/episode';
+export { ShownotePayloadKey } from './shownote/shownote.enum';
 export { StrategyName } from './strategy/strategy';
 export {
   UserRole,
   UserSignInPayloadKey,
   UserCreatePayloadKey,
 } from './user/user';
+export {
+  CommentCreatePayloadKey,
+  CommentValidationMessage,
+} from './comment/comment';

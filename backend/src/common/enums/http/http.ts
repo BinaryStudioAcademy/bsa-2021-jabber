@@ -1,1 +1,1 @@
-export { HttpCode } from 'jabber-shared/common/enums/enums';
+export { HttpCode, HttpMethod } from 'jabber-shared/common/enums/enums';

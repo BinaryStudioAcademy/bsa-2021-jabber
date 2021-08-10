@@ -1,5 +1,5 @@
 import cloudinary from 'cloudinary';
-import { UploadFileResponse } from '~/common/types/types';
+import { UploadFileResponse, DeleteFileResponse } from '~/common/types/types';
 import { ResourceType } from '~/common/enums/enums';
 import { UploadFileProps } from './common/types/types';
 
@@ -8,7 +8,7 @@ type Constructor = {
 };
 
 const { config, uploader } = cloudinary.v2;
-const { upload_large: uploadLarge } = uploader;
+const { upload_large: uploadLarge, destroy } = uploader;
 
 class FileStorage {
   constructor({ storageApiUser }: Constructor) {
@@ -31,6 +31,14 @@ class FileStorage {
       url,
       bytes,
       publicId: public_id,
+    };
+  }
+
+  public async delete(public_id: string): Promise<DeleteFileResponse> {
+    const { result } = await destroy(public_id);
+
+    return {
+      result,
     };
   }
 }
