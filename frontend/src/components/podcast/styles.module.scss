@@ -1,5 +1,4 @@
 .podcast {
-  flex-grow: 1;
   max-width: 1515px;
   width: 100%;
   margin: 0 auto;
@@ -10,8 +9,10 @@
   display: flex;
 }
 
-.descriptionWrapper {
-  flex-grow: 2;
+.podcastInfoWrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 10;
 }
 
 .title {
@@ -28,7 +29,12 @@
   margin: 0;
 }
 
+.a {
+  flex-grow: 1;
+}
+
 .wrapper {
+  width: 280px;
   margin-right: 100px;
   display: flex;
   flex-direction: column;
@@ -81,6 +87,7 @@
 
 .podcastImage {
   height: 100%;
+  width: 280px;
   object-fit: cover;
 }
 
