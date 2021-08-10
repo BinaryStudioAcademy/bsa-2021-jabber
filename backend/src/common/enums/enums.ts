@@ -40,11 +40,14 @@ export {
   EpisodePayloadKey,
   EpisodeStatus,
 } from './episode/episode';
-export { ShownoteCreatePayloadKey } from './shownote/shownote.enum';
+export { ShownotePayloadKey } from './shownote/shownote.enum';
 export { StrategyName } from './strategy/strategy';
 export {
   UserRole,
   UserSignInPayloadKey,
   UserCreatePayloadKey,
 } from './user/user';
-export { CommentCreatePayloadKey, CommentValidationMessage } from './comment/comment';
+export {
+  CommentCreatePayloadKey,
+  CommentValidationMessage,
+} from './comment/comment';

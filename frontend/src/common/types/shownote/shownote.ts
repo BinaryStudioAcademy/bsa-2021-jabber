@@ -1,5 +1,4 @@
 export type {
-  Shownote,
   ShownotePayload,
-  ShownoteCreatePayload,
+  Shownote,
 } from 'jabber-shared/common/types/types';
