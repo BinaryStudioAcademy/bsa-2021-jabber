@@ -4,7 +4,7 @@ import { episodeCreate as episodeCreateCommon } from 'jabber-shared/validation-s
 
 const episodeCreate = episodeCreateCommon.keys({
   [EpisodePayloadKey.IMAGE]: Joi.object().allow(null),
-  [EpisodePayloadKey.RECORD]: Joi.object().required(),
+  [EpisodePayloadKey.RECORD]: Joi.object().allow(null),
 });
 
 export { episodeCreate };

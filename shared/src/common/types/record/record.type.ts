@@ -5,6 +5,7 @@ type Record = {
   episodeId: number;
   createdAt: string;
   updatedAt: string;
+  publicId: string;
 };
 
 export type { Record };

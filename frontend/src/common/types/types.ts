@@ -11,6 +11,7 @@ export type {
 export type {
   Episode,
   EpisodeCreatePayload,
+  EpisodeEditPayload,
   EpisodeFormPayload,
 } from './episode/episode';
 export type { Shownote, ShownotePayload } from './shownote/shownote';

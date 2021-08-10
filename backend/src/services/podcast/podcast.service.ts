@@ -89,6 +89,7 @@ class Podcast {
     imageId,
     imageDataUrl,
   }: PodcastEditPayload): Promise<TPodcast> {
+
     const updatePodcast: PodcastEditDTOPayload = {
       name,
       description,

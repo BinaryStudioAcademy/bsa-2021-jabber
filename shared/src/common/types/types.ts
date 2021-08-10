@@ -10,6 +10,7 @@ export type { ValidationSchema } from './validation-schema/validation-schema';
 export type {
   Episode,
   EpisodeCreatePayload,
+  EpisodeEditPayload,
   EpisodePayload,
 } from './episode/episode';
 export type {
