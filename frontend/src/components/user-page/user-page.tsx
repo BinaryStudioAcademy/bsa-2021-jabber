@@ -1,15 +1,21 @@
-import { useAppSelector } from 'hooks/hooks';
+import { useAppSelector, useEffect, useDispatch } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
 import contactLogo from './assets/contact.svg';
 import editLogo from './assets/edit.svg';
 import { PodcastList } from 'components/common/common';
 import emailLogo from './assets/email.svg';
+import { homepage as homepageActions } from 'store/actions';
 import styles from './styles.module.scss';
 
 const UserPage: React.FC = () => {
   const { user } = useAppSelector(({ auth }: RootState) => ({
     user: auth.user,
   }));
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(homepageActions.loadPodcasts());
+  }, []);
 
   const hasUser = Boolean(user);
 
