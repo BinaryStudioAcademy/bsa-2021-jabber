@@ -16,6 +16,7 @@
 .userInfo {
   padding-bottom: 32px;
   display: flex;
+  position: relative;
 
   .imageContainer {
     padding: 0 25px 8px 25px;
@@ -74,12 +75,15 @@
     top: 0;
     right: 0;
   }
-}
 
-.line {
-  width: 100%;
-  height: 2px;
-  background-color: #dcdce0;
+  &::after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background-color: #dcdce0;
+    position: absolute;
+    bottom: 0px;
+  }
 }
 
 .favoritePodcastContainer {

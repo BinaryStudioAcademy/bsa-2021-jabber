@@ -80,7 +80,6 @@ const UserPage: React.FC = () => {
           </button>
         </div>
       </main>
-      <div className={styles.line} />
       <div className={styles.favoritePodcastContainer}>
         <span className={styles.favoritePodcastTitle}>Favorite Podcasts</span>
         <div className={styles.podcasts}>
