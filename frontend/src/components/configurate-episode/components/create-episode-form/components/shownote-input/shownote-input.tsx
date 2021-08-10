@@ -8,6 +8,7 @@ import {
 import { Button, Input } from 'components/common/common';
 import styles from './styles.module.scss';
 import { ErrorMessage } from '@hookform/error-message';
+import { useCallback } from 'react';
 
 type Props = {
   index: number;
@@ -22,6 +23,10 @@ const ShownoteInput: React.FC<Props> = ({
   errors,
   onRemove,
 }) => {
+  const handleRemove = useCallback(() => {
+    onRemove(index);
+  }, []);
+
   return (
     <li className={styles.shownoteInputs}>
       <Input
@@ -53,7 +58,7 @@ const ShownoteInput: React.FC<Props> = ({
       <Button
         label="Delete"
         buttonColor={ButtonColor.LIGHT_PINK}
-        onClick={(): void => onRemove(index)}
+        onClick={handleRemove}
       />
     </li>
   );
