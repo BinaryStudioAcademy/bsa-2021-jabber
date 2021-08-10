@@ -9,7 +9,6 @@ import {
   episode as episodeRep,
   record as recordRep,
   image as imageRep,
-  podcast as podcastRep,
 } from '~/data/repositories/repositories';
 import { shownote } from '~/services/services';
 import { HttpError } from '~/exceptions/exceptions';
@@ -21,7 +20,6 @@ type Constructor = {
   imageRepository: typeof imageRep;
   recordRepository: typeof recordRep;
   fileStorage: FileStorage;
-  podcastRepository: typeof podcastRep;
 };
 
 class Episode {
@@ -30,7 +28,6 @@ class Episode {
   #fileStorage: FileStorage;
   #recordRepository: typeof recordRep;
   #imageRepository: typeof imageRep;
-  #podcastRepository: typeof podcastRep;
 
   constructor({
     episodeRepository,
@@ -45,7 +42,6 @@ class Episode {
     this.#fileStorage = fileStorage;
     this.#recordRepository = recordRepository;
     this.#imageRepository = imageRepository;
-    this.#podcastRepository = podcastRepository;
   }
 
   public getAll(): Promise<TEpisode[]> {

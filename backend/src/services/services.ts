@@ -59,7 +59,6 @@ const episode = new Episode({
   imageRepository,
   recordRepository,
   fileStorage,
-  podcastRepository,
 });
 
 const comment = new Comment({
