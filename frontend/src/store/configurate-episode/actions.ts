@@ -16,16 +16,18 @@ const createEpisode = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkCo
     const { episodeApi, notificationService } = extra;
     const { auth } = getState();
 
-    const recordfile = getFileFromFileList(createEpisodePayload.record);
+    const file = getFileFromFileList(createEpisodePayload.record);
     const imgFile = getFileFromFileList(createEpisodePayload.image);
 
     const episodes = await episodeApi.create({
       name: createEpisodePayload.name,
       description: createEpisodePayload.description,
+      shownotes: createEpisodePayload.shownotes,
       podcastId: DEFAULT_PODCAST_ID,
+      status: createEpisodePayload.status,
       type: createEpisodePayload.type,
       userId: (<User>auth.user).id,
-      recordDataUrl: recordfile ? await getDataUrl(recordfile) : null,
+      recordDataUrl: file ? await getDataUrl(file) : null,
       imageDataUrl: imgFile ? await getDataUrl(imgFile) : null,
     });
 

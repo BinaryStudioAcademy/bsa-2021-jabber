@@ -1,5 +1,8 @@
 import { ShownoteModel as ShownoteM } from '~/data/models/models';
-import { Shownote as TShownote, ShownoteCreatePayload } from '~/common/types/types';
+import {
+  Shownote as TShownote,
+  ShownoteCreatePayload,
+} from '~/common/types/types';
 
 type Constructor = {
   ShownoteModel: typeof ShownoteM;
@@ -12,7 +15,7 @@ class Shownote {
     this.#ShownoteModel = ShownoteModel;
   }
 
-  public create(payload: ShownoteCreatePayload): Promise<TShownote> {
+  public create(payload: ShownoteCreatePayload[]): Promise<TShownote[]> {
     return this.#ShownoteModel.query().insert(payload);
   }
 

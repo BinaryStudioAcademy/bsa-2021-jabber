@@ -11,10 +11,12 @@ import {
   record as recordRep,
   image as imageRep,
 } from '~/data/repositories/repositories';
+import { shownote } from '~/services/services';
 import { HttpError } from '~/exceptions/exceptions';
 
 type Constructor = {
   episodeRepository: typeof episodeRep;
+  shownoteService: typeof shownote;
   imageRepository: typeof imageRep;
   recordRepository: typeof recordRep;
   fileStorage: FileStorage;
@@ -22,12 +24,20 @@ type Constructor = {
 
 class Episode {
   #episodeRepository: typeof episodeRep;
+  #shownoteService: typeof shownote;
   #fileStorage: FileStorage;
   #recordRepository: typeof recordRep;
   #imageRepository: typeof imageRep;
 
-  constructor({ episodeRepository, fileStorage, recordRepository, imageRepository }: Constructor) {
+  constructor({
+    episodeRepository,
+    shownoteService,
+    fileStorage,
+    recordRepository,
+    imageRepository,
+  }: Constructor) {
     this.#episodeRepository = episodeRepository;
+    this.#shownoteService = shownoteService;
     this.#fileStorage = fileStorage;
     this.#recordRepository = recordRepository;
     this.#imageRepository = imageRepository;
@@ -54,16 +64,18 @@ class Episode {
     imageDataUrl,
     type,
     description,
+    shownotes,
     name,
     podcastId,
+    status,
   }: EpisodeCreatePayload): Promise<TEpisode> {
-
     const newEpisode: EpisodeCreateDTOPayload = {
       userId,
       type,
       description,
       name,
       podcastId,
+      status,
       imageId: null,
     };
 
@@ -77,10 +89,18 @@ class Episode {
         url,
         publicId,
       });
+
       newEpisode.imageId = image.id;
     }
 
     const episode = await this.#episodeRepository.create(newEpisode);
+
+    await this.#shownoteService.create(
+      ...shownotes.map((shownote) => ({
+        ...shownote,
+        episodeId: episode.id,
+      })),
+    );
 
     if (recordDataUrl) {
       const { url, publicId, bytes } = await this.#fileStorage.upload({
