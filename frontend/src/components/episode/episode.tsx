@@ -1,24 +1,24 @@
-import H5AudioPlayer from 'react-h5-audio-player';
 import {
   useAppSelector,
   useDispatch,
   useEffect,
   useParams,
-  useState,
+  useRef,
 } from 'hooks/hooks';
 import { episode as episodeActions } from 'store/actions';
 import { CreateCommentForm, CommentsList } from './components/components';
-import { Loader } from 'components/common/common';
+import { Loader, Player } from 'components/common/common';
 import { DataStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
+import { PlayerRef } from 'components/common/player/player';
+import { getCurrentTime } from './helpers/helpers';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
-import { Player } from 'components/common/common';
 
 const Episode: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
-  const [player, setPlayer] = useState<H5AudioPlayer | null>(null);
+  const playerRef = useRef<PlayerRef | null>(null);
 
   const { episode, comments, user, dataStatus } = useAppSelector(
     ({ episode, auth }) => ({
@@ -37,10 +37,7 @@ const Episode: React.FC = () => {
   }, []);
 
   const handleCreateComment = (payload: CommentFormCreatePayload): void => {
-    const timestamp =
-      player && player.audio.current
-        ? Math.round(player.audio.current.currentTime)
-        : 0;
+    const timestamp = getCurrentTime(playerRef);
     dispatch(
       episodeActions.createComment({
         ...payload,
@@ -74,9 +71,9 @@ const Episode: React.FC = () => {
               />
             </p>
           </div>
-          {episode.record ? (
-            <Player src={episode.record.fileUrl} setRef={setPlayer} />
-          ) : null}
+          {episode.record && (
+            <Player src={episode.record.fileUrl} ref={playerRef} />
+          )}
         </>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such episode</h1>
