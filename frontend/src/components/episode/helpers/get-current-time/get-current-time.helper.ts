@@ -1,7 +1,8 @@
 import { PlayerRef } from 'components/common/player/player';
 
+const DEFAULT_TIME = 0;
+
 const getCurrentTime = (playerRef: React.MutableRefObject<PlayerRef | null>): number => {
-  const DEFAULT_TIME = 0;
 
   return playerRef.current
     ? Math.round(playerRef.current?.getCurrentTime())
