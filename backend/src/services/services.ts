@@ -49,16 +49,17 @@ const user = new User({
   tokenService: token,
 });
 
+const shownote = new Shownote({
+  shownoteRepository,
+});
+
 const episode = new Episode({
   episodeRepository,
+  shownoteService: shownote,
   imageRepository,
   recordRepository,
   fileStorage,
   podcastRepository,
-});
-
-const shownote = new Shownote({
-  shownoteRepository,
 });
 
 const comment = new Comment({

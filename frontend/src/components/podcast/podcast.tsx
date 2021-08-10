@@ -39,6 +39,7 @@ const Podcast: React.FC = () => {
             <div className={styles.descriptionWrapper}>
               <h1 className={styles.title}>{podcast.name}</h1>
               <p className={styles.description}>{podcast.description}</p>
+              <p className={styles.type}>Type: {podcast.type}</p>
             </div>
             <div className={styles.wrapper}>
               <p className={styles.imageWrapper}>
@@ -60,7 +61,12 @@ const Podcast: React.FC = () => {
               )}
             </div>
           </div>
-          <EpisodeTable episodes={episodes} />
+          {
+            episodes.length
+              ? <EpisodeTable episodes={episodes} />
+              : <div className={styles.placeholder}>There are no episodes in this podcast yet.</div>
+          }
+          
         </>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such podcast</h1>

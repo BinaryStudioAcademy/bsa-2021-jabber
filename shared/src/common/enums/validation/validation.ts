@@ -6,5 +6,7 @@ export { EpisodeValidationMessage } from './episode-validation-message.enum';
 export { EpisodeValidationRule } from './episode-validation-rule.enum';
 export { PodcastValidationMessage } from './podcast-validation-message.enum';
 export { PodcastValidationRule } from './podcast-validation-rule.enum';
+export { ShownoteValidationMessage } from './shownote-validation-message.enum';
+export { ShownoteValidationRule } from './shownote-validation-rule.enum';
 export { CommentValidationMessage } from './comment-validation-message.enum';
 export { CommentValidationRule } from './comment-validation-rule.enum';
