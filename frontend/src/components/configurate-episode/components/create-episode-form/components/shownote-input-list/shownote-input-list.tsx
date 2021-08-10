@@ -1,14 +1,9 @@
 import { DeepMap, FieldError, Control, FieldValues } from 'react-hook-form';
-import { ErrorMessage } from '@hookform/error-message';
-import {
-  ButtonColor,
-  EpisodePayloadKey,
-  InputType,
-  ShownotePayloadKey,
-} from 'common/enums/enums';
-import { Button, Input } from 'components/common/common';
+import { ButtonColor, EpisodePayloadKey } from 'common/enums/enums';
+import { Button } from 'components/common/common';
 import { useCallback, useFieldArray } from 'hooks/hooks';
 import { DEFAULT_SHOWNOTE_PAYLOAD } from '../../common/constants';
+import ShownoteInput from '../shownote-input/shownote-input';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -38,39 +33,13 @@ const ShownoteInputList: React.FC<Props> = ({ control, errors }) => {
       </div>
       <ul className={styles.inputList}>
         {fields.map((item, index) => (
-          <li key={item.id} className={styles.listItem}>
-            <Input
-              type={InputType.TEXT}
-              label="Name"
-              placeholder="Enter show-note name"
-              name={
-                `${EpisodePayloadKey.SHOWNOTES}[${index}].${ShownotePayloadKey.NAME}` as 'shownotes[x].name'
-              }
-              control={control}
-              errors={errors}
-            />
-            <Input
-              type={InputType.NUMBER}
-              label="Timestamp"
-              placeholder="Enter show-note timestamp"
-              name={
-                `${EpisodePayloadKey.SHOWNOTES}[${index}].${ShownotePayloadKey.TIMESTAMP}` as 'shownotes[x].timestamp'
-              }
-              control={control}
-              errors={errors}
-            />
-            <div className={styles.errorWrapper}>
-              <ErrorMessage
-                errors={errors}
-                name={`${EpisodePayloadKey.SHOWNOTES}[${index}]`}
-              />
-            </div>
-            <Button
-              label="Delete"
-              buttonColor={ButtonColor.LIGHT_PINK}
-              onClick={(): void => remove(index)}
-            />
-          </li>
+          <ShownoteInput
+            key={item.id}
+            index={index}
+            control={control}
+            errors={errors}
+            onRemove={remove}
+          />
         ))}
       </ul>
     </>
