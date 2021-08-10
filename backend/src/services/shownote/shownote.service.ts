@@ -15,7 +15,7 @@ class Shownote {
     this.#shownoteRepository = shownoteRepository;
   }
 
-  public create(payload: ShownoteCreatePayload): Promise<TShownote> {
+  public create(...payload: ShownoteCreatePayload[]): Promise<TShownote[]> {
     return this.#shownoteRepository.create(payload);
   }
 
