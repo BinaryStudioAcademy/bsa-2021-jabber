@@ -9,6 +9,8 @@ const EpisodeValidationMessage = {
   PODCAST_ID_REQUIRE: 'Podcast id is required',
   PODCAST_ID_NUMBER_FORMAT: 'Podcast id must be an integer',
   TYPE_REQUIRE: 'Episode type is required',
+  SHOWNOTES_REQUIRE: 'Shownotes field is required',
+  SHOWNOTE_DUPLICATE: 'Shownote contains a duplicate value',
   EPISODE_DESCRIPTION_REQUIRE: 'Episode description is required',
   EPISODE_DESCRIPTION_MIN_LENGTH: `Episode DESCRIPTION must be at least ${EpisodeValidationRule.EPISODE_DESCRIPTION_MIN_LENGTH} character long`,
   EPISODE_DESCRIPTION_MAX_LENGTH: `Episode DESCRIPTION must be at most ${EpisodeValidationRule.EPISODE_DESCRIPTION_MAX_LENGTH} characters long`,
