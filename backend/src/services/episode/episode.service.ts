@@ -95,12 +95,14 @@ class Episode {
 
     const episode = await this.#episodeRepository.create(newEpisode);
 
-    await this.#shownoteService.create(
-      ...shownotes.map((shownote) => ({
-        ...shownote,
-        episodeId: episode.id,
-      })),
-    );
+    if (shownotes.length) {
+      await this.#shownoteService.create(
+        ...shownotes.map((shownote) => ({
+          ...shownote,
+          episodeId: episode.id,
+        })),
+      );
+    }
 
     if (recordDataUrl) {
       const { url, publicId, bytes } = await this.#fileStorage.upload({
