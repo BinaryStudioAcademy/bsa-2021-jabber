@@ -1,5 +1,6 @@
 import { useAppSelector } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
+import { UserInfo } from './components/user-info';
 import styles from './styles.module.scss';
 
 const UserPage: React.FC = () => {
@@ -19,20 +20,11 @@ const UserPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
+      <img src="" width="256" height="256" />
+
       <div className={styles.userInformation}>
-        <img src="" width="256" height="256" />
-        <h3 className={styles.title}>First Name:</h3>
-        <h1 className={styles.userInfo}>{user?.firstName}</h1>
-        <h3 className={styles.title}>Last Name:</h3>
-        <h1 className={styles.userInfo}>{user?.lastName}</h1>
-        <h3 className={styles.title}>Nickname:</h3>
-        <h1 className={styles.userInfo}>{user?.nickname}</h1>
-        <h3 className={styles.title}>Email:</h3>
-        <h1 className={styles.userInfo}>{user?.email}</h1>
-        <h3 className={styles.title}>Bio:</h3>
-        <h1 className={styles.userInfo}> </h1>
+        <UserInfo user={user} />
       </div>
-      <div className={styles.userAvatarWrapper}></div>
     </div>
   );
 };
