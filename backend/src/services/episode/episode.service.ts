@@ -146,8 +146,7 @@ class Episode {
         fileSize: bytes,
       });
 
-      const oldRecords = await this.#recordRepository.getByEpisodeId(episodeId);
-      const { id, publicId: oldRecordPublicId } = oldRecords[0];
+      const { id, publicId: oldRecordPublicId } = await this.#recordRepository.getByEpisodeId(episodeId);
 
       if (id) {
         await this.#fileStorage.delete(oldRecordPublicId);
@@ -177,7 +176,7 @@ class Episode {
       imageId: newImageId ?? imageId,
     });
 
-    if (imageId) {
+    if (imageDataUrl && imageId) {
       const oldImage = await this.#imageRepository.getById(imageId);
 
       await this.#imageRepository.delete(oldImage.id);

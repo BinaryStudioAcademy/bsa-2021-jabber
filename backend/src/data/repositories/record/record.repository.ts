@@ -20,8 +20,8 @@ class Record {
     return this.#RecordModel.query().insert(payload);
   }
 
-  public getByEpisodeId(id: number): Promise<TRecord[]> {
-    return this.#RecordModel.query().where('episode_id', id);
+  public getByEpisodeId(id: number): Promise<TRecord> {
+    return this.#RecordModel.query().findOne({ episode_id: id });
   }
 
   public delete(id: number): Promise<number> {
