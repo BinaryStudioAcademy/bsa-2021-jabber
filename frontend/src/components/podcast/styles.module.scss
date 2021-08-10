@@ -19,6 +19,10 @@
   color: var(--color-button-background);
 }
 
+.type {
+  font-size: 16px;
+}
+
 .description {
   font-size: 18px;
   margin: 0;
@@ -27,6 +31,7 @@
 .wrapper {
   margin-right: 100px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   position: relative;
 
@@ -38,11 +43,12 @@
     content: '';
     pointer-events: none;
     position: absolute;
-    margin: -1px 0 -36px 1px;
+    margin: 1px 0 36px 1px;
     padding-bottom: 36px;
     width: 100%;
-    transition: transform 0.5s ease, background-size 0.5s 0.15s ease;
+    transition: transform 0.2s ease, background-size 0.5s 0.15s ease;
     z-index: 20;
+    height: 280px;
   }
 
   .imageWrapper {
@@ -75,4 +81,10 @@
 
 .podcastImage {
   height: 100%;
+  object-fit: cover;
+}
+
+.placeholder {
+  font-weight: 600;
+  color: var(--color-header-background);
 }

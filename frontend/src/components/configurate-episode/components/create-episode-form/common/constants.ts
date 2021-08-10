@@ -2,6 +2,7 @@ import {
   EpisodePayloadKey,
   EpisodeType,
   ShownotePayloadKey,
+  EpisodeStatus,
 } from 'common/enums/enums';
 import { EpisodeFormPayload, ShownotePayload } from 'common/types/types';
 
@@ -12,6 +13,7 @@ const DEFAULT_CREATE_EPISODE_PAYLOAD: EpisodeFormPayload = {
   [EpisodePayloadKey.TYPE]: EpisodeType.PUBLIC,
   [EpisodePayloadKey.IMAGE]: null,
   [EpisodePayloadKey.RECORD]: null,
+  [EpisodePayloadKey.STATUS]: EpisodeStatus.PUBLISHED,
 };
 
 const DEFAULT_SHOWNOTE_PAYLOAD: ShownotePayload = {

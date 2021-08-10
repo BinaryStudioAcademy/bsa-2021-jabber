@@ -58,23 +58,24 @@ class Episode {
     return episode;
   }
 
-  public async create(payload: EpisodeCreatePayload): Promise<TEpisode> {
-    const {
-      userId,
-      recordDataUrl,
-      imageDataUrl,
-      type,
-      description,
-      name,
-      podcastId,
-    } = payload;
-
+  public async create({
+    userId,
+    recordDataUrl,
+    imageDataUrl,
+    type,
+    description,
+    shownotes,
+    name,
+    podcastId,
+    status,
+  }: EpisodeCreatePayload): Promise<TEpisode> {
     const newEpisode: EpisodeCreateDTOPayload = {
       userId,
       type,
       description,
       name,
       podcastId,
+      status,
       imageId: null,
     };
 
@@ -94,12 +95,12 @@ class Episode {
 
     const episode = await this.#episodeRepository.create(newEpisode);
 
-    const shownotes = payload.shownotes.map((shownote) => ({
-      ...shownote,
-      episodeId: episode.id,
-    }));
-
-    await this.#shownoteService.create(...shownotes);    
+    await this.#shownoteService.create(
+      ...shownotes.map((shownote) => ({
+        ...shownote,
+        episodeId: episode.id,
+      })),
+    );
 
     if (recordDataUrl) {
       const { url, publicId, bytes } = await this.#fileStorage.upload({

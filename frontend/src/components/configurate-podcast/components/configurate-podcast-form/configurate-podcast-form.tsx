@@ -16,7 +16,7 @@ import { DEFAULT_PODCAST_PAYLOAD } from './common/constants';
 
 type Props = {
   onSubmit: (payload: PodcastFormPayload) => void;
-  payload?: PodcastFormPayload
+  payload?: PodcastFormPayload;
 };
 
 const acceptExtension = getFileExtensions(
@@ -26,9 +26,12 @@ const acceptExtension = getFileExtensions(
   FileExtension.SVG,
 );
 
-const selectOptions:Option[] = getOptions(Object.values(PodcastType));
+const selectOptions: Option[] = getOptions(Object.values(PodcastType));
 
-const ConfiguratePodcastForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_PODCAST_PAYLOAD }) => {
+const ConfiguratePodcastForm: React.FC<Props> = ({
+  onSubmit,
+  payload = DEFAULT_PODCAST_PAYLOAD,
+}) => {
   const { control, handleSubmit, errors, register } = useAppForm({
     validationSchema: podcastCreateSchema,
     defaultValues: payload,

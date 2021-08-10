@@ -4,9 +4,11 @@ import {
   EpisodeValidationMessage,
   EpisodePayloadKey,
   EpisodeType,
+  EpisodeStatus,
 } from '~/common/enums/enums';
 
 const episodeTypes = Object.values(EpisodeType);
+const episodeStatus = Object.values(EpisodeStatus);
 
 const episode = Joi.object({
   [EpisodePayloadKey.NAME]: Joi.string()
@@ -34,6 +36,12 @@ const episode = Joi.object({
       'string.empty': EpisodeValidationMessage.EPISODE_DESCRIPTION_REQUIRE,
       'string.min': EpisodeValidationMessage.EPISODE_DESCRIPTION_MIN_LENGTH,
       'string.max': EpisodeValidationMessage.EPISODE_DESCRIPTION_MAX_LENGTH,
+    }),
+  [EpisodePayloadKey.STATUS]: Joi.string()
+    .valid(...episodeStatus)
+    .required()
+    .messages({
+      'string.empty': EpisodeValidationMessage.STATUS_REQUIRE,
     }),
 });
 

@@ -32,8 +32,12 @@ export {
   CommentValidationRule,
   CommentValidationMessage,
 } from './validation/validation';
+export {
+  EpisodePayloadKey,
+  EpisodeType,
+  EpisodeStatus,
+} from './episode/episode';
 export { ShownotePayloadKey } from './shownote/shownote';
-export { EpisodePayloadKey, EpisodeType } from './episode/episode';
 export { CommentCreatePayloadKey } from './comment/comment';
 export { RecordCreatePayloadKey } from './record/record';
 export { ImageCreatePayloadKey } from './image/image';
