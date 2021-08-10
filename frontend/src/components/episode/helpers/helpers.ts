@@ -1,1 +1,1 @@
-export { getCurrentTime } from './get-current-time.helper';
+export { getCurrentTime } from './get-current-time/get-current-time.helper';
