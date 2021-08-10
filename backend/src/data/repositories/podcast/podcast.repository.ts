@@ -32,6 +32,10 @@ class Podcast {
   public update(id: string, payload: PodcastEditDTOPayload): Promise<TPodcast> {
     return this.#PodcastModel.query().updateAndFetchById(id, payload);
   }
+
+  public getPodcastsByUserId(userId: string): Promise<TPodcast[]> {
+    return this.#PodcastModel.query().where({ user_id: userId }).withGraphJoined('image');
+  }
 }
 
 export { Podcast };

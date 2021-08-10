@@ -124,6 +124,10 @@ class Podcast {
 
     return podcast;
   }
+
+  public getPodcastsByUserId(userId: string): Promise<TPodcast[]> {
+    return this.#podcastRepository.getPodcastsByUserId(userId);
+  }
 }
 
 export { Podcast };
