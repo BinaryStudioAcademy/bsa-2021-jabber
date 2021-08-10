@@ -1,0 +1,33 @@
+.container {
+  width: 100%;
+  padding: 50px 10%;
+  display: flex;
+}
+
+.containerUserNotFound {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userInformation {
+  padding-left: 20px;
+  flex: 1;
+}
+
+.title {
+  color: #616161;
+}
+
+.userAvatarWrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.userInfo {
+  margin-left: 10px;
+  margin-bottom: 50px;
+}
