@@ -12,7 +12,7 @@
 .podcastInfoWrapper {
   display: flex;
   flex-direction: column;
-  flex-grow: 10;
+  flex-grow: 0.8;
 }
 
 .title {
@@ -29,8 +29,8 @@
   margin: 0;
 }
 
-.a {
-  flex-grow: 1;
+.imageContainer {
+  flex-grow: 0.2;
 }
 
 .wrapper {

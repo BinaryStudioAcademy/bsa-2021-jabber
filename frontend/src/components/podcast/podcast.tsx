@@ -42,7 +42,7 @@ const Podcast: React.FC = () => {
               </div>
               <p className={styles.type}>Type: {podcast.type}</p>
             </div>
-            <div className={styles.a}>
+            <div className={styles.imageContainer}>
               <div className={styles.wrapper}>
                 <p className={styles.imageWrapper}>
                   <img
