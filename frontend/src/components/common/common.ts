@@ -14,3 +14,4 @@ export { default as Loader } from './loader/loader';
 export { default as Select } from './select/select';
 export { default as Datepiker } from './datepicker/datepicker';
 export { default as Table } from './table/table';
+export { default as PodcastList } from './podcasts-list/podcasts-list';

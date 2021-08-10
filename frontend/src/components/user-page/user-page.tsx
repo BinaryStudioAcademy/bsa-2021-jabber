@@ -2,7 +2,7 @@ import { useAppSelector } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
 import contactLogo from './assets/contact.svg';
 import editLogo from './assets/edit.svg';
-import { PodcastList } from '../homepage/components/components';
+import { PodcastList } from 'components/common/common';
 import emailLogo from './assets/email.svg';
 import styles from './styles.module.scss';
 
