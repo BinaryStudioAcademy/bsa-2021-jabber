@@ -82,6 +82,17 @@ class Podcast {
     return podcast;
   }
 
+  public async getByTitle(title: string): Promise<TPodcast> {
+    const podcast = await this.#podcastRepository.getByTitle(title);
+    if (!podcast) {
+      throw new HttpError({
+        status: HttpCode.NOT_FOUND,
+        message: ErrorMessage.PODCAST_NOT_FOUND,
+      });
+    }
+    return podcast;
+  }
+
   public async update(id: string, {
     name,
     userId,

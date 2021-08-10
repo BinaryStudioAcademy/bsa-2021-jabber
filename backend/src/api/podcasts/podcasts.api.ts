@@ -26,6 +26,15 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
   );
 
   podcastRouter.get(
+    PodcastsApiPath.SEARCH_BY_TITLE,
+    handleAsyncApi(async (req, res) => {
+      return res
+        .send(await podcastService.getByTitle(`${req.query.title}`))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  podcastRouter.get(
     PodcastsApiPath.$ID,
     handleAsyncApi(async (req, res) => {
       return res

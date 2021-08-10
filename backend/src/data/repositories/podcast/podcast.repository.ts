@@ -28,6 +28,10 @@ class Podcast {
     return this.#PodcastModel.query().findById(id);
   }
 
+  public getByTitle(title: string): Promise<any> {
+    return this.#PodcastModel.query().whereRaw(`REPLACE(name, ' ', '') ILIKE REPLACE('%${title}%', ' ', '')`);
+  }
+
   public update(id: string, payload: PodcastEditDTOPayload): Promise<TPodcast> {
     return this.#PodcastModel.query().updateAndFetchById(id, payload);
   }
