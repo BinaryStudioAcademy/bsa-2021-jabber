@@ -42,7 +42,7 @@ const Header: React.FC = () => {
                 </Link>
               </li>
               <li className={styles.liNavigation}>
-                <Link to={AppRoute.USER_PAGE} className={styles.link}>
+                <Link to={AppRoute.USERS_ID} className={styles.link}>
                   My Profile
                 </Link>
               </li>

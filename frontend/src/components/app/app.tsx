@@ -12,7 +12,7 @@ import Auth from 'components/auth/auth';
 import Homepage from 'components/homepage/homepage';
 import ConfiguratePodcast from 'components/configurate-podcast/configurate-podcast';
 import ConfigurateEpisode from 'components/configurate-episode/configurate-episode';
-import UserPage from 'components/user-page/user-page';
+import UserProfile from 'components/user-profile/user-profile';
 import Episode from 'components/episode/episode';
 import Podcast from 'components/podcast/podcast';
 import PodcastLive from 'components/podcast-live/podcast-live';
@@ -70,8 +70,8 @@ const App: React.FC = () => {
           exact
         />
         <AuthPublicRouter
-          path={AppRoute.USER_PAGE}
-          component={UserPage}
+          path={AppRoute.USERS_ID}
+          component={UserProfile}
           exact
         />
         <AuthPublicRouter

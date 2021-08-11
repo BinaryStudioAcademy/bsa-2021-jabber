@@ -19,7 +19,7 @@
   position: relative;
 
   .imageContainer {
-    padding: 0 25px 8px 25px;
+    padding: 0 25px 8px 0;
     display: inline-block;
 
     .userAvatar {
@@ -87,11 +87,8 @@
 }
 
 .favoritePodcastContainer {
-  margin-top: 30px;
-
   .favoritePodcastTitle {
     font-weight: bold;
-    font-size: 18px;
   }
 
   .podcasts {

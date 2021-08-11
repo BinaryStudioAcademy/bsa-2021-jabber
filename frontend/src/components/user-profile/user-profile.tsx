@@ -1,10 +1,9 @@
-import { useAppSelector, useEffect, useDispatch } from 'hooks/hooks';
+import { useAppSelector } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
-import contactLogo from './assets/contact.svg';
-import editLogo from './assets/edit.svg';
-import { PodcastList } from 'components/common/common';
-import emailLogo from './assets/email.svg';
-import { homepage as homepageActions } from 'store/actions';
+import contactLogo from 'assets/img/user-profile/contact.svg';
+import editLogo from 'assets/img/user-profile/edit.svg';
+import emailLogo from 'assets/img/user-profile/email.svg';
+import defaultImage from 'assets/img/user-profile/default-profile-picture.jpg';
 import styles from './styles.module.scss';
 
 const UserPage: React.FC = () => {
@@ -12,31 +11,22 @@ const UserPage: React.FC = () => {
     user: auth.user,
   }));
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(homepageActions.loadPodcasts());
-  }, []);
-
   const hasUser = Boolean(user);
 
   if (!hasUser) {
     return (
       <div className={styles.containerUserNotFound}>
-        <h1>Not User Found</h1>
+        <h1>User Not Found</h1>
       </div>
     );
   }
-
-  const { podcasts } = useAppSelector(({ homepage }) => ({
-    podcasts: homepage.podcasts,
-  }));
 
   return (
     <div className={styles.container}>
       <main className={styles.userInfo}>
         <div className={styles.imageContainer}>
           <img
-            src="http://res.cloudinary.com/hmqu8gtpn/image/upload/v1628597464/2/zxqhnwo2izhud72qbjg6.jpg"
+            src={defaultImage}
             width="195"
             height="195"
             className={styles.userAvatar}
@@ -81,10 +71,8 @@ const UserPage: React.FC = () => {
         </div>
       </main>
       <div className={styles.favoritePodcastContainer}>
-        <span className={styles.favoritePodcastTitle}>Favorite Podcasts</span>
-        <div className={styles.podcasts}>
-          <PodcastList podcasts={podcasts} />
-        </div>
+        <h2 className={styles.favoritePodcastTitle}>Favorite Podcasts</h2>
+        <div className={styles.podcasts}></div>
       </div>
     </div>
   );
