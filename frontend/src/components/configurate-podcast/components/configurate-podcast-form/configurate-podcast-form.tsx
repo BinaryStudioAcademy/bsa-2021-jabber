@@ -42,6 +42,7 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
         <ImagePreviewControl
           name={PodcastPayloadKey.IMAGE}
           control={control}
+          errors={errors}
         />
         <Input
           name={PodcastPayloadKey.NAME}
