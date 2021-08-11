@@ -1,8 +1,9 @@
-import { HttpCode } from '~/common/enums/enums';
+import { HttpCode, ErrorMessage } from '~/common/enums/enums';
 import {
   Episode as TEpisode,
   EpisodeCreateDTOPayload,
   EpisodeCreatePayload,
+  EpisodeEditPayload,
 } from '~/common/types/types';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
 import {
@@ -10,11 +11,12 @@ import {
   record as recordRep,
   image as imageRep,
 } from '~/data/repositories/repositories';
+import { shownote } from '~/services/services';
 import { HttpError } from '~/exceptions/exceptions';
-import { ErrorMessage } from '~/common/enums/enums';
 
 type Constructor = {
   episodeRepository: typeof episodeRep;
+  shownoteService: typeof shownote;
   imageRepository: typeof imageRep;
   recordRepository: typeof recordRep;
   fileStorage: FileStorage;
@@ -22,12 +24,21 @@ type Constructor = {
 
 class Episode {
   #episodeRepository: typeof episodeRep;
+  #shownoteService: typeof shownote;
   #fileStorage: FileStorage;
   #recordRepository: typeof recordRep;
   #imageRepository: typeof imageRep;
 
-  constructor({ episodeRepository, fileStorage, recordRepository, imageRepository }: Constructor) {
+  constructor({
+    episodeRepository,
+    shownoteService,
+    fileStorage,
+    recordRepository,
+    imageRepository,
+  }: Constructor) {
+
     this.#episodeRepository = episodeRepository;
+    this.#shownoteService = shownoteService;
     this.#fileStorage = fileStorage;
     this.#recordRepository = recordRepository;
     this.#imageRepository = imageRepository;
@@ -54,11 +65,11 @@ class Episode {
     imageDataUrl,
     type,
     description,
+    shownotes,
     name,
     podcastId,
     status,
   }: EpisodeCreatePayload): Promise<TEpisode> {
-
     const newEpisode: EpisodeCreateDTOPayload = {
       userId,
       type,
@@ -79,10 +90,20 @@ class Episode {
         url,
         publicId,
       });
+
       newEpisode.imageId = image.id;
     }
 
     const episode = await this.#episodeRepository.create(newEpisode);
+
+    if (shownotes.length) {
+      await this.#shownoteService.create(
+        ...shownotes.map((shownote) => ({
+          ...shownote,
+          episodeId: episode.id,
+        })),
+      );
+    }
 
     if (recordDataUrl) {
       const { url, publicId, bytes } = await this.#fileStorage.upload({
@@ -96,6 +117,73 @@ class Episode {
         episodeId: episode.id,
         fileSize: bytes,
       });
+    }
+
+    return episode;
+  }
+
+  public async update(id: string, payload: EpisodeEditPayload): Promise<TEpisode> {
+    const {
+      recordDataUrl,
+      imageDataUrl,
+      type,
+      description,
+      name,
+      userId,
+      imageId,
+      status,
+    } = payload;
+    const episodeId = Number(id);
+    let newImageId: number | null = null;
+
+    if (recordDataUrl) {
+      const { url, publicId, bytes } = await this.#fileStorage.upload({
+        dataUrl: recordDataUrl,
+        userId,
+      });
+
+      await this.#recordRepository.create({
+        publicId,
+        episodeId,
+        fileUrl: url,
+        fileSize: bytes,
+      });
+
+      const { id, publicId: oldRecordPublicId } = await this.#recordRepository.getByEpisodeId(episodeId);
+
+      if (id) {
+        await this.#fileStorage.delete(oldRecordPublicId);
+        await this.#recordRepository.delete(id);
+      }
+    }
+
+    if (imageDataUrl) {
+      const { url, publicId } = await this.#fileStorage.upload({
+        dataUrl: imageDataUrl,
+        userId,
+      });
+
+      const image = await this.#imageRepository.create({
+        url,
+        publicId,
+      });
+
+      newImageId = image.id;
+    }
+
+    const episode = await this.#episodeRepository.update(id, {
+      name,
+      description,
+      type,
+      status,
+      imageId: newImageId ?? imageId,
+    });
+
+    if (imageDataUrl && imageId) {
+      const oldImage = await this.#imageRepository.getById(imageId);
+
+      await this.#imageRepository.delete(oldImage.id);
+      await this.#fileStorage.delete(oldImage.publicId);
     }
 
     return episode;

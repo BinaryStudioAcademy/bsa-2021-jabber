@@ -15,3 +15,4 @@ export { default as Select } from './select/select';
 export { default as Datepiker } from './datepicker/datepicker';
 export { default as Table } from './table/table';
 export { default as InputImage } from './input-image/input-image';
+export { default as Player } from './player/player';

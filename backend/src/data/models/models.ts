@@ -5,3 +5,4 @@ export { Comment as CommentModel } from './comment/comment.model';
 export { Record as RecordModel } from './record/record.model';
 export { Image as ImageModel } from './image/image.model';
 export { Shownote as ShownoteModel } from './shownote/shownote.model';
+export { Notification as NotificationModel } from './notification/notification.model';
