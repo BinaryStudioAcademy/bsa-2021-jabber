@@ -1,0 +1,73 @@
+.container {
+  background-color: #fff;
+  padding: 30px 30px;
+  border-radius: 20px;
+  display: flex;
+  border: 1px solid transparent;
+
+  margin-bottom: 20px;
+}
+
+.image {
+  max-width: none;
+}
+
+.notificationInfo {
+  margin-left: 25px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  .infoTitle {
+    margin-top: 0px;
+  }
+
+  .notificationText {
+    color: #8b8b8b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .link {
+    text-decoration: none;
+    color: #5b8def;
+    font-size: 15px;
+  }
+}
+
+.notificationStatus {
+  padding: 0px 20px 20px 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .buttonEye {
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    width: 25px;
+    height: 25px;
+    padding: 0;
+  }
+
+  .notificationDate {
+    margin-top: 50px;
+    color: #8b8b8b;
+  }
+}
+
+.containerChecked {
+  @extend .container;
+  filter: grayscale(100%);
+
+  .eyeButton {
+    display: none;
+  }
+}
+
+.container:hover,
+.containerChecked:hover {
+  border: 1px solid #6600cc;
+  background-color: #6600cc05;
+}

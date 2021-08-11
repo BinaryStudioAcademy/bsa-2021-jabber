@@ -16,6 +16,7 @@ import UserProfile from 'components/user-profile/user-profile';
 import Episode from 'components/episode/episode';
 import Podcast from 'components/podcast/podcast';
 import PodcastLive from 'components/podcast-live/podcast-live';
+import Notifications from 'components/notifications/notifications';
 import { useDispatch, useEffect, useAppSelector } from 'hooks/hooks';
 import { storage } from 'services/services';
 import { auth as authActions } from 'store/actions';
@@ -52,6 +53,11 @@ const App: React.FC = () => {
         <AuthPrivateRouter
           path={AppRoute.PODCASTS_EDIT_$ID}
           component={ConfiguratePodcast}
+          exact
+        />
+        <AuthPrivateRouter
+          path={AppRoute.NOTIFICATIONS}
+          component={Notifications}
           exact
         />
         <AuthPublicRouter
