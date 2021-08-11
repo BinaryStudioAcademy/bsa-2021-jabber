@@ -1,9 +1,9 @@
 import { useAppSelector } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
+import { DefaultImage } from 'components/common/common';
 import contactLogo from 'assets/img/user-profile/contact.svg';
 import editLogo from 'assets/img/user-profile/edit.svg';
 import emailLogo from 'assets/img/user-profile/email.svg';
-import defaultImage from 'assets/img/user-profile/default-profile-picture.jpg';
 import styles from './styles.module.scss';
 
 const UserPage: React.FC = () => {
@@ -25,12 +25,7 @@ const UserPage: React.FC = () => {
     <div className={styles.container}>
       <main className={styles.userInfo}>
         <div className={styles.imageContainer}>
-          <img
-            src={defaultImage}
-            width="195"
-            height="195"
-            className={styles.userAvatar}
-          />
+          <DefaultImage label={user?.nickname} />
         </div>
         <div className={styles.mainUserInfo}>
           <div className={styles.userInfoHeader}>
