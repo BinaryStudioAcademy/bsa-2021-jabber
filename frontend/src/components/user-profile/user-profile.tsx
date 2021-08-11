@@ -1,15 +1,22 @@
-import { useAppSelector } from 'hooks/hooks';
+import { useAppSelector, useDispatch, useEffect } from 'hooks/hooks';
+import { Loader, PodcastList } from 'components/common/common';
 import { RootState } from 'common/types/types';
 import contactLogo from 'assets/img/user-profile/contact.svg';
 import editLogo from 'assets/img/user-profile/edit.svg';
 import emailLogo from 'assets/img/user-profile/email.svg';
 import defaultImage from 'assets/img/user-profile/default-profile-picture.jpg';
 import styles from './styles.module.scss';
+import { userProfile as userProfileActions } from 'store/actions';
+import { DataStatus } from 'common/enums/enums';
 
 const UserPage: React.FC = () => {
-  const { user } = useAppSelector(({ auth }: RootState) => ({
+  const { user, podcasts, dataStatus } = useAppSelector(({ auth, userProfile }: RootState) => ({
     user: auth.user,
+    podcasts: userProfile.podcasts,
+    dataStatus: userProfile.dataStatus,
   }));
+
+  const dispatch = useDispatch();
 
   const hasUser = Boolean(user);
 
@@ -20,6 +27,10 @@ const UserPage: React.FC = () => {
       </div>
     );
   }
+
+  useEffect(() => {
+    dispatch(userProfileActions.loadPodcasts());
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -73,6 +84,16 @@ const UserPage: React.FC = () => {
       <div className={styles.favoritePodcastContainer}>
         <h2 className={styles.favoritePodcastTitle}>Favorite Podcasts</h2>
         <div className={styles.podcasts}></div>
+        <h2 className={styles.favoritePodcastTitle}>My Podcasts</h2>
+        {dataStatus === DataStatus.PENDING
+          ? <Loader />
+          : podcasts ? (
+            <PodcastList podcasts={podcasts}/>
+          ) : (
+            <span className={styles.oopsMessage}>
+              Oops! There&apos;s nothing here
+            </span>
+          )}
       </div>
     </div>
   );
