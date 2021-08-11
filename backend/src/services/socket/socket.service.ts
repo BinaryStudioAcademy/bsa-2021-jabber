@@ -26,9 +26,7 @@ class Socket {
 
   public handler(io: Server): void {
     io.on('connection', (socket) => {
-      //eslint-disable-next-line
-      console.log('connect', socket);
-      // socket.emit('UPDATE_COMMENTS', () => console.log('object'));
+      socket.emit('hello', 'world');
     });
   }
 

@@ -7,6 +7,7 @@ import { Notification } from './notification/notification.service';
 import { EpisodeApi } from './episode-api/episode-api.service';
 import { Storage } from './storage/storage.service';
 import { RecordAudio } from './record-audio/record-audio.service';
+import { Socket } from './socket/socket.service';
 
 const storage = new Storage({
   storage: localStorage,
@@ -42,6 +43,10 @@ const recordAudio = new RecordAudio({
   notificationService: notification,
 });
 
+const socket = new Socket({
+  socketServer: ENV.SOCKET_SERVER,
+});
+
 export {
   authApi,
   notification,
@@ -50,4 +55,5 @@ export {
   storage,
   commentApi,
   recordAudio,
+  socket,
 };
