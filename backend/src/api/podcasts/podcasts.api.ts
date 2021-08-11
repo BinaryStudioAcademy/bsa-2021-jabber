@@ -33,7 +33,7 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
     PodcastsApiPath.USER_$ID,
     handleAsyncApi(async (req, res) => {
       return res
-        .send(await podcastService.getPodcastsByUserId(req.params.id))
+        .send(await podcastService.getAllByUserId(req.params.id))
         .status(HttpCode.OK);
     }),
   );

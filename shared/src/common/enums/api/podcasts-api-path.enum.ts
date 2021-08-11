@@ -1,8 +1,8 @@
 enum PodcastsApiPath {
   ROOT = '/',
   $ID = '/:id',
-  USER = '/user',
-  USER_$ID = '/user/:id',
+  USER = '/users',
+  USER_$ID = '/users/:id',
 }
 
 export { PodcastsApiPath };

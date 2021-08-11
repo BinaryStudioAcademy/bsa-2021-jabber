@@ -33,7 +33,7 @@ class Podcast {
     return this.#PodcastModel.query().updateAndFetchById(id, payload);
   }
 
-  public getPodcastsByUserId(userId: string): Promise<TPodcast[]> {
+  public getAllByUserId(userId: string): Promise<TPodcast[]> {
     return this.#PodcastModel.query().where({ user_id: userId }).withGraphJoined('image');
   }
 }

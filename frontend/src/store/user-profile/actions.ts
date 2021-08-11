@@ -6,7 +6,7 @@ const loadPodcasts = createAsyncThunk<Podcast[], undefined, AsyncThunkConfig>
 (ActionType.LOAD_PODCASTS, async (_args, { getState, extra }) => {
   const { podcastApi } = extra;
   const { auth } = getState();
-  const podcasts = await podcastApi.getPodcastsByUserId((<User>auth.user).id);
+  const podcasts = await podcastApi.getAllByUserId((<User>auth.user).id);
 
   return podcasts;
 });

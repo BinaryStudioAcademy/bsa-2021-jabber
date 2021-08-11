@@ -61,7 +61,7 @@ class PodcastApi {
     );
   }
 
-  public getPodcastsByUserId(userId: number): Promise<Podcast[]> {
+  public getAllByUserId(userId: number): Promise<Podcast[]> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.USER}${userId}`,
       {

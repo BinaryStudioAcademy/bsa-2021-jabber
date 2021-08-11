@@ -125,8 +125,8 @@ class Podcast {
     return podcast;
   }
 
-  public getPodcastsByUserId(userId: string): Promise<TPodcast[]> {
-    return this.#podcastRepository.getPodcastsByUserId(userId);
+  public getAllByUserId(userId: string): Promise<TPodcast[]> {
+    return this.#podcastRepository.getAllByUserId(userId);
   }
 }
 
