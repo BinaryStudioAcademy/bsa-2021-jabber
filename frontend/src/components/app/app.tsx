@@ -79,6 +79,11 @@ const App: React.FC = () => {
           component={Episode}
           exact
         />
+        <AuthPublicRouter
+          path={AppRoute.EPISODES_$ID_LIVE}
+          component={PodcastLive}
+          exact
+        />
         <AuthPublicRouter path={AppRoute.ROOT} component={Homepage} exact />
         <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />
       </Switch>
