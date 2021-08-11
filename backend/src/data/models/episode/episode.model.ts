@@ -4,6 +4,7 @@ import { EpisodeType, EpisodeStatus } from '~/common/enums/enums';
 import { Abstract } from '../abstract/abstract.model';
 import { Image } from '~/data/models/image/image.model';
 import { Shownote } from '~/data/models/shownote/shownote.model';
+import { Record } from '~/data/models/record/record.model';
 
 class Episode extends Abstract {
   [EpisodeDTOKey.NAME]: string;
@@ -15,6 +16,8 @@ class Episode extends Abstract {
   [EpisodeDTOKey.IMAGE_ID]: number | null;
 
   [EpisodeDTOKey.IMAGE]: Image | null;
+
+  [EpisodeDTOKey.RECORD]: Record | null;
 
   [EpisodeDTOKey.TYPE]: EpisodeType;
 
@@ -43,6 +46,14 @@ class Episode extends Abstract {
       join: {
         from: 'episodes.id',
         to: 'shownotes.episode_id',
+      },
+    },
+    record: {
+      relation: Model.HasOneRelation,
+      modelClass: Record,
+      join: {
+        from: 'episodes.id',
+        to: 'records.episode_id',
       },
     },
   };

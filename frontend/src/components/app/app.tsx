@@ -12,6 +12,7 @@ import Auth from 'components/auth/auth';
 import Homepage from 'components/homepage/homepage';
 import ConfiguratePodcast from 'components/configurate-podcast/configurate-podcast';
 import ConfigurateEpisode from 'components/configurate-episode/configurate-episode';
+import UserProfile from 'components/user-profile/user-profile';
 import Episode from 'components/episode/episode';
 import Podcast from 'components/podcast/podcast';
 import PodcastLive from 'components/podcast-live/podcast-live';
@@ -66,6 +67,11 @@ const App: React.FC = () => {
         <AuthPublicRouter
           path={AppRoute.PODCASTS_$ID_EPISODES_EDIT_$ID}
           component={ConfigurateEpisode}
+          exact
+        />
+        <AuthPublicRouter
+          path={AppRoute.USERS_ID}
+          component={UserProfile}
           exact
         />
         <AuthPublicRouter
