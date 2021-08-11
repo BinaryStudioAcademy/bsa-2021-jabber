@@ -32,7 +32,7 @@ const customStyles: StylesConfig<OptionType, false> = {
     padding: '5px 12px',
     cursor: 'pointer',
   }),
-  indicatorSeparator: (provided) =>({
+  indicatorSeparator: (provided) => ({
     ...provided,
     width: 0,
   }),
@@ -57,6 +57,7 @@ const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
         value={currentValue}
         onChange={handleSelectChange}
       />
+
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />
       </span>
