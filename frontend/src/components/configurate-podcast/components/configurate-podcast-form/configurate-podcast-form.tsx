@@ -9,7 +9,7 @@ import {
 } from 'common/enums/enums';
 import { Option, PodcastFormPayload } from 'common/types/types';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
-import { Input, Button, Select, InputImage } from 'components/common/common';
+import { Input, Button, Select, ImagePreviewControl } from 'components/common/common';
 import { DEFAULT_PODCAST_PAYLOAD } from './common/constants';
 import { podcastCreate as podcastCreateSchema } from 'validation-schemas/validation-schemas';
 import styles from './styles.module.scss';
@@ -25,14 +25,13 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
   onSubmit,
   payload = DEFAULT_PODCAST_PAYLOAD,
 }) => {
-  const { control, handleSubmit, errors, register } = useAppForm({
+  const { control, handleSubmit, errors } = useAppForm({
     validationSchema: podcastCreateSchema,
     defaultValues: payload,
   });
 
-  const { createPodcastStatus, image } = useAppSelector(({ configuratePodcast }) => ({
+  const { createPodcastStatus } = useAppSelector(({ configuratePodcast }) => ({
     createPodcastStatus: configuratePodcast.dataStatus,
-    image: configuratePodcast.podcast?.image,
   }));
 
   const isFormDisabled = createPodcastStatus === DataStatus.PENDING;
@@ -40,9 +39,9 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisabled} className={styles.fieldset}>
-        <InputImage
-          register={register}
-          image={image?.url}
+        <ImagePreviewControl
+          name={PodcastPayloadKey.IMAGE}
+          control={control}
         />
         <Input
           name={PodcastPayloadKey.NAME}
