@@ -17,3 +17,6 @@ export { default as Table } from './table/table';
 export { default as Comment } from './comment/comment';
 export { default as CommentsList } from './comments-list/comments-list';
 export { default as CreateCommentForm } from './create-comment-form/create-comment-form';
+export { default as PodcastList } from './podcasts-list/podcasts-list';
+export { default as PodcastItem } from './podcast-item/podcast-item';
+export { default as Player } from './player/player';

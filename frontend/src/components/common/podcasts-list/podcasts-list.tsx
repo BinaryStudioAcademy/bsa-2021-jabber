@@ -1,5 +1,5 @@
 import { Podcast as TPodcast } from 'common/types/types';
-import Podcast from '../podcast/podcast';
+import { PodcastItem } from 'components/common/common';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 const PodcastsList: React.FC<Props> = ({ podcasts }) => (
   <ul className={styles.list}>
     {podcasts.map((it) => (
-      <Podcast podcast={it} key={it.id} />
+      <PodcastItem podcast={it} key={it.id} />
     ))}
   </ul>
 );

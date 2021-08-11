@@ -11,12 +11,14 @@ import {
 } from 'common/enums/enums';
 import { episodeCreate as createEpisodeValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
-import styles from './styles.module.scss';
 import { Button, Input, Select } from 'components/common/common';
 import { DEFAULT_CREATE_EPISODE_PAYLOAD } from './common/constants';
+import ShownoteInputList from './components/shownote-input-list/shownote-input-list';
+import styles from './styles.module.scss';
 
 type Props = {
   onSubmit: (payload: EpisodeFormPayload) => void;
+  payload?: EpisodeFormPayload;
 };
 
 const selectTypeOptions: Option[] = getOptions(Object.values(EpisodeType));
@@ -33,10 +35,10 @@ const acceptAudioExtension = getFileExtensions(
   FileExtension.WAV,
 );
 
-const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
+const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE_EPISODE_PAYLOAD }) => {
   const { control, handleSubmit, errors, register } = useAppForm({
     validationSchema: createEpisodeValidationSchema,
-    defaultValues: DEFAULT_CREATE_EPISODE_PAYLOAD,
+    defaultValues: payload,
   });
 
   const { dataStatus } = useAppSelector(({ episode }) => ({
@@ -64,6 +66,7 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit }) => {
           control={control}
           errors={errors}
         />
+        <ShownoteInputList control={control} errors={errors} />
         <Select
           options={selectTypeOptions}
           label="Type"

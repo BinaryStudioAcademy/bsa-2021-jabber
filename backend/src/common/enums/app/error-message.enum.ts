@@ -9,6 +9,7 @@ enum ErrorMessage {
   BAD_TOKEN = 'Token is invalid',
   EMAIL_IS_ALREADY_TAKEN = 'Email is already taken',
   EPISODE_NOT_FOUND = 'Episode not found',
+  NOT_YOURS_PODCAST = 'This podcast not yours',
 }
 
 export { ErrorMessage };

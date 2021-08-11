@@ -11,8 +11,14 @@ export type {
 export type {
   Episode,
   EpisodeCreatePayload,
+  EpisodeEditPayload,
   EpisodeFormPayload,
 } from './episode/episode';
+export type { Shownote, ShownotePayload } from './shownote/shownote';
 export type { SignResponse } from './sign/sign';
-export type { CommentCreatePayload, Comment, CommentFormCreatePayload } from './comment/comment';
+export type {
+  CommentCreatePayload,
+  Comment,
+  CommentFormCreatePayload,
+} from './comment/comment';
 export type { Option } from './ui/option';

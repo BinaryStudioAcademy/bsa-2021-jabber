@@ -10,9 +10,14 @@ export type { ValidationSchema } from './validation-schema/validation-schema';
 export type {
   Episode,
   EpisodeCreatePayload,
+  EpisodeEditPayload,
   EpisodePayload,
 } from './episode/episode';
-export type { Shownote, ShownoteCreatePayload } from './shownote/shownote';
+export type {
+  Shownote,
+  ShownotePayload,
+  ShownoteCreatePayload,
+} from './shownote/shownote';
 export type { Comment, CommentCreatePayload } from './comment/comment';
 export type { Record, RecordCreatePayload } from './record/record';
 export type { SignResponse } from './sign/sign';
