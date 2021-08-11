@@ -1,4 +1,4 @@
-import SelectReact, { StylesConfig } from 'react-select';
+import SelectReact from 'react-select';
 import { Option } from 'common/types/types';
 import { ErrorMessage } from '@hookform/error-message';
 import {
@@ -9,6 +9,7 @@ import {
   useController,
 } from 'react-hook-form';
 import { getCurrentValue } from './helpers/helpers';
+import { styles as selectStyles } from './styles';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -18,24 +19,6 @@ type Props = {
   name: Path<FieldValues>;
   control: Control;
   errors: FieldErrors;
-};
-
-type OptionType = {
-  label: string;
-  value: string;
-};
-
-const customStyles: StylesConfig<OptionType, false> = {
-  control: (provided) => ({
-    ...provided,
-    border: 'none',
-    padding: '5px 12px',
-    cursor: 'pointer',
-  }),
-  indicatorSeparator: (provided) => ({
-    ...provided,
-    width: 0,
-  }),
 };
 
 const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
@@ -51,7 +34,7 @@ const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
     <label className={styles.inputWrapper}>
       <span className={styles.label}>{label}</span>
       <SelectReact
-        styles={customStyles}
+        styles={selectStyles}
         {...field}
         options={options}
         value={currentValue}
