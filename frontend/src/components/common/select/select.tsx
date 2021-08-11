@@ -57,7 +57,6 @@ const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
         value={currentValue}
         onChange={handleSelectChange}
       />
-
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />
       </span>

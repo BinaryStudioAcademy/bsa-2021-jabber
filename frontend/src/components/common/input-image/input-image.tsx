@@ -3,7 +3,10 @@ import {
   PodcastPayloadKey,
   InputType,
 } from 'common/enums/enums';
-import { FieldValues, UseFormRegister } from 'react-hook-form';
+import {
+  FieldValues,
+  UseFormRegister,
+} from 'react-hook-form';
 import { useState } from 'hooks/hooks';
 import { getFileExtensions } from 'helpers/helpers';
 import cameraIcon from 'assets/img/icon-camera.svg';
