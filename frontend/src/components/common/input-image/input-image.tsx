@@ -35,7 +35,7 @@ const InputImage: React.FC<Props> = ({ register, image }) => {
   };
 
   return (
-    <div className={styles.updeteImgWrapper}>
+    <label className={styles.inputWrapper}>
       <img
         src={img}
         width="716"
@@ -43,25 +43,23 @@ const InputImage: React.FC<Props> = ({ register, image }) => {
         loading="lazy" alt=""
       />
       <div className={styles.panel}>
-        <label htmlFor={styles.imgField}>
-          <img
-            src={cameraIcon}
-            width="24"
-            height="20"
-            loading="lazy"
-            alt=""
-            className={styles.cameraIcon}
-          />
-        </label>
-        <input
-          {...register(PodcastPayloadKey.IMAGE)}
-          accept={acceptExtension}
-          type={InputType.FILE}
-          id={styles.imgField}
-          onChange={handleChange}
+        <img
+          src={cameraIcon}
+          width="24"
+          height="20"
+          loading="lazy"
+          alt=""
+          className={styles.cameraIcon}
         />
       </div>
-    </div>
+      <input
+        {...register(PodcastPayloadKey.IMAGE)}
+        accept={acceptExtension}
+        type={InputType.FILE}
+        onChange={handleChange}
+        className="visually-hidden"
+      />
+    </label>
   );
 };
 
