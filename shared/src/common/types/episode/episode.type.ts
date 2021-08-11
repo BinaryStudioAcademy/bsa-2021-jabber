@@ -1,5 +1,6 @@
 import { EpisodeType, EpisodeStatus } from '~/common/enums/enums';
 import { Image } from '~/common/types/image/image.type';
+import { Record } from '~/common/types/record/record.type';
 
 type Episode = {
   id: number;
@@ -7,6 +8,7 @@ type Episode = {
   userId: number;
   imageId: number | null;
   image: Image | null;
+  record: Record | null;
   status: EpisodeStatus;
   podcastId: number;
   createdAt: string;
