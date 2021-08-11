@@ -1,10 +1,12 @@
 import { Joi } from '~/helpers/helpers';
+import { shownote } from '~/validation-schemas/shownote/shownote';
 import {
   EpisodeValidationRule,
   EpisodeValidationMessage,
   EpisodePayloadKey,
   EpisodeType,
   EpisodeStatus,
+  ShownotePayloadKey,
 } from '~/common/enums/enums';
 
 const episodeTypes = Object.values(EpisodeType);
@@ -36,6 +38,17 @@ const episode = Joi.object({
       'string.empty': EpisodeValidationMessage.EPISODE_DESCRIPTION_REQUIRE,
       'string.min': EpisodeValidationMessage.EPISODE_DESCRIPTION_MIN_LENGTH,
       'string.max': EpisodeValidationMessage.EPISODE_DESCRIPTION_MAX_LENGTH,
+    }),
+  [EpisodePayloadKey.SHOWNOTES]: Joi.array()
+    .items(shownote)
+    .unique(
+      (a, b) =>
+        a[ShownotePayloadKey.TIMESTAMP] === b[ShownotePayloadKey.TIMESTAMP],
+    )
+    .required()
+    .messages({
+      'array.required': EpisodeValidationMessage.SHOWNOTES_REQUIRE,
+      'array.unique': EpisodeValidationMessage.SHOWNOTE_DUPLICATE,
     }),
   [EpisodePayloadKey.STATUS]: Joi.string()
     .valid(...episodeStatus)
