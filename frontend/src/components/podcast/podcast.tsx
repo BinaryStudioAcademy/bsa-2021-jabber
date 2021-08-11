@@ -1,19 +1,20 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import { podcast as podcastActions } from 'store/actions';
-import { AppRoute, DataStatus } from 'common/enums/enums';
-import defaultImage from 'assets/img/default-podcast-image.jpeg';
-import { Link, Loader } from 'components/common/common';
+import { AppRoute, DataStatus, DefaultImageSize } from 'common/enums/enums';
+import { Link, Loader, DefaultImage } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 
 const Podcast: React.FC = () => {
-  const { userId, podcast, episodes, dataStatus } = useAppSelector(({ podcast, auth }) => ({
-    userId: auth.user?.id,
-    podcast: podcast.podcast,
-    episodes: podcast.episodes,
-    dataStatus: podcast.dataStatus,
-  }));
+  const { userId, podcast, episodes, dataStatus } = useAppSelector(
+    ({ podcast, auth }) => ({
+      userId: auth.user?.id,
+      podcast: podcast.podcast,
+      episodes: podcast.episodes,
+      dataStatus: podcast.dataStatus,
+    }),
+  );
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
 
@@ -45,16 +46,24 @@ const Podcast: React.FC = () => {
             </div>
             <div className={styles.imageContainer}>
               <div className={styles.wrapper}>
-                <p className={styles.imageWrapper}>
-                  <img
-                    src={podcast.image?.url ?? defaultImage}
-                    className={styles.podcastImage}
-                    width="280"
-                    height="280"
-                    loading="lazy"
-                    alt={podcast.name}
+                {podcast.image ? (
+                  <p className={styles.imageWrapper}>
+                    <img
+                      src={podcast.image.url}
+                      className={styles.podcastImage}
+                      width="280"
+                      height="280"
+                      loading="lazy"
+                      alt={podcast.name}
+                    />
+                  </p>
+                ) : (
+                  <DefaultImage
+                    label={podcast.name}
+                    size={DefaultImageSize.LARGE}
+                    className={styles.defaultImageWrapper}
                   />
-                </p>
+                )}
                 {podcast.userId === userId && (
                   <Link
                     to={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}

@@ -57,12 +57,16 @@
     height: 280px;
   }
 
-  .imageWrapper {
+  .imageWrapper,
+  .defaultImageWrapper {
     margin: 0 0 10px;
+    transition: transform 0.2s ease;
+  }
+
+  .imageWrapper {
     border-radius: 5px;
     outline: 10px solid rgba(134, 134, 134, 0.55);
     outline-offset: -10px;
-    transition: transform 0.2s ease;
     height: 280px;
   }
 
@@ -74,6 +78,10 @@
 
     .imageWrapper {
       outline: 10px solid rgba(134, 134, 134, 0.71);
+    }
+
+    .imageWrapper,
+    .defaultImageWrapper {
       transform: translateY(-8px);
     }
   }
