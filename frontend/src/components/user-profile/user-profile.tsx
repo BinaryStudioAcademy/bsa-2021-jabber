@@ -87,7 +87,7 @@ const UserPage: React.FC = () => {
         <h2 className={styles.favoritePodcastTitle}>My Podcasts</h2>
         {dataStatus === DataStatus.PENDING
           ? <Loader />
-          : podcasts ? (
+          : podcasts.length ? (
             <PodcastList podcasts={podcasts}/>
           ) : (
             <span className={styles.oopsMessage}>
