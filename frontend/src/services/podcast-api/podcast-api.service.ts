@@ -63,7 +63,7 @@ class PodcastApi {
 
   public getAllByUserId(userId: number): Promise<Podcast[]> {
     return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.USER}${userId}`,
+      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.USERS}/${userId}`,
       {
         method: HttpMethod.GET,
       },
