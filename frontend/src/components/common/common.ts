@@ -15,5 +15,5 @@ export { default as Select } from './select/select';
 export { default as Datepiker } from './datepicker/datepicker';
 export { default as Table } from './table/table';
 export { default as PodcastList } from './podcasts-list/podcasts-list';
-export { default as PodcastItem } from './podcast/podcast';
+export { default as PodcastItem } from './podcast-item/podcast-item';
 export { default as Player } from './player/player';
