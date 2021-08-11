@@ -21,7 +21,7 @@ class Episode {
   }
 
   public getById(id: string): Promise<TEpisode> {
-    return this.#EpisodeModel.query().findById(id);
+    return this.#EpisodeModel.query().findById(id).withGraphJoined('[record, image]');
   }
 
   public getAllByPodcastId(id: string): Promise<TEpisode[]> {
