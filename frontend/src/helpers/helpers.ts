@@ -3,6 +3,7 @@ export { getFormattedDate, getDistanceToDateNow } from './date/date';
 export { getResolver as getFormResolver, getOptions } from './form/form';
 export {
   getDataUrl,
+  getFileExtension,
   getFileExtensions,
   getFileFromFileList,
 } from './file/file';
