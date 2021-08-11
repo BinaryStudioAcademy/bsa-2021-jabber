@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import {
   User,
   Episode,
@@ -26,7 +26,7 @@ const loadCommentsByEpisodeId = createAsyncThunk<Comment[], number, AsyncThunkCo
 
 const createComment = createAsyncThunk<Comment, CommentFormCreatePayload, AsyncThunkConfig>
 (ActionType.CREATE_COMMENT, async (payload, { extra, getState }) => {
-  const { commentApi } = extra;
+  const { commentApi, socketService } = extra;
   const { auth, episode } = getState();
   const comment = await commentApi.create({
     ...payload,
@@ -34,7 +34,11 @@ const createComment = createAsyncThunk<Comment, CommentFormCreatePayload, AsyncT
     episodeId: (<Episode>episode.episode).id,
   });
 
+  socketService.updateComments(comment);
+
   return comment;
 });
 
-export { loadEpisode, loadCommentsByEpisodeId, createComment };
+const updateComments = createAction<Comment>(ActionType.UPDATE_COMMENTS);
+
+export { loadEpisode, loadCommentsByEpisodeId, createComment, updateComments };

@@ -51,3 +51,4 @@ export {
   CommentCreatePayloadKey,
   CommentValidationMessage,
 } from './comment/comment';
+export { SocketEvent } from './socket/socket';

@@ -6,6 +6,7 @@ import {
   useRef,
 } from 'hooks/hooks';
 import { episode as episodeActions } from 'store/actions';
+import { socket as socketService } from 'services/services';
 import { CreateCommentForm, CommentsList } from './components/components';
 import { Loader, Player } from 'components/common/common';
 import { DataStatus } from 'common/enums/enums';
@@ -32,8 +33,14 @@ const Episode: React.FC = () => {
   const hasUser = Boolean(user);
 
   useEffect(() => {
+    socketService.joinRoom(id);
+    socketService.getUpdatedComments(dispatch, episodeActions.updateComments);
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisode(Number(id)));
+
+    return (): void => {
+      socketService.leaveRoom(id);
+    };
   }, []);
 
   const handleCreateComment = (payload: CommentFormCreatePayload): void => {
