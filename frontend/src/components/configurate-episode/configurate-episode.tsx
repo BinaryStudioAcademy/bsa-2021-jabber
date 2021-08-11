@@ -1,6 +1,9 @@
-import { useDispatch, useParams } from 'hooks/hooks';
+import { useDispatch, useParams, useEffect, useAppSelector } from 'hooks/hooks';
 import { configurateEpisode as configurateEpisodeActions } from 'store/actions';
 import { EpisodeFormPayload } from 'common/types/types';
+import { DataStatus } from 'common/enums/enums';
+import { mapEpisodeToFormPayload } from './helpers/helpers';
+import { Loader } from 'components/common/common';
 import { CreateEpisodeForm } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
@@ -9,18 +12,40 @@ const ConfigurateEpisode: React.FC = () => {
   const { id } = useParams<PageParams>();
   const dispatch = useDispatch();
 
+  const { episode, dataStatus } = useAppSelector(({ configurateEpisode }) => ({
+    episode: configurateEpisode.episode,
+    dataStatus: configurateEpisode.dataStatus,
+  }));
+
+  const mapEpisode = episode ? mapEpisodeToFormPayload(episode) : undefined;
+
   const isEdit = Boolean(id);
 
-  const handleCreateEpisode = (payload: EpisodeFormPayload): void => {
-    dispatch(configurateEpisodeActions.createEpisode(payload));
+  const isLoading = dataStatus === DataStatus.PENDING;
+
+  const handleFormSubmit = (payload: EpisodeFormPayload): void => {
+    isEdit
+      ? dispatch(configurateEpisodeActions.editEpisode(payload))
+      : dispatch(configurateEpisodeActions.createEpisode(payload));
   };
+
+  useEffect(() => {
+    if (isEdit) {
+      dispatch(configurateEpisodeActions.loadEpisode(Number(id)));
+    }
+  }, []);
 
   return (
     <div className={styles.episode}>
       <h2>
-        {isEdit ? 'Edit' : 'Create'} Episode {id ?? ''}
+        {isEdit ? 'Edit' : 'Create'} Episode {episode?.name ?? ''}
       </h2>
-      <CreateEpisodeForm onSubmit={handleCreateEpisode} />
+      {isLoading
+        ? <Loader />
+        : <CreateEpisodeForm
+          onSubmit={handleFormSubmit}
+          payload={mapEpisode} />
+      }
     </div>
   );
 };

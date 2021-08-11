@@ -16,3 +16,4 @@ export { default as Datepiker } from './datepicker/datepicker';
 export { default as Table } from './table/table';
 export { default as PodcastList } from './podcasts-list/podcasts-list';
 export { default as PodcastItem } from './podcast/podcast';
+export { default as Player } from './player/player';
