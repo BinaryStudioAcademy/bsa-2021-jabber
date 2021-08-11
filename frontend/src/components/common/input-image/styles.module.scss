@@ -1,40 +1,39 @@
-  .updeteImgWrapper{
-    position: relative;
-    max-width: 716px;
-    width: 100%;
+.updeteImgWrapper{
+  position: relative;
+  max-width: 716px;
+  width: 100%;
 
-    img{
-      border-radius: 5px;
-      height: 281px;
-      object-fit: cover;
+  img{
+    border-radius: 5px;
+    height: 281px;
+    object-fit: cover;
+  }
+
+  .panel{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 54px;
+    border-radius: 0 0 5px 5px;
+    background: rgba(25, 34, 47, 0.7);
+    
+    .cameraIcon{
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+
+      height: 20px;
+      width: 24px;
     }
 
-    .panel{
+    #imgField{
       position: absolute;
       bottom: 0;
       width: 100%;
-      height: 54px;
-      border-radius: 0 0 5px 5px;
-      background: rgba(25, 34, 47, 0.7);
-      
-      .cameraIcon{
-        position: absolute;
-        top: 16px;
-        left: 50%;
-        transform: translateX(-50%);
-
-        height: 20px;
-        width: 24px;
-      }
-
-      #imgField{
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 281px;
-        cursor: pointer;
-        opacity: .0001;
-      }
+      height: 281px;
+      cursor: pointer;
+      opacity: .0001;
     }
   }
-  
+}
