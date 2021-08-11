@@ -1,30 +1,23 @@
-import { getFileExtensions, getOptions } from 'helpers/helpers';
+import { getOptions } from 'helpers/helpers';
 import {
   PodcastPayloadKey,
   ButtonType,
   DataStatus,
-  InputType,
-  FileExtension,
   PodcastType,
+  AppRoute,
+  ButtonColor,
 } from 'common/enums/enums';
 import { Option, PodcastFormPayload } from 'common/types/types';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
-import { Input, Button, Select } from 'components/common/common';
+import { Input, Button, Select, InputImage } from 'components/common/common';
+import { DEFAULT_PODCAST_PAYLOAD } from './common/constants';
 import { podcastCreate as podcastCreateSchema } from 'validation-schemas/validation-schemas';
 import styles from './styles.module.scss';
-import { DEFAULT_PODCAST_PAYLOAD } from './common/constants';
 
 type Props = {
   onSubmit: (payload: PodcastFormPayload) => void;
   payload?: PodcastFormPayload;
 };
-
-const acceptExtension = getFileExtensions(
-  FileExtension.JPEG,
-  FileExtension.JPG,
-  FileExtension.PNG,
-  FileExtension.SVG,
-);
 
 const selectOptions: Option[] = getOptions(Object.values(PodcastType));
 
@@ -37,8 +30,9 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
     defaultValues: payload,
   });
 
-  const { createPodcastStatus } = useAppSelector(({ configuratePodcast }) => ({
+  const { createPodcastStatus, image } = useAppSelector(({ configuratePodcast }) => ({
     createPodcastStatus: configuratePodcast.dataStatus,
+    image: configuratePodcast.podcast?.image,
   }));
 
   const isFormDisabled = createPodcastStatus === DataStatus.PENDING;
@@ -46,20 +40,16 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisabled} className={styles.fieldset}>
+        <InputImage
+          register={register}
+          image={image?.url}
+        />
         <Input
           name={PodcastPayloadKey.NAME}
           control={control}
           errors={errors}
           label="Podcast Name"
-          placeholder="Name"
-        />
-        <Input
-          name={PodcastPayloadKey.DESCRIPTION}
-          control={control}
-          errors={errors}
-          label="Podcast Description"
-          placeholder="Description"
-          hasMultipleRows
+          placeholder="Enter Name"
         />
         <Select
           options={selectOptions}
@@ -68,12 +58,28 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
           control={control}
           errors={errors}
         />
-        <input
-          {...register(PodcastPayloadKey.IMAGE)}
-          accept={acceptExtension}
-          type={InputType.FILE}
+        <Input
+          name={PodcastPayloadKey.DESCRIPTION}
+          control={control}
+          errors={errors}
+          label="Description"
+          placeholder="Enter description podcast"
+          hasMultipleRows
         />
-        <Button label="Save" type={ButtonType.SUBMIT} />
+        <div className={styles.btnsWrapper}>
+          <Button
+            className={styles.btnSave}
+            label="Save"
+            type={ButtonType.SUBMIT}
+          />
+          <Button
+            className={styles.btnCancel}
+            buttonColor={ButtonColor.LIGHT_PINK}
+            label="Cancel"
+            type={ButtonType.SUBMIT}
+            href={AppRoute.ROOT}
+          />
+        </div>
       </fieldset>
     </form>
   );

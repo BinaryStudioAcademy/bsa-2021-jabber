@@ -1,8 +1,12 @@
 .podcast {
   display: flex;
   flex-direction: column;
-  max-width: 1515px;
+  max-width: 716px;
   width: 100%;
   margin: 0 auto;
-  padding: 30px;
+  padding: 0;
+
+  h2{
+    margin-top: 37px;
+  }
 }
