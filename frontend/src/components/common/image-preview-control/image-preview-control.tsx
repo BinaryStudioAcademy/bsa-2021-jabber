@@ -8,6 +8,7 @@ import {
   Path,
   Control,
 } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
 import { getFileExtensions } from 'helpers/helpers';
 import defaultImage from 'assets/img/default-podcast-image.jpeg';
 import styles from './styles.module.scss';
@@ -15,6 +16,7 @@ import styles from './styles.module.scss';
 type Props = {
   name: Path<FieldValues>;
   control: Control;
+  errors: FieldValues;
 };
 
 const acceptExtension = getFileExtensions(
@@ -24,7 +26,7 @@ const acceptExtension = getFileExtensions(
   FileExtension.SVG,
 );
 
-const ImagePreviewControl: React.FC<Props> = ({ name, control }) => {
+const ImagePreviewControl: React.FC<Props> = ({ name, control, errors }) => {
   const { field } = useController({ name, control });
 
   const handleChange = (evt: React.ChangeEvent<FieldValues>): void => {
@@ -53,6 +55,9 @@ const ImagePreviewControl: React.FC<Props> = ({ name, control }) => {
           className="visually-hidden"
         />
       </label>
+      <span className={styles.errorWrapper}>
+        <ErrorMessage errors={errors} name={name} />
+      </span>
     </>
   );
 };
