@@ -5,7 +5,6 @@ import Button from 'components/common/button/button';
 import styles from './styles.module.scss';
 import { CreateCommentForm, CommentsList } from 'components/common/common';
 import { CommentFormCreatePayload } from 'common/types/types';
-import defaultImage from 'assets/img/default-podcast-image.jpeg';
 
 type PageParams = {
   id: string;
@@ -57,51 +56,41 @@ const PodcastLive: React.FC = () => {
   return (
     <main className={styles.root}>
       <h1>Record podcast</h1>
-      {episode &&
-        <div className={styles.content}>
+      <div className={styles.content}>
+        {episode &&          
           <div className={styles.descriptionWrapper}>
             <h1 className={styles.title}>{episode.name}</h1>
             <p className={styles.description}>{episode.description}</p>
-            <p className={styles.type}>Type: {episode.type}</p>
           </div>
-          <p className={styles.imageWrapper}>
-            <img
-              src={episode.image?.url ?? defaultImage}
-              width="280"
-              height="280"
-              loading="lazy"
-              alt={episode.name}
-            />
-          </p>
+        }
+        <h3>
+          Status:
+          {' '}
+          {recordStatus}
+        </h3>
+        <div className={styles.buttonRow}>
+          <Button
+            label="&#9210;"
+            buttonColor={ButtonColor.LIGHT_NAVY}
+            onClick={handleStart} />
+          {!isPaused
+            ? <Button
+              label="&#9208;"
+              buttonColor={ButtonColor.LIGHT_NAVY}
+              onClick={handlePause} />
+            : <Button
+              label="&#9654;"
+              buttonColor={ButtonColor.LIGHT_NAVY}
+              onClick={handleResume} />}
+          <Button
+            label="&#9209;"
+            buttonColor={ButtonColor.LIGHT_NAVY}
+            onClick={handleStop} />
         </div>
-      }
-      <h3>
-        Status:
-        {' '}
-        {recordStatus}
-      </h3>
-      <div className={styles.buttonRow}>
-        <Button
-          label="&#9210;"
-          buttonColor={ButtonColor.LIGHT_NAVY}
-          onClick={handleStart} />
-        {!isPaused
-          ? <Button
-            label="&#9208;"
-            buttonColor={ButtonColor.LIGHT_NAVY}
-            onClick={handlePause} />
-          : <Button
-            label="&#9654;"
-            buttonColor={ButtonColor.LIGHT_NAVY}
-            onClick={handleResume} />}
-        <Button
-          label="&#9209;"
-          buttonColor={ButtonColor.LIGHT_NAVY}
-          onClick={handleStop} />
       </div>
       <div className={styles.commentsWrapper}>
-        {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
-        <div className={styles.commentsCounter}>{comments.length} comments</div>
+        <div className={styles.commentsCounter}>Comments ({comments.length})</div>
+        {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}        
         {comments.length ? (
           <CommentsList comments={comments} />
         ) : (
