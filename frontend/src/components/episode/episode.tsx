@@ -14,6 +14,7 @@ import { PlayerRef } from 'components/common/player/player';
 import { getCurrentTime } from './helpers/helpers';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
+import ShownotesList from './components/shownotes-list/shownotes-list';
 
 const Episode: React.FC = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,10 @@ const Episode: React.FC = () => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisode(Number(id)));
   }, []);
+
+  const handleJumpToTimeLine = (timeline:number): void => {
+    playerRef.current?.setCurrentTime(timeline);
+  };
 
   const handleCreateComment = (payload: CommentFormCreatePayload): void => {
     const timestamp = getCurrentTime(playerRef);
@@ -60,6 +65,12 @@ const Episode: React.FC = () => {
               <p className={styles.description}>{episode.description}</p>
               <p className={styles.type}>Type: {episode.type}</p>
               <p className={styles.type}>Status: {episode.status}</p>
+              {episode.shownotes && (
+                <div className={styles.shownotesWrapper}>
+                  <h3>Time navigation</h3>
+                  <ShownotesList shownotes={episode.shownotes} handleJumpToTimeLine={handleJumpToTimeLine} />
+                </div>
+              )}
             </div>
             <p className={styles.logoWrapper}>
               <img

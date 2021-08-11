@@ -29,6 +29,17 @@
   margin: 15px 0;
 }
 
+.shownotesWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+h3 {
+  font-size: 24px;
+  color: white;
+  margin: 0;
+}
+
 .logoWrapper {
   flex-grow: 0.4;
   display: flex;
