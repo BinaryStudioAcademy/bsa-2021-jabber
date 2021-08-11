@@ -1,17 +1,14 @@
 import {
-  FieldValues,
-  UseFormRegister,
-} from 'react-hook-form';
-import defaultImage from 'assets/img/default-podcast-image.jpeg';
-import { getFileExtensions } from 'helpers/helpers';
-import {
   FileExtension,
   PodcastPayloadKey,
   InputType,
 } from 'common/enums/enums';
-import styles from './styles.module.scss';
-import cameraIcon from 'assets/img/icon-camera.svg';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { useState } from 'hooks/hooks';
+import { getFileExtensions } from 'helpers/helpers';
+import cameraIcon from 'assets/img/icon-camera.svg';
+import defaultImage from 'assets/img/default-podcast-image.jpeg';
+import styles from './styles.module.scss';
 
 type Props = {
   register: UseFormRegister<FieldValues>;
