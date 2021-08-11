@@ -1,0 +1,23 @@
+.defaultImage {
+  position: relative;
+
+  background-color: #3e4752;
+  border-color: #989ea6;
+  border-style: solid;
+
+  font-size: 650%;
+  font-weight: bold;
+  color: #fff;
+
+  cursor: default;
+
+  & span {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+    cursor: inherit;
+  }
+}
