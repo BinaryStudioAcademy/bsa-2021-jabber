@@ -1,7 +1,6 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import { episode as episodeActions } from 'store/actions';
-import { CreateCommentForm, CommentsList } from './components/components';
-import { Loader } from 'components/common/common';
+import { Loader, CreateCommentForm, CommentsList } from 'components/common/common';
 import { DataStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PageParams } from './common/types/types';
