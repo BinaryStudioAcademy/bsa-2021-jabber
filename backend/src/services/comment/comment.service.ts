@@ -27,7 +27,7 @@ class Comment {
     return this.#commentRepository.getAllByEpisodeId(id);
   }
 
-  public deleteAllByEpisodeId(id: string): Promise<TComment[]> {
+  public deleteAllByEpisodeId(id: number): Promise<TComment[]> {
     return this.#commentRepository.deleteAllByEpisodeId(id);
   }
 }

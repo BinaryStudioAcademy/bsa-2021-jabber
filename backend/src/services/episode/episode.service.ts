@@ -11,7 +11,7 @@ import {
   record as recordRep,
   image as imageRep,
 } from '~/data/repositories/repositories';
-import { shownote, comment } from '~/services/services';
+import { shownote, comment, record, image } from '~/services/services';
 import { HttpError } from '~/exceptions/exceptions';
 
 type Constructor = {
@@ -21,6 +21,8 @@ type Constructor = {
   recordRepository: typeof recordRep;
   fileStorage: FileStorage;
   commentService: typeof comment;
+  recordService: typeof record;
+  imageService: typeof image;
 };
 
 class Episode {
@@ -30,6 +32,8 @@ class Episode {
   #recordRepository: typeof recordRep;
   #imageRepository: typeof imageRep;
   #commentService: typeof comment;
+  #recordService: typeof record;
+  #imageService: typeof image;
 
   constructor({
     episodeRepository,
@@ -38,6 +42,8 @@ class Episode {
     recordRepository,
     imageRepository,
     commentService,
+    recordService,
+    imageService,
   }: Constructor) {
     this.#episodeRepository = episodeRepository;
     this.#shownoteService = shownoteService;
@@ -45,13 +51,15 @@ class Episode {
     this.#recordRepository = recordRepository;
     this.#imageRepository = imageRepository;
     this.#commentService = commentService;
+    this.#recordService = recordService;
+    this.#imageService = imageService;
   }
 
   public getAll(): Promise<TEpisode[]> {
     return this.#episodeRepository.getAll();
   }
 
-  public async getById(id: string): Promise<TEpisode> {
+  public async getById(id: number): Promise<TEpisode> {
     const episode = await this.#episodeRepository.getById(id);
     if (!episode) {
       throw new HttpError({
@@ -210,14 +218,29 @@ class Episode {
     return this.#episodeRepository.getAllByPodcastId(id);
   }
 
-  public async delete(id: string): Promise<TEpisode> {
-    // const episode = await this.#episodeRepository.getById(id);
+  public async delete(id: number): Promise<TEpisode> {
+    const episode = await this.#episodeRepository.getById(id);
+
+    if (!episode) {
+      throw new HttpError({
+        status: HttpCode.NOT_FOUND,
+        message: ErrorMessage.EPISODE_NOT_FOUND,
+      });
+    }
 
     await this.#commentService.deleteAllByEpisodeId(id);
-    // console.log(episode);
 
-    return this.#episodeRepository.delete(id);
-    // return episode;
+    await this.#recordService.deleteByEpisodeId(id);
+
+    await this.#shownoteService.deleteAllByEpisodeId(id);
+
+    await this.#episodeRepository.delete(id);
+
+    if (episode.imageId) {
+      await this.#imageService.delete(episode.imageId);
+    }
+
+    return episode;
   }
 }
 

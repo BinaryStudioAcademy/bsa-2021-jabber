@@ -20,7 +20,7 @@ class Episode {
     return this.#EpisodeModel.query();
   }
 
-  public getById(id: string): Promise<TEpisode> {
+  public getById(id: number): Promise<TEpisode> {
     return this.#EpisodeModel.query().findById(id).withGraphJoined('[record, image, shownotes]');
   }
 
@@ -42,7 +42,7 @@ class Episode {
       .withGraphFetched('shownotes');
   }
 
-  public delete(id: string): Promise<TEpisode> {
+  public delete(id: number): Promise<TEpisode> {
     return this.#EpisodeModel
       .query()
       .deleteById(id)

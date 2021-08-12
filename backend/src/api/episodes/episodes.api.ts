@@ -33,7 +33,7 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
     EpisodesApiPath.$ID,
     handleAsyncApi(async (req, res) => {
       return res
-        .send(await episodeService.getById(req.params.id))
+        .send(await episodeService.getById(Number(req.params.id)))
         .status(HttpCode.OK);
     }),
   );
@@ -75,7 +75,7 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
     handleAsyncApi(async (req, res) => {
       console.log(req.params.id)
       return res
-        .json(await episodeService.delete(req.params.id))
+        .json(await episodeService.delete(Number(req.params.id)))
         .status(HttpCode.OK);
     }),
   );
