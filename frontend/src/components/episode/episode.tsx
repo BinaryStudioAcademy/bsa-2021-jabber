@@ -62,34 +62,30 @@ const Episode: React.FC = () => {
   return (
     <main className={styles.root}>
       {episode ? (
-        <div className={styles.episodeWrapper}>
-          <ImageWrapper
-            src={episode.image?.url}
-            alt={episode.name}
-            label={episode.name}
-            className={styles.imageWrapper}
-          />
-          <div className={styles.episode}>
-            {
-              isStaging && isOwner && <Button className={styles.btnStartLive} label="Start Live" href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`} />
-            }
-            <div className={styles.descriptionWrapper}>
-              {isOwner && <Link to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`} className={styles.editLink}/>}
-              <h1 className={styles.title}>{episode.name}</h1>
-              <p className={styles.description}>{episode.description}</p>
-              <p className={styles.status}>Status: {episode.status}</p>
-              
-            </div>
-            {/* {episode.image?.url && <img
+        <>
+          <div className={styles.episodeWrapper}>
+            <ImageWrapper
               src={episode.image?.url}
-              className={styles.episodeImage}              
-              loading="lazy"
               alt={episode.name}
-            />}             */}
+              label={episode.name}
+              className={styles.imageWrapper}
+            />
+            <div className={styles.episode}>
+              {
+                isStaging && isOwner && <Button className={styles.btnStartLive} label="Start Live" href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`} />
+              }
+              <div className={styles.descriptionWrapper}>
+                {isOwner && <Link to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`} className={styles.editLink}/>}
+                <h1 className={styles.title}>{episode.name}</h1>
+                <p className={styles.description}>{episode.description}</p>
+                <p className={styles.status}>Status: {episode.status}</p>
+                
+              </div>            
+            </div>
+            {episode.record && (
+              <Player src={episode.record.fileUrl} ref={playerRef} />
+            )}
           </div>
-          {episode.record && (
-            <Player src={episode.record.fileUrl} ref={playerRef} />
-          )}
           <div className={styles.commentsWrapper}>
             <div className={styles.commentsCounter}>Comments ({comments.length})</div>
             {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
@@ -99,7 +95,7 @@ const Episode: React.FC = () => {
               <div>There&apos;s no comment yet.</div>
             )}
           </div>
-        </div>
+        </>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such episode</h1>
       )}
