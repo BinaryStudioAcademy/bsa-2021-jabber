@@ -1,13 +1,14 @@
 import { Middleware } from '@reduxjs/toolkit';
 import { io } from 'socket.io-client';
 import { ENV, SocketEvent, DataStatus } from 'common/enums/enums';
+import { Comment } from 'common/types/types';
 import { ActionType as EpisodeActionType } from 'store/episode/common';
 import { episode as episodeAction } from 'store/actions';
 
 const socket = io(ENV.SOCKET_SERVER);
 
 const socketMiddleware: Middleware = ({ dispatch }) => (next): any => {
-  socket.on(SocketEvent.UPDATE_COMMENTS, (comment) => {
+  socket.on(SocketEvent.UPDATE_COMMENTS, (comment: Comment): void => {
     dispatch(episodeAction.updateComments(comment));
   });
 
