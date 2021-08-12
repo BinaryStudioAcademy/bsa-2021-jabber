@@ -41,12 +41,14 @@ const editEpisode = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkConf
     const { episodeApi } = extra;
     const { configurateEpisode, auth } = getState();
     const { id } = <Episode>configurateEpisode.episode;
+
     const recordfile = getFileFromFileList(editEpisodePayload.record);
     const imgFile = getFileFromFileList(editEpisodePayload.image);
 
     const episode = await episodeApi.update(id, {
       name: editEpisodePayload.name,
       description: editEpisodePayload.description,
+      shownotes: editEpisodePayload.shownotes,
       type: editEpisodePayload.type,
       recordDataUrl: recordfile ? await getDataUrl(recordfile) : null,
       imageDataUrl: imgFile ? await getDataUrl(imgFile) : null,

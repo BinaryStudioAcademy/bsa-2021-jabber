@@ -3,9 +3,9 @@ import {
   EpisodeValidationMessage,
   EpisodePayloadKey,
 } from '~/common/enums/enums';
-import { episodeCreate as episodeCreateCommon } from 'jabber-shared/validation-schemas/validation-schemas';
+import { episode } from 'jabber-shared/validation-schemas/validation-schemas';
 
-const episodeCreate = episodeCreateCommon.keys({
+const episodeCreate = episode.keys({
   [EpisodePayloadKey.USER_ID]: Joi.number().integer().required().messages({
     'number.required': EpisodeValidationMessage.USER_ID_REQUIRE,
     'number.integer': EpisodeValidationMessage.USER_ID_NUMBER_FORMAT,
