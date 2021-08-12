@@ -46,7 +46,7 @@ const Podcast: React.FC = () => {
             </div>
             <div className={styles.imageContainer}>
               <div className={styles.wrapper}>
-                <p className={styles.imageWrapper}>
+                <div className={styles.imageWrapper}>
                   {podcast.image ? (
                     <img
                       src={podcast.image.url}
@@ -59,7 +59,7 @@ const Podcast: React.FC = () => {
                   ) : (
                     <DefaultImage label={podcast.name} />
                   )}
-                </p>
+                </div>
                 {podcast.userId === userId && (
                   <Link
                     to={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
