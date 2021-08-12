@@ -5,7 +5,11 @@ const COLUMN_NAME = 'cover_id';
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.table(TABLE_NAME, (table) => {
-    table.integer(COLUMN_NAME).defaultTo(null);
+    table
+      .integer(COLUMN_NAME)
+      .references('id')
+      .inTable('images')
+      .defaultTo(null);
   });
 }
 
