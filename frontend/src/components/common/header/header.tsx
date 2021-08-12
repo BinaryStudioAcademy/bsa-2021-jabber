@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppSelector, useDispatch, useVisible } from 'hooks/hooks';
-import { AppRoute, ButtonType, DefaultImageSize } from 'common/enums/enums';
+import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
 import { Button, Link, DefaultImage } from 'components/common/common';
 import { auth as authActions } from 'store/actions';
@@ -58,11 +58,7 @@ const Header: React.FC = () => {
                   className={styles.usersButtonWrapper}
                   onClick={handleMenuToggle}
                 >
-                  <DefaultImage
-                    label={user?.nickname}
-                    size={DefaultImageSize.SMALL}
-                    className={styles.profileAvatar}
-                  />
+                  <DefaultImage label={user?.nickname} />
                 </button>
                 {isVisible && (
                   <div className={styles.dropDown}>

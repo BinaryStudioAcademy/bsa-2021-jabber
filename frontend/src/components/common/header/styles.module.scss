@@ -31,7 +31,7 @@
 }
 
 .link {
-  color: #ffffff;
+  color: #fff;
   text-decoration: none;
 }
 
@@ -42,23 +42,34 @@
   padding-right: 30px;
 }
 
+.profile {
+  margin-left: 40px;
+  position: relative;
+}
+
 .usersButtonWrapper {
   height: 40px;
   width: 40px;
 
   padding: 0;
-
-  background-color: #00000000;
-  border: none;
-
-  .profileAvatar {
-    cursor: pointer;
-  }
-}
-
-.profile {
-  margin-left: 40px;
   position: relative;
+
+  background-color: #000;
+  border: none;
+  border-radius: 50%;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    display: block;
+
+    height: 100%;
+    width: 100%;
+
+    position: absolute;
+    cursor: pointer;
+    z-index: 15;
+  }
 }
 
 .signIn {
@@ -67,7 +78,7 @@
 
 .signInText {
   text-decoration: none;
-  color: #ffffff;
+  color: #fff;
   font-weight: 500;
   font-size: 18px;
   line-height: 21px;
