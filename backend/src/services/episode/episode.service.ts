@@ -36,7 +36,6 @@ class Episode {
     recordRepository,
     imageRepository,
   }: Constructor) {
-
     this.#episodeRepository = episodeRepository;
     this.#shownoteService = shownoteService;
     this.#fileStorage = fileStorage;
@@ -122,17 +121,20 @@ class Episode {
     return episode;
   }
 
-  public async update(id: string, payload: EpisodeEditPayload): Promise<TEpisode> {
-    const {
+  public async update(
+    id: string,
+    {
       recordDataUrl,
       imageDataUrl,
       type,
       description,
+      shownotes,
       name,
       userId,
       imageId,
       status,
-    } = payload;
+    }: EpisodeEditPayload,
+  ): Promise<TEpisode> {
     const episodeId = Number(id);
     let newImageId: number | null = null;
 
@@ -149,7 +151,8 @@ class Episode {
         fileSize: bytes,
       });
 
-      const { id, publicId: oldRecordPublicId } = await this.#recordRepository.getByEpisodeId(episodeId);
+      const { id, publicId: oldRecordPublicId } =
+        await this.#recordRepository.getByEpisodeId(episodeId);
 
       if (id) {
         await this.#fileStorage.delete(oldRecordPublicId);
@@ -171,13 +174,16 @@ class Episode {
       newImageId = image.id;
     }
 
-    const episode = await this.#episodeRepository.update(id, {
-      name,
-      description,
-      type,
-      status,
-      imageId: newImageId ?? imageId,
-    });
+    await this.#shownoteService.deleteAllByEpisodeId(Number(id));
+
+    if (shownotes.length) {
+      await this.#shownoteService.create(
+        ...shownotes.map((shownote) => ({
+          ...shownote,
+          episodeId: Number(id),
+        })),
+      );
+    }
 
     if (imageDataUrl && imageId) {
       const oldImage = await this.#imageRepository.getById(imageId);
@@ -185,6 +191,14 @@ class Episode {
       await this.#imageRepository.delete(oldImage.id);
       await this.#fileStorage.delete(oldImage.publicId);
     }
+
+    const episode = await this.#episodeRepository.update(id, {
+      name,
+      description,
+      type,
+      status,
+      imageId: newImageId ?? imageId,
+    });
 
     return episode;
   }
