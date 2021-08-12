@@ -13,6 +13,7 @@ import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
 import { getCurrentTime } from './helpers/helpers';
 import { PageParams } from './common/types/types';
+import defaultImage from 'assets/img/default-podcast-image.jpeg';
 import styles from './styles.module.scss';
 
 const Episode: React.FC = () => {
@@ -61,15 +62,20 @@ const Episode: React.FC = () => {
               <p className={styles.type}>Type: {episode.type}</p>
               <p className={styles.type}>Status: {episode.status}</p>
             </div>
-            <p className={styles.logoWrapper}>
-              <img
-                src="#"
-                width="280"
-                height="280"
-                loading="lazy"
-                alt={episode.name}
-              />
-            </p>
+            <div className={styles.imageContainer}>
+              <div className={styles.wrapper}>
+                <p className={styles.imageWrapper}>
+                  <img
+                    src={episode.image?.url ?? defaultImage}
+                    className={styles.episodeImage}
+                    width="280"
+                    height="280"
+                    loading="lazy"
+                    alt={episode.name}
+                  />
+                </p>
+              </div>
+            </div>
           </div>
           {episode.record && (
             <Player src={episode.record.fileUrl} ref={playerRef} />
@@ -77,7 +83,8 @@ const Episode: React.FC = () => {
         </>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such episode</h1>
-      )}
+      )
+      }
       <div className={styles.commentsWrapper}>
         {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
         {comments.length ? (
@@ -86,7 +93,7 @@ const Episode: React.FC = () => {
           <div>There&apos;s no comment yet.</div>
         )}
       </div>
-    </main>
+    </main >
   );
 };
 
