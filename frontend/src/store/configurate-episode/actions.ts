@@ -1,25 +1,19 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import {
-  Episode,
-  AsyncThunkConfig,
-  EpisodeFormPayload,
-  CreateActionEpisodePayload,
-  User,
-} from 'common/types/types';
-import { getFileFromFileList, getDataUrl } from 'helpers/helpers';
+import { AsyncThunkConfig, CreateActionEpisodePayload, Episode, EpisodeFormPayload, User } from 'common/types/types';
+import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
 import { ActionType } from './common';
-import { NotificationMessage, NotificationTitle } from 'common/enums/enums';
+import { AppRoute, NotificationMessage, NotificationTitle } from 'common/enums/enums';
 
 const createEpisode = createAsyncThunk<Episode, CreateActionEpisodePayload, AsyncThunkConfig>(
   ActionType.CREATE_EPISODE,
   async (createEpisodePayload, { getState, extra }) => {
-    const { episodeApi, notificationService } = extra;
+    const { episodeApi, notificationService, navigationService } = extra;
     const { auth } = getState();
 
     const file = getFileFromFileList(createEpisodePayload.record);
     const imgFile = getFileFromFileList(createEpisodePayload.image);
 
-    const episodes = await episodeApi.create({
+    const episode = await episodeApi.create({
       name: createEpisodePayload.name,
       description: createEpisodePayload.description,
       shownotes: createEpisodePayload.shownotes,
@@ -32,7 +26,8 @@ const createEpisode = createAsyncThunk<Episode, CreateActionEpisodePayload, Asyn
     });
 
     notificationService.success(NotificationTitle.SUCCESS, `The episode ${NotificationMessage.SUCCESS_CREATED}`);
-    return episodes;
+    navigationService.push(`${AppRoute.EPISODES}/${episode.id}`);
+    return episode;
   });
 
 const editEpisode = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkConfig>(
