@@ -6,7 +6,7 @@ import styles from './styles.module.scss';
 
 const NotificationItem: React.FC = () => {
   return (
-    <ul className={styles.container}>
+    <li className={styles.container}>
       <div className={styles.notificationLogo}>
         <img
           className={styles.image}
@@ -36,7 +36,7 @@ const NotificationItem: React.FC = () => {
         </button>
         <span className={styles.notificationDate}>09:31</span>
       </div>
-    </ul>
+    </li>
   );
 };
 

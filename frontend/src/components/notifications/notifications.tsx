@@ -1,11 +1,15 @@
 import NotificationItem from './components/notification-item';
+import { useSelector } from 'hooks/hooks';
 import styles from './styles.module.scss';
 
 const Notifications: React.FC = () => {
+
+  useSelector;
+  
   return (
-    <li className={styles.container}>
+    <ul className={styles.container}>
       <NotificationItem />
-    </li>
+    </ul>
   );
 };
 
