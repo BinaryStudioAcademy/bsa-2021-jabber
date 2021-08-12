@@ -1,4 +1,4 @@
-import { SearchPayloadKey } from '../enums/search';
+import { SearchPayloadKey } from '~/common/enums/enums';
 
 type SearchPayload = {
   [SearchPayloadKey.SEARCH]: string,

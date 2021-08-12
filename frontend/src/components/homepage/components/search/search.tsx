@@ -1,20 +1,17 @@
 import Input from 'components/common/input/input';
 import { useAppForm } from 'hooks/hooks';
 import { DEFAULT_SEARCH_PAYLOAD } from './common/constants';
-import { SearchPayload } from './common/types/search';
 import { IconName } from 'common/enums/ui/ui';
 import { FormEvent } from 'common/enums/enums';
 import styles from './styles.module.scss';
 
 type Props = {
-  onChange: (payload: SearchPayload) => void;
-  value: string;
+  onChange: (evt: React.ChangeEvent<HTMLFormElement>) => void;
 };
 
-const Search: React.FC<Props> = ({ onChange, value }) => {
+const Search: React.FC<Props> = ({ onChange }) => {
   const {
     control,
-    handleSubmit,
     errors,
   } = useAppForm({
     defaultValues: DEFAULT_SEARCH_PAYLOAD,
@@ -23,8 +20,7 @@ const Search: React.FC<Props> = ({ onChange, value }) => {
 
   return (
     <form
-      onChange={handleSubmit(onChange)}
-      onSubmit={(e: React.SyntheticEvent): void => e.preventDefault()}
+      onChange={onChange}
     >
       <div className={styles.searchBlock}>
         <Input
@@ -34,8 +30,6 @@ const Search: React.FC<Props> = ({ onChange, value }) => {
           control={control}
           errors={errors}
           icon={IconName.SEARCH}
-          value={value}
-          autoFocus={true}
         />
       </div>
     </form>);

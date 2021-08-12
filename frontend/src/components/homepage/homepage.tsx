@@ -1,11 +1,11 @@
 import { DataStatus } from 'common/enums/enums';
 import { Loader } from 'components/common/common';
-import { useAppSelector, useCallback, useDispatch, useEffect, useState } from 'hooks/hooks';
+import { useAppSelector, useCallback, useDispatch, useEffect } from 'hooks/hooks';
 import { homepage as homepageActions } from 'store/actions';
 import { PodcastList, Search } from './components/components';
-import { SearchPayload } from './components/search/common/types/search';
 import styles from './styles.module.scss';
-import _ from 'lodash';
+import { SEARCH_TIMEOUT } from './components/search/common/constants';
+import { setDebounce } from 'jabber-shared/helpers/timeout/timeout';
 
 const Homepage: React.FC = () => {
   const { podcasts, dataStatus } = useAppSelector(({ homepage }) => ({
@@ -15,29 +15,27 @@ const Homepage: React.FC = () => {
   const dispatch = useDispatch();
   const hasPodcasts = Boolean(podcasts.length);
 
-  const [text, setText] = useState<string>('');
-
   useEffect(() => {
     dispatch(homepageActions.loadPodcasts());
   }, []);
 
-  const debounceValue = useCallback(_.debounce((value) =>
-    (dispatch(homepageActions.searchPodcasts(value))), 1000), []);
+  const debounceValue = useCallback(setDebounce((value) => {
+    const data: Record<string, unknown> = { search: value };
+    (dispatch(homepageActions.loadPodcastsBySearch(data)));
+  }, SEARCH_TIMEOUT), []);
 
-  const handleChange = ({ search }: SearchPayload): void => {
-    setText(search);
-    debounceValue(search);
+  const handleChange = (event: React.ChangeEvent<HTMLFormElement>): void => {
+    debounceValue(event.target.value);
   };
 
   if (dataStatus === DataStatus.PENDING) {
-    return <Loader />;
+    return <Loader/>;
   }
 
   return (
     <main className={styles.main}>
       <Search
-        onChange={(value): void => handleChange(value)}
-        value={text}
+        onChange={handleChange}
       />
       <h2 className={styles.title}>All podcasts</h2>
       { hasPodcasts ?

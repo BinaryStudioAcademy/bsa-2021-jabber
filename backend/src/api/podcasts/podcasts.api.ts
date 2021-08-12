@@ -29,19 +29,19 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
   );
 
   podcastRouter.get(
-    PodcastsApiPath.SEARCH_BY_TITLE,
-    handleAsyncApi(async (req, res) => {
-      return res
-        .send(await podcastService.getByTitle(`${req.query.title}`))
-        .status(HttpCode.OK);
-    }),
-  );
-
-  podcastRouter.get(
     PodcastsApiPath.$ID,
     handleAsyncApi(async (req, res) => {
       return res
         .send(await podcastService.getById(req.params.id))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  podcastRouter.post(
+    PodcastsApiPath.SEARCH,
+    handleAsyncApi(async (req, res) => {
+      return res
+        .send(await podcastService.getAllBySearch(req.body))
         .status(HttpCode.OK);
     }),
   );

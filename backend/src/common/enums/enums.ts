@@ -51,3 +51,4 @@ export {
   CommentCreatePayloadKey,
   CommentValidationMessage,
 } from './comment/comment';
+export { SearchPayloadKey } from './search/search';

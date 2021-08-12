@@ -3,7 +3,7 @@ import {
   PodcastCreateDTOPayload,
   PodcastEditDTOPayload,
   PodcastCreatePayload,
-  PodcastEditPayload,
+  PodcastEditPayload, SearchPayload,
 } from '~/common/types/types';
 import {
   podcast as podcastRep,
@@ -82,15 +82,8 @@ class Podcast {
     return podcast;
   }
 
-  public async getByTitle(title: string): Promise<TPodcast> {
-    const podcast = await this.#podcastRepository.getByTitle(title);
-    if (!podcast) {
-      throw new HttpError({
-        status: HttpCode.NOT_FOUND,
-        message: ErrorMessage.PODCAST_NOT_FOUND,
-      });
-    }
-    return podcast;
+  public async getAllBySearch(data: SearchPayload): Promise<TPodcast[]> {
+    return await this.#podcastRepository.getAllBySearch(data);
   }
 
   public async update(id: string, {

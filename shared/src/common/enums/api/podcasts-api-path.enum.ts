@@ -1,7 +1,7 @@
 enum PodcastsApiPath {
   ROOT = '/',
   $ID = '/:id',
-  SEARCH_BY_TITLE = '/search-title',
+  SEARCH = '/search',
 }
 
 export { PodcastsApiPath };

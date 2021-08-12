@@ -20,8 +20,6 @@ type Props = {
   hasMultipleRows?: boolean;
   icon?: IconName;
   className?: string;
-  value?: string;
-  autoFocus?: boolean;
 };
 
 const Input: React.FC<Props> = ({
@@ -32,10 +30,8 @@ const Input: React.FC<Props> = ({
   placeholder = '',
   type = InputType.TEXT,
   hasMultipleRows = false,
-  icon = IconName.INVISIBLE,
+  icon ,
   className,
-  value,
-  autoFocus = false,
 }) => {
   const { field } = useController({ name, control });
 
@@ -53,8 +49,6 @@ const Input: React.FC<Props> = ({
           {...field}
           type={type}
           placeholder={placeholder}
-          value={value}
-          autoFocus={autoFocus}
           className={getAllowedClasses(
             className,
             styles.input,

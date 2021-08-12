@@ -30,11 +30,13 @@ class PodcastApi {
     );
   }
 
-  public getByTitle(value: string): Promise<Podcast[]> {
+  public getAllBySearch(searchValues: Record<string, unknown>): Promise<Podcast[]> {
     return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.SEARCH_BY_TITLE}?title=${value}`,
+      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.SEARCH}`,
       {
-        method: HttpMethod.GET,
+        method: HttpMethod.POST,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(searchValues),
       },
     );
   }

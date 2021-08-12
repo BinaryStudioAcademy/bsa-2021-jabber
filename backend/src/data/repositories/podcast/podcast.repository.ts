@@ -1,7 +1,7 @@
 import {
   Podcast as TPodcast,
   PodcastCreateDTOPayload,
-  PodcastEditDTOPayload,
+  PodcastEditDTOPayload, SearchPayload,
 } from '~/common/types/types';
 import { PodcastType } from '~/common/enums/enums';
 import { PodcastModel as PodcastM } from '~/data/models/models';
@@ -29,8 +29,9 @@ class Podcast {
     return this.#PodcastModel.query().findById(id).withGraphJoined('image');
   }
 
-  public getByTitle(title: string): Promise<any> {
-    return this.#PodcastModel.query().whereRaw(`REPLACE(name, ' ', '') ILIKE REPLACE('%${title}%', ' ', '')`);
+  public getAllBySearch(searchData: SearchPayload): Promise<TPodcast[]> {
+    const { search } = searchData;
+    return this.#PodcastModel.query().whereRaw(`REPLACE(name, ' ', '') ILIKE REPLACE('%${search}%', ' ', '')`);
   }
 
   public update(id: string, payload: PodcastEditDTOPayload): Promise<TPodcast> {

@@ -10,15 +10,15 @@ const loadPodcasts = createAsyncThunk<Podcast[], undefined, AsyncThunkConfig>
   return podcasts;
 });
 
-const searchPodcasts = createAsyncThunk<Podcast[], string, AsyncThunkConfig>
-(ActionType.SEARCH_PODCASTS, async (title, { extra }) => {
+const loadPodcastsBySearch = createAsyncThunk<Podcast[], Record<string, unknown>, AsyncThunkConfig>
+(ActionType.LOAD_PODCASTS_BY_SEARCH, async (searchValues, { extra }) => {
   const { podcastApi } = extra;
-  const podcasts = await podcastApi.getByTitle(title);
+  const podcasts = await podcastApi.getAllBySearch(searchValues);
 
   return podcasts;
 });
 
 export {
   loadPodcasts,
-  searchPodcasts,
+  loadPodcastsBySearch,
 };
