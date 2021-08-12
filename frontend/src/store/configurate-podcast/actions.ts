@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getDataUrl, getFileFromFileList  } from 'helpers/helpers';
+import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
 import {
   AsyncThunkConfig,
   Podcast,
@@ -31,16 +31,21 @@ const edit = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
   ActionType.EDIT_PODCAST,
   async (podcastPayload, { getState, extra }) => {
     const { podcastApi, notificationService } = extra;
-    const { configuratePodcast } = getState();
+    const { auth, configuratePodcast } = getState();
     const file = getFileFromFileList(podcastPayload.image);
-    const updatePodcast = <Podcast>configuratePodcast.podcast;
-    const podcast = await podcastApi.update({
-      ...updatePodcast,
+    const { id, imageId } = <Podcast>configuratePodcast.podcast;
+
+    const podcast = await podcastApi.update(id, {
+      userId: (<User>auth.user).id,
       name: podcastPayload.name,
       description: podcastPayload.description,
+      type: podcastPayload.type,
+      imageId: imageId,
       imageDataUrl: file ? await getDataUrl(file) : null,
     });
+
     notificationService.success(NotificationTitle.SUCCESS, `The podcast ${NotificationMessage.SUCCESS_UPDATED}`);
+
     return podcast;
   });
 

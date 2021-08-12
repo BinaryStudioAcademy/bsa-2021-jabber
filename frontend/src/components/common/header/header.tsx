@@ -2,9 +2,8 @@ import React from 'react';
 import { useAppSelector, useDispatch, useVisible } from 'hooks/hooks';
 import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
-import { Button, Link } from 'components/common/common';
+import { Button, Link, DefaultImage } from 'components/common/common';
 import { auth as authActions } from 'store/actions';
-import defaultAvatar from 'assets/img/default-user-avatar.svg';
 import logo from 'assets/img/logo.svg';
 import styles from './styles.module.scss';
 
@@ -41,6 +40,14 @@ const Header: React.FC = () => {
                   Podcasts
                 </Link>
               </li>
+              <li className={styles.liNavigation}>
+                <Link
+                  to={`${AppRoute.USERS}/${user?.id}`}
+                  className={styles.link}
+                >
+                  My Profile
+                </Link>
+              </li>
             </ul>
             <div className={styles.userInfo}>
               <Link to={AppRoute.PODCASTS_EDIT} className={styles.link}>
@@ -51,14 +58,7 @@ const Header: React.FC = () => {
                   className={styles.usersButtonWrapper}
                   onClick={handleMenuToggle}
                 >
-                  <img
-                    className={styles.profileAvatar}
-                    src={defaultAvatar}
-                    width="40px"
-                    height="40px"
-                    alt="avatar"
-                    loading="lazy"
-                  />
+                  <DefaultImage label={user?.nickname} />
                 </button>
                 {isVisible && (
                   <div className={styles.dropDown}>

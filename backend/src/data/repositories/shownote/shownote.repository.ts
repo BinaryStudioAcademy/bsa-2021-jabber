@@ -19,8 +19,12 @@ class Shownote {
     return this.#ShownoteModel.query().insert(payload);
   }
 
-  public getAllByEpisodeId(id: string): Promise<TShownote[]> {
+  public getAllByEpisodeId(id: number): Promise<TShownote[]> {
     return this.#ShownoteModel.query().where('episode_id', id).returning('*');
+  }
+
+  public deleteAllByEpisodeId(id: number): Promise<number> {
+    return this.#ShownoteModel.query().delete().where('episode_id', id);
   }
 }
 

@@ -9,7 +9,7 @@ import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 
 const ConfigurateEpisode: React.FC = () => {
-  const { id } = useParams<PageParams>();
+  const { id, podcastId } = useParams<PageParams>();
   const dispatch = useDispatch();
 
   const { episode, dataStatus } = useAppSelector(({ configurateEpisode }) => ({
@@ -26,7 +26,10 @@ const ConfigurateEpisode: React.FC = () => {
   const handleFormSubmit = (payload: EpisodeFormPayload): void => {
     isEdit
       ? dispatch(configurateEpisodeActions.editEpisode(payload))
-      : dispatch(configurateEpisodeActions.createEpisode(payload));
+      : dispatch(configurateEpisodeActions.createEpisode({
+        ...payload,
+        podcastId: Number(podcastId),
+      }));
   };
 
   useEffect(() => {

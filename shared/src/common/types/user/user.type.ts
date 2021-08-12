@@ -3,6 +3,7 @@ type User = {
   firstName: string;
   lastName: string;
   email: string;
+  nickname: string;
   password: string;
   birthdate: string;
   createdAt: string;
