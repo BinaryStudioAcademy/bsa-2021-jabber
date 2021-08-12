@@ -26,7 +26,10 @@ const ImageWrapper: React.FC<Props> = ({
   className,
 }) => {
   return (
-    <div className={getAllowedClasses(styles.imageWrapper, className)}>
+    <div
+      style={getDefaultImageStyle({ width, height })}
+      className={getAllowedClasses(styles.imageWrapper, className)}
+    >
       {src ? (
         <img
           src={src}
@@ -36,7 +39,7 @@ const ImageWrapper: React.FC<Props> = ({
           alt={alt}
         />
       ) : (
-        <div style={getDefaultImageStyle({ width, height })}>
+        <div>
           <span>{getLabelSubstring(label)}</span>
         </div>
       )}
