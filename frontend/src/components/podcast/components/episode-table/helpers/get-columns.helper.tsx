@@ -4,11 +4,6 @@ import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import { EpisodeNameRow } from '../types/types';
 
-// type EpisodeNameRow = {
-//   name: string,
-//   episodeId: string,
-// };
-
 const getColumns = (): Column[] => {
   const columns: Column[] = [
     {
@@ -26,11 +21,9 @@ const getColumns = (): Column[] => {
           episodeId: row.episodeId,
         };
       },
-      Cell: function getLink({ value }): JSX.Element  { 
-        return (
-          <Link to={`${AppRoute.EPISODES}/${value.episodeId}`} >{value.name}</Link>
-        );
-      },
+      Cell: ({ value }): JSX.Element => (
+        <Link to={`${AppRoute.EPISODES}/${value.episodeId}`}>{value.name}</Link>
+      ),
     },
     {
       Header: 'Created At',
