@@ -6,9 +6,8 @@ import {
   useRef,
 } from 'hooks/hooks';
 import { episode as episodeActions } from 'store/actions';
-import { CreateCommentForm, CommentsList } from './components/components';
-import { Loader, Player } from 'components/common/common';
-import { DataStatus } from 'common/enums/enums';
+import { Loader, CreateCommentForm, CommentsList, Player, Button } from 'components/common/common';
+import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
 import { getCurrentTime } from './helpers/helpers';
@@ -30,6 +29,8 @@ const Episode: React.FC = () => {
   );
 
   const hasUser = Boolean(user);
+  const isStaging = episode?.status === EpisodeStatus.STAGING;
+  const isOwner = user?.id === episode?.userId;
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
@@ -60,6 +61,9 @@ const Episode: React.FC = () => {
               <p className={styles.description}>{episode.description}</p>
               <p className={styles.type}>Type: {episode.type}</p>
               <p className={styles.type}>Status: {episode.status}</p>
+              {
+                isStaging && isOwner && <Button label="Start Live" href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}/>
+              }
             </div>
             <p className={styles.logoWrapper}>
               <img
@@ -73,7 +77,7 @@ const Episode: React.FC = () => {
           </div>
           {episode.record && (
             <Player src={episode.record.fileUrl} ref={playerRef} />
-          )}
+          )}          
         </>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such episode</h1>

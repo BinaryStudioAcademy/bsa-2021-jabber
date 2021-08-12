@@ -8,3 +8,4 @@ export { CommentDTOKey } from './comment-dto-key.enum';
 export { RecordDTOKey } from './record-dto-key.enum';
 export { ImageDTOKey } from './image-dto-key';
 export { NotificationDTOKey } from './notification-dto-key.enum';
+export { UserNotificationDTOKey } from './user-notification-dto-key.enum';
