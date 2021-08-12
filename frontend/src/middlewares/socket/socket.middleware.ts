@@ -7,9 +7,9 @@ import { episode as episodeAction } from 'store/actions';
 
 type Next = (action: AnyAction) => void;
 
-const socket = io(ENV.SOCKET_SERVER);
+const socket: Middleware = ({ dispatch }) => (next): Next => {
+  const socket = io(ENV.SOCKET_SERVER);
 
-const socketMiddleware: Middleware = ({ dispatch }) => (next): Next => {
   socket.on(SocketEvent.UPDATE_COMMENTS, (comment: Comment): void => {
     dispatch(episodeAction.updateComments(comment));
   });
@@ -25,8 +25,9 @@ const socketMiddleware: Middleware = ({ dispatch }) => (next): Next => {
         break;
       }
     }
+
     next(action);
   };
 };
 
-export { socketMiddleware };
+export { socket };

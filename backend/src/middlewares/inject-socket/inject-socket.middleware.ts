@@ -7,7 +7,7 @@ const injectSocket  = (io: Server) => (
   next: NextFunction,
 ): void => {
   req.io = io;
-  next();
+  return next();
 };
 
 export { injectSocket  };

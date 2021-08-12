@@ -11,7 +11,7 @@ import {
   recordAudio as recordAudioService,
   notification as notificationService,
 } from 'services/services';
-import { handleError as handleErrorMiddleware, socketMiddleware } from 'middlewares/middlewares';
+import { handleError as handleErrorMiddleware, socket as socketMiddleware } from 'middlewares/middlewares';
 
 const extraArgument = {
   authApi,
