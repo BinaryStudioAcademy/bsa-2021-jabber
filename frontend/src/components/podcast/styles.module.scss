@@ -35,8 +35,8 @@
 
 .wrapper {
   width: 280px;
-  margin-right: 100px;
   display: flex;
+  margin-left: auto;
   flex-direction: column;
   justify-content: center;
   position: relative;
@@ -57,17 +57,33 @@
     height: 280px;
   }
 
-  .imageWrapper,
-  .defaultImageWrapper {
-    margin: 0 0 10px;
-    transition: transform 0.2s ease;
-  }
-
   .imageWrapper {
-    border-radius: 5px;
-    outline: 10px solid rgba(134, 134, 134, 0.55);
-    outline-offset: -10px;
     height: 280px;
+    width: 280px;
+
+    margin: 0 0 10px;
+    position: relative;
+
+    font-size: 110px;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+
+    &::before {
+      display: block;
+      content: '';
+
+      width: 100%;
+      height: 100%;
+
+      position: absolute;
+
+      outline: 10px solid rgba(134, 134, 134, 0.55);
+      outline-offset: -10px;
+
+      z-index: 15;
+      transition: inherit;
+    }
   }
 
   &:hover {
@@ -76,13 +92,12 @@
       transform: translateY(-8px);
     }
 
-    .imageWrapper {
-      outline: 10px solid rgba(134, 134, 134, 0.71);
-    }
-
-    .imageWrapper,
-    .defaultImageWrapper {
+    & .imageWrapper {
       transform: translateY(-8px);
+
+      &::before {
+        outline: 10px solid rgba(134, 134, 134, 0.71);
+      }
     }
   }
 }
@@ -95,7 +110,6 @@
 
 .podcastImage {
   height: 100%;
-  width: 280px;
   object-fit: cover;
 }
 

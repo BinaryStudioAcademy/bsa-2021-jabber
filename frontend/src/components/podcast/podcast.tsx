@@ -1,6 +1,6 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import { podcast as podcastActions } from 'store/actions';
-import { AppRoute, DataStatus, DefaultImageSize } from 'common/enums/enums';
+import { AppRoute, DataStatus } from 'common/enums/enums';
 import { Link, Loader, DefaultImage } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
@@ -46,8 +46,8 @@ const Podcast: React.FC = () => {
             </div>
             <div className={styles.imageContainer}>
               <div className={styles.wrapper}>
-                {podcast.image ? (
-                  <p className={styles.imageWrapper}>
+                <p className={styles.imageWrapper}>
+                  {podcast.image ? (
                     <img
                       src={podcast.image.url}
                       className={styles.podcastImage}
@@ -56,14 +56,10 @@ const Podcast: React.FC = () => {
                       loading="lazy"
                       alt={podcast.name}
                     />
-                  </p>
-                ) : (
-                  <DefaultImage
-                    label={podcast.name}
-                    size={DefaultImageSize.LARGE}
-                    className={styles.defaultImageWrapper}
-                  />
-                )}
+                  ) : (
+                    <DefaultImage label={podcast.name} />
+                  )}
+                </p>
                 {podcast.userId === userId && (
                   <Link
                     to={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
