@@ -62,6 +62,8 @@ const Header: React.FC = () => {
                   src={headerBell}
                   width="23"
                   height="23"
+                  loading="lazy"
+                  alt="notifications"
                   className={styles.notification}
                 />
               </Link>

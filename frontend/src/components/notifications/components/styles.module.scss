@@ -76,6 +76,6 @@
 
 .container:hover,
 .containerChecked:hover {
-  border: 1px solid #6600cc;
-  background-color: #6600cc05;
+  border: 1px solid var(--color-header-background);
+  background-color: #0066aa05;
 }
