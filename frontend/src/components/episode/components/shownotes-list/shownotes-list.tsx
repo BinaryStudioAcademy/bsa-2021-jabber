@@ -1,6 +1,25 @@
 import { Shownote as TShownote } from 'common/types/types';
-import Shownotes from '../shownotes/shownotes';
+import Shownote from '../shownote/shownote';
 import styles from './styles.module.scss';
+
+type gridStyle = {
+  gridTemplateColumns: string;
+  gridTemplateRows: string;
+};
+
+const getGridMarkup = (shownotes: TShownote[]): gridStyle => {
+  const halfOfShownotes = Math.ceil(shownotes.length / 2);
+  let columnsCount = 1;
+  let rowsCount = shownotes.length;
+  if (halfOfShownotes >= 4) {
+    columnsCount = 2;
+    rowsCount = halfOfShownotes;
+  }
+  return {
+    gridTemplateColumns: `repeat(${columnsCount}, 6fr)`,
+    gridTemplateRows: `repeat(${rowsCount}, 1fr)`,
+  };
+};
 
 type Props = {
   shownotes: TShownote[];
@@ -8,28 +27,19 @@ type Props = {
 };
 
 const ShownotesList: React.FC<Props> = ({ shownotes, handleJumpToTimeLine }) => {
-  const halfOfShownotes = shownotes.length / 2;
-  const notesOnLeftSide = [];
-  const notesOnRightSide = [];
-
-  for (let i = 0; i < shownotes.length; i++) {
-    i < halfOfShownotes ? notesOnLeftSide.push(shownotes[i]) : notesOnRightSide.push(shownotes[i]);
-  }
 
   return (
-    <div className={styles.columnsWrapper}>
-      {notesOnLeftSide && (
-        <Shownotes
-          shownotes={notesOnLeftSide}
+    <div
+      style={getGridMarkup(shownotes)}
+      className={styles.columnsWrapper}
+    >
+      {shownotes.map((shownote) => (
+        <Shownote
+          key={shownote.id}
+          shownote={shownote}
           handleJumpToTimeLine={handleJumpToTimeLine}
         />
-      )}
-      {notesOnRightSide && (
-        <Shownotes
-          shownotes={notesOnRightSide}
-          handleJumpToTimeLine={handleJumpToTimeLine}
-        />
-      )}
+      ))}
     </div>
   );
 };

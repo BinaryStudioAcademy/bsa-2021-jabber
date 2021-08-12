@@ -65,12 +65,12 @@ const Episode: React.FC = () => {
               <p className={styles.description}>{episode.description}</p>
               <p className={styles.type}>Type: {episode.type}</p>
               <p className={styles.type}>Status: {episode.status}</p>
-              {episode.shownotes && (
+              {episode.shownotes?.length ? (
                 <div className={styles.shownotesWrapper}>
                   <h3>Time navigation</h3>
                   <ShownotesList shownotes={episode.shownotes} handleJumpToTimeLine={handleJumpToTimeLine} />
                 </div>
-              )}
+              ) : null}
             </div>
             <p className={styles.logoWrapper}>
               <img

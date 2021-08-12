@@ -1,5 +1,6 @@
 .columnsWrapper {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   width: 70%;
   min-width: 420px;
 }
