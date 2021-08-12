@@ -24,7 +24,7 @@ const UserPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <main className={styles.userInfo}>
-        <div className={styles.imageContainer}>
+        <div className={styles.imageWrapper}>
           <DefaultImage label={user?.nickname} />
         </div>
         <div className={styles.mainUserInfo}>
