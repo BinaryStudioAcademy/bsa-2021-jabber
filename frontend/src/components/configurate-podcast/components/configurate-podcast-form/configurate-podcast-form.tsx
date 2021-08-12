@@ -1,3 +1,4 @@
+import { ErrorMessage } from '@hookform/error-message';
 import { getFileExtensions, getOptions } from 'helpers/helpers';
 import {
   PodcastPayloadKey,
@@ -68,11 +69,16 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
           control={control}
           errors={errors}
         />
-        <input
-          {...register(PodcastPayloadKey.IMAGE)}
-          accept={acceptExtension}
-          type={InputType.FILE}
-        />
+        <div>
+          <input
+            {...register(PodcastPayloadKey.IMAGE)}
+            accept={acceptExtension}
+            type={InputType.FILE}
+          />
+          <span>
+            <ErrorMessage errors={errors} name={PodcastPayloadKey.IMAGE} />
+          </span>
+        </div>
         <Button label="Save" type={ButtonType.SUBMIT} />
       </fieldset>
     </form>

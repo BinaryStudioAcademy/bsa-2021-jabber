@@ -1,3 +1,0 @@
-const DEFAULT_PODCAST_ID = -1;
-
-export { DEFAULT_PODCAST_ID };

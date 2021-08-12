@@ -15,7 +15,11 @@ export {
   PodcastValidationMessage,
   PodcastType,
 } from './podcast/podcast';
-export { EpisodePayloadKey, EpisodeType, EpisodeStatus } from './episode/episode';
+export {
+  EpisodePayloadKey,
+  EpisodeType,
+  EpisodeStatus,
+} from './episode/episode';
 export { UserCreatePayloadKey, UserSignInPayloadKey } from './user/user';
 export {
   ButtonType,
@@ -28,5 +32,8 @@ export { DateFormatType } from './date/date';
 export { RecordStatus } from './record/record';
 export { ShownotePayloadKey } from './shownote/shownote';
 export { CommentCreatePayloadKey } from './comment/comment';
-export { NotificationMessage, NotificationTitle } from './notification/notification';
 export { SocketEvent } from './socket/socket';
+export {
+  NotificationMessage,
+  NotificationTitle,
+} from './notification/notification';
