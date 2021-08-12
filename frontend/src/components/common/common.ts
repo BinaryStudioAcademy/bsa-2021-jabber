@@ -17,3 +17,4 @@ export { default as Table } from './table/table';
 export { default as PodcastList } from './podcasts-list/podcasts-list';
 export { default as PodcastItem } from './podcast-item/podcast-item';
 export { default as Player } from './player/player';
+export { MaskedInput } from './masked-input/masked-input';

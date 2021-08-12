@@ -8,7 +8,7 @@ import {
   useController,
 } from 'react-hook-form';
 import 'react-datepicker/dist/react-datepicker.css';
-import MaskedInput from 'react-maskedinput';
+import { MaskedInput } from '../common';
 import styles from './styles.module.scss';
 import React from 'react';
 
