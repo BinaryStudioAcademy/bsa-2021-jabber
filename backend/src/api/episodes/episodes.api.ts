@@ -69,6 +69,17 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
     }),
   );
 
+  episodeRouter.delete(
+    EpisodesApiPath.$ID,
+    checkAuthMiddleware(HttpMethod.DELETE),
+    handleAsyncApi(async (req, res) => {
+      console.log(req.params.id)
+      return res
+        .json(await episodeService.delete(req.params.id))
+        .status(HttpCode.OK);
+    }),
+  );
+
   return episodeRouter;
 };
 

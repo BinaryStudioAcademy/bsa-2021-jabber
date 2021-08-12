@@ -53,16 +53,17 @@ const shownote = new Shownote({
   shownoteRepository,
 });
 
+const comment = new Comment({
+  commentRepository,
+});
+
 const episode = new Episode({
   episodeRepository,
   shownoteService: shownote,
+  commentService: comment,
   imageRepository,
   recordRepository,
   fileStorage,
-});
-
-const comment = new Comment({
-  commentRepository,
 });
 
 const record = new Record({

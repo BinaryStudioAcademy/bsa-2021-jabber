@@ -41,6 +41,14 @@ class Episode {
       .updateAndFetchById(id, payload)
       .withGraphFetched('shownotes');
   }
+
+  public delete(id: string): Promise<TEpisode> {
+    return this.#EpisodeModel
+      .query()
+      .deleteById(id)
+      .returning('*')
+      .first();
+  }
 }
 
 export { Episode };

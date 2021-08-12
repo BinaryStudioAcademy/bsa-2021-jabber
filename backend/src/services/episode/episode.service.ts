@@ -11,7 +11,7 @@ import {
   record as recordRep,
   image as imageRep,
 } from '~/data/repositories/repositories';
-import { shownote } from '~/services/services';
+import { shownote, comment } from '~/services/services';
 import { HttpError } from '~/exceptions/exceptions';
 
 type Constructor = {
@@ -20,6 +20,7 @@ type Constructor = {
   imageRepository: typeof imageRep;
   recordRepository: typeof recordRep;
   fileStorage: FileStorage;
+  commentService: typeof comment;
 };
 
 class Episode {
@@ -28,6 +29,7 @@ class Episode {
   #fileStorage: FileStorage;
   #recordRepository: typeof recordRep;
   #imageRepository: typeof imageRep;
+  #commentService: typeof comment;
 
   constructor({
     episodeRepository,
@@ -35,12 +37,14 @@ class Episode {
     fileStorage,
     recordRepository,
     imageRepository,
+    commentService,
   }: Constructor) {
     this.#episodeRepository = episodeRepository;
     this.#shownoteService = shownoteService;
     this.#fileStorage = fileStorage;
     this.#recordRepository = recordRepository;
     this.#imageRepository = imageRepository;
+    this.#commentService = commentService;
   }
 
   public getAll(): Promise<TEpisode[]> {
@@ -204,6 +208,16 @@ class Episode {
 
   public getAllByPodcastId(id: string): Promise<TEpisode[]> {
     return this.#episodeRepository.getAllByPodcastId(id);
+  }
+
+  public async delete(id: string): Promise<TEpisode> {
+    // const episode = await this.#episodeRepository.getById(id);
+
+    await this.#commentService.deleteAllByEpisodeId(id);
+    // console.log(episode);
+
+    return this.#episodeRepository.delete(id);
+    // return episode;
   }
 }
 

@@ -69,4 +69,13 @@ const loadEpisode = createAsyncThunk<Episode, number, AsyncThunkConfig>(
     return episode;
   });
 
-export { createEpisode, editEpisode, loadEpisode };
+const deleteEpisode = createAsyncThunk<void, number, AsyncThunkConfig>(
+  ActionType.DELETE_EPISODE,
+  async (id, { extra }) => {
+    const { episodeApi, notificationService } = extra;
+    await episodeApi.delete(id);
+
+    notificationService.success(NotificationTitle.SUCCESS, `The episode ${NotificationMessage.SUCCESS_DELETED}`);
+  });
+
+export { createEpisode, editEpisode, loadEpisode, deleteEpisode };
