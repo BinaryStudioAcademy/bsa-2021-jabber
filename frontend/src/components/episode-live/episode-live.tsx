@@ -10,7 +10,7 @@ type PageParams = {
   id: string;
 };
 
-const PodcastLive: React.FC = () => {
+const EpisodeLive: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
 
@@ -50,7 +50,6 @@ const PodcastLive: React.FC = () => {
 
   const handleCreateComment = (payload: CommentFormCreatePayload): void => {
     dispatch(episodeActions.createComment(payload));
-    alert(payload.text);
   };
 
   return (
@@ -101,4 +100,4 @@ const PodcastLive: React.FC = () => {
   );
 };
 
-export default PodcastLive;
+export default EpisodeLive;

@@ -15,7 +15,7 @@ import ConfigurateEpisode from 'components/configurate-episode/configurate-episo
 import UserProfile from 'components/user-profile/user-profile';
 import Episode from 'components/episode/episode';
 import Podcast from 'components/podcast/podcast';
-import PodcastLive from 'components/podcast-live/podcast-live';
+import EpisodeLive from 'components/episode-live/episode-live';
 import { useDispatch, useEffect, useAppSelector } from 'hooks/hooks';
 import { storage } from 'services/services';
 import { auth as authActions } from 'store/actions';
@@ -60,11 +60,6 @@ const App: React.FC = () => {
           exact
         />
         <AuthPublicRouter
-          path={AppRoute.PODCASTS_$ID_LIVE}
-          component={PodcastLive}
-          exact
-        />
-        <AuthPublicRouter
           path={AppRoute.PODCASTS_$ID_EPISODES_EDIT_$ID}
           component={ConfigurateEpisode}
           exact
@@ -81,7 +76,7 @@ const App: React.FC = () => {
         />
         <AuthPublicRouter
           path={AppRoute.EPISODES_$ID_LIVE}
-          component={PodcastLive}
+          component={EpisodeLive}
           exact
         />
         <AuthPublicRouter path={AppRoute.ROOT} component={Homepage} exact />

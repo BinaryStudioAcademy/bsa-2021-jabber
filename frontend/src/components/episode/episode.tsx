@@ -62,7 +62,7 @@ const Episode: React.FC = () => {
               <p className={styles.type}>Type: {episode.type}</p>
               <p className={styles.type}>Status: {episode.status}</p>
               {
-                isStaging && isOwner && <Button label={'Start Live'} href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}/>
+                isStaging && isOwner && <Button label="Start Live" href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}/>
               }
             </div>
             <p className={styles.logoWrapper}>
