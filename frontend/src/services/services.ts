@@ -1,4 +1,6 @@
+import { createBrowserHistory } from 'history';
 import { ENV } from 'common/enums/enums';
+import { Navigation } from './navigation/navigation.service';
 import { Http } from './http/http.service';
 import { AuthApi } from './auth-api/auth-api.service';
 import { PodcastApi } from './podcast-api/podcast-api.service';
@@ -11,6 +13,10 @@ import { UserApi } from './user-api/user-api.service';
 
 const storage = new Storage({
   storage: localStorage,
+});
+
+const navigation = new Navigation({
+  history: createBrowserHistory(),
 });
 
 const http = new Http({
@@ -54,6 +60,7 @@ export {
   podcastApi,
   episodeApi,
   storage,
+  navigation,
   commentApi,
   recordAudio,
   userApi,

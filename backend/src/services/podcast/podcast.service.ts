@@ -84,6 +84,7 @@ class Podcast {
 
   public async update(id: string, {
     name,
+    type,
     userId,
     description,
     imageId,
@@ -92,6 +93,7 @@ class Podcast {
 
     const updatePodcast: PodcastEditDTOPayload = {
       name,
+      type,
       description,
       imageId: imageId,
     };

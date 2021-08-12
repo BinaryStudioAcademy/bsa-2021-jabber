@@ -139,6 +139,13 @@ class Episode {
     let newImageId: number | null = null;
 
     if (recordDataUrl) {
+      const oldRecord = await this.#recordRepository.getByEpisodeId(episodeId);
+
+      if (oldRecord) {
+        await this.#fileStorage.delete(oldRecord.publicId);
+        await this.#recordRepository.delete(oldRecord.id);
+      }
+
       const { url, publicId, bytes } = await this.#fileStorage.upload({
         dataUrl: recordDataUrl,
         userId,
@@ -150,14 +157,6 @@ class Episode {
         fileUrl: url,
         fileSize: bytes,
       });
-
-      const { id, publicId: oldRecordPublicId } =
-        await this.#recordRepository.getByEpisodeId(episodeId);
-
-      if (id) {
-        await this.#fileStorage.delete(oldRecordPublicId);
-        await this.#recordRepository.delete(id);
-      }
     }
 
     if (imageDataUrl) {
