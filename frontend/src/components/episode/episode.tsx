@@ -6,13 +6,14 @@ import {
   useRef,
 } from 'hooks/hooks';
 import { episode as episodeActions } from 'store/actions';
-import { Loader, CreateCommentForm, CommentsList, Player, Button, ShownotesList } from 'components/common/common';
+import { Loader, CreateCommentForm, CommentsList, Player, Button } from 'components/common/common';
 import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
 import { getCurrentTime } from './helpers/helpers';
 import { PageParams } from './common/types/types';
 import defaultImage from 'assets/img/default-podcast-image.jpeg';
+import { ShownotesList } from './components/components';
 import styles from './styles.module.scss';
 
 const Episode: React.FC = () => {
@@ -29,6 +30,7 @@ const Episode: React.FC = () => {
     }),
   );
 
+  const hasShownotes = Boolean(episode?.shownotes?.length);
   const hasUser = Boolean(user);
   const isStaging = episode?.status === EpisodeStatus.STAGING;
   const isOwner = user?.id === episode?.userId;
@@ -66,12 +68,12 @@ const Episode: React.FC = () => {
               <p className={styles.description}>{episode.description}</p>
               <p className={styles.type}>Type: {episode.type}</p>
               <p className={styles.type}>Status: {episode.status}</p>
-              {episode.shownotes?.length ? (
+              {hasShownotes && (
                 <div className={styles.shownotesWrapper}>
                   <h3>Time navigation</h3>
-                  <ShownotesList shownotes={episode.shownotes} handleJumpToTimeLine={handleJumpToTimeLine} />
+                  <ShownotesList shownotes={episode.shownotes} onClick={handleJumpToTimeLine} />
                 </div>
-              ) : null}
+              )}
               {
                 isStaging && isOwner && <Button className={styles.btnStartLive} label="Start Live" href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`} />
               }
