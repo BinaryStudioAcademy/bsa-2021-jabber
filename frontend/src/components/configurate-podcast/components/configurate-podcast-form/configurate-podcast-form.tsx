@@ -30,8 +30,9 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
     defaultValues: payload,
   });
 
-  const { createPodcastStatus } = useAppSelector(({ configuratePodcast }) => ({
+  const { createPodcastStatus, podcast } = useAppSelector(({ configuratePodcast }) => ({
     createPodcastStatus: configuratePodcast.dataStatus,
+    podcast: configuratePodcast.podcast,
   }));
 
   const isFormDisabled = createPodcastStatus === DataStatus.PENDING;
@@ -43,6 +44,7 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
           name={PodcastPayloadKey.IMAGE}
           control={control}
           errors={errors}
+          imageUrl={podcast?.image?.url}
         />
         <Input
           name={PodcastPayloadKey.NAME}

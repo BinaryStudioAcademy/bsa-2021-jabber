@@ -17,6 +17,7 @@ type Props = {
   name: Path<FieldValues>;
   control: Control;
   errors: FieldValues;
+  imageUrl?: string;
 };
 
 const acceptExtension = getFileExtensions(
@@ -26,14 +27,14 @@ const acceptExtension = getFileExtensions(
   FileExtension.SVG,
 );
 
-const ImagePreviewControl: React.FC<Props> = ({ name, control, errors }) => {
+const ImagePreviewControl: React.FC<Props> = ({ name, control, errors, imageUrl }) => {
   const { field } = useController({ name, control });
 
   const handleChange = (evt: React.ChangeEvent<FieldValues>): void => {
     const hasImg = Boolean(evt.target.files.length);
     const imgUrl = hasImg
       ? URL.createObjectURL(evt.target.files[0])
-      : defaultImage;
+      : imageUrl ?? defaultImage;
 
     field.onChange(imgUrl);
   };
@@ -42,7 +43,7 @@ const ImagePreviewControl: React.FC<Props> = ({ name, control, errors }) => {
     <>
       <label className={styles.inputWrapper}>
         <img
-          src={field.value ?? defaultImage}
+          src={field.value ?? imageUrl ?? defaultImage}
           width="716"
           height="281"
           loading="lazy" alt=""
