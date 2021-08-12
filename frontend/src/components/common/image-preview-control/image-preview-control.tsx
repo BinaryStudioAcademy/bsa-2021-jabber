@@ -32,8 +32,9 @@ const ImagePreviewControl: React.FC<Props> = ({ name, control, errors, imageUrl 
 
   const handleChange = (evt: React.ChangeEvent<FieldValues>): void => {
     const hasImg = Boolean(evt.target.files.length);
+    const [file] = evt.target.files ?? [];
     const imgUrl = hasImg
-      ? URL.createObjectURL(evt.target.files[0])
+      ? URL.createObjectURL(file)
       : imageUrl ?? defaultImage;
 
     field.onChange(imgUrl);
