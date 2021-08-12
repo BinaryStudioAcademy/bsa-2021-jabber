@@ -16,17 +16,37 @@
     margin: -1px 0 -36px 1px;
     padding-bottom: 36px;
     width: 100%;
-    transition: transform 0.5s ease, background-size 0.5s 0.15s ease;
+    transition: transform 0.2s ease, background-size 0.5s 0.15s ease;
     z-index: 20;
   }
 
   .imageWrapper {
-    margin: 0 0 10px;
-    border-radius: 5px;
-    outline: 10px solid rgba(134, 134, 134, 0.55);
-    outline-offset: -10px;
-    transition: transform 0.2s ease;
     height: 195px;
+    width: 195px;
+
+    margin: 0 0 10px;
+    position: relative;
+
+    font-size: 77px;
+    border-radius: 3px;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+
+    &::before {
+      display: block;
+      content: '';
+
+      width: 100%;
+      height: 100%;
+
+      position: absolute;
+
+      outline: 10px solid rgba(134, 134, 134, 0.55);
+      outline-offset: -10px;
+
+      z-index: 15;
+      transition: inherit;
+    }
   }
 
   &:hover {
@@ -35,9 +55,12 @@
       transform: translateY(-8px);
     }
 
-    .imageWrapper {
-      outline: 10px solid rgba(134, 134, 134, 0.71);
+    & .imageWrapper {
       transform: translateY(-8px);
+
+      &::before {
+        outline: 10px solid rgba(134, 134, 134, 0.71);
+      }
     }
   }
 }

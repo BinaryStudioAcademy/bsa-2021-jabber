@@ -14,7 +14,12 @@ export { default as Loader } from './loader/loader';
 export { default as Select } from './select/select';
 export { default as Datepiker } from './datepicker/datepicker';
 export { default as Table } from './table/table';
+export { default as CommentItem } from './comment-item/comment-item';
+export { default as CommentsList } from './comments-list/comments-list';
+export { default as CreateCommentForm } from './create-comment-form/create-comment-form';
 export { default as PodcastList } from './podcasts-list/podcasts-list';
 export { default as PodcastItem } from './podcast-item/podcast-item';
 export { default as Player } from './player/player';
 export { MaskedInput } from './masked-input/masked-input';
+export { default as DefaultImage } from './default-image/default-image';
+

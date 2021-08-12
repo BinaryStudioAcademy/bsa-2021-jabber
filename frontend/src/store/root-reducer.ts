@@ -6,6 +6,7 @@ import { reducer as toastrReducer } from 'react-redux-toastr';
 import { reducer as episode } from './episode/reducer';
 import { reducer as podcast } from './podcast/reducer';
 import { reducer as record } from './record/reducer';
+import { reducer as userProfile } from './user-profile/reducer';
 
 const rootReducer = {
   auth,
@@ -15,6 +16,7 @@ const rootReducer = {
   episode,
   podcast,
   record,
+  userProfile,
   toastr: toastrReducer,
 };
 
