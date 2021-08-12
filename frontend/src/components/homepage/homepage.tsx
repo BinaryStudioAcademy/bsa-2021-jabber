@@ -3,9 +3,9 @@ import { Loader } from 'components/common/common';
 import { useAppSelector, useCallback, useDispatch, useEffect } from 'hooks/hooks';
 import { homepage as homepageActions } from 'store/actions';
 import { PodcastList, Search } from './components/components';
-import styles from './styles.module.scss';
 import { SEARCH_TIMEOUT } from './components/search/common/constants';
 import { setDebounce } from 'jabber-shared/helpers/timeout/timeout';
+import styles from './styles.module.scss';
 
 const Homepage: React.FC = () => {
   const { podcasts, dataStatus } = useAppSelector(({ homepage }) => ({
