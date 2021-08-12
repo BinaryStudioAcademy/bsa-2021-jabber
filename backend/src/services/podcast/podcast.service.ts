@@ -51,6 +51,7 @@ class Podcast {
       userId,
       description,
       imageId: null,
+      coverId: null,
       type,
     };
 
