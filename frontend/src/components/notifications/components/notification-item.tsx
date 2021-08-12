@@ -1,4 +1,4 @@
-import defaultLogo from 'assets/img/default-notifications.png';
+import notificationIcon from 'assets/img/notification-icon.png';
 import newNotificationEye from 'assets/img/eye.svg';
 import { AppRoute } from 'common/enums/enums';
 import { Link } from 'components/common/common';
@@ -10,7 +10,7 @@ const NotificationItem: React.FC = () => {
       <div className={styles.notificationLogo}>
         <img
           className={styles.image}
-          src={defaultLogo}
+          src={notificationIcon}
           width="40"
           height="40"
         />

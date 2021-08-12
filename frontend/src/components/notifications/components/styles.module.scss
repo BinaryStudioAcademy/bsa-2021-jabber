@@ -61,7 +61,12 @@
 }
 
 .containerChecked {
-  @extend .container;
+  background-color: #faf9f9;
+  padding: 30px 30px;
+  border-radius: 15px;
+  display: flex;
+  border: 1px solid transparent;
+  margin-bottom: 20px;
   filter: grayscale(100%);
 
   .eyeButton {
