@@ -60,6 +60,16 @@ class PodcastApi {
       },
     );
   }
+
+  public getAllByUserId(userId: number): Promise<Podcast[]> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.USERS}/${userId}`,
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
+
 }
 
 export { PodcastApi };

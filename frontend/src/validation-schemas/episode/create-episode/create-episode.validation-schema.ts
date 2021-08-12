@@ -1,8 +1,8 @@
 import { Joi } from 'helpers/helpers';
 import { EpisodePayloadKey } from 'common/enums/enums';
-import { episodeCreate as episodeCreateCommon } from 'jabber-shared/validation-schemas/validation-schemas';
+import { episode } from 'jabber-shared/validation-schemas/validation-schemas';
 
-const episodeCreate = episodeCreateCommon.keys({
+const episodeCreate = episode.keys({
   [EpisodePayloadKey.IMAGE]: Joi.object().allow(null),
   [EpisodePayloadKey.RECORD]: Joi.object().allow(null),
 });
