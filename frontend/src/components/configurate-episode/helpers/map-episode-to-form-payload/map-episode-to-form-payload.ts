@@ -9,7 +9,6 @@ const mapEpisodeToFormPayload = (episode: Episode): EpisodeFormPayload => ({
   image: null,
   status: episode.status,
   shownotes: episode.shownotes.map(mapShownoteToFormPayload),
-  podcastId: episode.podcastId,
 });
 
 export { mapEpisodeToFormPayload };

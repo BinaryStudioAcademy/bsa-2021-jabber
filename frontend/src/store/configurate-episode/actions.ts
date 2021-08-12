@@ -13,7 +13,7 @@ const createEpisode = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkCo
   ActionType.CREATE_EPISODE,
   async (createEpisodePayload, { getState, extra }) => {
     const { episodeApi, notificationService } = extra;
-    const { auth } = getState();
+    const { auth, podcast } = getState();
 
     const file = getFileFromFileList(createEpisodePayload.record);
     const imgFile = getFileFromFileList(createEpisodePayload.image);
@@ -22,7 +22,7 @@ const createEpisode = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkCo
       name: createEpisodePayload.name,
       description: createEpisodePayload.description,
       shownotes: createEpisodePayload.shownotes,
-      podcastId: createEpisodePayload.podcastId,
+      podcastId: podcast.podcast?.id ?? -1,
       status: createEpisodePayload.status,
       type: createEpisodePayload.type,
       userId: (<User>auth.user).id,
@@ -54,7 +54,6 @@ const editEpisode = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkConf
       userId: (<User>auth.user).id,
       imageId: (<Episode>configurateEpisode.episode).imageId,
       status: editEpisodePayload.status,
-      podcastId: editEpisodePayload.podcastId,
     });
 
     return episode;

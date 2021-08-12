@@ -56,9 +56,6 @@ const episode = Joi.object({
     .messages({
       'string.empty': EpisodeValidationMessage.STATUS_REQUIRE,
     }),
-  [EpisodePayloadKey.PODCAST_ID]: Joi.number()
-  .integer()
-  .required(),
 });
 
 export { episode };

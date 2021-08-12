@@ -5,7 +5,6 @@ type EpisodePayload = {
   [EpisodePayloadKey.TYPE]: EpisodeType;
   [EpisodePayloadKey.DESCRIPTION]: string;
   [EpisodePayloadKey.STATUS]: EpisodeStatus;
-  [EpisodePayloadKey.PODCAST_ID]: number;
 };
 
 export type { EpisodePayload };

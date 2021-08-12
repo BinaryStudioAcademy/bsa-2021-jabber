@@ -18,7 +18,7 @@ import styles from './styles.module.scss';
 
 type Props = {
   onSubmit: (payload: EpisodeFormPayload) => void;
-  payload: EpisodeFormPayload | { podcastId: number };
+  payload?: EpisodeFormPayload;
 };
 
 const selectTypeOptions: Option[] = getOptions(Object.values(EpisodeType));
@@ -35,13 +35,7 @@ const acceptAudioExtension = getFileExtensions(
   FileExtension.WAV,
 );
 
-const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload }) => {
-
-  payload = {
-    ...DEFAULT_CREATE_EPISODE_PAYLOAD,
-    ...payload,
-  };
-
+const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE_EPISODE_PAYLOAD }) => {
   const { control, handleSubmit, errors, register } = useAppForm({
     validationSchema: createEpisodeValidationSchema,
     defaultValues: payload,
@@ -52,9 +46,6 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload }) => {
   }));
 
   const isFormDisable = dataStatus === DataStatus.PENDING;
-
-  // eslint-disable-next-line no-console
-  console.log(errors);
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
