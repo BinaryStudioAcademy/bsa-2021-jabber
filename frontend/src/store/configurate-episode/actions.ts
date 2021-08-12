@@ -3,17 +3,14 @@ import {
   Episode,
   AsyncThunkConfig,
   EpisodeFormPayload,
+  CreateActionEpisodePayload,
   User,
 } from 'common/types/types';
 import { getFileFromFileList, getDataUrl } from 'helpers/helpers';
 import { ActionType } from './common';
 import { NotificationMessage, NotificationTitle } from 'common/enums/enums';
 
-type CreateEpisodPayload = EpisodeFormPayload & {
-  podcastId: number;
-};
-
-const createEpisode = createAsyncThunk<Episode, CreateEpisodPayload, AsyncThunkConfig>(
+const createEpisode = createAsyncThunk<Episode, CreateActionEpisodePayload, AsyncThunkConfig>(
   ActionType.CREATE_EPISODE,
   async (createEpisodePayload, { getState, extra }) => {
     const { episodeApi, notificationService } = extra;
