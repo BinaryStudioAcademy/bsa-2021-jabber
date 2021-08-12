@@ -52,3 +52,4 @@ export {
   CommentCreatePayloadKey,
   CommentValidationMessage,
 } from './comment/comment';
+export { UserNotificationStatus } from './user-notification/user-notification';

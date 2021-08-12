@@ -1,4 +1,8 @@
-import { TableName, UserNotificationDTOKey } from '~/common/enums/enums';
+import {
+  TableName,
+  UserNotificationDTOKey,
+  UserNotificationStatus,
+} from '~/common/enums/enums';
 import { Abstract } from '../abstract/abstract.model';
 
 class UserNotification extends Abstract {
@@ -6,7 +10,7 @@ class UserNotification extends Abstract {
 
   [UserNotificationDTOKey.NOTIFICATION_ID]: number;
 
-  [UserNotificationDTOKey.IS_CHECKED]: boolean;
+  [UserNotificationDTOKey.STATUS]: UserNotificationStatus;
 
   static get tableName(): string {
     return TableName.USERS_NOTIFICATIONS;

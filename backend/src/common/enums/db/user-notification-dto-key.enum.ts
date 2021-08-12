@@ -1,7 +1,7 @@
 enum UserNotificationDTOKey {
   USER_ID = 'userId',
   NOTIFICATION_ID = 'notificationId',
-  IS_CHECKED = 'isChecked',
+  STATUS = 'status',
 }
 
 export { UserNotificationDTOKey };
