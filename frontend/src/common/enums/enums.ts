@@ -27,7 +27,6 @@ export {
   InputType,
   ButtonStyle,
   ButtonColor,
-  DefaultImageSize,
 } from './ui/ui';
 export { DateFormatType } from './date/date';
 export { RecordStatus } from './record/record';
