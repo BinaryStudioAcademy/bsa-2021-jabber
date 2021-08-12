@@ -18,7 +18,8 @@ const getColumns = (): Column[] => {
     },
     {
       Header: 'Name and Host',
-      accessor: ( row: Row ): Record<string, unknown> => {
+      accessor: (originalRow): Record<string, unknown> => {
+        const row = originalRow as Row;
         return {
           name: row.name,
           episodeId: row.episodeId,
