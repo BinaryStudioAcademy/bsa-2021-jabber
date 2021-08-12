@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { Server } from 'socket.io';
 
-const socketInjector = (io: Server) => (
+const injectSocket  = (io: Server) => (
   req: Request,
   _res: Response,
   next: NextFunction,
@@ -10,4 +10,4 @@ const socketInjector = (io: Server) => (
   next();
 };
 
-export { socketInjector };
+export { injectSocket  };

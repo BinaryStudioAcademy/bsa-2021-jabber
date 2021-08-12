@@ -1,7 +1,7 @@
 import { Express } from 'express';
 import { Server } from 'socket.io';
 import { createServer, Server as HttpServer } from 'http';
-import { socketInjector as socketInjectorMiddleware } from '~/middlewares/middlewares';
+import { injectSocket  as injectSocketMiddleware } from '~/middlewares/middlewares';
 import { SocketEvent } from '~/common/enums/enums';
 import { Comment } from '~/common/types/types';
 
@@ -21,7 +21,7 @@ class Socket {
   public create(app: Express): void {
     this.#socketServer = createServer(app);
     this.#io = new Server(this.#socketServer);
-    app.use(socketInjectorMiddleware(this.#io));
+    app.use(injectSocketMiddleware(this.#io));
     this.handler(this.#io);
     this.#socketServer.listen(this.#port);
   }
