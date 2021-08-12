@@ -9,6 +9,7 @@ import { Notification } from './notification/notification.service';
 import { EpisodeApi } from './episode-api/episode-api.service';
 import { Storage } from './storage/storage.service';
 import { RecordAudio } from './record-audio/record-audio.service';
+import { UserApi } from './user-api/user-api.service';
 
 const storage = new Storage({
   storage: localStorage,
@@ -42,6 +43,11 @@ const commentApi = new CommentApi({
   apiPrefix: ENV.API_PATH,
 });
 
+const userApi = new UserApi({
+  http,
+  apiPrefix: ENV.API_PATH,
+});
+
 const notification = new Notification();
 
 const recordAudio = new RecordAudio({
@@ -54,7 +60,8 @@ export {
   podcastApi,
   episodeApi,
   storage,
+  navigation,
   commentApi,
   recordAudio,
-  navigation,
+  userApi,
 };
