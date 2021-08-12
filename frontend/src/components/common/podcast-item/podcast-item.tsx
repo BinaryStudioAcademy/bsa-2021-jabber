@@ -9,8 +9,8 @@ type Props = {
 
 const Podcast: React.FC<Props> = ({ podcast }) => (
   <li className={styles.wrapper}>
-    {podcast.image ? (
-      <div className={styles.imageWrapper}>
+    <div className={styles.imageWrapper}>
+      {podcast.image ? (
         <img
           src={podcast.image.url}
           className={styles.podcastImage}
@@ -18,13 +18,10 @@ const Podcast: React.FC<Props> = ({ podcast }) => (
           height="195"
           loading="lazy"
         />
-      </div>
-    ) : (
-      <DefaultImage
-        label={podcast.name}
-        className={styles.defaultImageWrapper}
-      />
-    )}
+      ) : (
+        <DefaultImage label={podcast.name} />
+      )}
+    </div>
     <h3 className={styles.title}>
       <Link to={`${AppRoute.PODCASTS}/${podcast.id}`} className={styles.link}>
         {podcast.name}
