@@ -63,7 +63,7 @@ const Episode: React.FC = () => {
               <p className={styles.type}>Type: {episode.type}</p>
               <p className={styles.type}>Status: {episode.status}</p>
               {
-                isStaging && isOwner && <Button label="Start Live" href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}/>
+                isStaging && isOwner && <Button className={styles.btnStartLive} label="Start Live" href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`} />
               }
             </div>
             <div className={styles.imageContainer}>
@@ -83,12 +83,11 @@ const Episode: React.FC = () => {
           </div>
           {episode.record && (
             <Player src={episode.record.fileUrl} ref={playerRef} />
-          )}          
+          )}
         </>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such episode</h1>
-      )
-      }
+      )}
       <div className={styles.commentsWrapper}>
         {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
         {comments.length ? (
