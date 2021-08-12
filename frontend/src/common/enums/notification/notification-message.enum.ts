@@ -1,7 +1,10 @@
 enum NotificationMessage {
-  SUCCESS_CREATED = 'has been created',
-  SUCCESS_UPDATED = 'has been updated',
-  SUCCESS_DELETED = 'has been deleted',
+  USER_CREATED = 'User has been created successfully 🎉',
+  PODCAST_CREATED = 'Podcast has been created successfully 🎉',
+  PODCAST_UPDATED = 'Podcast has been updated successfully 🎉',
+  EPISODE_CREATED = 'Episode has been created successfully 🎉',
+  EPISODE_UPDATED = 'Episode has been updated successfully 🎉',
+  EPISODE_DELETED = 'Episode has been deleted successfully 🎉',
 }
 
 export { NotificationMessage };

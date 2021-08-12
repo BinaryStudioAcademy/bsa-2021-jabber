@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { Episode } from 'common/types/types';
-import { createEpisode, editEpisode, loadEpisode, deleteEpisode } from './actions';
+import { create, edit, loadEpisode, deleteEpisode } from './actions';
 
 type State = {
   dataStatus: DataStatus;
@@ -14,24 +14,24 @@ const initialState: State = {
 };
 
 const reducer = createReducer(initialState, (builder) => {
-  builder.addCase(createEpisode.pending, (state) => {
+  builder.addCase(create.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
   });
-  builder.addCase(createEpisode.fulfilled, (state, action) => {
+  builder.addCase(create.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.episode = action.payload;
   });
-  builder.addCase(createEpisode.rejected, (state) => {
+  builder.addCase(create.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
-  builder.addCase(editEpisode.pending, (state) => {
+  builder.addCase(edit.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
   });
-  builder.addCase(editEpisode.fulfilled, (state, action) => {
+  builder.addCase(edit.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.episode = action.payload;
   });
-  builder.addCase(editEpisode.rejected, (state) => {
+  builder.addCase(edit.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
   builder.addCase(loadEpisode.pending, (state) => {

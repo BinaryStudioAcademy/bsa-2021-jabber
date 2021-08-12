@@ -4,6 +4,7 @@
   h3 {
     margin: 0;
     text-align: center;
+    color: var(--color-primary-light);
   }
 
   .buttonRow {
@@ -18,7 +19,29 @@
 
 .content {
   padding: 75px 75px 20px 75px;
-  background-color: #fff;
+  position: relative;
+}
+
+.imageWrapper {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  z-index: -1;
+
+  & div {
+    background-color: #989ea6;
+  }
+
+  & span {
+    left: 80%;
+    top: calc((100% - 89px) / 2);
+
+    font-size: 120px;
+    color: #3e4752;
+    opacity: 0.1;
+  }
 }
 
 .descriptionWrapper {
@@ -26,13 +49,16 @@
   margin-bottom: 45px;
   padding: 35px;
   border-radius: 3px;
-  background: linear-gradient(0deg, rgba(25, 34, 47, 0.7), rgba(25, 34, 47, 0.7));
+  background: linear-gradient(
+    0deg,
+    rgba(25, 34, 47, 0.7),
+    rgba(25, 34, 47, 0.7)
+  );
   color: var(--color-primary-light);
 }
 
 .title {
   margin: 0 0 20px 0;
-  
 }
 
 .description {
@@ -45,14 +71,6 @@
 .type {
   font-size: 16px;
   margin: 15px 0;
-}
-
-.imageWrapper {
-  flex-grow: 0.4;
-  display: flex;
-  justify-content: center;
-  margin: 0;
-  min-width: 280px;
 }
 
 .logo {

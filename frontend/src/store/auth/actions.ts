@@ -10,7 +10,9 @@ const signUp = createAsyncThunk<User, UserCreatePayload, AsyncThunkConfig>
   const { user, token } = await authApi.signUp(registerPayload);
 
   storageService.setItem(StorageKey.TOKEN, token);
-  notificationService.success(NotificationTitle.SUCCESS, `New user ${NotificationMessage.SUCCESS_CREATED}`);
+
+  notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.USER_CREATED);
+
   return user;
 });
 
