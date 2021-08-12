@@ -21,15 +21,11 @@
   }
 
   .imageWrapper {
-    height: 195px;
-    width: 195px;
-
     margin: 0 0 10px;
     position: relative;
 
     font-size: 77px;
     border-radius: 3px;
-    overflow: hidden;
     transition: transform 0.2s ease;
 
     &::before {

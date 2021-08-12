@@ -6,7 +6,15 @@ import {
   useRef,
 } from 'hooks/hooks';
 import { episode as episodeActions } from 'store/actions';
-import { Loader, CreateCommentForm, CommentsList, Player, Button, Link } from 'components/common/common';
+import {
+  Loader,
+  CreateCommentForm,
+  CommentsList,
+  Player,
+  Button,
+  Link,
+  ImageWrapper,
+} from 'components/common/common';
 import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
@@ -54,7 +62,13 @@ const Episode: React.FC = () => {
   return (
     <main className={styles.root}>
       {episode ? (
-        <>
+        <div className={styles.episodeWrapper}>
+          <ImageWrapper
+            src={episode.image?.url}
+            alt={episode.name}
+            label={episode.name}
+            className={styles.imageWrapper}
+          />
           <div className={styles.episode}>
             {
               isStaging && isOwner && <Button className={styles.btnStartLive} label="Start Live" href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`} />
@@ -66,12 +80,12 @@ const Episode: React.FC = () => {
               <p className={styles.status}>Status: {episode.status}</p>
               
             </div>
-            {episode.image?.url && <img
+            {/* {episode.image?.url && <img
               src={episode.image?.url}
               className={styles.episodeImage}              
               loading="lazy"
               alt={episode.name}
-            />}            
+            />}             */}
           </div>
           {episode.record && (
             <Player src={episode.record.fileUrl} ref={playerRef} />
@@ -85,7 +99,7 @@ const Episode: React.FC = () => {
               <div>There&apos;s no comment yet.</div>
             )}
           </div>
-        </>
+        </div>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such episode</h1>
       )}
