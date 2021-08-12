@@ -22,6 +22,10 @@ class User {
     return this.#userRepository.getAll();
   }
 
+  public getById(id: number): Promise<TUser> {
+    return this.#userRepository.getById(id);
+  }
+
   public async getByToken(token: string): Promise<TUser> {
     const decoded = this.#tokenService.decode<TokenPayload>(token);
     if (!decoded) {
