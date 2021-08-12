@@ -11,9 +11,6 @@ const Notifications: React.FC = () => {
         </label>
       </div>
       <NotificationItem />
-      <NotificationItem />
-      <NotificationItem />
-      <NotificationItem />
     </div>
   );
 };
