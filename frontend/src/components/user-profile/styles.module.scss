@@ -18,17 +18,18 @@
   display: flex;
   position: relative;
 
-  .imageContainer {
-    padding: 0 25px 8px 0;
-    display: inline-block;
+  .imageWrapper {
+    width: 195px;
+    height: 195px;
 
-    .userAvatar {
-      width: 195px;
-      height: 195px;
-      object-fit: cover;
-      border-radius: 3px;
-      max-width: none;
-    }
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    margin: 0 25px 8px 0;
+    font-size: 77px;
+
+    border-radius: 3px;
+    overflow: hidden;
   }
 
   .mainUserInfo {

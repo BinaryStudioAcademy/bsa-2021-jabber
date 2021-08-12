@@ -29,11 +29,17 @@ class Episode {
   }
 
   public create(payload: EpisodeCreateDTOPayload): Promise<TEpisode> {
-    return this.#EpisodeModel.query().insert(payload).withGraphFetched('image');
+    return this.#EpisodeModel
+      .query()
+      .insert(payload)
+      .withGraphFetched('[image, shownotes]');
   }
 
   public update(id: string, payload: EpisodeEditDTOPayload): Promise<TEpisode> {
-    return this.#EpisodeModel.query().updateAndFetchById(id, payload);
+    return this.#EpisodeModel
+      .query()
+      .updateAndFetchById(id, payload)
+      .withGraphFetched('shownotes');
   }
 }
 

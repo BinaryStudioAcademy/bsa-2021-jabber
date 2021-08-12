@@ -1,5 +1,5 @@
 import { Shownote as TShownote } from 'common/types/types';
-import Shownote from '../shownote/shownote';
+import { Shownote } from '../common';
 import styles from './styles.module.scss';
 
 type gridStyle = {

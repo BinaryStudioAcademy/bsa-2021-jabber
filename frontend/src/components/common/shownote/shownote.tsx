@@ -1,8 +1,8 @@
 import { Shownote as TShownote } from 'common/types/types';
 import { DateFormatType } from 'common/enums/enums';
-import { MILLISECONDS_IN_SECOND } from '../../../common/player/common/constants';
 import styles from './styles.module.scss';
 import { getFormattedDate } from 'helpers/date/date';
+import { MILLISECONDS_IN_SECOND } from '../player/common/constants';
 
 type Props = {
   shownote: TShownote;

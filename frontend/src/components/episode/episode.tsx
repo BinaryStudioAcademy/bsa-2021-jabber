@@ -6,15 +6,14 @@ import {
   useRef,
 } from 'hooks/hooks';
 import { episode as episodeActions } from 'store/actions';
-import { CreateCommentForm, CommentsList } from './components/components';
-import { Loader, Player } from 'components/common/common';
-import { DataStatus } from 'common/enums/enums';
+import { Loader, CreateCommentForm, CommentsList, Player, Button, ShownotesList } from 'components/common/common';
+import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
 import { getCurrentTime } from './helpers/helpers';
 import { PageParams } from './common/types/types';
+import defaultImage from 'assets/img/default-podcast-image.jpeg';
 import styles from './styles.module.scss';
-import ShownotesList from './components/shownotes-list/shownotes-list';
 
 const Episode: React.FC = () => {
   const dispatch = useDispatch();
@@ -31,6 +30,8 @@ const Episode: React.FC = () => {
   );
 
   const hasUser = Boolean(user);
+  const isStaging = episode?.status === EpisodeStatus.STAGING;
+  const isOwner = user?.id === episode?.userId;
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
@@ -71,16 +72,24 @@ const Episode: React.FC = () => {
                   <ShownotesList shownotes={episode.shownotes} handleJumpToTimeLine={handleJumpToTimeLine} />
                 </div>
               ) : null}
+              {
+                isStaging && isOwner && <Button className={styles.btnStartLive} label="Start Live" href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`} />
+              }
             </div>
-            <p className={styles.logoWrapper}>
-              <img
-                src="#"
-                width="280"
-                height="280"
-                loading="lazy"
-                alt={episode.name}
-              />
-            </p>
+            <div className={styles.imageContainer}>
+              <div className={styles.wrapper}>
+                <p className={styles.imageWrapper}>
+                  <img
+                    src={episode.image?.url ?? defaultImage}
+                    className={styles.episodeImage}
+                    width="280"
+                    height="280"
+                    loading="lazy"
+                    alt={episode.name}
+                  />
+                </p>
+              </div>
+            </div>
           </div>
           {episode.record && (
             <Player src={episode.record.fileUrl} ref={playerRef} />
@@ -97,7 +106,7 @@ const Episode: React.FC = () => {
           <div>There&apos;s no comment yet.</div>
         )}
       </div>
-    </main>
+    </main >
   );
 };
 

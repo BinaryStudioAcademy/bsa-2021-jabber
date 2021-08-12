@@ -84,6 +84,7 @@ class Podcast {
 
   public async update(id: string, {
     name,
+    type,
     userId,
     description,
     imageId,
@@ -92,6 +93,7 @@ class Podcast {
 
     const updatePodcast: PodcastEditDTOPayload = {
       name,
+      type,
       description,
       imageId: imageId,
     };
@@ -123,6 +125,10 @@ class Podcast {
     }
 
     return podcast;
+  }
+
+  public getAllByUserId(userId: string): Promise<TPodcast[]> {
+    return this.#podcastRepository.getAllByUserId(userId);
   }
 }
 

@@ -8,6 +8,7 @@ enum TableName {
   RECORDS = 'records',
   IMAGES = 'images',
   NOTIFICATIONS = 'notifications',
+  USERS_NOTIFICATIONS = 'users_notifications',
 }
 
 export { TableName };
