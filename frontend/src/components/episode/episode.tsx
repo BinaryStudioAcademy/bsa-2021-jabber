@@ -6,13 +6,12 @@ import {
   useRef,
 } from 'hooks/hooks';
 import { episode as episodeActions } from 'store/actions';
-import { Loader, CreateCommentForm, CommentsList, Player, Button } from 'components/common/common';
+import { Loader, CreateCommentForm, CommentsList, Player, Button, Link } from 'components/common/common';
 import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
 import { getCurrentTime } from './helpers/helpers';
 import { PageParams } from './common/types/types';
-import defaultImage from 'assets/img/default-podcast-image.jpeg';
 import styles from './styles.module.scss';
 
 const Episode: React.FC = () => {
@@ -57,45 +56,39 @@ const Episode: React.FC = () => {
       {episode ? (
         <>
           <div className={styles.episode}>
+            {
+              isStaging && isOwner && <Button className={styles.btnStartLive} label="Start Live" href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`} />
+            }
             <div className={styles.descriptionWrapper}>
+              {isOwner && <Link to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`} className={styles.editLink}/>}
               <h1 className={styles.title}>{episode.name}</h1>
               <p className={styles.description}>{episode.description}</p>
-              <p className={styles.type}>Type: {episode.type}</p>
-              <p className={styles.type}>Status: {episode.status}</p>
-              {
-                isStaging && isOwner && <Button className={styles.btnStartLive} label="Start Live" href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`} />
-              }
+              <p className={styles.status}>Status: {episode.status}</p>
+              
             </div>
-            <div className={styles.imageContainer}>
-              <div className={styles.wrapper}>
-                <p className={styles.imageWrapper}>
-                  <img
-                    src={episode.image?.url ?? defaultImage}
-                    className={styles.episodeImage}
-                    width="280"
-                    height="280"
-                    loading="lazy"
-                    alt={episode.name}
-                  />
-                </p>
-              </div>
-            </div>
+            {episode.image?.url && <img
+              src={episode.image?.url}
+              className={styles.episodeImage}              
+              loading="lazy"
+              alt={episode.name}
+            />}            
           </div>
           {episode.record && (
             <Player src={episode.record.fileUrl} ref={playerRef} />
           )}
+          <div className={styles.commentsWrapper}>
+            <div className={styles.commentsCounter}>Comments ({comments.length})</div>
+            {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
+            {comments.length ? (
+              <CommentsList comments={comments} />
+            ) : (
+              <div>There&apos;s no comment yet.</div>
+            )}
+          </div>
         </>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such episode</h1>
       )}
-      <div className={styles.commentsWrapper}>
-        {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
-        {comments.length ? (
-          <CommentsList comments={comments} />
-        ) : (
-          <div>There&apos;s no comment yet.</div>
-        )}
-      </div>
     </main >
   );
 };
