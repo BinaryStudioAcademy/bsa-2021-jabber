@@ -9,11 +9,15 @@ import { getFileFromFileList, getDataUrl } from 'helpers/helpers';
 import { ActionType } from './common';
 import { NotificationMessage, NotificationTitle } from 'common/enums/enums';
 
-const createEpisode = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkConfig>(
+type CreateEpisodFormPayload = EpisodeFormPayload & {
+  podcastId: number;
+};
+
+const createEpisode = createAsyncThunk<Episode, CreateEpisodFormPayload, AsyncThunkConfig>(
   ActionType.CREATE_EPISODE,
   async (createEpisodePayload, { getState, extra }) => {
     const { episodeApi, notificationService } = extra;
-    const { auth, podcast } = getState();
+    const { auth } = getState();
 
     const file = getFileFromFileList(createEpisodePayload.record);
     const imgFile = getFileFromFileList(createEpisodePayload.image);
@@ -22,7 +26,7 @@ const createEpisode = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkCo
       name: createEpisodePayload.name,
       description: createEpisodePayload.description,
       shownotes: createEpisodePayload.shownotes,
-      podcastId: podcast.podcast?.id ?? -1,
+      podcastId: createEpisodePayload.podcastId,
       status: createEpisodePayload.status,
       type: createEpisodePayload.type,
       userId: (<User>auth.user).id,
