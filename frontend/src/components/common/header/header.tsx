@@ -58,9 +58,12 @@ const Header: React.FC = () => {
                 type={ButtonType.BUTTON}
               />
               <Link to={AppRoute.NOTIFICATIONS}>
-                <button className={styles.notification}>
-                  <img src={headerBell} width="23" height="23" />
-                </button>
+                <img
+                  src={headerBell}
+                  width="23"
+                  height="23"
+                  className={styles.notification}
+                />
               </Link>
               <div className={styles.profile} ref={ref}>
                 <button
