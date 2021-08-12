@@ -9,11 +9,11 @@ import { getFileFromFileList, getDataUrl } from 'helpers/helpers';
 import { ActionType } from './common';
 import { NotificationMessage, NotificationTitle } from 'common/enums/enums';
 
-type CreateEpisodFormPayload = EpisodeFormPayload & {
+type CreateEpisodPayload = EpisodeFormPayload & {
   podcastId: number;
 };
 
-const createEpisode = createAsyncThunk<Episode, CreateEpisodFormPayload, AsyncThunkConfig>(
+const createEpisode = createAsyncThunk<Episode, CreateEpisodPayload, AsyncThunkConfig>(
   ActionType.CREATE_EPISODE,
   async (createEpisodePayload, { getState, extra }) => {
     const { episodeApi, notificationService } = extra;

@@ -5,10 +5,11 @@ import {
   podcastApi,
   episodeApi,
   commentApi,
+  userApi,
+  navigation as navigationService,
   storage as storageService,
   recordAudio as recordAudioService,
   notification as notificationService,
-  userApi,
 } from 'services/services';
 import { handleError as handleErrorMiddleware } from 'middlewares/middlewares';
 
@@ -17,10 +18,11 @@ const extraArgument = {
   podcastApi,
   episodeApi,
   commentApi,
+  userApi,
   storageService,
   recordAudioService,
   notificationService,
-  userApi,
+  navigationService,
 };
 
 const store = configureStore({
