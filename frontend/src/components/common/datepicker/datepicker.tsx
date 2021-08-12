@@ -8,6 +8,7 @@ import {
   useController,
 } from 'react-hook-form';
 import 'react-datepicker/dist/react-datepicker.css';
+import MaskedInput from 'react-maskedinput';
 import styles from './styles.module.scss';
 import React from 'react';
 
@@ -42,6 +43,9 @@ const Datepicker: React.FC<Props> = ({
         className={styles.datePicker}
         selected={field.value}
         onChange={handleDateChange}
+        customInput={
+          <MaskedInput mask="11/11/1111" placeholder="mm/dd/yyyy"/>
+        }
       />
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />
