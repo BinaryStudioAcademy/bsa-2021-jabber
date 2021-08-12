@@ -1,5 +1,7 @@
+import { AppRoute } from 'common/enums/enums';
 import { useTable } from 'hooks/hooks';
 import { Column } from 'react-table';
+import { Link } from 'components/common/common';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -32,16 +34,23 @@ const Table: React.FC<Props> = ({ columns, data = [] }) => {
       <tbody {...getTableBodyProps()}>
         {rows.map((row, i) => {
           prepareRow(row);
-          return (
+          const episodeId = row.original.episodeId;
+          return (            
             <tr {...row.getRowProps()} key={i} className={styles.episodeRow}>
               {row.cells.map((cell, i) => {
-                return (
-                  <td {...cell.getCellProps()} key={i}>
+                return ( i === 1 
+                  ? <td {...cell.getCellProps()} key={i}>
+                    <Link to={`${AppRoute.EPISODES}/${episodeId}`} key={i} className={styles.link}>
+                      {cell.render('Cell')}
+                    </Link>
+                  </td>                  
+                  : <td {...cell.getCellProps()} key={i}>
                     {cell.render('Cell')}
                   </td>
                 );
               })}
             </tr>
+            
           );
         })}
       </tbody>

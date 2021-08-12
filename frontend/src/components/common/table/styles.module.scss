@@ -26,3 +26,13 @@
     }
   }
 }
+
+.link {
+  text-decoration: none;
+  color: var(--color-primary-dark);
+  width: 100%;
+  display: inline-block;
+  &:hover {
+    font-weight: 500;
+  }
+}
