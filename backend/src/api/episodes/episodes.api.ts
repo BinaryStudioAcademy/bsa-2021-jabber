@@ -73,7 +73,6 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
     EpisodesApiPath.$ID,
     checkAuthMiddleware(HttpMethod.DELETE),
     handleAsyncApi(async (req, res) => {
-      console.log(req.params.id)
       return res
         .json(await episodeService.delete(Number(req.params.id)))
         .status(HttpCode.OK);
