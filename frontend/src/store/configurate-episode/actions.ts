@@ -1,25 +1,19 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import {
-  Episode,
-  AsyncThunkConfig,
-  EpisodeFormPayload,
-  CreateActionEpisodePayload,
-  User,
-} from 'common/types/types';
-import { getFileFromFileList, getDataUrl } from 'helpers/helpers';
+import { AsyncThunkConfig, CreateActionEpisodePayload, Episode, EpisodeFormPayload, User } from 'common/types/types';
+import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
 import { ActionType } from './common';
-import { NotificationMessage, NotificationTitle } from 'common/enums/enums';
+import { AppRoute, NotificationMessage, NotificationTitle } from 'common/enums/enums';
 
-const createEpisode = createAsyncThunk<Episode, CreateActionEpisodePayload, AsyncThunkConfig>(
+const create = createAsyncThunk<Episode, CreateActionEpisodePayload, AsyncThunkConfig>(
   ActionType.CREATE_EPISODE,
   async (createEpisodePayload, { getState, extra }) => {
-    const { episodeApi, notificationService } = extra;
+    const { episodeApi, notificationService, navigationService } = extra;
     const { auth } = getState();
 
     const file = getFileFromFileList(createEpisodePayload.record);
     const imgFile = getFileFromFileList(createEpisodePayload.image);
 
-    const episodes = await episodeApi.create({
+    const episode = await episodeApi.create({
       name: createEpisodePayload.name,
       description: createEpisodePayload.description,
       shownotes: createEpisodePayload.shownotes,
@@ -31,18 +25,21 @@ const createEpisode = createAsyncThunk<Episode, CreateActionEpisodePayload, Asyn
       imageDataUrl: imgFile ? await getDataUrl(imgFile) : null,
     });
 
-    notificationService.success(NotificationTitle.SUCCESS, `The episode ${NotificationMessage.SUCCESS_CREATED}`);
-    return episodes;
+    notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.EPISODE_CREATED);
+
+    navigationService.push(`${AppRoute.EPISODES}/${episode.id}`);
+
+    return episode;
   });
 
-const editEpisode = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkConfig>(
+const edit = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkConfig>(
   ActionType.EDIT_EPISODE,
   async (editEpisodePayload, { getState, extra }) => {
-    const { episodeApi } = extra;
+    const { episodeApi, navigationService, notificationService } = extra;
     const { configurateEpisode, auth } = getState();
     const { id } = <Episode>configurateEpisode.episode;
 
-    const recordfile = getFileFromFileList(editEpisodePayload.record);
+    const recordFile = getFileFromFileList(editEpisodePayload.record);
     const imgFile = getFileFromFileList(editEpisodePayload.image);
 
     const episode = await episodeApi.update(id, {
@@ -50,12 +47,16 @@ const editEpisode = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkConf
       description: editEpisodePayload.description,
       shownotes: editEpisodePayload.shownotes,
       type: editEpisodePayload.type,
-      recordDataUrl: recordfile ? await getDataUrl(recordfile) : null,
+      recordDataUrl: recordFile ? await getDataUrl(recordFile) : null,
       imageDataUrl: imgFile ? await getDataUrl(imgFile) : null,
       userId: (<User>auth.user).id,
       imageId: (<Episode>configurateEpisode.episode).imageId,
       status: editEpisodePayload.status,
     });
+
+    notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.EPISODE_UPDATED);
+
+    navigationService.push(`${AppRoute.EPISODES}/${episode.id}`);
 
     return episode;
   });
@@ -69,4 +70,4 @@ const loadEpisode = createAsyncThunk<Episode, number, AsyncThunkConfig>(
     return episode;
   });
 
-export { createEpisode, editEpisode, loadEpisode };
+export { create, edit, loadEpisode };

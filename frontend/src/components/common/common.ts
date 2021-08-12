@@ -21,5 +21,5 @@ export { default as CreateCommentForm } from './create-comment-form/create-comme
 export { default as PodcastList } from './podcasts-list/podcasts-list';
 export { default as PodcastItem } from './podcast-item/podcast-item';
 export { default as Player } from './player/player';
-export { default as DefaultImage } from './default-image/default-image';
+export { default as ImageWrapper } from './image-wrapper/image-wrapper';
 
