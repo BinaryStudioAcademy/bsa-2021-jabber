@@ -26,15 +26,13 @@ const loadCommentsByEpisodeId = createAsyncThunk<Comment[], number, AsyncThunkCo
 
 const createComment = createAsyncThunk<Comment, CommentFormCreatePayload, AsyncThunkConfig>
 (ActionType.CREATE_COMMENT, async (payload, { extra, getState }) => {
-  const { commentApi, socketService } = extra;
+  const { commentApi } = extra;
   const { auth, episode } = getState();
   const comment = await commentApi.create({
     ...payload,
     userId: (<User>auth.user).id,
     episodeId: (<Episode>episode.episode).id,
   });
-
-  socketService.updateComments(comment);
 
   return comment;
 });

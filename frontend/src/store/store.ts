@@ -8,9 +8,8 @@ import {
   storage as storageService,
   recordAudio as recordAudioService,
   notification as notificationService,
-  socket as socketService,
 } from 'services/services';
-import { handleError as handleErrorMiddleware } from 'middlewares/middlewares';
+import { handleError as handleErrorMiddleware, socketMiddleware } from 'middlewares/middlewares';
 
 const extraArgument = {
   authApi,
@@ -20,7 +19,6 @@ const extraArgument = {
   storageService,
   recordAudioService,
   notificationService,
-  socketService,
 };
 
 const store = configureStore({
@@ -30,7 +28,7 @@ const store = configureStore({
       thunk: {
         extraArgument,
       },
-    }).concat(handleErrorMiddleware);
+    }).concat(handleErrorMiddleware, socketMiddleware);
   },
 });
 

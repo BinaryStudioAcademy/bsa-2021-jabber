@@ -29,12 +29,8 @@ class Socket {
   private handler(io: Server): void {
     io.on(SocketEvent.CONNECTION, (socket) => {
 
-      socket.on(SocketEvent.JOIN_ROOM, (id: string) => {
-        socket.join(id);
-      });
-
-      socket.on(SocketEvent.LEAVE_ROOM, (id: string) => {
-        socket.leave(id);
+      socket.on(SocketEvent.JOIN_ROOM, (id: number) => {
+        socket.join(String(id));
       });
 
       socket.on(SocketEvent.UPDATE_COMMENTS, (comment: Comment) => {
