@@ -28,7 +28,7 @@ class Comment {
     return this.#CommentModel.query().findOne(id).withGraphFetched('user');
   }
 
-  public deleteAllByEpisodeId(id: string): Promise<TComment[]> {
+  public deleteAllByEpisodeId(id: number): Promise<TComment[]> {
     return this.#CommentModel.query().delete().where('episode_id', id).returning('*');
   }
 }
