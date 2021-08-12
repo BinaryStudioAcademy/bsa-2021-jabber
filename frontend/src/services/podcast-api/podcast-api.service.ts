@@ -61,9 +61,9 @@ class PodcastApi {
     );
   }
 
-  public update(payload: PodcastEditPayload): Promise<Podcast> {
+  public update(id: number, payload: PodcastEditPayload): Promise<Podcast> {
     return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}${payload.id}`,
+      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}${id}`,
       {
         method: HttpMethod.PUT,
         contentType: ContentType.JSON,
@@ -71,6 +71,16 @@ class PodcastApi {
       },
     );
   }
+
+  public getAllByUserId(userId: number): Promise<Podcast[]> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.USERS}/${userId}`,
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
+
 }
 
 export { PodcastApi };

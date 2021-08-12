@@ -1,4 +1,6 @@
+import { createBrowserHistory } from 'history';
 import { ENV } from 'common/enums/enums';
+import { Navigation } from './navigation/navigation.service';
 import { Http } from './http/http.service';
 import { AuthApi } from './auth-api/auth-api.service';
 import { PodcastApi } from './podcast-api/podcast-api.service';
@@ -7,9 +9,14 @@ import { Notification } from './notification/notification.service';
 import { EpisodeApi } from './episode-api/episode-api.service';
 import { Storage } from './storage/storage.service';
 import { RecordAudio } from './record-audio/record-audio.service';
+import { UserApi } from './user-api/user-api.service';
 
 const storage = new Storage({
   storage: localStorage,
+});
+
+const navigation = new Navigation({
+  history: createBrowserHistory(),
 });
 
 const http = new Http({
@@ -36,6 +43,11 @@ const commentApi = new CommentApi({
   apiPrefix: ENV.API_PATH,
 });
 
+const userApi = new UserApi({
+  http,
+  apiPrefix: ENV.API_PATH,
+});
+
 const notification = new Notification();
 
 const recordAudio = new RecordAudio({
@@ -48,6 +60,8 @@ export {
   podcastApi,
   episodeApi,
   storage,
+  navigation,
   commentApi,
   recordAudio,
+  userApi,
 };

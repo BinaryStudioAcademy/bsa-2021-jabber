@@ -1,8 +1,9 @@
-import { HttpCode } from '~/common/enums/enums';
+import { HttpCode, ErrorMessage } from '~/common/enums/enums';
 import {
   Episode as TEpisode,
   EpisodeCreateDTOPayload,
   EpisodeCreatePayload,
+  EpisodeEditPayload,
 } from '~/common/types/types';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
 import {
@@ -12,7 +13,6 @@ import {
 } from '~/data/repositories/repositories';
 import { shownote } from '~/services/services';
 import { HttpError } from '~/exceptions/exceptions';
-import { ErrorMessage } from '~/common/enums/enums';
 
 type Constructor = {
   episodeRepository: typeof episodeRep;
@@ -117,6 +117,87 @@ class Episode {
         fileSize: bytes,
       });
     }
+
+    return episode;
+  }
+
+  public async update(
+    id: string,
+    {
+      recordDataUrl,
+      imageDataUrl,
+      type,
+      description,
+      shownotes,
+      name,
+      userId,
+      imageId,
+      status,
+    }: EpisodeEditPayload,
+  ): Promise<TEpisode> {
+    const episodeId = Number(id);
+    let newImageId: number | null = null;
+
+    if (recordDataUrl) {
+      const oldRecord = await this.#recordRepository.getByEpisodeId(episodeId);
+
+      if (oldRecord) {
+        await this.#fileStorage.delete(oldRecord.publicId);
+        await this.#recordRepository.delete(oldRecord.id);
+      }
+
+      const { url, publicId, bytes } = await this.#fileStorage.upload({
+        dataUrl: recordDataUrl,
+        userId,
+      });
+
+      await this.#recordRepository.create({
+        publicId,
+        episodeId,
+        fileUrl: url,
+        fileSize: bytes,
+      });
+    }
+
+    if (imageDataUrl) {
+      const { url, publicId } = await this.#fileStorage.upload({
+        dataUrl: imageDataUrl,
+        userId,
+      });
+
+      const image = await this.#imageRepository.create({
+        url,
+        publicId,
+      });
+
+      newImageId = image.id;
+    }
+
+    await this.#shownoteService.deleteAllByEpisodeId(Number(id));
+
+    if (shownotes.length) {
+      await this.#shownoteService.create(
+        ...shownotes.map((shownote) => ({
+          ...shownote,
+          episodeId: Number(id),
+        })),
+      );
+    }
+
+    if (imageDataUrl && imageId) {
+      const oldImage = await this.#imageRepository.getById(imageId);
+
+      await this.#imageRepository.delete(oldImage.id);
+      await this.#fileStorage.delete(oldImage.publicId);
+    }
+
+    const episode = await this.#episodeRepository.update(id, {
+      name,
+      description,
+      type,
+      status,
+      imageId: newImageId ?? imageId,
+    });
 
     return episode;
   }

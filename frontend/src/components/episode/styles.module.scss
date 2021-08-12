@@ -1,17 +1,50 @@
 .root {
-  flex-grow: 1;
   max-width: 1515px;
   width: 100%;
+
   margin: 0 auto;
   padding: 30px;
 
+  flex-grow: 1;
+
   .episode {
     display: flex;
+    padding: 30px;
+  }
+}
+
+.episodeWrapper {
+  position: relative;
+}
+
+.imageWrapper {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  z-index: -1;
+
+  & div {
+    background-color: #989ea6;
+  }
+
+  & span {
+    left: 80%;
+    top: calc((100% - 89px) / 2);
+
+    font-size: 120px;
+    color: #3e4752;
+    opacity: 0.1;
   }
 }
 
 .descriptionWrapper {
-  flex-grow: 0.6;
+  flex-grow: 1;
+
+  .btnStartLive {
+    width: 200px;
+  }
 }
 
 .title {
@@ -27,17 +60,6 @@
 .type {
   font-size: 16px;
   margin: 15px 0;
-}
-
-.logoWrapper {
-  flex-grow: 0.4;
-  display: flex;
-  justify-content: center;
-  margin: 0;
-}
-
-.logo {
-  border: 2px solid #e9e9e9;
 }
 
 .notFound {

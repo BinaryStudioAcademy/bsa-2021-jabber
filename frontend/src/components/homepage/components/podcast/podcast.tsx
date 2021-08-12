@@ -1,7 +1,6 @@
 import { AppRoute } from 'common/enums/enums';
 import { Podcast as TPodcast } from 'common/types/types';
 import { Link } from 'components/common/common';
-import defaultImage from 'assets/img/default-podcast-image.jpeg';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -12,7 +11,7 @@ const Podcast: React.FC<Props> = ({ podcast }) => (
   <li className={styles.wrapper}>
     <div className={styles.imageWrapper}>
       <img
-        src={podcast.image?.url ?? defaultImage}
+        src={podcast.image?.url}
         className={styles.podcastImage}
         width="195"
         height="195"

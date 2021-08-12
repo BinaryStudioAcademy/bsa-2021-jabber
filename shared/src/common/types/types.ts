@@ -10,6 +10,7 @@ export type { ValidationSchema } from './validation-schema/validation-schema';
 export type {
   Episode,
   EpisodeCreatePayload,
+  EpisodeEditPayload,
   EpisodePayload,
 } from './episode/episode';
 export type {
@@ -22,3 +23,4 @@ export type { Record, RecordCreatePayload } from './record/record';
 export type { SignResponse } from './sign/sign';
 export type { TokenPayload } from './token/token';
 export type { SearchPayload } from './search/search';
+export type { UserNotification } from './user-notification/user-notification';

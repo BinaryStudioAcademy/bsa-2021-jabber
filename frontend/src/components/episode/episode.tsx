@@ -1,17 +1,32 @@
-import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
+import {
+  useAppSelector,
+  useDispatch,
+  useEffect,
+  useParams,
+  useRef,
+} from 'hooks/hooks';
 import { episode as episodeActions } from 'store/actions';
-import { CreateCommentForm, CommentsList } from './components/components';
-import { Loader } from 'components/common/common';
-import { DataStatus } from 'common/enums/enums';
+import {
+  Loader,
+  CreateCommentForm,
+  CommentsList,
+  Player,
+  Button,
+  ImageWrapper,
+} from 'components/common/common';
+import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
+import { PlayerRef } from 'components/common/player/player';
+import { getCurrentTime } from './helpers/helpers';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 
 const Episode: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
+  const playerRef = useRef<PlayerRef | null>(null);
 
-  const { episode, dataStatus, comments, user } = useAppSelector(
+  const { episode, comments, user, dataStatus } = useAppSelector(
     ({ episode, auth }) => ({
       dataStatus: episode.dataStatus,
       episode: episode.episode,
@@ -21,6 +36,8 @@ const Episode: React.FC = () => {
   );
 
   const hasUser = Boolean(user);
+  const isStaging = episode?.status === EpisodeStatus.STAGING;
+  const isOwner = user?.id === episode?.userId;
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
@@ -28,7 +45,13 @@ const Episode: React.FC = () => {
   }, []);
 
   const handleCreateComment = (payload: CommentFormCreatePayload): void => {
-    dispatch(episodeActions.createComment(payload));
+    const timestamp = getCurrentTime(playerRef);
+    dispatch(
+      episodeActions.createComment({
+        ...payload,
+        timestamp,
+      }),
+    );
   };
 
   if (dataStatus === DataStatus.PENDING) {
@@ -38,22 +61,31 @@ const Episode: React.FC = () => {
   return (
     <main className={styles.root}>
       {episode ? (
-        <div className={styles.episode}>
-          <div className={styles.descriptionWrapper}>
-            <h1 className={styles.title}>{episode.name}</h1>
-            <p className={styles.description}>{episode.description}</p>
-            <p className={styles.type}>Type: {episode.type}</p>
-            <p className={styles.type}>Status: {episode.status}</p>
+        <div className={styles.episodeWrapper}>
+          <ImageWrapper
+            src={episode.image?.url}
+            alt={episode.name}
+            label={episode.name}
+            className={styles.imageWrapper}
+          />
+          <div className={styles.episode}>
+            <div className={styles.descriptionWrapper}>
+              <h1 className={styles.title}>{episode.name}</h1>
+              <p className={styles.description}>{episode.description}</p>
+              <p className={styles.type}>Type: {episode.type}</p>
+              <p className={styles.type}>Status: {episode.status}</p>
+              {isStaging && isOwner && (
+                <Button
+                  className={styles.btnStartLive}
+                  label="Start Live"
+                  href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}
+                />
+              )}
+            </div>
           </div>
-          <p className={styles.logoWrapper}>
-            <img
-              src="#"
-              width="280"
-              height="280"
-              loading="lazy"
-              alt={episode.name}
-            />
-          </p>
+          {episode.record && (
+            <Player src={episode.record.fileUrl} ref={playerRef} />
+          )}
         </div>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such episode</h1>

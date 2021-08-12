@@ -25,6 +25,7 @@ export {
   RecordDTOKey,
   ImageDTOKey,
   NotificationDTOKey,
+  UserNotificationDTOKey,
 } from './db/db';
 export { HttpCode, HttpMethod } from './http/http';
 export {
@@ -52,3 +53,4 @@ export {
   CommentValidationMessage,
 } from './comment/comment';
 export { SearchPayloadKey } from './search/search';
+export { UserNotificationStatus } from './user-notification/user-notification';

@@ -1,5 +1,9 @@
 import { EpisodeModel as EpisodeM } from '~/data/models/models';
-import { Episode as TEpisode, EpisodeCreateDTOPayload } from '~/common/types/types';
+import {
+  Episode as TEpisode,
+  EpisodeCreateDTOPayload,
+  EpisodeEditDTOPayload,
+} from '~/common/types/types';
 
 type Constructor = {
   EpisodeModel: typeof EpisodeM;
@@ -17,7 +21,7 @@ class Episode {
   }
 
   public getById(id: string): Promise<TEpisode> {
-    return this.#EpisodeModel.query().findById(id);
+    return this.#EpisodeModel.query().findById(id).withGraphJoined('[record, image, shownotes]');
   }
 
   public getAllByPodcastId(id: string): Promise<TEpisode[]> {
@@ -25,7 +29,17 @@ class Episode {
   }
 
   public create(payload: EpisodeCreateDTOPayload): Promise<TEpisode> {
-    return this.#EpisodeModel.query().insert(payload).withGraphFetched('image');
+    return this.#EpisodeModel
+      .query()
+      .insert(payload)
+      .withGraphFetched('[image, shownotes]');
+  }
+
+  public update(id: string, payload: EpisodeEditDTOPayload): Promise<TEpisode> {
+    return this.#EpisodeModel
+      .query()
+      .updateAndFetchById(id, payload)
+      .withGraphFetched('shownotes');
   }
 }
 

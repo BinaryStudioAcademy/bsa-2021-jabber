@@ -11,7 +11,9 @@ export type {
 export type {
   Episode,
   EpisodeCreatePayload,
+  EpisodeEditPayload,
   EpisodeFormPayload,
+  CreateActionEpisodePayload,
 } from './episode/episode';
 export type { Shownote, ShownotePayload } from './shownote/shownote';
 export type { SignResponse } from './sign/sign';

@@ -1,18 +1,20 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import { podcast as podcastActions } from 'store/actions';
 import { AppRoute, DataStatus } from 'common/enums/enums';
-import defaultImage from 'assets/img/default-podcast-image.jpeg';
-import { Link, Loader } from 'components/common/common';
+import { Link, Loader, ImageWrapper } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 
 const Podcast: React.FC = () => {
-  const { podcast, episodes, dataStatus } = useAppSelector(({ podcast }) => ({
-    podcast: podcast.podcast,
-    episodes: podcast.episodes,
-    dataStatus: podcast.dataStatus,
-  }));
+  const { userId, podcast, episodes, dataStatus } = useAppSelector(
+    ({ podcast, auth }) => ({
+      userId: auth.user?.id,
+      podcast: podcast.podcast,
+      episodes: podcast.episodes,
+      dataStatus: podcast.dataStatus,
+    }),
+  );
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
 
@@ -35,31 +37,26 @@ const Podcast: React.FC = () => {
       {podcast ? (
         <>
           <div className={styles.content}>
+            <ImageWrapper
+              src={podcast.image?.url}
+              loading="lazy"
+              alt={podcast.name}
+              label={podcast.name}
+              className={styles.imageWrapper}
+            />
             <div className={styles.podcastInfoWrapper}>
               <h1 className={styles.title}>{podcast.name}</h1>
               <div className={styles.descriptionWrapper}>
                 <p className={styles.description}>{podcast.description}</p>
               </div>
               <p className={styles.type}>Type: {podcast.type}</p>
-            </div>
-            <div className={styles.imageContainer}>
-              <div className={styles.wrapper}>
-                <p className={styles.imageWrapper}>
-                  <img
-                    src={podcast.image?.url ?? defaultImage}
-                    className={styles.podcastImage}
-                    width="280"
-                    height="280"
-                    loading="lazy"
-                    alt={podcast.name}
-                  />
-                </p>
+              {podcast.userId === userId && (
                 <Link
                   to={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
                 >
                   Add episode
                 </Link>
-              </div>
+              )}
             </div>
           </div>
           {episodes.length ? (

@@ -43,3 +43,4 @@ export { RecordCreatePayloadKey } from './record/record';
 export { ImageCreatePayloadKey } from './image/image';
 export { DateFormatType } from './date/date';
 export { SearchPayloadKey } from './search/search';
+export { UserNotificationStatus } from './user-notification/user-notification';

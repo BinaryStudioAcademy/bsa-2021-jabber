@@ -5,6 +5,8 @@ import {
   podcastApi,
   episodeApi,
   commentApi,
+  userApi,
+  navigation as navigationService,
   storage as storageService,
   recordAudio as recordAudioService,
   notification as notificationService,
@@ -16,9 +18,11 @@ const extraArgument = {
   podcastApi,
   episodeApi,
   commentApi,
+  userApi,
   storageService,
   recordAudioService,
   notificationService,
+  navigationService,
 };
 
 const store = configureStore({

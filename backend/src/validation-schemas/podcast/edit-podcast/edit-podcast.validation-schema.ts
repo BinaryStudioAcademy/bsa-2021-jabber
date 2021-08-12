@@ -13,12 +13,6 @@ const podcastEdit = podcast.keys({
       'number.required': PodcastValidationMessage.USER_ID_REQUIRE,
       'number.integer': PodcastValidationMessage.USER_ID_NUMBER_FORMAT,
     }),
-  [PodcastPayloadKey.UPDATE_AT]: Joi.date()
-    .required(),
-  [PodcastPayloadKey.CREATE_AT]: Joi.date()
-    .required(),
-  [PodcastPayloadKey.ID]: Joi.number()
-    .required(),
   [PodcastPayloadKey.IMAGE_ID]: Joi.number().allow(null),
   [PodcastPayloadKey.IMAGE_DATA_URL]: [
     Joi.string().uri().messages({
