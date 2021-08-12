@@ -1,6 +1,6 @@
 import { DateFormatType } from 'common/enums/enums';
 import { Shownote as TShownote } from 'common/types/types';
-import { MILLISECONDS_IN_SECOND, SECONDS_IN_MINUTE } from '../../../../common/constants/constants';
+import { MILLISECONDS_IN_SECOND, SECONDS_IN_MINUTE } from 'common/constants/constants';
 import { getFormattedDate } from 'helpers/date/date';
 
 const getTimeOffset = (shownote: TShownote): string => {
