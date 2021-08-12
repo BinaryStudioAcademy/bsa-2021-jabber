@@ -1,6 +1,10 @@
 import { Knex } from 'knex';
 import { getFormattedISODate } from '~/helpers/helpers';
-import { UserNotificationStatus } from '~/common/enums/enums';
+
+const UserNotificationStatus = {
+  UNCHECKED: 'unchecked',
+  CHECKED: 'checked',
+} as const;
 
 const TABLE_NAME = 'users_notifications';
 
