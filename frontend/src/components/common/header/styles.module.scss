@@ -31,6 +31,8 @@
 }
 
 .link {
+  flex-shrink: 0;
+
   color: #fff;
   text-decoration: none;
 }
@@ -52,23 +54,13 @@
   width: 40px;
 
   padding: 0;
-  position: relative;
 
-  background-color: #000;
   border: none;
-  border-radius: 50%;
-  overflow: hidden;
+  background-color: transparent;
 
-  &::before {
-    content: '';
-    display: block;
-
-    height: 100%;
-    width: 100%;
-
-    position: absolute;
+  .imageWrapper {
+    border-radius: 50%;
     cursor: pointer;
-    z-index: 15;
   }
 }
 

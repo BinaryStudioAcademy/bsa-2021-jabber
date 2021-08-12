@@ -35,17 +35,21 @@ type Props = {
   onClickPrevious?: () => void;
   onClickNext?: () => void;
 };
+
 type Ref = {
   setCurrentTime: (seconds: number) => void;
   getCurrentTime: () => number;
 };
+
 const rateSteps = Object.values(RateStep);
+
 const Player = forwardRef<Ref, Props>(
   (
     { src, skipTime = DEFAULT_SKIP_TIME, onClickNext, onClickPrevious },
     ref,
   ) => {
     const playerRef = useRef<H5AudioPlayer | null>(null);
+
     const [rateIndex, setRateIndex] = useState(
       rateSteps.indexOf(RateStep.NORMAL),
     );
@@ -63,11 +67,13 @@ const Player = forwardRef<Ref, Props>(
         return 0;
       },
     }));
+
     useEffect(() => {
       if (playerRef.current && playerRef.current.audio.current) {
         playerRef.current.audio.current.playbackRate = rateSteps[rateIndex];
       }
     }, [rateIndex]);
+
     const handleChangeRate = useCallback(() => {
       setRateIndex(
         rateIndex === rateSteps.length - ARRAY_SHIFT
@@ -75,6 +81,7 @@ const Player = forwardRef<Ref, Props>(
           : rateIndex + ARRAY_SHIFT,
       );
     }, [rateIndex]);
+
     return (
       <H5AudioPlayer
         ref={playerRef}
@@ -184,6 +191,7 @@ const Player = forwardRef<Ref, Props>(
     );
   },
 );
-Player.displayName = 'Player';
+
 export default Player;
+
 export type { Ref as PlayerRef };

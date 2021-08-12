@@ -1,9 +1,11 @@
 .root {
-  flex-grow: 1;
   max-width: 1515px;
   width: 100%;
+
   margin: 0 auto;
   padding: 30px;
+
+  flex-grow: 1;
 
   .episode {
     display: flex;
@@ -11,10 +13,36 @@
   }
 }
 
+.episodeWrapper {
+  position: relative;
+}
+
+.imageWrapper {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  z-index: -1;
+
+  & div {
+    background-color: #989ea6;
+  }
+
+  & span {
+    left: 80%;
+    top: calc((100% - 89px) / 2);
+
+    font-size: 120px;
+    color: #3e4752;
+    opacity: 0.1;
+  }
+}
+
 .descriptionWrapper {
   flex-grow: 1;
 
-  .btnStartLive{
+  .btnStartLive {
     width: 200px;
   }
 }
