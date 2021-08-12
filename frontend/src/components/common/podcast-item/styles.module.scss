@@ -29,7 +29,6 @@
 
     font-size: 77px;
     border-radius: 3px;
-
     overflow: hidden;
     transition: transform 0.2s ease;
 
@@ -78,4 +77,9 @@
     left: 0;
     content: '';
   }
+}
+
+.podcastImage {
+  height: 100%;
+  object-fit: cover;
 }
