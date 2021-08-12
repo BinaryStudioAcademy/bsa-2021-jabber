@@ -14,6 +14,7 @@ const DEFAULT_CREATE_EPISODE_PAYLOAD: EpisodeFormPayload = {
   [EpisodePayloadKey.IMAGE]: null,
   [EpisodePayloadKey.RECORD]: null,
   [EpisodePayloadKey.STATUS]: EpisodeStatus.PUBLISHED,
+  [EpisodePayloadKey.PODCAST_ID]: -1,
 };
 
 const DEFAULT_SHOWNOTE_PAYLOAD: ShownotePayload = {
