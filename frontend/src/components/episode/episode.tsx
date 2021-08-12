@@ -19,7 +19,6 @@ import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
 import { getCurrentTime } from './helpers/helpers';
 import { PageParams } from './common/types/types';
-import defaultImage from 'assets/img/default-podcast-image.jpeg';
 import { ShownotesList } from './components/components';
 import styles from './styles.module.scss';
 
@@ -92,18 +91,6 @@ const Episode: React.FC = () => {
               }
             </div>
             <div className={styles.imageContainer}>
-              <div className={styles.wrapper}>
-                <p className={styles.imageWrapper}>
-                  <img
-                    src={episode.image?.url ?? defaultImage}
-                    className={styles.episodeImage}
-                    width="280"
-                    height="280"
-                    loading="lazy"
-                    alt={episode.name}
-                  />
-                </p>
-              </div>
               {isStaging && isOwner && (
                 <Button
                   className={styles.btnStartLive}
