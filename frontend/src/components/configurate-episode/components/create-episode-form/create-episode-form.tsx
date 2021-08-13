@@ -1,5 +1,5 @@
 import { EpisodeFormPayload, Option } from 'common/types/types';
-import { getOptions, getFileExtensions } from 'helpers/helpers';
+import { getOptions, getFileExtensions, getDataUrl, getFileFromFileList } from 'helpers/helpers';
 import {
   ButtonType,
   DataStatus,
@@ -11,7 +11,7 @@ import {
   ButtonColor,
 } from 'common/enums/enums';
 import { episodeCreate as createEpisodeValidationSchema } from 'validation-schemas/validation-schemas';
-import { useAppForm, useAppSelector } from 'hooks/hooks';
+import { useAppForm, useAppSelector, useState, useHistory } from 'hooks/hooks';
 import { Button, Input, Select } from 'components/common/common';
 import { DEFAULT_CREATE_EPISODE_PAYLOAD } from './common/constants';
 import ShownoteInputList from './components/shownote-input-list/shownote-input-list';
@@ -38,9 +38,15 @@ const acceptAudioExtension = getFileExtensions(
 );
 
 const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE_EPISODE_PAYLOAD, imageUrl }) => {
-  const { control, handleSubmit, errors, register } = useAppForm({
+  const { control, handleSubmit, errors, register, getValues } = useAppForm({
     validationSchema: createEpisodeValidationSchema,
     defaultValues: payload,
+  });
+  const history = useHistory();
+
+  const [fileInfo, setFileInfo] = useState({
+    recordName: '',
+    imageDataUrl: '',
   });
 
   const { dataStatus } = useAppSelector(({ episode }) => ({
@@ -49,12 +55,27 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
 
   const isFormDisable = dataStatus === DataStatus.PENDING;
 
+  const getFileInfo = async (): Promise<void> => {
+    const { image, record } = getValues();
+    const imageFile = getFileFromFileList(image);
+    const recordFile = getFileFromFileList(record);
+
+    setFileInfo({
+      recordName: recordFile ? recordFile.name : '',
+      imageDataUrl: imageFile ? await getDataUrl(imageFile) : '',
+    });
+  };
+
+  const handleCancel = (): void => {
+    history.goBack();
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} onChange={getFileInfo}>
       <fieldset disabled={isFormDisable} className={styles.fieldset}>
         <label
           className={styles.imageLabel}
-          style={{ backgroundImage: `url(${imageUrl})` }}
+          style={{ backgroundImage: `url(${fileInfo.imageDataUrl || imageUrl})` }}
         >
           <input
             {...register(EpisodePayloadKey.IMAGE)}
@@ -62,14 +83,18 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
             type={InputType.FILE}
           />
         </label>
-        <label className={styles.recordLabel}>
-          Upload record
-          <input
-            {...register(EpisodePayloadKey.RECORD)}
-            accept={acceptAudioExtension}
-            type={InputType.FILE}
-          />
-        </label>
+        <div className={styles.recordWrapper}>
+          <label className={styles.recordLabel}>
+            Upload record
+            <input
+              {...register(EpisodePayloadKey.RECORD)}
+              accept={acceptAudioExtension}
+              type={InputType.FILE}
+            />
+          </label>
+          <span>{fileInfo.recordName}</span>
+        </div>
+
         <Input
           type={InputType.TEXT}
           label="Name episode"
@@ -88,7 +113,7 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
           hasMultipleRows
           rows={7}
         />
-        <label className={styles.selectLabel}>
+        <div className={styles.selectWrapper}>
           <Select
             options={selectTypeOptions}
             label="Type"
@@ -96,8 +121,8 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
             control={control}
             errors={errors}
           />
-        </label>
-        <label className={styles.selectLabel}>
+        </div>
+        <div className={styles.selectWrapper}>
           <Select
             options={selectStatusOptions}
             label="Status"
@@ -105,11 +130,18 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
             control={control}
             errors={errors}
           />
-        </label>
+        </div>
         <ShownoteInputList control={control} errors={errors} />
         <div className={styles.buttonRow}>
-          <Button label="Save" type={ButtonType.SUBMIT} />
-          <Button label="Cancel" buttonColor={ButtonColor.LIGHT_PINK} />
+          <Button
+            label="Save"
+            type={ButtonType.SUBMIT}
+          />
+          <Button
+            label="Cancel"
+            buttonColor={ButtonColor.LIGHT_PINK}
+            onClick={handleCancel}
+          />
         </div>
       </fieldset>
     </form >
