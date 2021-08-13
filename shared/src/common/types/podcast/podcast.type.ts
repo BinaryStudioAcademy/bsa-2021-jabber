@@ -7,6 +7,7 @@ type Podcast = {
   userId: number;
   imageId: number | null;
   image: Image | null;
+  coverId: number | null;
   cover: Image | null;
   createdAt: string;
   updatedAt: string;
