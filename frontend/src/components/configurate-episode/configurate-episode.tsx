@@ -12,14 +12,16 @@ const ConfigurateEpisode: React.FC = () => {
   const { id, podcastId } = useParams<PageParams>();
   const dispatch = useDispatch();
 
-  const { episode, dataStatus } = useAppSelector(({ configurateEpisode }) => ({
+  const { episode, dataStatus, user } = useAppSelector(({ configurateEpisode, auth }) => ({
     episode: configurateEpisode.episode,
     dataStatus: configurateEpisode.dataStatus,
+    user: auth.user,
   }));
 
   const mapEpisode = episode ? mapEpisodeToFormPayload(episode) : undefined;
 
   const isEdit = Boolean(id);
+  const isEpisodeOwner = user?.id === episode?.userId; 
 
   const isLoading = dataStatus === DataStatus.PENDING;
 
@@ -52,19 +54,19 @@ const ConfigurateEpisode: React.FC = () => {
       </h2>
       {isLoading ? (
         <Loader />
-      ) : (
+      ) : isEdit ? isEpisodeOwner ? (
         <>
           <CreateEpisodeForm onSubmit={handleFormSubmit} payload={mapEpisode} />
-          {isEdit && (
-            <Button
-              label="Delete"
-              type={ButtonType.BUTTON}
-              buttonColor={ButtonColor.LIGHT_NAVY}
-              onClick={handleDeleteEpisode}
-            />
-          )}
+          <Button
+            label="Delete"
+            type={ButtonType.BUTTON}
+            buttonColor={ButtonColor.LIGHT_NAVY}
+            onClick={handleDeleteEpisode}
+          />
         </>
-      )}
+      ) : 
+        <div>Episode is not available!</div> 
+        : <CreateEpisodeForm onSubmit={handleFormSubmit} payload={mapEpisode} />}
     </div>
   );
 };
