@@ -25,6 +25,7 @@ import { FileStorage } from './file-storage/file-storage.service';
 import { Token } from './token/token.service';
 import { Passport } from './passport/passport.service';
 import { Genre } from './genre/genre.service';
+import { Socket } from './socket/socket.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -88,6 +89,8 @@ const genre = new Genre({
   genreRepository,
 })
 
+const socket = new Socket();
+
 export {
   auth,
   appAsyncStorage,
@@ -102,4 +105,5 @@ export {
   token,
   passport,
   genre,
+  socket,
 };

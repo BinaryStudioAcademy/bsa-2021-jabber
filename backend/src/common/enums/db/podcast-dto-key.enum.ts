@@ -7,6 +7,7 @@ enum PodcastDTOKey {
   DESCRIPTION = 'description',
   TYPE = 'type',
   GENRE_ID = 'genreId',
+  USER = 'user',
 }
 
 export { PodcastDTOKey };

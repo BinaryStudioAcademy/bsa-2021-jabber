@@ -26,7 +26,7 @@ class Podcast {
   }
 
   public getById(id: string): Promise<TPodcast> {
-    return this.#PodcastModel.query().findById(id).withGraphJoined('image');
+    return this.#PodcastModel.query().findById(id).withGraphJoined('[image, user]');
   }
 
   public update(id: string, payload: PodcastEditDTOPayload): Promise<TPodcast> {
