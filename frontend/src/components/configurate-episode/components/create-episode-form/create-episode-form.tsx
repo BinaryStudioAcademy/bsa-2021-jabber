@@ -8,6 +8,7 @@ import {
   InputType,
   FileExtension,
   EpisodeStatus,
+  ButtonColor,
 } from 'common/enums/enums';
 import { episodeCreate as createEpisodeValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
@@ -19,6 +20,7 @@ import styles from './styles.module.scss';
 type Props = {
   onSubmit: (payload: EpisodeFormPayload) => void;
   payload?: EpisodeFormPayload;
+  imageUrl?: string;
 };
 
 const selectTypeOptions: Option[] = getOptions(Object.values(EpisodeType));
@@ -35,7 +37,7 @@ const acceptAudioExtension = getFileExtensions(
   FileExtension.WAV,
 );
 
-const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE_EPISODE_PAYLOAD }) => {
+const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE_EPISODE_PAYLOAD, imageUrl }) => {
   const { control, handleSubmit, errors, register } = useAppForm({
     validationSchema: createEpisodeValidationSchema,
     defaultValues: payload,
@@ -48,12 +50,30 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
   const isFormDisable = dataStatus === DataStatus.PENDING;
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisable} className={styles.fieldset}>
+        <label
+          className={styles.imageLabel}
+          style={{ backgroundImage: `url(${imageUrl})` }}
+        >
+          <input
+            {...register(EpisodePayloadKey.IMAGE)}
+            accept={acceptExtension}
+            type={InputType.FILE}
+          />
+        </label>
+        <label className={styles.recordLabel}>
+          Upload record
+          <input
+            {...register(EpisodePayloadKey.RECORD)}
+            accept={acceptAudioExtension}
+            type={InputType.FILE}
+          />
+        </label>
         <Input
           type={InputType.TEXT}
-          label="Name"
-          placeholder="Enter episode name"
+          label="Name episode"
+          placeholder="Enter name"
           name={EpisodePayloadKey.NAME}
           control={control}
           errors={errors}
@@ -61,45 +81,38 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
         <Input
           type={InputType.TEXT}
           label="Description"
-          placeholder="Enter episode description"
+          placeholder="Enter description episode"
           name={EpisodePayloadKey.DESCRIPTION}
           control={control}
           errors={errors}
+          hasMultipleRows
+          rows={7}
         />
+        <label className={styles.selectLabel}>
+          <Select
+            options={selectTypeOptions}
+            label="Type"
+            name={EpisodePayloadKey.TYPE}
+            control={control}
+            errors={errors}
+          />
+        </label>
+        <label className={styles.selectLabel}>
+          <Select
+            options={selectStatusOptions}
+            label="Status"
+            name={EpisodePayloadKey.STATUS}
+            control={control}
+            errors={errors}
+          />
+        </label>
         <ShownoteInputList control={control} errors={errors} />
-        <Select
-          options={selectTypeOptions}
-          label="Type"
-          name={EpisodePayloadKey.TYPE}
-          control={control}
-          errors={errors}
-        />
-        <Select
-          options={selectStatusOptions}
-          label="Status"
-          name={EpisodePayloadKey.STATUS}
-          control={control}
-          errors={errors}
-        />
-        <label>
-          Image
-          <input
-            {...register(EpisodePayloadKey.IMAGE)}
-            accept={acceptExtension}
-            type={InputType.FILE}
-          />
-        </label>
-        <label>
-          Record
-          <input
-            {...register(EpisodePayloadKey.RECORD)}
-            accept={acceptAudioExtension}
-            type={InputType.FILE}
-          />
-        </label>
-        <Button label="Save" type={ButtonType.SUBMIT} />
+        <div className={styles.buttonRow}>
+          <Button label="Save" type={ButtonType.SUBMIT} />
+          <Button label="Cancel" buttonColor={ButtonColor.LIGHT_PINK} />
+        </div>
       </fieldset>
-    </form>
+    </form >
   );
 };
 

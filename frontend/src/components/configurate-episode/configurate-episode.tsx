@@ -46,6 +46,7 @@ const ConfigurateEpisode: React.FC = () => {
       {isLoading
         ? <Loader />
         : <CreateEpisodeForm
+          imageUrl={episode?.image?.url}
           onSubmit={handleFormSubmit}
           payload={mapEpisode} />
       }
