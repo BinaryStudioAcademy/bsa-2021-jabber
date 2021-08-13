@@ -4,6 +4,6 @@ type Notifications = {
   message: string;
   createdAt: string;
   updatedAt: string;
-}
+};
 
 export type { Notifications };

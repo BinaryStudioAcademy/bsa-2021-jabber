@@ -1,5 +1,5 @@
 import { UserNotificationStatus } from '~/common/enums/enums';
-import { Notifications } from 'src/common/types/notification/notifications.type'
+import { Notifications } from 'src/common/types/notification/notifications.type';
 
 type UserNotification = {
   id: number;
