@@ -25,8 +25,8 @@ const ConfigurateEpisode: React.FC = () => {
 
   const handleFormSubmit = (payload: EpisodeFormPayload): void => {
     isEdit
-      ? dispatch(configurateEpisodeActions.editEpisode(payload))
-      : dispatch(configurateEpisodeActions.createEpisode({
+      ? dispatch(configurateEpisodeActions.edit(payload))
+      : dispatch(configurateEpisodeActions.create({
         ...payload,
         podcastId: Number(podcastId),
       }));

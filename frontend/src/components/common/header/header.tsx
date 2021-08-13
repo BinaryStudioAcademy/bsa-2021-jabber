@@ -1,10 +1,8 @@
-import React from 'react';
 import { useAppSelector, useDispatch, useVisible } from 'hooks/hooks';
 import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
-import { Button, Link } from 'components/common/common';
+import { Button, Link, ImageWrapper } from 'components/common/common';
 import { auth as authActions } from 'store/actions';
-import defaultAvatar from 'assets/img/user-profile/default-profile-picture.jpg';
 import logo from 'assets/img/logo.svg';
 import styles from './styles.module.scss';
 
@@ -59,13 +57,12 @@ const Header: React.FC = () => {
                   className={styles.usersButtonWrapper}
                   onClick={handleMenuToggle}
                 >
-                  <img
-                    className={styles.profileAvatar}
-                    src={defaultAvatar}
-                    width="40px"
-                    height="40px"
-                    alt="avatar"
+                  <ImageWrapper
+                    width="40"
+                    height="40"
                     loading="lazy"
+                    label={user?.nickname}
+                    className={styles.imageWrapper}
                   />
                 </button>
                 {isVisible && (

@@ -32,16 +32,16 @@ const Table: React.FC<Props> = ({ columns, data = [] }) => {
       <tbody {...getTableBodyProps()}>
         {rows.map((row, i) => {
           prepareRow(row);
-          return (
+          return (            
             <tr {...row.getRowProps()} key={i} className={styles.episodeRow}>
               {row.cells.map((cell, i) => {
-                return (
+                return ( 
                   <td {...cell.getCellProps()} key={i}>
                     {cell.render('Cell')}
                   </td>
                 );
               })}
-            </tr>
+            </tr>            
           );
         })}
       </tbody>

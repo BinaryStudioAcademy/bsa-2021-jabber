@@ -34,7 +34,7 @@ const ShownoteInput: React.FC<Props> = ({
         label="Name"
         placeholder="Enter show-note name"
         name={
-          `${EpisodePayloadKey.SHOWNOTES}[${index}].${ShownotePayloadKey.NAME}` as 'shownotes[x].name'
+          `${EpisodePayloadKey.SHOWNOTES}[${index}].${ShownotePayloadKey.NAME}` as 'shownote[x].name'
         }
         control={control}
         errors={errors}
@@ -44,7 +44,7 @@ const ShownoteInput: React.FC<Props> = ({
         label="Timestamp"
         placeholder="Enter show-note timestamp"
         name={
-          `${EpisodePayloadKey.SHOWNOTES}[${index}].${ShownotePayloadKey.TIMESTAMP}` as 'shownotes[x].timestamp'
+          `${EpisodePayloadKey.SHOWNOTES}[${index}].${ShownotePayloadKey.TIMESTAMP}` as 'shownote[x].timestamp'
         }
         control={control}
         errors={errors}

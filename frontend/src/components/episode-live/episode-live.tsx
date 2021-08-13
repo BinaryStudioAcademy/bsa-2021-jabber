@@ -1,10 +1,17 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
-import { record as recordActions, episode as episodeActions } from 'store/actions';
+import {
+  record as recordActions,
+  episode as episodeActions,
+} from 'store/actions';
 import { RecordStatus, ButtonColor } from 'common/enums/enums';
-import Button from 'components/common/button/button';
-import styles from './styles.module.scss';
-import { CreateCommentForm, CommentsList } from 'components/common/common';
 import { CommentFormCreatePayload } from 'common/types/types';
+import {
+  CreateCommentForm,
+  CommentsList,
+  ImageWrapper,
+  Button,
+} from 'components/common/common';
+import styles from './styles.module.scss';
 
 type PageParams = {
   id: string;
@@ -14,12 +21,14 @@ const EpisodeLive: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
 
-  const { recordStatus, user, episode, comments } = useAppSelector(({ record, auth, episode }) => ({
-    recordStatus: record.recordStatus,
-    episode: episode.episode,
-    comments: episode.comments,
-    user: auth.user,
-  }));
+  const { recordStatus, user, episode, comments } = useAppSelector(
+    ({ record, auth, episode }) => ({
+      recordStatus: record.recordStatus,
+      episode: episode.episode,
+      comments: episode.comments,
+      user: auth.user,
+    }),
+  );
   const isPaused = recordStatus === RecordStatus.PAUSED;
   const hasUser = Boolean(user);
 
@@ -56,46 +65,59 @@ const EpisodeLive: React.FC = () => {
     <main className={styles.root}>
       <h1>Record podcast</h1>
       <div className={styles.content}>
-        {episode &&          
-          <div className={styles.descriptionWrapper}>
-            <h1 className={styles.title}>{episode.name}</h1>
-            <p className={styles.description}>{episode.description}</p>
-          </div>
-        }
-        <h3>
-          Status:
-          {' '}
-          {recordStatus}
-        </h3>
+        {episode && (
+          <>
+            <ImageWrapper
+              src={episode.image?.url}
+              loading="lazy"
+              alt={episode.name}
+              label={episode.name}
+              className={styles.imageWrapper}
+            />
+            <div className={styles.descriptionWrapper}>
+              <h1 className={styles.title}>{episode.name}</h1>
+              <p className={styles.description}>{episode.description}</p>
+            </div>
+          </>
+        )}
+        <h3>Status: {recordStatus}</h3>
         <div className={styles.buttonRow}>
           <Button
             label="&#9210;"
-            buttonColor={ButtonColor.LIGHT_NAVY}
-            onClick={handleStart} />
-          {!isPaused
-            ? <Button
+            buttonColor={ButtonColor.LIGHT_PINK}
+            onClick={handleStart}
+          />
+          {!isPaused ? (
+            <Button
               label="&#9208;"
-              buttonColor={ButtonColor.LIGHT_NAVY}
-              onClick={handlePause} />
-            : <Button
+              buttonColor={ButtonColor.LIGHT_PINK}
+              onClick={handlePause}
+            />
+          ) : (
+            <Button
               label="&#9654;"
-              buttonColor={ButtonColor.LIGHT_NAVY}
-              onClick={handleResume} />}
+              buttonColor={ButtonColor.LIGHT_PINK}
+              onClick={handleResume}
+            />
+          )}
           <Button
             label="&#9209;"
-            buttonColor={ButtonColor.LIGHT_NAVY}
-            onClick={handleStop} />
+            buttonColor={ButtonColor.LIGHT_PINK}
+            onClick={handleStop}
+          />
         </div>
       </div>
-      <div className={styles.commentsWrapper}>
-        <div className={styles.commentsCounter}>Comments ({comments.length})</div>
-        {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}        
+      <section className={styles.commentsWrapper}>
+        <h2 className={styles.commentsCounter}>
+          Comments ({comments.length})
+        </h2>
+        {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
         {comments.length ? (
           <CommentsList comments={comments} />
         ) : (
           <div className={styles.placeholder}>There&apos;s no comment yet.</div>
         )}
-      </div>
+      </section>
     </main>
   );
 };
