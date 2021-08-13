@@ -42,4 +42,5 @@ export { CommentCreatePayloadKey } from './comment/comment';
 export { RecordCreatePayloadKey } from './record/record';
 export { ImageCreatePayloadKey } from './image/image';
 export { DateFormatType } from './date/date';
+export { SocketEvent } from './socket/socket';
 export { UserNotificationStatus } from './user-notification/user-notification';
