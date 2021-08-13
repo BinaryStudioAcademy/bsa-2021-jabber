@@ -1,8 +1,10 @@
 .wrapper {
+  width: 195px;
   position: relative;
 
   .title {
     margin: 0;
+    font-size: 16px;
   }
 
   &:before {

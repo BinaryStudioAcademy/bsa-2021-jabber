@@ -7,3 +7,4 @@ export { authentication } from './authentication/authentication.middleware';
 export { checkAuth } from './check-auth/check-auth.middleware';
 export { registration } from './registration/registration.middleware';
 export { checkUserPodcastOwner, checkUserEpisodeOwner } from './check-user-owner/check-user-owner.middleware';
+export { injectSocket  } from './inject-socket/inject-socket.middleware';

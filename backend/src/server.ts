@@ -5,7 +5,7 @@ import passport from 'passport';
 import { Model } from 'objection';
 import { ENV } from '~/common/enums/enums';
 import { initApi } from '~/api/api';
-import { logger, passport as passportService } from '~/services/services';
+import { logger, passport as passportService, socket as socketService } from '~/services/services';
 import {
   setTraceId as setTraceIdMiddleware,
   logRequest as logRequestMiddleware,
@@ -14,6 +14,7 @@ import {
 import knexConfig from '../knexfile';
 
 const app = express();
+socketService.create(app);
 
 Model.knex(Knex(knexConfig[ENV.APP.NODE_ENV]));
 

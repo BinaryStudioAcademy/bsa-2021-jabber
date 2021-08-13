@@ -6,6 +6,7 @@ config();
 const {
   NODE_ENV,
   PORT,
+  SOCKET_PORT,
   DATABASE_URL,
   DB_POOL_MIN,
   DB_POOL_MAX,
@@ -18,6 +19,7 @@ const ENV = {
   APP: {
     NODE_ENV: <AppEnvironment>NODE_ENV,
     SERVER_PORT: PORT,
+    SOCKET_PORT: SOCKET_PORT,
   },
   DB: {
     CONNECTION_STRING: DATABASE_URL,

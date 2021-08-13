@@ -12,6 +12,7 @@ import {
   CommentsList,
   Player,
   Button,
+  Link,
   ImageWrapper,
 } from 'components/common/common';
 import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
@@ -19,6 +20,7 @@ import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
 import { getCurrentTime } from './helpers/helpers';
 import { PageParams } from './common/types/types';
+import { ShownotesList } from './components/components';
 import styles from './styles.module.scss';
 
 const Episode: React.FC = () => {
@@ -35,6 +37,7 @@ const Episode: React.FC = () => {
     }),
   );
 
+  const hasShownotes = Boolean(episode?.shownotes?.length);
   const hasUser = Boolean(user);
   const isStaging = episode?.status === EpisodeStatus.STAGING;
   const isOwner = user?.id === episode?.userId;
@@ -43,6 +46,10 @@ const Episode: React.FC = () => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisode(Number(id)));
   }, []);
+
+  const handleJumpToTimeLine = (timeline: number): void => {
+    playerRef.current?.setCurrentTime(timeline);
+  };
 
   const handleCreateComment = (payload: CommentFormCreatePayload): void => {
     const timestamp = getCurrentTime(playerRef);
@@ -61,19 +68,15 @@ const Episode: React.FC = () => {
   return (
     <main className={styles.root}>
       {episode ? (
-        <div className={styles.episodeWrapper}>
-          <ImageWrapper
-            src={episode.image?.url}
-            alt={episode.name}
-            label={episode.name}
-            className={styles.imageWrapper}
-          />
-          <div className={styles.episode}>
-            <div className={styles.descriptionWrapper}>
-              <h1 className={styles.title}>{episode.name}</h1>
-              <p className={styles.description}>{episode.description}</p>
-              <p className={styles.type}>Type: {episode.type}</p>
-              <p className={styles.type}>Status: {episode.status}</p>
+        <>
+          <div className={styles.episodeWrapper}>
+            <ImageWrapper
+              src={episode.image?.url}
+              alt={episode.name}
+              label={episode.name}
+              className={styles.imageWrapper}
+            />
+            <div className={styles.episode}>
               {isStaging && isOwner && (
                 <Button
                   className={styles.btnStartLive}
@@ -81,23 +84,46 @@ const Episode: React.FC = () => {
                   href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}
                 />
               )}
+              <div className={styles.descriptionWrapper}>
+                {isOwner && (
+                  <Link
+                    to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`}
+                    className={styles.editLink}
+                  />
+                )}
+                <h1 className={styles.title}>{episode.name}</h1>
+                <p className={styles.description}>{episode.description}</p>
+                <p className={styles.status}>Status: {episode.status}</p>
+                {hasShownotes && (
+                  <div className={styles.shownotesWrapper}>
+                    <h3>Time navigation</h3>
+                    <ShownotesList
+                      shownotes={episode.shownotes}
+                      onClick={handleJumpToTimeLine}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
+            {episode.record && (
+              <Player src={episode.record.fileUrl} ref={playerRef} />
+            )}
           </div>
-          {episode.record && (
-            <Player src={episode.record.fileUrl} ref={playerRef} />
-          )}
-        </div>
+          <section className={styles.commentsWrapper}>
+            <h2 className={styles.commentsCounter}>
+              Comments ({comments.length})
+            </h2>
+            {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
+            {comments.length ? (
+              <CommentsList comments={comments} />
+            ) : (
+              <div>There&apos;s no comment yet.</div>
+            )}
+          </section>
+        </>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such episode</h1>
       )}
-      <div className={styles.commentsWrapper}>
-        {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
-        {comments.length ? (
-          <CommentsList comments={comments} />
-        ) : (
-          <div>There&apos;s no comment yet.</div>
-        )}
-      </div>
     </main>
   );
 };

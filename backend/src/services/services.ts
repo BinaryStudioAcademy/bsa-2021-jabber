@@ -24,6 +24,7 @@ import { FileStorage } from './file-storage/file-storage.service';
 import { Token } from './token/token.service';
 import { Passport } from './passport/passport.service';
 import { Image } from './image/image.service';
+import { Socket } from './socket/socket.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -91,6 +92,10 @@ const passport = new Passport({
   userRepository,
 });
 
+const socket = new Socket({
+  port: <string>ENV.APP.SOCKET_PORT,
+});
+
 export {
   auth,
   appAsyncStorage,
@@ -105,4 +110,5 @@ export {
   token,
   passport,
   image,
+  socket,
 };

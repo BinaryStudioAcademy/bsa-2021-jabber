@@ -196,13 +196,6 @@ class Episode {
       );
     }
 
-    if (imageDataUrl && imageId) {
-      const oldImage = await this.#imageRepository.getById(imageId);
-
-      await this.#imageRepository.delete(oldImage.id);
-      await this.#fileStorage.delete(oldImage.publicId);
-    }
-
     const episode = await this.#episodeRepository.update(id, {
       name,
       description,
@@ -210,6 +203,13 @@ class Episode {
       status,
       imageId: newImageId ?? imageId,
     });
+
+    if (imageDataUrl && imageId) {
+      const oldImage = await this.#imageRepository.getById(imageId);
+
+      await this.#imageRepository.delete(oldImage.id);
+      await this.#fileStorage.delete(oldImage.publicId);
+    }
 
     return episode;
   }
