@@ -39,17 +39,17 @@ const ConfigurateEpisode: React.FC = () => {
   }, []);
 
   return (
-    <div className={styles.episode}>
-      <h2>
-        {isEdit ? 'Edit' : 'Create'} Episode {episode?.name ?? ''}
-      </h2>
+    <main className={styles.episode}>
+      <h1 className={styles.episodeTitle}>
+        {isEdit ? 'Edit' : 'Create'} episode
+      </h1>
       {isLoading
         ? <Loader />
         : <CreateEpisodeForm
           onSubmit={handleFormSubmit}
           payload={mapEpisode} />
       }
-    </div>
+    </main>
   );
 };
 
