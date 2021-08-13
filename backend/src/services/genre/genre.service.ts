@@ -6,7 +6,6 @@ import {
   genre as genreRep,
 } from '~/data/repositories/repositories';
 
-
 type Constructor = {
   genreRepository: typeof genreRep;
 };

@@ -1,4 +1,4 @@
-import { Knex } from "knex";
+import { Knex } from 'knex';
 
 const TABLE_NAME = 'podcasts';
 const COLUMN_NAME = 'genre_id';

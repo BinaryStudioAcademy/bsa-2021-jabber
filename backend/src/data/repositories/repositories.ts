@@ -47,6 +47,6 @@ const record = new Record({
 
 const genre = new Genre({
   GenreModel,
-})
+});
 
 export { user, episode, podcast, image, comment, record, shownote, genre };

@@ -87,7 +87,7 @@ const passport = new Passport({
 
 const genre = new Genre({
   genreRepository,
-})
+});
 
 const socket = new Socket();
 

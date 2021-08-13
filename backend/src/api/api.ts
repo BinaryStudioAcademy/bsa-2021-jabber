@@ -15,7 +15,7 @@ import { initPodcastsApi } from './podcasts/podcasts.api';
 import { initEpisodesApi } from './episodes/episodes.api';
 import { initCommentsApi } from './comments/comments.api';
 import { initRecordsApi } from './records/records.api';
-import { initGenreApi } from "./genre/genre.api";
+import { initGenreApi } from './genre/genre.api';
 
 const initApi = (app: Router): Router => {
   const apiRouter = Router();
@@ -55,7 +55,7 @@ const initApi = (app: Router): Router => {
   initGenreApi({
     apiRouter,
     genreService,
-  })
+  });
 
   return apiRouter;
 };
