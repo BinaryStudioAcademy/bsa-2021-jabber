@@ -14,6 +14,8 @@ class Podcast extends Abstract {
 
   [PodcastDTOKey.IMAGE]: Image | null;
 
+  [PodcastDTOKey.COVER]: Image | null;
+
   [PodcastDTOKey.DESCRIPTION]: string;
 
   [PodcastDTOKey.TYPE]: PodcastType;
@@ -28,6 +30,14 @@ class Podcast extends Abstract {
       modelClass: Image,
       join: {
         from: 'podcasts.image_id',
+        to: 'images.id',
+      },
+    },
+    cover: {
+      relation: Model.HasOneRelation,
+      modelClass: Image,
+      join: {
+        from: 'podcasts.cover_id',
         to: 'images.id',
       },
     },

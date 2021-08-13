@@ -6,6 +6,7 @@ enum PodcastDTOKey {
   IMAGE = 'image',
   DESCRIPTION = 'description',
   TYPE = 'type',
+  COVER = 'cover',
 }
 
 export { PodcastDTOKey };
