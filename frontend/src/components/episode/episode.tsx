@@ -109,17 +109,17 @@ const Episode: React.FC = () => {
               <Player src={episode.record.fileUrl} ref={playerRef} />
             )}
           </div>
-          <div className={styles.commentsWrapper}>
-            <div className={styles.commentsCounter}>
+          <section className={styles.commentsWrapper}>
+            <h2 className={styles.commentsCounter}>
               Comments ({comments.length})
-            </div>
+            </h2>
             {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
             {comments.length ? (
               <CommentsList comments={comments} />
             ) : (
               <div>There&apos;s no comment yet.</div>
             )}
-          </div>
+          </section>
         </>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such episode</h1>

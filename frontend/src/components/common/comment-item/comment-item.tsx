@@ -29,7 +29,8 @@ const Comment: React.FC<Props> = ({ comment }) => {
       />
       <div className={styles.intro}>
         <p className={styles.userName}>
-          {comment.user.firstName}&nbsp;<span>at</span>&nbsp;{time}
+          {comment.user.nickname ?? comment.user.firstName}&nbsp;<span>at</span>
+          &nbsp;{time}
         </p>
         <p className={styles.text}>{comment.text}</p>
       </div>
