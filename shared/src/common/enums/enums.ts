@@ -6,6 +6,7 @@ export {
   EpisodesApiPath,
   CommentsApiPath,
   RecordsApiPath,
+  NotificationApiPath,
 } from './api/api';
 export { CustomExceptionName } from './exceptions/exceptions';
 export { ContentType, FileExtension } from './file/file';

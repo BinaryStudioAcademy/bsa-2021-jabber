@@ -5,7 +5,7 @@ import { loadNotification } from './actions';
 
 type State = {
   dataStatus: DataStatus;
-  notifications: UserNotification[] | UserNotification | null;
+  notifications: UserNotification[];
 };
 
 const initialState: State = {
