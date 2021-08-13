@@ -22,6 +22,11 @@ const podcastCreate = podcast.keys({
     .messages({
       'file.invalidExtension': PodcastValidationMessage.FILE_EXTENSION_FORMAT,
     }),
+  [PodcastPayloadKey.GENRE]: Joi.string()
+    .required()
+    .messages({
+      'string.empty': PodcastValidationMessage.GENRE_REQUIRE,
+    }),
 });
 
 export { podcastCreate };

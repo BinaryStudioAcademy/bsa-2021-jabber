@@ -6,6 +6,7 @@ const DEFAULT_PODCAST_PAYLOAD: PodcastFormPayload = {
   [PodcastPayloadKey.DESCRIPTION]: '',
   [PodcastPayloadKey.IMAGE]: null,
   [PodcastPayloadKey.TYPE]: PodcastType.PUBLIC,
+  [PodcastPayloadKey.GENRE]: '',
 };
 
 export { DEFAULT_PODCAST_PAYLOAD };

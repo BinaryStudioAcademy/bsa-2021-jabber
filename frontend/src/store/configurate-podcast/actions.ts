@@ -19,7 +19,7 @@ const create = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
     const podcast = await podcastApi.create({
       userId: (<User>auth.user).id,
       description: podcastPayload.description,
-      ganre: podcastPayload.genre,
+      genreId: Number(podcastPayload.genre),
       name: podcastPayload.name,
       type: podcastPayload.type,
       imageDataUrl: file ? await getDataUrl(file) : null,
@@ -48,6 +48,7 @@ const edit = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
       type: podcastPayload.type,
       imageId: imageId,
       imageDataUrl: file ? await getDataUrl(file) : null,
+      genreId: Number(podcastPayload.genre),
     });
 
     notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PODCAST_UPDATED);
