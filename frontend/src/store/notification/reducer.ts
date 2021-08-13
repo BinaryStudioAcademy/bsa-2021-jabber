@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { UserNotification } from 'common/types/types';
-import { loadNotification } from './actions';
+import { loadNotifications } from './actions';
 
 type State = {
   dataStatus: DataStatus;
@@ -14,14 +14,14 @@ const initialState: State = {
 };
 
 const reducer = createReducer(initialState, (builder) => {
-  builder.addCase(loadNotification.pending, (state) => {
+  builder.addCase(loadNotifications.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
   });
-  builder.addCase(loadNotification.fulfilled, (state) => {
+  builder.addCase(loadNotifications.fulfilled, (state) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.notifications = [];
   });
-  builder.addCase(loadNotification.rejected, (state) => {
+  builder.addCase(loadNotifications.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
 });

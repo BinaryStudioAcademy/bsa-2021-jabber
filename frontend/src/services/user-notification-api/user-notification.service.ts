@@ -16,11 +16,9 @@ class UserNotificationApi {
     this.#apiPrefix = apiPrefix;
   }
 
-  public getById(id: number): Promise<UserNotification> {
+  public getAllById(id: number): Promise<UserNotification[]> {
     return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.NOTIFICATIONS}${
-        NotificationApiPath.ROOT
-      }${id}`,
+      `${this.#apiPrefix}${ApiPath.NOTIFICATIONS}${NotificationApiPath.ROOT}${id}`,
       {
         method: HttpMethod.GET,
       },
