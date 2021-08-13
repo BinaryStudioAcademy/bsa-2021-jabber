@@ -23,3 +23,4 @@ export type {
   CommentFormCreatePayload,
 } from './comment/comment';
 export type { Option } from './ui/option';
+export type { UserNotification } from './notification/notification';
