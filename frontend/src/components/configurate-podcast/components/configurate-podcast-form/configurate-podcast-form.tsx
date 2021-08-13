@@ -79,6 +79,16 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
             <ErrorMessage errors={errors} name={PodcastPayloadKey.IMAGE} />
           </span>
         </div>
+        <div>
+          <input
+            {...register(PodcastPayloadKey.COVER)}
+            accept={acceptExtension}
+            type={InputType.FILE}
+          />
+          <span>
+            <ErrorMessage errors={errors} name={PodcastPayloadKey.COVER} />
+          </span>
+        </div>
         <Button label="Save" type={ButtonType.SUBMIT} />
       </fieldset>
     </form>

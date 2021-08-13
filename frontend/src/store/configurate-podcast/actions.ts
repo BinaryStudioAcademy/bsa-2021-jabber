@@ -15,6 +15,7 @@ const create = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
     const { podcastApi, notificationService, navigationService } = extra;
     const { auth } = getState();
     const file = getFileFromFileList(podcastPayload.image);
+    const coverFile = getFileFromFileList(podcastPayload.cover);
 
     const podcast = await podcastApi.create({
       userId: (<User>auth.user).id,
@@ -22,6 +23,7 @@ const create = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
       name: podcastPayload.name,
       type: podcastPayload.type,
       imageDataUrl: file ? await getDataUrl(file) : null,
+      coverDataUrl: coverFile ? await getDataUrl(coverFile) : null,
     });
 
     notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PODCAST_CREATED);

@@ -38,11 +38,11 @@ const Podcast: React.FC = () => {
         <>
           <div className={styles.content}>
             <ImageWrapper
-              src={podcast.image?.url}
+              src={podcast.cover?.url}
               loading="lazy"
               alt={podcast.name}
               label={podcast.name}
-              className={styles.imageWrapper}
+              className={styles.coverWrapper}
             />
             <div className={styles.podcastInfoWrapper}>
               <h1 className={styles.title}>{podcast.name}</h1>
