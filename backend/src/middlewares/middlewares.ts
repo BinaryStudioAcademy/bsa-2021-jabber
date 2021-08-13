@@ -6,4 +6,4 @@ export { jwt } from './jwt/jwt.middleware';
 export { authentication } from './authentication/authentication.middleware';
 export { checkAuth } from './check-auth/check-auth.middleware';
 export { registration } from './registration/registration.middleware';
-export { checkUserOwner } from './check-user-owner/check-user-owner.middleware';
+export { checkUserPodcastOwner, checkUserEpisodeOwner } from './check-user-owner/check-user-owner.middleware';

@@ -8,7 +8,8 @@ import { episode as episodeService } from '~/services/services';
 import { handleAsyncApi } from '~/helpers/helpers';
 import {
   checkAuth as checkAuthMiddleware,
-  checkUserOwner as checkUserOwnerMiddleware,
+  checkUserPodcastOwner as checkUserPodcastOwnerMiddleware,
+  checkUserEpisodeOwner as checkUserEpisodeOwnerMiddleware,
   validateSchema as validateSchemaMiddleware,
 } from '~/middlewares/middlewares';
 
@@ -50,7 +51,7 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
   episodeRouter.post(
     EpisodesApiPath.ROOT,
     checkAuthMiddleware(HttpMethod.POST),
-    checkUserOwnerMiddleware(),
+    checkUserPodcastOwnerMiddleware(),
     validateSchemaMiddleware(episodeCreateValidationSchema),
     handleAsyncApi(async (req, res) => {
       const episode = await episodeService.create(req.body);
@@ -61,6 +62,7 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
   episodeRouter.put(
     EpisodesApiPath.$ID,
     checkAuthMiddleware(HttpMethod.PUT),
+    checkUserEpisodeOwnerMiddleware(),
     validateSchemaMiddleware(episodeEditValidationSchema),
     handleAsyncApi(async (req, res) => {
       return res
@@ -72,6 +74,7 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
   episodeRouter.delete(
     EpisodesApiPath.$ID,
     checkAuthMiddleware(HttpMethod.DELETE),
+    checkUserEpisodeOwnerMiddleware(),    
     handleAsyncApi(async (req, res) => {
       return res
         .json(await episodeService.delete(Number(req.params.id)))
