@@ -10,8 +10,8 @@ import {
 } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { getFileExtensions } from 'helpers/helpers';
-import defaultImage from 'assets/img/default-podcast-image.jpeg';
 import styles from './styles.module.scss';
+import ImageWrapper from '../image-wrapper/image-wrapper';
 
 type Props = {
   name: Path<FieldValues>;
@@ -35,7 +35,7 @@ const ImagePreviewControl: React.FC<Props> = ({ name, control, errors, imageUrl 
     const [file] = evt.target.files ?? [];
     const imgUrl = hasImg
       ? URL.createObjectURL(file)
-      : imageUrl ?? defaultImage;
+      : imageUrl;
 
     field.onChange(imgUrl);
   };
@@ -43,11 +43,12 @@ const ImagePreviewControl: React.FC<Props> = ({ name, control, errors, imageUrl 
   return (
     <>
       <label className={styles.inputWrapper}>
-        <img
-          src={field.value ?? imageUrl ?? defaultImage}
+        <ImageWrapper
+          src={field.value ?? imageUrl}
           width="716"
           height="281"
-          loading="lazy" alt=""
+          loading="lazy" 
+          className={styles.imgInput}
         />
         <input
           {...control.register(name)}
