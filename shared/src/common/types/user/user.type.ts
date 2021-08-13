@@ -6,7 +6,7 @@ type User = {
   nickname: string;
   password: string;
   birthdate: string;
-  bio: string | null;
+  bio: string;
   createdAt: string;
   updatedAt: string;
 };

@@ -5,7 +5,7 @@ const COLUMN_NAME = 'bio';
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.table(TABLE_NAME, (table) => {
-    table.text(COLUMN_NAME).defaultTo(null);
+    table.text(COLUMN_NAME).defaultTo('');
   });
 }
 
