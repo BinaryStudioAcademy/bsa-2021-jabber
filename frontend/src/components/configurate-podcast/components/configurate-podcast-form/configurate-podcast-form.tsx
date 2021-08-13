@@ -18,6 +18,7 @@ import { DEFAULT_PODCAST_PAYLOAD } from './common/constants';
 type Props = {
   onSubmit: (payload: PodcastFormPayload) => void;
   payload?: PodcastFormPayload;
+  genres: Option[];
 };
 
 const acceptExtension = getFileExtensions(
@@ -32,6 +33,7 @@ const selectOptions: Option[] = getOptions(Object.values(PodcastType));
 const ConfiguratePodcastForm: React.FC<Props> = ({
   onSubmit,
   payload = DEFAULT_PODCAST_PAYLOAD,
+  genres,
 }) => {
   const { control, handleSubmit, errors, register } = useAppForm({
     validationSchema: podcastCreateSchema,
@@ -61,6 +63,13 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
           label="Podcast Description"
           placeholder="Description"
           hasMultipleRows
+        />
+        <Select
+          options={genres}
+          label="Genre"
+          name={PodcastPayloadKey.GENRE}
+          control={control}
+          errors={errors}
         />
         <Select
           options={selectOptions}
