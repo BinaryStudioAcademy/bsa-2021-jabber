@@ -87,8 +87,6 @@ const UserPage: React.FC = () => {
         </div>
       </main>
       <div className={styles.favoritePodcastContainer}>
-        <h2 className={styles.favoritePodcastTitle}>Favorite Podcasts</h2>
-        <div className={styles.podcasts}></div>
         <h2 className={styles.favoritePodcastTitle}>My Podcasts</h2>
         {podcasts.length ? (
           <PodcastList podcasts={podcasts} />

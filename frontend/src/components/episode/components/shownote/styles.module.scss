@@ -1,0 +1,35 @@
+.rowWrapper {
+  padding: 5px;
+  background-color: #00000000;
+  border: none;
+  text-align: left;
+}
+
+.rowWrapper:hover {
+  cursor: pointer;
+}
+
+.time {
+  color: var(--color-link-active);
+  font-weight: bold;
+  font-size: 16px;
+  flex-grow: 0.2;
+  transition: all 1s ease;
+  margin-right: 5px;
+}
+
+.noteName {
+  font-size: 14px;
+  flex-grow: 0.8;
+  line-height: 1.6;
+  white-space: nowrap;
+  transition: all 1s ease;
+}
+
+.rowWrapper:hover .time {
+  color: white;
+}
+
+.rowWrapper:hover .noteName {
+  color: var(--color-link-active);
+}

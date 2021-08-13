@@ -24,8 +24,10 @@ const create = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
       imageDataUrl: file ? await getDataUrl(file) : null,
     });
 
-    notificationService.success(NotificationTitle.SUCCESS, `The podcast ${NotificationMessage.SUCCESS_CREATED}`);
+    notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PODCAST_CREATED);
+
     navigationService.push(`${AppRoute.PODCASTS}/${podcast.id}`);
+
     return podcast;
   },
 );
@@ -33,7 +35,7 @@ const create = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
 const edit = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
   ActionType.EDIT_PODCAST,
   async (podcastPayload, { getState, extra }) => {
-    const { podcastApi, notificationService } = extra;
+    const { podcastApi, notificationService, navigationService } = extra;
     const { auth, configuratePodcast } = getState();
     const file = getFileFromFileList(podcastPayload.image);
     const { id, imageId } = <Podcast>configuratePodcast.podcast;
@@ -47,7 +49,10 @@ const edit = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
       imageDataUrl: file ? await getDataUrl(file) : null,
     });
 
-    notificationService.success(NotificationTitle.SUCCESS, `The podcast ${NotificationMessage.SUCCESS_UPDATED}`);
+    notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PODCAST_UPDATED);
+
+    navigationService.push(`${AppRoute.PODCASTS}/${podcast.id}`);
+
     return podcast;
   });
 
