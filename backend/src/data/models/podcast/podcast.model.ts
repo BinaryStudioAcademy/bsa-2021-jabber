@@ -18,6 +18,8 @@ class Podcast extends Abstract {
 
   [PodcastDTOKey.TYPE]: PodcastType;
 
+  [PodcastDTOKey.GENRE_ID]: number | null;
+
   static get tableName(): string {
     return TableName.PODCASTS;
   }

@@ -7,6 +7,7 @@ type PodcastCreateDTOPayload = {
   coverId : number | null;
   description: string;
   type: PodcastType;
+  genreId: number;
 };
 
 export type { PodcastCreateDTOPayload };

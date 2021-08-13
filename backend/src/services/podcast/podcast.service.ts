@@ -45,6 +45,7 @@ class Podcast {
     description,
     imageDataUrl,
     type,
+    genreId,
   }: PodcastCreatePayload): Promise<TPodcast> {
     const newPodcast: PodcastCreateDTOPayload = {
       name,
@@ -53,6 +54,7 @@ class Podcast {
       imageId: null,
       coverId: null,
       type,
+      genreId,
     };
 
     if (imageDataUrl) {

@@ -10,6 +10,7 @@ import {
   comment as commentRepository,
   record as recordRepository,
   image as imageRepository,
+  genre as genreRepository,
 } from '~/data/repositories/repositories';
 import { AsyncLocalStorage } from './async-storage/async-storage.service';
 import { Logger } from './logger/logger.service';
@@ -23,6 +24,7 @@ import { Record } from './record/record.service';
 import { FileStorage } from './file-storage/file-storage.service';
 import { Token } from './token/token.service';
 import { Passport } from './passport/passport.service';
+import { Genre } from './genre/genre.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -82,6 +84,10 @@ const passport = new Passport({
   userRepository,
 });
 
+const genre = new Genre({
+  genreRepository,
+})
+
 export {
   auth,
   appAsyncStorage,
@@ -95,4 +101,5 @@ export {
   fileStorage,
   token,
   passport,
+  genre,
 };

@@ -9,7 +9,7 @@ enum PodcastPayloadKey {
   CREATE_AT = 'createdAt',
   IMAGE_ID = 'imageId',
   TYPE = 'type',
-  GENRE = 'genre',
+  GENRE_ID = 'genreId',
 }
 
 export { PodcastPayloadKey };
