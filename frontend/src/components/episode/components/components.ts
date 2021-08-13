@@ -1,4 +1,2 @@
-import CreateCommentForm from './create-comment-form/create-comment-form';
-import CommentsList from './comments-list/comments-list';
-
-export { CreateCommentForm, CommentsList };
+export { default as Shownote } from './shownote/shownote';
+export { default as ShownotesList } from './shownotes-list/shownotes-list';

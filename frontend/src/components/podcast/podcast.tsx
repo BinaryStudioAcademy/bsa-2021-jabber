@@ -1,18 +1,20 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import { podcast as podcastActions } from 'store/actions';
 import { AppRoute, DataStatus } from 'common/enums/enums';
-import defaultImage from 'assets/img/default-podcast-image.jpeg';
-import { Link, Loader } from 'components/common/common';
+import { Link, Loader, ImageWrapper } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 
 const Podcast: React.FC = () => {
-  const { podcast, episodes, dataStatus } = useAppSelector(({ podcast }) => ({
-    podcast: podcast.podcast,
-    episodes: podcast.episodes,
-    dataStatus: podcast.dataStatus,
-  }));
+  const { userId, podcast, episodes, dataStatus } = useAppSelector(
+    ({ podcast, auth }) => ({
+      userId: auth.user?.id,
+      podcast: podcast.podcast,
+      episodes: podcast.episodes,
+      dataStatus: podcast.dataStatus,
+    }),
+  );
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
 
@@ -35,35 +37,35 @@ const Podcast: React.FC = () => {
       {podcast ? (
         <>
           <div className={styles.content}>
-            <div className={styles.descriptionWrapper}>
+            <ImageWrapper
+              src={podcast.image?.url}
+              loading="lazy"
+              alt={podcast.name}
+              label={podcast.name}
+              className={styles.imageWrapper}
+            />
+            <div className={styles.podcastInfoWrapper}>
               <h1 className={styles.title}>{podcast.name}</h1>
-              <p className={styles.description}>{podcast.description}</p>
+              <div className={styles.descriptionWrapper}>
+                <p className={styles.description}>{podcast.description}</p>
+              </div>
               <p className={styles.type}>Type: {podcast.type}</p>
-            </div>
-            <div className={styles.wrapper}>
-              <p className={styles.imageWrapper}>
-                <img
-                  src={podcast.image?.url ?? defaultImage}
-                  className={styles.podcastImage}
-                  width="280"
-                  height="280"
-                  loading="lazy"
-                  alt={podcast.name}
-                />
-              </p>
-              <Link
-                to={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
-              >
-                Add episode
-              </Link>
+              {podcast.userId === userId && (
+                <Link
+                  to={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
+                >
+                  Add episode
+                </Link>
+              )}
             </div>
           </div>
-          {
-            episodes.length
-              ? <EpisodeTable episodes={episodes} />
-              : <div className={styles.placeholder}>There are no episodes in this podcast yet.</div>
-          }
-          
+          {episodes.length ? (
+            <EpisodeTable episodes={episodes} />
+          ) : (
+            <div className={styles.placeholder}>
+              There are no episodes in this podcast yet.
+            </div>
+          )}
         </>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such podcast</h1>

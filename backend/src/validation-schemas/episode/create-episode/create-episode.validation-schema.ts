@@ -1,9 +1,9 @@
 import { Joi } from '~/helpers/helpers';
-import { episode } from 'jabber-shared/validation-schemas/validation-schemas';
 import {
   EpisodeValidationMessage,
   EpisodePayloadKey,
 } from '~/common/enums/enums';
+import { episode } from 'jabber-shared/validation-schemas/validation-schemas';
 
 const episodeCreate = episode.keys({
   [EpisodePayloadKey.USER_ID]: Joi.number().integer().required().messages({

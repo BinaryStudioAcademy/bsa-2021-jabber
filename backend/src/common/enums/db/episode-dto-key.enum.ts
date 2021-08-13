@@ -7,6 +7,8 @@ enum EpisodeDTOKey {
   STATUS = 'status',
   IMAGE_ID = 'imageId',
   IMAGE = 'image',
+  RECORD = 'record',
+  SHOWNOTES = 'shownotes',
 }
 
 export { EpisodeDTOKey };

@@ -1,17 +1,34 @@
-import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
+import {
+  useAppSelector,
+  useDispatch,
+  useEffect,
+  useParams,
+  useRef,
+} from 'hooks/hooks';
 import { episode as episodeActions } from 'store/actions';
-import { CreateCommentForm, CommentsList } from './components/components';
-import { Loader } from 'components/common/common';
-import { DataStatus } from 'common/enums/enums';
+import {
+  Loader,
+  CreateCommentForm,
+  CommentsList,
+  Player,
+  Button,
+  Link,
+  ImageWrapper,
+} from 'components/common/common';
+import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
+import { PlayerRef } from 'components/common/player/player';
+import { getCurrentTime } from './helpers/helpers';
 import { PageParams } from './common/types/types';
+import { ShownotesList } from './components/components';
 import styles from './styles.module.scss';
 
 const Episode: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
+  const playerRef = useRef<PlayerRef | null>(null);
 
-  const { episode, dataStatus, comments, user } = useAppSelector(
+  const { episode, comments, user, dataStatus } = useAppSelector(
     ({ episode, auth }) => ({
       dataStatus: episode.dataStatus,
       episode: episode.episode,
@@ -20,15 +37,28 @@ const Episode: React.FC = () => {
     }),
   );
 
+  const hasShownotes = Boolean(episode?.shownotes?.length);
   const hasUser = Boolean(user);
+  const isStaging = episode?.status === EpisodeStatus.STAGING;
+  const isOwner = user?.id === episode?.userId;
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisode(Number(id)));
   }, []);
 
+  const handleJumpToTimeLine = (timeline: number): void => {
+    playerRef.current?.setCurrentTime(timeline);
+  };
+
   const handleCreateComment = (payload: CommentFormCreatePayload): void => {
-    dispatch(episodeActions.createComment(payload));
+    const timestamp = getCurrentTime(playerRef);
+    dispatch(
+      episodeActions.createComment({
+        ...payload,
+        timestamp,
+      }),
+    );
   };
 
   if (dataStatus === DataStatus.PENDING) {
@@ -38,34 +68,62 @@ const Episode: React.FC = () => {
   return (
     <main className={styles.root}>
       {episode ? (
-        <div className={styles.episode}>
-          <div className={styles.descriptionWrapper}>
-            <h1 className={styles.title}>{episode.name}</h1>
-            <p className={styles.description}>{episode.description}</p>
-            <p className={styles.type}>Type: {episode.type}</p>
-            <p className={styles.type}>Status: {episode.status}</p>
-          </div>
-          <p className={styles.logoWrapper}>
-            <img
-              src="#"
-              width="280"
-              height="280"
-              loading="lazy"
+        <>
+          <div className={styles.episodeWrapper}>
+            <ImageWrapper
+              src={episode.image?.url}
               alt={episode.name}
+              label={episode.name}
+              className={styles.imageWrapper}
             />
-          </p>
-        </div>
+            <div className={styles.episode}>
+              {isStaging && isOwner && (
+                <Button
+                  className={styles.btnStartLive}
+                  label="Start Live"
+                  href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}
+                />
+              )}
+              <div className={styles.descriptionWrapper}>
+                {isOwner && (
+                  <Link
+                    to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`}
+                    className={styles.editLink}
+                  />
+                )}
+                <h1 className={styles.title}>{episode.name}</h1>
+                <p className={styles.description}>{episode.description}</p>
+                <p className={styles.status}>Status: {episode.status}</p>
+                {hasShownotes && (
+                  <div className={styles.shownotesWrapper}>
+                    <h3>Time navigation</h3>
+                    <ShownotesList
+                      shownotes={episode.shownotes}
+                      onClick={handleJumpToTimeLine}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+            {episode.record && (
+              <Player src={episode.record.fileUrl} ref={playerRef} />
+            )}
+          </div>
+          <div className={styles.commentsWrapper}>
+            <div className={styles.commentsCounter}>
+              Comments ({comments.length})
+            </div>
+            {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
+            {comments.length ? (
+              <CommentsList comments={comments} />
+            ) : (
+              <div>There&apos;s no comment yet.</div>
+            )}
+          </div>
+        </>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such episode</h1>
       )}
-      <div className={styles.commentsWrapper}>
-        {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
-        {comments.length ? (
-          <CommentsList comments={comments} />
-        ) : (
-          <div>There&apos;s no comment yet.</div>
-        )}
-      </div>
     </main>
   );
 };

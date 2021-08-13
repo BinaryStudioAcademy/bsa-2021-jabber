@@ -27,6 +27,8 @@ export {
   EpisodeValidationMessage,
   PodcastValidationRule,
   PodcastValidationMessage,
+  ShownoteValidationRule,
+  ShownoteValidationMessage,
   CommentValidationRule,
   CommentValidationMessage,
 } from './validation/validation';
@@ -35,8 +37,9 @@ export {
   EpisodeType,
   EpisodeStatus,
 } from './episode/episode';
-export { ShownoteCreatePayloadKey } from './shownote/shownote';
+export { ShownotePayloadKey } from './shownote/shownote';
 export { CommentCreatePayloadKey } from './comment/comment';
 export { RecordCreatePayloadKey } from './record/record';
 export { ImageCreatePayloadKey } from './image/image';
 export { DateFormatType } from './date/date';
+export { UserNotificationStatus } from './user-notification/user-notification';

@@ -3,6 +3,8 @@ import { TableName, EpisodeDTOKey } from '~/common/enums/enums';
 import { EpisodeType, EpisodeStatus } from '~/common/enums/enums';
 import { Abstract } from '../abstract/abstract.model';
 import { Image } from '~/data/models/image/image.model';
+import { Shownote } from '~/data/models/shownote/shownote.model';
+import { Record } from '~/data/models/record/record.model';
 
 class Episode extends Abstract {
   [EpisodeDTOKey.NAME]: string;
@@ -15,9 +17,13 @@ class Episode extends Abstract {
 
   [EpisodeDTOKey.IMAGE]: Image | null;
 
+  [EpisodeDTOKey.RECORD]: Record | null;
+
   [EpisodeDTOKey.TYPE]: EpisodeType;
 
   [EpisodeDTOKey.DESCRIPTION]: string;
+
+  [EpisodeDTOKey.SHOWNOTES]: Shownote[];
 
   [EpisodeDTOKey.STATUS]: EpisodeStatus;
 
@@ -32,6 +38,22 @@ class Episode extends Abstract {
       join: {
         from: 'episodes.image_id',
         to: 'images.id',
+      },
+    },
+    shownotes: {
+      relation: Model.HasManyRelation,
+      modelClass: Shownote,
+      join: {
+        from: 'episodes.id',
+        to: 'shownotes.episode_id',
+      },
+    },
+    record: {
+      relation: Model.HasOneRelation,
+      modelClass: Record,
+      join: {
+        from: 'episodes.id',
+        to: 'records.episode_id',
       },
     },
   };

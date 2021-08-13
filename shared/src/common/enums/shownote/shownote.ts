@@ -1,1 +1,1 @@
-export { ShownoteCreatePayloadKey } from './shownote-create-payload-key.enum';
+export { ShownotePayloadKey } from './shownote-payload-key.enum';

@@ -1,5 +1,4 @@
 .podcast {
-  flex-grow: 1;
   max-width: 1515px;
   width: 100%;
   margin: 0 auto;
@@ -8,10 +7,15 @@
 
 .content {
   display: flex;
+
+  padding: 55px 75px;
+  position: relative;
 }
 
-.descriptionWrapper {
-  flex-grow: 2;
+.podcastInfoWrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 0.8;
 }
 
 .title {
@@ -28,48 +32,29 @@
   margin: 0;
 }
 
-.wrapper {
-  margin-right: 100px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
+.imageContainer {
+  flex-grow: 0.2;
+}
 
-  &:before {
-    background-image: url('../../assets/img/corner.svg');
-    background-position: right top;
-    background-repeat: no-repeat;
-    background-size: 0 0;
-    content: '';
-    pointer-events: none;
-    position: absolute;
-    margin: 1px 0 36px 1px;
-    padding-bottom: 36px;
-    width: 100%;
-    transition: transform 0.2s ease, background-size 0.5s 0.15s ease;
-    z-index: 20;
-    height: 280px;
+.imageWrapper {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  z-index: -1;
+
+  & div {
+    background-color: #989ea6;
   }
 
-  .imageWrapper {
-    margin: 0 0 10px;
-    border-radius: 5px;
-    outline: 10px solid rgba(134, 134, 134, 0.55);
-    outline-offset: -10px;
-    transition: transform 0.2s ease;
-    height: 280px;
-  }
+  & span {
+    left: 80%;
+    top: calc(50%);
 
-  &:hover {
-    &:before {
-      background-size: 36px 36px;
-      transform: translateY(-8px);
-    }
-
-    .imageWrapper {
-      outline: 10px solid rgba(134, 134, 134, 0.71);
-      transform: translateY(-8px);
-    }
+    font-size: 120px;
+    color: #3e4752;
+    opacity: 0.1;
   }
 }
 
@@ -77,11 +62,6 @@
   flex-grow: 1;
   text-align: center;
   margin: 0;
-}
-
-.podcastImage {
-  height: 100%;
-  object-fit: cover;
 }
 
 .placeholder {

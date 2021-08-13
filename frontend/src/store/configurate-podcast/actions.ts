@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getDataUrl, getFileFromFileList  } from 'helpers/helpers';
+import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
 import {
   AsyncThunkConfig,
   Podcast,
@@ -7,40 +7,52 @@ import {
   User,
 } from 'common/types/types';
 import { ActionType } from './common';
-import { NotificationMessage, NotificationTitle } from 'common/enums/enums';
+import { AppRoute, NotificationMessage, NotificationTitle } from 'common/enums/enums';
 
 const create = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
   ActionType.CREATE_PODCAST,
   async (podcastPayload, { getState, extra }) => {
-    const { podcastApi, notificationService } = extra;
+    const { podcastApi, notificationService, navigationService } = extra;
     const { auth } = getState();
     const file = getFileFromFileList(podcastPayload.image);
-    notificationService.success(NotificationTitle.SUCCESS, `The podcast ${NotificationMessage.SUCCESS_CREATED}`);
 
-    return podcastApi.create({
+    const podcast = await podcastApi.create({
       userId: (<User>auth.user).id,
       description: podcastPayload.description,
       name: podcastPayload.name,
       type: podcastPayload.type,
       imageDataUrl: file ? await getDataUrl(file) : null,
     });
+
+    notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PODCAST_CREATED);
+
+    navigationService.push(`${AppRoute.PODCASTS}/${podcast.id}`);
+
+    return podcast;
   },
 );
 
 const edit = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
   ActionType.EDIT_PODCAST,
   async (podcastPayload, { getState, extra }) => {
-    const { podcastApi, notificationService } = extra;
-    const { configuratePodcast } = getState();
+    const { podcastApi, notificationService, navigationService } = extra;
+    const { auth, configuratePodcast } = getState();
     const file = getFileFromFileList(podcastPayload.image);
-    const updatePodcast = <Podcast>configuratePodcast.podcast;
-    const podcast = await podcastApi.update({
-      ...updatePodcast,
+    const { id, imageId } = <Podcast>configuratePodcast.podcast;
+
+    const podcast = await podcastApi.update(id, {
+      userId: (<User>auth.user).id,
       name: podcastPayload.name,
       description: podcastPayload.description,
+      type: podcastPayload.type,
+      imageId: imageId,
       imageDataUrl: file ? await getDataUrl(file) : null,
     });
-    notificationService.success(NotificationTitle.SUCCESS, `The podcast ${NotificationMessage.SUCCESS_UPDATED}`);
+
+    notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PODCAST_UPDATED);
+
+    navigationService.push(`${AppRoute.PODCASTS}/${podcast.id}`);
+
     return podcast;
   });
 

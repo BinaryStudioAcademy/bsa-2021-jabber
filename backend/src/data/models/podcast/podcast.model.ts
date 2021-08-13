@@ -10,6 +10,8 @@ class Podcast extends Abstract {
 
   [PodcastDTOKey.IMAGE_ID]: number | null;
 
+  [PodcastDTOKey.COVER_ID]: number | null;
+
   [PodcastDTOKey.IMAGE]: Image | null;
 
   [PodcastDTOKey.DESCRIPTION]: string;
