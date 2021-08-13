@@ -11,7 +11,7 @@ import {
 } from '~/data/repositories/repositories';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
 import { HttpError } from '~/exceptions/exceptions';
-import { HttpCode } from '~/common/enums/enums';
+import { HttpCode, PodcastType } from '~/common/enums/enums';
 import { ErrorMessage } from '~/common/enums/app/error-message.enum';
 
 type Constructor = {
@@ -128,8 +128,18 @@ class Podcast {
     return podcast;
   }
 
-  public getAllByUserId(userId: string): Promise<TPodcast[]> {
-    return this.#podcastRepository.getAllByUserId(userId);
+  public getAllByUserId(searchedUserId: string, requestUserId: string | undefined): Promise<TPodcast[]> {
+
+    const filterParams = {
+      user_id: searchedUserId,
+    };
+    const isRequestUserAuthorised = Boolean(requestUserId);
+
+    if (!isRequestUserAuthorised || searchedUserId !== requestUserId) {
+      Object.assign(filterParams, { type: PodcastType.PUBLIC });
+    }
+
+    return this.#podcastRepository.getAllByUserId(filterParams);
   }
 }
 
