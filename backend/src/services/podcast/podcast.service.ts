@@ -44,6 +44,7 @@ class Podcast {
     userId,
     description,
     imageDataUrl,
+    coverDataUrl,
     type,
   }: PodcastCreatePayload): Promise<TPodcast> {
     const newPodcast: PodcastCreateDTOPayload = {
@@ -67,6 +68,20 @@ class Podcast {
       });
 
       newPodcast.imageId = image.id;
+    }
+
+    if (coverDataUrl) {
+      const { url, publicId } = await this.#fileStorage.upload({
+        dataUrl: coverDataUrl,
+        userId,
+      });
+
+      const image = await this.#imageRepository.create({
+        url,
+        publicId,
+      });
+
+      newPodcast.coverId = image.id;
     }
 
     return this.#podcastRepository.create(newPodcast);
