@@ -1,4 +1,5 @@
 export { Switch, Route, Redirect } from 'react-router-dom';
+export { default as MaskedInput } from 'react-maskedinput';
 export { default as Button } from './button/button';
 export { default as Input } from './input/input';
 export { default as Link } from './link/link';
@@ -21,3 +22,4 @@ export { default as PodcastList } from './podcasts-list/podcasts-list';
 export { default as PodcastItem } from './podcast-item/podcast-item';
 export { default as Player } from './player/player';
 export { default as ImageWrapper } from './image-wrapper/image-wrapper';
+
