@@ -24,12 +24,8 @@ class Record {
     return this.#recordRepository.delete(id);
   }
 
-  public async deleteByEpisodeId(id: number): Promise<void> {
-    const record = await this.#recordRepository.getByEpisodeId(id);
-
-    if (record) {
-      await this.delete(record.id);
-    }
+  public getByEpisodeId(id: number): Promise<TRecord> {
+    return this.#recordRepository.getByEpisodeId(id);
   }
 }
 

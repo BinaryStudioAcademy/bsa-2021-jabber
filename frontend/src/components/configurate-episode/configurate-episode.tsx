@@ -33,7 +33,10 @@ const ConfigurateEpisode: React.FC = () => {
   };
 
   const handleDeleteEpisode = (): void => {
-    dispatch(configurateEpisodeActions.deleteEpisode(Number(id)));
+    dispatch(configurateEpisodeActions.deleteEpisode({
+      episodeId: Number(id),
+      podcastId: Number(podcastId),
+    }));
   };
 
   useEffect(() => {

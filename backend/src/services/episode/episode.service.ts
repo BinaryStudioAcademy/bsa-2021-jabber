@@ -230,7 +230,10 @@ class Episode {
 
     await this.#commentService.deleteAllByEpisodeId(id);
 
-    await this.#recordService.deleteByEpisodeId(id);
+    const record = await this.#recordService.getByEpisodeId(id);
+    if (record) {
+      await this.#recordService.delete(record.id);
+    }
 
     await this.#shownoteService.deleteAllByEpisodeId(id);
 
