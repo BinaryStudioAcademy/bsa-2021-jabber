@@ -19,6 +19,7 @@ import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
 import { getCurrentTime } from './helpers/helpers';
 import { PageParams } from './common/types/types';
+import { ShownotesList } from './components/components';
 import styles from './styles.module.scss';
 
 const Episode: React.FC = () => {
@@ -35,6 +36,7 @@ const Episode: React.FC = () => {
     }),
   );
 
+  const hasShownotes = Boolean(episode?.shownotes?.length);
   const hasUser = Boolean(user);
   const isStaging = episode?.status === EpisodeStatus.STAGING;
   const isOwner = user?.id === episode?.userId;
@@ -43,6 +45,10 @@ const Episode: React.FC = () => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisode(Number(id)));
   }, []);
+
+  const handleJumpToTimeLine = (timeline:number): void => {
+    playerRef.current?.setCurrentTime(timeline);
+  };
 
   const handleCreateComment = (payload: CommentFormCreatePayload): void => {
     const timestamp = getCurrentTime(playerRef);
@@ -74,6 +80,17 @@ const Episode: React.FC = () => {
               <p className={styles.description}>{episode.description}</p>
               <p className={styles.type}>Type: {episode.type}</p>
               <p className={styles.type}>Status: {episode.status}</p>
+              {hasShownotes && (
+                <div className={styles.shownotesWrapper}>
+                  <h3>Time navigation</h3>
+                  <ShownotesList shownotes={episode.shownotes} onClick={handleJumpToTimeLine} />
+                </div>
+              )}
+              {
+                isStaging && isOwner && <Button className={styles.btnStartLive} label="Start Live" href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`} />
+              }
+            </div>
+            <div className={styles.imageContainer}>
               {isStaging && isOwner && (
                 <Button
                   className={styles.btnStartLive}
