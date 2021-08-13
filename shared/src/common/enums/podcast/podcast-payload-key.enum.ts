@@ -10,6 +10,7 @@ enum PodcastPayloadKey {
   IMAGE_ID = 'imageId',
   TYPE = 'type',
   GENRE_ID = 'genreId',
+  GENRE = 'genre',
 }
 
 export { PodcastPayloadKey };

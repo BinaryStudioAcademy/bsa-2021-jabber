@@ -5,6 +5,7 @@ type PodcastEditDTOPayload = {
   imageId: number | null;
   description: string;
   type: PodcastType;
+  genreId: number;
 };
 
 export type { PodcastEditDTOPayload };
