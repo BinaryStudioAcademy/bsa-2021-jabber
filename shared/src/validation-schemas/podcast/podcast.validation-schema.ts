@@ -30,6 +30,7 @@ const podcast = Joi.object({
       'string.max': PodcastValidationMessage.PODCAST_DESCRIPTION_MAX_LENGTH,
     }),
   [PodcastPayloadKey.TYPE]: Joi.string().valid(...podcastType),
+  [PodcastPayloadKey.TYPE]: Joi.string().valid(...podcastType),
 });
 
 export { podcast };

@@ -13,6 +13,7 @@ const DEFAULT_CREATE_EPISODE_PAYLOAD: EpisodeFormPayload = {
   [EpisodePayloadKey.TYPE]: EpisodeType.PUBLIC,
   [EpisodePayloadKey.IMAGE]: null,
   [EpisodePayloadKey.RECORD]: null,
+  [EpisodePayloadKey.GENRE]: null,
   [EpisodePayloadKey.STATUS]: EpisodeStatus.PUBLISHED,
 };
 

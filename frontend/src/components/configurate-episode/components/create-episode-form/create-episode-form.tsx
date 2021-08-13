@@ -66,6 +66,13 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
           control={control}
           errors={errors}
         />
+        <Select
+          options={selectStatusOptions}
+          label="Genre"
+          name={EpisodePayloadKey.GENRE}
+          control={control}
+          errors={errors}
+        />
         <ShownoteInputList control={control} errors={errors} />
         <Select
           options={selectTypeOptions}
