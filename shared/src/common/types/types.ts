@@ -1,4 +1,9 @@
-export type { User, UserCreatePayload, UserSignInPayload } from './user/user';
+export type {
+  User,
+  UserCreatePayload,
+  UserSignInPayload,
+  UserEditPayload,
+} from './user/user';
 export type {
   Podcast,
   PodcastPayload,
