@@ -1,18 +1,24 @@
-import { useAppSelector, useParams, useDispatch, useEffect } from 'hooks/hooks';
-import { Loader, PodcastList, ImageWrapper } from 'components/common/common';
-import { DataStatus } from 'common/enums/enums';
+import {
+  Loader,
+  PodcastList,
+  ImageWrapper,
+  Link,
+} from 'components/common/common';
+import { AppRoute, DataStatus } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
+import { useAppSelector, useParams, useDispatch, useEffect } from 'hooks/hooks';
 import { userProfile as userProfileActions } from 'store/actions';
-import { PageParams } from './common/types/types';
 import contactLogo from 'assets/img/user-profile/contact.svg';
-import editLogo from 'assets/img/user-profile/edit.svg';
 import emailLogo from 'assets/img/user-profile/email.svg';
+import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 
 const UserPage: React.FC = () => {
   const { id } = useParams<PageParams>();
-  const { user, podcasts, dataStatus } = useAppSelector(
-    ({ userProfile }: RootState) => ({
+
+  const { currentUser, user, podcasts, dataStatus } = useAppSelector(
+    ({ auth, userProfile }: RootState) => ({
+      currentUser: auth.user,
       user: userProfile.user,
       podcasts: userProfile.podcasts,
       dataStatus: userProfile.dataStatus,
@@ -27,6 +33,7 @@ const UserPage: React.FC = () => {
   }, [id]);
 
   const hasUser = Boolean(user);
+  const hasPermitToEdit = currentUser?.id === Number(id);
 
   if (!hasUser) {
     return (
@@ -81,9 +88,12 @@ const UserPage: React.FC = () => {
               necessitatibus eos vel a, doloribus qui voluptas dolores eveniet
             </span>
           </div>
-          <button className={styles.editButton}>
-            <img src={editLogo} />
-          </button>
+          {hasPermitToEdit && (
+            <Link
+              to={`${AppRoute.USERS_EDIT}/${id}`}
+              className={styles.editLink}
+            />
+          )}
         </div>
       </main>
       <div className={styles.favoritePodcastContainer}>
