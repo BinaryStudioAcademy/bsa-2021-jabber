@@ -8,3 +8,4 @@ export { checkAuth } from './check-auth/check-auth.middleware';
 export { registration } from './registration/registration.middleware';
 export { checkUserOwner } from './check-user-owner/check-user-owner.middleware';
 export { injectSocket  } from './inject-socket/inject-socket.middleware';
+export { identifyUser } from './identify-user/identify-user.middleware';

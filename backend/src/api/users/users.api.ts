@@ -24,7 +24,6 @@ const initUsersApi = ({ apiRouter, userService }: Args): Router => {
 
   userRouter.get(
     UsersApiPath.$ID,
-    checkAuth(HttpMethod.GET),
     handleAsyncApi(async (_req, res) => {
       return res.json(await userService.getById(Number(_req.params.id))).status(HttpCode.OK);
     }),
