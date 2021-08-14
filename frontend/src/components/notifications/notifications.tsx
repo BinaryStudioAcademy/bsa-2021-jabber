@@ -11,7 +11,7 @@ const Notifications: React.FC = () => {
   return (
     <ul className={styles.container}>
       {notifications.map((notification) => {
-        <NotificationItem notification={notification} />;
+        <NotificationItem notification={notification} key={notification.id} />;
       })}
     </ul>
   );
