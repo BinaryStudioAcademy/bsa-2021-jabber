@@ -4,11 +4,30 @@
   width: 100%;
   cursor: pointer;
 
-  .label {
-    position: relative;
-    bottom: 5px;
-    font-size: 12px;
-    font-weight: 500;
+  .cornerRight {
+    width: 140px;
+    height: 140px;
+    overflow: hidden;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  
+    .label {
+        position: absolute;
+        left: -18px;
+        top: 36px;
+        transform: rotate(45deg);
+        z-index: 98;
+        display: block;
+        width: 225px;
+        padding: 5px 0;
+        font-size: 12px;
+        font-weight: 500;
+        background-color: var(--color-button-background);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
   }
 
   &::before{

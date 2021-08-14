@@ -50,7 +50,9 @@ const ImagePreviewControl: React.FC<Props> = ({
   return (
     <>
       <label className={styles.inputWrapper}>
-        <span className={styles.label}>{label}</span>
+        <div className={styles.cornerRight}>
+          <span className={styles.label}>{label}</span>
+        </div>
         <ImageWrapper
           src={field.value ?? imageUrl}
           width="716"
