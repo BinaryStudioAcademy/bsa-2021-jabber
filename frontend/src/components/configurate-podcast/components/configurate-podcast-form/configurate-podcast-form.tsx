@@ -13,6 +13,7 @@ import { Input, Button, Select, ImagePreviewControl } from 'components/common/co
 import { DEFAULT_PODCAST_PAYLOAD } from './common/constants';
 import { podcastCreate as podcastCreateSchema } from 'validation-schemas/validation-schemas';
 import styles from './styles.module.scss';
+import { ImagePreviewStyle } from 'common/enums/ui/image-preview-control-style.enum';
 
 type Props = {
   onSubmit: (payload: PodcastFormPayload) => void;
@@ -46,6 +47,7 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
           errors={errors}
           imageUrl={podcast?.image?.url}
           label="Podcast Image"
+          imagePreviewStyle={ImagePreviewStyle.SHORT}
         />
         <ImagePreviewControl
           name={PodcastPayloadKey.COVER}

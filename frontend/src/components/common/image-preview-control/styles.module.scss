@@ -4,6 +4,7 @@
   width: 100%;
   cursor: pointer;
 
+
   .cornerRight {
     width: 140px;
     height: 140px;
@@ -63,4 +64,12 @@
   color: var(--color-button-background);
   min-height: 18px;
   margin-top: 5px;
+}
+
+.styleShort{
+  max-width: 358px;
+}
+
+.styleWide{
+  max-width: 716px;
 }

@@ -12,6 +12,8 @@ import { ErrorMessage } from '@hookform/error-message';
 import { getFileExtensions } from 'helpers/helpers';
 import styles from './styles.module.scss';
 import ImageWrapper from '../image-wrapper/image-wrapper';
+import { getAllowedClasses } from 'helpers/dom/dom';
+import { ImagePreviewStyle } from 'common/enums/ui/image-preview-control-style.enum';
 
 type Props = {
   name: Path<FieldValues>;
@@ -19,6 +21,8 @@ type Props = {
   errors: FieldValues;
   imageUrl?: string;
   label?: string;
+  className?: string;
+  imagePreviewStyle?: ImagePreviewStyle;
 };
 
 const acceptExtension = getFileExtensions(
@@ -34,6 +38,8 @@ const ImagePreviewControl: React.FC<Props> = ({
   errors,
   imageUrl,
   label = 'Image',
+  className,
+  imagePreviewStyle = ImagePreviewStyle.WIDE,
 }) => {
   const { field } = useController({ name, control });
 
@@ -47,9 +53,19 @@ const ImagePreviewControl: React.FC<Props> = ({
     field.onChange(imgUrl);
   };
 
+  const allowedClassesInputWrapper = getAllowedClasses(
+    className,
+    styles.inputWrapper,
+    styles[`style${imagePreviewStyle}`],
+  );
+
+  const allowedClassesImage = getAllowedClasses(
+    styles[`style${imagePreviewStyle}`],
+  );
+
   return (
     <>
-      <label className={styles.inputWrapper}>
+      <label className={allowedClassesInputWrapper}>
         <div className={styles.cornerRight}>
           <span className={styles.label}>{label}</span>
         </div>
@@ -58,7 +74,7 @@ const ImagePreviewControl: React.FC<Props> = ({
           width="716"
           height="281"
           loading="lazy"
-          className={styles.imgInput}
+          className={allowedClassesImage}
         />
         <input
           {...control.register(name)}
