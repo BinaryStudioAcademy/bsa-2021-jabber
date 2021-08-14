@@ -33,7 +33,7 @@ const ImagePreviewControl: React.FC<Props> = ({
   control,
   errors,
   imageUrl,
-  label = '',
+  label = 'Image',
 }) => {
   const { field } = useController({ name, control });
 
