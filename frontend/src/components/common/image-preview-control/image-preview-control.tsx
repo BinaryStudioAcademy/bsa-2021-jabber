@@ -47,7 +47,7 @@ const ImagePreviewControl: React.FC<Props> = ({ name, control, errors, imageUrl 
           src={field.value ?? imageUrl}
           width="716"
           height="281"
-          loading="lazy" 
+          loading="lazy"
           className={styles.imgInput}
         />
         <input
