@@ -21,13 +21,8 @@ const Podcast: React.FC = () => {
 
   useEffect(() => {
     dispatch(podcastActions.loadPodcast(Number(id)));
+    dispatch(podcastActions.loadEpisodesByPodcastId(Number(id)));
   }, []);
-
-  useEffect(() => {
-    if (podcast) {
-      dispatch(podcastActions.loadEpisodesByPodcastId(podcast.id));
-    }
-  }, [podcast]);
 
   if (dataStatus === DataStatus.PENDING) {
     return <Loader />;
