@@ -9,4 +9,17 @@
   margin: 0;
   border: none;
   gap: 15px;
+
+  .btnsWrapper{
+    display: flex;
+    flex-direction: row;
+    .btnSave{
+      margin-right: 15px;
+    }
+    .btnSave,
+    .btnCancel{
+      max-width: 193px;
+      width: 100%;
+    }
+  }
 }

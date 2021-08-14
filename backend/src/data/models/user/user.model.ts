@@ -17,6 +17,8 @@ class User extends Abstract {
 
   [UserDTOKey.ROLE]: UserRole;
 
+  [UserDTOKey.BIO]: string;
+
   static get tableName(): string {
     return TableName.USERS;
   }

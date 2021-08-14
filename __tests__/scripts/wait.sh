@@ -9,9 +9,9 @@ function wait() {
     RESULT=2
     echo 'Sever is up!'
   elif [ $TIMER -ge 180 ]; then
-     RESULT=2
+    RESULT=2
     echo 'Timeout exceeded. Server still down.'
-  else 
+  else
     RESULT=1
   fi
 }
@@ -20,6 +20,6 @@ function wait() {
 while [[ $RESULT -lt 2 ]]; do
   echo 'Waiting for server . . .'
   sleep 5
-  TIMER=$((TIMER+5)) 
+  TIMER=$((TIMER+5))
   wait
 done
