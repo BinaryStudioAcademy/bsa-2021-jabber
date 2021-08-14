@@ -159,7 +159,7 @@ class Podcast {
       await this.#fileStorage.delete(publicId);
       await this.#imageRepository.delete(deleteImageId);
     }
-    
+
     if (deleteCoverId) {
       const { publicId } = await this.#imageRepository.getById(deleteCoverId);
       await this.#fileStorage.delete(publicId);
