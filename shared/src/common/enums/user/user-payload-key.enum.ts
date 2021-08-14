@@ -1,4 +1,4 @@
-enum UserCreatePayloadKey {
+enum UserPayloadKey {
   FIRST_NAME = 'firstName',
   LAST_NAME = 'lastName',
   NICKNAME = 'nickname',
@@ -7,4 +7,4 @@ enum UserCreatePayloadKey {
   BIRTHDATE = 'birthdate',
 }
 
-export { UserCreatePayloadKey };
+export { UserPayloadKey };

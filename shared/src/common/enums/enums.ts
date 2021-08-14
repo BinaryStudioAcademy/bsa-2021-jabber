@@ -10,11 +10,7 @@ export {
 export { CustomExceptionName } from './exceptions/exceptions';
 export { ContentType, FileExtension } from './file/file';
 export { HttpCode, HttpHeader, HttpMethod } from './http/http';
-export {
-  UserCreatePayloadKey,
-  UserSignInPayloadKey,
-  UserRole,
-} from './user/user';
+export { UserPayloadKey, UserRole } from './user/user';
 export { PodcastPayloadKey, PodcastType } from './podcast/podcast';
 export {
   SignInValidationRule,
