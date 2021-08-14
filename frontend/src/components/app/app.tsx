@@ -1,4 +1,4 @@
-import { AppRoute } from 'common/enums/enums';
+import { AppRoute, StorageKey } from 'common/enums/enums';
 import {
   Switch,
   Route,
@@ -16,10 +16,10 @@ import UserProfile from 'components/user-profile/user-profile';
 import Episode from 'components/episode/episode';
 import Podcast from 'components/podcast/podcast';
 import EpisodeLive from 'components/episode-live/episode-live';
+import EditUser from 'components/edit-user/edit-user';
 import { useDispatch, useEffect, useAppSelector } from 'hooks/hooks';
 import { storage } from 'services/services';
 import { auth as authActions } from 'store/actions';
-import { StorageKey } from 'common/enums/enums';
 
 const App: React.FC = () => {
   const { user } = useAppSelector(({ auth }) => ({
@@ -65,8 +65,13 @@ const App: React.FC = () => {
           exact
         />
         <AuthPublicRouter
-          path={AppRoute.USERS_ID}
+          path={AppRoute.USERS_$ID}
           component={UserProfile}
+          exact
+        />
+        <AuthPrivateRouter
+          path={AppRoute.USERS_EDIT_$ID}
+          component={EditUser}
           exact
         />
         <AuthPublicRouter
