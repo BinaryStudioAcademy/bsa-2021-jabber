@@ -1,0 +1,40 @@
+.inputWrapper{
+  position: relative;
+  max-width: 716px;
+  width: 100%;
+  cursor: pointer;
+
+  &::before{
+    content: '';
+    position: absolute;
+    z-index: 99;
+    bottom: 0;
+    width: 100%;
+    height: 54px;
+    background: rgba(25, 34, 47, 0.7);
+    border-radius: 0 0 5px 5px;
+  }
+
+  &::after{
+    content: '';
+    position: absolute;
+    z-index: 100;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 20px;
+    background: url('../../../assets/img/icon-camera.svg');
+    margin: auto;
+  }
+  
+  .imgInput{
+    cursor: pointer;
+  }
+}
+
+.errorWrapper{
+  color: var(--color-button-background);
+  min-height: 18px;
+  margin-top: 5px;
+}
