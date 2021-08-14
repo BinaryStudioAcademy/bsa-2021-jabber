@@ -23,6 +23,7 @@ const Podcast: React.FC<Props> = ({ podcast }) => (
         {podcast.name}
       </Link>
     </h3>
+    <p className={styles.author}>{podcast.user.nickname}</p>
   </li>
 );
 
