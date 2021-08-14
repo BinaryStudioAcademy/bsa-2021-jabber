@@ -10,6 +10,7 @@ import { EpisodeApi } from './episode-api/episode-api.service';
 import { Storage } from './storage/storage.service';
 import { RecordAudio } from './record-audio/record-audio.service';
 import { UserApi } from './user-api/user-api.service';
+import { GenreApi } from './genre-api/genre-api.service';
 
 const storage = new Storage({
   storage: localStorage,
@@ -48,6 +49,11 @@ const userApi = new UserApi({
   apiPrefix: ENV.API_PATH,
 });
 
+const genreApi = new GenreApi({
+  http,
+  apiPrefix: ENV.API_PATH,
+});
+
 const notification = new Notification();
 
 const recordAudio = new RecordAudio({
@@ -64,4 +70,5 @@ export {
   commentApi,
   recordAudio,
   userApi,
+  genreApi,
 };
