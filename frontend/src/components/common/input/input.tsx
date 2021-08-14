@@ -18,7 +18,6 @@ type Props = {
   control: Control;
   errors: FieldErrors;
   hasMultipleRows?: boolean;
-  rows?: number;
 };
 
 const Input: React.FC<Props> = ({
@@ -29,7 +28,6 @@ const Input: React.FC<Props> = ({
   placeholder = '',
   type = InputType.TEXT,
   hasMultipleRows = false,
-  rows,
 }) => {
   const { field } = useController({ name, control });
 
@@ -41,7 +39,6 @@ const Input: React.FC<Props> = ({
           {...field}
           placeholder={placeholder}
           className={getAllowedClasses(styles.input, styles.textarea)}
-          rows={rows}
         />
       ) : (
         <input

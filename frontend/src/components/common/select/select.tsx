@@ -19,10 +19,9 @@ type Props = {
   name: Path<FieldValues>;
   control: Control;
   errors: FieldErrors;
-  className?: string;
 };
 
-const Select: React.FC<Props> = ({ options, label, name, control, errors, className }) => {
+const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
   const { field } = useController({ name, control });
 
   const handleSelectChange = (option: Option | null): void => {
@@ -40,7 +39,6 @@ const Select: React.FC<Props> = ({ options, label, name, control, errors, classN
         options={options}
         value={currentValue}
         onChange={handleSelectChange}
-        className={className}
       />
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />

@@ -81,7 +81,6 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
           control={control}
           errors={errors}
           hasMultipleRows
-          rows={7}
         />
         <Select
           options={selectTypeOptions}
@@ -89,7 +88,6 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
           name={EpisodePayloadKey.TYPE}
           control={control}
           errors={errors}
-          className={styles.selectInput}
         />
         <Select
           options={selectStatusOptions}
@@ -97,7 +95,6 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
           name={EpisodePayloadKey.STATUS}
           control={control}
           errors={errors}
-          className={styles.selectInput}
         />
         <ShownoteInputList control={control} errors={errors} />
         <div className={styles.buttonRow}>
