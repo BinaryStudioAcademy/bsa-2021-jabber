@@ -4,7 +4,7 @@ import { PodcastFormPayload } from 'common/types/types';
 import { PageParams } from './common/types/types';
 import { ConfiguratePodcastForm } from './components/components';
 import styles from './styles.module.scss';
-import { mapPodcastToFormPayload } from './helpers/helpers';
+import { mapPodcastToFormPayload, mapGenreToOptions } from './helpers/helpers';
 import { Loader } from 'components/common/common';
 import { DataStatus } from 'common/enums/enums';
 
@@ -12,9 +12,10 @@ const ConfiguratePodcast: React.FC = () => {
   const { id } = useParams<PageParams>();
   const dispatch = useDispatch();
 
-  const { podcast, dataStatus } = useAppSelector(({ configuratePodcast }) => ({
+  const { podcast, dataStatus, genres } = useAppSelector(({ configuratePodcast }) => ({
     podcast: configuratePodcast.podcast,
     dataStatus: configuratePodcast.dataStatus,
+    genres: configuratePodcast.genres,
   }));
 
   const isEdit = Boolean(id);
@@ -26,8 +27,10 @@ const ConfiguratePodcast: React.FC = () => {
   };
 
   const mappedPodcast = podcast ? mapPodcastToFormPayload(podcast) : undefined;
+  const mappedGenres = mapGenreToOptions(genres);
 
   useEffect(() => {
+    dispatch(configuratePodcastActions.loadGenres());
     if (isEdit) {
       dispatch(configuratePodcastActions.loadPodcast(Number(id)));
     }
@@ -35,7 +38,7 @@ const ConfiguratePodcast: React.FC = () => {
 
   return (
     <div className={styles.podcast}>
-      <h2>
+      <h2 className={styles.podcastTitle}>
         {isEdit ? 'Edit' : 'Create'} Podcast {id ?? ''}
       </h2>
       {dataStatus === DataStatus.PENDING ? (
@@ -44,6 +47,7 @@ const ConfiguratePodcast: React.FC = () => {
         <ConfiguratePodcastForm
           onSubmit={handleFormSubmit}
           payload={mappedPodcast}
+          genres={mappedGenres}
         />
       )}
     </div>

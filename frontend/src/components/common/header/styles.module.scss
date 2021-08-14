@@ -1,6 +1,6 @@
 .header {
   display: flex;
-  min-height: 105px;
+  min-height: 80px;
   background-color: var(--color-header-background);
 }
 
@@ -10,7 +10,7 @@
   width: 100%;
   max-width: 1515px;
   margin: 0 auto;
-  padding: 30px;
+  padding: 15px 30px;
 }
 
 .navigation {
@@ -31,6 +31,8 @@
 }
 
 .link {
+  flex-shrink: 0;
+
   color: #fff;
   text-decoration: none;
 }
@@ -58,23 +60,13 @@
   width: 40px;
 
   padding: 0;
-  position: relative;
 
-  background-color: #000;
   border: none;
-  border-radius: 50%;
-  overflow: hidden;
+  background-color: transparent;
 
-  &::before {
-    content: '';
-    display: block;
-
-    height: 100%;
-    width: 100%;
-
-    position: absolute;
+  .imageWrapper {
+    border-radius: 50%;
     cursor: pointer;
-    z-index: 15;
   }
 }
 

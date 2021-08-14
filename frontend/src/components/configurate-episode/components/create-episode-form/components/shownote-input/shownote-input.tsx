@@ -29,37 +29,39 @@ const ShownoteInput: React.FC<Props> = ({
 
   return (
     <li className={styles.shownoteInputs}>
-      <Input
-        type={InputType.TEXT}
-        label="Name"
-        placeholder="Enter show-note name"
-        name={
-          `${EpisodePayloadKey.SHOWNOTES}[${index}].${ShownotePayloadKey.NAME}` as 'shownotes[x].name'
-        }
-        control={control}
-        errors={errors}
-      />
-      <Input
-        type={InputType.NUMBER}
-        label="Timestamp"
-        placeholder="Enter show-note timestamp"
-        name={
-          `${EpisodePayloadKey.SHOWNOTES}[${index}].${ShownotePayloadKey.TIMESTAMP}` as 'shownotes[x].timestamp'
-        }
-        control={control}
-        errors={errors}
-      />
+      <div className={styles.inputRow}>
+        <Input
+          type={InputType.NUMBER}
+          label=""
+          placeholder="Sec"
+          name={
+            `${EpisodePayloadKey.SHOWNOTES}[${index}].${ShownotePayloadKey.TIMESTAMP}` as 'shownote[x].timestamp'
+          }
+          control={control}
+          errors={errors}
+        />
+        <Input
+          type={InputType.TEXT}
+          label=""
+          placeholder="Brief description of time navigation"
+          name={
+            `${EpisodePayloadKey.SHOWNOTES}[${index}].${ShownotePayloadKey.NAME}` as 'shownote[x].name'
+          }
+          control={control}
+          errors={errors}
+        />
+        <Button
+          label="Delete"
+          buttonColor={ButtonColor.LIGHT_PINK}
+          onClick={handleRemove}
+        />
+      </div>
       <div className={styles.errorWrapper}>
         <ErrorMessage
           errors={errors}
           name={`${EpisodePayloadKey.SHOWNOTES}[${index}]`}
         />
       </div>
-      <Button
-        label="Delete"
-        buttonColor={ButtonColor.LIGHT_PINK}
-        onClick={handleRemove}
-      />
     </li>
   );
 };

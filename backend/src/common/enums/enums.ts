@@ -6,6 +6,7 @@ export {
   EpisodesApiPath,
   CommentsApiPath,
   RecordsApiPath,
+  GenresApiPath,
 } from './api/api';
 export {
   AppAsyncStorageKey,
@@ -26,6 +27,7 @@ export {
   ImageDTOKey,
   NotificationDTOKey,
   UserNotificationDTOKey,
+  GenreDTOKey,
 } from './db/db';
 export { HttpCode, HttpMethod } from './http/http';
 export {
@@ -52,4 +54,5 @@ export {
   CommentCreatePayloadKey,
   CommentValidationMessage,
 } from './comment/comment';
+export { SocketEvent } from './socket/socket';
 export { UserNotificationStatus } from './user-notification/user-notification';

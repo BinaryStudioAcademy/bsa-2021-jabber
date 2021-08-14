@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import {
   User,
   Episode,
@@ -37,4 +37,6 @@ const createComment = createAsyncThunk<Comment, CommentFormCreatePayload, AsyncT
   return comment;
 });
 
-export { loadEpisode, loadCommentsByEpisodeId, createComment };
+const updateComments = createAction<Comment>(ActionType.UPDATE_COMMENTS);
+
+export { loadEpisode, loadCommentsByEpisodeId, createComment, updateComments };

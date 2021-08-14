@@ -24,3 +24,4 @@ export type {
 } from './comment/comment';
 export type { Option } from './ui/option';
 export type { UserNotification } from './notification/notification';
+export type { Genre } from './genre/genre';

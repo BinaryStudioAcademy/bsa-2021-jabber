@@ -1,14 +1,13 @@
 import { useAppSelector, useParams, useDispatch, useEffect } from 'hooks/hooks';
-import { Loader, PodcastList } from 'components/common/common';
+import { Loader, PodcastList, ImageWrapper } from 'components/common/common';
+import { DataStatus } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
-import { DefaultImage } from 'components/common/common';
+import { userProfile as userProfileActions } from 'store/actions';
+import { PageParams } from './common/types/types';
 import contactLogo from 'assets/img/user-profile/contact.svg';
 import editLogo from 'assets/img/user-profile/edit.svg';
 import emailLogo from 'assets/img/user-profile/email.svg';
 import styles from './styles.module.scss';
-import { userProfile as userProfileActions } from 'store/actions';
-import { DataStatus } from 'common/enums/enums';
-import { PageParams } from './common/types/types';
 
 const UserPage: React.FC = () => {
   const { id } = useParams<PageParams>();
@@ -42,9 +41,13 @@ const UserPage: React.FC = () => {
   ) : (
     <div className={styles.container}>
       <main className={styles.userInfo}>
-        <div className={styles.imageWrapper}>
-          <DefaultImage label={user?.nickname} />
-        </div>
+        <ImageWrapper
+          width="195"
+          height="195"
+          loading="lazy"
+          label={user?.nickname}
+          className={styles.imageWrapper}
+        />
         <div className={styles.mainUserInfo}>
           <div className={styles.userInfoHeader}>
             <span className={styles.boldHeaderInfo}>
@@ -84,8 +87,6 @@ const UserPage: React.FC = () => {
         </div>
       </main>
       <div className={styles.favoritePodcastContainer}>
-        <h2 className={styles.favoritePodcastTitle}>Favorite Podcasts</h2>
-        <div className={styles.podcasts}></div>
         <h2 className={styles.favoritePodcastTitle}>My Podcasts</h2>
         {podcasts.length ? (
           <PodcastList podcasts={podcasts} />

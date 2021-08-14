@@ -26,3 +26,4 @@ export type { Record, RecordCreatePayload } from './record/record';
 export type { UploadFileResponse, DeleteFileResponse } from './file/file';
 export type { SignResponse } from './sign/sign';
 export type { TokenPayload } from './token/token';
+export type { Genre } from './genre/genre';

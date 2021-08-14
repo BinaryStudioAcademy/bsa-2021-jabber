@@ -1,45 +1,40 @@
-import { ErrorMessage } from '@hookform/error-message';
-import { getFileExtensions, getOptions } from 'helpers/helpers';
+import { getOptions } from 'helpers/helpers';
 import {
   PodcastPayloadKey,
   ButtonType,
   DataStatus,
-  InputType,
-  FileExtension,
   PodcastType,
+  AppRoute,
+  ButtonColor,
 } from 'common/enums/enums';
 import { Option, PodcastFormPayload } from 'common/types/types';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
-import { Input, Button, Select } from 'components/common/common';
+import { Input, Button, Select, ImagePreviewControl } from 'components/common/common';
+import { DEFAULT_PODCAST_PAYLOAD } from './common/constants';
 import { podcastCreate as podcastCreateSchema } from 'validation-schemas/validation-schemas';
 import styles from './styles.module.scss';
-import { DEFAULT_PODCAST_PAYLOAD } from './common/constants';
 
 type Props = {
   onSubmit: (payload: PodcastFormPayload) => void;
   payload?: PodcastFormPayload;
+  genres: Option[];
 };
-
-const acceptExtension = getFileExtensions(
-  FileExtension.JPEG,
-  FileExtension.JPG,
-  FileExtension.PNG,
-  FileExtension.SVG,
-);
 
 const selectOptions: Option[] = getOptions(Object.values(PodcastType));
 
 const ConfiguratePodcastForm: React.FC<Props> = ({
   onSubmit,
   payload = DEFAULT_PODCAST_PAYLOAD,
+  genres,
 }) => {
-  const { control, handleSubmit, errors, register } = useAppForm({
+  const { control, handleSubmit, errors } = useAppForm({
     validationSchema: podcastCreateSchema,
     defaultValues: payload,
   });
 
-  const { createPodcastStatus } = useAppSelector(({ configuratePodcast }) => ({
+  const { createPodcastStatus, podcast } = useAppSelector(({ configuratePodcast }) => ({
     createPodcastStatus: configuratePodcast.dataStatus,
+    podcast: configuratePodcast.podcast,
   }));
 
   const isFormDisabled = createPodcastStatus === DataStatus.PENDING;
@@ -47,20 +42,25 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisabled} className={styles.fieldset}>
+        <ImagePreviewControl
+          name={PodcastPayloadKey.IMAGE}
+          control={control}
+          errors={errors}
+          imageUrl={podcast?.image?.url}
+        />
         <Input
           name={PodcastPayloadKey.NAME}
           control={control}
           errors={errors}
           label="Podcast Name"
-          placeholder="Name"
+          placeholder="Enter Name"
         />
-        <Input
-          name={PodcastPayloadKey.DESCRIPTION}
+        <Select
+          options={genres}
+          label="Genre"
+          name={PodcastPayloadKey.GENRE}
           control={control}
           errors={errors}
-          label="Podcast Description"
-          placeholder="Description"
-          hasMultipleRows
         />
         <Select
           options={selectOptions}
@@ -69,17 +69,28 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
           control={control}
           errors={errors}
         />
-        <div>
-          <input
-            {...register(PodcastPayloadKey.IMAGE)}
-            accept={acceptExtension}
-            type={InputType.FILE}
+        <Input
+          name={PodcastPayloadKey.DESCRIPTION}
+          control={control}
+          errors={errors}
+          label="Description"
+          placeholder="Enter description podcast"
+          hasMultipleRows
+        />
+        <div className={styles.btnsWrapper}>
+          <Button
+            className={styles.btnSave}
+            label="Save"
+            type={ButtonType.SUBMIT}
           />
-          <span>
-            <ErrorMessage errors={errors} name={PodcastPayloadKey.IMAGE} />
-          </span>
+          <Button
+            className={styles.btnCancel}
+            buttonColor={ButtonColor.LIGHT_PINK}
+            label="Cancel"
+            type={ButtonType.SUBMIT}
+            href={AppRoute.ROOT}
+          />
         </div>
-        <Button label="Save" type={ButtonType.SUBMIT} />
       </fieldset>
     </form>
   );

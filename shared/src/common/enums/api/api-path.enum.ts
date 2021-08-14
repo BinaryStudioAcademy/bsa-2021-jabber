@@ -6,6 +6,7 @@ enum ApiPath {
   COMMENTS = '/comments',
   RECORDS = '/records',
   NOTIFICATIONS = '/notifications',
+  GENRES = '/genres',
 }
 
 export { ApiPath };

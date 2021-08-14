@@ -1,7 +1,7 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import { podcast as podcastActions } from 'store/actions';
 import { AppRoute, DataStatus } from 'common/enums/enums';
-import { Link, Loader, DefaultImage } from 'components/common/common';
+import { Link, Loader, ImageWrapper } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
@@ -17,16 +17,12 @@ const Podcast: React.FC = () => {
   );
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
+  const isOwner = userId === podcast?.userId;
 
   useEffect(() => {
     dispatch(podcastActions.loadPodcast(Number(id)));
+    dispatch(podcastActions.loadEpisodesByPodcastId(Number(id)));
   }, []);
-
-  useEffect(() => {
-    if (podcast) {
-      dispatch(podcastActions.loadEpisodesByPodcastId(podcast.id));
-    }
-  }, [podcast]);
 
   if (dataStatus === DataStatus.PENDING) {
     return <Loader />;
@@ -37,37 +33,49 @@ const Podcast: React.FC = () => {
       {podcast ? (
         <>
           <div className={styles.content}>
+            <ImageWrapper
+              src={podcast.image?.url}
+              loading="lazy"
+              alt={podcast.name}
+              label={podcast.name}
+              className={styles.imageWrapper}
+            />
             <div className={styles.podcastInfoWrapper}>
+              {isOwner && (
+                <Link
+                  to={`${AppRoute.PODCASTS_EDIT}/${podcast.id}`}
+                  className={styles.editLink}
+                />
+              )}
               <h1 className={styles.title}>{podcast.name}</h1>
-              <div className={styles.descriptionWrapper}>
-                <p className={styles.description}>{podcast.description}</p>
-              </div>
-              <p className={styles.type}>Type: {podcast.type}</p>
-            </div>
-            <div className={styles.imageContainer}>
-              <div className={styles.wrapper}>
-                <div className={styles.imageWrapper}>
-                  {podcast.image ? (
-                    <img
-                      src={podcast.image.url}
-                      className={styles.podcastImage}
-                      width="280"
-                      height="280"
-                      loading="lazy"
-                      alt={podcast.name}
-                    />
-                  ) : (
-                    <DefaultImage label={podcast.name} />
-                  )}
-                </div>
-                {podcast.userId === userId && (
-                  <Link
-                    to={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
-                  >
-                    Add episode
-                  </Link>
-                )}
-              </div>
+              <p className={styles.description}>{podcast.description}</p>
+              <ul className={styles.infoList}>
+                <li className={styles.infoItem}>
+                  <div className={`${styles.infoName} ${styles.host}`}>Host</div>
+                  <p className={styles.infoInner}>{podcast.user.nickname}</p>
+                </li>
+                <li className={styles.infoItem}>
+                  <div className={`${styles.infoName} ${styles.episodes}`}>Episodes</div>
+                  <p className={styles.infoInner}>{episodes.length} episodes</p>
+                </li>
+                <li className={styles.infoItem}>
+                  <div className={`${styles.infoName} ${styles.period}`}>Рeriodicity</div>
+                  <p className={styles.infoInner}>Once a month</p>
+                </li>
+                <li className={styles.infoItem}>
+                  <div className={`${styles.infoName} ${styles.average}`}>Average time</div>
+                  <p className={styles.infoInner}>{podcast.userId} min</p>
+                </li>
+              </ul>
+
+              {podcast.userId === userId && (
+                <Link
+                  to={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
+                  className={styles.addEpisodeLink}
+                >
+                  Add episode
+                </Link>
+              )}
             </div>
           </div>
           {episodes.length ? (

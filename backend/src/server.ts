@@ -5,7 +5,7 @@ import passport from 'passport';
 import { Model } from 'objection';
 import { ENV } from '~/common/enums/enums';
 import { initApi } from '~/api/api';
-import { logger, passport as passportService } from '~/services/services';
+import { logger, passport as passportService, socket as socketService } from '~/services/services';
 import {
   setTraceId as setTraceIdMiddleware,
   logRequest as logRequestMiddleware,
@@ -39,5 +39,7 @@ const server = app.listen(ENV.APP.SERVER_PORT, () => {
     `Listening to connections on Port — ${ENV.APP.SERVER_PORT}, Environment: ${ENV.APP.NODE_ENV}`,
   );
 });
+
+socketService.create(server, app);
 
 export { server };
