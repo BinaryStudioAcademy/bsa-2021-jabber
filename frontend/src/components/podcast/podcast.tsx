@@ -72,7 +72,7 @@ const Podcast: React.FC = () => {
                   <p className={styles.infoInner}>{podcast.userId} min</p>
                 </li>
               </ul>
-              
+
               {podcast.userId === userId && (
                 <Link
                   to={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}

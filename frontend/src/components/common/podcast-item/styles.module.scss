@@ -5,7 +5,7 @@
   .title {
     margin: 0;
     font-size: 16px;
-    & a:hover  {      
+    & a:hover  {
       color: var(--color-header-background);
     }
   }
@@ -52,7 +52,7 @@
 
   &:hover {
     color: var(--color-header-background);
-    
+
     &:before {
       background-size: 36px 36px;
       transform: translateY(-8px);
@@ -84,5 +84,5 @@
 
 .author {
   margin: 0;
-  letter-spacing: 1px;  
+  letter-spacing: 1px;
 }
