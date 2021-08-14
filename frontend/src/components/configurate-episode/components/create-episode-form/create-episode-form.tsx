@@ -1,5 +1,5 @@
 import { EpisodeFormPayload, Option } from 'common/types/types';
-import { getOptions, getFileExtensions, getDataUrl, getFileFromFileList } from 'helpers/helpers';
+import { getOptions, getFileExtensions } from 'helpers/helpers';
 import {
   ButtonType,
   DataStatus,
@@ -11,8 +11,8 @@ import {
   ButtonColor,
 } from 'common/enums/enums';
 import { episodeCreate as createEpisodeValidationSchema } from 'validation-schemas/validation-schemas';
-import { useAppForm, useAppSelector, useState, useHistory } from 'hooks/hooks';
-import { Button, Input, Select } from 'components/common/common';
+import { useAppForm, useAppSelector, useHistory } from 'hooks/hooks';
+import { Button, Input, Select, ImagePreviewControl } from 'components/common/common';
 import { DEFAULT_CREATE_EPISODE_PAYLOAD } from './common/constants';
 import ShownoteInputList from './components/shownote-input-list/shownote-input-list';
 import styles from './styles.module.scss';
@@ -26,28 +26,17 @@ type Props = {
 const selectTypeOptions: Option[] = getOptions(Object.values(EpisodeType));
 const selectStatusOptions: Option[] = getOptions(Object.values(EpisodeStatus));
 
-const acceptExtension = getFileExtensions(
-  FileExtension.JPEG,
-  FileExtension.JPG,
-  FileExtension.PNG,
-  FileExtension.SVG,
-);
 const acceptAudioExtension = getFileExtensions(
   FileExtension.MP3,
   FileExtension.WAV,
 );
 
 const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE_EPISODE_PAYLOAD, imageUrl }) => {
-  const { control, handleSubmit, errors, register, getValues } = useAppForm({
+  const { control, handleSubmit, errors, register } = useAppForm({
     validationSchema: createEpisodeValidationSchema,
     defaultValues: payload,
   });
   const history = useHistory();
-
-  const [fileInfo, setFileInfo] = useState({
-    recordName: '',
-    imageDataUrl: '',
-  });
 
   const { dataStatus } = useAppSelector(({ episode }) => ({
     dataStatus: episode.dataStatus,
@@ -55,46 +44,27 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
 
   const isFormDisable = dataStatus === DataStatus.PENDING;
 
-  const getFileInfo = async (): Promise<void> => {
-    const { image, record } = getValues();
-    const imageFile = getFileFromFileList(image);
-    const recordFile = getFileFromFileList(record);
-
-    setFileInfo({
-      recordName: recordFile ? recordFile.name : '',
-      imageDataUrl: imageFile ? await getDataUrl(imageFile) : '',
-    });
-  };
-
   const handleCancel = (): void => {
     history.goBack();
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} onChange={getFileInfo}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisable} className={styles.fieldset}>
-        <label
-          className={styles.imageLabel}
-          style={{ backgroundImage: `url(${fileInfo.imageDataUrl || imageUrl})` }}
-        >
+        <ImagePreviewControl
+          name={EpisodePayloadKey.IMAGE}
+          control={control}
+          errors={errors}
+          imageUrl={imageUrl}
+        />
+        <label className={styles.recordLabel}>
+          Upload record
           <input
-            {...register(EpisodePayloadKey.IMAGE)}
-            accept={acceptExtension}
+            {...register(EpisodePayloadKey.RECORD)}
+            accept={acceptAudioExtension}
             type={InputType.FILE}
           />
         </label>
-        <div className={styles.recordWrapper}>
-          <label className={styles.recordLabel}>
-            Upload record
-            <input
-              {...register(EpisodePayloadKey.RECORD)}
-              accept={acceptAudioExtension}
-              type={InputType.FILE}
-            />
-          </label>
-          <span>{fileInfo.recordName}</span>
-        </div>
-
         <Input
           type={InputType.TEXT}
           label="Name episode"
@@ -113,26 +83,22 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
           hasMultipleRows
           rows={7}
         />
-        <div className={styles.selectWrapper}>
-          <Select
-            options={selectTypeOptions}
-            label="Type"
-            name={EpisodePayloadKey.TYPE}
-            control={control}
-            errors={errors}
-            className={styles.selectInput}
-          />
-        </div>
-        <div className={styles.selectWrapper}>
-          <Select
-            options={selectStatusOptions}
-            label="Status"
-            name={EpisodePayloadKey.STATUS}
-            control={control}
-            errors={errors}
-            className={styles.selectInput}
-          />
-        </div>
+        <Select
+          options={selectTypeOptions}
+          label="Type"
+          name={EpisodePayloadKey.TYPE}
+          control={control}
+          errors={errors}
+          className={styles.selectInput}
+        />
+        <Select
+          options={selectStatusOptions}
+          label="Status"
+          name={EpisodePayloadKey.STATUS}
+          control={control}
+          errors={errors}
+          className={styles.selectInput}
+        />
         <ShownoteInputList control={control} errors={errors} />
         <div className={styles.buttonRow}>
           <Button

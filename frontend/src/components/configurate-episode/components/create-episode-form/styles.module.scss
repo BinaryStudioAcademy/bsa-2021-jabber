@@ -5,90 +5,31 @@
   padding: 0;
   border: none;
 
-  .imageLabel {
-    position: relative;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-color: #fff;
-    border-radius: 7px;
-    height: 280px;
+  .recordLabel {
+    display: block;
+    align-self: flex-start;
     cursor: pointer;
-    margin-bottom: 20px;
+    padding: 8px 15px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 7px;
+    border-color: var(--color-button-background);
+    font-size: 16px;
+    font-weight: 700;
+    transition: all 1s ease;
+    text-align: center;
+    background-color: var(--color-primary-ligth);
+    color: var(--color-button-background);
+    flex-shrink: 0;
+    margin-bottom: 15px;
 
-    &::before {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      background-color: rgba(25, 34, 47, 0.7);
-      border-radius: 0 0 7px 7px;
-      height: 55px;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      content: url("../../../../assets/img/camera.svg");
+    &:hover {
+      background-color: var(--color-button-background);
+      color: #fff;
     }
 
     input[type="file"] {
       display: none;
-    }
-  }
-  .recordWrapper {
-    display: flex;
-    align-items: center;
-    flex-grow: 1;
-    margin-bottom: 15px;
-
-    .recordLabel {
-      display: block;
-      cursor: pointer;
-      padding: 8px 15px;
-      border-width: 1px;
-      border-style: solid;
-      border-radius: 7px;
-      border-color: var(--color-button-background);
-      font-size: 16px;
-      font-weight: 700;
-      transition: all 1s ease;
-      text-align: center;
-      background-color: var(--color-primary-ligth);
-      color: var(--color-button-background);
-      flex-shrink: 0;
-
-      &:hover {
-        background-color: var(--color-button-background);
-        color: #fff;
-      }
-
-      input[type="file"] {
-        display: none;
-      }
-    }
-
-    span {
-      font-weight: 600;
-      margin-left: 15px;
-      max-width: 475px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
-
-  .selectWrapper {
-    margin-bottom: 25px;
-
-    .selectInput {
-
-      [class$="-control"] {
-        border: none;
-        height: 40px;
-        border-radius: 7px;
-      }
-
-      [class$="-indicatorSeparator"] {
-        display: none;
-      }
     }
   }
 
