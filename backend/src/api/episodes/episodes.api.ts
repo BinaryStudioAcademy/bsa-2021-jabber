@@ -74,7 +74,7 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
   episodeRouter.delete(
     EpisodesApiPath.$ID,
     checkAuthMiddleware(HttpMethod.DELETE),
-    checkUserEpisodeOwnerMiddleware(),    
+    checkUserEpisodeOwnerMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await episodeService.delete(Number(req.params.id)))
