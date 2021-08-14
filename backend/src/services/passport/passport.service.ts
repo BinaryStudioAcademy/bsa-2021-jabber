@@ -64,12 +64,12 @@ class Passport {
           return isCryptsEqual
             ? done(null, user)
             : done(
-                {
-                  status: HttpCode.UNAUTHORIZED,
-                  message: ErrorMessage.WRONG_PASSWORD,
-                },
-                false,
-              );
+              {
+                status: HttpCode.UNAUTHORIZED,
+                message: ErrorMessage.WRONG_PASSWORD,
+              },
+              false,
+            );
         } catch (err) {
           return done(err);
         }
