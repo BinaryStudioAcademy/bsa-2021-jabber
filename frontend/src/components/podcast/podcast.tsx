@@ -17,16 +17,12 @@ const Podcast: React.FC = () => {
   );
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
+  const isOwner = userId === podcast?.userId;
 
   useEffect(() => {
     dispatch(podcastActions.loadPodcast(Number(id)));
+    dispatch(podcastActions.loadEpisodesByPodcastId(Number(id)));
   }, []);
-
-  useEffect(() => {
-    if (podcast) {
-      dispatch(podcastActions.loadEpisodesByPodcastId(podcast.id));
-    }
-  }, [podcast]);
 
   if (dataStatus === DataStatus.PENDING) {
     return <Loader />;
@@ -45,14 +41,37 @@ const Podcast: React.FC = () => {
               className={styles.imageWrapper}
             />
             <div className={styles.podcastInfoWrapper}>
+              {isOwner && (
+                <Link
+                  to={`${AppRoute.PODCASTS_EDIT}/${podcast.id}`}
+                  className={styles.editLink}
+                />
+              )}
               <h1 className={styles.title}>{podcast.name}</h1>
-              <div className={styles.descriptionWrapper}>
-                <p className={styles.description}>{podcast.description}</p>
-              </div>
-              <p className={styles.type}>Type: {podcast.type}</p>
+              <p className={styles.description}>{podcast.description}</p>
+              <ul className={styles.infoList}>
+                <li className={styles.infoItem}>
+                  <div className={`${styles.infoName} ${styles.host}`}>Host</div>
+                  <p className={styles.infoInner}>{podcast.user.nickname}</p>
+                </li>
+                <li className={styles.infoItem}>
+                  <div className={`${styles.infoName} ${styles.episodes}`}>Episodes</div>
+                  <p className={styles.infoInner}>{episodes.length} episodes</p>
+                </li>
+                <li className={styles.infoItem}>
+                  <div className={`${styles.infoName} ${styles.period}`}>Рeriodicity</div>
+                  <p className={styles.infoInner}>Once a month</p>
+                </li>
+                <li className={styles.infoItem}>
+                  <div className={`${styles.infoName} ${styles.average}`}>Average time</div>
+                  <p className={styles.infoInner}>{podcast.userId} min</p>
+                </li>
+              </ul>
+
               {podcast.userId === userId && (
                 <Link
                   to={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
+                  className={styles.addEpisodeLink}
                 >
                   Add episode
                 </Link>
