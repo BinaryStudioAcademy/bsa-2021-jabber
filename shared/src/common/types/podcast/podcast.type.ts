@@ -12,7 +12,7 @@ type Podcast = {
   updatedAt: string;
   description: string;
   type: PodcastType;
-  genreId: number;
+  genreId: number | null;
   user: User;
 };
 
