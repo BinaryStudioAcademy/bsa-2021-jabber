@@ -5,3 +5,4 @@ export { PodcastsApiPath } from './podcasts-api-path.enum';
 export { EpisodesApiPath } from './episodes-api-path.enum';
 export { CommentsApiPath } from './comments-api-path.enum';
 export { RecordsApiPath } from './records-api-path.enum';
+export { GenresApiPath } from './genre-api-path.enum';

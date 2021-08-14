@@ -24,3 +24,4 @@ export type {
   CommentFormCreatePayload,
 } from './comment/comment';
 export type { Option } from './ui/option';
+export type { Genre } from './genre/genre';

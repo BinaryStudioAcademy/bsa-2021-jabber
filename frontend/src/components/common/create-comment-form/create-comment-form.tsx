@@ -1,6 +1,6 @@
 import { CommentCreatePayloadKey, ButtonType, DataStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
-import { useAppForm, useAppSelector } from 'hooks/hooks';
+import { useAppForm, useAppSelector, useEffect } from 'hooks/hooks';
 import { Input, Button } from 'components/common/common';
 import { comment as commentCreateValidationSchema } from 'validation-schemas/validation-schemas';
 import { DEFAULT_CREATE_COMMENT_PAYLOAD } from './common/constants';
@@ -11,7 +11,7 @@ type Props = {
 };
 
 const CreateCommentForm: React.FC<Props> = ({ onSubmit }) => {
-  const { control, handleSubmit, errors } = useAppForm({
+  const { control, handleSubmit, errors, isSubmitSuccessful, reset } = useAppForm({
     validationSchema: commentCreateValidationSchema,
     defaultValues: DEFAULT_CREATE_COMMENT_PAYLOAD,
   });
@@ -19,6 +19,12 @@ const CreateCommentForm: React.FC<Props> = ({ onSubmit }) => {
   const { commentDataStatus } = useAppSelector(({ episode }) => ({
     commentDataStatus: episode.commentDataStatus,
   }));
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+  }, [isSubmitSuccessful, reset]);
 
   const isFormDisable = commentDataStatus === DataStatus.PENDING;
 

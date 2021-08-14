@@ -6,4 +6,5 @@ export {
   EpisodesApiPath,
   CommentsApiPath,
   RecordsApiPath,
+  GenresApiPath,
 } from 'jabber-shared/common/enums/enums';
