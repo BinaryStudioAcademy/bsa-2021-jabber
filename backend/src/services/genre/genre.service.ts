@@ -1,7 +1,6 @@
 import {
   Genre as TGenre,
 } from '~/common/types/types';
-
 import {
   genre as genreRep,
 } from '~/data/repositories/repositories';

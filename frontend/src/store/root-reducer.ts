@@ -7,7 +7,6 @@ import { reducer as episode } from './episode/reducer';
 import { reducer as podcast } from './podcast/reducer';
 import { reducer as record } from './record/reducer';
 import { reducer as userProfile } from './user-profile/reducer';
-import { reducer as genre } from './genre/reducer';
 
 const rootReducer = {
   auth,

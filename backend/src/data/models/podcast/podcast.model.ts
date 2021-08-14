@@ -19,7 +19,7 @@ class Podcast extends Abstract {
 
   [PodcastDTOKey.TYPE]: PodcastType;
 
-  [PodcastDTOKey.GENRE_ID]: number;
+  [PodcastDTOKey.GENRE_ID]: number | null;
 
   [PodcastDTOKey.USER]: User;
 

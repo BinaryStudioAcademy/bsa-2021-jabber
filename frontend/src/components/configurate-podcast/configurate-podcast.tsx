@@ -1,8 +1,5 @@
 import { useDispatch, useParams, useEffect, useAppSelector } from 'hooks/hooks';
-import {
-  configuratePodcast as configuratePodcastActions,
-  genre as genreAction,
-} from 'store/actions';
+import { configuratePodcast as configuratePodcastActions } from 'store/actions';
 import { PodcastFormPayload } from 'common/types/types';
 import { PageParams } from './common/types/types';
 import { ConfiguratePodcastForm } from './components/components';
@@ -15,10 +12,10 @@ const ConfiguratePodcast: React.FC = () => {
   const { id } = useParams<PageParams>();
   const dispatch = useDispatch();
 
-  const { podcast, dataStatus, genres } = useAppSelector(({ configuratePodcast, genre }) => ({
+  const { podcast, dataStatus, genres } = useAppSelector(({ configuratePodcast }) => ({
     podcast: configuratePodcast.podcast,
     dataStatus: configuratePodcast.dataStatus,
-    genres: genre.genres,
+    genres: configuratePodcast.genres,
   }));
 
   const isEdit = Boolean(id);
@@ -33,7 +30,7 @@ const ConfiguratePodcast: React.FC = () => {
   const mappedGenres = mapGenreToOptions(genres);
 
   useEffect(() => {
-    dispatch(genreAction.loadGenres());
+    dispatch(configuratePodcastActions.loadGenres());
     if (isEdit) {
       dispatch(configuratePodcastActions.loadPodcast(Number(id)));
     }

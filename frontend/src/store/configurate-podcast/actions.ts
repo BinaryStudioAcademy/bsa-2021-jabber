@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
 import {
   AsyncThunkConfig,
+  Genre,
   Podcast,
   PodcastFormPayload,
   User,
@@ -66,4 +67,12 @@ const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>
   return podcast;
 });
 
-export { create, edit, loadPodcast };
+const loadGenres = createAsyncThunk<Genre[], undefined, AsyncThunkConfig>
+(ActionType.LOAD_GENRES, async (_args, { extra }) => {
+  const { genreApi } = extra;
+  const genres = await genreApi.getAll();
+
+  return genres;
+});
+
+export { create, edit, loadPodcast, loadGenres };

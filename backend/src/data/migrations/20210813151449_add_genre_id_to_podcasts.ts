@@ -9,7 +9,7 @@ export async function up(knex: Knex): Promise<void> {
       .integer(COLUMN_NAME)
       .references('id')
       .inTable('genres')
-      .notNullable();
+      .defaultTo(null);
   });
 }
 
