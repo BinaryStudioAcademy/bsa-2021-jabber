@@ -1,8 +1,13 @@
 .wrapper {
+  width: 195px;
   position: relative;
 
   .title {
     margin: 0;
+    font-size: 16px;
+    & a:hover  {
+      color: var(--color-header-background);
+    }
   }
 
   &:before {
@@ -46,6 +51,8 @@
   }
 
   &:hover {
+    color: var(--color-header-background);
+
     &:before {
       background-size: 36px 36px;
       transform: translateY(-8px);
@@ -75,7 +82,7 @@
   }
 }
 
-.podcastImage {
-  height: 100%;
-  object-fit: cover;
+.author {
+  margin: 0;
+  letter-spacing: 1px;
 }
