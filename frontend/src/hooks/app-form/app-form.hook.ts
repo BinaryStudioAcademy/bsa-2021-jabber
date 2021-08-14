@@ -6,6 +6,7 @@ import {
   UseFormRegister,
   UseFormHandleSubmit,
   UseFormGetValues,
+  UseFormReset,
 } from 'react-hook-form';
 import { ValidationSchema } from 'common/types/types';
 import { getFormResolver } from 'helpers/helpers';
@@ -18,9 +19,11 @@ type useAppFormProps = {
 type useAppFormReturn = {
   control: Control;
   errors: FieldErrors;
+  isSubmitSuccessful: boolean;
   register: UseFormRegister<FieldValues>;
   handleSubmit: UseFormHandleSubmit<FieldValues>;
   getValues: UseFormGetValues<FieldValues>;
+  reset: UseFormReset<FieldValues>;
 };
 
 const useAppForm = ({
@@ -30,8 +33,9 @@ const useAppForm = ({
   const {
     control,
     handleSubmit,
+    reset,
     register,
-    formState: { errors },
+    formState: { errors, isSubmitSuccessful },
     getValues,
   } = useForm<FieldValues>({
     defaultValues,
@@ -39,7 +43,7 @@ const useAppForm = ({
     mode: 'onSubmit',
   });
 
-  return { control, register, errors, handleSubmit, getValues };
+  return { control, register, errors, handleSubmit, getValues, reset, isSubmitSuccessful };
 };
 
 export { useAppForm };

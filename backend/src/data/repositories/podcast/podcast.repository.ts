@@ -18,7 +18,7 @@ class Podcast {
   }
 
   public getAll(): Promise<TPodcast[]> {
-    return this.#PodcastModel.query().where('type', PodcastType.PUBLIC).withGraphJoined('image');
+    return this.#PodcastModel.query().where('type', PodcastType.PUBLIC).withGraphJoined('[image, user]');
   }
 
   public create(payload: PodcastCreateDTOPayload): Promise<TPodcast> {
@@ -26,7 +26,7 @@ class Podcast {
   }
 
   public getById(id: string): Promise<TPodcast> {
-    return this.#PodcastModel.query().findById(id).withGraphJoined('image');
+    return this.#PodcastModel.query().findById(id).withGraphJoined('[image, user]');
   }
 
   public update(id: string, payload: PodcastEditDTOPayload): Promise<TPodcast> {

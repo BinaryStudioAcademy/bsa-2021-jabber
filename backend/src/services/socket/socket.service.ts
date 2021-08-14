@@ -1,29 +1,17 @@
 import { Express } from 'express';
+import { Server as HttpServer } from 'http';
 import { Server } from 'socket.io';
-import { createServer, Server as HttpServer } from 'http';
-import { injectSocket  as injectSocketMiddleware } from '~/middlewares/middlewares';
+import { injectSocket as injectSocketMiddleware } from '~/middlewares/middlewares';
 import { SocketEvent } from '~/common/enums/enums';
 import { Comment } from '~/common/types/types';
 
-type Constructor = {
-  port: string;
-};
-
 class Socket {
-  #socketServer?: HttpServer;
   #io?: Server;
-  #port: string;
 
-  constructor({ port }: Constructor) {
-    this.#port = port;
-  }
-
-  public create(app: Express): void {
-    this.#socketServer = createServer(app);
-    this.#io = new Server(this.#socketServer);
+  public create(server: HttpServer, app: Express): void {
+    this.#io = new Server(server);
     app.use(injectSocketMiddleware(this.#io));
     this.handler(this.#io);
-    this.#socketServer.listen(this.#port);
   }
 
   private handler(io: Server): void {
