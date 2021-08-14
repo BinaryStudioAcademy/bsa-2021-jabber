@@ -5,6 +5,7 @@ import { useAppSelector, useDispatch, useLocation } from 'hooks/hooks';
 import { Redirect } from 'components/common/common';
 import logo from 'assets/img/logo-dark.svg';
 import { SignInForm, SignUpForm } from './components/components';
+import { getDateWithoutTimezoneOffset } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 const Auth: React.FC = () => {
@@ -16,7 +17,11 @@ const Auth: React.FC = () => {
   const hasUser = Boolean(user);
 
   const handleSignUpSubmit = (payload: UserCreatePayload): void => {
-    dispatch(authActions.signUp(payload));
+    dispatch(authActions.signUp({
+      ...payload,
+      birthdate: getDateWithoutTimezoneOffset(payload.birthdate),
+    }),
+    );
   };
 
   const handleSignInSubmit = (payload: UserSignInPayload): void => {
