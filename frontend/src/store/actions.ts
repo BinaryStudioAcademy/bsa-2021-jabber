@@ -6,4 +6,3 @@ export * as episode from './episode/actions';
 export * as podcast from './podcast/actions';
 export * as record from './record/actions';
 export * as userProfile from './user-profile/actions';
-export * as genre from './genre/actions';
