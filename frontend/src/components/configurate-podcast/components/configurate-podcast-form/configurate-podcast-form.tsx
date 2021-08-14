@@ -41,18 +41,18 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisabled} className={styles.fieldset}>
         <ImagePreviewControl
-          name={PodcastPayloadKey.COVER}
-          control={control}
-          errors={errors}
-          imageUrl={podcast?.cover?.url}
-          label="Podcast Cover"
-        />
-        <ImagePreviewControl
           name={PodcastPayloadKey.IMAGE}
           control={control}
           errors={errors}
           imageUrl={podcast?.image?.url}
           label="Podcast Image"
+        />
+        <ImagePreviewControl
+          name={PodcastPayloadKey.COVER}
+          control={control}
+          errors={errors}
+          imageUrl={podcast?.cover?.url}
+          label="Podcast Cover"
         />
         <Input
           name={PodcastPayloadKey.NAME}
