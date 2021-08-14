@@ -1,5 +1,5 @@
-import { ApiPath, HttpMethod, NotificationApiPath } from 'common/enums/enums';
-import { UserNotification } from 'common/types/types';
+import { ApiPath, HttpMethod, NotificationsApiPath } from 'common/enums/enums';
+import { UserNotification } from 'common/types/types'; 
 import { Http } from 'services/http/http.service';
 
 type Constructor = {
@@ -18,7 +18,7 @@ class UserNotificationApi {
 
   public getAllById(id: number): Promise<UserNotification[]> {
     return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.NOTIFICATIONS}${NotificationApiPath.ROOT}${id}`,
+      `${this.#apiPrefix}${ApiPath.NOTIFICATIONS}${NotificationsApiPath.ROOT}${id}`, 
       {
         method: HttpMethod.GET,
       },

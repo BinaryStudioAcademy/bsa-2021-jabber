@@ -1,4 +1,4 @@
-type Notifications = {
+type Notification = {
   id: number;
   title: string;
   message: string;
@@ -6,4 +6,4 @@ type Notifications = {
   updatedAt: string;
 };
 
-export type { Notifications };
+export type { Notification };
