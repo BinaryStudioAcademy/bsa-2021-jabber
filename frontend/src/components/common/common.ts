@@ -15,6 +15,7 @@ export { default as Loader } from './loader/loader';
 export { default as Select } from './select/select';
 export { default as Datepiker } from './datepicker/datepicker';
 export { default as Table } from './table/table';
+export { default as ImagePreviewControl } from './image-preview-control/image-preview-control';
 export { default as CommentItem } from './comment-item/comment-item';
 export { default as CommentsList } from './comments-list/comments-list';
 export { default as CreateCommentForm } from './create-comment-form/create-comment-form';

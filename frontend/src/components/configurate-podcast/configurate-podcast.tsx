@@ -35,7 +35,7 @@ const ConfiguratePodcast: React.FC = () => {
 
   return (
     <div className={styles.podcast}>
-      <h2>
+      <h2 className={styles.podcastTitle}>
         {isEdit ? 'Edit' : 'Create'} Podcast {id ?? ''}
       </h2>
       {dataStatus === DataStatus.PENDING ? (

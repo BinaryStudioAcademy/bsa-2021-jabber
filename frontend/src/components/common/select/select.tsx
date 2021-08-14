@@ -9,6 +9,7 @@ import {
   useController,
 } from 'react-hook-form';
 import { getCurrentValue } from './helpers/helpers';
+import { styles as selectStyles } from './styles';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -33,6 +34,7 @@ const Select: React.FC<Props> = ({ options, label, name, control, errors }) => {
     <label className={styles.inputWrapper}>
       <span className={styles.label}>{label}</span>
       <SelectReact
+        styles={selectStyles}
         {...field}
         options={options}
         value={currentValue}
