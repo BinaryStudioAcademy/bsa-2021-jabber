@@ -1,8 +1,27 @@
 .shownoteInputs {
-  margin-bottom: 25px;
+  .inputRow {
+    display: flex;
+    align-items: flex-start;
+
+    label {
+      &:first-of-type {
+        max-width: 150px;
+
+        input[type="number"] {
+          padding-right: 20px;
+        }
+      }
+
+      &:last-of-type {
+        flex-grow: 1;
+        margin-left: 15px;
+      }
+    }
+  }
 
   & button {
-    padding: 4px 10px;
+    margin: 5px 0 0 15px;
+    padding: 7px 10px;
     font-weight: 600;
   }
 }

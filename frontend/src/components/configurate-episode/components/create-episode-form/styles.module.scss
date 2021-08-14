@@ -76,12 +76,26 @@
   }
 
   .selectWrapper {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+
+    .selectInput {
+
+      [class$="-control"] {
+        border: none;
+        height: 40px;
+        border-radius: 7px;
+      }
+
+      [class$="-indicatorSeparator"] {
+        display: none;
+      }
+    }
   }
 
   .buttonRow {
     display: flex;
     flex-grow: 1;
+    margin-top: 30px;
 
     button {
       padding: 8px 80px;

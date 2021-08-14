@@ -120,6 +120,7 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
             name={EpisodePayloadKey.TYPE}
             control={control}
             errors={errors}
+            className={styles.selectInput}
           />
         </div>
         <div className={styles.selectWrapper}>
@@ -129,6 +130,7 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
             name={EpisodePayloadKey.STATUS}
             control={control}
             errors={errors}
+            className={styles.selectInput}
           />
         </div>
         <ShownoteInputList control={control} errors={errors} />

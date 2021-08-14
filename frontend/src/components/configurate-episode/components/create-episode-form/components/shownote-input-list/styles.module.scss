@@ -1,17 +1,15 @@
-.title {
-  display: flex;
-  align-items: center;
-  font-size: 12px;
-  font-weight: 500;
+.timeNavTitle {
+  font-weight: 700;
+  margin-bottom: 20px;
+}
 
-  & button {
-    margin-left: 16px;
-    padding: 2px 10px;
-    font-weight: 600;
-  }
+.timeNavAddButton {
+  align-self: flex-start;
+  margin-bottom: 20px;
 }
 
 .inputList {
   margin: 0;
+  padding: 0;
   list-style: none;
 }
