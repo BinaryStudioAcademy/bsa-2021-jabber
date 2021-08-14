@@ -45,12 +45,14 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
           control={control}
           errors={errors}
           imageUrl={podcast?.cover?.url}
+          label="Podcast Cover"
         />
         <ImagePreviewControl
           name={PodcastPayloadKey.IMAGE}
           control={control}
           errors={errors}
           imageUrl={podcast?.image?.url}
+          label="Podcast Image"
         />
         <Input
           name={PodcastPayloadKey.NAME}
@@ -88,17 +90,6 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
             href={AppRoute.ROOT}
           />
         </div>
-        {/* <div>
-          <input
-            {...register(PodcastPayloadKey.COVER)}
-            accept={acceptExtension}
-            type={InputType.FILE}
-          />
-          <span>
-            <ErrorMessage errors={errors} name={PodcastPayloadKey.COVER} />
-          </span>
-        </div> */}
-        {/* <Button label="Save" type={ButtonType.SUBMIT} /> */}
       </fieldset>
     </form>
   );

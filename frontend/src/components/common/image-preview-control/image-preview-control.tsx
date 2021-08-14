@@ -18,6 +18,7 @@ type Props = {
   control: Control;
   errors: FieldValues;
   imageUrl?: string;
+  label?: string;
 };
 
 const acceptExtension = getFileExtensions(
@@ -27,7 +28,13 @@ const acceptExtension = getFileExtensions(
   FileExtension.SVG,
 );
 
-const ImagePreviewControl: React.FC<Props> = ({ name, control, errors, imageUrl }) => {
+const ImagePreviewControl: React.FC<Props> = ({
+  name,
+  control,
+  errors,
+  imageUrl,
+  label = '',
+}) => {
   const { field } = useController({ name, control });
 
   const handleChange = (evt: React.ChangeEvent<FieldValues>): void => {
@@ -43,6 +50,7 @@ const ImagePreviewControl: React.FC<Props> = ({ name, control, errors, imageUrl 
   return (
     <>
       <label className={styles.inputWrapper}>
+        <span className={styles.label}>{label}</span>
         <ImageWrapper
           src={field.value ?? imageUrl}
           width="716"
