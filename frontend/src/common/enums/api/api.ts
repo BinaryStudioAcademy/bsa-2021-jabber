@@ -5,5 +5,5 @@ export {
   PodcastsApiPath,
   EpisodesApiPath,
   CommentsApiPath,
-  NotificationsApiPath, 
+  NotificationsApiPath,
 } from 'jabber-shared/common/enums/enums';

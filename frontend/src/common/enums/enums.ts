@@ -5,7 +5,7 @@ export {
   PodcastsApiPath,
   EpisodesApiPath,
   CommentsApiPath,
-  NotificationsApiPath, 
+  NotificationsApiPath,
 } from './api/api';
 export { AppRoute, ENV, DataStatus, StorageKey } from './app/app';
 export { HttpHeader, HttpMethod } from './http/http';
