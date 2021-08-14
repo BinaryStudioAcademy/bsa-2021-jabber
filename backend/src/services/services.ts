@@ -92,9 +92,7 @@ const passport = new Passport({
   userRepository,
 });
 
-const socket = new Socket({
-  port: <string>ENV.APP.SOCKET_PORT,
-});
+const socket = new Socket();
 
 export {
   auth,
