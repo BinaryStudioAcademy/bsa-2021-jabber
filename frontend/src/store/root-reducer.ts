@@ -18,7 +18,6 @@ const rootReducer = {
   record,
   userProfile,
   toastr: toastrReducer,
-  genre,
 };
 
 export { rootReducer };
