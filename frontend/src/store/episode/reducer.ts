@@ -1,13 +1,14 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { Episode, Comment } from 'common/types/types';
-import { loadEpisode, loadCommentsByEpisodeId, createComment, updateComments } from './actions';
+import { Episode, Comment, Podcast } from 'common/types/types';
+import { loadEpisode, loadCommentsByEpisodeId, createComment, updateComments, loadPodcast } from './actions';
 
 type State = {
   dataStatus: DataStatus;
   commentDataStatus: DataStatus;
   episode: Episode | null;
   comments: Comment[];
+  podcast: Podcast | null;
 };
 
 const initialState: State = {
@@ -15,6 +16,7 @@ const initialState: State = {
   commentDataStatus: DataStatus.IDLE,
   episode: null,
   comments: [],
+  podcast: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -28,6 +30,19 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(loadEpisode.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
+
+  //
+  builder.addCase(loadPodcast.pending, (state) => {
+    state.dataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(loadPodcast.fulfilled, (state, action) => {
+    state.dataStatus = DataStatus.FULFILLED;
+    state.podcast = action.payload;
+  });
+  builder.addCase(loadPodcast.rejected, (state) => {
+    state.dataStatus = DataStatus.REJECTED;
+  });
+  //
 
   builder.addCase(loadCommentsByEpisodeId.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
