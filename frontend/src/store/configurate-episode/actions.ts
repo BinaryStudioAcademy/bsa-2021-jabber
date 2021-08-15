@@ -7,7 +7,7 @@ import {
   EpisodeFormPayload,
   User,
 } from 'common/types/types';
-import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
+import { getDataUrl, getFileFromFileList, getDataUrlFromBlobUrl } from 'helpers/helpers';
 import { ActionType } from './common';
 import { AppRoute, NotificationMessage, NotificationTitle } from 'common/enums/enums';
 
@@ -43,18 +43,21 @@ const edit = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkConfig>(
   ActionType.EDIT_EPISODE,
   async (editEpisodePayload, { getState, extra }) => {
     const { episodeApi, navigationService, notificationService } = extra;
-    const { configurateEpisode, auth } = getState();
+    const { configurateEpisode, auth, record } = getState();
     const { id } = <Episode>configurateEpisode.episode;
 
     const recordFile = getFileFromFileList(editEpisodePayload.record);
     const imgFile = getFileFromFileList(editEpisodePayload.image);
+    const recordDataUrl = record.recordDataUrl
+      ? await getDataUrlFromBlobUrl(record.recordDataUrl)
+      : (recordFile ? await getDataUrl(recordFile) : null);
 
     const episode = await episodeApi.update(id, {
       name: editEpisodePayload.name,
       description: editEpisodePayload.description,
       shownotes: editEpisodePayload.shownotes,
       type: editEpisodePayload.type,
-      recordDataUrl: recordFile ? await getDataUrl(recordFile) : null,
+      recordDataUrl,
       imageDataUrl: imgFile ? await getDataUrl(imgFile) : null,
       userId: (<User>auth.user).id,
       imageId: (<Episode>configurateEpisode.episode).imageId,

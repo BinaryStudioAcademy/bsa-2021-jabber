@@ -42,7 +42,7 @@ class RecordAudio {
   public stop(): string {
     if (this.#recorder?.state !== RecordStatus.INACTIVE) {
       this.#recorder?.stop();
-      const audioBlob = new Blob(this.#audioChunks);
+      const audioBlob = new Blob(this.#audioChunks, { type: 'audio/wave' });
       this.#audioDataUrl = URL.createObjectURL(audioBlob);
       this.#audioChunks = [];
     }

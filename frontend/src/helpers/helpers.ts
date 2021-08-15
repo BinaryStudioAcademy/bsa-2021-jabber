@@ -5,5 +5,6 @@ export {
   getDataUrl,
   getFileExtensions,
   getFileFromFileList,
+  getDataUrlFromBlobUrl,
 } from './file/file';
 export { Joi } from './validation-schema/validation-schema';
