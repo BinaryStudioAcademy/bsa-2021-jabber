@@ -1,5 +1,5 @@
 import { Joi } from '~/helpers/helpers';
-import { SignInValidationMessage, UserPayloadKey } from '~/common/enums/enums';
+import { UserValidationMessage, UserPayloadKey } from '~/common/enums/enums';
 
 const common = Joi.object({
   [UserPayloadKey.EMAIL]: Joi.string()
@@ -7,8 +7,8 @@ const common = Joi.object({
     .email({ tlds: { allow: false } })
     .required()
     .messages({
-      'string.email': SignInValidationMessage.EMAIL_WRONG,
-      'any.required': SignInValidationMessage.EMAIL_REQUIRED,
+      'string.email': UserValidationMessage.EMAIL_WRONG,
+      'string.empty': UserValidationMessage.EMAIL_REQUIRE,
     }),
 });
 

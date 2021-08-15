@@ -13,12 +13,8 @@ export { HttpCode, HttpHeader, HttpMethod } from './http/http';
 export { UserPayloadKey, UserRole } from './user/user';
 export { PodcastPayloadKey, PodcastType } from './podcast/podcast';
 export {
-  SignInValidationRule,
-  SignInValidationMessage,
-} from './validation/validation';
-export {
-  SignUpValidationRule,
-  SignUpValidationMessage,
+  UserValidationRule,
+  UserValidationMessage,
   EpisodeValidationRule,
   EpisodeValidationMessage,
   PodcastValidationRule,
