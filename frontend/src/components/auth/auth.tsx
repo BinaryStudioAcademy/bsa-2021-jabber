@@ -1,11 +1,12 @@
 import { AppRoute } from 'common/enums/enums';
 import { auth as authActions } from 'store/actions';
 import { UserCreatePayload, UserSignInPayload } from 'common/types/types';
+import { DateFormatType } from 'common/enums/enums';
 import { useAppSelector, useDispatch, useLocation } from 'hooks/hooks';
 import { Redirect } from 'components/common/common';
 import logo from 'assets/img/logo-dark.svg';
 import { SignInForm, SignUpForm } from './components/components';
-import { getDateWithoutTimezoneOffset } from 'helpers/helpers';
+import { getFormattedDate } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 const Auth: React.FC = () => {
@@ -19,7 +20,7 @@ const Auth: React.FC = () => {
   const handleSignUpSubmit = (payload: UserCreatePayload): void => {
     dispatch(authActions.signUp({
       ...payload,
-      birthdate: getDateWithoutTimezoneOffset(payload.birthdate),
+      birthdate: getFormattedDate(new Date(payload.birthdate), DateFormatType.ISO_DATE_000Z),
     }),
     );
   };
