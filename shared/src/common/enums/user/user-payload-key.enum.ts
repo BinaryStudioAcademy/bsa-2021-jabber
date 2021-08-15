@@ -5,6 +5,7 @@ enum UserPayloadKey {
   EMAIL = 'email',
   PASSWORD = 'password',
   BIRTHDATE = 'birthdate',
+  BIO = 'bio',
 }
 
 export { UserPayloadKey };
