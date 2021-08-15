@@ -128,7 +128,7 @@ class Podcast {
     return podcast;
   }
 
-  public getAllByUserId(searchedUserId: string, requestUserId: string | undefined): Promise<TPodcast[]> {
+  public getAllByUserId(searchedUserId: number, requestUserId: number | undefined): Promise<TPodcast[]> {
     const filterParams = {
       user_id: searchedUserId,
     };
