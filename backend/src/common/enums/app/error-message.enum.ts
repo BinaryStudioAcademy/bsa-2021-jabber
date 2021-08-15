@@ -10,6 +10,7 @@ enum ErrorMessage {
   EMAIL_IS_ALREADY_TAKEN = 'Email is already taken',
   EPISODE_NOT_FOUND = 'Episode not found',
   NOT_YOURS_PODCAST = 'This podcast not yours',
+  NOT_YOURS_EPISODE = 'This episode not yours',
 }
 
 export { ErrorMessage };

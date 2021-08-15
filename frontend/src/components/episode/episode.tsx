@@ -5,7 +5,10 @@ import {
   useParams,
   useRef,
 } from 'hooks/hooks';
-import { episode as episodeActions } from 'store/actions';
+import {
+  episode as episodeActions,
+  configurateEpisode as configurateEpisodeActions,
+} from 'store/actions';
 import {
   Loader,
   CreateCommentForm,
@@ -61,6 +64,15 @@ const Episode: React.FC = () => {
     );
   };
 
+  const handleDeleteEpisode = (): void => {
+    dispatch(
+      configurateEpisodeActions.deleteEpisode({
+        episodeId: Number(id),
+        podcastId: Number(episode?.podcastId),
+      }),
+    );
+  };
+
   if (dataStatus === DataStatus.PENDING) {
     return <Loader />;
   }
@@ -86,10 +98,20 @@ const Episode: React.FC = () => {
               )}
               <div className={styles.descriptionWrapper}>
                 {isOwner && (
-                  <Link
-                    to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`}
-                    className={styles.editLink}
-                  />
+                  <>
+                    <Link
+                      to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`}
+                      className={styles.editLink}
+                    >
+                      <span className="visually-hidden">Edit episode</span>
+                    </Link>
+                    <button
+                      onClick={handleDeleteEpisode}
+                      className={styles.deleteButton}
+                    >
+                      <span className="visually-hidden">Delete episode</span>
+                    </button>
+                  </>
                 )}
                 <h1 className={styles.title}>{episode.name}</h1>
                 <p className={styles.description}>{episode.description}</p>

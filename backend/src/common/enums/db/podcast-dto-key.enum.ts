@@ -6,6 +6,8 @@ enum PodcastDTOKey {
   IMAGE = 'image',
   DESCRIPTION = 'description',
   TYPE = 'type',
+  COVER = 'cover',
+  GENRE_ID = 'genreId',
   USER = 'user',
 }
 

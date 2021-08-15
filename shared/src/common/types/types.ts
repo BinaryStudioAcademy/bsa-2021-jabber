@@ -24,3 +24,4 @@ export type { SignResponse } from './sign/sign';
 export type { TokenPayload } from './token/token';
 export type { PodcastSearchPayload } from './search/search';
 export type { UserNotification } from './user-notification/user-notification';
+export type { Genre } from './genre/genre';

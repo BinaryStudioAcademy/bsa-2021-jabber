@@ -10,6 +10,7 @@ import {
 } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { getFileExtensions } from 'helpers/helpers';
+import { getAllowedClasses } from 'helpers/dom/dom';
 import styles from './styles.module.scss';
 import ImageWrapper from '../image-wrapper/image-wrapper';
 
@@ -18,6 +19,8 @@ type Props = {
   control: Control;
   errors: FieldValues;
   imageUrl?: string;
+  label?: string;
+  className?: string;
 };
 
 const acceptExtension = getFileExtensions(
@@ -27,7 +30,14 @@ const acceptExtension = getFileExtensions(
   FileExtension.SVG,
 );
 
-const ImagePreviewControl: React.FC<Props> = ({ name, control, errors, imageUrl }) => {
+const ImagePreviewControl: React.FC<Props> = ({
+  name,
+  control,
+  errors,
+  imageUrl,
+  label,
+  className,
+}) => {
   const { field } = useController({ name, control });
 
   const handleChange = (evt: React.ChangeEvent<FieldValues>): void => {
@@ -40,15 +50,24 @@ const ImagePreviewControl: React.FC<Props> = ({ name, control, errors, imageUrl 
     field.onChange(imgUrl);
   };
 
+  const allowedClassesInputWrapper = getAllowedClasses(
+    className,
+    styles.inputWrapper,
+  );
+
   return (
     <>
-      <label className={styles.inputWrapper}>
+      <label className={allowedClassesInputWrapper}>
+        {label &&
+          <span className={styles.cornerRight}>
+            {label}
+          </span>}
         <ImageWrapper
           src={field.value ?? imageUrl}
           width="716"
           height="281"
           loading="lazy"
-          className={styles.imgInput}
+          className={className}
         />
         <input
           {...control.register(name)}

@@ -8,10 +8,13 @@ type Podcast = {
   userId: number;
   imageId: number | null;
   image: Image | null;
+  coverId: number | null;
+  cover: Image | null;
   createdAt: string;
   updatedAt: string;
   description: string;
   type: PodcastType;
+  genreId: number | null;
   user: User;
 };
 
