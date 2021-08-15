@@ -13,7 +13,7 @@ const Notifications: React.FC = () => {
   if (!hasNotificaions) {
     return (
       <div className={styles.containerUserNotFound}>
-        <h1>You haven`t received any notifications yet</h1>
+        <h1>You haven`t received any notifications yet.</h1>
       </div>
     );
   }
