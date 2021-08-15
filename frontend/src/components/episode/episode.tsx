@@ -31,12 +31,13 @@ const Episode: React.FC = () => {
   const { id } = useParams<PageParams>();
   const playerRef = useRef<PlayerRef | null>(null);
 
-  const { episode, comments, user, dataStatus } = useAppSelector(
+  const { episode, comments, user, dataStatus, podcast } = useAppSelector(
     ({ episode, auth }) => ({
       dataStatus: episode.dataStatus,
       episode: episode.episode,
       comments: episode.comments,
       user: auth.user,
+      podcast: episode.podcast,
     }),
   );
 
@@ -48,6 +49,7 @@ const Episode: React.FC = () => {
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisode(Number(id)));
+    dispatch(episodeActions.loadPodcast(Number(id)));
   }, []);
 
   const handleJumpToTimeLine = (timeline: number): void => {
@@ -116,10 +118,10 @@ const Episode: React.FC = () => {
                 <h1 className={styles.title}>{episode.name}</h1>
 
                 <Link
-                  to={`${AppRoute.PODCASTS}/${episode.podcastId}`}
+                  to={`${AppRoute.PODCASTS}/${episode?.podcastId}`}
                   className={styles.link}
                 >
-                  <h4>&#8592; Back to the podcast</h4>
+                  {podcast?.name}
                 </Link>
                 <p className={styles.description}>{episode.description}</p>
                 <p className={styles.status}>Status: {episode.status}</p>
