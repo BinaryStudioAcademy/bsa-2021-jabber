@@ -49,7 +49,6 @@ const Episode: React.FC = () => {
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisode(Number(id)));
-    dispatch(episodeActions.loadPodcast(Number(id)));
   }, []);
 
   const handleJumpToTimeLine = (timeline: number): void => {
