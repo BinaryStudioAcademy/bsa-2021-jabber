@@ -1,11 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { NotificationMessage, NotificationTitle } from 'common/enums/enums';
-import {
-  Podcast,
-  AsyncThunkConfig,
-  User,
-  UserEditPayload,
-} from 'common/types/types';
+import { Podcast, AsyncThunkConfig, User } from 'common/types/types';
 import { ActionType } from './common';
 
 const loadPodcasts = createAsyncThunk<Podcast[], number, AsyncThunkConfig>(
@@ -28,21 +22,4 @@ const loadUser = createAsyncThunk<User, number, AsyncThunkConfig>(
   },
 );
 
-const updateUser = createAsyncThunk<User, UserEditPayload, AsyncThunkConfig>(
-  ActionType.UPDATE_USER,
-  async (payload, { extra, getState }) => {
-    const { userApi, notificationService } = extra;
-    const { auth } = getState();
-
-    const updatedUser = await userApi.update((<User>auth.user).id, payload);
-
-    notificationService.success(
-      NotificationTitle.SUCCESS,
-      NotificationMessage.USER_UPDATED,
-    );
-
-    return updatedUser;
-  },
-);
-
-export { loadPodcasts, loadUser, updateUser };
+export { loadPodcasts, loadUser };
