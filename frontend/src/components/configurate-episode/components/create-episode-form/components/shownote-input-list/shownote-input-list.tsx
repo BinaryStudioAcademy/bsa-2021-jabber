@@ -23,14 +23,13 @@ const ShownoteInputList: React.FC<Props> = ({ control, errors }) => {
 
   return (
     <>
-      <div className={styles.title}>
-        Shownotes
-        <Button
-          label="Add"
-          buttonColor={ButtonColor.LIGHT_PINK}
-          onClick={handleAddShownote}
-        />
-      </div>
+      <span className={styles.timeNavTitle}>Time navigation</span>
+      <Button
+        label="Add time navigation"
+        buttonColor={ButtonColor.LIGHT_PINK}
+        onClick={handleAddShownote}
+        className={styles.timeNavAddButton}
+      />
       <ul className={styles.inputList}>
         {fields.map((item, index) => (
           <ShownoteInput

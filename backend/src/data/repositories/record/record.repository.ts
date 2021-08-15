@@ -24,8 +24,8 @@ class Record {
     return this.#RecordModel.query().findOne({ episode_id: id });
   }
 
-  public delete(id: number): Promise<number> {
-    return this.#RecordModel.query().deleteById(id);
+  public delete(id: number): Promise<TRecord> {
+    return this.#RecordModel.query().deleteById(id).returning('*').first();
   }
 }
 

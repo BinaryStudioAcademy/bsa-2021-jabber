@@ -45,6 +45,7 @@ class Podcast {
     description,
     imageDataUrl,
     type,
+    genreId,
   }: PodcastCreatePayload): Promise<TPodcast> {
     const newPodcast: PodcastCreateDTOPayload = {
       name,
@@ -53,6 +54,7 @@ class Podcast {
       imageId: null,
       coverId: null,
       type,
+      genreId,
     };
 
     if (imageDataUrl) {
@@ -90,6 +92,7 @@ class Podcast {
     description,
     imageId,
     imageDataUrl,
+    genreId,
   }: PodcastEditPayload): Promise<TPodcast> {
 
     const updatePodcast: PodcastEditDTOPayload = {
@@ -97,6 +100,7 @@ class Podcast {
       type,
       description,
       imageId: imageId,
+      genreId,
     };
 
     let deleteImageId: number | null = null;

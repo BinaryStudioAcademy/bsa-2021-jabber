@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
 import {
   AsyncThunkConfig,
+  Genre,
   Podcast,
   PodcastFormPayload,
   User,
@@ -19,6 +20,7 @@ const create = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
     const podcast = await podcastApi.create({
       userId: (<User>auth.user).id,
       description: podcastPayload.description,
+      genreId: Number(podcastPayload.genre),
       name: podcastPayload.name,
       type: podcastPayload.type,
       imageDataUrl: file ? await getDataUrl(file) : null,
@@ -47,6 +49,7 @@ const edit = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
       type: podcastPayload.type,
       imageId: imageId,
       imageDataUrl: file ? await getDataUrl(file) : null,
+      genreId: Number(podcastPayload.genre),
     });
 
     notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PODCAST_UPDATED);
@@ -64,4 +67,12 @@ const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>
   return podcast;
 });
 
-export { create, edit, loadPodcast };
+const loadGenres = createAsyncThunk<Genre[], undefined, AsyncThunkConfig>
+(ActionType.LOAD_GENRES, async (_args, { extra }) => {
+  const { genreApi } = extra;
+  const genres = await genreApi.getAll();
+
+  return genres;
+});
+
+export { create, edit, loadPodcast, loadGenres };
