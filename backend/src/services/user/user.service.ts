@@ -6,7 +6,6 @@ import {
 import { user as userRep } from '~/data/repositories/repositories';
 import { ErrorMessage, HttpCode } from '~/common/enums/enums';
 import { HttpError } from '~/exceptions/exceptions';
-import { encrypt } from '~/helpers/helpers';
 import { token } from '~/services/services';
 
 type Constructor = {
@@ -47,17 +46,7 @@ class User {
       });
     }
 
-    const updatedUser = { ...payload };
-    const hasPassword = Boolean(payload.password);
-
-    if (!hasPassword) {
-      const user = await this.getById(id);
-      updatedUser.password = user.password;
-    } else {
-      updatedUser.password = await encrypt(payload.password as string);
-    }
-
-    return this.#userRepository.update(id, updatedUser);
+    return this.#userRepository.update(id, payload);
   }
 
   public async getByToken(token: string): Promise<TUser> {
