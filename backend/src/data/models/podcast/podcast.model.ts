@@ -3,7 +3,7 @@ import { TableName, PodcastDTOKey, PodcastType } from '~/common/enums/enums';
 import { Abstract } from '../abstract/abstract.model';
 import { Image } from '~/data/models/image/image.model';
 import { User } from '~/data/models/user/user.model';
-import { Genre } from '../genre/genre.model';
+import { Genre } from '~/data/models/genre/genre.model';
 
 class Podcast extends Abstract {
   [PodcastDTOKey.NAME]: string;
@@ -26,7 +26,7 @@ class Podcast extends Abstract {
 
   [PodcastDTOKey.USER]: User;
 
-  [PodcastDTOKey.GENRE]: Genre;
+  [PodcastDTOKey.GENRE]: Genre | null;
 
   static get tableName(): string {
     return TableName.PODCASTS;

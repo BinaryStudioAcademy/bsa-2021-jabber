@@ -5,6 +5,7 @@ import { Link, Loader, ImageWrapper } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
+import { getAllowedClasses } from 'helpers/dom/dom';
 
 const Podcast: React.FC = () => {
   const { userId, podcast, episodes, dataStatus } = useAppSelector(
@@ -51,21 +52,21 @@ const Podcast: React.FC = () => {
               <p className={styles.description}>{podcast.description}</p>
               <ul className={styles.infoList}>
                 <li className={styles.infoItem}>
-                  <div className={`${styles.infoName} ${styles.host}`}>Host</div>
+                  <div className={getAllowedClasses(styles.infoName, styles.host)}>Host</div>
                   <p className={styles.infoInner}>{podcast.user.nickname}</p>
                 </li>
                 {Boolean(episodes.length) && (
                   <li className={styles.infoItem}>
-                    <div className={`${styles.infoName} ${styles.episodes}`}>Episodes</div>
+                    <div className={getAllowedClasses(styles.infoName, styles.episodes)}>Episodes</div>
                     <p className={styles.infoInner}>{episodes.length} episodes</p>
                   </li>
                 )}
                 <li className={styles.infoItem}>
-                  <div className={`${styles.infoName} ${styles.period}`}>Рeriodicity</div>
+                  <div className={getAllowedClasses(styles.infoName, styles.period)}>Рeriodicity</div>
                   <p className={styles.infoInner}>Once a month</p>
                 </li>
                 <li className={styles.infoItem}>
-                  <div className={`${styles.infoName} ${styles.genre}`}>Genre</div>
+                  <div className={getAllowedClasses(styles.infoName, styles.genre)}>Genre</div>
                   <p className={styles.infoInner}>{podcast.genre?.name}</p>
                 </li>
               </ul>
