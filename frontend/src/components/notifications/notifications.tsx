@@ -8,6 +8,16 @@ const Notifications: React.FC = () => {
     notifications: notification.notifications,
   }));
 
+  const hasNotificaions = Boolean(notifications.length);
+
+  if (!hasNotificaions) {
+    return (
+      <div className={styles.containerUserNotFound}>
+        <h1>You haven`t received any notifications yet.</h1>
+      </div>
+    );
+  }
+
   return (
     <ul className={styles.container}>
       {notifications.map((notification) => {
