@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
 import {
   AsyncThunkConfig,
@@ -75,4 +75,6 @@ const loadGenres = createAsyncThunk<Genre[], undefined, AsyncThunkConfig>
   return genres;
 });
 
-export { create, edit, loadPodcast, loadGenres };
+const resetPodcast = createAction(ActionType.RESET_PODCAST);
+
+export { create, edit, loadPodcast, loadGenres, resetPodcast };
