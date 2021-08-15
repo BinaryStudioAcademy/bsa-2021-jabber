@@ -1,6 +1,7 @@
 import { Image } from '~/common/types/image/image.type';
 import { PodcastType } from '~/common/enums/enums';
 import { User } from '../user/user.type';
+import { Genre } from '../genre/genre.type';
 
 type Podcast = {
   id: number;
@@ -16,6 +17,7 @@ type Podcast = {
   type: PodcastType;
   genreId: number | null;
   user: User;
+  genre: Genre;
 };
 
 export type { Podcast };
