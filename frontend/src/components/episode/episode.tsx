@@ -102,7 +102,9 @@ const Episode: React.FC = () => {
                     <Link
                       to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`}
                       className={styles.editLink}
-                    />
+                    >
+                      <span className="visually-hidden">Edit episode</span>
+                    </Link>
                     <button
                       onClick={handleDeleteEpisode}
                       className={styles.deleteButton}
