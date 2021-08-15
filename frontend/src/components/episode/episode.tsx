@@ -137,7 +137,10 @@ const Episode: React.FC = () => {
             </h2>
             {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
             {comments.length ? (
-              <CommentsList comments={comments} />
+              <CommentsList
+                comments={comments}
+                onClick={handleJumpToTimeLine}
+              />
             ) : (
               <div>There&apos;s no comment yet.</div>
             )}

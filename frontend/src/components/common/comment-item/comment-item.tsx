@@ -1,22 +1,23 @@
 import { Comment as TComment } from 'common/types/types';
-import { getFormattedDate, getDistanceToDateNow } from 'helpers/date/date';
-import { DateFormatType } from 'common/enums/enums';
+import { getDistanceToDateNow } from 'helpers/date/date';
 import ImageWrapper from '../image-wrapper/image-wrapper';
 import styles from './styles.module.scss';
+import { mapSecondToCommentTime } from './helpers/helpers';
 
 type Props = {
   comment: TComment;
+  onClick?: (payload: number) => void;
 };
 
-const Comment: React.FC<Props> = ({ comment }) => {
-  const time = getFormattedDate(
-    new Date(comment.createdAt),
-    DateFormatType.HOURES_MINUTES,
-  );
+const Comment: React.FC<Props> = ({ comment, onClick }) => {
+
   const distance = getDistanceToDateNow(
     new Date(comment.createdAt),
     Date.now(),
   );
+
+  const timeComment = mapSecondToCommentTime(comment.timestamp);
+
   return (
     <li className={styles.wrapper}>
       <ImageWrapper
@@ -30,7 +31,17 @@ const Comment: React.FC<Props> = ({ comment }) => {
       <div className={styles.intro}>
         <p className={styles.userName}>
           {comment.user.nickname ?? comment.user.firstName}&nbsp;<span>at</span>
-          &nbsp;{time}
+          &nbsp;
+          {onClick
+            ? <button
+              className={styles.commentAtButton}
+              onClick={(): void => {
+                onClick(comment.timestamp);
+              }}>
+              {timeComment}
+            </button>
+            : timeComment
+          }
         </p>
         <p className={styles.text}>{comment.text}</p>
       </div>
