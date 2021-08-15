@@ -1,8 +1,8 @@
 import { PodcastType } from '~/common/enums/enums';
 
-type PodcastsReturnedType = {
+type UserPodcastQueryParams = {
   user_id: number;
   type?: PodcastType;
 };
 
-export type { PodcastsReturnedType };
+export type { UserPodcastQueryParams };
