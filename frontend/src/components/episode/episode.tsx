@@ -5,7 +5,10 @@ import {
   useParams,
   useRef,
 } from 'hooks/hooks';
-import { episode as episodeActions,  configurateEpisode as configurateEpisodeActions } from 'store/actions';
+import {
+  episode as episodeActions,
+  configurateEpisode as configurateEpisodeActions,
+} from 'store/actions';
 import {
   Loader,
   CreateCommentForm,
@@ -15,7 +18,7 @@ import {
   Link,
   ImageWrapper,
 } from 'components/common/common';
-import { AppRoute, DataStatus, EpisodeStatus, ButtonType, ButtonColor } from 'common/enums/enums';
+import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
 import { getCurrentTime } from './helpers/helpers';
@@ -62,10 +65,12 @@ const Episode: React.FC = () => {
   };
 
   const handleDeleteEpisode = (): void => {
-    dispatch(configurateEpisodeActions.deleteEpisode({
-      episodeId: Number(id),
-      podcastId: Number(episode?.podcastId),
-    }));
+    dispatch(
+      configurateEpisodeActions.deleteEpisode({
+        episodeId: Number(id),
+        podcastId: Number(episode?.podcastId),
+      }),
+    );
   };
 
   if (dataStatus === DataStatus.PENDING) {
@@ -98,10 +103,7 @@ const Episode: React.FC = () => {
                       to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`}
                       className={styles.editLink}
                     />
-                    <Button
-                      label="Delete"
-                      type={ButtonType.BUTTON}
-                      buttonColor={ButtonColor.LIGHT_PINK}
+                    <button
                       onClick={handleDeleteEpisode}
                       className={styles.deleteButton}
                     />
