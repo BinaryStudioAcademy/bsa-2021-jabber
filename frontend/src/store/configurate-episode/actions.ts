@@ -1,5 +1,12 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AsyncThunkConfig, CreateActionEpisodePayload, Episode, EpisodeFormPayload, User } from 'common/types/types';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  AsyncThunkConfig,
+  CreateActionEpisodePayload,
+  DeleteActionEpisodePayload,
+  Episode,
+  EpisodeFormPayload,
+  User,
+} from 'common/types/types';
 import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
 import { ActionType } from './common';
 import { AppRoute, NotificationMessage, NotificationTitle } from 'common/enums/enums';
@@ -70,4 +77,16 @@ const loadEpisode = createAsyncThunk<Episode, number, AsyncThunkConfig>(
     return episode;
   });
 
-export { create, edit, loadEpisode };
+const deleteEpisode = createAsyncThunk<void, DeleteActionEpisodePayload, AsyncThunkConfig>(
+  ActionType.DELETE_EPISODE,
+  async ({ podcastId, episodeId }, { extra }) => {
+    const { episodeApi, notificationService, navigationService } = extra;
+    await episodeApi.delete(episodeId);
+
+    notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.EPISODE_DELETED);
+    navigationService.push(`${AppRoute.PODCASTS}/${podcastId}`);
+  });
+
+const resetState = createAction(ActionType.RESET_STATE);
+
+export { create, edit, loadEpisode, deleteEpisode, resetState };

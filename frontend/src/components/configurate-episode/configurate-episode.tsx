@@ -36,20 +36,25 @@ const ConfigurateEpisode: React.FC = () => {
     if (isEdit) {
       dispatch(configurateEpisodeActions.loadEpisode(Number(id)));
     }
+
+    return ((): void => {
+      dispatch(configurateEpisodeActions.resetState());
+    });
   }, []);
 
   return (
-    <div className={styles.episode}>
-      <h2>
-        {isEdit ? 'Edit' : 'Create'} Episode {episode?.name ?? ''}
-      </h2>
+    <main className={styles.episode}>
+      <h1 className={styles.episodeTitle}>
+        {isEdit ? 'Edit' : 'Create'} episode
+      </h1>
       {isLoading
         ? <Loader />
         : <CreateEpisodeForm
+          imageUrl={episode?.image?.url}
           onSubmit={handleFormSubmit}
           payload={mapEpisode} />
       }
-    </div>
+    </main>
   );
 };
 

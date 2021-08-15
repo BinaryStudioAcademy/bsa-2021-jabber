@@ -7,7 +7,7 @@ import { ApiPath, HttpCode, PodcastsApiPath, HttpMethod } from '~/common/enums/e
 import { handleAsyncApi } from '~/helpers/helpers';
 import {
   checkAuth as checkAuthMiddleware,
-  checkUserOwner as checkUserOwnerMiddleware,
+  checkUserPodcastOwner as checkUserPodcastOwnerMiddleware,
   validateSchema as validateSchemaMiddleware,
 } from '~/middlewares/middlewares';
 import { podcast as podcastService } from '~/services/services';
@@ -61,7 +61,7 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
   podcastRouter.put(
     PodcastsApiPath.$ID,
     checkAuthMiddleware(HttpMethod.PUT),
-    checkUserOwnerMiddleware(),
+    checkUserPodcastOwnerMiddleware(),
     validateSchemaMiddleware(editPodcastValidationSchema),
     handleAsyncApi(async (req, res) => {
       return res

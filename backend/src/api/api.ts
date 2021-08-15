@@ -7,6 +7,7 @@ import {
   episode as episodeService,
   comment as commentService,
   record as recordService,
+  genre as genreService,
 } from '~/services/services';
 import { initAuthApi } from './auth/auth.api';
 import { initUsersApi } from './users/users.api';
@@ -14,6 +15,7 @@ import { initPodcastsApi } from './podcasts/podcasts.api';
 import { initEpisodesApi } from './episodes/episodes.api';
 import { initCommentsApi } from './comments/comments.api';
 import { initRecordsApi } from './records/records.api';
+import { initGenreApi } from './genre/genre.api';
 
 const initApi = (app: Router): Router => {
   const apiRouter = Router();
@@ -48,6 +50,11 @@ const initApi = (app: Router): Router => {
   initRecordsApi({
     apiRouter,
     recordService,
+  });
+
+  initGenreApi({
+    apiRouter,
+    genreService,
   });
 
   return apiRouter;

@@ -22,6 +22,21 @@ const podcastCreate = podcast.keys({
     .messages({
       'file.invalidExtension': PodcastValidationMessage.FILE_EXTENSION_FORMAT,
     }),
+  [PodcastPayloadKey.COVER]: Joi.object()
+    .custom(
+      fileExtensionValidation(
+        FileExtension.JPEG,
+        FileExtension.JPG,
+        FileExtension.PNG,
+        FileExtension.SVG,
+      ),
+      'file extension validation',
+    )
+    .allow(null)
+    .messages({
+      'file.invalidExtension': PodcastValidationMessage.FILE_EXTENSION_FORMAT,
+    }),
+  [PodcastPayloadKey.GENRE]: Joi.string().allow(null),
 });
 
 export { podcastCreate };

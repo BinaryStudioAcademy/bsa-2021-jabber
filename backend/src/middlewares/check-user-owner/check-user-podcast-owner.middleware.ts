@@ -3,7 +3,7 @@ import { HttpError } from '~/exceptions/exceptions';
 import { ErrorMessage, HttpCode } from '~/common/enums/enums';
 import { podcast as podcastService } from '~/services/services';
 
-const checkUserOwner = (): RequestHandler => {
+const checkUserPodcastOwner = (): RequestHandler => {
   const handler: RequestHandler = async (req, _res, next) => {
     const podcastId = req.params.id ?? req.body.podcastId;
     const { userId: podcastOwnerId } = await podcastService.getById(podcastId);
@@ -21,4 +21,4 @@ const checkUserOwner = (): RequestHandler => {
   return handler;
 };
 
-export { checkUserOwner };
+export { checkUserPodcastOwner };
