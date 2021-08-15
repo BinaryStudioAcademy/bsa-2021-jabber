@@ -69,7 +69,10 @@ const UserPage: React.FC = () => {
                 height="18"
                 className={styles.headerLogo}
               />
-              {user?.email}
+              <a className={styles.emailLink} href={`mailto:${user?.email}`}>
+                {user?.email}
+              </a>
+              ;
             </span>
           </div>
           <div className={styles.bioContainer}>
