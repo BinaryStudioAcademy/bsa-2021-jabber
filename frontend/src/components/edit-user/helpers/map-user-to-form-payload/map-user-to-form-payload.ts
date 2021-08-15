@@ -7,6 +7,7 @@ const mapUserToFormPayload = (user: User): UserFormPayload => ({
   email: user.email,
   nickname: user.nickname,
   birthdate: new Date(user.birthdate),
+  bio: user.bio,
 });
 
 export { mapUserToFormPayload };
