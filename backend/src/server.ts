@@ -15,7 +15,6 @@ import {
 import knexConfig from '../knexfile';
 
 const app = express();
-socketService.create(app);
 
 Model.knex(Knex(knexConfig[ENV.APP.NODE_ENV]));
 
@@ -43,5 +42,7 @@ const server = app.listen(ENV.APP.SERVER_PORT, () => {
     `Listening to connections on Port — ${ENV.APP.SERVER_PORT}, Environment: ${ENV.APP.NODE_ENV}`,
   );
 });
+
+socketService.create(server, app);
 
 export { server };
