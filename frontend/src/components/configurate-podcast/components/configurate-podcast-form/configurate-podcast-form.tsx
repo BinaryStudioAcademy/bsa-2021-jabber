@@ -17,6 +17,7 @@ import styles from './styles.module.scss';
 type Props = {
   onSubmit: (payload: PodcastFormPayload) => void;
   payload?: PodcastFormPayload;
+  genres: Option[];
 };
 
 const selectOptions: Option[] = getOptions(Object.values(PodcastType));
@@ -24,6 +25,7 @@ const selectOptions: Option[] = getOptions(Object.values(PodcastType));
 const ConfiguratePodcastForm: React.FC<Props> = ({
   onSubmit,
   payload = DEFAULT_PODCAST_PAYLOAD,
+  genres,
 }) => {
   const { control, handleSubmit, errors } = useAppForm({
     validationSchema: podcastCreateSchema,
@@ -52,6 +54,13 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
           errors={errors}
           label="Podcast Name"
           placeholder="Enter Name"
+        />
+        <Select
+          options={genres}
+          label="Genre"
+          name={PodcastPayloadKey.GENRE}
+          control={control}
+          errors={errors}
         />
         <Select
           options={selectOptions}

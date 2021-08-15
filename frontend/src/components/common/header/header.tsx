@@ -4,6 +4,7 @@ import { RootState } from 'common/types/types';
 import { Button, Link, ImageWrapper } from 'components/common/common';
 import { auth as authActions } from 'store/actions';
 import logo from 'assets/img/logo.svg';
+import headerBell from 'assets/img/header-bell.svg';
 import styles from './styles.module.scss';
 
 const Header: React.FC = () => {
@@ -49,8 +50,20 @@ const Header: React.FC = () => {
               </li>
             </ul>
             <div className={styles.userInfo}>
-              <Link to={AppRoute.PODCASTS_EDIT} className={styles.link}>
-                <Button label="+ Create Podcast" type={ButtonType.BUTTON} />
+              <Button
+                label="+ Create Podcast"
+                href={AppRoute.PODCASTS_EDIT}
+                type={ButtonType.BUTTON}
+              />
+              <Link to={AppRoute.NOTIFICATIONS}>
+                <img
+                  src={headerBell}
+                  width="23"
+                  height="23"
+                  loading="lazy"
+                  alt=""
+                  className={styles.notification}
+                />
               </Link>
               <div className={styles.profile} ref={ref}>
                 <button

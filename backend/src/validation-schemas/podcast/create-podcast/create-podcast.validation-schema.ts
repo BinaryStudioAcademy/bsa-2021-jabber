@@ -16,6 +16,12 @@ const podcastCreate = podcast.keys({
     }),
     Joi.any().equal(null),
   ],
+  [PodcastPayloadKey.GENRE_ID]: Joi.number()
+    .integer()
+    .allow(null)
+    .messages({
+      'number.integer': PodcastValidationMessage.GENRE_ID_NUMBER_FORMAT,
+    }),
 });
 
 export { podcastCreate };

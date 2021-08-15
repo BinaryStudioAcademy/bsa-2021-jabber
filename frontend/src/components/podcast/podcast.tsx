@@ -21,13 +21,8 @@ const Podcast: React.FC = () => {
 
   useEffect(() => {
     dispatch(podcastActions.loadPodcast(Number(id)));
+    dispatch(podcastActions.loadEpisodesByPodcastId(Number(id)));
   }, []);
-
-  useEffect(() => {
-    if (podcast) {
-      dispatch(podcastActions.loadEpisodesByPodcastId(podcast.id));
-    }
-  }, [podcast]);
 
   if (dataStatus === DataStatus.PENDING) {
     return <Loader />;
@@ -59,17 +54,15 @@ const Podcast: React.FC = () => {
                   <div className={`${styles.infoName} ${styles.host}`}>Host</div>
                   <p className={styles.infoInner}>{podcast.user.nickname}</p>
                 </li>
-                <li className={styles.infoItem}>
-                  <div className={`${styles.infoName} ${styles.episodes}`}>Episodes</div>
-                  <p className={styles.infoInner}>{episodes.length} episodes</p>
-                </li>
+                {Boolean(episodes.length) && (
+                  <li className={styles.infoItem}>
+                    <div className={`${styles.infoName} ${styles.episodes}`}>Episodes</div>
+                    <p className={styles.infoInner}>{episodes.length} episodes</p>
+                  </li>
+                )}
                 <li className={styles.infoItem}>
                   <div className={`${styles.infoName} ${styles.period}`}>Рeriodicity</div>
                   <p className={styles.infoInner}>Once a month</p>
-                </li>
-                <li className={styles.infoItem}>
-                  <div className={`${styles.infoName} ${styles.average}`}>Average time</div>
-                  <p className={styles.infoInner}>{podcast.userId} min</p>
                 </li>
               </ul>
 

@@ -20,7 +20,7 @@ class Episode {
     return this.#EpisodeModel.query();
   }
 
-  public getById(id: string): Promise<TEpisode> {
+  public getById(id: number): Promise<TEpisode> {
     return this.#EpisodeModel.query().findById(id).withGraphJoined('[record, image, shownotes]');
   }
 
@@ -40,6 +40,14 @@ class Episode {
       .query()
       .updateAndFetchById(id, payload)
       .withGraphFetched('shownotes');
+  }
+
+  public delete(id: number): Promise<TEpisode> {
+    return this.#EpisodeModel
+      .query()
+      .deleteById(id)
+      .returning('*')
+      .first();
   }
 }
 
