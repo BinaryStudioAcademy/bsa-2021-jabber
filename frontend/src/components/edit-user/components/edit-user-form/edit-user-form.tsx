@@ -61,12 +61,13 @@ const EditUserForm: React.FC<Props> = ({
           errors={errors}
         />
         <Input
-          type={InputType.PASSWORD}
-          label="Password"
-          placeholder="Enter your password"
-          name={UserPayloadKey.PASSWORD}
+          type={InputType.TEXT}
+          label="Bio"
+          placeholder="Enter your bio"
+          name={UserPayloadKey.BIO}
           control={control}
           errors={errors}
+          hasMultipleRows
         />
         <Button
           label="Edit"
