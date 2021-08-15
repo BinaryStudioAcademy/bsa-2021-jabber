@@ -36,7 +36,11 @@ class User {
       payload.email,
     );
 
-    if (userWithSimilarEmail && userWithSimilarEmail.id !== id) {
+    const hasSimilarEmail = Boolean(userWithSimilarEmail);
+    const isAnotherUserEmail =
+      hasSimilarEmail && userWithSimilarEmail.id !== id;
+
+    if (isAnotherUserEmail) {
       throw new HttpError({
         status: HttpCode.BAD_REQUEST,
         message: ErrorMessage.EMAIL_IS_ALREADY_TAKEN,
@@ -44,12 +48,13 @@ class User {
     }
 
     const updatedUser = { ...payload };
+    const hasPassword = Boolean(payload.password);
 
-    if (!payload.password) {
+    if (!hasPassword) {
       const user = await this.getById(id);
       updatedUser.password = user.password;
     } else {
-      updatedUser.password = await encrypt(payload.password);
+      updatedUser.password = await encrypt(payload.password as string);
     }
 
     return this.#userRepository.update(id, updatedUser);
