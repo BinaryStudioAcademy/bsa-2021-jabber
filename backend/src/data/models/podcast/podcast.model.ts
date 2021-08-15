@@ -3,6 +3,7 @@ import { TableName, PodcastDTOKey, PodcastType } from '~/common/enums/enums';
 import { Abstract } from '../abstract/abstract.model';
 import { Image } from '~/data/models/image/image.model';
 import { User } from '~/data/models/user/user.model';
+import { Genre } from '../genre/genre.model';
 
 class Podcast extends Abstract {
   [PodcastDTOKey.NAME]: string;
@@ -24,6 +25,8 @@ class Podcast extends Abstract {
   [PodcastDTOKey.GENRE_ID]: number | null;
 
   [PodcastDTOKey.USER]: User;
+
+  [PodcastDTOKey.GENRE]: Genre;
 
   static get tableName(): string {
     return TableName.PODCASTS;
@@ -52,6 +55,14 @@ class Podcast extends Abstract {
       join: {
         from: 'podcasts.user_id',
         to: 'users.id',
+      },
+    },
+    genre: {
+      relation: Model.HasOneRelation,
+      modelClass: Genre,
+      join: {
+        from: 'podcasts.genre_id',
+        to: 'genres.id',
       },
     },
   };
