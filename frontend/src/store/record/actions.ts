@@ -27,9 +27,9 @@ const resumeRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
 });
 
 const stopRecord = createAsyncThunk<string, undefined, AsyncThunkConfig>
-(ActionType.STOP_RECORD, (_arg, { extra }) => {
+(ActionType.STOP_RECORD, async (_arg, { extra }) => {
   const { recordAudioService } = extra;
-  const audioDataUrl = recordAudioService.stop();
+  const audioDataUrl = await recordAudioService.stop();
 
   return audioDataUrl;
 });

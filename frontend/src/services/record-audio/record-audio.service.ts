@@ -9,7 +9,6 @@ class RecordAudio {
   #notificationService;
   #recorder?: MediaRecorder;
   #audioChunks: Blob[] = [];
-  #audioDataUrl = '';
 
   constructor({ notificationService }: Constructor) {
     this.#notificationService = notificationService;
@@ -28,7 +27,7 @@ class RecordAudio {
   }
 
   public start(): void {
-    this.#recorder?.start();
+    this.#recorder?.start(500);
   }
 
   public pause(): void {
@@ -39,14 +38,16 @@ class RecordAudio {
     this.#recorder?.resume();
   }
 
-  public stop(): string {
-    if (this.#recorder?.state !== RecordStatus.INACTIVE) {
-      this.#recorder?.stop();
-      const audioBlob = new Blob(this.#audioChunks, { type: 'audio/wave' });
-      this.#audioDataUrl = URL.createObjectURL(audioBlob);
-      this.#audioChunks = [];
-    }
-    return this.#audioDataUrl;
+  public stop(): Promise<string> {
+    return new Promise((resolve, _reject) => {
+
+      if (this.#recorder?.state !== RecordStatus.INACTIVE) {
+        this.#recorder?.stop();
+        const audioBlob = new Blob(this.#audioChunks, { type: 'audio/wave' });
+        this.#audioChunks = [];
+        resolve(URL.createObjectURL(audioBlob));
+      }
+    });
   }
 
   public init(): void {
