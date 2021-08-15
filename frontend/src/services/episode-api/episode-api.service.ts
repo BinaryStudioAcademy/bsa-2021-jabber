@@ -66,6 +66,15 @@ class EpisodeApi {
       },
     );
   }
+
+  public delete(id: number): Promise<Episode> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.EPISODES}${EpisodesApiPath.ROOT}${id}`,
+      {
+        method: HttpMethod.DELETE,
+      },
+    );
+  }
 }
 
 export { EpisodeApi };

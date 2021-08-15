@@ -15,6 +15,7 @@ import ConfigurateEpisode from 'components/configurate-episode/configurate-episo
 import UserProfile from 'components/user-profile/user-profile';
 import Episode from 'components/episode/episode';
 import Podcast from 'components/podcast/podcast';
+import Notifications from 'components/notifications/notifications';
 import EpisodeLive from 'components/episode-live/episode-live';
 import EditUser from 'components/edit-user/edit-user';
 import { useDispatch, useEffect, useAppSelector } from 'hooks/hooks';
@@ -52,6 +53,11 @@ const App: React.FC = () => {
         <AuthPrivateRouter
           path={AppRoute.PODCASTS_EDIT_$ID}
           component={ConfiguratePodcast}
+          exact
+        />
+        <AuthPrivateRouter
+          path={AppRoute.NOTIFICATIONS}
+          component={Notifications}
           exact
         />
         <AuthPublicRouter

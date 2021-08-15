@@ -10,6 +10,7 @@ import {
   comment as commentRepository,
   record as recordRepository,
   image as imageRepository,
+  genre as genreRepository,
 } from '~/data/repositories/repositories';
 import { AsyncLocalStorage } from './async-storage/async-storage.service';
 import { Logger } from './logger/logger.service';
@@ -23,6 +24,8 @@ import { Record } from './record/record.service';
 import { FileStorage } from './file-storage/file-storage.service';
 import { Token } from './token/token.service';
 import { Passport } from './passport/passport.service';
+import { Image } from './image/image.service';
+import { Genre } from './genre/genre.service';
 import { Socket } from './socket/socket.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
@@ -54,20 +57,28 @@ const shownote = new Shownote({
   shownoteRepository,
 });
 
-const episode = new Episode({
-  episodeRepository,
-  shownoteService: shownote,
-  imageRepository,
-  recordRepository,
-  fileStorage,
-});
-
 const comment = new Comment({
   commentRepository,
 });
 
 const record = new Record({
   recordRepository,
+});
+
+const image = new Image({
+  imageRepository,
+  fileStorage,
+});
+
+const episode = new Episode({
+  episodeRepository,
+  shownoteService: shownote,
+  commentService: comment,
+  recordService: record,
+  imageService: image,
+  imageRepository,
+  recordRepository,
+  fileStorage,
 });
 
 const podcast = new Podcast({
@@ -81,6 +92,10 @@ const passport = new Passport({
   passportJwt,
   LocalStrategy,
   userRepository,
+});
+
+const genre = new Genre({
+  genreRepository,
 });
 
 const socket = new Socket();
@@ -98,5 +113,7 @@ export {
   fileStorage,
   token,
   passport,
+  image,
+  genre,
   socket,
 };

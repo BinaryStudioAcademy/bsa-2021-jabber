@@ -19,6 +19,7 @@ export type {
   EpisodeEditPayload,
   EpisodeFormPayload,
   CreateActionEpisodePayload,
+  DeleteActionEpisodePayload,
 } from './episode/episode';
 export type { Shownote, ShownotePayload } from './shownote/shownote';
 export type { SignResponse } from './sign/sign';
@@ -28,3 +29,5 @@ export type {
   CommentFormCreatePayload,
 } from './comment/comment';
 export type { Option } from './ui/option';
+export type { UserNotification } from './notification/notification';
+export type { Genre } from './genre/genre';

@@ -1,12 +1,48 @@
-.form {
-  padding: 15px;
-}
-
 .fieldset {
   display: flex;
   flex-direction: column;
   margin: 0;
   padding: 0;
-  gap: 15px;
   border: none;
+
+  .recordLabel {
+    display: block;
+    align-self: flex-start;
+    cursor: pointer;
+    padding: 8px 15px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 7px;
+    border-color: var(--color-button-background);
+    font-size: 16px;
+    font-weight: 700;
+    transition: all 1s ease;
+    text-align: center;
+    background-color: var(--color-primary-ligth);
+    color: var(--color-button-background);
+    flex-shrink: 0;
+    margin-bottom: 15px;
+
+    &:hover {
+      background-color: var(--color-button-background);
+      color: #fff;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+  }
+
+  .buttonRow {
+    display: flex;
+    flex-grow: 1;
+    margin-top: 30px;
+
+    button {
+      padding: 8px 80px;
+    }
+    button + button {
+      margin-left: 15px;
+    }
+  }
 }

@@ -28,3 +28,4 @@ export type { Record, RecordCreatePayload } from './record/record';
 export type { SignResponse } from './sign/sign';
 export type { TokenPayload } from './token/token';
 export type { UserNotification } from './user-notification/user-notification';
+export type { Genre } from './genre/genre';
