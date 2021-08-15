@@ -5,6 +5,7 @@ import { homepage as homepageActions } from 'store/actions';
 import { PodcastList, Search } from './components/components';
 import { SEARCH_TIMEOUT } from './components/search/common/constants';
 import { setDebounce } from 'jabber-shared/helpers/timeout/timeout';
+import { FieldValues, UnpackNestedValue } from 'react-hook-form';
 import styles from './styles.module.scss';
 
 const Homepage: React.FC = () => {
@@ -19,13 +20,12 @@ const Homepage: React.FC = () => {
     dispatch(homepageActions.loadPodcasts());
   }, []);
 
-  const debounceValue = useCallback(setDebounce((value) => {
-    const data: Record<string, unknown> = { search: value };
-    (dispatch(homepageActions.loadPodcastsBySearch(data)));
+  const debounceValue = useCallback(setDebounce((value: UnpackNestedValue<FieldValues>) => {
+    (dispatch(homepageActions.loadPodcastsBySearch(value)));
   }, SEARCH_TIMEOUT), []);
 
-  const handleChange = (event: React.ChangeEvent<HTMLFormElement>): void => {
-    debounceValue(event.target.value);
+  const handleChange = (value: UnpackNestedValue<FieldValues>): void => {
+    debounceValue(value);
   };
 
   if (dataStatus === DataStatus.PENDING) {

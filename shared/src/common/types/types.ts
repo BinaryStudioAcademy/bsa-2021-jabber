@@ -22,5 +22,5 @@ export type { Comment, CommentCreatePayload } from './comment/comment';
 export type { Record, RecordCreatePayload } from './record/record';
 export type { SignResponse } from './sign/sign';
 export type { TokenPayload } from './token/token';
-export type { SearchPayload } from './search/search';
+export type { PodcastSearchPayload } from './search/search';
 export type { UserNotification } from './user-notification/user-notification';

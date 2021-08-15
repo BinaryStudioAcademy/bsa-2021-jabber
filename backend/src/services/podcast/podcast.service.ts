@@ -3,7 +3,7 @@ import {
   PodcastCreateDTOPayload,
   PodcastEditDTOPayload,
   PodcastCreatePayload,
-  PodcastEditPayload, SearchPayload,
+  PodcastEditPayload, PodcastSearchPayload,
 } from '~/common/types/types';
 import {
   podcast as podcastRep,
@@ -83,7 +83,7 @@ class Podcast {
     return podcast;
   }
 
-  public async getAllBySearch(data: SearchPayload): Promise<TPodcast[]> {
+  public async getAllBySearch(data: PodcastSearchPayload): Promise<TPodcast[]> {
     return await this.#podcastRepository.getAllBySearch(data);
   }
 

@@ -1,1 +1,1 @@
-export type { SearchPayload } from './search-payload.type';
+export type { PodcastSearchPayload } from './podcast-search-payload.type';
