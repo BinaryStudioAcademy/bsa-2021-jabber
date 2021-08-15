@@ -38,11 +38,14 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
   });
   const history = useHistory();
 
-  const { dataStatus } = useAppSelector(({ episode }) => ({
+  const { dataStatus, recordDataUrl } = useAppSelector(({ episode, record }) => ({
     dataStatus: episode.dataStatus,
+    recordDataUrl: record.recordDataUrl,
   }));
 
   const isFormDisable = dataStatus === DataStatus.PENDING;
+
+  const hasRecord = Boolean(recordDataUrl);
 
   const handleCancel = (): void => {
     history.goBack();
@@ -57,14 +60,16 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
           errors={errors}
           imageUrl={imageUrl}
         />
-        <label className={styles.recordLabel}>
-          Upload record
-          <input
-            {...register(EpisodePayloadKey.RECORD)}
-            accept={acceptAudioExtension}
-            type={InputType.FILE}
-          />
-        </label>
+        {hasRecord
+          || <label className={styles.recordLabel}>
+            Upload record
+            <input
+              {...register(EpisodePayloadKey.RECORD)}
+              accept={acceptAudioExtension}
+              type={InputType.FILE}
+            />
+          </label>
+        }
         <Input
           type={InputType.TEXT}
           label="Name episode"
