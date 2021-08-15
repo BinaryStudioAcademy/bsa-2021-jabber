@@ -64,6 +64,10 @@ const Podcast: React.FC = () => {
                   <div className={`${styles.infoName} ${styles.period}`}>Рeriodicity</div>
                   <p className={styles.infoInner}>Once a month</p>
                 </li>
+                <li className={styles.infoItem}>
+                  <div className={`${styles.infoName} ${styles.genre}`}>Genre</div>
+                  <p className={styles.infoInner}>{podcast.genre?.name}</p>
+                </li>
               </ul>
 
               {podcast.userId === userId && (
