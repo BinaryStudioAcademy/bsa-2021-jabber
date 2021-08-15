@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { Episode } from 'common/types/types';
-import { create, edit, loadEpisode, deleteEpisode } from './actions';
+import { create, edit, loadEpisode, deleteEpisode, resetEpisode } from './actions';
 
 type State = {
   dataStatus: DataStatus;
@@ -53,6 +53,9 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(deleteEpisode.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(resetEpisode, (state) => {
+    state.episode = null;
   });
 });
 

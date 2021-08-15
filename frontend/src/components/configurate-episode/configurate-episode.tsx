@@ -36,6 +36,10 @@ const ConfigurateEpisode: React.FC = () => {
     if (isEdit) {
       dispatch(configurateEpisodeActions.loadEpisode(Number(id)));
     }
+
+    return (): void => {
+      dispatch(configurateEpisodeActions.resetEpisode());
+    };
   }, []);
 
   return (
