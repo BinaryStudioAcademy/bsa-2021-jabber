@@ -2,7 +2,10 @@ import { AppRoute, DataStatus } from 'common/enums/enums';
 import { RootState, UserEditPayload } from 'common/types/types';
 import { Loader, Redirect } from 'components/common/common';
 import { useAppSelector, useParams, useEffect, useDispatch } from 'hooks/hooks';
-import { userProfile as userProfileActions } from 'store/actions';
+import {
+  userProfile as userProfileActions,
+  configurateUser as configurateUserActions,
+} from 'store/actions';
 import { PageParams } from './common/types/page-params.type';
 import { mapUserToFormPayload } from './helpers/helpers';
 import EditUserForm from './components/edit-user-form/edit-user-form';
@@ -33,7 +36,7 @@ const EditUser: React.FC = () => {
   }, [id]);
 
   const handleFormSubmit = (payload: UserEditPayload): void => {
-    dispatch(userProfileActions.updateUser(payload));
+    dispatch(configurateUserActions.editUser(payload));
   };
 
   const mappedUser = user ? mapUserToFormPayload(user) : undefined;
