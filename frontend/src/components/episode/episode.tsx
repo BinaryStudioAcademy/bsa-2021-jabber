@@ -115,7 +115,6 @@ const Episode: React.FC = () => {
                   </>
                 )}
                 <h1 className={styles.title}>{episode.name}</h1>
-
                 <Link
                   to={`${AppRoute.PODCASTS}/${episode?.podcastId}`}
                   className={styles.link}

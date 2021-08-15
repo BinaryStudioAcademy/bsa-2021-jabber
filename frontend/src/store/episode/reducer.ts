@@ -31,7 +31,6 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(loadEpisodePayload.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
-
   builder.addCase(loadCommentsByEpisodeId.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
   });
