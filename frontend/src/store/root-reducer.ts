@@ -20,8 +20,8 @@ const rootReducer = {
   record,
   userProfile,
   notification,
-  toastr: toastrReducer,
   configurateUser,
+  toastr: toastrReducer,
 };
 
 export { rootReducer };
