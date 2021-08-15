@@ -34,7 +34,7 @@ const Podcast: React.FC = () => {
         <>
           <div className={styles.content}>
             <ImageWrapper
-              src={podcast.image?.url}
+              src={podcast.cover?.url}
               loading="lazy"
               alt={podcast.name}
               label={podcast.name}
