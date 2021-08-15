@@ -106,7 +106,9 @@ const Episode: React.FC = () => {
                     <button
                       onClick={handleDeleteEpisode}
                       className={styles.deleteButton}
-                    />
+                    >
+                      <span className="visually-hidden">Delete episode</span>
+                    </button>
                   </>
                 )}
                 <h1 className={styles.title}>{episode.name}</h1>
