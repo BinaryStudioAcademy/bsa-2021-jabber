@@ -24,6 +24,7 @@ import { Record } from './record/record.service';
 import { FileStorage } from './file-storage/file-storage.service';
 import { Token } from './token/token.service';
 import { Passport } from './passport/passport.service';
+import { Image } from './image/image.service';
 import { Genre } from './genre/genre.service';
 import { Socket } from './socket/socket.service';
 
@@ -56,20 +57,28 @@ const shownote = new Shownote({
   shownoteRepository,
 });
 
-const episode = new Episode({
-  episodeRepository,
-  shownoteService: shownote,
-  imageRepository,
-  recordRepository,
-  fileStorage,
-});
-
 const comment = new Comment({
   commentRepository,
 });
 
 const record = new Record({
   recordRepository,
+});
+
+const image = new Image({
+  imageRepository,
+  fileStorage,
+});
+
+const episode = new Episode({
+  episodeRepository,
+  shownoteService: shownote,
+  commentService: comment,
+  recordService: record,
+  imageService: image,
+  imageRepository,
+  recordRepository,
+  fileStorage,
 });
 
 const podcast = new Podcast({
@@ -104,6 +113,7 @@ export {
   fileStorage,
   token,
   passport,
+  image,
   genre,
   socket,
 };
