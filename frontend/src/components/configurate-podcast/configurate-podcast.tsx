@@ -36,7 +36,7 @@ const ConfiguratePodcast: React.FC = () => {
     dispatch(configuratePodcastActions.loadGenres());
 
     return ((): void => {
-      dispatch(configuratePodcastActions.resetPodcast());
+      dispatch(configuratePodcastActions.resetState());
     });
   }, []);
 

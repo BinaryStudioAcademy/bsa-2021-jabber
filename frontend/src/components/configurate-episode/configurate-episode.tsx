@@ -38,7 +38,7 @@ const ConfigurateEpisode: React.FC = () => {
     }
 
     return ((): void => {
-      dispatch(configurateEpisodeActions.resetEpisode());
+      dispatch(configurateEpisodeActions.resetState());
     });
   }, []);
 

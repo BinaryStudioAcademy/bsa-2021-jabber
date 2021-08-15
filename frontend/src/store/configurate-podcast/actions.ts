@@ -75,6 +75,6 @@ const loadGenres = createAsyncThunk<Genre[], undefined, AsyncThunkConfig>
   return genres;
 });
 
-const resetPodcast = createAction(ActionType.RESET_PODCAST);
+const resetState = createAction(ActionType.RESET_STATE);
 
-export { create, edit, loadPodcast, loadGenres, resetPodcast };
+export { create, edit, loadPodcast, loadGenres, resetState };
