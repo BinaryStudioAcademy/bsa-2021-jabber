@@ -5,6 +5,7 @@ import {
   Comment,
   CommentFormCreatePayload,
   AsyncThunkConfig,
+  Podcast,
 } from 'common/types/types';
 import { ActionType } from './common';
 
@@ -16,7 +17,7 @@ const loadEpisode = createAsyncThunk<Episode, number, AsyncThunkConfig>
   return episode;
 });
 
-const loadPodcast = createAsyncThunk<any, number, AsyncThunkConfig>
+const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>
 (ActionType.LOAD_PODCAST, async (id, { extra }) => {
   const { episodeApi, podcastApi } = extra;
   const episode = await episodeApi.getById(id);

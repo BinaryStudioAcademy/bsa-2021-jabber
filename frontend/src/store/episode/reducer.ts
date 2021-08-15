@@ -31,7 +31,6 @@ const reducer = createReducer(initialState, (builder) => {
     state.dataStatus = DataStatus.REJECTED;
   });
 
-  //
   builder.addCase(loadPodcast.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
   });
@@ -42,7 +41,6 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(loadPodcast.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
-  //
 
   builder.addCase(loadCommentsByEpisodeId.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
