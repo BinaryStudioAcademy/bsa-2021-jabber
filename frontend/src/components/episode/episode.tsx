@@ -114,6 +114,13 @@ const Episode: React.FC = () => {
                   </>
                 )}
                 <h1 className={styles.title}>{episode.name}</h1>
+
+                <Link
+                  to={`${AppRoute.PODCASTS}/${episode.podcastId}`}
+                  className={styles.link}
+                >
+                  <h4>&#8592; Back to the podcast</h4>
+                </Link>
                 <p className={styles.description}>{episode.description}</p>
                 <p className={styles.status}>Status: {episode.status}</p>
                 {hasShownotes && (
