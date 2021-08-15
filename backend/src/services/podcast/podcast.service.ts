@@ -4,6 +4,7 @@ import {
   PodcastEditDTOPayload,
   PodcastCreatePayload,
   PodcastEditPayload,
+  PodcastsReturnedType,
 } from '~/common/types/types';
 import {
   podcast as podcastRep,
@@ -174,13 +175,13 @@ class Podcast {
   }
 
   public getAllByUserId(searchedUserId: number, requestUserId: number | undefined): Promise<TPodcast[]> {
-    const filterParams = {
+    const filterParams: PodcastsReturnedType = {
       user_id: searchedUserId,
     };
     const isRequestUserAuthorised = Boolean(requestUserId);
 
     if (!isRequestUserAuthorised || searchedUserId !== requestUserId) {
-      Object.assign(filterParams, { type: PodcastType.PUBLIC });
+      filterParams.type = PodcastType.PUBLIC;
     }
 
     return this.#podcastRepository.getAllByUserId(filterParams);

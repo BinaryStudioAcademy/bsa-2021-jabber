@@ -2,14 +2,10 @@ import {
   Podcast as TPodcast,
   PodcastCreateDTOPayload,
   PodcastEditDTOPayload,
+  PodcastsReturnedType,
 } from '~/common/types/types';
 import { PodcastType } from '~/common/enums/enums';
 import { PodcastModel as PodcastM } from '~/data/models/models';
-
-type filterParams = {
-  user_id: number;
-  type?: PodcastType.PUBLIC;
-};
 
 type Constructor = {
   PodcastModel: typeof PodcastM;
@@ -38,8 +34,8 @@ class Podcast {
     return this.#PodcastModel.query().updateAndFetchById(id, payload);
   }
 
-  public getAllByUserId(filterParams: filterParams): Promise<TPodcast[]> {
-    return this.#PodcastModel.query().where(filterParams).withGraphJoined('image');
+  public getAllByUserId(filterParams: PodcastsReturnedType): Promise<TPodcast[]> {
+    return this.#PodcastModel.query().where(filterParams).withGraphJoined('[image, user]');
   }
 }
 
