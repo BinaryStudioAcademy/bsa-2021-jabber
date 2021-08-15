@@ -52,6 +52,11 @@
         .headerLogo {
           margin-right: 5px;
         }
+
+        .emailLink {
+          text-decoration: none;
+          color: var(--color-primary-dark);
+        }
       }
     }
     .bioContainer {

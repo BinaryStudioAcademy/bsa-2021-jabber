@@ -27,11 +27,11 @@ class Podcast {
   }
 
   public create(payload: PodcastCreateDTOPayload): Promise<TPodcast> {
-    return this.#PodcastModel.query().insert(payload).withGraphFetched('image');
+    return this.#PodcastModel.query().insert(payload).withGraphFetched('[image, cover]');
   }
 
   public getById(id: string): Promise<TPodcast> {
-    return this.#PodcastModel.query().findById(id).withGraphJoined('[image, user]');
+    return this.#PodcastModel.query().findById(id).withGraphJoined('[image, cover, user]');
   }
 
   public update(id: string, payload: PodcastEditDTOPayload): Promise<TPodcast> {

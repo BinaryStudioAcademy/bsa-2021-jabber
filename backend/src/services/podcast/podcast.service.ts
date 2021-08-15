@@ -44,6 +44,7 @@ class Podcast {
     userId,
     description,
     imageDataUrl,
+    coverDataUrl,
     type,
     genreId,
   }: PodcastCreatePayload): Promise<TPodcast> {
@@ -71,6 +72,20 @@ class Podcast {
       newPodcast.imageId = image.id;
     }
 
+    if (coverDataUrl) {
+      const { url, publicId } = await this.#fileStorage.upload({
+        dataUrl: coverDataUrl,
+        userId,
+      });
+
+      const image = await this.#imageRepository.create({
+        url,
+        publicId,
+      });
+
+      newPodcast.coverId = image.id;
+    }
+
     return this.#podcastRepository.create(newPodcast);
   }
 
@@ -92,6 +107,8 @@ class Podcast {
     description,
     imageId,
     imageDataUrl,
+    coverDataUrl,
+    coverId,
     genreId,
   }: PodcastEditPayload): Promise<TPodcast> {
 
@@ -100,10 +117,12 @@ class Podcast {
       type,
       description,
       imageId: imageId,
+      coverId: coverId,
       genreId,
     };
 
     let deleteImageId: number | null = null;
+    let deleteCoverId: number | null = null;
 
     if (imageDataUrl) {
       const { url, publicId } = await this.#fileStorage.upload({
@@ -121,12 +140,34 @@ class Podcast {
       updatePodcast.imageId = image.id;
     }
 
+    if (coverDataUrl) {
+      const { url, publicId } = await this.#fileStorage.upload({
+        dataUrl: coverDataUrl,
+        userId,
+      });
+
+      deleteCoverId = coverId;
+
+      const image = await this.#imageRepository.create({
+        url,
+        publicId,
+      });
+
+      updatePodcast.coverId = image.id;
+    }
+
     const podcast = await this.#podcastRepository.update(id, updatePodcast);
 
     if (deleteImageId) {
       const { publicId } = await this.#imageRepository.getById(deleteImageId);
       await this.#fileStorage.delete(publicId);
       await this.#imageRepository.delete(deleteImageId);
+    }
+
+    if (deleteCoverId) {
+      const { publicId } = await this.#imageRepository.getById(deleteCoverId);
+      await this.#fileStorage.delete(publicId);
+      await this.#imageRepository.delete(deleteCoverId);
     }
 
     return podcast;

@@ -47,6 +47,15 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
           control={control}
           errors={errors}
           imageUrl={podcast?.image?.url}
+          label="Podcast Image"
+          className={styles.imagePreview}
+        />
+        <ImagePreviewControl
+          name={PodcastPayloadKey.COVER}
+          control={control}
+          errors={errors}
+          imageUrl={podcast?.cover?.url}
+          label="Podcast Cover"
         />
         <Input
           name={PodcastPayloadKey.NAME}
