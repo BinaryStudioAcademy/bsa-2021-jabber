@@ -1,4 +1,3 @@
-import { ErrorMessage } from '@hookform/error-message';
 import {
   Control,
   FieldErrors,
@@ -6,6 +5,7 @@ import {
   Path,
   FieldValues,
 } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
 import { InputType } from 'common/enums/enums';
 import { getAllowedClasses } from 'helpers/dom/dom';
 import styles from './styles.module.scss';
@@ -18,6 +18,8 @@ type Props = {
   control: Control;
   errors: FieldErrors;
   hasMultipleRows?: boolean;
+  options?: React.TextareaHTMLAttributes<HTMLTextAreaElement>
+  | React.InputHTMLAttributes<HTMLInputElement>;
 };
 
 const Input: React.FC<Props> = ({
@@ -28,6 +30,7 @@ const Input: React.FC<Props> = ({
   placeholder = '',
   type = InputType.TEXT,
   hasMultipleRows = false,
+  options = {},
 }) => {
   const { field } = useController({ name, control });
 
@@ -37,12 +40,14 @@ const Input: React.FC<Props> = ({
       {hasMultipleRows ? (
         <textarea
           {...field}
+          {...(options as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
           placeholder={placeholder}
           className={getAllowedClasses(styles.input, styles.textarea)}
         />
       ) : (
         <input
           {...field}
+          {...(options as React.InputHTMLAttributes<HTMLInputElement>)}
           type={type}
           placeholder={placeholder}
           className={styles.input}
