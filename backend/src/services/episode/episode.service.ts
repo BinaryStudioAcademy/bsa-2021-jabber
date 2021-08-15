@@ -1,5 +1,6 @@
 import { HttpCode, ErrorMessage } from '~/common/enums/enums';
 import {
+  Comment as TComment,
   Episode as TEpisode,
   EpisodeCreateDTOPayload,
   EpisodeCreatePayload,
@@ -214,7 +215,7 @@ class Episode {
     return episode;
   }
 
-  public getAllByPodcastId(id: string): Promise<TEpisode[]> {
+  public getAllByPodcastId(id: number): Promise<TEpisode[]> {
     return this.#episodeRepository.getAllByPodcastId(id);
   }
 
@@ -244,6 +245,14 @@ class Episode {
     }
 
     return episode;
+  }
+
+  public async deleteAllByPodcastId(id: number): Promise<void> {
+    const episodes = await this.#episodeRepository.getAllByPodcastId(id);
+    episodes.forEach((episode) => {
+      this.delete(episode.id);
+    });
+    /*return this.#episodeRepository.deleteAllByPodcastId(id);*/
   }
 }
 

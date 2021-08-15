@@ -25,7 +25,7 @@ class Podcast {
     return this.#PodcastModel.query().insert(payload).withGraphFetched('image');
   }
 
-  public getById(id: string): Promise<TPodcast> {
+  public getById(id: number): Promise<TPodcast> {
     return this.#PodcastModel.query().findById(id).withGraphJoined('[image, user]');
   }
 
@@ -35,6 +35,14 @@ class Podcast {
 
   public getAllByUserId(userId: string): Promise<TPodcast[]> {
     return this.#PodcastModel.query().where({ user_id: userId }).withGraphJoined('[image, user]');
+  }
+
+  public delete(id: number): Promise<TPodcast> {
+    return this.#PodcastModel
+      .query()
+      .deleteById(id)
+      .returning('*')
+      .first();
   }
 }
 

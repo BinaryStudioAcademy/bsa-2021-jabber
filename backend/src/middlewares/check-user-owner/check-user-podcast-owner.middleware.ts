@@ -6,7 +6,7 @@ import { podcast as podcastService } from '~/services/services';
 const checkUserPodcastOwner = (): RequestHandler => {
   const handler: RequestHandler = async (req, _res, next) => {
     const podcastId = req.params.id ?? req.body.podcastId;
-    const { userId: podcastOwnerId } = await podcastService.getById(podcastId);
+    const { userId: podcastOwnerId } = await podcastService.getById(Number(podcastId));
 
     if (req.user?.id !== podcastOwnerId) {
       next(new HttpError({
