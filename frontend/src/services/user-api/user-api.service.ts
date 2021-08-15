@@ -1,8 +1,4 @@
-import {
-  ApiPath,
-  HttpMethod,
-  UsersApiPath,
-} from 'common/enums/enums';
+import { ApiPath, HttpMethod, UsersApiPath } from 'common/enums/enums';
 import { User } from 'common/types/types';
 import { Http } from 'services/http/http.service';
 
