@@ -96,8 +96,16 @@
 }
 
 .episodeInfo {
-  font-size: 14px;
   margin: 5px 0;
+  font-size: 12px;
+
+  .episodeInfoTitle {
+    float: left;
+  }
+
+  .episodeInfoValue {
+    margin-left: 50px;
+  }
 }
 
 .shownotesWrapper {
@@ -109,11 +117,6 @@ h3 {
   font-size: 24px;
   color: white;
   margin: 0;
-}
-
-dt {
-  float: left;
-  margin-right: 5px;
 }
 
 .logoWrapper {
