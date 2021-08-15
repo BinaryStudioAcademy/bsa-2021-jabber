@@ -12,6 +12,8 @@ enum PodcastPayloadKey {
   CREATE_AT = 'createdAt',
   IMAGE_ID = 'imageId',
   TYPE = 'type',
+  GENRE_ID = 'genreId',
+  GENRE = 'genre',
 }
 
 export { PodcastPayloadKey };
