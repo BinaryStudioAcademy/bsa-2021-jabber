@@ -34,13 +34,12 @@ const ShownoteInput: React.FC<Props> = ({
         <Input
           type={InputType.NUMBER}
           label=""
-          placeholder="Sec"
           name={
             `${EpisodePayloadKey.SHOWNOTES}[${index}].${ShownotePayloadKey.TIMESTAMP}` as 'shownote[x].timestamp'
           }
           control={control}
           errors={errors}
-          options={{ min: MIN_SHOWNOTE_TIME }}
+          min={MIN_SHOWNOTE_TIME}
         />
         <Input
           type={InputType.TEXT}

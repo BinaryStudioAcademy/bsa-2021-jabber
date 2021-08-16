@@ -18,9 +18,10 @@ type Props = {
   control: Control;
   errors: FieldErrors;
   hasMultipleRows?: boolean;
-  options?: React.TextareaHTMLAttributes<HTMLTextAreaElement>
-  | React.InputHTMLAttributes<HTMLInputElement>;
-};
+} & (
+  | React.InputHTMLAttributes<HTMLInputElement>
+  | React.TextareaHTMLAttributes<HTMLTextAreaElement>
+);
 
 const Input: React.FC<Props> = ({
   label,
@@ -30,7 +31,7 @@ const Input: React.FC<Props> = ({
   placeholder = '',
   type = InputType.TEXT,
   hasMultipleRows = false,
-  options = {},
+  ...options
 }) => {
   const { field } = useController({ name, control });
 
