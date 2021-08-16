@@ -38,18 +38,19 @@ const ConfigurateEpisode: React.FC = () => {
     }
   }, []);
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <main className={styles.episode}>
       <h1 className={styles.episodeTitle}>
         {isEdit ? 'Edit' : 'Create'} episode
       </h1>
-      {isLoading
-        ? <Loader />
-        : <CreateEpisodeForm
-          imageUrl={episode?.image?.url}
-          onSubmit={handleFormSubmit}
-          payload={mapEpisode} />
-      }
+      <CreateEpisodeForm
+        imageUrl={episode?.image?.url}
+        onSubmit={handleFormSubmit}
+        payload={mapEpisode} />
     </main>
   );
 };
