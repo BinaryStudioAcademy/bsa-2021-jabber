@@ -1,8 +1,18 @@
 import { Router } from 'express';
-import { ApiPath, HttpCode, HttpMethod, UsersApiPath } from '~/common/enums/enums';
+import {
+  ApiPath,
+  HttpCode,
+  HttpMethod,
+  UsersApiPath,
+} from '~/common/enums/enums';
+import { userEdit as userEditValidationSchema } from '~/validation-schemas/validation-schemas';
 import { handleAsyncApi } from '~/helpers/helpers';
 import { user as userService } from '~/services/services';
-import { checkAuth } from '~/middlewares/middlewares';
+import {
+  checkAuth as checkAuthMiddleware,
+  checkUserHasPermitToEdit as checkUserHasPermitToEditMiddleware,
+  validateSchema as validateSchemaMiddleware,
+} from '~/middlewares/middlewares';
 
 type Args = {
   apiRouter: Router;
@@ -16,7 +26,7 @@ const initUsersApi = ({ apiRouter, userService }: Args): Router => {
 
   userRouter.get(
     UsersApiPath.ROOT,
-    checkAuth(HttpMethod.GET),
+    checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (_req, res) => {
       return res.json(await userService.getAll()).status(HttpCode.OK);
     }),
@@ -24,8 +34,22 @@ const initUsersApi = ({ apiRouter, userService }: Args): Router => {
 
   userRouter.get(
     UsersApiPath.$ID,
-    handleAsyncApi(async (_req, res) => {
-      return res.json(await userService.getById(Number(_req.params.id))).status(HttpCode.OK);
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await userService.getById(Number(req.params.id)))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  userRouter.put(
+    UsersApiPath.$ID,
+    checkAuthMiddleware(HttpMethod.PUT),
+    checkUserHasPermitToEditMiddleware(),
+    validateSchemaMiddleware(userEditValidationSchema),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await userService.update(Number(req.params.id), req.body))
+        .status(HttpCode.OK);
     }),
   );
 

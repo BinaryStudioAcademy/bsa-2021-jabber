@@ -4,7 +4,7 @@ import {
   ButtonType,
   DataStatus,
   InputType,
-  UserSignInPayloadKey,
+  UserPayloadKey,
 } from 'common/enums/enums';
 import { signIn as signInValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
@@ -43,7 +43,7 @@ const SignInForm: React.FC<Props> = ({ onSubmit }) => {
           type={InputType.EMAIL}
           label="Email"
           placeholder="Enter your email"
-          name={UserSignInPayloadKey.EMAIL}
+          name={UserPayloadKey.EMAIL}
           control={control}
           errors={errors}
         />
@@ -51,7 +51,7 @@ const SignInForm: React.FC<Props> = ({ onSubmit }) => {
           type={InputType.PASSWORD}
           label="Password"
           placeholder="Enter your password"
-          name={UserSignInPayloadKey.PASSWORD}
+          name={UserPayloadKey.PASSWORD}
           control={control}
           errors={errors}
         />
