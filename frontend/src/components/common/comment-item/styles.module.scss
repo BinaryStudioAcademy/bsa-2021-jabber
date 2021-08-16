@@ -37,3 +37,15 @@
   color: rgba(53, 53, 53, 0.5);
   font-weight: 600;
 }
+
+.commentAtButton{
+  border: none;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.commentAtButton:hover{
+  color: var(--color-link-active);
+}

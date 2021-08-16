@@ -1,5 +1,5 @@
 import { Shownote as TShownote } from 'common/types/types';
-import { getTimeOffset } from '../../helpers/helpers';
+import { getTimeOffset } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 
 const Shownote: React.FC<Props> = ({ shownote, onClick }) => {
 
-  const time = getTimeOffset(shownote);
+  const time = getTimeOffset(shownote.timestamp);
 
   const handleTimeLineJump = (): void => {
     onClick(shownote.timestamp);
