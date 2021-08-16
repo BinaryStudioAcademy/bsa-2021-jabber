@@ -151,7 +151,9 @@ const Episode: React.FC = () => {
           </section>
         </>
       ) : (
-        <h1 className={styles.notFound}>Oops. There is no such episode</h1>
+        dataStatus === DataStatus.REJECTED && (
+          <h1 className={styles.notFound}>Oops. There is no such episode</h1>
+        )
       )}
     </main>
   );
