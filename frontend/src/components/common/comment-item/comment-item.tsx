@@ -9,12 +9,16 @@ type Props = {
   onClick?: (payload: number) => void;
 };
 
-const Comment: React.FC<Props> = ({ comment, onClick }) => {
+const CommentItem: React.FC<Props> = ({ comment, onClick }) => {
 
   const distance = getDistanceToDateNow(
     new Date(comment.createdAt),
     Date.now(),
   );
+
+  const onClickCommentTime = (): void => {
+    onClick && onClick(comment.timestamp);
+  };
 
   const timeComment = mapSecondToCommentTime(comment.timestamp);
 
@@ -35,9 +39,7 @@ const Comment: React.FC<Props> = ({ comment, onClick }) => {
           {onClick
             ? <button
               className={styles.commentAtButton}
-              onClick={(): void => {
-                onClick(comment.timestamp);
-              }}>
+              onClick={onClickCommentTime}>
               {timeComment}
             </button>
             : timeComment
@@ -50,4 +52,4 @@ const Comment: React.FC<Props> = ({ comment, onClick }) => {
   );
 };
 
-export default Comment;
+export default CommentItem;

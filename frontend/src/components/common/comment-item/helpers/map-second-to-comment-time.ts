@@ -1,7 +1,8 @@
-import moment from 'moment';
+import { addSeconds, format } from 'date-fns';
 
 const mapSecondToCommentTime = (seconds: number): string => {
-  return moment.utc(seconds * 1000).format('HH:mm:ss');
+  const helperDate = addSeconds(new Date(0), seconds);
+  return format(helperDate, 'mm:ss');
 };
 
 export { mapSecondToCommentTime };
