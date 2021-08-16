@@ -10,6 +10,7 @@ import {
   setTraceId as setTraceIdMiddleware,
   logRequest as logRequestMiddleware,
   handleError as handleErrorMiddleware,
+  identifyUser as identifyUserMiddleware,
 } from '~/middlewares/middlewares';
 import knexConfig from '../knexfile';
 
@@ -24,6 +25,8 @@ app.use(urlencoded({ extended: true, limit: '100mb' }));
 
 app.use(passport.initialize());
 passportService.init(passport);
+
+app.use(identifyUserMiddleware);
 
 initApi(app);
 
