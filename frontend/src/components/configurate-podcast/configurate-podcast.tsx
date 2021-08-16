@@ -20,6 +20,8 @@ const ConfiguratePodcast: React.FC = () => {
 
   const isEdit = Boolean(id);
 
+  const isLoading = dataStatus === DataStatus.PENDING;
+
   const handleFormSubmit = (payload: PodcastFormPayload): void => {
     isEdit
       ? dispatch(configuratePodcastActions.edit(payload))
@@ -40,20 +42,20 @@ const ConfiguratePodcast: React.FC = () => {
     });
   }, []);
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <div className={styles.podcast}>
       <h2 className={styles.podcastTitle}>
-        {isEdit ? 'Edit' : 'Create'} Podcast {id ?? ''}
+        {isEdit ? 'Edit' : 'Create'} Podcast
       </h2>
-      {dataStatus === DataStatus.PENDING ? (
-        <Loader />
-      ) : (
-        <ConfiguratePodcastForm
-          onSubmit={handleFormSubmit}
-          payload={mappedPodcast}
-          genres={mappedGenres}
-        />
-      )}
+      <ConfiguratePodcastForm
+        onSubmit={handleFormSubmit}
+        payload={mappedPodcast}
+        genres={mappedGenres}
+      />
     </div>
   );
 };
