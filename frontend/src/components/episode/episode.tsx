@@ -114,15 +114,24 @@ const Episode: React.FC = () => {
                     </button>
                   </>
                 )}
-                <h1 className={styles.title}>{episode.name}</h1>
                 <Link
                   to={`${AppRoute.PODCASTS}/${episode?.podcastId}`}
                   className={styles.link}
                 >
                   {podcast?.name}
                 </Link>
+                <h1 className={styles.title}>{episode.name}</h1>
+                <dl className={styles.episodeInfo}>
+                  <div className={styles.infoBlock}>
+                    <dt className={styles.infoBlockTitle}>Type: </dt>
+                    <dd className={styles.infoBlockValue}>{episode.type}</dd>
+                  </div>
+                  <div className={styles.infoBlock}>
+                    <dt className={styles.infoBlockTitle}>Status:</dt>
+                    <dd className={styles.infoBlockValue}>{episode.status}</dd>
+                  </div>
+                </dl>
                 <p className={styles.description}>{episode.description}</p>
-                <p className={styles.status}>Status: {episode.status}</p>
                 {hasShownotes && (
                   <div className={styles.shownotesWrapper}>
                     <h3>Time navigation</h3>
@@ -144,7 +153,10 @@ const Episode: React.FC = () => {
             </h2>
             {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
             {comments.length ? (
-              <CommentsList comments={comments} />
+              <CommentsList
+                comments={comments}
+                onClick={handleJumpToTimeLine}
+              />
             ) : (
               <div>There&apos;s no comment yet.</div>
             )}
