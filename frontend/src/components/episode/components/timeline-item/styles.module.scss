@@ -4,4 +4,21 @@
   width: 10px;
   height: 10px;
   background-color: var(--color-link-active);
+  transform: translateX(-50%);
+  .avatarWrapper {
+    flex-shrink: 0;
+    margin-right: 10px;
+    border-radius: 50%;
+  }
+  .timelineItemContent {
+    position: relative;
+    bottom: 35px;
+    display: none;
+    color: var(--color-primary-light);
+  }
+  &:hover {
+    .timelineItemContent {
+      display: flex;
+    }
+  }
 }

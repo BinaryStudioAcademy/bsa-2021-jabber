@@ -1,7 +1,7 @@
 import H5AudioPlayer from 'react-h5-audio-player';
+import { useAppSelector } from 'hooks/hooks';
 import { DataStatus } from 'common/enums/enums';
 import { Comment as TComment } from 'common/types/types';
-import { useAppSelector } from 'hooks/hooks';
 import TimelineItem from '../timeline-item/timeline-item';
 import styles from './styles.module.scss';
 
@@ -20,32 +20,49 @@ const CommentsTimeline: React.FC<Props> = ({
     playerStatus: player.dataStatus,
   }));
 
-  let duration = 0;
   const player = playerRef.current;
   const playerContainer = playerContainerRef.current;
   const progressBar = player?.progressBar.current;
+  const duration = player?.audio.current?.duration;
 
   if (
     playerStatus !== DataStatus.FULFILLED ||
     !player ||
     !playerContainer ||
-    !progressBar
+    !progressBar ||
+    !duration
   ) {
     return null;
   }
-  duration = player.audio.current?.duration || 0;
 
-  // eslint-disable-next-line no-console
-  console.log(progressBar.getBoundingClientRect());
-  // eslint-disable-next-line no-console
-  console.log(playerContainer.getBoundingClientRect());
-  // eslint-disable-next-line no-console
-  console.log(duration);
+  const { x: progressBarLeft, width: progressBarWidth } =
+    progressBar.getBoundingClientRect();
+  const { x: playerContainerLeft, width: playerContainerWidth } = playerContainer.getBoundingClientRect();
+
+  const offset = progressBarLeft - playerContainerLeft;
+
+  const props = {
+    dimensions: {
+      offset,
+      progressBarWidth,
+      playerContainerWidth,
+    },
+    duration,
+  };
 
   return (
     <div className={styles.timeline}>
       {comments.map((item) => (
-        <TimelineItem key={item.id} comment={item} />
+        <TimelineItem
+          key={item.id}
+          comment={item}
+          {...props}
+          handleClick={(): void => {
+            if (player.audio.current) {
+              player.audio.current.currentTime = item.timestamp;
+            }
+          }}
+        />
       ))}
     </div>
   );
