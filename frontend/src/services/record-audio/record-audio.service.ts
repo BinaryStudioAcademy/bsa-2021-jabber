@@ -1,5 +1,6 @@
 import { notification as notificationService } from '../services';
 import { RecordStatus } from 'common/enums/enums';
+import { TIME_SLICE } from './common/constants/constants';
 
 type Constructor = {
   notificationService: typeof notificationService;
@@ -33,7 +34,7 @@ class RecordAudio {
   }
 
   public start(): void {
-    this.#recorder?.start(500);
+    this.#recorder?.start(TIME_SLICE);
   }
 
   public pause(): void {
