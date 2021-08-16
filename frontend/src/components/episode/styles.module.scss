@@ -58,6 +58,11 @@
   cursor: pointer;
 }
 
+.link {
+  color: #f3427f;
+  text-decoration: none;
+}
+
 .btnStartLive {
   font-size: 16px;
   display: inline-block;
@@ -83,21 +88,28 @@
 }
 
 .title {
-  margin: 0 0 20px 0;
   font-size: 40px;
+  margin: 0;
 }
 
 .description {
   font-size: 14px;
-  margin: 0 0 35px 0;
+  margin: 20px 0 35px 0;
   line-height: 1.25;
   letter-spacing: 1px;
   width: 450px;
 }
 
-.status {
+.episodeInfo {
   font-size: 12px;
-  margin: 15px 0;
+
+  .infoBlock {
+    display: flex;
+
+    .infoBlockValue {
+      margin-left: 10;
+    }
+  }
 }
 
 .shownotesWrapper {

@@ -1,17 +1,19 @@
 import { forwardRef } from 'react';
 import H5AudioPlayer, { RHAP_UI } from 'react-h5-audio-player';
-import { FIRST_ARRAY_IDX } from 'jabber-shared/common/constants/constants';
+import { FIRST_ARRAY_IDX } from 'common/constants/constants';
 import {
   useState,
   useEffect,
   useRef,
   useCallback,
   useImperativeHandle,
+  useDispatch,
 } from 'hooks/hooks';
-import { getAllowedClasses } from 'helpers/dom/dom';
+import { getAllowedClasses } from 'helpers/helpers';
 import {
   ARRAY_SHIFT,
   DEFAULT_SKIP_TIME,
+  DEFAULT_CURRENT_TIME,
   MILLISECONDS_IN_SECOND,
 } from './common/constants';
 import { getRatePointerStyle } from './common/helpers';
@@ -27,7 +29,9 @@ import { ReactComponent as MuteIcon } from 'assets/img/player/mute.svg';
 import { ReactComponent as RateScaleIcon } from 'assets/img/player/rateScale.svg';
 import { ReactComponent as RatePointerIcon } from 'assets/img/player/ratePointer.svg';
 import 'react-h5-audio-player/lib/styles.css';
+import { player as playerActions } from 'store/actions';
 import styles from './styles.module.scss';
+import { DataStatus } from 'common/enums/enums';
 
 type Props = {
   src: string;
@@ -50,10 +54,12 @@ const Player = forwardRef<Ref, Props>(
     ref,
   ) => {
     const playerRef = useRef<H5AudioPlayer | null>(null);
+    const dispatch = useDispatch();
 
     const [rateIndex, setRateIndex] = useState(
       rateSteps.indexOf(RateStep.NORMAL),
     );
+
     useImperativeHandle(ref, () => ({
       setCurrentTime: (seconds: number): void => {
         if (playerRef.current && playerRef.current.audio.current) {
@@ -65,7 +71,7 @@ const Player = forwardRef<Ref, Props>(
           return playerRef.current.audio.current.currentTime;
         }
 
-        return 0;
+        return DEFAULT_CURRENT_TIME;
       },
       getRef: (): React.MutableRefObject<H5AudioPlayer | null> => playerRef,
     }));
@@ -84,20 +90,26 @@ const Player = forwardRef<Ref, Props>(
       );
     }, [rateIndex]);
 
-    // eslint-disable-next-line no-console
-    console.log(playerRef.current?.progressBar);
-
     return (
       <H5AudioPlayer
         ref={playerRef}
         src={src}
-        showSkipControls={true}
+        showSkipControls={false}
         progressJumpSteps={{
           backward: skipTime,
           forward: skipTime,
         }}
         onClickNext={onClickNext}
         onClickPrevious={onClickPrevious}
+        onLoadStart={(): void => {
+          dispatch(playerActions.setPlayerStatus(DataStatus.PENDING));
+        }}
+        onLoadedData={(): void => {
+          dispatch(playerActions.setPlayerStatus(DataStatus.FULFILLED));
+        }}
+        onError={(): void => {
+          dispatch(playerActions.setPlayerStatus(DataStatus.REJECTED));
+        }}
         customAdditionalControls={[]}
         customVolumeControls={[
           RHAP_UI.VOLUME,

@@ -23,20 +23,23 @@ import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
 import { getCurrentTime } from './helpers/helpers';
 import { PageParams } from './common/types/types';
-import { ShownotesList } from './components/components';
+import { ShownotesList, ComentsTimeline } from './components/components';
 import styles from './styles.module.scss';
 
 const Episode: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
   const playerRef = useRef<PlayerRef | null>(null);
+  const playerContainerRef = useRef<HTMLDivElement>(null);
 
-  const { episode, comments, user, dataStatus } = useAppSelector(
+  const { episode, comments, user, dataStatus, podcast } = useAppSelector(
     ({ episode, auth }) => ({
       dataStatus: episode.dataStatus,
       episode: episode.episode,
       comments: episode.comments,
       user: auth.user,
+      podcast: episode.podcast,
+
     }),
   );
 
@@ -47,7 +50,7 @@ const Episode: React.FC = () => {
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
-    dispatch(episodeActions.loadEpisode(Number(id)));
+    dispatch(episodeActions.loadEpisodePayload(Number(id)));
   }, []);
 
   const handleJumpToTimeLine = (timeline: number): void => {
@@ -114,8 +117,23 @@ const Episode: React.FC = () => {
                   </>
                 )}
                 <h1 className={styles.title}>{episode.name}</h1>
+                <Link
+                  to={`${AppRoute.PODCASTS}/${episode?.podcastId}`}
+                  className={styles.link}
+                >
+                  {podcast?.name}
+                </Link>
                 <p className={styles.description}>{episode.description}</p>
-                <p className={styles.status}>Status: {episode.status}</p>
+                <dl className={styles.episodeInfo}>
+                  <div className={styles.infoBlock}>
+                    <dt>Type: </dt>
+                    <dd className={styles.infoBlockValue}>{episode.type}</dd>
+                  </div>
+                  <div className={styles.infoBlock}>
+                    <dt>Status:</dt>
+                    <dd className={styles.infoBlockValue}>{episode.status}</dd>
+                  </div>
+                </dl>
                 {hasShownotes && (
                   <div className={styles.shownotesWrapper}>
                     <h3>Time navigation</h3>
@@ -128,11 +146,9 @@ const Episode: React.FC = () => {
               </div>
             </div>
             {episode.record && (
-              <div className={styles.timeline}>
+              <div ref={playerContainerRef}>
                 <Player src={episode.record.fileUrl} ref={playerRef} />
-                {/* {playerRef.current?.getRef().current ? (
-                  <ComentsTimeline comments={comments} player={playerRef.current.getRef().current!} />
-                ) : null} */}
+                {playerRef.current && <ComentsTimeline comments={comments} playerRef={playerRef.current.getRef()} playerContainerRef={playerContainerRef}/>}
               </div>
             )}
           </div>

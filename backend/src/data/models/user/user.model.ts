@@ -9,6 +9,8 @@ class User extends Abstract {
 
   [UserDTOKey.NICKNAME]: string;
 
+  [UserDTOKey.IMAGE_ID]: number | null;
+
   [UserDTOKey.BIRTHDATE]: string;
 
   [UserDTOKey.EMAIL]: string;

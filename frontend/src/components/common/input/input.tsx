@@ -7,7 +7,7 @@ import {
   FieldValues,
 } from 'react-hook-form';
 import { InputType } from 'common/enums/enums';
-import { getAllowedClasses } from 'helpers/dom/dom';
+import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 type Props = {

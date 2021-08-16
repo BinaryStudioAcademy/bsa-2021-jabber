@@ -4,11 +4,11 @@ import {
   ButtonType,
   DataStatus,
   InputType,
-  UserCreatePayloadKey,
+  UserPayloadKey,
 } from 'common/enums/enums';
 import { signUp as signUpValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
-import { Button, Input, Link, Datepiker } from 'components/common/common';
+import { Button, Input, Link, Datepicker } from 'components/common/common';
 import { DEFAULT_REGISTER_PAYLOAD } from './common/constants';
 import styles from './styles.module.scss';
 
@@ -21,12 +21,11 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
     validationSchema: signUpValidationSchema,
     defaultValues: DEFAULT_REGISTER_PAYLOAD,
   });
-
   const { authStatus } = useAppSelector(({ auth }) => ({
     authStatus: auth.dataStatus,
   }));
 
-  const isFormDisable = authStatus === DataStatus.PENDING;
+  const isFormDisabled = authStatus === DataStatus.PENDING;
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -38,25 +37,25 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
           Sign In
         </Link>
       </div>
-      <fieldset disabled={isFormDisable} className={styles.fieldset}>
+      <fieldset disabled={isFormDisabled} className={styles.fieldset}>
         <Input
           label="First name"
           placeholder="Enter your name"
-          name={UserCreatePayloadKey.FIRST_NAME}
+          name={UserPayloadKey.FIRST_NAME}
           control={control}
           errors={errors}
         />
         <Input
           label="Last name"
           placeholder="Enter your last name"
-          name={UserCreatePayloadKey.LAST_NAME}
+          name={UserPayloadKey.LAST_NAME}
           control={control}
           errors={errors}
         />
         <Input
           label="Nickname"
           placeholder="Enter your nickname"
-          name={UserCreatePayloadKey.NICKNAME}
+          name={UserPayloadKey.NICKNAME}
           control={control}
           errors={errors}
         />
@@ -64,7 +63,7 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
           type={InputType.EMAIL}
           label="Email"
           placeholder="Enter your email"
-          name={UserCreatePayloadKey.EMAIL}
+          name={UserPayloadKey.EMAIL}
           control={control}
           errors={errors}
         />
@@ -72,13 +71,13 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
           type={InputType.PASSWORD}
           label="Password"
           placeholder="Enter your password"
-          name={UserCreatePayloadKey.PASSWORD}
+          name={UserPayloadKey.PASSWORD}
           control={control}
           errors={errors}
         />
-        <Datepiker
+        <Datepicker
           label="Birthdate"
-          name={UserCreatePayloadKey.BIRTHDATE}
+          name={UserPayloadKey.BIRTHDATE}
           control={control}
           errors={errors}
         />

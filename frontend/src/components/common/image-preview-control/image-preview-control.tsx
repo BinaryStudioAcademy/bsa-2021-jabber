@@ -9,10 +9,10 @@ import {
   Control,
 } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { getFileExtensions } from 'helpers/helpers';
-import { getAllowedClasses } from 'helpers/dom/dom';
+import { getFileExtensions, getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 import ImageWrapper from '../image-wrapper/image-wrapper';
+import { useState } from 'react';
 
 type Props = {
   name: Path<FieldValues>;
@@ -40,14 +40,14 @@ const ImagePreviewControl: React.FC<Props> = ({
 }) => {
   const { field } = useController({ name, control });
 
+  const [currentImgUrl, setImgUrl] = useState<string | undefined>(imageUrl);
+
   const handleChange = (evt: React.ChangeEvent<FieldValues>): void => {
     const hasImg = Boolean(evt.target.files.length);
     const [file] = evt.target.files ?? [];
-    const imgUrl = hasImg
-      ? URL.createObjectURL(file)
-      : imageUrl;
+    setImgUrl(hasImg ? URL.createObjectURL(file) : imageUrl);
 
-    field.onChange(imgUrl);
+    field.onChange(evt.target.files);
   };
 
   const allowedClassesInputWrapper = getAllowedClasses(
@@ -63,7 +63,7 @@ const ImagePreviewControl: React.FC<Props> = ({
             {label}
           </span>}
         <ImageWrapper
-          src={field.value ?? imageUrl}
+          src={currentImgUrl ?? imageUrl}
           width="716"
           height="281"
           loading="lazy"
