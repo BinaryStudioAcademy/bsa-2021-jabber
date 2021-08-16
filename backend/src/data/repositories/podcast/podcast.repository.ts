@@ -2,6 +2,7 @@ import {
   Podcast as TPodcast,
   PodcastCreateDTOPayload,
   PodcastEditDTOPayload,
+  UserPodcastQueryParams,
 } from '~/common/types/types';
 import { PodcastType } from '~/common/enums/enums';
 import { PodcastModel as PodcastM } from '~/data/models/models';
@@ -26,15 +27,15 @@ class Podcast {
   }
 
   public getById(id: string): Promise<TPodcast> {
-    return this.#PodcastModel.query().findById(id).withGraphJoined('[image, cover, user]');
+    return this.#PodcastModel.query().findById(id).withGraphJoined('[image, cover, user, genre]');
   }
 
   public update(id: string, payload: PodcastEditDTOPayload): Promise<TPodcast> {
     return this.#PodcastModel.query().updateAndFetchById(id, payload);
   }
 
-  public getAllByUserId(userId: string): Promise<TPodcast[]> {
-    return this.#PodcastModel.query().where({ user_id: userId }).withGraphJoined('[image, user]');
+  public getAllByUserId(filterParams: UserPodcastQueryParams): Promise<TPodcast[]> {
+    return this.#PodcastModel.query().where(filterParams).withGraphJoined('[image, user]');
   }
 }
 

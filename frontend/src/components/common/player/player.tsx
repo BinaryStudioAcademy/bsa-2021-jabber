@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import H5AudioPlayer, { RHAP_UI } from 'react-h5-audio-player';
-import { FIRST_ARRAY_IDX } from 'jabber-shared/common/constants/constants';
+import { FIRST_ARRAY_IDX } from 'common/constants/constants';
 import {
   useState,
   useEffect,
@@ -8,10 +8,11 @@ import {
   useCallback,
   useImperativeHandle,
 } from 'hooks/hooks';
-import { getAllowedClasses } from 'helpers/dom/dom';
+import { getAllowedClasses } from 'helpers/helpers';
 import {
   ARRAY_SHIFT,
   DEFAULT_SKIP_TIME,
+  DEFAULT_CURRENT_TIME,
   MILLISECONDS_IN_SECOND,
 } from './common/constants';
 import { getRatePointerStyle } from './common/helpers';
@@ -53,6 +54,7 @@ const Player = forwardRef<Ref, Props>(
     const [rateIndex, setRateIndex] = useState(
       rateSteps.indexOf(RateStep.NORMAL),
     );
+
     useImperativeHandle(ref, () => ({
       setCurrentTime: (seconds: number): void => {
         if (playerRef.current && playerRef.current.audio.current) {
@@ -64,7 +66,7 @@ const Player = forwardRef<Ref, Props>(
           return playerRef.current.audio.current.currentTime;
         }
 
-        return 0;
+        return DEFAULT_CURRENT_TIME;
       },
     }));
 
@@ -86,7 +88,7 @@ const Player = forwardRef<Ref, Props>(
       <H5AudioPlayer
         ref={playerRef}
         src={src}
-        showSkipControls={true}
+        showSkipControls={false}
         progressJumpSteps={{
           backward: skipTime,
           forward: skipTime,

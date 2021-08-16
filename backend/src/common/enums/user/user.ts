@@ -1,5 +1,1 @@
-export {
-  UserRole,
-  UserSignInPayloadKey,
-  UserCreatePayloadKey,
-} from 'jabber-shared/common/enums/enums';
+export { UserPayloadKey, UserRole } from 'jabber-shared/common/enums/enums';
