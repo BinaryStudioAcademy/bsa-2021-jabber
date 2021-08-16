@@ -128,7 +128,12 @@ const Episode: React.FC = () => {
               </div>
             </div>
             {episode.record && (
-              <Player src={episode.record.fileUrl} ref={playerRef} />
+              <div className={styles.timeline}>
+                <Player src={episode.record.fileUrl} ref={playerRef} />
+                {/* {playerRef.current?.getRef().current ? (
+                  <ComentsTimeline comments={comments} player={playerRef.current.getRef().current!} />
+                ) : null} */}
+              </div>
             )}
           </div>
           <section className={styles.commentsWrapper}>

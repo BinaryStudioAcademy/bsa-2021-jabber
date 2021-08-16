@@ -7,6 +7,7 @@ type Comment = {
   episodeId: number;
   createdAt: string;
   updatedAt: string;
+  timestamp: number;
   user: User;
 };
 

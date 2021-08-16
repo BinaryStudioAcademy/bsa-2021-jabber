@@ -39,6 +39,7 @@ type Props = {
 type Ref = {
   setCurrentTime: (seconds: number) => void;
   getCurrentTime: () => number;
+  getRef: () => React.MutableRefObject<H5AudioPlayer | null>;
 };
 
 const rateSteps = Object.values(RateStep);
@@ -66,6 +67,7 @@ const Player = forwardRef<Ref, Props>(
 
         return 0;
       },
+      getRef: (): React.MutableRefObject<H5AudioPlayer | null> => playerRef,
     }));
 
     useEffect(() => {
@@ -81,6 +83,9 @@ const Player = forwardRef<Ref, Props>(
           : rateIndex + ARRAY_SHIFT,
       );
     }, [rateIndex]);
+
+    // eslint-disable-next-line no-console
+    console.log(playerRef.current?.progressBar);
 
     return (
       <H5AudioPlayer
