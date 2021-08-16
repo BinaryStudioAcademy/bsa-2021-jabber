@@ -10,7 +10,6 @@ import {
 } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { getFileExtensions, getAllowedClasses } from 'helpers/helpers';
-// import { getAllowedClasses } from 'helpers/dom/dom';
 import styles from './styles.module.scss';
 import ImageWrapper from '../image-wrapper/image-wrapper';
 
