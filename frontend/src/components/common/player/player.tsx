@@ -8,7 +8,7 @@ import {
   useCallback,
   useImperativeHandle,
 } from 'hooks/hooks';
-import { getAllowedClasses } from 'helpers/dom/dom';
+import { getAllowedClasses } from 'helpers/helpers';
 import {
   ARRAY_SHIFT,
   DEFAULT_SKIP_TIME,

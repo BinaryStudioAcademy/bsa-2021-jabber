@@ -5,7 +5,7 @@ import { Link, Loader, ImageWrapper } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
-import { getAllowedClasses } from 'helpers/dom/dom';
+import { getAllowedClasses } from 'helpers/helpers';
 
 const Podcast: React.FC = () => {
   const { userId, podcast, episodes, dataStatus } = useAppSelector(

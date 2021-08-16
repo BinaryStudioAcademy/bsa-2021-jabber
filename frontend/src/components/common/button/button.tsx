@@ -1,5 +1,5 @@
 import { AppRoute, ButtonColor, ButtonStyle, ButtonType } from 'common/enums/enums';
-import { getAllowedClasses } from 'helpers/dom/dom';
+import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 import { Link } from 'components/common/common';
 
