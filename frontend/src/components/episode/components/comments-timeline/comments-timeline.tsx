@@ -57,7 +57,7 @@ const CommentsTimeline: React.FC<Props> = ({
           key={item.id}
           comment={item}
           {...props}
-          handleClick={(): void => {
+          handleGoToTimestamp={(): void => {
             if (player.audio.current) {
               player.audio.current.currentTime = item.timestamp;
             }

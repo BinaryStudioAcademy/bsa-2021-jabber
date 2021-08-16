@@ -10,14 +10,14 @@ type Props = {
     playerContainerWidth: number;
   };
   duration: number;
-  handleClick: () => void;
+  handleGoToTimestamp: () => void;
 };
 
 const TimelineItem: React.FC<Props> = ({
   comment,
   dimensions,
   duration,
-  handleClick,
+  handleGoToTimestamp,
 }) => {
   const commentOffset =
     ((dimensions.offset +
@@ -29,7 +29,7 @@ const TimelineItem: React.FC<Props> = ({
     <div
       className={styles.timelineItem}
       style={{ left: `${commentOffset}%` }}
-      onClick={handleClick}
+      onClick={handleGoToTimestamp}
     >
       <div className={styles.timelineItemContent}>
         <ImageWrapper

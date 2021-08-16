@@ -3,10 +3,10 @@
   background-color: #00000000;
   border: none;
   text-align: left;
-}
 
-.rowWrapper:hover {
-  cursor: pointer;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .time {
@@ -25,10 +25,6 @@
   white-space: nowrap;
   transition: all 1s ease;
   color: var(--color-primary-light);
-}
-
-.rowWrapper:hover .time {
-  color: white;
 }
 
 .rowWrapper:hover .noteName {

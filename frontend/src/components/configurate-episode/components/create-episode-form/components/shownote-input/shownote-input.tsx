@@ -1,4 +1,5 @@
 import { Control, DeepMap, FieldError, FieldValues } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
 import {
   ButtonColor,
   EpisodePayloadKey,
@@ -6,9 +7,9 @@ import {
   ShownotePayloadKey,
 } from 'common/enums/enums';
 import { Button, Input } from 'components/common/common';
+import { useCallback } from 'hooks/hooks';
+import { MIN_SHOWNOTE_TIME } from './common/constants';
 import styles from './styles.module.scss';
-import { ErrorMessage } from '@hookform/error-message';
-import { useCallback } from 'react';
 
 type Props = {
   index: number;
@@ -33,12 +34,12 @@ const ShownoteInput: React.FC<Props> = ({
         <Input
           type={InputType.NUMBER}
           label=""
-          placeholder="Sec"
           name={
             `${EpisodePayloadKey.SHOWNOTES}[${index}].${ShownotePayloadKey.TIMESTAMP}` as 'shownote[x].timestamp'
           }
           control={control}
           errors={errors}
+          min={MIN_SHOWNOTE_TIME}
         />
         <Input
           type={InputType.TEXT}
