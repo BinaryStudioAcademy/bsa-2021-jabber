@@ -12,16 +12,16 @@ const ConfiguratePodcast: React.FC = () => {
   const { id } = useParams<PageParams>();
   const dispatch = useDispatch();
 
-  const { podcast, dataStatusPodcast, genres, dataStatusGenres } = useAppSelector(({ configuratePodcast }) => ({
+  const { podcast, dataStatus, genres, genresDataStatus } = useAppSelector(({ configuratePodcast }) => ({
     podcast: configuratePodcast.podcast,
-    dataStatusPodcast: configuratePodcast.dataStatusPodcast,
+    dataStatus: configuratePodcast.dataStatus,
     genres: configuratePodcast.genres,
-    dataStatusGenres: configuratePodcast.dataStatusGenres,
+    genresDataStatus: configuratePodcast.genresDataStatus,
   }));
 
   const isEdit = Boolean(id);
 
-  const isLoading = dataStatusPodcast === DataStatus.PENDING || dataStatusGenres === DataStatus.PENDING;
+  const isLoading = dataStatus === DataStatus.PENDING || genresDataStatus === DataStatus.PENDING;
 
   const handleFormSubmit = (payload: PodcastFormPayload): void => {
     isEdit
