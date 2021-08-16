@@ -82,10 +82,12 @@ const UserPage: React.FC = () => {
               ;
             </span>
           </div>
-          <div className={styles.bioContainer}>
-            <span className={styles.bioTitle}>Bio:</span>
-            <span className={styles.bioText}>{user?.bio}</span>
-          </div>
+          {user?.bio && (
+            <div className={styles.bioContainer}>
+              <span className={styles.bioTitle}>Bio:</span>
+              <span className={styles.bioText}>{user?.bio}</span>
+            </div>
+          )}
         </div>
         {hasPermitToEdit && (
           <Link
