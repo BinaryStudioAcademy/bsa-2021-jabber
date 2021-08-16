@@ -6,14 +6,18 @@ import {
   CommentFormCreatePayload,
   AsyncThunkConfig,
 } from 'common/types/types';
-import { ActionType } from './common';
+import { ActionType, LoadEpisodePayload } from './common';
 
-const loadEpisode = createAsyncThunk<Episode, number, AsyncThunkConfig>
-(ActionType.LOAD_EPISODE, async (id, { extra }) => {
-  const { episodeApi } = extra;
+const loadEpisodePayload = createAsyncThunk<LoadEpisodePayload, number, AsyncThunkConfig>
+(ActionType.LOAD_EPISODE_PAYLOAD, async (id, { extra }) => {
+  const { episodeApi, podcastApi } = extra;
   const episode = await episodeApi.getById(id);
+  const podcast = await podcastApi.getById(episode.podcastId);
 
-  return episode;
+  return {
+    episode,
+    podcast,
+  };
 });
 
 const loadCommentsByEpisodeId = createAsyncThunk<Comment[], number, AsyncThunkConfig>
@@ -39,4 +43,4 @@ const createComment = createAsyncThunk<Comment, CommentFormCreatePayload, AsyncT
 
 const updateComments = createAction<Comment>(ActionType.UPDATE_COMMENTS);
 
-export { loadEpisode, loadCommentsByEpisodeId, createComment, updateComments };
+export { loadEpisodePayload, loadCommentsByEpisodeId, createComment, updateComments };

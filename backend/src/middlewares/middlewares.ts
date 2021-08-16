@@ -9,3 +9,4 @@ export { registration } from './registration/registration.middleware';
 export { checkUserEpisodeOwner } from './check-user-owner/check-user-episode-owner.middleware';
 export { checkUserPodcastOwner } from './check-user-owner/check-user-podcast-owner.middleware';
 export { injectSocket  } from './inject-socket/inject-socket.middleware';
+export { identifyUser } from './identify-user/identify-user.middleware';
