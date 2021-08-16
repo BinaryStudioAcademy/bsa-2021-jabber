@@ -20,6 +20,12 @@ class RecordAudio {
     this.#recorder.ondataavailable = ({ data }: BlobEvent): void => {
       this.#audioChunks.push(data);
     };
+
+    this.#recorder.onstop = (): void => {
+      stream.getTracks().forEach((track) => {
+        track.stop();
+      });
+    };
   }
 
   private onError(err: MediaStreamError): void {
