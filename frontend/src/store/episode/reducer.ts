@@ -32,14 +32,14 @@ const reducer = createReducer(initialState, (builder) => {
     state.dataStatus = DataStatus.REJECTED;
   });
   builder.addCase(loadCommentsByEpisodeId.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
+    state.commentDataStatus = DataStatus.PENDING;
   });
   builder.addCase(loadCommentsByEpisodeId.fulfilled, (state, action) => {
-    state.dataStatus = DataStatus.FULFILLED;
+    state.commentDataStatus = DataStatus.FULFILLED;
     state.comments = action.payload;
   });
   builder.addCase(loadCommentsByEpisodeId.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
+    state.commentDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(createComment.pending, (state) => {
     state.commentDataStatus = DataStatus.PENDING;
