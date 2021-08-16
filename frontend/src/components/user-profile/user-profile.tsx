@@ -84,20 +84,15 @@ const UserPage: React.FC = () => {
           </div>
           <div className={styles.bioContainer}>
             <span className={styles.bioTitle}>Bio:</span>
-            <span className={styles.bioText}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
-              quasi sunt vel nulla. Porro, assumenda atque modi quam dolores ab
-              sit vel voluptate unde. Molestias expedita ipsam exercitationem et
-              necessitatibus eos vel a, doloribus qui voluptas dolores eveniet
-            </span>
+            <span className={styles.bioText}>{user?.bio}</span>
           </div>
-          {hasPermitToEdit && (
-            <Link
-              to={`${AppRoute.USERS_EDIT}/${id}`}
-              className={styles.editLink}
-            />
-          )}
         </div>
+        {hasPermitToEdit && (
+          <Link
+            to={`${AppRoute.USERS_EDIT}/${id}`}
+            className={styles.editLink}
+          />
+        )}
       </main>
       <div className={styles.podcastsByUserContainer}>
         <h2 className={styles.podcastsByUserTitle}>My Podcasts</h2>
