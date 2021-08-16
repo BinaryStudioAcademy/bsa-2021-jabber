@@ -42,7 +42,7 @@ const create = createAsyncThunk<Episode, CreateActionEpisodePayload, AsyncThunkC
 const edit = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkConfig>(
   ActionType.EDIT_EPISODE,
   async (editEpisodePayload, { getState, extra }) => {
-    const { episodeApi, navigationService, notificationService } = extra;
+    const { episodeApi, navigationService, notificationService, recordAudioService } = extra;
     const { configurateEpisode, auth, record } = getState();
     const { id } = <Episode>configurateEpisode.episode;
 
@@ -63,6 +63,10 @@ const edit = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkConfig>(
       imageId: (<Episode>configurateEpisode.episode).imageId,
       status: editEpisodePayload.status,
     });
+
+    if (episode && record.recordDataUrl) {
+      recordAudioService.revokeUrl(record.recordDataUrl);
+    }
 
     notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.EPISODE_UPDATED);
 

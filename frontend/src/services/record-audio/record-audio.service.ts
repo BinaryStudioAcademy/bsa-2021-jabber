@@ -56,6 +56,10 @@ class RecordAudio {
       (stream) => this.onSuccess(stream),
       (err) => this.onError(err));
   }
+
+  public revokeUrl(url: string): void {
+    URL.revokeObjectURL(url);
+  }
 }
 
 export { RecordAudio };
