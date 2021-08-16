@@ -1,5 +1,5 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
-import { podcast as podcastActions } from 'store/actions';
+import { podcast as podcastActions, configuratePodcast as configuratePodcastActions } from 'store/actions';
 import { AppRoute, DataStatus } from 'common/enums/enums';
 import { Link, Loader, ImageWrapper } from 'components/common/common';
 import { EpisodeTable } from './components/components';
@@ -25,6 +25,13 @@ const Podcast: React.FC = () => {
     dispatch(podcastActions.loadEpisodesByPodcastId(Number(id)));
   }, []);
 
+  const handleDeletePodcast = (): void => {
+    dispatch(configuratePodcastActions.deletePodcast({
+      podcastId: Number(id),
+      userId: Number(userId),
+    }));
+  };
+
   if (dataStatus === DataStatus.PENDING) {
     return <Loader />;
   }
@@ -43,10 +50,18 @@ const Podcast: React.FC = () => {
             />
             <div className={styles.podcastInfoWrapper}>
               {isOwner && (
-                <Link
-                  to={`${AppRoute.PODCASTS_EDIT}/${podcast.id}`}
-                  className={styles.editLink}
-                />
+                <>
+                  <Link
+                    to={`${AppRoute.PODCASTS_EDIT}/${podcast.id}`}
+                    className={styles.editLink}
+                  />
+                  <button
+                    onClick={handleDeletePodcast}
+                    className={styles.deleteButton}
+                  >
+                    <span className="visually-hidden">Delete episode</span>
+                  </button>
+                </>
               )}
               <h1 className={styles.title}>{podcast.name}</h1>
               <p className={styles.description}>{podcast.description}</p>

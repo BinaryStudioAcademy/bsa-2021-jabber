@@ -4,6 +4,7 @@ enum ActionType {
   LOAD_PODCAST = 'configurate-podcast/load-podcast',
   RESET_STATE = 'configurate-podcast/reset-state',
   LOAD_GENRES = 'configurate-podcast/load-genres',
+  DELETE_PODCAST = 'configurate-podcast/delete-podcast',
 }
 
 export { ActionType };

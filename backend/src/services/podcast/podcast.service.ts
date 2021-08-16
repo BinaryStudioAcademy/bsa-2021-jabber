@@ -205,14 +205,14 @@ class Podcast {
       });
     }
 
+    await this.#podcastRepository.delete(id);
+
     const episodes = await this.#episodeService.getAllByPodcastId(id);
     const isEpisodesExist = Boolean(episodes);
 
     if (isEpisodesExist) {
       await this.#episodeService.deleteAllByPodcastId(id);
     }
-
-    await this.#podcastRepository.delete(id);
 
     if (podcast.imageId) {
       await this.#imageService.delete(podcast.imageId);
