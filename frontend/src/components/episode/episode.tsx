@@ -122,7 +122,16 @@ const Episode: React.FC = () => {
                   {podcast?.name}
                 </Link>
                 <p className={styles.description}>{episode.description}</p>
-                <p className={styles.status}>Status: {episode.status}</p>
+                <dl className={styles.episodeInfo}>
+                  <div className={styles.infoBlock}>
+                    <dt>Type: </dt>
+                    <dd className={styles.infoBlockValue}>{episode.type}</dd>
+                  </div>
+                  <div className={styles.infoBlock}>
+                    <dt>Status:</dt>
+                    <dd className={styles.infoBlockValue}>{episode.status}</dd>
+                  </div>
+                </dl>
                 {hasShownotes && (
                   <div className={styles.shownotesWrapper}>
                     <h3>Time navigation</h3>
@@ -144,7 +153,10 @@ const Episode: React.FC = () => {
             </h2>
             {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
             {comments.length ? (
-              <CommentsList comments={comments} />
+              <CommentsList
+                comments={comments}
+                onClick={handleJumpToTimeLine}
+              />
             ) : (
               <div>There&apos;s no comment yet.</div>
             )}

@@ -18,10 +18,14 @@ const Auth: React.FC = () => {
   const hasUser = Boolean(user);
 
   const handleSignUpSubmit = (payload: UserCreatePayload): void => {
-    dispatch(authActions.signUp({
-      ...payload,
-      birthdate: getFormattedDate(new Date(payload.birthdate), DateFormatType.ISO_DATE_000Z),
-    }),
+    dispatch(
+      authActions.signUp({
+        ...payload,
+        birthdate: getFormattedDate(
+          new Date(payload.birthdate),
+          DateFormatType.ISO_DATE_000Z,
+        ),
+      }),
     );
   };
 
