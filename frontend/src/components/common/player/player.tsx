@@ -88,7 +88,7 @@ const Player = forwardRef<Ref, Props>(
       <H5AudioPlayer
         ref={playerRef}
         src={src}
-        autoPlay
+        autoPlay={false}
         showSkipControls={false}
         progressJumpSteps={{
           backward: skipTime,
