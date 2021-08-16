@@ -1,4 +1,4 @@
-enum SignUpValidationRule {
+enum UserValidationRule {
   FIRST_NAME_MIN_LENGTH = 1,
   FIRST_NAME_MAX_LENGTH = 20,
   LAST_NAME_MIN_LENGTH = 1,
@@ -7,6 +7,7 @@ enum SignUpValidationRule {
   NICKNAME_MAX_LENGTH = 15,
   PASSWORD_MIN_LENGTH = 6,
   PASSWORD_MAX_LENGTH = 15,
+  BIO_MAX_LENGTH = 256,
 }
 
-export { SignUpValidationRule };
+export { UserValidationRule };

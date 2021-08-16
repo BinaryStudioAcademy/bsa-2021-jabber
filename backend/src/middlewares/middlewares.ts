@@ -8,4 +8,6 @@ export { checkAuth } from './check-auth/check-auth.middleware';
 export { registration } from './registration/registration.middleware';
 export { checkUserEpisodeOwner } from './check-user-owner/check-user-episode-owner.middleware';
 export { checkUserPodcastOwner } from './check-user-owner/check-user-podcast-owner.middleware';
-export { injectSocket  } from './inject-socket/inject-socket.middleware';
+export { injectSocket } from './inject-socket/inject-socket.middleware';
+export { checkUserHasPermitToEdit } from './check-user-has-permit-to-edit/check-user-has-permit-to-edit.middleware';
+export { identifyUser } from './identify-user/identify-user.middleware';

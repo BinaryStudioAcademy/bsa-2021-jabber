@@ -208,17 +208,16 @@
 
       &:first-child {
         margin-right: 22px;
-        margin-left: 36px;
       }
 
       &:last-child {
         margin-left: 22px;
-        margin-right: 36px;
       }
     }
 
     &_rewind-button {
       order: 1;
+      margin-right: 36px;
     }
 
     &_play-pause-button {
@@ -227,6 +226,7 @@
 
     &_forward-button {
       order: 3;
+      margin-left: 36px;
     }
   }
 }

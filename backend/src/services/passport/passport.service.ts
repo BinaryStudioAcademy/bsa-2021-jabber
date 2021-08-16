@@ -6,8 +6,7 @@ import {
   HttpCode,
   ErrorMessage,
   StrategyName,
-  UserSignInPayloadKey,
-  UserCreatePayloadKey,
+  UserPayloadKey,
 } from '~/common/enums/enums';
 import { checkIsCryptsEqual } from '~/helpers/helpers';
 
@@ -42,7 +41,7 @@ class Passport {
   private getLoginStrategy(): passportJwt.Strategy {
     return new this.#LocalStrategy(
       {
-        usernameField: UserSignInPayloadKey.EMAIL,
+        usernameField: UserPayloadKey.EMAIL,
       },
       async (email, password, done) => {
         try {
@@ -82,8 +81,8 @@ class Passport {
     return new this.#LocalStrategy(
       {
         passReqToCallback: true,
-        usernameField: UserCreatePayloadKey.EMAIL,
-        passwordField: UserCreatePayloadKey.PASSWORD,
+        usernameField: UserPayloadKey.EMAIL,
+        passwordField: UserPayloadKey.PASSWORD,
       },
       async ({ body }, _username, _password, done) => {
         try {

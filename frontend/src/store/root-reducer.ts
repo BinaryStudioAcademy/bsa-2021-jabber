@@ -8,6 +8,7 @@ import { reducer as podcast } from './podcast/reducer';
 import { reducer as record } from './record/reducer';
 import { reducer as userProfile } from './user-profile/reducer';
 import { reducer as notification } from './notification/reducer';
+import { reducer as configurateUser } from './configurate-user/reducer';
 
 const rootReducer = {
   auth,
@@ -19,6 +20,7 @@ const rootReducer = {
   record,
   userProfile,
   notification,
+  configurateUser,
   toastr: toastrReducer,
 };
 

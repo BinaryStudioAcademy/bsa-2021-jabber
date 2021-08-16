@@ -6,7 +6,7 @@ import { loadPodcasts, loadUser } from './actions';
 type State = {
   dataStatus: DataStatus;
   podcasts: Podcast[];
-  user: User | null
+  user: User | null;
 };
 
 const initialState: State = {

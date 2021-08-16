@@ -7,3 +7,4 @@ export {
   getFileFromFileList,
 } from './file/file';
 export { Joi } from './validation-schema/validation-schema';
+export { getAllowedClasses } from './dom/dom';
