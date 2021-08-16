@@ -18,10 +18,8 @@ type Props = {
   control: Control;
   errors: FieldErrors;
   hasMultipleRows?: boolean;
-} & (
-  | React.InputHTMLAttributes<HTMLInputElement>
-  | React.TextareaHTMLAttributes<HTMLTextAreaElement>
-);
+  min?: number;
+};
 
 const Input: React.FC<Props> = ({
   label,
@@ -31,7 +29,7 @@ const Input: React.FC<Props> = ({
   placeholder = '',
   type = InputType.TEXT,
   hasMultipleRows = false,
-  ...options
+  min,
 }) => {
   const { field } = useController({ name, control });
 
@@ -41,14 +39,13 @@ const Input: React.FC<Props> = ({
       {hasMultipleRows ? (
         <textarea
           {...field}
-          {...(options as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
           placeholder={placeholder}
           className={getAllowedClasses(styles.input, styles.textarea)}
         />
       ) : (
         <input
           {...field}
-          {...(options as React.InputHTMLAttributes<HTMLInputElement>)}
+          min={min}
           type={type}
           placeholder={placeholder}
           className={styles.input}
