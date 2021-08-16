@@ -96,15 +96,14 @@
 }
 
 .episodeInfo {
-  margin: 5px 0;
   font-size: 12px;
 
-  .episodeInfoTitle {
-    float: left;
-  }
+  .infoBlock {
+    display: flex;
 
-  .episodeInfoValue {
-    margin-left: 50px;
+    .infoBlockValue {
+      margin-left: 10;
+    }
   }
 }
 

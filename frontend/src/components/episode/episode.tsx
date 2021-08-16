@@ -116,10 +116,14 @@ const Episode: React.FC = () => {
                 <h1 className={styles.title}>{episode.name}</h1>
                 <p className={styles.description}>{episode.description}</p>
                 <dl className={styles.episodeInfo}>
-                  <dt className={styles.episodeInfoTitle}>Type: </dt>
-                  <dd className={styles.episodeInfoValue}>{episode.type}</dd>
-                  <dt className={styles.episodeInfoTitle}>Status:</dt>
-                  <dd className={styles.episodeInfoValue}>{episode.status}</dd>
+                  <div className={styles.infoBlock}>
+                    <dt>Type: </dt>
+                    <dd className={styles.infoBlockValue}>{episode.type}</dd>
+                  </div>
+                  <div className={styles.infoBlock}>
+                    <dt>Status:</dt>
+                    <dd className={styles.infoBlockValue}>{episode.status}</dd>
+                  </div>
                 </dl>
                 {hasShownotes && (
                   <div className={styles.shownotesWrapper}>
