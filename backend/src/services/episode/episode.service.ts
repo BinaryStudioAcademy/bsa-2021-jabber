@@ -247,7 +247,6 @@ class Episode {
   }
 
   public async deleteAllByPodcastId(id: number): Promise<void> {
-    // return this.#episodeRepository.deleteAllByPodcastId(id);
     const episodes = await this.#episodeRepository.getAllByPodcastId(id);
     episodes.forEach((episode) => {
       this.delete(episode.id);
