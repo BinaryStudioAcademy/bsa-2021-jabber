@@ -87,6 +87,4 @@ const deletePodcast = createAsyncThunk<void, DeleteActionPodcastPayload, AsyncTh
     navigationService.push(`${AppRoute.USERS}/${userId}`);
   });
 
-const resetState = createAction(ActionType.RESET_STATE);
-
 export { create, edit, loadPodcast, loadGenres, deletePodcast };
