@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { Genre, Podcast } from 'common/types/types';
-import { create, edit, loadPodcast, resetState, loadGenres } from './actions';
+import { create, edit, loadPodcast, loadGenres } from './actions';
 
 type State = {
   dataStatusPodcast: DataStatus;
@@ -21,9 +21,9 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(create.pending, (state) => {
     state.dataStatusPodcast = DataStatus.PENDING;
   });
-  builder.addCase(create.fulfilled, (state, action) => {
+  builder.addCase(create.fulfilled, (state) => {
     state.dataStatusPodcast = DataStatus.FULFILLED;
-    state.podcast = action.payload;
+    Object.assign(state, initialState);
   });
   builder.addCase(create.rejected, (state) => {
     state.dataStatusPodcast = DataStatus.REJECTED;
@@ -31,9 +31,9 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(edit.pending, (state) => {
     state.dataStatusPodcast = DataStatus.PENDING;
   });
-  builder.addCase(edit.fulfilled, (state, action) => {
+  builder.addCase(edit.fulfilled, (state) => {
     state.dataStatusPodcast = DataStatus.FULFILLED;
-    state.podcast = action.payload;
+    Object.assign(state, initialState);
   });
   builder.addCase(edit.rejected, (state) => {
     state.dataStatusPodcast = DataStatus.REJECTED;
@@ -47,9 +47,6 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadPodcast.rejected, (state) => {
     state.dataStatusPodcast = DataStatus.REJECTED;
-  });
-  builder.addCase(resetState, (state) => {
-    Object.assign(state, initialState);
   });
   builder.addCase(loadGenres.pending, (state) => {
     state.dataStatusGenres = DataStatus.PENDING;

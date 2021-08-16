@@ -1,5 +1,10 @@
-import { ApiPath, HttpMethod, UsersApiPath } from 'common/enums/enums';
-import { User } from 'common/types/types';
+import {
+  ApiPath,
+  ContentType,
+  HttpMethod,
+  UsersApiPath,
+} from 'common/enums/enums';
+import { User, UserEditPayload } from 'common/types/types';
 import { Http } from 'services/http/http.service';
 
 type Constructor = {
@@ -21,6 +26,17 @@ class UserApi {
       `${this.#apiPrefix}${ApiPath.USERS}${UsersApiPath.ROOT}${id}`,
       {
         method: HttpMethod.GET,
+      },
+    );
+  }
+
+  public update(id: number, payload: UserEditPayload): Promise<User> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.USERS}${UsersApiPath.ROOT}${id}`,
+      {
+        method: HttpMethod.PUT,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
       },
     );
   }

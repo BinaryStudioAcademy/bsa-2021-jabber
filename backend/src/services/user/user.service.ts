@@ -1,8 +1,12 @@
-import { User as TUser, TokenPayload } from '~/common/types/types';
+import {
+  User as TUser,
+  TokenPayload,
+  UserEditPayload,
+} from '~/common/types/types';
 import { user as userRep } from '~/data/repositories/repositories';
 import { ErrorMessage, HttpCode } from '~/common/enums/enums';
 import { HttpError } from '~/exceptions/exceptions';
-import { token } from '../services';
+import { token } from '~/services/services';
 
 type Constructor = {
   userRepository: typeof userRep;
@@ -24,6 +28,25 @@ class User {
 
   public getById(id: number): Promise<TUser> {
     return this.#userRepository.getById(id);
+  }
+
+  public async update(id: number, payload: UserEditPayload): Promise<TUser> {
+    const userWithSimilarEmail = await this.#userRepository.getByEmail(
+      payload.email,
+    );
+
+    const hasSimilarEmail = Boolean(userWithSimilarEmail);
+    const isAnotherUserEmail =
+      hasSimilarEmail && userWithSimilarEmail.id !== id;
+
+    if (isAnotherUserEmail) {
+      throw new HttpError({
+        status: HttpCode.BAD_REQUEST,
+        message: ErrorMessage.EMAIL_IS_ALREADY_TAKEN,
+      });
+    }
+
+    return this.#userRepository.update(id, payload);
   }
 
   public async getByToken(token: string): Promise<TUser> {

@@ -21,6 +21,8 @@ const ConfiguratePodcast: React.FC = () => {
 
   const isEdit = Boolean(id);
 
+  const isLoading = dataStatusPodcast === DataStatus.PENDING || dataStatusGenres === DataStatus.PENDING;
+
   const handleFormSubmit = (payload: PodcastFormPayload): void => {
     isEdit
       ? dispatch(configuratePodcastActions.edit(payload))
@@ -30,33 +32,27 @@ const ConfiguratePodcast: React.FC = () => {
   const mappedPodcast = podcast ? mapPodcastToFormPayload(podcast) : undefined;
   const mappedGenres = mapGenreToOptions(genres);
 
-  const isLoading = dataStatusPodcast === DataStatus.PENDING || dataStatusGenres === DataStatus.PENDING;
-
   useEffect(() => {
     if (isEdit) {
       dispatch(configuratePodcastActions.loadPodcast(Number(id)));
     }
     dispatch(configuratePodcastActions.loadGenres());
-
-    return ((): void => {
-      dispatch(configuratePodcastActions.resetState());
-    });
   }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className={styles.podcast}>
       <h2 className={styles.podcastTitle}>
-        {isEdit ? 'Edit' : 'Create'} Podcast {id ?? ''}
+        {isEdit ? 'Edit' : 'Create'} Podcast
       </h2>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <ConfiguratePodcastForm
-          onSubmit={handleFormSubmit}
-          payload={mappedPodcast}
-          genres={mappedGenres}
-        />
-      )}
+      <ConfiguratePodcastForm
+        onSubmit={handleFormSubmit}
+        payload={mappedPodcast}
+        genres={mappedGenres}
+      />
     </div>
   );
 };

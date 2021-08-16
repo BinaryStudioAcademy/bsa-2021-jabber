@@ -33,7 +33,7 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
   });
 
   const { createPodcastStatus, podcast } = useAppSelector(({ configuratePodcast }) => ({
-    createPodcastStatus: configuratePodcast.dataStatus,
+    createPodcastStatus: configuratePodcast.dataStatusPodcast,
     podcast: configuratePodcast.podcast,
   }));
 

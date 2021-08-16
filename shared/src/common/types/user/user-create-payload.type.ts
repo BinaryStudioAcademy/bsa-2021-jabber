@@ -1,12 +1,8 @@
-import { UserCreatePayloadKey } from '~/common/enums/enums';
+import { UserPayloadKey } from '~/common/enums/enums';
+import { UserConfigurePayload } from './user-configure-payload.type';
 
-type UserCreatePayload = {
-  [UserCreatePayloadKey.FIRST_NAME]: string;
-  [UserCreatePayloadKey.LAST_NAME]: string;
-  [UserCreatePayloadKey.EMAIL]: string;
-  [UserCreatePayloadKey.PASSWORD]: string;
-  [UserCreatePayloadKey.NICKNAME]: string;
-  [UserCreatePayloadKey.BIRTHDATE]: string;
+type UserCreatePayload = UserConfigurePayload & {
+  [UserPayloadKey.PASSWORD]: string;
 };
 
 export type { UserCreatePayload };

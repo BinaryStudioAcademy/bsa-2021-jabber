@@ -74,13 +74,15 @@
       }
     }
   }
-  .editButton {
-    background-color: none;
-    border: none;
-    cursor: pointer;
+  .editLink {
+    display: block;
     position: absolute;
     top: 0;
     right: 0;
+    width: 25px;
+    height: 25px;
+    background: url('../../assets/img/user-profile/edit.svg') center center /
+      cover;
   }
 
   &::after {

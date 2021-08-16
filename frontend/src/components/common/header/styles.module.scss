@@ -31,8 +31,9 @@
 }
 
 .link {
-  flex-shrink: 0;
-
+  display: flex;
+  justify-content: center;
+  padding: 10px 5px;
   color: #fff;
   text-decoration: none;
 }
@@ -115,7 +116,6 @@
 .dropDownListElement {
   background-color: var(--color-header-background);
   color: #fff;
-  padding: 10px 5px;
   border-radius: 5px;
   margin: 5px 0;
   transition: all 0.3s ease;
