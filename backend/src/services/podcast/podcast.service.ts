@@ -1,3 +1,4 @@
+import { HttpCode, PodcastType, ErrorMessage } from '~/common/enums/enums';
 import {
   Podcast as TPodcast,
   PodcastCreateDTOPayload,
@@ -12,28 +13,35 @@ import {
 } from '~/data/repositories/repositories';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
 import { HttpError } from '~/exceptions/exceptions';
-import { HttpCode, PodcastType } from '~/common/enums/enums';
-import { ErrorMessage } from '~/common/enums/app/error-message.enum';
+import { image, episode } from '~/services/services';
 
 type Constructor = {
   podcastRepository: typeof podcastRep;
   imageRepository: typeof imageRep;
   fileStorage: FileStorage;
+  imageService: typeof image;
+  episodeService: typeof episode;
 };
 
 class Podcast {
   #podcastRepository: typeof podcastRep;
   #imageRepository: typeof imageRep;
   #fileStorage: FileStorage;
+  #imageService: typeof image;
+  #episodeService: typeof episode;
 
   constructor({
     podcastRepository,
     imageRepository,
     fileStorage,
+    imageService,
+    episodeService,
   }: Constructor) {
     this.#podcastRepository = podcastRepository;
     this.#imageRepository = imageRepository;
     this.#fileStorage = fileStorage;
+    this.#imageService = imageService;
+    this.#episodeService = episodeService;
   }
 
   public getAll(): Promise<TPodcast[]> {
@@ -90,7 +98,7 @@ class Podcast {
     return this.#podcastRepository.create(newPodcast);
   }
 
-  public async getById(id: string): Promise<TPodcast> {
+  public async getById(id: number): Promise<TPodcast> {
     const podcast = await this.#podcastRepository.getById(id);
     if (!podcast) {
       throw new HttpError({
@@ -185,6 +193,27 @@ class Podcast {
     }
 
     return this.#podcastRepository.getAllByUserId(filterParams);
+  }
+
+  public async delete(id: number): Promise<TPodcast> {
+    const podcast = await this.#podcastRepository.getById(id);
+
+    if (!podcast) {
+      throw new HttpError({
+        status: HttpCode.NOT_FOUND,
+        message: ErrorMessage.PODCAST_NOT_FOUND,
+      });
+    }
+
+    await this.#episodeService.deleteAllByPodcastId(id);
+
+    if (podcast.imageId) {
+      await this.#imageService.delete(podcast.imageId);
+    }
+
+    await this.#podcastRepository.delete(id);
+
+    return podcast;
   }
 }
 
