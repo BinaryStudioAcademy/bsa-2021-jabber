@@ -5,12 +5,14 @@ import { create, edit, loadPodcast, loadGenres } from './actions';
 
 type State = {
   dataStatus: DataStatus;
+  genresDataStatus: DataStatus;
   podcast: Podcast | null;
   genres: Genre[];
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
+  genresDataStatus: DataStatus.IDLE,
   podcast: null,
   genres: [],
 };
@@ -45,14 +47,14 @@ const reducer = createReducer(initialState, (builder) => {
     state.dataStatus = DataStatus.REJECTED;
   });
   builder.addCase(loadGenres.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
+    state.genresDataStatus = DataStatus.PENDING;
   });
   builder.addCase(loadGenres.fulfilled, (state, action) => {
-    state.dataStatus = DataStatus.FULFILLED;
+    state.genresDataStatus = DataStatus.FULFILLED;
     state.genres = action.payload;
   });
   builder.addCase(loadGenres.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
+    state.genresDataStatus = DataStatus.REJECTED;
   });
 });
 
