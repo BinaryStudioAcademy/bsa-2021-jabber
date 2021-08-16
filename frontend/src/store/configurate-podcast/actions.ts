@@ -1,4 +1,4 @@
-import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
 import {
   AsyncThunkConfig,
@@ -10,7 +10,7 @@ import {
 import { ActionType } from './common';
 import { AppRoute, NotificationMessage, NotificationTitle } from 'common/enums/enums';
 
-const create = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
+const create = createAsyncThunk<void, PodcastFormPayload, AsyncThunkConfig>(
   ActionType.CREATE_PODCAST,
   async (podcastPayload, { getState, extra }) => {
     const { podcastApi, notificationService, navigationService } = extra;
@@ -31,12 +31,10 @@ const create = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
     notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PODCAST_CREATED);
 
     navigationService.push(`${AppRoute.PODCASTS}/${podcast.id}`);
-
-    return podcast;
   },
 );
 
-const edit = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
+const edit = createAsyncThunk<void, PodcastFormPayload, AsyncThunkConfig>(
   ActionType.EDIT_PODCAST,
   async (podcastPayload, { getState, extra }) => {
     const { podcastApi, notificationService, navigationService } = extra;
@@ -60,8 +58,6 @@ const edit = createAsyncThunk<Podcast, PodcastFormPayload, AsyncThunkConfig>(
     notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PODCAST_UPDATED);
 
     navigationService.push(`${AppRoute.PODCASTS}/${podcast.id}`);
-
-    return podcast;
   });
 
 const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>
@@ -80,6 +76,4 @@ const loadGenres = createAsyncThunk<Genre[], undefined, AsyncThunkConfig>
   return genres;
 });
 
-const resetState = createAction(ActionType.RESET_STATE);
-
-export { create, edit, loadPodcast, loadGenres, resetState };
+export { create, edit, loadPodcast, loadGenres };
