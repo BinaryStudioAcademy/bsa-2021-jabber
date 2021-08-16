@@ -205,13 +205,22 @@ class Podcast {
       });
     }
 
-    await this.#episodeService.deleteAllByPodcastId(id);
+    const episodes = await this.#episodeService.getAllByPodcastId(id);
+    const isEpisodesExist = Boolean(episodes);
+
+    if (isEpisodesExist) {
+      await this.#episodeService.deleteAllByPodcastId(id);
+    }
+
+    await this.#podcastRepository.delete(id);
 
     if (podcast.imageId) {
       await this.#imageService.delete(podcast.imageId);
     }
 
-    await this.#podcastRepository.delete(id);
+    if (podcast.coverId) {
+      await this.#imageService.delete(podcast.coverId);
+    }
 
     return podcast;
   }

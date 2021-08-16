@@ -49,6 +49,13 @@ class Episode {
       .returning('*')
       .first();
   }
+
+  public deleteAllByPodcastId(id: number): Promise<TEpisode[]> {
+    return this.#EpisodeModel.query()
+    .delete()
+    .where('podcast_id', id)
+    .returning('*');
+  }
 }
 
 export { Episode };

@@ -86,7 +86,7 @@ const podcast = new Podcast({
   imageRepository,
   fileStorage,
   imageService: image,
-  episodeService: episode
+  episodeService: episode,
 });
 
 const passport = new Passport({
