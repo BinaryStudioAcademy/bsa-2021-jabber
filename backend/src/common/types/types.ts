@@ -11,6 +11,7 @@ export type {
   PodcastCreateDTOPayload,
   PodcastEditPayload,
   PodcastEditDTOPayload,
+  UserPodcastQueryParams,
 } from './podcast/podcast';
 export type { Image, ImageCreatePayload } from './image/image';
 export type { ValidationSchema } from './validation-schema/validation-schema';

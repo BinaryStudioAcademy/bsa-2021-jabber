@@ -20,6 +20,13 @@ const podcastEdit = podcast.keys({
     }),
     Joi.any().equal(null),
   ],
+  [PodcastPayloadKey.COVER_ID]: Joi.number().allow(null),
+  [PodcastPayloadKey.COVER_DATA_URL]: [
+    Joi.string().uri().messages({
+      'string.uri': PodcastValidationMessage.DATA_URL_FORMAT,
+    }),
+    Joi.any().equal(null),
+  ],
   [PodcastPayloadKey.GENRE_ID]: Joi.number()
     .integer()
     .allow(null)

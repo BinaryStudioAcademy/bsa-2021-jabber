@@ -4,6 +4,7 @@ import {
   PodcastEditDTOPayload,
   PodcastCreatePayload,
   PodcastEditPayload,
+  UserPodcastQueryParams,
 } from '~/common/types/types';
 import {
   podcast as podcastRep,
@@ -11,7 +12,7 @@ import {
 } from '~/data/repositories/repositories';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
 import { HttpError } from '~/exceptions/exceptions';
-import { HttpCode } from '~/common/enums/enums';
+import { HttpCode, PodcastType } from '~/common/enums/enums';
 import { ErrorMessage } from '~/common/enums/app/error-message.enum';
 
 type Constructor = {
@@ -44,6 +45,7 @@ class Podcast {
     userId,
     description,
     imageDataUrl,
+    coverDataUrl,
     type,
     genreId,
   }: PodcastCreatePayload): Promise<TPodcast> {
@@ -71,6 +73,20 @@ class Podcast {
       newPodcast.imageId = image.id;
     }
 
+    if (coverDataUrl) {
+      const { url, publicId } = await this.#fileStorage.upload({
+        dataUrl: coverDataUrl,
+        userId,
+      });
+
+      const image = await this.#imageRepository.create({
+        url,
+        publicId,
+      });
+
+      newPodcast.coverId = image.id;
+    }
+
     return this.#podcastRepository.create(newPodcast);
   }
 
@@ -92,6 +108,8 @@ class Podcast {
     description,
     imageId,
     imageDataUrl,
+    coverDataUrl,
+    coverId,
     genreId,
   }: PodcastEditPayload): Promise<TPodcast> {
 
@@ -100,10 +118,12 @@ class Podcast {
       type,
       description,
       imageId: imageId,
+      coverId: coverId,
       genreId,
     };
 
     let deleteImageId: number | null = null;
+    let deleteCoverId: number | null = null;
 
     if (imageDataUrl) {
       const { url, publicId } = await this.#fileStorage.upload({
@@ -121,6 +141,22 @@ class Podcast {
       updatePodcast.imageId = image.id;
     }
 
+    if (coverDataUrl) {
+      const { url, publicId } = await this.#fileStorage.upload({
+        dataUrl: coverDataUrl,
+        userId,
+      });
+
+      deleteCoverId = coverId;
+
+      const image = await this.#imageRepository.create({
+        url,
+        publicId,
+      });
+
+      updatePodcast.coverId = image.id;
+    }
+
     const podcast = await this.#podcastRepository.update(id, updatePodcast);
 
     if (deleteImageId) {
@@ -129,11 +165,26 @@ class Podcast {
       await this.#imageRepository.delete(deleteImageId);
     }
 
+    if (deleteCoverId) {
+      const { publicId } = await this.#imageRepository.getById(deleteCoverId);
+      await this.#fileStorage.delete(publicId);
+      await this.#imageRepository.delete(deleteCoverId);
+    }
+
     return podcast;
   }
 
-  public getAllByUserId(userId: string): Promise<TPodcast[]> {
-    return this.#podcastRepository.getAllByUserId(userId);
+  public getAllByUserId(searchedUserId: number, requestUserId: number | undefined): Promise<TPodcast[]> {
+    const filterParams: UserPodcastQueryParams = {
+      user_id: searchedUserId,
+    };
+    const isRequestUserAuthorised = Boolean(requestUserId);
+
+    if (!isRequestUserAuthorised || searchedUserId !== requestUserId) {
+      filterParams.type = PodcastType.PUBLIC;
+    }
+
+    return this.#podcastRepository.getAllByUserId(filterParams);
   }
 }
 

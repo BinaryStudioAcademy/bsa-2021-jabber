@@ -5,7 +5,10 @@ import {
   useParams,
   useRef,
 } from 'hooks/hooks';
-import { episode as episodeActions,  configurateEpisode as configurateEpisodeActions } from 'store/actions';
+import {
+  episode as episodeActions,
+  configurateEpisode as configurateEpisodeActions,
+} from 'store/actions';
 import {
   Loader,
   CreateCommentForm,
@@ -15,7 +18,7 @@ import {
   Link,
   ImageWrapper,
 } from 'components/common/common';
-import { AppRoute, DataStatus, EpisodeStatus, ButtonType, ButtonColor } from 'common/enums/enums';
+import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
 import { getCurrentTime } from './helpers/helpers';
@@ -28,12 +31,13 @@ const Episode: React.FC = () => {
   const { id } = useParams<PageParams>();
   const playerRef = useRef<PlayerRef | null>(null);
 
-  const { episode, comments, user, dataStatus } = useAppSelector(
+  const { episode, comments, user, dataStatus, podcast } = useAppSelector(
     ({ episode, auth }) => ({
       dataStatus: episode.dataStatus,
       episode: episode.episode,
       comments: episode.comments,
       user: auth.user,
+      podcast: episode.podcast,
     }),
   );
 
@@ -44,7 +48,7 @@ const Episode: React.FC = () => {
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
-    dispatch(episodeActions.loadEpisode(Number(id)));
+    dispatch(episodeActions.loadEpisodePayload(Number(id)));
   }, []);
 
   const handleJumpToTimeLine = (timeline: number): void => {
@@ -62,10 +66,12 @@ const Episode: React.FC = () => {
   };
 
   const handleDeleteEpisode = (): void => {
-    dispatch(configurateEpisodeActions.deleteEpisode({
-      episodeId: Number(id),
-      podcastId: Number(episode?.podcastId),
-    }));
+    dispatch(
+      configurateEpisodeActions.deleteEpisode({
+        episodeId: Number(id),
+        podcastId: Number(episode?.podcastId),
+      }),
+    );
   };
 
   if (dataStatus === DataStatus.PENDING) {
@@ -97,17 +103,24 @@ const Episode: React.FC = () => {
                     <Link
                       to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`}
                       className={styles.editLink}
-                    />
-                    <Button
-                      label="Delete"
-                      type={ButtonType.BUTTON}
-                      buttonColor={ButtonColor.LIGHT_PINK}
+                    >
+                      <span className="visually-hidden">Edit episode</span>
+                    </Link>
+                    <button
                       onClick={handleDeleteEpisode}
                       className={styles.deleteButton}
-                    />
+                    >
+                      <span className="visually-hidden">Delete episode</span>
+                    </button>
                   </>
                 )}
                 <h1 className={styles.title}>{episode.name}</h1>
+                <Link
+                  to={`${AppRoute.PODCASTS}/${episode?.podcastId}`}
+                  className={styles.link}
+                >
+                  {podcast?.name}
+                </Link>
                 <p className={styles.description}>{episode.description}</p>
                 <p className={styles.status}>Status: {episode.status}</p>
                 {hasShownotes && (

@@ -76,7 +76,10 @@ const UserPage: React.FC = () => {
                 height="18"
                 className={styles.headerLogo}
               />
-              {user?.email}
+              <a className={styles.emailLink} href={`mailto:${user?.email}`}>
+                {user?.email}
+              </a>
+              ;
             </span>
           </div>
           <div className={styles.bioContainer}>
@@ -96,8 +99,8 @@ const UserPage: React.FC = () => {
           )}
         </div>
       </main>
-      <div className={styles.favoritePodcastContainer}>
-        <h2 className={styles.favoritePodcastTitle}>My Podcasts</h2>
+      <div className={styles.podcastsByUserContainer}>
+        <h2 className={styles.podcastsByUserTitle}>My Podcasts</h2>
         {podcasts.length ? (
           <PodcastList podcasts={podcasts} />
         ) : (

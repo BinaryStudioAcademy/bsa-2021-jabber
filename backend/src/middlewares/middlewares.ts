@@ -10,3 +10,4 @@ export { checkUserEpisodeOwner } from './check-user-owner/check-user-episode-own
 export { checkUserPodcastOwner } from './check-user-owner/check-user-podcast-owner.middleware';
 export { injectSocket } from './inject-socket/inject-socket.middleware';
 export { checkUserHasPermitToEdit } from './check-user-has-permit-to-edit/check-user-has-permit-to-edit.middleware';
+export { identifyUser } from './identify-user/identify-user.middleware';
