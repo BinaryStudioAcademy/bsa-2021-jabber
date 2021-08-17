@@ -21,6 +21,7 @@ export {
   EpisodePayloadKey,
   EpisodeType,
   EpisodeStatus,
+  EpisodeValidationMessage,
 } from './episode/episode';
 export { UserPayloadKey } from './user/user';
 export {

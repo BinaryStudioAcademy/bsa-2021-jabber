@@ -1,8 +1,11 @@
 import { Joi } from 'helpers/helpers';
-import { EpisodePayloadKey, FileExtension } from 'common/enums/enums';
 import { episode } from 'jabber-shared/validation-schemas/validation-schemas';
+import {
+  EpisodePayloadKey,
+  FileExtension,
+  EpisodeValidationMessage,
+} from 'common/enums/enums';
 import { fileExtensionValidation } from '../../helpers/helpers';
-import { EpisodeValidationMessage } from 'jabber-shared/common/enums/enums';
 
 const episodeCreate = episode.keys({
   [EpisodePayloadKey.IMAGE]: Joi.object()

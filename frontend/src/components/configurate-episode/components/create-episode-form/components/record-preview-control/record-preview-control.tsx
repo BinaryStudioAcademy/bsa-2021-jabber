@@ -1,17 +1,17 @@
 import {
-  FileExtension,
-  InputType,
-} from 'common/enums/enums';
-import {
   FieldValues,
   Path,
   Control,
   useController,
 } from 'react-hook-form';
-import { getFileExtensions } from 'helpers/helpers';
-import { ErrorMessage } from '@hookform/error-message';
-import styles from './styles.module.scss';
 import { useState } from 'hooks/hooks';
+import { ErrorMessage } from '@hookform/error-message';
+import { getFileExtensions } from 'helpers/helpers';
+import {
+  InputType,
+  FileExtension,
+} from 'common/enums/enums';
+import styles from './styles.module.scss';
 
 type Props = {
   name: Path<FieldValues>;

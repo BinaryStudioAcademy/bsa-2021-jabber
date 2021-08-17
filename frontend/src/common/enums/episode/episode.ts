@@ -1,1 +1,6 @@
-export { EpisodePayloadKey, EpisodeType, EpisodeStatus } from 'jabber-shared/common/enums/enums';
+export { 
+  EpisodePayloadKey, 
+  EpisodeType, 
+  EpisodeStatus, 
+  EpisodeValidationMessage, 
+} from 'jabber-shared/common/enums/enums';
