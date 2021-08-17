@@ -110,10 +110,8 @@ class Podcast {
     return podcast;
   }
 
-  public async getAllBySearch(
-    payload: PodcastSearchPayload,
-  ): Promise<TPodcast[]> {
-    return await this.#podcastRepository.getAllBySearch(payload);
+  public getAllBySearch(payload: PodcastSearchPayload): Promise<TPodcast[]> {
+    return this.#podcastRepository.getAllBySearch(payload);
   }
 
   public async update(
@@ -193,7 +191,7 @@ class Podcast {
 
   public getAllByUserId(
     searchedUserId: number,
-    requestUserId: number | undefined,
+    requestUserId?: number,
   ): Promise<TPodcast[]> {
     const filterParams: UserPodcastQueryParams = {
       user_id: searchedUserId,
