@@ -39,7 +39,7 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
 
   const isFormDisabled = createPodcastStatus === DataStatus.PENDING;
 
-  const sortedGenres = genres.sort((a, b) => a.label > b.label ? 1 : -1);
+  const sortedGenres = [...genres].sort((a, b) => a.label > b.label ? 1 : -1);
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
