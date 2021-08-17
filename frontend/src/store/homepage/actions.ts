@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Podcast, AsyncThunkConfig } from 'common/types/types';
+import { Podcast, AsyncThunkConfig, PodcastBySearchPayload } from 'common/types/types';
 import { ActionType } from './common';
-import { FieldValues, UnpackNestedValue } from 'react-hook-form';
 
 const loadPodcasts = createAsyncThunk<Podcast[], undefined, AsyncThunkConfig>
 (ActionType.LOAD_PODCASTS, async (_args, { extra }) => {
@@ -11,9 +10,10 @@ const loadPodcasts = createAsyncThunk<Podcast[], undefined, AsyncThunkConfig>
   return podcasts;
 });
 
-const loadPodcastsBySearch = createAsyncThunk<Podcast[], UnpackNestedValue<FieldValues>, AsyncThunkConfig>
+const loadPodcastsBySearch = createAsyncThunk<Podcast[], PodcastBySearchPayload, AsyncThunkConfig>
 (ActionType.LOAD_PODCASTS_BY_SEARCH, async (searchValues, { extra }) => {
   const { podcastApi } = extra;
+  console.warn(searchValues);
   const podcasts = await podcastApi.getAllBySearch(searchValues);
 
   return podcasts;

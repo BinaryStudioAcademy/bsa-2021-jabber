@@ -1,13 +1,13 @@
 import { DataStatus } from 'common/enums/enums';
-import { Loader } from 'components/common/common';
+import { Loader, PodcastList } from 'components/common/common';
 import {
   useAppSelector,
   useCallback,
   useDispatch,
   useEffect,
 } from 'hooks/hooks';
+import { convertToPodcastType } from './helpers/helpers';
 import { homepage as homepageActions } from 'store/actions';
-import { PodcastList } from 'components/common/common';
 import { Search } from './components/components';
 import { SEARCH_TIMEOUT } from './common/constants';
 import { setDebounce } from 'helpers/helpers';
@@ -28,7 +28,8 @@ const Homepage: React.FC = () => {
 
   const debounceValue = useCallback(
     setDebounce((value: UnpackNestedValue<FieldValues>) => {
-      dispatch(homepageActions.loadPodcastsBySearch(value));
+      const convertedValue = convertToPodcastType(value);
+      dispatch(homepageActions.loadPodcastsBySearch(convertedValue));
     }, SEARCH_TIMEOUT),
     [],
   );

@@ -11,7 +11,11 @@ type Props = {
 };
 
 const Search: React.FC<Props> = ({ onChange }) => {
-  const { control, errors, getValues } = useAppForm({
+  const {
+    control,
+    errors,
+    getValues,
+  } = useAppForm({
     defaultValues: DEFAULT_PODCAST_SEARCH_PAYLOAD,
     modeAction: FormEvent.ON_CHANGE,
   });
@@ -21,7 +25,9 @@ const Search: React.FC<Props> = ({ onChange }) => {
   };
 
   return (
-    <form onChange={handleChange}>
+    <form
+      onChange={handleChange}
+    >
       <div className={styles.searchBlock}>
         <Input
           label=""
@@ -33,8 +39,7 @@ const Search: React.FC<Props> = ({ onChange }) => {
           icon={IconName.SEARCH}
         />
       </div>
-    </form>
-  );
+    </form>);
 };
 
 export default Search;
