@@ -36,12 +36,23 @@
 .editLink {
   display: block;
   position: absolute;
-  right: 45px;
+  right: 90px;
   top: 45px;
   width: 25px;
   height: 25px;
   background: url('../../assets/img/user-profile/edit.svg') center center /
     cover;
+}
+
+.deleteButton {
+  position: absolute;
+  right: 45px;
+  top: 45px;
+  width: 25px;
+  height: 25px;
+  background: url('../../assets/img/trash-bucket.svg') center center / cover;
+  border: none;
+  cursor: pointer;
 }
 
 .addEpisodeLink {

@@ -70,6 +70,15 @@ class PodcastApi {
     );
   }
 
+  public delete(id: number): Promise<Podcast> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}${id}`,
+      {
+        method: HttpMethod.DELETE,
+      },
+    );
+  }
+
 }
 
 export { PodcastApi };
