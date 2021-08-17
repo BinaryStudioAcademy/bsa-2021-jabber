@@ -33,11 +33,11 @@ const EditUserForm: React.FC<Props> = ({
     <form onSubmit={handleSubmit(onSubmit)} className={styles.editUserForm}>
       <fieldset disabled={disabled}>
         <ImagePreviewControl
-          label="avatar image"
           name={UserPayloadKey.IMAGE}
           control={control}
           errors={errors}
           imageUrl={user?.image?.url}
+          className={styles.imagePreview}
         />
         <Input
           label="First name"
