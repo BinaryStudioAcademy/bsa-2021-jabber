@@ -4,6 +4,7 @@ export type {
   UserCreatePayload,
   UserEditPayload,
   UserSignInPayload,
+  UserEditFormPayload,
 } from './user/user';
 export type { HttpOptions } from './http/http';
 export type { ValidationSchema } from './validation-schema/validation-schema';
