@@ -38,7 +38,6 @@ const Homepage: React.FC = () => {
 
   const handleChange = (value: UnpackNestedValue<FieldValues>): void => {
     setVal(value.search);
-    console.warn(val);
     debounceValue(value);
   };
 
