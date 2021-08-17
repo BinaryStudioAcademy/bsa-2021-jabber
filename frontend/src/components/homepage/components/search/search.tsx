@@ -8,10 +8,9 @@ import styles from './styles.module.scss';
 
 type Props = {
   onChange: (evt: UnpackNestedValue<FieldValues>) => void;
-  value: string;
 };
 
-const Search: React.FC<Props> = ({ onChange, value }) => {
+const Search: React.FC<Props> = ({ onChange }) => {
   const { control, errors, getValues } = useAppForm({
     defaultValues: DEFAULT_PODCAST_SEARCH_PAYLOAD,
     modeAction: FormEvent.ON_CHANGE,
@@ -32,7 +31,6 @@ const Search: React.FC<Props> = ({ onChange, value }) => {
           control={control}
           errors={errors}
           icon={IconName.SEARCH}
-          value={value}
         />
       </div>
     </form>

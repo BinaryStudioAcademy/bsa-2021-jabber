@@ -20,7 +20,6 @@ type Props = {
   hasMultipleRows?: boolean;
   icon?: IconName;
   className?: string;
-  value?: string;
   min?: number;
 };
 
@@ -34,7 +33,6 @@ const Input: React.FC<Props> = ({
   hasMultipleRows = false,
   icon,
   className,
-  value,
   min,
 }) => {
   const { field } = useController({ name, control });
@@ -53,8 +51,6 @@ const Input: React.FC<Props> = ({
           {...field}
           min={min}
           type={type}
-          value={value}
-          autoFocus
           placeholder={placeholder}
           className={getAllowedClasses(
             className,

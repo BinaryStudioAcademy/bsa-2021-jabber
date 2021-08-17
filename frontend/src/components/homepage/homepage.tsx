@@ -5,7 +5,6 @@ import {
   useCallback,
   useDispatch,
   useEffect,
-  useState,
 } from 'hooks/hooks';
 import { homepage as homepageActions } from 'store/actions';
 import { PodcastList } from 'components/common/common';
@@ -34,10 +33,7 @@ const Homepage: React.FC = () => {
     [],
   );
 
-  const [val, setVal] = useState('');
-
   const handleChange = (value: UnpackNestedValue<FieldValues>): void => {
-    setVal(value.search);
     debounceValue(value);
   };
 
@@ -47,7 +43,7 @@ const Homepage: React.FC = () => {
 
   return (
     <main className={styles.main}>
-      <Search onChange={handleChange} value={val} />
+      <Search onChange={handleChange} />
       <h2 className={styles.title}>All podcasts</h2>
       {hasPodcasts ? (
         <PodcastList podcasts={podcasts} />
