@@ -31,7 +31,7 @@ const RecordPreviewControl: React.FC<Props> = ({
 }) => {
   const { field } = useController({ name, control });
 
-  const [currentRecord, setRecord] = useState<string | undefined>('');
+  const [currentRecord, setRecord] = useState<string>('');
 
   const handleChange = (evt: React.ChangeEvent<FieldValues>): void => {
     const [file] = evt.target.files ?? [];
