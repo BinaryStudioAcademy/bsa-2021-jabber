@@ -62,7 +62,7 @@ class User {
       bio,
       nickname,
       birthdate,
-      imageId: null,
+      imageId,
     };
 
     let deleteImageId: number | null = null;
