@@ -248,7 +248,7 @@ class Episode {
 
   public async deleteAllByPodcastId(id: number): Promise<void> {
     const episodes = await this.#episodeRepository.getAllByPodcastId(id);
-    await Promise.all(episodes.map((episode) => this.delete(episode.id)))
+    await Promise.all(episodes.map((episode) => this.delete(episode.id)));
   }
 }
 
