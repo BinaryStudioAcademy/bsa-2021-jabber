@@ -36,8 +36,8 @@ const RecordPreviewControl: React.FC<Props> = ({
   const handleChange = (evt: React.ChangeEvent<FieldValues>): void => {
     const [file] = evt.target.files ?? [];
     const hasRecord = Boolean(file);
-    
-    if(!hasRecord){
+
+    if (!hasRecord) {
       return;
     }
 
