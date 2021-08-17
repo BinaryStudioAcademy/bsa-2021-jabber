@@ -15,6 +15,7 @@ import {
   DEFAULT_SKIP_TIME,
   DEFAULT_CURRENT_TIME,
   MILLISECONDS_IN_SECOND,
+  DEFAULT_DURATION,
 } from './common/constants';
 import { getRatePointerStyle } from './common/helpers';
 import { RateStep } from './common/enums';
@@ -33,7 +34,7 @@ import styles from './styles.module.scss';
 
 type Props = {
   src: string;
-  setPlayerStatus: React.Dispatch<React.SetStateAction<DataStatus>>;
+  handleSetPlayerStatus: React.Dispatch<React.SetStateAction<DataStatus>>;
   skipTime?: number;
   onClickPrevious?: () => void;
   onClickNext?: () => void;
@@ -42,6 +43,7 @@ type Props = {
 type Ref = {
   setCurrentTime: (seconds: number) => void;
   getCurrentTime: () => number;
+  getPodcastDuration: () => number;
   getRef: () => React.MutableRefObject<H5AudioPlayer | null>;
 };
 
@@ -49,7 +51,7 @@ const rateSteps = Object.values(RateStep);
 
 const Player = forwardRef<Ref, Props>(
   (
-    { src, skipTime = DEFAULT_SKIP_TIME, onClickNext, onClickPrevious, setPlayerStatus },
+    { src, skipTime = DEFAULT_SKIP_TIME, onClickNext, onClickPrevious, handleSetPlayerStatus },
     ref,
   ) => {
     const playerRef = useRef<H5AudioPlayer | null>(null);
@@ -71,6 +73,13 @@ const Player = forwardRef<Ref, Props>(
 
         return DEFAULT_CURRENT_TIME;
       },
+      getPodcastDuration: (): number => {
+        if (playerRef.current && playerRef.current.audio.current) {
+          return playerRef.current.audio.current.duration;
+        }
+
+        return DEFAULT_DURATION;
+      },
       getRef: (): React.MutableRefObject<H5AudioPlayer | null> => playerRef,
     }));
 
@@ -89,13 +98,13 @@ const Player = forwardRef<Ref, Props>(
     }, [rateIndex]);
 
     const handleLoadStart = (): void => {
-      setPlayerStatus(DataStatus.PENDING);
+      handleSetPlayerStatus(DataStatus.PENDING);
     };
     const handleLoadedData = (): void => {
-      setPlayerStatus(DataStatus.FULFILLED);
+      handleSetPlayerStatus(DataStatus.FULFILLED);
     };
     const handleError = (): void => {
-      setPlayerStatus(DataStatus.REJECTED);
+      handleSetPlayerStatus(DataStatus.REJECTED);
     };
 
     return (

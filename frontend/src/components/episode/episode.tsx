@@ -22,7 +22,7 @@ import {
 import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
-import { getCurrentTime } from './helpers/helpers';
+import { getCurrentTime, getCommentsTimelineDimensions } from './helpers/helpers';
 import { PageParams } from './common/types/types';
 import { ShownotesList, ComentsTimeline } from './components/components';
 import styles from './styles.module.scss';
@@ -82,6 +82,9 @@ const Episode: React.FC = () => {
   if (dataStatus === DataStatus.PENDING) {
     return <Loader />;
   }
+
+  const commentsTimelineDimensions = getCommentsTimelineDimensions(playerRef, playerContainerRef);
+  const podcastDuration = playerRef.current?.getPodcastDuration();
 
   return (
     <main className={styles.root}>
@@ -150,8 +153,19 @@ const Episode: React.FC = () => {
             </div>
             {episode.record && (
               <div ref={playerContainerRef}>
-                <Player src={episode.record.fileUrl} ref={playerRef} setPlayerStatus={setPlayerStatus}/>
-                {isPlayerLoaded && playerRef.current && <ComentsTimeline comments={comments} playerRef={playerRef.current.getRef()} playerContainerRef={playerContainerRef}/>}
+                <Player
+                  src={episode.record.fileUrl}
+                  ref={playerRef}
+                  handleSetPlayerStatus={setPlayerStatus}
+                />
+                {isPlayerLoaded && commentsTimelineDimensions && podcastDuration && (
+                  <ComentsTimeline
+                    comments={comments}
+                    dimensions={commentsTimelineDimensions}
+                    duration={podcastDuration}
+                    handleJumpToTimeLine={handleJumpToTimeLine}
+                  />
+                )}
               </div>
             )}
           </div>

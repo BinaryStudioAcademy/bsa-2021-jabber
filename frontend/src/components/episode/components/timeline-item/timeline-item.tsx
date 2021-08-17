@@ -1,21 +1,21 @@
 import { ImageWrapper } from 'components/common/common';
 import { Comment as TComment } from 'common/types/types';
-import { Dimentions } from './common/types/types';
+import { Dimensions } from '../../common/types/types';
 import { getCommentOffset } from './helpers/helpers';
 import styles from './styles.module.scss';
 
 type Props = {
   comment: TComment;
-  dimensions: Dimentions;
+  dimensions: Dimensions;
   duration: number;
-  handleGoToTimestamp: (timestamp: number) => () => void;
+  handleGoToItemTimestamp: (timestamp: number) => () => void;
 };
 
 const TimelineItem: React.FC<Props> = ({
   comment,
   dimensions,
   duration,
-  handleGoToTimestamp,
+  handleGoToItemTimestamp,
 }) => {
   const commentOffset = getCommentOffset(
     duration,
@@ -27,7 +27,7 @@ const TimelineItem: React.FC<Props> = ({
     <button
       className={styles.timelineItem}
       style={{ left: `${commentOffset}%` }}
-      onClick={handleGoToTimestamp(comment.timestamp)}
+      onClick={handleGoToItemTimestamp(comment.timestamp)}
     >
       <div className={styles.timelineItemContent}>
         <ImageWrapper

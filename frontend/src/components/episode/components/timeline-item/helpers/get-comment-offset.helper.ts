@@ -1,9 +1,9 @@
-import { Dimentions } from '../common/types/types';
+import { Dimensions } from '../../../common/types/types';
 
 const getCommentOffset = (
   duration: number,
   timestamp: number,
-  dimensions: Dimentions,
+  dimensions: Dimensions,
 ): number => {
   return (
     ((dimensions.offset +

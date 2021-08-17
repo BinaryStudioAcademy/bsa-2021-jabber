@@ -1,52 +1,25 @@
-import H5AudioPlayer from 'react-h5-audio-player';
 import { Comment as TComment } from 'common/types/types';
 import TimelineItem from '../timeline-item/timeline-item';
+import { Dimensions } from '../../common/types/types';
 import styles from './styles.module.scss';
 
 type Props = {
   comments: TComment[];
-  playerRef: React.MutableRefObject<H5AudioPlayer | null>;
-  playerContainerRef: React.RefObject<HTMLDivElement>;
+  handleJumpToTimeLine: (timeline: number) => void;
+  dimensions: Dimensions;
+  duration: number;
 };
 
 const CommentsTimeline: React.FC<Props> = ({
   comments,
-  playerRef,
-  playerContainerRef,
+  dimensions,
+  duration,
+  handleJumpToTimeLine,
 }) => {
 
-  const player = playerRef.current;
-  const playerContainer = playerContainerRef.current;
-  const progressBar = player?.progressBar.current;
-  const duration = player?.audio.current?.duration;
-
-  if (
-    !player ||
-    !playerContainer ||
-    !progressBar ||
-    !duration
-  ) {
-    return null;
-  }
-
-  const { x: progressBarLeft, width: progressBarWidth } =
-    progressBar.getBoundingClientRect();
-  const { x: playerContainerLeft, width: playerContainerWidth } =
-    playerContainer.getBoundingClientRect();
-
-  const offset = progressBarLeft - playerContainerLeft;
-
-  const dimensions = {
-    offset,
-    progressBarWidth,
-    playerContainerWidth,
-  };
-
-  const handleGoToTimestamp = (timestamp: number): (() => void) => {
+  const handleGoToItemTimestamp = (timestamp: number): (() => void) => {
     return (): void => {
-      if (player.audio.current) {
-        player.audio.current.currentTime = timestamp;
-      }
+      handleJumpToTimeLine(timestamp);
     };
   };
 
@@ -58,7 +31,7 @@ const CommentsTimeline: React.FC<Props> = ({
           comment={item}
           dimensions={dimensions}
           duration={duration}
-          handleGoToTimestamp={handleGoToTimestamp}
+          handleGoToItemTimestamp={handleGoToItemTimestamp}
         />
       ))}
     </div>

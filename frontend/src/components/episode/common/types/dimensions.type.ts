@@ -1,7 +1,7 @@
-type Dimentions = {
+type Dimensions = {
   offset: number;
   progressBarWidth: number;
   playerContainerWidth: number;
 };
 
-export type { Dimentions };
+export type { Dimensions };
