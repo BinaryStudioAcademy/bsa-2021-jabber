@@ -1,5 +1,5 @@
 export { checkIsOneOf } from './boolean/boolean';
-export { getFormattedDate, getDistanceToDateNow } from './date/date';
+export { getFormattedDate, getDistanceToDateNow, getTimeOffset } from './date/date';
 export { getResolver as getFormResolver, getOptions } from './form/form';
 export {
   getDataUrl,
@@ -7,3 +7,4 @@ export {
   getFileFromFileList,
 } from './file/file';
 export { Joi } from './validation-schema/validation-schema';
+export { getAllowedClasses } from './dom/dom';

@@ -1,4 +1,4 @@
-import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   AsyncThunkConfig,
   CreateActionEpisodePayload,
@@ -11,7 +11,7 @@ import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
 import { ActionType } from './common';
 import { AppRoute, NotificationMessage, NotificationTitle } from 'common/enums/enums';
 
-const create = createAsyncThunk<Episode, CreateActionEpisodePayload, AsyncThunkConfig>(
+const create = createAsyncThunk<void, CreateActionEpisodePayload, AsyncThunkConfig>(
   ActionType.CREATE_EPISODE,
   async (createEpisodePayload, { getState, extra }) => {
     const { episodeApi, notificationService, navigationService } = extra;
@@ -35,11 +35,9 @@ const create = createAsyncThunk<Episode, CreateActionEpisodePayload, AsyncThunkC
     notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.EPISODE_CREATED);
 
     navigationService.push(`${AppRoute.EPISODES}/${episode.id}`);
-
-    return episode;
   });
 
-const edit = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkConfig>(
+const edit = createAsyncThunk<void, EpisodeFormPayload, AsyncThunkConfig>(
   ActionType.EDIT_EPISODE,
   async (editEpisodePayload, { getState, extra }) => {
     const { episodeApi, navigationService, notificationService, recordAudioService } = extra;
@@ -71,8 +69,6 @@ const edit = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkConfig>(
     notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.EPISODE_UPDATED);
 
     navigationService.push(`${AppRoute.EPISODES}/${episode.id}`);
-
-    return episode;
   });
 
 const loadEpisode = createAsyncThunk<Episode, number, AsyncThunkConfig>(
@@ -94,6 +90,4 @@ const deleteEpisode = createAsyncThunk<void, DeleteActionEpisodePayload, AsyncTh
     navigationService.push(`${AppRoute.PODCASTS}/${podcastId}`);
   });
 
-const resetState = createAction(ActionType.RESET_STATE);
-
-export { create, edit, loadEpisode, deleteEpisode, resetState };
+export { create, edit, loadEpisode, deleteEpisode };

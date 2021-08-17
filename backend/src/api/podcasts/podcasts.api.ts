@@ -33,7 +33,7 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
     PodcastsApiPath.USERS_$ID,
     handleAsyncApi(async (req, res) => {
       return res
-        .send(await podcastService.getAllByUserId(req.params.id))
+        .send(await podcastService.getAllByUserId(Number(req.params.id), Number(req.user?.id)))
         .status(HttpCode.OK);
     }),
   );
@@ -42,7 +42,7 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
     PodcastsApiPath.$ID,
     handleAsyncApi(async (req, res) => {
       return res
-        .send(await podcastService.getById(req.params.id))
+        .send(await podcastService.getById(Number(req.params.id)))
         .status(HttpCode.OK);
     }),
   );
@@ -66,6 +66,17 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
     handleAsyncApi(async (req, res) => {
       return res
         .json(await podcastService.update(req.params.id, req.body))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  podcastRouter.delete(
+    PodcastsApiPath.$ID,
+    checkAuthMiddleware(HttpMethod.DELETE),
+    checkUserPodcastOwnerMiddleware(),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await podcastService.delete(Number(req.params.id)))
         .status(HttpCode.OK);
     }),
   );

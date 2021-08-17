@@ -1,11 +1,17 @@
 export type { AppAsyncStorage } from './app/app';
-export type { User, UserCreatePayload, UserSignInPayload } from './user/user';
+export type {
+  User,
+  UserCreatePayload,
+  UserSignInPayload,
+  UserEditPayload,
+} from './user/user';
 export type {
   Podcast,
   PodcastCreatePayload,
   PodcastCreateDTOPayload,
   PodcastEditPayload,
   PodcastEditDTOPayload,
+  UserPodcastQueryParams,
 } from './podcast/podcast';
 export type { Image, ImageCreatePayload } from './image/image';
 export type { ValidationSchema } from './validation-schema/validation-schema';

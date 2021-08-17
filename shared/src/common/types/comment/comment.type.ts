@@ -8,6 +8,7 @@ type Comment = {
   createdAt: string;
   updatedAt: string;
   user: User;
+  timestamp: number;
 };
 
 export type { Comment };

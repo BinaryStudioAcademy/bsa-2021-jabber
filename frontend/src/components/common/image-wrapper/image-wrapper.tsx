@@ -1,4 +1,4 @@
-import { getAllowedClasses } from 'helpers/dom/dom';
+import { getAllowedClasses } from 'helpers/helpers';
 import { DEFAULT_IMAGE_ALT, DEFAULT_LABEL } from './common/constants/constants';
 import {
   getDefaultImageStyle,

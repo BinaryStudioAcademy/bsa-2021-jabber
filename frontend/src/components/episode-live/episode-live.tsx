@@ -34,7 +34,7 @@ const EpisodeLive: React.FC = () => {
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
-    dispatch(episodeActions.loadEpisode(Number(id)));
+    dispatch(episodeActions.loadEpisodePayload(Number(id)));
   }, []);
 
   useEffect(() => {

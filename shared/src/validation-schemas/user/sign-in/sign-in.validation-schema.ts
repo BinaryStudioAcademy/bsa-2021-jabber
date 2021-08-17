@@ -1,30 +1,21 @@
 import { Joi } from '~/helpers/helpers';
-import { UserSignInPayload } from '~/common/types/types';
 import {
-  SignInValidationMessage,
-  SignInValidationRule,
-  UserSignInPayloadKey,
+  UserValidationRule,
+  UserValidationMessage,
+  UserPayloadKey,
 } from '~/common/enums/enums';
+import { common } from '../common/common.validation-schema';
 
-const signIn = Joi.object<UserSignInPayload>({
-  [UserSignInPayloadKey.EMAIL]: Joi.string()
+const signIn = common.keys({
+  [UserPayloadKey.PASSWORD]: Joi.string()
     .trim()
-    .email({ tlds: { allow: false } })
+    .min(UserValidationRule.PASSWORD_MIN_LENGTH)
+    .max(UserValidationRule.PASSWORD_MAX_LENGTH)
     .required()
     .messages({
-      'string.email': SignInValidationMessage.EMAIL_WRONG,
-      'any.required': SignInValidationMessage.EMAIL_REQUIRED,
-    }),
-  [UserSignInPayloadKey.PASSWORD]: Joi.string()
-    .trim()
-    .min(SignInValidationRule.PASSWORD_MIN_LENGTH)
-    .max(SignInValidationRule.PASSWORD_MAX_LENGTH)
-    .required()
-    .messages({
-      'string.base': SignInValidationMessage.EMAIL_WRONG,
-      'string.min': SignInValidationMessage.PASSWORD_MIN_LENGTH,
-      'string.max': SignInValidationMessage.PASSWORD_MAX_LENGTH,
-      'any.required': SignInValidationMessage.PASSWORD_REQUIRED,
+      'string.empty': UserValidationMessage.PASSWORD_REQUIRE,
+      'string.min': UserValidationMessage.PASSWORD_MIN_LENGTH,
+      'string.max': UserValidationMessage.PASSWORD_MAX_LENGTH,
     }),
 });
 

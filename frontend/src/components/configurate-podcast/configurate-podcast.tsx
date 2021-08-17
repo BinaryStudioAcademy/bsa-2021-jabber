@@ -12,13 +12,16 @@ const ConfiguratePodcast: React.FC = () => {
   const { id } = useParams<PageParams>();
   const dispatch = useDispatch();
 
-  const { podcast, dataStatus, genres } = useAppSelector(({ configuratePodcast }) => ({
+  const { podcast, dataStatus, genres, genresDataStatus } = useAppSelector(({ configuratePodcast }) => ({
     podcast: configuratePodcast.podcast,
     dataStatus: configuratePodcast.dataStatus,
     genres: configuratePodcast.genres,
+    genresDataStatus: configuratePodcast.genresDataStatus,
   }));
 
   const isEdit = Boolean(id);
+
+  const isLoading = dataStatus === DataStatus.PENDING || genresDataStatus === DataStatus.PENDING;
 
   const handleFormSubmit = (payload: PodcastFormPayload): void => {
     isEdit
@@ -34,26 +37,22 @@ const ConfiguratePodcast: React.FC = () => {
       dispatch(configuratePodcastActions.loadPodcast(Number(id)));
     }
     dispatch(configuratePodcastActions.loadGenres());
-
-    return ((): void => {
-      dispatch(configuratePodcastActions.resetState());
-    });
   }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className={styles.podcast}>
       <h2 className={styles.podcastTitle}>
-        {isEdit ? 'Edit' : 'Create'} Podcast {id ?? ''}
+        {isEdit ? 'Edit' : 'Create'} Podcast
       </h2>
-      {dataStatus === DataStatus.PENDING ? (
-        <Loader />
-      ) : (
-        <ConfiguratePodcastForm
-          onSubmit={handleFormSubmit}
-          payload={mappedPodcast}
-          genres={mappedGenres}
-        />
-      )}
+      <ConfiguratePodcastForm
+        onSubmit={handleFormSubmit}
+        payload={mappedPodcast}
+        genres={mappedGenres}
+      />
     </div>
   );
 };

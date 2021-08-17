@@ -4,13 +4,17 @@ import { CommentItem } from 'components/common/common';
 
 type Props = {
   comments: TComment[];
+  onClick?: (payload: number) => void;
 };
 
-const CommentsList: React.FC<Props> = ({ comments }) => {
+const CommentsList: React.FC<Props> = ({ comments,onClick }) => {
   return (
     <ul className={styles.list}>
       {comments.map((item) => (
-        <CommentItem comment={item} key={item.id} />
+        <CommentItem
+          onClick={onClick}
+          comment={item}
+          key={item.id} />
       ))}
     </ul>
   );

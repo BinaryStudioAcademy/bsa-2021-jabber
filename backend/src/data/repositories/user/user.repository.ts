@@ -1,4 +1,8 @@
-import { User as TUser, UserCreatePayload } from '~/common/types/types';
+import {
+  User as TUser,
+  UserCreatePayload,
+  UserEditPayload,
+} from '~/common/types/types';
 import { UserModel as UserM } from '~/data/models/models';
 
 type Constructor = {
@@ -26,6 +30,11 @@ class User {
 
   public getById(id: number): Promise<TUser> {
     return this.#UserModel.query().findById(id);
-  }}
+  }
+
+  public update(id: number, payload: UserEditPayload): Promise<TUser> {
+    return this.#UserModel.query().updateAndFetchById(id, payload);
+  }
+}
 
 export { User };
