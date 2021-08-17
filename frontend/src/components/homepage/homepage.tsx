@@ -8,7 +8,8 @@ import {
   useState,
 } from 'hooks/hooks';
 import { homepage as homepageActions } from 'store/actions';
-import { PodcastList, Search } from './components/components';
+import { PodcastList } from 'components/common/common';
+import { Search } from './components/components';
 import { SEARCH_TIMEOUT } from './components/search/common/constants';
 import { setDebounce } from 'helpers/helpers';
 import { FieldValues, UnpackNestedValue } from 'react-hook-form';
