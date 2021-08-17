@@ -7,7 +7,7 @@ import {
   EpisodeFormPayload,
   User,
 } from 'common/types/types';
-import { getDataUrl, getFileFromFileList, getDataUrlFromBlobUrl } from 'helpers/helpers';
+import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
 import { ActionType } from './common';
 import { AppRoute, NotificationMessage, NotificationTitle } from 'common/enums/enums';
 
@@ -48,9 +48,13 @@ const edit = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkConfig>(
 
     const recordFile = getFileFromFileList(editEpisodePayload.record);
     const imgFile = getFileFromFileList(editEpisodePayload.image);
-    const recordDataUrl = record.recordDataUrl
-      ? await getDataUrlFromBlobUrl(record.recordDataUrl)
-      : (recordFile ? await getDataUrl(recordFile) : null);
+
+    const liveRecord = await recordAudioService.getLiveRecord();
+    let recordDataUrl = recordFile ? await getDataUrl(recordFile) : null;
+
+    if (record.hasLiveRecord) {
+      recordDataUrl = await getDataUrl(liveRecord);
+    }
 
     const episode = await episodeApi.update(id, {
       name: editEpisodePayload.name,
@@ -63,10 +67,6 @@ const edit = createAsyncThunk<Episode, EpisodeFormPayload, AsyncThunkConfig>(
       imageId: (<Episode>configurateEpisode.episode).imageId,
       status: editEpisodePayload.status,
     });
-
-    if (episode && record.recordDataUrl) {
-      recordAudioService.revokeUrl(record.recordDataUrl);
-    }
 
     notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.EPISODE_UPDATED);
 

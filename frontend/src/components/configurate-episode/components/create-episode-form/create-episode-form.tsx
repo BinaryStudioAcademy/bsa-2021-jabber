@@ -38,14 +38,12 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
   });
   const history = useHistory();
 
-  const { dataStatus, recordDataUrl } = useAppSelector(({ episode, record }) => ({
+  const { dataStatus, hasLiveRecord } = useAppSelector(({ episode, record }) => ({
     dataStatus: episode.dataStatus,
-    recordDataUrl: record.recordDataUrl,
+    hasLiveRecord: record.hasLiveRecord,
   }));
 
   const isFormDisable = dataStatus === DataStatus.PENDING;
-
-  const hasRecord = Boolean(recordDataUrl);
 
   const handleCancel = (): void => {
     history.goBack();
@@ -60,7 +58,7 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
           errors={errors}
           imageUrl={imageUrl}
         />
-        {hasRecord
+        {hasLiveRecord
           || <label className={styles.recordLabel}>
             Upload record
             <input

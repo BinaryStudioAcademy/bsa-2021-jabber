@@ -27,17 +27,15 @@ const resumeRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
   recordAudioService.resume();
 });
 
-const stopRecord = createAsyncThunk<string, undefined, AsyncThunkConfig>
+const stopRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
 (ActionType.STOP_RECORD, async (_arg, { extra, getState }) => {
   const { recordAudioService, navigationService } = extra;
   const { episode } = getState();
   const { id, podcastId }  = <Episode>episode.episode;
 
-  const recordDataUrl = await recordAudioService.stop();
+  recordAudioService.stop();
 
   navigationService.push(`${AppRoute.PODCASTS}/${podcastId}${AppRoute.EPISODES_EDIT}/${id}`);
-
-  return recordDataUrl;
 });
 
 export {

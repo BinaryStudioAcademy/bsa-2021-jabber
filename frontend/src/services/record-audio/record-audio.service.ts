@@ -45,15 +45,19 @@ class RecordAudio {
     this.#recorder?.resume();
   }
 
-  public stop(): Promise<string> {
-    return new Promise((resolve, _reject) => {
+  public stop(): void {
+    if (this.#recorder?.state !== RecordStatus.INACTIVE) {
+      this.#recorder?.stop();
+    }
+  }
 
-      if (this.#recorder?.state !== RecordStatus.INACTIVE) {
-        this.#recorder?.stop();
-        const audioBlob = new Blob(this.#audioChunks, { type: 'audio/wave' });
-        this.#audioChunks = [];
-        resolve(URL.createObjectURL(audioBlob));
-      }
+  public getLiveRecord(): Promise<Blob> {
+    return new Promise((resolve, _reject) => {
+      const audioBlob = new Blob(this.#audioChunks, { type: 'audio/wave' });
+
+      this.#audioChunks = [];
+
+      resolve(audioBlob);
     });
   }
 
@@ -62,10 +66,6 @@ class RecordAudio {
       { audio: true },
       (stream) => this.onSuccess(stream),
       (err) => this.onError(err));
-  }
-
-  public revokeUrl(url: string): void {
-    URL.revokeObjectURL(url);
   }
 }
 
