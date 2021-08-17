@@ -34,10 +34,14 @@ const RecordPreviewControl: React.FC<Props> = ({
   const [currentRecord, setRecord] = useState<string | undefined>('');
 
   const handleChange = (evt: React.ChangeEvent<FieldValues>): void => {
-    const hasRecord = Boolean(evt.target.files.length);
     const [file] = evt.target.files ?? [];
+    const hasRecord = Boolean(file);
+    
+    if(!hasRecord){
+      return;
+    }
 
-    setRecord(hasRecord && file.name);
+    setRecord(file.name);
     field.onChange(evt.target.files);
   };
 
