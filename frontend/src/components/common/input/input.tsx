@@ -54,6 +54,7 @@ const Input: React.FC<Props> = ({
           min={min}
           type={type}
           value={value}
+          autoFocus
           placeholder={placeholder}
           className={getAllowedClasses(
             className,
