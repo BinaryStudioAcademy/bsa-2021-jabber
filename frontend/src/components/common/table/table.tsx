@@ -27,8 +27,8 @@ const Table: React.FC<Props> = ({ columns, data = [] }) => {
                 <span>{column.render('Header')}</span>
                 <span className={`${styles.sortIndicator} ${column.isSorted
                   ? column.isSortedDesc
-                    ? styles.sortIndicatorDesc
-                    : styles.sortIndicatorAsc
+                    ? styles.desc
+                    : styles.asc
                   : ''}`
                 }>
                 </span>
