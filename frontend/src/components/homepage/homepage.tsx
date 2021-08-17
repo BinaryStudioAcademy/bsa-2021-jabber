@@ -1,4 +1,5 @@
 import { DataStatus } from 'common/enums/enums';
+import { PodcastSearchPayload } from 'common/types/types';
 import { Loader, PodcastList } from 'components/common/common';
 import {
   useAppSelector,
@@ -6,12 +7,10 @@ import {
   useDispatch,
   useEffect,
 } from 'hooks/hooks';
-import { convertToPodcastType } from './helpers/helpers';
 import { homepage as homepageActions } from 'store/actions';
 import { Search } from './components/components';
 import { SEARCH_TIMEOUT } from './common/constants';
 import { setDebounce } from 'helpers/helpers';
-import { FieldValues, UnpackNestedValue } from 'react-hook-form';
 import styles from './styles.module.scss';
 
 const Homepage: React.FC = () => {
@@ -27,9 +26,8 @@ const Homepage: React.FC = () => {
   }, []);
 
   const handleChange = useCallback(
-    setDebounce((value: UnpackNestedValue<FieldValues>) => {
-      const convertedValue = convertToPodcastType(value);
-      dispatch(homepageActions.loadPodcastsBySearch(convertedValue));
+    setDebounce((payload: PodcastSearchPayload) => {
+      dispatch(homepageActions.loadPodcastsBySearch(payload));
     }, SEARCH_TIMEOUT),
     [],
   );

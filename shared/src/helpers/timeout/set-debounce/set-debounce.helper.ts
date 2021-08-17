@@ -1,4 +1,5 @@
-type DebounceCallbackType = <T>(...args: T[]) => void;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type DebounceCallbackType = (...args: any[]) => void;
 
 const setDebounce = (
   fn: DebounceCallbackType,

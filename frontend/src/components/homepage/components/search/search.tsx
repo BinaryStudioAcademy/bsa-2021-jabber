@@ -1,37 +1,30 @@
-import Input from 'components/common/input/input';
+import { FormEvent, IconName, InputType } from 'common/enums/enums';
+import { PodcastSearchPayload } from 'common/types/types';
+import { Input } from 'components/common/common';
 import { useAppForm } from 'hooks/hooks';
 import { DEFAULT_PODCAST_SEARCH_PAYLOAD } from './common/constants';
-import { IconName, InputType } from 'common/enums/ui/ui';
-import { FormEvent } from 'common/enums/enums';
-import { FieldValues, UnpackNestedValue } from 'react-hook-form';
 import styles from './styles.module.scss';
 
 type Props = {
-  onChange: (evt: UnpackNestedValue<FieldValues>) => void;
+  onChange: (payload: PodcastSearchPayload) => void;
 };
 
 const Search: React.FC<Props> = ({ onChange }) => {
-  const {
-    control,
-    errors,
-    getValues,
-  } = useAppForm({
+  const { control, errors, getValues } = useAppForm({
     defaultValues: DEFAULT_PODCAST_SEARCH_PAYLOAD,
     modeAction: FormEvent.ON_CHANGE,
   });
 
   const handleChange = (): void => {
-    onChange(getValues());
+    onChange(getValues() as PodcastSearchPayload);
   };
 
   return (
-    <form
-      onChange={handleChange}
-    >
+    <form onChange={handleChange}>
       <div className={styles.searchBlock}>
         <Input
           label=""
-          type={InputType.TEXT}
+          type={InputType.SEARCH}
           name="search"
           placeholder="Search podcasts..."
           control={control}
@@ -39,7 +32,8 @@ const Search: React.FC<Props> = ({ onChange }) => {
           icon={IconName.SEARCH}
         />
       </div>
-    </form>);
+    </form>
+  );
 };
 
 export default Search;
