@@ -163,7 +163,7 @@ const Episode: React.FC = () => {
                     comments={comments}
                     dimensions={commentsTimelineDimensions}
                     duration={podcastDuration}
-                    handleJumpToTimeLine={handleJumpToTimeLine}
+                    onClick={handleJumpToTimeLine}
                   />
                 )}
               </div>

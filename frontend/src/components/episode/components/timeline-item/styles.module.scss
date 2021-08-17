@@ -1,21 +1,21 @@
 .timelineItem {
   position: absolute;
-  bottom: 105px;
-  width: 10px;
-  height: 10px;
-  background-color: var(--color-link-active);
-  transform: translateX(-50%);
-  border: none;
-  outline: none;
-  cursor: pointer;
-  .avatarWrapper {
-    flex-shrink: 0;
-    margin-right: 10px;
-    border-radius: 50%;
+  bottom: 115px;
+  .timelineItemBtn {
+    position: absolute;
+    display: block;
+    width: 10px;
+    height: 10px;
+    transform: translateX(-50%);
+    background-color: var(--color-link-active);
+    border: none;
+    outline: none;
+    cursor: pointer;
   }
   .timelineItemContent {
-    position: relative;
-    bottom: 35px;
+    position: absolute;
+    left: -6px;
+    bottom: 0;
     display: none;
     color: var(--color-primary-light);
   }
@@ -23,5 +23,10 @@
     .timelineItemContent {
       display: flex;
     }
+  }
+  .avatarWrapper {
+    flex-shrink: 0;
+    margin-right: 10px;
+    border-radius: 50%;
   }
 }

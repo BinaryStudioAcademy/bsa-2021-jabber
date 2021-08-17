@@ -62,19 +62,19 @@ const Player = forwardRef<Ref, Props>(
 
     useImperativeHandle(ref, () => ({
       setCurrentTime: (seconds: number): void => {
-        if (playerRef.current && playerRef.current.audio.current) {
+        if (playerRef.current?.audio.current) {
           playerRef.current.audio.current.currentTime = seconds;
         }
       },
       getCurrentTime: (): number => {
-        if (playerRef.current && playerRef.current.audio.current) {
+        if (playerRef.current?.audio.current) {
           return playerRef.current.audio.current.currentTime;
         }
 
         return DEFAULT_CURRENT_TIME;
       },
       getPodcastDuration: (): number => {
-        if (playerRef.current && playerRef.current.audio.current) {
+        if (playerRef.current?.audio.current) {
           return playerRef.current.audio.current.duration;
         }
 

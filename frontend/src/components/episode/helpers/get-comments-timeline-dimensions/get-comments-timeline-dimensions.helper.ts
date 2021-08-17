@@ -20,13 +20,11 @@ const getCommentsTimelineDimensions = (
 
   const offset = progressBarLeft - playerContainerLeft;
 
-  const dimensions = {
+  return {
     offset,
     progressBarWidth,
     playerContainerWidth,
   };
-
-  return dimensions;
 };
 
 export { getCommentsTimelineDimensions };

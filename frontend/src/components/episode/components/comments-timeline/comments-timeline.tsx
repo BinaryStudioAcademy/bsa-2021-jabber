@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 
 type Props = {
   comments: TComment[];
-  handleJumpToTimeLine: (timeline: number) => void;
+  onClick: (timeline: number) => void;
   dimensions: Dimensions;
   duration: number;
 };
@@ -14,27 +14,20 @@ const CommentsTimeline: React.FC<Props> = ({
   comments,
   dimensions,
   duration,
-  handleJumpToTimeLine,
+  onClick: handleJumpToTimeLine,
 }) => {
-
-  const handleGoToItemTimestamp = (timestamp: number): (() => void) => {
-    return (): void => {
-      handleJumpToTimeLine(timestamp);
-    };
-  };
-
   return (
-    <div className={styles.timeline}>
+    <ul className={styles.timeline}>
       {comments.map((item) => (
         <TimelineItem
           key={item.id}
           comment={item}
           dimensions={dimensions}
           duration={duration}
-          handleGoToItemTimestamp={handleGoToItemTimestamp}
+          onClick={handleJumpToTimeLine}
         />
       ))}
-    </div>
+    </ul>
   );
 };
 

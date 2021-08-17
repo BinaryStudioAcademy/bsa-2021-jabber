@@ -8,14 +8,14 @@ type Props = {
   comment: TComment;
   dimensions: Dimensions;
   duration: number;
-  handleGoToItemTimestamp: (timestamp: number) => () => void;
+  onClick: (timeline: number) => void;
 };
 
 const TimelineItem: React.FC<Props> = ({
   comment,
   dimensions,
   duration,
-  handleGoToItemTimestamp,
+  onClick: handleJumpToTimeLine,
 }) => {
   const commentOffset = getCommentOffset(
     duration,
@@ -23,12 +23,16 @@ const TimelineItem: React.FC<Props> = ({
     dimensions,
   );
 
+  const handleGoToItemTimestamp = (): void => {
+    handleJumpToTimeLine(comment.timestamp);
+  };
+
   return (
-    <button
-      className={styles.timelineItem}
-      style={{ left: `${commentOffset}%` }}
-      onClick={handleGoToItemTimestamp(comment.timestamp)}
-    >
+    <li className={styles.timelineItem} style={{ left: `${commentOffset}%` }}>
+      <button
+        onClick={handleGoToItemTimestamp}
+        className={styles.timelineItemBtn}
+      />
       <div className={styles.timelineItemContent}>
         <ImageWrapper
           width="30"
@@ -43,7 +47,7 @@ const TimelineItem: React.FC<Props> = ({
           <div>{comment.text}</div>
         </div>
       </div>
-    </button>
+    </li>
   );
 };
 
