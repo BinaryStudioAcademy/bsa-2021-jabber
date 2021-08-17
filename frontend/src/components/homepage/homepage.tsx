@@ -26,17 +26,13 @@ const Homepage: React.FC = () => {
     dispatch(homepageActions.loadPodcasts());
   }, []);
 
-  const debounceValue = useCallback(
+  const handleChange = useCallback(
     setDebounce((value: UnpackNestedValue<FieldValues>) => {
       const convertedValue = convertToPodcastType(value);
       dispatch(homepageActions.loadPodcastsBySearch(convertedValue));
     }, SEARCH_TIMEOUT),
     [],
   );
-
-  const handleChange = (value: UnpackNestedValue<FieldValues>): void => {
-    debounceValue(value);
-  };
 
   if (dataStatus === DataStatus.PENDING) {
     return <Loader />;
