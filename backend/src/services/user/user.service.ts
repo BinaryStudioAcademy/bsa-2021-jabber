@@ -2,24 +2,32 @@ import {
   User as TUser,
   TokenPayload,
   UserEditPayload,
+  UserEditDTOPayload,
 } from '~/common/types/types';
-import { user as userRep } from '~/data/repositories/repositories';
+import { user as userRep, image as imageRep } from '~/data/repositories/repositories';
 import { ErrorMessage, HttpCode } from '~/common/enums/enums';
 import { HttpError } from '~/exceptions/exceptions';
 import { token } from '~/services/services';
+import { FileStorage } from '~/services/file-storage/file-storage.service';
 
 type Constructor = {
   userRepository: typeof userRep;
   tokenService: typeof token;
+  imageRepository: typeof imageRep;
+  fileStorage: FileStorage;
 };
 
 class User {
   #userRepository: typeof userRep;
   #tokenService: typeof token;
+  #imageRepository: typeof imageRep;
+  #fileStorage: FileStorage;
 
-  constructor({ userRepository, tokenService }: Constructor) {
+  constructor({ userRepository, tokenService, imageRepository, fileStorage }: Constructor) {
     this.#userRepository = userRepository;
     this.#tokenService = tokenService;
+    this.#imageRepository = imageRepository;
+    this.#fileStorage = fileStorage;
   }
 
   public getAll(): Promise<TUser[]> {
@@ -31,6 +39,7 @@ class User {
   }
 
   public async update(id: number, payload: UserEditPayload): Promise<TUser> {
+    const { firstName, lastName, email, bio, nickname, birthdate, imageDataUrl, imageId } = payload;
     const userWithSimilarEmail = await this.#userRepository.getByEmail(
       payload.email,
     );
@@ -46,7 +55,43 @@ class User {
       });
     }
 
-    return this.#userRepository.update(id, payload);
+    const updateUser: UserEditDTOPayload = {
+      firstName,
+      lastName,
+      email,
+      bio,
+      nickname,
+      birthdate,
+      imageId: null,
+    };
+
+    let deleteImageId: number | null = null;
+
+    if (imageDataUrl) {
+      const { url, publicId } = await this.#fileStorage.upload({
+        dataUrl: imageDataUrl,
+        userId: id,
+      });
+
+      deleteImageId = imageId;
+
+      const image = await this.#imageRepository.create({
+        url,
+        publicId,
+      });
+
+      updateUser.imageId = image.id;
+    }
+
+    const user = await this.#userRepository.update(id, updateUser);
+
+    if (deleteImageId) {
+      const { publicId } = await this.#imageRepository.getById(deleteImageId);
+      await this.#fileStorage.delete(publicId);
+      await this.#imageRepository.delete(deleteImageId);
+    }
+
+    return user;
   }
 
   public async getByToken(token: string): Promise<TUser> {
