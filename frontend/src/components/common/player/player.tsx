@@ -7,9 +7,9 @@ import {
   useRef,
   useCallback,
   useImperativeHandle,
-  useDispatch,
 } from 'hooks/hooks';
 import { getAllowedClasses } from 'helpers/helpers';
+import { DataStatus } from 'common/enums/enums';
 import {
   ARRAY_SHIFT,
   DEFAULT_SKIP_TIME,
@@ -29,12 +29,11 @@ import { ReactComponent as MuteIcon } from 'assets/img/player/mute.svg';
 import { ReactComponent as RateScaleIcon } from 'assets/img/player/rateScale.svg';
 import { ReactComponent as RatePointerIcon } from 'assets/img/player/ratePointer.svg';
 import 'react-h5-audio-player/lib/styles.css';
-import { player as playerActions } from 'store/actions';
 import styles from './styles.module.scss';
-import { DataStatus } from 'common/enums/enums';
 
 type Props = {
   src: string;
+  setPlayerStatus: React.Dispatch<React.SetStateAction<DataStatus>>;
   skipTime?: number;
   onClickPrevious?: () => void;
   onClickNext?: () => void;
@@ -50,11 +49,10 @@ const rateSteps = Object.values(RateStep);
 
 const Player = forwardRef<Ref, Props>(
   (
-    { src, skipTime = DEFAULT_SKIP_TIME, onClickNext, onClickPrevious },
+    { src, skipTime = DEFAULT_SKIP_TIME, onClickNext, onClickPrevious, setPlayerStatus },
     ref,
   ) => {
     const playerRef = useRef<H5AudioPlayer | null>(null);
-    const dispatch = useDispatch();
 
     const [rateIndex, setRateIndex] = useState(
       rateSteps.indexOf(RateStep.NORMAL),
@@ -90,6 +88,16 @@ const Player = forwardRef<Ref, Props>(
       );
     }, [rateIndex]);
 
+    const handleLoadStart = (): void => {
+      setPlayerStatus(DataStatus.PENDING);
+    };
+    const handleLoadedData = (): void => {
+      setPlayerStatus(DataStatus.FULFILLED);
+    };
+    const handleError = (): void => {
+      setPlayerStatus(DataStatus.REJECTED);
+    };
+
     return (
       <H5AudioPlayer
         ref={playerRef}
@@ -101,15 +109,9 @@ const Player = forwardRef<Ref, Props>(
         }}
         onClickNext={onClickNext}
         onClickPrevious={onClickPrevious}
-        onLoadStart={(): void => {
-          dispatch(playerActions.setPlayerStatus(DataStatus.PENDING));
-        }}
-        onLoadedData={(): void => {
-          dispatch(playerActions.setPlayerStatus(DataStatus.FULFILLED));
-        }}
-        onError={(): void => {
-          dispatch(playerActions.setPlayerStatus(DataStatus.REJECTED));
-        }}
+        onLoadStart={handleLoadStart}
+        onLoadedData={handleLoadedData}
+        onError={handleError}
         customAdditionalControls={[]}
         customVolumeControls={[
           RHAP_UI.VOLUME,

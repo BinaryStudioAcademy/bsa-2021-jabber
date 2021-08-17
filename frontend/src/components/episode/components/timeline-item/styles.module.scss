@@ -5,6 +5,8 @@
   height: 10px;
   background-color: var(--color-link-active);
   transform: translateX(-50%);
+  border: none;
+  outline: none;
   .avatarWrapper {
     flex-shrink: 0;
     margin-right: 10px;

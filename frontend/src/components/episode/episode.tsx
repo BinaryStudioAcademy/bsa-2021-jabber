@@ -4,6 +4,7 @@ import {
   useEffect,
   useParams,
   useRef,
+  useState,
 } from 'hooks/hooks';
 import {
   episode as episodeActions,
@@ -39,14 +40,16 @@ const Episode: React.FC = () => {
       comments: episode.comments,
       user: auth.user,
       podcast: episode.podcast,
-
     }),
   );
+
+  const [playerStatus, setPlayerStatus] = useState<DataStatus>(DataStatus.IDLE);
 
   const hasShownotes = Boolean(episode?.shownotes?.length);
   const hasUser = Boolean(user);
   const isStaging = episode?.status === EpisodeStatus.STAGING;
   const isOwner = user?.id === episode?.userId;
+  const isPlayerLoaded = playerStatus === DataStatus.FULFILLED;
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
@@ -147,8 +150,8 @@ const Episode: React.FC = () => {
             </div>
             {episode.record && (
               <div ref={playerContainerRef}>
-                <Player src={episode.record.fileUrl} ref={playerRef} />
-                {playerRef.current && <ComentsTimeline comments={comments} playerRef={playerRef.current.getRef()} playerContainerRef={playerContainerRef}/>}
+                <Player src={episode.record.fileUrl} ref={playerRef} setPlayerStatus={setPlayerStatus}/>
+                {isPlayerLoaded && playerRef.current && <ComentsTimeline comments={comments} playerRef={playerRef.current.getRef()} playerContainerRef={playerContainerRef}/>}
               </div>
             )}
           </div>

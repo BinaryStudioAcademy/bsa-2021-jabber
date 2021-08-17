@@ -9,7 +9,6 @@ import { reducer as record } from './record/reducer';
 import { reducer as userProfile } from './user-profile/reducer';
 import { reducer as notification } from './notification/reducer';
 import { reducer as configurateUser } from './configurate-user/reducer';
-import { reducer as player } from './player/reducer';
 
 const rootReducer = {
   auth,
@@ -23,7 +22,6 @@ const rootReducer = {
   notification,
   configurateUser,
   toastr: toastrReducer,
-  player,
 };
 
 export { rootReducer };

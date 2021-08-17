@@ -1,6 +1,4 @@
 import H5AudioPlayer from 'react-h5-audio-player';
-import { useAppSelector } from 'hooks/hooks';
-import { DataStatus } from 'common/enums/enums';
 import { Comment as TComment } from 'common/types/types';
 import TimelineItem from '../timeline-item/timeline-item';
 import styles from './styles.module.scss';
@@ -16,9 +14,6 @@ const CommentsTimeline: React.FC<Props> = ({
   playerRef,
   playerContainerRef,
 }) => {
-  const { playerStatus } = useAppSelector(({ player }) => ({
-    playerStatus: player.dataStatus,
-  }));
 
   const player = playerRef.current;
   const playerContainer = playerContainerRef.current;
@@ -26,7 +21,6 @@ const CommentsTimeline: React.FC<Props> = ({
   const duration = player?.audio.current?.duration;
 
   if (
-    playerStatus !== DataStatus.FULFILLED ||
     !player ||
     !playerContainer ||
     !progressBar ||
@@ -37,17 +31,23 @@ const CommentsTimeline: React.FC<Props> = ({
 
   const { x: progressBarLeft, width: progressBarWidth } =
     progressBar.getBoundingClientRect();
-  const { x: playerContainerLeft, width: playerContainerWidth } = playerContainer.getBoundingClientRect();
+  const { x: playerContainerLeft, width: playerContainerWidth } =
+    playerContainer.getBoundingClientRect();
 
   const offset = progressBarLeft - playerContainerLeft;
 
-  const props = {
-    dimensions: {
-      offset,
-      progressBarWidth,
-      playerContainerWidth,
-    },
-    duration,
+  const dimensions = {
+    offset,
+    progressBarWidth,
+    playerContainerWidth,
+  };
+
+  const handleGoToTimestamp = (timestamp: number): (() => void) => {
+    return (): void => {
+      if (player.audio.current) {
+        player.audio.current.currentTime = timestamp;
+      }
+    };
   };
 
   return (
@@ -56,12 +56,9 @@ const CommentsTimeline: React.FC<Props> = ({
         <TimelineItem
           key={item.id}
           comment={item}
-          {...props}
-          handleGoToTimestamp={(): void => {
-            if (player.audio.current) {
-              player.audio.current.currentTime = item.timestamp;
-            }
-          }}
+          dimensions={dimensions}
+          duration={duration}
+          handleGoToTimestamp={handleGoToTimestamp}
         />
       ))}
     </div>

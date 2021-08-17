@@ -1,16 +1,14 @@
 import { ImageWrapper } from 'components/common/common';
 import { Comment as TComment } from 'common/types/types';
+import { Dimentions } from './common/types/types';
+import { getCommentOffset } from './helpers/helpers';
 import styles from './styles.module.scss';
 
 type Props = {
   comment: TComment;
-  dimensions: {
-    offset: number;
-    progressBarWidth: number;
-    playerContainerWidth: number;
-  };
+  dimensions: Dimentions;
   duration: number;
-  handleGoToTimestamp: () => void;
+  handleGoToTimestamp: (timestamp: number) => () => void;
 };
 
 const TimelineItem: React.FC<Props> = ({
@@ -19,17 +17,17 @@ const TimelineItem: React.FC<Props> = ({
   duration,
   handleGoToTimestamp,
 }) => {
-  const commentOffset =
-    ((dimensions.offset +
-      (comment.timestamp / duration) * dimensions.progressBarWidth) /
-      dimensions.playerContainerWidth) *
-    100;
+  const commentOffset = getCommentOffset(
+    duration,
+    comment.timestamp,
+    dimensions,
+  );
 
   return (
-    <div
+    <button
       className={styles.timelineItem}
       style={{ left: `${commentOffset}%` }}
-      onClick={handleGoToTimestamp}
+      onClick={handleGoToTimestamp(comment.timestamp)}
     >
       <div className={styles.timelineItemContent}>
         <ImageWrapper
@@ -45,7 +43,7 @@ const TimelineItem: React.FC<Props> = ({
           <div>{comment.text}</div>
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 
