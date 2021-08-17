@@ -1,18 +1,24 @@
-import { useAppSelector, useParams, useDispatch, useEffect } from 'hooks/hooks';
-import { Loader, PodcastList, ImageWrapper } from 'components/common/common';
-import { DataStatus } from 'common/enums/enums';
+import {
+  Loader,
+  PodcastList,
+  ImageWrapper,
+  Link,
+} from 'components/common/common';
+import { AppRoute, DataStatus } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
+import { useAppSelector, useParams, useDispatch, useEffect } from 'hooks/hooks';
 import { userProfile as userProfileActions } from 'store/actions';
-import { PageParams } from './common/types/types';
 import contactLogo from 'assets/img/user-profile/contact.svg';
-import editLogo from 'assets/img/user-profile/edit.svg';
 import emailLogo from 'assets/img/user-profile/email.svg';
+import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 
 const UserPage: React.FC = () => {
   const { id } = useParams<PageParams>();
-  const { user, podcasts, dataStatus } = useAppSelector(
-    ({ userProfile }: RootState) => ({
+
+  const { currentUser, user, podcasts, dataStatus } = useAppSelector(
+    ({ auth, userProfile }: RootState) => ({
+      currentUser: auth.user,
       user: userProfile.user,
       podcasts: userProfile.podcasts,
       dataStatus: userProfile.dataStatus,
@@ -27,8 +33,9 @@ const UserPage: React.FC = () => {
   }, [id]);
 
   const hasUser = Boolean(user);
+  const hasPermitToEdit = currentUser?.id === Number(id);
 
-  if (!hasUser) {
+  if (!hasUser && dataStatus === DataStatus.FULFILLED) {
     return (
       <div className={styles.containerUserNotFound}>
         <h1>User Not Found</h1>
@@ -75,22 +82,22 @@ const UserPage: React.FC = () => {
               ;
             </span>
           </div>
-          <div className={styles.bioContainer}>
-            <span className={styles.bioTitle}>Bio:</span>
-            <span className={styles.bioText}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
-              quasi sunt vel nulla. Porro, assumenda atque modi quam dolores ab
-              sit vel voluptate unde. Molestias expedita ipsam exercitationem et
-              necessitatibus eos vel a, doloribus qui voluptas dolores eveniet
-            </span>
-          </div>
-          <button className={styles.editButton}>
-            <img src={editLogo} />
-          </button>
+          {user?.bio && (
+            <div className={styles.bioContainer}>
+              <span className={styles.bioTitle}>Bio:</span>
+              <span className={styles.bioText}>{user?.bio}</span>
+            </div>
+          )}
         </div>
+        {hasPermitToEdit && (
+          <Link
+            to={`${AppRoute.USERS_EDIT}/${id}`}
+            className={styles.editLink}
+          />
+        )}
       </main>
-      <div className={styles.favoritePodcastContainer}>
-        <h2 className={styles.favoritePodcastTitle}>My Podcasts</h2>
+      <div className={styles.podcastsByUserContainer}>
+        <h2 className={styles.podcastsByUserTitle}>My Podcasts</h2>
         {podcasts.length ? (
           <PodcastList podcasts={podcasts} />
         ) : (

@@ -1,10 +1,11 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
-import { podcast as podcastActions } from 'store/actions';
+import { podcast as podcastActions, configuratePodcast as configuratePodcastActions } from 'store/actions';
 import { AppRoute, DataStatus } from 'common/enums/enums';
 import { Link, Loader, ImageWrapper } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
+import { getAllowedClasses } from 'helpers/helpers';
 
 const Podcast: React.FC = () => {
   const { userId, podcast, episodes, dataStatus } = useAppSelector(
@@ -24,6 +25,13 @@ const Podcast: React.FC = () => {
     dispatch(podcastActions.loadEpisodesByPodcastId(Number(id)));
   }, []);
 
+  const handleDeletePodcast = (): void => {
+    dispatch(configuratePodcastActions.deletePodcast({
+      podcastId: Number(id),
+      userId: Number(userId),
+    }));
+  };
+
   if (dataStatus === DataStatus.PENDING) {
     return <Loader />;
   }
@@ -42,27 +50,68 @@ const Podcast: React.FC = () => {
             />
             <div className={styles.podcastInfoWrapper}>
               {isOwner && (
-                <Link
-                  to={`${AppRoute.PODCASTS_EDIT}/${podcast.id}`}
-                  className={styles.editLink}
-                />
+                <>
+                  <Link
+                    to={`${AppRoute.PODCASTS_EDIT}/${podcast.id}`}
+                    className={styles.editLink}
+                  />
+                  <button
+                    onClick={handleDeletePodcast}
+                    className={styles.deleteButton}
+                  >
+                    <span className="visually-hidden">Delete episode</span>
+                  </button>
+                </>
               )}
               <h1 className={styles.title}>{podcast.name}</h1>
               <p className={styles.description}>{podcast.description}</p>
               <ul className={styles.infoList}>
                 <li className={styles.infoItem}>
-                  <div className={`${styles.infoName} ${styles.host}`}>Host</div>
-                  <p className={styles.infoInner}>{podcast.user.nickname}</p>
+                  <div
+                    className={getAllowedClasses(styles.infoName, styles.host)}
+                  >
+                    Host
+                  </div>
+                  <Link
+                    className={styles.infoInner}
+                    to={`${AppRoute.USERS}/${podcast.userId}`}
+                  >
+                    <p>{podcast.user.nickname}</p>
+                  </Link>
                 </li>
                 {Boolean(episodes.length) && (
                   <li className={styles.infoItem}>
-                    <div className={`${styles.infoName} ${styles.episodes}`}>Episodes</div>
-                    <p className={styles.infoInner}>{episodes.length} episodes</p>
+                    <div
+                      className={getAllowedClasses(
+                        styles.infoName,
+                        styles.episodes,
+                      )}
+                    >
+                      Episodes
+                    </div>
+                    <p className={styles.infoInner}>
+                      {episodes.length} episodes
+                    </p>
                   </li>
                 )}
                 <li className={styles.infoItem}>
-                  <div className={`${styles.infoName} ${styles.period}`}>Рeriodicity</div>
+                  <div
+                    className={getAllowedClasses(
+                      styles.infoName,
+                      styles.period,
+                    )}
+                  >
+                    Рeriodicity
+                  </div>
                   <p className={styles.infoInner}>Once a month</p>
+                </li>
+                <li className={styles.infoItem}>
+                  <div
+                    className={getAllowedClasses(styles.infoName, styles.genre)}
+                  >
+                    Genre
+                  </div>
+                  <p className={styles.infoInner}>{podcast.genre?.name}</p>
                 </li>
               </ul>
 

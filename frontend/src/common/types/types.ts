@@ -1,5 +1,10 @@
 export type { RootState, AppDispatch, AsyncThunkConfig } from './app/app';
-export type { User, UserCreatePayload, UserSignInPayload } from './user/user';
+export type {
+  User,
+  UserCreatePayload,
+  UserEditPayload,
+  UserSignInPayload,
+} from './user/user';
 export type { HttpOptions } from './http/http';
 export type { ValidationSchema } from './validation-schema/validation-schema';
 export type {
@@ -7,6 +12,7 @@ export type {
   PodcastFormPayload,
   PodcastCreatePayload,
   PodcastEditPayload,
+  DeleteActionPodcastPayload,
 } from './podcast/podcast';
 export type {
   Episode,

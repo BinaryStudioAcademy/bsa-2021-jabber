@@ -21,27 +21,23 @@
   .imageWrapper {
     width: 195px;
     height: 195px;
-
     margin: 0 25px 8px 0;
-
-    flex-grow: 0;
-    flex-shrink: 0;
-
     font-size: 77px;
     border-radius: 3px;
-
     overflow: hidden;
+    flex-shrink: 0;
   }
 
   .mainUserInfo {
-    position: relative;
     .userInfoHeader {
       display: flex;
+
       .boldHeaderInfo {
         font-weight: bold;
         font-size: 24px;
         line-height: 34px;
       }
+
       .headerInfo {
         margin-left: 25px;
         display: flex;
@@ -62,6 +58,7 @@
     .bioContainer {
       margin-top: 25px;
       width: 60%;
+      word-break: break-all;
 
       .bioTitle {
         display: block;
@@ -74,13 +71,16 @@
       }
     }
   }
-  .editButton {
-    background-color: none;
-    border: none;
-    cursor: pointer;
+
+  .editLink {
+    display: block;
     position: absolute;
     top: 0;
     right: 0;
+    width: 25px;
+    height: 25px;
+    background: url('../../assets/img/user-profile/edit.svg') center center /
+      cover;
   }
 
   &::after {
@@ -93,8 +93,8 @@
   }
 }
 
-.favoritePodcastContainer {
-  .favoritePodcastTitle {
+.podcastsByUserContainer {
+  .podcastsByUserTitle {
     font-weight: bold;
   }
 

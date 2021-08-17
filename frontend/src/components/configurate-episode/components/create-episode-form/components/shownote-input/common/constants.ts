@@ -1,0 +1,3 @@
+const MIN_SHOWNOTE_TIME = 0;
+
+export { MIN_SHOWNOTE_TIME };

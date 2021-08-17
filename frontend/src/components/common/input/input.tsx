@@ -1,4 +1,3 @@
-import { ErrorMessage } from '@hookform/error-message';
 import {
   Control,
   FieldErrors,
@@ -7,7 +6,8 @@ import {
   FieldValues,
 } from 'react-hook-form';
 import { IconName, InputType } from 'common/enums/enums';
-import { getAllowedClasses } from 'helpers/dom/dom';
+import { ErrorMessage } from '@hookform/error-message';
+import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -21,6 +21,7 @@ type Props = {
   icon?: IconName;
   className?: string;
   value?: string;
+  min?: number;
 };
 
 const Input: React.FC<Props> = ({
@@ -34,6 +35,7 @@ const Input: React.FC<Props> = ({
   icon,
   className,
   value,
+  min,
 }) => {
   const { field } = useController({ name, control });
 
@@ -49,6 +51,7 @@ const Input: React.FC<Props> = ({
       ) : (
         <input
           {...field}
+          min={min}
           type={type}
           value={value}
           placeholder={placeholder}

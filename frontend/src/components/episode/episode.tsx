@@ -31,12 +31,13 @@ const Episode: React.FC = () => {
   const { id } = useParams<PageParams>();
   const playerRef = useRef<PlayerRef | null>(null);
 
-  const { episode, comments, user, dataStatus } = useAppSelector(
+  const { episode, comments, user, dataStatus, podcast } = useAppSelector(
     ({ episode, auth }) => ({
       dataStatus: episode.dataStatus,
       episode: episode.episode,
       comments: episode.comments,
       user: auth.user,
+      podcast: episode.podcast,
     }),
   );
 
@@ -47,7 +48,7 @@ const Episode: React.FC = () => {
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
-    dispatch(episodeActions.loadEpisode(Number(id)));
+    dispatch(episodeActions.loadEpisodePayload(Number(id)));
   }, []);
 
   const handleJumpToTimeLine = (timeline: number): void => {
@@ -113,9 +114,24 @@ const Episode: React.FC = () => {
                     </button>
                   </>
                 )}
+                <Link
+                  to={`${AppRoute.PODCASTS}/${episode?.podcastId}`}
+                  className={styles.link}
+                >
+                  {podcast?.name}
+                </Link>
                 <h1 className={styles.title}>{episode.name}</h1>
+                <dl className={styles.episodeInfo}>
+                  <div className={styles.infoBlock}>
+                    <dt className={styles.infoBlockTitle}>Type: </dt>
+                    <dd className={styles.infoBlockValue}>{episode.type}</dd>
+                  </div>
+                  <div className={styles.infoBlock}>
+                    <dt className={styles.infoBlockTitle}>Status:</dt>
+                    <dd className={styles.infoBlockValue}>{episode.status}</dd>
+                  </div>
+                </dl>
                 <p className={styles.description}>{episode.description}</p>
-                <p className={styles.status}>Status: {episode.status}</p>
                 {hasShownotes && (
                   <div className={styles.shownotesWrapper}>
                     <h3>Time navigation</h3>
@@ -137,7 +153,10 @@ const Episode: React.FC = () => {
             </h2>
             {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
             {comments.length ? (
-              <CommentsList comments={comments} />
+              <CommentsList
+                comments={comments}
+                onClick={handleJumpToTimeLine}
+              />
             ) : (
               <div>There&apos;s no comment yet.</div>
             )}

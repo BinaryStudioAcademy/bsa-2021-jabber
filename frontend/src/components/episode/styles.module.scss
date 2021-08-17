@@ -40,7 +40,7 @@
   display: block;
   position: absolute;
   right: 90px;
-  top: 45px;
+  top: 35px;
   width: 25px;
   height: 25px;
   background: url('../../assets/img/user-profile/edit.svg') center center /
@@ -50,12 +50,17 @@
 .deleteButton {
   position: absolute;
   right: 45px;
-  top: 45px;
+  top: 35px;
   width: 25px;
   height: 25px;
   background: url('../../assets/img/trash-bucket.svg') center center / cover;
   border: none;
   cursor: pointer;
+}
+
+.link {
+  color: #f3427f;
+  text-decoration: none;
 }
 
 .btnStartLive {
@@ -83,21 +88,32 @@
 }
 
 .title {
-  margin: 0 0 20px 0;
   font-size: 40px;
+  margin: 0;
 }
 
 .description {
   font-size: 14px;
-  margin: 0 0 35px 0;
+  margin: 20px 0;
   line-height: 1.25;
   letter-spacing: 1px;
   width: 450px;
 }
 
-.status {
+.episodeInfo {
   font-size: 12px;
-  margin: 15px 0;
+
+  .infoBlock {
+    display: flex;
+
+    .infoBlockValue {
+      margin-left: 10;
+    }
+
+    .infoBlockTitle {
+      font-weight: bold;
+    }
+  }
 }
 
 .shownotesWrapper {

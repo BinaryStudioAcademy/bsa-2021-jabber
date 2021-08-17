@@ -1,6 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { signUp, signIn, getCurrentUser, resetUser } from './actions';
+import {
+  auth as authActions,
+  configurateUser as configurateUserActions,
+} from 'store/actions';
 import { User } from 'common/types/types';
 
 type State = {
@@ -14,40 +17,46 @@ const initialState: State = {
 };
 
 const reducer = createReducer(initialState, (builder) => {
-  builder.addCase(signUp.pending, (state) => {
+  builder.addCase(authActions.signUp.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
   });
-  builder.addCase(signUp.fulfilled, (state, action) => {
+  builder.addCase(authActions.signUp.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.user = action.payload;
   });
-  builder.addCase(signUp.rejected, (state) => {
+  builder.addCase(authActions.signUp.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
-  builder.addCase(signIn.pending, (state) => {
+  builder.addCase(authActions.signIn.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
   });
-  builder.addCase(signIn.fulfilled, (state, action) => {
+  builder.addCase(authActions.signIn.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.user = action.payload;
   });
-  builder.addCase(signIn.rejected, (state) => {
+  builder.addCase(authActions.signIn.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
-  builder.addCase(getCurrentUser.pending, (state) => {
+  builder.addCase(authActions.getCurrentUser.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
   });
-  builder.addCase(getCurrentUser.fulfilled, (state, action) => {
+  builder.addCase(authActions.getCurrentUser.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.user = action.payload;
   });
-  builder.addCase(getCurrentUser.rejected, (state) => {
+  builder.addCase(authActions.getCurrentUser.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
-  builder.addCase(resetUser.fulfilled, (state) => {
+  builder.addCase(authActions.resetUser.fulfilled, (state) => {
     state.dataStatus = DataStatus.IDLE;
     state.user = null;
   });
+  builder.addCase(
+    configurateUserActions.editUser.fulfilled,
+    (state, action) => {
+      state.user = action.payload;
+    },
+  );
 });
 
 export { reducer };

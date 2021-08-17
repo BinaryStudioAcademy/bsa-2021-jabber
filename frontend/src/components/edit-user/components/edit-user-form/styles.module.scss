@@ -1,0 +1,20 @@
+.editUserForm {
+  fieldset {
+    display: flex;
+    flex-direction: column;
+    border: 0;
+  }
+
+  .btnsWrapper {
+    display: flex;
+    flex-direction: row;
+    .btnSave {
+      margin-right: 15px;
+    }
+    .btnSave,
+    .btnCancel {
+      max-width: 193px;
+      width: 100%;
+    }
+  }
+}
