@@ -20,6 +20,7 @@ type Props = {
   hasMultipleRows?: boolean;
   icon?: IconName;
   className?: string;
+  value?: string;
 };
 
 const Input: React.FC<Props> = ({
@@ -30,8 +31,9 @@ const Input: React.FC<Props> = ({
   placeholder = '',
   type = InputType.TEXT,
   hasMultipleRows = false,
-  icon ,
+  icon,
   className,
+  value,
 }) => {
   const { field } = useController({ name, control });
 
@@ -48,13 +50,15 @@ const Input: React.FC<Props> = ({
         <input
           {...field}
           type={type}
+          value={value}
           placeholder={placeholder}
           className={getAllowedClasses(
             className,
             styles.input,
             styles[`icon--${icon}`],
           )}
-        />)}
+        />
+      )}
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />
       </span>
