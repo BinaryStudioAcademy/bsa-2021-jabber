@@ -19,15 +19,3 @@
     background-color: rgba($color: #000000, $alpha: 0.5);
     z-index: 1001;
   }
-
-  .closeBtn {
-    padding: 5px 10px;
-    background-color: var(--color-button-background);
-    color: white;
-    cursor: pointer;
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    border-radius: 2px;
-    border: none;
-  }
