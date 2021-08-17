@@ -1,5 +1,1 @@
-type PodcastSearchPayload = {
-  search: string;
-};
-
-export type { PodcastSearchPayload };
+export type { PodcastSearchPayload } from 'jabber-shared/common/types/types';
