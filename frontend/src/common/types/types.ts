@@ -13,7 +13,7 @@ export type {
   PodcastCreatePayload,
   PodcastEditPayload,
   DeleteActionPodcastPayload,
-  PodcastBySearchPayload,
+  PodcastSearchPayload,
 } from './podcast/podcast';
 export type {
   Episode,

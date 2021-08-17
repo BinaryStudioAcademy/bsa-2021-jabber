@@ -1,8 +1,8 @@
 
 import { FieldValues, UnpackNestedValue } from 'react-hook-form';
-import { PodcastBySearchPayload } from 'common/types/types';
+import { PodcastSearchPayload } from 'common/types/types';
 
-const convertToPodcastType = (pref: UnpackNestedValue<FieldValues>): PodcastBySearchPayload => {
+const convertToPodcastType = (pref: UnpackNestedValue<FieldValues>): PodcastSearchPayload => {
   return { search: pref.search };
 };
 

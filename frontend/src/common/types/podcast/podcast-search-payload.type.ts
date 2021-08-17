@@ -1,5 +1,5 @@
-type PodcastBySearchPayload = {
+type PodcastSearchPayload = {
   search: string;
 };
 
-export type { PodcastBySearchPayload };
+export type { PodcastSearchPayload };
