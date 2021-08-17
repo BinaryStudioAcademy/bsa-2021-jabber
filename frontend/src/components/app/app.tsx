@@ -7,7 +7,6 @@ import {
   AuthPublicRouter,
   Loader,
   AuthPrivateRouter,
-  Modal,
 } from 'components/common/common';
 import Auth from 'components/auth/auth';
 import Homepage from 'components/homepage/homepage';
@@ -95,9 +94,6 @@ const App: React.FC = () => {
         <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />
       </Switch>
       <Toaster />
-      <Modal showModal = {true}>
-        <p>Modal content</p>
-      </Modal>
     </>
   );
 };
