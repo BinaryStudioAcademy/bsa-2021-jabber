@@ -1,6 +1,7 @@
 import { useTable } from 'hooks/hooks';
 import { Column, useSortBy } from 'react-table';
 import styles from './styles.module.scss';
+import { getAllowedClasses } from 'helpers/helpers';
 
 type Props = {
   columns: Column[];
@@ -25,11 +26,11 @@ const Table: React.FC<Props> = ({ columns, data = [] }) => {
 
               <th {...column.getHeaderProps(column.getSortByToggleProps())} key={i}>
                 <span>{column.render('Header')}</span>
-                <span className={`${styles.sortIndicator} ${column.isSorted
+                <span className={getAllowedClasses([styles.sortIndicator, column.isSorted
                   ? column.isSortedDesc
                     ? styles.desc
                     : styles.asc
-                  : ''}`
+                  : null])
                 }>
                 </span>
               </th>
