@@ -1,12 +1,11 @@
 import { EpisodeFormPayload, Option } from 'common/types/types';
-import { getOptions, getFileExtensions } from 'helpers/helpers';
+import { getOptions } from 'helpers/helpers';
 import {
   ButtonType,
   DataStatus,
   EpisodePayloadKey,
   EpisodeType,
   InputType,
-  FileExtension,
   EpisodeStatus,
   ButtonColor,
 } from 'common/enums/enums';
@@ -15,6 +14,7 @@ import { useAppForm, useAppSelector, useHistory } from 'hooks/hooks';
 import { Button, Input, Select, ImagePreviewControl } from 'components/common/common';
 import { DEFAULT_CREATE_EPISODE_PAYLOAD } from './common/constants';
 import ShownoteInputList from './components/shownote-input-list/shownote-input-list';
+import RecordPreviewControl from './components/record-preview-control/record-preview-control';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -26,13 +26,8 @@ type Props = {
 const selectTypeOptions: Option[] = getOptions(Object.values(EpisodeType));
 const selectStatusOptions: Option[] = getOptions(Object.values(EpisodeStatus));
 
-const acceptAudioExtension = getFileExtensions(
-  FileExtension.MP3,
-  FileExtension.WAV,
-);
-
 const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE_EPISODE_PAYLOAD, imageUrl }) => {
-  const { control, handleSubmit, errors, register } = useAppForm({
+  const { control, handleSubmit, errors } = useAppForm({
     validationSchema: createEpisodeValidationSchema,
     defaultValues: payload,
   });
@@ -57,14 +52,11 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
           errors={errors}
           imageUrl={imageUrl}
         />
-        <label className={styles.recordLabel}>
-          Upload record
-          <input
-            {...register(EpisodePayloadKey.RECORD)}
-            accept={acceptAudioExtension}
-            type={InputType.FILE}
-          />
-        </label>
+        <RecordPreviewControl
+          name={EpisodePayloadKey.RECORD}
+          control={control}
+          errors={errors}
+        />
         <Input
           type={InputType.TEXT}
           label="Name episode"
