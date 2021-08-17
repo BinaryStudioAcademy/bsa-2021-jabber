@@ -51,5 +51,4 @@ export {
   CommentValidationMessage,
 } from './comment/comment';
 export { SocketEvent } from './socket/socket';
-export { PodcastSearchPayloadKey } from './search/podcast-search';
 export { UserNotificationStatus } from './user-notification/user-notification';
