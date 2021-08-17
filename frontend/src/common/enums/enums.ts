@@ -22,7 +22,7 @@ export {
   EpisodeType,
   EpisodeStatus,
 } from './episode/episode';
-export { UserPayloadKey } from './user/user';
+export { UserPayloadKey, UserValidationMessage } from './user/user';
 export {
   ButtonType,
   IconName,
