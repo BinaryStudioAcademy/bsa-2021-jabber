@@ -13,7 +13,6 @@ const loadPodcasts = createAsyncThunk<Podcast[], undefined, AsyncThunkConfig>
 const loadPodcastsBySearch = createAsyncThunk<Podcast[], PodcastSearchPayload, AsyncThunkConfig>
 (ActionType.LOAD_PODCASTS_BY_SEARCH, async (searchValues, { extra }) => {
   const { podcastApi } = extra;
-  console.warn(searchValues);
   const podcasts = await podcastApi.getAllBySearch(searchValues);
 
   return podcasts;
