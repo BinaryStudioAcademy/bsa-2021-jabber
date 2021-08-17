@@ -18,12 +18,18 @@
     }
     .sortIndicator{
       display: inline-block;
-      width: 20px;
-      height: 20px;
-      padding-top: 6px;
+      width: 26px;
+      height: 12px;
+      background-position: center;
+      background-size: cover;
     }
-    .sortArrow {
-      width: 16px;
+
+    .sortIndicatorDesc {
+      background-image: url("../../../assets/img/arrow-up.svg");
+    }
+
+    .sortIndicatorAsc {
+      background-image: url("../../../assets/img/arrow-down.svg");
     }
   }
   td {

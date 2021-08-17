@@ -1,8 +1,6 @@
 import { useTable } from 'hooks/hooks';
 import { Column, useSortBy } from 'react-table';
 import styles from './styles.module.scss';
-import arrowUp from 'assets/img/arrow-up.svg';
-import arrowDown from 'assets/img/arrow-down.svg';
 
 type Props = {
   columns: Column[];
@@ -27,12 +25,12 @@ const Table: React.FC<Props> = ({ columns, data = [] }) => {
 
               <th {...column.getHeaderProps(column.getSortByToggleProps())} key={i}>
                 <span>{column.render('Header')}</span>
-                <span className={styles.sortIndicator}>
-                  {column.isSorted
-                    ? column.isSortedDesc
-                      ? (<img src={arrowDown} className={styles.sortArrow} alt="sort-asc" />)
-                      : (<img src={arrowUp} className={styles.sortArrow} alt="sort-desc" />)
-                    : null }
+                <span className={`${styles.sortIndicator} ${column.isSorted
+                  ? column.isSortedDesc
+                    ? styles.sortIndicatorDesc
+                    : styles.sortIndicatorAsc
+                  : ''}`
+                }>
                 </span>
               </th>
             ))}
