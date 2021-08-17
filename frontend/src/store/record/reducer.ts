@@ -1,7 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { RecordStatus } from 'common/enums/enums';
-import { pauseRecord, resumeRecord, startRecord, stopRecord } from './actions';
-import { configurateEpisode as ConfigurateEpisodeActions } from 'store/actions';
+import { pauseRecord, resumeRecord, startRecord, stopRecord, resetState } from './actions';
 
 type State = {
   recordStatus: RecordStatus;
@@ -27,7 +26,7 @@ const reducer = createReducer(initialState, (builder) => {
     state.recordStatus = RecordStatus.INACTIVE;
     state.hasLiveRecord = true;
   });
-  builder.addCase(ConfigurateEpisodeActions.edit.fulfilled, (state) => {
+  builder.addCase(resetState, (state) => {
     Object.assign(state, initialState);
   });
 });

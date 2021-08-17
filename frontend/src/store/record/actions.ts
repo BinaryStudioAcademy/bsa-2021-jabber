@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import { AsyncThunkConfig, Episode } from 'common/types/types';
 import { AppRoute } from 'common/enums/enums';
 import { ActionType } from './common';
@@ -38,10 +38,13 @@ const stopRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
   navigationService.push(`${AppRoute.PODCASTS}/${podcastId}${AppRoute.EPISODES_EDIT}/${id}`);
 });
 
+const resetState = createAction(ActionType.RESET_STATE);
+
 export {
   initRecord,
   startRecord,
   pauseRecord,
   resumeRecord,
   stopRecord,
+  resetState,
 };
