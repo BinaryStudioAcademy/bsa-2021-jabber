@@ -44,7 +44,8 @@ class Podcast {
     const { search } = searchData;
     return this.#PodcastModel
       .query()
-      .whereRaw(`REPLACE(name, ' ', '') ILIKE REPLACE('%${search}%', ' ', '')`);
+      .whereRaw(`REPLACE(name, ' ', '') ILIKE REPLACE('%${search}%', ' ', '')`)
+      .withGraphJoined('[image]');
   }
 
   public update(id: string, payload: PodcastEditDTOPayload): Promise<TPodcast> {
