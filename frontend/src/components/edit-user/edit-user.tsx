@@ -57,6 +57,7 @@ const EditUser: React.FC = () => {
           disabled={isFormDisabled}
           defaultValues={mappedUser}
           onSubmit={handleFormSubmit}
+          user={user}
         />
       )}
     </div>
