@@ -20,6 +20,7 @@ const Homepage: React.FC = () => {
   }));
   const dispatch = useDispatch();
   const hasPodcasts = Boolean(podcasts.length);
+  const isLoading = dataStatus === DataStatus.PENDING;
 
   useEffect(() => {
     dispatch(homepageActions.loadPodcasts());
@@ -32,15 +33,13 @@ const Homepage: React.FC = () => {
     [],
   );
 
-  if (dataStatus === DataStatus.PENDING) {
-    return <Loader />;
-  }
-
   return (
     <main className={styles.main}>
       <Search onChange={handleChange} />
       <h2 className={styles.title}>All podcasts</h2>
-      {hasPodcasts ? (
+      {isLoading ? (
+        <Loader />
+      ) : hasPodcasts ? (
         <PodcastList podcasts={podcasts} />
       ) : (
         <span className={styles.oopsMessage}>
