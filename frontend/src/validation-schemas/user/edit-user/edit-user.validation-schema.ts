@@ -1,8 +1,7 @@
 
-import { Joi } from 'helpers/helpers';
+import { Joi, fileExtensionValidation } from 'helpers/helpers';
 import { userEdit } from 'jabber-shared/validation-schemas/validation-schemas';
 import { PodcastPayloadKey, FileExtension, UserValidationMessage } from 'common/enums/enums';
-import { fileExtensionValidation } from 'helpers/helpers';
 
 const editUser = userEdit.keys({
   [PodcastPayloadKey.IMAGE]: Joi.object()
