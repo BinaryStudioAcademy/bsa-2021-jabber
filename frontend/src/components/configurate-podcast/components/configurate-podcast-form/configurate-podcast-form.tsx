@@ -39,6 +39,8 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
 
   const isFormDisabled = createPodcastStatus === DataStatus.PENDING;
 
+  const sortedGenres = genres.sort((a, b) => a.label > b.label ? 1 : -1);
+
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisabled} className={styles.fieldset}>
@@ -65,7 +67,7 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
           placeholder="Enter Name"
         />
         <Select
-          options={genres}
+          options={sortedGenres}
           label="Genre"
           name={PodcastPayloadKey.GENRE}
           control={control}
