@@ -3,10 +3,11 @@ import {
   AppRoute,
   NotificationMessage,
   NotificationTitle,
+  DateFormatType,
 } from 'common/enums/enums';
 import { AsyncThunkConfig, User, UserEditFormPayload } from 'common/types/types';
 import { ActionType } from './common';
-import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
+import { getDataUrl, getFileFromFileList, getFormattedDate } from 'helpers/helpers';
 
 const editUser = createAsyncThunk<User, UserEditFormPayload, AsyncThunkConfig>(
   ActionType.EDIT_USER,
@@ -22,9 +23,12 @@ const editUser = createAsyncThunk<User, UserEditFormPayload, AsyncThunkConfig>(
       nickname: payload.nickname,
       bio: payload.bio,
       email: payload.email,
-      birthdate: payload.birthdate,
-      imageDataUrl: file ? await getDataUrl(file) : null,
       imageId,
+      imageDataUrl: file ? await getDataUrl(file) : null,
+      birthdate: getFormattedDate(
+        payload.birthdate,
+        DateFormatType.ISO_DATE_000Z,
+      ),
     });
 
     notificationService.success(

@@ -5,7 +5,7 @@ type UserEditDTOPayload = {
   [UserPayloadKey.LAST_NAME]: string;
   [UserPayloadKey.NICKNAME]: string;
   [UserPayloadKey.EMAIL]: string;
-  [UserPayloadKey.BIRTHDATE]: Date;
+  [UserPayloadKey.BIRTHDATE]: string;
   [UserPayloadKey.BIO]: string;
   [UserPayloadKey.IMAGE_ID]: number | null;
 };
