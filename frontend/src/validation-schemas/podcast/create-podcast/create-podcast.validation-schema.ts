@@ -5,7 +5,7 @@ import {
   PodcastValidationMessage,
   FileExtension,
 } from 'common/enums/enums';
-import { fileExtensionValidation } from './shared/helpers/helpers';
+import { fileExtensionValidation } from 'helpers/helpers';
 
 const podcastCreate = podcast.keys({
   [PodcastPayloadKey.IMAGE]: Joi.object()

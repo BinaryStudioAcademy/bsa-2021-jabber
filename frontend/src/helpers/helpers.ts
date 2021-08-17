@@ -6,5 +6,5 @@ export {
   getFileExtensions,
   getFileFromFileList,
 } from './file/file';
-export { Joi } from './validation-schema/validation-schema';
+export { Joi, fileExtensionValidation } from './validation-schema/validation-schema';
 export { getAllowedClasses } from './dom/dom';
