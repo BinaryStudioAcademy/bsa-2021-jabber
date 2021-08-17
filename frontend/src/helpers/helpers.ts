@@ -11,5 +11,8 @@ export {
   getFileFromFileList,
 } from './file/file';
 export { setDebounce } from './debounce/debounce';
-export { Joi } from './validation-schema/validation-schema';
+export {
+  Joi,
+  fileExtensionValidation,
+} from './validation-schema/validation-schema';
 export { getAllowedClasses } from './dom/dom';

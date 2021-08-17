@@ -1,11 +1,10 @@
-import { Joi } from 'helpers/helpers';
+import { Joi, fileExtensionValidation } from 'helpers/helpers';
 import { podcast } from 'jabber-shared/validation-schemas/validation-schemas';
 import {
   PodcastPayloadKey,
   PodcastValidationMessage,
   FileExtension,
 } from 'common/enums/enums';
-import { fileExtensionValidation } from './shared/helpers/helpers';
 
 const podcastCreate = podcast.keys({
   [PodcastPayloadKey.IMAGE]: Joi.object()

@@ -4,6 +4,7 @@ export type {
   UserCreatePayload,
   UserSignInPayload,
   UserEditPayload,
+  UserEditDTOPayload,
 } from './user/user';
 export type {
   Podcast,
