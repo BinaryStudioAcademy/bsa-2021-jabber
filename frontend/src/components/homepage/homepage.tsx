@@ -47,7 +47,6 @@ const Homepage: React.FC = () => {
           Oops! There&apos;s nothing here
         </span>
       )}
-      )
     </main>
   );
 };
