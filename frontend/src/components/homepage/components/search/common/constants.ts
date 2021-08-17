@@ -5,6 +5,6 @@ const DEFAULT_PODCAST_SEARCH_PAYLOAD: PodcastSearchPayload = {
   [PodcastSearchPayloadKey.PODCAST_SEARCH]: '',
 };
 
-export const SEARCH_TIMEOUT = 1000;
+const SEARCH_TIMEOUT = 1000;
 
-export { DEFAULT_PODCAST_SEARCH_PAYLOAD };
+export { DEFAULT_PODCAST_SEARCH_PAYLOAD, SEARCH_TIMEOUT };

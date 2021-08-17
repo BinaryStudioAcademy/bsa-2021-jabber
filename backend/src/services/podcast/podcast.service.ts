@@ -110,8 +110,10 @@ class Podcast {
     return podcast;
   }
 
-  public async getAllBySearch(data: PodcastSearchPayload): Promise<TPodcast[]> {
-    return await this.#podcastRepository.getAllBySearch(data);
+  public async getAllBySearch(
+    payload: PodcastSearchPayload,
+  ): Promise<TPodcast[]> {
+    return await this.#podcastRepository.getAllBySearch(payload);
   }
 
   public async update(

@@ -10,7 +10,7 @@ import {
 import { homepage as homepageActions } from 'store/actions';
 import { PodcastList, Search } from './components/components';
 import { SEARCH_TIMEOUT } from './components/search/common/constants';
-import { setDebounce } from 'jabber-shared/helpers/timeout/timeout';
+import { setDebounce } from 'helpers/helpers';
 import { FieldValues, UnpackNestedValue } from 'react-hook-form';
 import styles from './styles.module.scss';
 
