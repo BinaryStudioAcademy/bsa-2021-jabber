@@ -1,4 +1,4 @@
-import { PodcastSearchPayloadKey } from './enums/search';
+import { PodcastSearchPayloadKey } from 'common/enums/enums';
 import { PodcastSearchPayload } from './types/search';
 
 const DEFAULT_PODCAST_SEARCH_PAYLOAD: PodcastSearchPayload = {
