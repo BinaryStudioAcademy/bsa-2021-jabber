@@ -1,4 +1,3 @@
-import { ErrorMessage } from '@hookform/error-message';
 import {
   Control,
   FieldErrors,
@@ -6,6 +5,7 @@ import {
   Path,
   FieldValues,
 } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
 import { InputType } from 'common/enums/enums';
 import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
@@ -18,8 +18,8 @@ type Props = {
   name: Path<FieldValues>;
   control: Control;
   errors: FieldErrors;
-  min?: number;
   hasMultipleRows?: boolean;
+  min?: number;
 };
 
 type Ref = HTMLInputElement | HTMLTextAreaElement;
