@@ -18,6 +18,7 @@ import {
   Button,
   Link,
   ImageWrapper,
+  ConfirmPopup,
 } from 'components/common/common';
 import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
@@ -59,6 +60,8 @@ const Episode: React.FC = () => {
     dispatch(episodeActions.loadEpisodePayload(Number(id)));
   }, []);
 
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState<boolean>(false);
+
   const handleJumpToTimeLine = (timeline: number): void => {
     playerRef.current?.setCurrentTime(timeline);
   };
@@ -80,6 +83,10 @@ const Episode: React.FC = () => {
         podcastId: Number(episode?.podcastId),
       }),
     );
+  };
+
+  const handleShowPopup = (): void => {
+    setIsConfirmPopupOpen(!isConfirmPopupOpen);
   };
 
   if (dataStatus === DataStatus.PENDING) {
@@ -121,11 +128,18 @@ const Episode: React.FC = () => {
                       <span className="visually-hidden">Edit episode</span>
                     </Link>
                     <button
-                      onClick={handleDeleteEpisode}
+                      onClick={handleShowPopup}
                       className={styles.deleteButton}
                     >
                       <span className="visually-hidden">Delete episode</span>
                     </button>
+                    <ConfirmPopup
+                      title="Delete Episode"
+                      description="You are going to delete the episode. Are you sure about this?"
+                      isOpen={isConfirmPopupOpen}
+                      onClose={handleShowPopup}
+                      onConfirm={handleDeleteEpisode}
+                    />
                   </>
                 )}
                 <Link
