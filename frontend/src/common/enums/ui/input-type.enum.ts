@@ -6,6 +6,7 @@ enum InputType {
   DATE = 'date',
   CHECKBOX = 'checkbox',
   FILE = 'file',
+  SEARCH = 'search',
 }
 
 export { InputType };

@@ -1,7 +1,7 @@
 import {
   User as TUser,
   UserCreatePayload,
-  UserEditPayload,
+  UserEditDTOPayload,
 } from '~/common/types/types';
 import { UserModel as UserM } from '~/data/models/models';
 
@@ -17,7 +17,7 @@ class User {
   }
 
   public getAll(): Promise<TUser[]> {
-    return this.#UserModel.query();
+    return this.#UserModel.query().withGraphJoined('[image]');
   }
 
   public create(payload: UserCreatePayload): Promise<TUser> {
@@ -25,14 +25,14 @@ class User {
   }
 
   public getByEmail(email: string): Promise<TUser> {
-    return this.#UserModel.query().findOne('email', email);
+    return this.#UserModel.query().findOne('email', email).withGraphJoined('[image]');
   }
 
   public getById(id: number): Promise<TUser> {
-    return this.#UserModel.query().findById(id);
+    return this.#UserModel.query().findById(id).withGraphJoined('[image]');
   }
 
-  public update(id: number, payload: UserEditPayload): Promise<TUser> {
+  public update(id: number, payload: UserEditDTOPayload): Promise<TUser> {
     return this.#UserModel.query().updateAndFetchById(id, payload);
   }
 }

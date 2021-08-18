@@ -1,5 +1,8 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
-import { podcast as podcastActions, configuratePodcast as configuratePodcastActions } from 'store/actions';
+import {
+  podcast as podcastActions,
+  configuratePodcast as configuratePodcastActions,
+} from 'store/actions';
 import { AppRoute, DataStatus } from 'common/enums/enums';
 import { Link, Loader, ImageWrapper } from 'components/common/common';
 import { EpisodeTable } from './components/components';
@@ -26,10 +29,12 @@ const Podcast: React.FC = () => {
   }, []);
 
   const handleDeletePodcast = (): void => {
-    dispatch(configuratePodcastActions.deletePodcast({
-      podcastId: Number(id),
-      userId: Number(userId),
-    }));
+    dispatch(
+      configuratePodcastActions.deletePodcast({
+        podcastId: Number(id),
+        userId: Number(userId),
+      }),
+    );
   };
 
   if (dataStatus === DataStatus.PENDING) {
@@ -38,7 +43,7 @@ const Podcast: React.FC = () => {
 
   return (
     <main className={styles.podcast}>
-      {podcast ? (
+      {podcast && dataStatus === DataStatus.FULFILLED ? (
         <>
           <div className={styles.content}>
             <ImageWrapper
@@ -112,6 +117,14 @@ const Podcast: React.FC = () => {
                     Genre
                   </div>
                   <p className={styles.infoInner}>{podcast.genre?.name}</p>
+                </li>
+                <li className={styles.infoItem}>
+                  <div
+                    className={getAllowedClasses(styles.infoName, styles.type)}
+                  >
+                    Type
+                  </div>
+                  <p className={styles.infoInner}>{podcast.type}</p>
                 </li>
               </ul>
 

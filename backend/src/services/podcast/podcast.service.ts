@@ -5,6 +5,7 @@ import {
   PodcastEditDTOPayload,
   PodcastCreatePayload,
   PodcastEditPayload,
+  PodcastSearchPayload,
   UserPodcastQueryParams,
 } from '~/common/types/types';
 import {
@@ -109,18 +110,24 @@ class Podcast {
     return podcast;
   }
 
-  public async update(id: string, {
-    name,
-    type,
-    userId,
-    description,
-    imageId,
-    imageDataUrl,
-    coverDataUrl,
-    coverId,
-    genreId,
-  }: PodcastEditPayload): Promise<TPodcast> {
+  public getAllBySearch(payload: PodcastSearchPayload): Promise<TPodcast[]> {
+    return this.#podcastRepository.getAllBySearch(payload);
+  }
 
+  public async update(
+    id: string,
+    {
+      name,
+      type,
+      userId,
+      description,
+      imageId,
+      imageDataUrl,
+      coverDataUrl,
+      coverId,
+      genreId,
+    }: PodcastEditPayload,
+  ): Promise<TPodcast> {
     const updatePodcast: PodcastEditDTOPayload = {
       name,
       type,
@@ -182,7 +189,10 @@ class Podcast {
     return podcast;
   }
 
-  public getAllByUserId(searchedUserId: number, requestUserId: number | undefined): Promise<TPodcast[]> {
+  public getAllByUserId(
+    searchedUserId: number,
+    requestUserId?: number,
+  ): Promise<TPodcast[]> {
     const filterParams: UserPodcastQueryParams = {
       user_id: searchedUserId,
     };

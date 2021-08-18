@@ -8,6 +8,7 @@ enum UserDTOKey {
   ROLE = 'role',
   BIO = 'bio',
   IMAGE_ID = 'imageId',
+  IMAGE = 'image',
 }
 
 export { UserDTOKey };

@@ -51,6 +51,8 @@ const fileStorage = new FileStorage({
 const user = new User({
   userRepository,
   tokenService: token,
+  imageRepository,
+  fileStorage,
 });
 
 const shownote = new Shownote({

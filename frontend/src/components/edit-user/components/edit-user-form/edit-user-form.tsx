@@ -1,5 +1,5 @@
 import { useAppForm } from 'hooks/hooks';
-import { User, UserEditPayload } from 'common/types/types';
+import { User, UserEditFormPayload } from 'common/types/types';
 import {
   UserPayloadKey,
   InputType,
@@ -7,15 +7,14 @@ import {
   ButtonColor,
   AppRoute,
 } from 'common/enums/enums';
-import { Button, Datepicker, Input } from 'components/common/common';
-import { userEdit as userEditValidationSchema } from 'validation-schemas/validation-schemas';
+import { Button, Datepicker, Input, ImagePreviewControl } from 'components/common/common';
+import { editUser as editUserValidationSchema } from 'validation-schemas/validation-schemas';
 import styles from './styles.module.scss';
-import { UserFormPayload } from 'common/types/user/user-form-payload.type';
 
 type Props = {
   disabled: boolean;
-  defaultValues: UserFormPayload;
-  onSubmit: (payload: UserEditPayload) => void;
+  defaultValues: UserEditFormPayload;
+  onSubmit: (payload: UserEditFormPayload) => void;
   user: User | null;
 };
 
@@ -26,13 +25,20 @@ const EditUserForm: React.FC<Props> = ({
   user,
 }) => {
   const { control, handleSubmit, errors } = useAppForm({
-    validationSchema: userEditValidationSchema,
+    validationSchema: editUserValidationSchema,
     defaultValues,
   });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.editUserForm}>
       <fieldset disabled={disabled}>
+        <ImagePreviewControl
+          name={UserPayloadKey.IMAGE}
+          control={control}
+          errors={errors}
+          imageUrl={user?.image?.url}
+          className={styles.imagePreview}
+        />
         <Input
           label="First name"
           placeholder="Enter your name"

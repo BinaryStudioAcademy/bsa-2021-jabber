@@ -13,7 +13,11 @@ export { CustomExceptionName } from './exceptions/exceptions';
 export { ContentType, FileExtension } from './file/file';
 export { HttpCode, HttpHeader, HttpMethod } from './http/http';
 export { UserPayloadKey, UserRole } from './user/user';
-export { PodcastPayloadKey, PodcastType } from './podcast/podcast';
+export {
+  PodcastPayloadKey,
+  PodcastType,
+  PodcastSearchPayloadKey,
+} from './podcast/podcast';
 export {
   UserValidationRule,
   UserValidationMessage,
