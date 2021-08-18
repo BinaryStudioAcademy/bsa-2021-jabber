@@ -6,10 +6,11 @@ import {
 } from 'react-hook-form';
 import { useState } from 'hooks/hooks';
 import { ErrorMessage } from '@hookform/error-message';
-import { getFileExtensions } from 'helpers/helpers';
+import { getFileExtensions, getFormattedDate } from 'helpers/helpers';
 import {
   InputType,
   FileExtension,
+  DateFormatType,
 } from 'common/enums/enums';
 import styles from './styles.module.scss';
 
@@ -17,6 +18,7 @@ type Props = {
   name: Path<FieldValues>;
   control: Control;
   errors: FieldValues;
+  hasLiveRecord: boolean;
 };
 
 const acceptAudioExtension = getFileExtensions(
@@ -28,10 +30,15 @@ const RecordPreviewControl: React.FC<Props> = ({
   name,
   control,
   errors,
+  hasLiveRecord,
 }) => {
   const { field } = useController({ name, control });
 
   const [currentRecord, setRecord] = useState<string | undefined>('');
+
+  const liveRecordName = hasLiveRecord
+    ? getFormattedDate(new Date(), DateFormatType.DAY_MONTH_YEAR) + '.wav'
+    : '';
 
   const handleChange = (evt: React.ChangeEvent<FieldValues>): void => {
     const [file] = evt.target.files ?? [];
@@ -58,7 +65,7 @@ const RecordPreviewControl: React.FC<Props> = ({
             onChange={handleChange}
           />
         </label>
-        <span className={styles.recordPreview}>{currentRecord}</span>
+        <span className={styles.recordPreview}>{currentRecord || liveRecordName}</span>
       </label>
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />
