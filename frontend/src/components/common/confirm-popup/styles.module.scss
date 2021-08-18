@@ -1,0 +1,17 @@
+.popup {
+  position: relative;
+  background-color: var(--color-primary-light);
+  padding: 30px;
+  border: none;
+  min-width: 300px;
+  border-radius: 5px;
+  h2 {
+    margin-top: 0;
+    text-align: center;
+  }
+}
+
+.btnWrapper {
+  display: flex;
+  justify-content: space-between;
+}

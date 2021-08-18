@@ -1,26 +1,17 @@
 .modal {
-    position: relative;
-    background-color: var(--color-primary-light);
-    padding: 30px;
-    border: none;
-    min-width: 300px;
-    border-radius: 5px;
-    h2 {
-      margin-top: 0;
-      text-align: center;
-    }
-  }
+  background-color: transparent;
+}
 
-  .overlay {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba($color: #000000, $alpha: 0.2);
-    backdrop-filter: blur(3px);
-    z-index: 1001;
-  }
+.overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba($color: #000000, $alpha: 0.2);
+  backdrop-filter: blur(3px);
+  z-index: 1001;
+}

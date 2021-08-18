@@ -4,7 +4,7 @@ import {
   configuratePodcast as configuratePodcastActions,
 } from 'store/actions';
 import { AppRoute, DataStatus } from 'common/enums/enums';
-import { Link, Loader, ImageWrapper, Button, Modal } from 'components/common/common';
+import { Link, Loader, ImageWrapper, ConfirmPopup } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
@@ -72,12 +72,11 @@ const Podcast: React.FC = () => {
                   >
                     <span className="visually-hidden">Delete episode</span>
                   </button>
-                  <Modal isShowModal={showModal} onCloseModal={handleShowModal}>
-                    <h2>Are you sure?</h2>
-                    <div className={styles.btnWrapper}>
-                      <Button onClick={handleDeletePodcast} label={'Delete'}></Button>
-                    </div>
-                  </Modal>
+                  <ConfirmPopup
+                    isShowModal={showModal}
+                    onCloseModal={handleShowModal}
+                    onDelete={handleDeletePodcast}
+                  />
                 </>
               )}
               <h1 className={styles.title}>{podcast.name}</h1>

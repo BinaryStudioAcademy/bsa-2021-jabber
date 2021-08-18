@@ -18,7 +18,7 @@ import {
   Button,
   Link,
   ImageWrapper,
-  Modal,
+  ConfirmPopup,
 } from 'components/common/common';
 import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
@@ -133,12 +133,11 @@ const Episode: React.FC = () => {
                     >
                       <span className="visually-hidden">Delete episode</span>
                     </button>
-                    <Modal isShowModal = {showModal} onCloseModal = {handleShowModal}>
-                      <h2>Are you sure?</h2>
-                      <div className = {styles.btnWrapper}>
-                        <Button onClick = {handleDeleteEpisode} label = {'Delete'}></Button>
-                      </div>
-                    </Modal>
+                    <ConfirmPopup
+                      isShowModal={showModal}
+                      onCloseModal={handleShowModal}
+                      onDelete={handleDeleteEpisode}
+                    />
                   </>
                 )}
                 <Link
