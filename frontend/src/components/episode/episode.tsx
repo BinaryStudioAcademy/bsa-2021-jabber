@@ -4,6 +4,7 @@ import {
   useEffect,
   useParams,
   useRef,
+  useState,
 } from 'hooks/hooks';
 import {
   episode as episodeActions,
@@ -21,15 +22,16 @@ import {
 import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
-import { getCurrentTime } from './helpers/helpers';
+import { getCurrentTime, getCommentsTimelineDimensions } from './helpers/helpers';
 import { PageParams } from './common/types/types';
-import { ShownotesList } from './components/components';
+import { ShownotesList, ComentsTimeline } from './components/components';
 import styles from './styles.module.scss';
 
 const Episode: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
   const playerRef = useRef<PlayerRef | null>(null);
+  const playerContainerRef = useRef<HTMLDivElement>(null);
 
   const { episode, comments, user, dataStatus, podcast } = useAppSelector(
     ({ episode, auth }) => ({
@@ -41,10 +43,13 @@ const Episode: React.FC = () => {
     }),
   );
 
+  const [playerStatus, setPlayerStatus] = useState<DataStatus>(DataStatus.IDLE);
+
   const hasShownotes = Boolean(episode?.shownotes?.length);
   const hasUser = Boolean(user);
   const isStaging = episode?.status === EpisodeStatus.STAGING;
   const isOwner = user?.id === episode?.userId;
+  const isPlayerLoaded = playerStatus === DataStatus.FULFILLED;
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
@@ -77,6 +82,9 @@ const Episode: React.FC = () => {
   if (dataStatus === DataStatus.PENDING) {
     return <Loader />;
   }
+
+  const commentsTimelineDimensions = getCommentsTimelineDimensions(playerRef, playerContainerRef);
+  const podcastDuration = playerRef.current?.getPodcastDuration();
 
   return (
     <main className={styles.root}>
@@ -144,7 +152,21 @@ const Episode: React.FC = () => {
               </div>
             </div>
             {episode.record && (
-              <Player src={episode.record.fileUrl} ref={playerRef} />
+              <div ref={playerContainerRef}>
+                <Player
+                  src={episode.record.fileUrl}
+                  ref={playerRef}
+                  onSetPlayerStatus={setPlayerStatus}
+                />
+                {isPlayerLoaded && commentsTimelineDimensions && podcastDuration && (
+                  <ComentsTimeline
+                    comments={comments}
+                    dimensions={commentsTimelineDimensions}
+                    duration={podcastDuration}
+                    onJumpToTimeLine={handleJumpToTimeLine}
+                  />
+                )}
+              </div>
             )}
           </div>
           <section className={styles.commentsWrapper}>
