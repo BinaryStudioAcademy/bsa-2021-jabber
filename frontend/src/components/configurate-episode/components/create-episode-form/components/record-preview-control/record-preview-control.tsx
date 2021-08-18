@@ -6,11 +6,11 @@ import {
 } from 'react-hook-form';
 import { useState } from 'hooks/hooks';
 import { ErrorMessage } from '@hookform/error-message';
-import { getFileExtensions, getFormattedDate } from 'helpers/helpers';
+import { getFileExtensions } from 'helpers/helpers';
+import { getLiveRecordName } from './helpers/helpers';
 import {
   InputType,
   FileExtension,
-  DateFormatType,
 } from 'common/enums/enums';
 import styles from './styles.module.scss';
 
@@ -36,9 +36,7 @@ const RecordPreviewControl: React.FC<Props> = ({
 
   const [currentRecord, setRecord] = useState<string | undefined>('');
 
-  const liveRecordName = hasLiveRecord
-    ? `${getFormattedDate(new Date(), DateFormatType.DAY_MONTH_YEAR)}.${FileExtension.WAV}`
-    : '';
+  const liveRecordName = hasLiveRecord ? getLiveRecordName() : '';
 
   const handleChange = (evt: React.ChangeEvent<FieldValues>): void => {
     const [file] = evt.target.files ?? [];
