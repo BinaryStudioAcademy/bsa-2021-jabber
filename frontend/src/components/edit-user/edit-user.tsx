@@ -1,5 +1,5 @@
 import { AppRoute, DataStatus } from 'common/enums/enums';
-import { RootState, UserEditPayload } from 'common/types/types';
+import { RootState, UserEditFormPayload } from 'common/types/types';
 import { Loader, Redirect } from 'components/common/common';
 import { useAppSelector, useParams, useEffect, useDispatch } from 'hooks/hooks';
 import {
@@ -35,7 +35,7 @@ const EditUser: React.FC = () => {
     dispatch(userProfileActions.loadUser(Number(id)));
   }, [id]);
 
-  const handleFormSubmit = (payload: UserEditPayload): void => {
+  const handleFormSubmit = (payload: UserEditFormPayload): void => {
     dispatch(configurateUserActions.editUser(payload));
   };
 
@@ -57,6 +57,7 @@ const EditUser: React.FC = () => {
           disabled={isFormDisabled}
           defaultValues={mappedUser}
           onSubmit={handleFormSubmit}
+          user={user}
         />
       )}
     </div>
