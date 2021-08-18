@@ -9,6 +9,7 @@ import {
 import { InputType } from 'common/enums/enums';
 import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
+import React from 'react';
 
 type Props = {
   type?: InputType;
@@ -17,43 +18,54 @@ type Props = {
   name: Path<FieldValues>;
   control: Control;
   errors: FieldErrors;
+  min?: number;
   hasMultipleRows?: boolean;
 };
 
-const Input: React.FC<Props> = ({
-  label,
-  name,
-  control,
-  errors,
-  placeholder = '',
-  type = InputType.TEXT,
-  hasMultipleRows = false,
-}) => {
-  const { field } = useController({ name, control });
+type Ref = HTMLInputElement | HTMLTextAreaElement;
 
-  return (
-    <label className={styles.inputWrapper}>
-      <span className={styles.label}>{label}</span>
-      {hasMultipleRows ? (
-        <textarea
-          {...field}
-          placeholder={placeholder}
-          className={getAllowedClasses(styles.input, styles.textarea)}
-        />
-      ) : (
-        <input
-          {...field}
-          type={type}
-          placeholder={placeholder}
-          className={styles.input}
-        />
-      )}
+const Input = React.forwardRef<Ref, Props>(
+  (
+    {
+      label,
+      name,
+      control,
+      errors,
+      placeholder = '',
+      type = InputType.TEXT,
+      min,
+      hasMultipleRows = false,
+    },
+    ref,
+  ) => {
+    const { field } = useController({ name, control });
 
-      <span className={styles.errorWrapper}>
-        <ErrorMessage errors={errors} name={name} />
-      </span>
-    </label>
-  );
-};
+    return (
+      <label className={styles.inputWrapper}>
+        <span className={styles.label}>{label}</span>
+        {hasMultipleRows ? (
+          <textarea
+            {...field}
+            placeholder={placeholder}
+            className={getAllowedClasses(styles.input, styles.textarea)}
+            ref={ref as React.Ref<HTMLTextAreaElement>}
+          />
+        ) : (
+          <input
+            {...field}
+            type={type}
+            placeholder={placeholder}
+            className={styles.input}
+            min={min}
+            ref={ref as React.Ref<HTMLInputElement>}
+          />
+        )}
 
+        <span className={styles.errorWrapper}>
+          <ErrorMessage errors={errors} name={name} />
+        </span>
+      </label>
+    );
+  },
+);
 export default Input;
