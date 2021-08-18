@@ -2,6 +2,8 @@
   🎧 Jabber 🪗
 </h1>
 
+*[Mobile app repository](https://github.com/eugeneprib/JabbReactNative)*
+
 ## ℹ️ General info
 
 This is the repository responsible for Jabber's app.
