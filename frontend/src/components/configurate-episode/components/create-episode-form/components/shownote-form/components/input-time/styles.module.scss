@@ -1,0 +1,41 @@
+.inputTime {
+  box-sizing: border-box;
+  position: relative;
+
+  input {
+    padding-right: 32px;
+  }
+
+  button {
+    position: absolute;
+    right: 8%;
+    transform: translateY(-50%);
+
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--color-button-background);
+
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    z-index: 35;
+
+    &:first-child {
+      top: calc(5px + 12px);
+    }
+
+    &:last-child {
+      top: calc(5px + 46px - 12px);
+    }
+  }
+
+  input[type='number'] {
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      -moz-appearance: textfield;
+      margin: 0;
+      display: none;
+    }
+  }
+}
