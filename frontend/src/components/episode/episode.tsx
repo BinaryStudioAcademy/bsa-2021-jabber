@@ -60,7 +60,7 @@ const Episode: React.FC = () => {
     dispatch(episodeActions.loadEpisodePayload(Number(id)));
   }, []);
 
-  const [showModal, setShowModal] = useState(false);
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState<boolean>(false);
 
   const handleJumpToTimeLine = (timeline: number): void => {
     playerRef.current?.setCurrentTime(timeline);
@@ -85,8 +85,8 @@ const Episode: React.FC = () => {
     );
   };
 
-  const handleShowModal = (): void => {
-    setShowModal(!showModal);
+  const handleShowPopup = (): void => {
+    setIsConfirmPopupOpen(!isConfirmPopupOpen);
   };
 
   if (dataStatus === DataStatus.PENDING) {
@@ -128,15 +128,17 @@ const Episode: React.FC = () => {
                       <span className="visually-hidden">Edit episode</span>
                     </Link>
                     <button
-                      onClick={handleShowModal}
+                      onClick={handleShowPopup}
                       className={styles.deleteButton}
                     >
                       <span className="visually-hidden">Delete episode</span>
                     </button>
                     <ConfirmPopup
-                      isShowModal={showModal}
-                      onCloseModal={handleShowModal}
-                      onDelete={handleDeleteEpisode}
+                      title="Delete Episode"
+                      description="You are going to delete the episode. Are you sure about this?"
+                      isOpen={isConfirmPopupOpen}
+                      onClose={handleShowPopup}
+                      onConfirm={handleDeleteEpisode}
                     />
                   </>
                 )}

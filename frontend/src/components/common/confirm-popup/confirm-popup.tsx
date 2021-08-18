@@ -2,23 +2,28 @@ import { Button, Modal } from 'components/common/common';
 import styles from './styles.module.scss';
 
 type Props = {
-  isShowModal: boolean;
-  onCloseModal: () => void;
-  onDelete: () => void;
+  title: string;
+  description: string;
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
 };
 
 const ConfirmPopup: React.FC<Props> = ({
-  isShowModal = true,
-  onCloseModal,
-  onDelete,
+  title,
+  description,
+  isOpen,
+  onClose,
+  onConfirm,
 }) => {
   return (
-    <Modal isShowModal={isShowModal} onCloseModal={onCloseModal}>
+    <Modal isShowModal={isOpen} onCloseModal={onClose}>
       <div className={styles.popup}>
-        <h2>Are you sure?</h2>
+        <h2>{title}</h2>
+        <p>{description}</p>
         <div className={styles.btnWrapper}>
-          <Button onClick={onDelete} label="Delete"></Button>
-          <Button onClick={onCloseModal} label="Cancel"></Button>
+          <Button onClick={onConfirm} label="Confirm" />
+          <Button onClick={onClose} label="Cancel" />
         </div>
       </div>
     </Modal>

@@ -28,7 +28,7 @@ const Podcast: React.FC = () => {
     dispatch(podcastActions.loadEpisodesByPodcastId(Number(id)));
   }, []);
 
-  const [showModal, setShowModal] = useState(false);
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState<boolean>(false);
 
   const handleDeletePodcast = (): void => {
     dispatch(
@@ -39,8 +39,8 @@ const Podcast: React.FC = () => {
     );
   };
 
-  const handleShowModal = (): void => {
-    setShowModal(!showModal);
+  const handleShowPopup = (): void => {
+    setIsConfirmPopupOpen(!isConfirmPopupOpen);
   };
 
   if (dataStatus === DataStatus.PENDING) {
@@ -67,15 +67,17 @@ const Podcast: React.FC = () => {
                     className={styles.editLink}
                   />
                   <button
-                    onClick={handleShowModal}
+                    onClick={handleShowPopup}
                     className={styles.deleteButton}
                   >
                     <span className="visually-hidden">Delete episode</span>
                   </button>
                   <ConfirmPopup
-                    isShowModal={showModal}
-                    onCloseModal={handleShowModal}
-                    onDelete={handleDeletePodcast}
+                    title="Delete Podcast"
+                    description="You are going to delete the podcast. Are you sure about this?"
+                    isOpen={isConfirmPopupOpen}
+                    onClose={handleShowPopup}
+                    onConfirm={handleDeletePodcast}
                   />
                 </>
               )}
