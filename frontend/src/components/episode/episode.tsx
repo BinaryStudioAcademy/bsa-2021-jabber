@@ -156,14 +156,14 @@ const Episode: React.FC = () => {
                 <Player
                   src={episode.record.fileUrl}
                   ref={playerRef}
-                  handleSetPlayerStatus={setPlayerStatus}
+                  onSetPlayerStatus={setPlayerStatus}
                 />
                 {isPlayerLoaded && commentsTimelineDimensions && podcastDuration && (
                   <ComentsTimeline
                     comments={comments}
                     dimensions={commentsTimelineDimensions}
                     duration={podcastDuration}
-                    onClick={handleJumpToTimeLine}
+                    onJumpToTimeLine={handleJumpToTimeLine}
                   />
                 )}
               </div>

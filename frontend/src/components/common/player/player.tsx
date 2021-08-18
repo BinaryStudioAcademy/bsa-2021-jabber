@@ -34,7 +34,7 @@ import styles from './styles.module.scss';
 
 type Props = {
   src: string;
-  handleSetPlayerStatus: React.Dispatch<React.SetStateAction<DataStatus>>;
+  onSetPlayerStatus: React.Dispatch<React.SetStateAction<DataStatus>>;
   skipTime?: number;
   onClickPrevious?: () => void;
   onClickNext?: () => void;
@@ -51,7 +51,7 @@ const rateSteps = Object.values(RateStep);
 
 const Player = forwardRef<Ref, Props>(
   (
-    { src, skipTime = DEFAULT_SKIP_TIME, onClickNext, onClickPrevious, handleSetPlayerStatus },
+    { src, skipTime = DEFAULT_SKIP_TIME, onClickNext, onClickPrevious, onSetPlayerStatus },
     ref,
   ) => {
     const playerRef = useRef<H5AudioPlayer | null>(null);
@@ -98,13 +98,13 @@ const Player = forwardRef<Ref, Props>(
     }, [rateIndex]);
 
     const handleLoadStart = (): void => {
-      handleSetPlayerStatus(DataStatus.PENDING);
+      onSetPlayerStatus(DataStatus.PENDING);
     };
     const handleLoadedData = (): void => {
-      handleSetPlayerStatus(DataStatus.FULFILLED);
+      onSetPlayerStatus(DataStatus.FULFILLED);
     };
     const handleError = (): void => {
-      handleSetPlayerStatus(DataStatus.REJECTED);
+      onSetPlayerStatus(DataStatus.REJECTED);
     };
 
     return (

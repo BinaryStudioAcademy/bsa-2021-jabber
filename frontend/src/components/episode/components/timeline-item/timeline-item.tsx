@@ -8,14 +8,14 @@ type Props = {
   comment: TComment;
   dimensions: Dimensions;
   duration: number;
-  onClick: (timeline: number) => void;
+  onJumpToTimeLine: (timeline: number) => void;
 };
 
 const TimelineItem: React.FC<Props> = ({
   comment,
   dimensions,
   duration,
-  onClick: handleJumpToTimeLine,
+  onJumpToTimeLine,
 }) => {
   const commentOffset = getCommentOffset(
     duration,
@@ -24,7 +24,7 @@ const TimelineItem: React.FC<Props> = ({
   );
 
   const handleGoToItemTimestamp = (): void => {
-    handleJumpToTimeLine(comment.timestamp);
+    onJumpToTimeLine(comment.timestamp);
   };
 
   return (

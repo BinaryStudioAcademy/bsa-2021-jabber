@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 
 type Props = {
   comments: TComment[];
-  onClick: (timeline: number) => void;
+  onJumpToTimeLine: (timeline: number) => void;
   dimensions: Dimensions;
   duration: number;
 };
@@ -14,7 +14,7 @@ const CommentsTimeline: React.FC<Props> = ({
   comments,
   dimensions,
   duration,
-  onClick: handleJumpToTimeLine,
+  onJumpToTimeLine,
 }) => {
   return (
     <ul className={styles.timeline}>
@@ -24,7 +24,7 @@ const CommentsTimeline: React.FC<Props> = ({
           comment={item}
           dimensions={dimensions}
           duration={duration}
-          onClick={handleJumpToTimeLine}
+          onJumpToTimeLine={onJumpToTimeLine}
         />
       ))}
     </ul>
