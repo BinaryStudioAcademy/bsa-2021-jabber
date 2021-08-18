@@ -7,7 +7,7 @@ type Props = {
   podcast: TPodcast;
 };
 
-const Podcast: React.FC<Props> = ({ podcast }) => (
+const PodcastItem: React.FC<Props> = ({ podcast }) => (
   <li className={styles.wrapper}>
     <ImageWrapper
       width="195"
@@ -27,4 +27,4 @@ const Podcast: React.FC<Props> = ({ podcast }) => (
   </li>
 );
 
-export default Podcast;
+export default PodcastItem;

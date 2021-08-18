@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Podcast, AsyncThunkConfig } from 'common/types/types';
+import { Podcast, AsyncThunkConfig, PodcastSearchPayload } from 'common/types/types';
 import { ActionType } from './common';
 
 const loadPodcasts = createAsyncThunk<Podcast[], undefined, AsyncThunkConfig>
@@ -10,4 +10,15 @@ const loadPodcasts = createAsyncThunk<Podcast[], undefined, AsyncThunkConfig>
   return podcasts;
 });
 
-export { loadPodcasts };
+const loadPodcastsBySearch = createAsyncThunk<Podcast[], PodcastSearchPayload, AsyncThunkConfig>
+(ActionType.LOAD_PODCASTS_BY_SEARCH, async (searchValues, { extra }) => {
+  const { podcastApi } = extra;
+  const podcasts = await podcastApi.getAllBySearch(searchValues);
+
+  return podcasts;
+});
+
+export {
+  loadPodcasts,
+  loadPodcastsBySearch,
+};

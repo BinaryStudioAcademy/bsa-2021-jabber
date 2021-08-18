@@ -24,7 +24,7 @@ class Episode {
     return this.#EpisodeModel.query().findById(id).withGraphJoined('[record, image, shownotes]');
   }
 
-  public getAllByPodcastId(id: string): Promise<TEpisode[]> {
+  public getAllByPodcastId(id: number): Promise<TEpisode[]> {
     return this.#EpisodeModel.query().where('podcast_id', id);
   }
 

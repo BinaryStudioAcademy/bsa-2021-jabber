@@ -4,7 +4,12 @@ import {
   ContentType,
   HttpMethod,
 } from 'common/enums/enums';
-import { Podcast, PodcastCreatePayload, PodcastEditPayload } from 'common/types/types';
+import {
+  Podcast,
+  PodcastCreatePayload,
+  PodcastEditPayload,
+  PodcastSearchPayload,
+} from 'common/types/types';
 import { Http } from 'services/http/http.service';
 
 type Constructor = {
@@ -26,6 +31,17 @@ class PodcastApi {
       `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}`,
       {
         method: HttpMethod.GET,
+      },
+    );
+  }
+
+  public getAllBySearch(payload: PodcastSearchPayload): Promise<Podcast[]> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.SEARCH}`,
+      {
+        method: HttpMethod.POST,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
       },
     );
   }
@@ -70,6 +86,14 @@ class PodcastApi {
     );
   }
 
+  public delete(id: number): Promise<Podcast> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}${id}`,
+      {
+        method: HttpMethod.DELETE,
+      },
+    );
+  }
 }
 
 export { PodcastApi };

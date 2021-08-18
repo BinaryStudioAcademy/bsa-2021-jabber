@@ -1,30 +1,44 @@
 import { useAppForm } from 'hooks/hooks';
-import { UserEditPayload } from 'common/types/types';
-import { UserPayloadKey, InputType, ButtonType } from 'common/enums/enums';
-import { Button, Datepicker, Input } from 'components/common/common';
-import { userEdit as userEditValidationSchema } from 'validation-schemas/validation-schemas';
+import { User, UserEditFormPayload } from 'common/types/types';
+import {
+  UserPayloadKey,
+  InputType,
+  ButtonType,
+  ButtonColor,
+  AppRoute,
+} from 'common/enums/enums';
+import { Button, Datepicker, Input, ImagePreviewControl } from 'components/common/common';
+import { editUser as editUserValidationSchema } from 'validation-schemas/validation-schemas';
 import styles from './styles.module.scss';
-import { UserFormPayload } from 'common/types/user/user-form-payload.type';
 
 type Props = {
   disabled: boolean;
-  defaultValues: UserFormPayload;
-  onSubmit: (payload: UserEditPayload) => void;
+  defaultValues: UserEditFormPayload;
+  onSubmit: (payload: UserEditFormPayload) => void;
+  user: User | null;
 };
 
 const EditUserForm: React.FC<Props> = ({
   disabled,
   defaultValues,
   onSubmit,
+  user,
 }) => {
   const { control, handleSubmit, errors } = useAppForm({
-    validationSchema: userEditValidationSchema,
+    validationSchema: editUserValidationSchema,
     defaultValues,
   });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.editUserForm}>
       <fieldset disabled={disabled}>
+        <ImagePreviewControl
+          name={UserPayloadKey.IMAGE}
+          control={control}
+          errors={errors}
+          imageUrl={user?.image?.url}
+          className={styles.imagePreview}
+        />
         <Input
           label="First name"
           placeholder="Enter your name"
@@ -69,11 +83,20 @@ const EditUserForm: React.FC<Props> = ({
           errors={errors}
           hasMultipleRows
         />
-        <Button
-          label="Edit"
-          className={styles.button}
-          type={ButtonType.SUBMIT}
-        />
+        <div className={styles.btnsWrapper}>
+          <Button
+            label="Edit"
+            className={styles.btnSave}
+            type={ButtonType.SUBMIT}
+          />
+          <Button
+            className={styles.btnCancel}
+            buttonColor={ButtonColor.LIGHT_PINK}
+            label="Cancel"
+            type={ButtonType.SUBMIT}
+            href={`${AppRoute.USERS}/${user?.id}`}
+          />
+        </div>
       </fieldset>
     </form>
   );
