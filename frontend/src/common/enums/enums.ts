@@ -8,7 +8,7 @@ export {
   NotificationsApiPath,
   GenresApiPath,
 } from './api/api';
-export { AppRoute, ENV, DataStatus, StorageKey } from './app/app';
+export { AppRoute, ENV, DataStatus, StorageKey, RainbowColor } from './app/app';
 export { HttpHeader, HttpMethod } from './http/http';
 export { ContentType, FileExtension } from './file/file';
 export {
