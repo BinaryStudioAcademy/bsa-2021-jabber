@@ -1,10 +1,10 @@
-import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
+import { useAppSelector, useDispatch, useEffect, useParams, useState } from 'hooks/hooks';
 import {
   podcast as podcastActions,
   configuratePodcast as configuratePodcastActions,
 } from 'store/actions';
 import { AppRoute, DataStatus } from 'common/enums/enums';
-import { Link, Loader, ImageWrapper } from 'components/common/common';
+import { Link, Loader, ImageWrapper, Button, Modal } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
@@ -28,6 +28,8 @@ const Podcast: React.FC = () => {
     dispatch(podcastActions.loadEpisodesByPodcastId(Number(id)));
   }, []);
 
+  const [showModal, setShowModal] = useState(false);
+
   const handleDeletePodcast = (): void => {
     dispatch(
       configuratePodcastActions.deletePodcast({
@@ -35,6 +37,10 @@ const Podcast: React.FC = () => {
         userId: Number(userId),
       }),
     );
+  };
+
+  const handleShowModal = (): void => {
+    setShowModal(!showModal);
   };
 
   if (dataStatus === DataStatus.PENDING) {
@@ -61,11 +67,17 @@ const Podcast: React.FC = () => {
                     className={styles.editLink}
                   />
                   <button
-                    onClick={handleDeletePodcast}
+                    onClick={handleShowModal}
                     className={styles.deleteButton}
                   >
                     <span className="visually-hidden">Delete episode</span>
                   </button>
+                  <Modal isShowModal={showModal} onCloseModal={handleShowModal}>
+                    <h2>Are you sure?</h2>
+                    <div className={styles.btnWrapper}>
+                      <Button onClick={handleDeletePodcast} label={'Delete'}></Button>
+                    </div>
+                  </Modal>
                 </>
               )}
               <h1 className={styles.title}>{podcast.name}</h1>

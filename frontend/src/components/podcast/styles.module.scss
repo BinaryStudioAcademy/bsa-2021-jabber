@@ -55,6 +55,11 @@
   cursor: pointer;
 }
 
+.btnWrapper {
+  display: flex;
+  justify-content: center;
+}
+
 .addEpisodeLink {
   font-size: 18px;
   color: var(--color-button-background);

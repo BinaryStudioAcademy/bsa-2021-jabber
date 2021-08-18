@@ -18,6 +18,7 @@ import {
   Button,
   Link,
   ImageWrapper,
+  Modal,
 } from 'components/common/common';
 import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
@@ -59,6 +60,8 @@ const Episode: React.FC = () => {
     dispatch(episodeActions.loadEpisodePayload(Number(id)));
   }, []);
 
+  const [showModal, setShowModal] = useState(false);
+
   const handleJumpToTimeLine = (timeline: number): void => {
     playerRef.current?.setCurrentTime(timeline);
   };
@@ -80,6 +83,10 @@ const Episode: React.FC = () => {
         podcastId: Number(episode?.podcastId),
       }),
     );
+  };
+
+  const handleShowModal = (): void => {
+    setShowModal(!showModal);
   };
 
   if (dataStatus === DataStatus.PENDING) {
@@ -121,11 +128,17 @@ const Episode: React.FC = () => {
                       <span className="visually-hidden">Edit episode</span>
                     </Link>
                     <button
-                      onClick={handleDeleteEpisode}
+                      onClick={handleShowModal}
                       className={styles.deleteButton}
                     >
                       <span className="visually-hidden">Delete episode</span>
                     </button>
+                    <Modal isShowModal = {showModal} onCloseModal = {handleShowModal}>
+                      <h2>Are you sure?</h2>
+                      <div className = {styles.btnWrapper}>
+                        <Button onClick = {handleDeleteEpisode} label = {'Delete'}></Button>
+                      </div>
+                    </Modal>
                   </>
                 )}
                 <Link
