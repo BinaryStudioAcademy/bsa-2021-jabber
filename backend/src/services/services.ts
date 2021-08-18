@@ -51,6 +51,8 @@ const fileStorage = new FileStorage({
 const user = new User({
   userRepository,
   tokenService: token,
+  imageRepository,
+  fileStorage,
 });
 
 const shownote = new Shownote({
@@ -85,6 +87,8 @@ const podcast = new Podcast({
   podcastRepository,
   imageRepository,
   fileStorage,
+  imageService: image,
+  episodeService: episode,
 });
 
 const passport = new Passport({

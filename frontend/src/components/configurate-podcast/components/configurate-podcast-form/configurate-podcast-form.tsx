@@ -12,6 +12,7 @@ import { useAppForm, useAppSelector } from 'hooks/hooks';
 import { Input, Button, Select, ImagePreviewControl } from 'components/common/common';
 import { DEFAULT_PODCAST_PAYLOAD } from './common/constants';
 import { podcastCreate as podcastCreateSchema } from 'validation-schemas/validation-schemas';
+import { sortGenresByName } from '../../helpers/helpers';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -39,6 +40,8 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
 
   const isFormDisabled = createPodcastStatus === DataStatus.PENDING;
 
+  const sortedGenres = sortGenresByName(genres);
+
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisabled} className={styles.fieldset}>
@@ -65,7 +68,7 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
           placeholder="Enter Name"
         />
         <Select
-          options={genres}
+          options={sortedGenres}
           label="Genre"
           name={PodcastPayloadKey.GENRE}
           control={control}
