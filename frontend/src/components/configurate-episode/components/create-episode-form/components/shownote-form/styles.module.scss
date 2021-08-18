@@ -1,0 +1,34 @@
+.shownoteForm {
+  .errorWrapper {
+    margin-bottom: 5px;
+
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-button-background);
+  }
+
+  .caption {
+    font-size: 16px;
+    color: #000;
+    margin-bottom: 15px;
+  }
+
+  .fields {
+    display: flex;
+
+    .inputTime {
+      max-width: 117px;
+      margin-right: 15px;
+    }
+
+    label {
+      &:last-child {
+        width: 100%;
+      }
+    }
+  }
+
+  .submitBtn {
+    margin-top: 4px;
+  }
+}
