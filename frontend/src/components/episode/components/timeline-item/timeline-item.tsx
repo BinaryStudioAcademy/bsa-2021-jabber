@@ -1,8 +1,9 @@
 import { ImageWrapper } from 'components/common/common';
 import { Comment } from 'common/types/types';
 import { Dimensions } from '../../common/types/types';
-import { getCommentOffset, getCommentColor } from './helpers/helpers';
+import { getCommentOffset, getCommentColor, getLeftCommentBlock } from './helpers/helpers';
 import styles from './styles.module.scss';
+import { useEffect, useRef, useState } from 'hooks/hooks';
 
 type Props = {
   comment: Comment;
@@ -24,6 +25,16 @@ const TimelineItem: React.FC<Props> = ({
   );
   const commentColor = getCommentColor();
 
+  const [leftBlockComment, setLeftBlockComment] = useState(0);
+
+  const commentTextRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (commentTextRef.current){
+      setLeftBlockComment(getLeftCommentBlock(commentOffset, dimensions.playerContainerWidth, commentTextRef.current.clientWidth));
+    }
+  }, [commentTextRef.current]);
+
   const handleGoToItemTimestamp = (): void => {
     onJumpToTimeLine(comment.timestamp);
   };
@@ -40,7 +51,7 @@ const TimelineItem: React.FC<Props> = ({
         onClick={handleGoToItemTimestamp}
         className={styles.timelineItemBtn}
       />
-      <div className={styles.timelineItemContent}>
+      <div style={{ left: `${leftBlockComment}px` }} className={styles.timelineItemContent}>
         <ImageWrapper
           width="30"
           height="30"
@@ -52,7 +63,7 @@ const TimelineItem: React.FC<Props> = ({
         />
         <div className={styles.timelineItemInfo}>
           <div>{comment.user.nickname}</div>
-          <div>{comment.text}</div>
+          <div ref={commentTextRef} className={styles.commentText}>{comment.text}</div>
         </div>
       </div>
     </li>
