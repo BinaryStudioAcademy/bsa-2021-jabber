@@ -23,27 +23,15 @@ const CommentItem: React.FC<Props> = ({ comment, onClick }) => {
 
   return (
     <li className={styles.wrapper}>
-      {comment.user.image ? (
-        <ImageWrapper
-          width="40"
-          height="40"
-          loading="lazy"
-          alt={String(comment.userId)}
-          label={comment.user.nickname}
-          className={styles.avatarWrapper}
-          src={comment.user.image.url}
-        />
-      ) : (
-        <ImageWrapper
-          width="40"
-          height="40"
-          loading="lazy"
-          alt={String(comment.userId)}
-          label={comment.user.nickname}
-          className={styles.avatarWrapper}
-        />
-      )}
-
+      <ImageWrapper
+        width="40"
+        height="40"
+        loading="lazy"
+        alt={String(comment.userId)}
+        label={comment.user.nickname}
+        className={styles.avatarWrapper}
+        src={comment.user.image?.url}
+      />
       <div className={styles.intro}>
         <p className={styles.userName}>
           {comment.user.nickname ?? comment.user.firstName}&nbsp;<span>at</span>

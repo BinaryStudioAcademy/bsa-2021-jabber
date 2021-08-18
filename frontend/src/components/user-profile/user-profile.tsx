@@ -48,24 +48,14 @@ const UserPage: React.FC = () => {
   ) : (
     <div className={styles.container}>
       <main className={styles.userInfo}>
-        {user?.image ? (
-          <ImageWrapper
-            width="195"
-            height="195"
-            loading="lazy"
-            label={user?.nickname}
-            className={styles.imageWrapper}
-            src={user.image.url}
-          />
-        ) : (
-          <ImageWrapper
-            width="195"
-            height="195"
-            loading="lazy"
-            label={user?.nickname}
-            className={styles.imageWrapper}
-          />
-        )}
+        <ImageWrapper
+          width="195"
+          height="195"
+          loading="lazy"
+          label={user?.nickname}
+          className={styles.imageWrapper}
+          src={user?.image?.url}
+        />
         <div className={styles.mainUserInfo}>
           <div className={styles.userInfoHeader}>
             <span className={styles.boldHeaderInfo}>
