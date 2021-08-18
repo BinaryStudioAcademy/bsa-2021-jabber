@@ -26,7 +26,7 @@ const Header: React.FC = () => {
     dispatch(authActions.resetUser());
   };
 
-  const [isShowNav, setIsShowNav] = useState(false);
+  const [isShowNav, setIsShowNav] = useState<boolean>(false);
 
   const handleShowNav = (): void => {
     setIsShowNav(!isShowNav);
