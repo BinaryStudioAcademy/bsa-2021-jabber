@@ -45,6 +45,7 @@ const RecordPreviewControl: React.FC<Props> = ({
     const hasRecord = Boolean(file);
 
     if (!hasRecord) {
+      setRecord('');
       return;
     }
 
