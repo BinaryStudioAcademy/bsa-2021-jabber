@@ -1,4 +1,6 @@
-import { Dimensions } from '../../../common/types/types';
+import { Dimensions } from '../../../../common/types/types';
+
+const FULL_WIDTH = 100;
 
 const getCommentOffset = (
   duration: number,
@@ -9,7 +11,7 @@ const getCommentOffset = (
     ((dimensions.offset +
       (timestamp / duration) * dimensions.progressBarWidth) /
       dimensions.playerContainerWidth) *
-    100
+    FULL_WIDTH
   );
 };
 

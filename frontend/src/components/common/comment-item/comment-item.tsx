@@ -1,11 +1,11 @@
-import { Comment as TComment } from 'common/types/types';
+import { getTimeOffset } from 'helpers/helpers';
+import { Comment } from 'common/types/types';
 import { getDistanceToDateNow } from 'helpers/date/date';
 import ImageWrapper from '../image-wrapper/image-wrapper';
 import styles from './styles.module.scss';
-import { getTimeOffset } from 'helpers/helpers';
 
 type Props = {
-  comment: TComment;
+  comment: Comment;
   onClick?: (payload: number) => void;
 };
 

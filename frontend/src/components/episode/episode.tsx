@@ -22,7 +22,10 @@ import {
 import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
-import { getCurrentTime, getCommentsTimelineDimensions } from './helpers/helpers';
+import {
+  getCurrentTime,
+  getCommentsTimelineDimensions,
+} from './helpers/helpers';
 import { PageParams } from './common/types/types';
 import { ShownotesList, ComentsTimeline } from './components/components';
 import styles from './styles.module.scss';
@@ -83,7 +86,10 @@ const Episode: React.FC = () => {
     return <Loader />;
   }
 
-  const commentsTimelineDimensions = getCommentsTimelineDimensions(playerRef, playerContainerRef);
+  const commentsTimelineDimensions = getCommentsTimelineDimensions(
+    playerRef,
+    playerContainerRef,
+  );
   const podcastDuration = playerRef.current?.getPodcastDuration();
 
   return (
@@ -151,6 +157,14 @@ const Episode: React.FC = () => {
                 )}
               </div>
             </div>
+            {isPlayerLoaded && commentsTimelineDimensions && podcastDuration && (
+              <ComentsTimeline
+                comments={comments}
+                dimensions={commentsTimelineDimensions}
+                duration={podcastDuration}
+                onJumpToTimeLine={handleJumpToTimeLine}
+              />
+            )}
             {episode.record && (
               <div ref={playerContainerRef}>
                 <Player
@@ -158,14 +172,6 @@ const Episode: React.FC = () => {
                   ref={playerRef}
                   onSetPlayerStatus={setPlayerStatus}
                 />
-                {isPlayerLoaded && commentsTimelineDimensions && podcastDuration && (
-                  <ComentsTimeline
-                    comments={comments}
-                    dimensions={commentsTimelineDimensions}
-                    duration={podcastDuration}
-                    onJumpToTimeLine={handleJumpToTimeLine}
-                  />
-                )}
               </div>
             )}
           </div>

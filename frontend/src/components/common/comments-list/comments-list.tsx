@@ -1,9 +1,9 @@
-import { Comment as TComment } from 'common/types/types';
-import styles from './styles.module.scss';
 import { CommentItem } from 'components/common/common';
+import { Comment } from 'common/types/types';
+import styles from './styles.module.scss';
 
 type Props = {
-  comments: TComment[];
+  comments: Comment[];
   onClick?: (payload: number) => void;
 };
 
