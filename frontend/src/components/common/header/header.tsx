@@ -76,6 +76,7 @@ const Header: React.FC = () => {
                     loading="lazy"
                     label={user?.nickname}
                     className={styles.imageWrapper}
+                    src={user?.image?.url}
                   />
                 </button>
                 {isVisible && (

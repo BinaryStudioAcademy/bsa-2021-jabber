@@ -19,6 +19,8 @@ const UserValidationMessage = {
   BIRTHDATE_REQUIRE: 'Birthdate is required',
   BIRTHDATE_LESS_THEN: 'Birthdate can not be future date',
   BIO_MAX_LENGTH: `Bio must be at most ${UserValidationRule.BIO_MAX_LENGTH} characters long`,
+  FILE_EXTENSION_FORMAT: 'Image file must have valid type',
+  DATA_URL_FORMAT: 'Image must be valid jpeg, png or svg file',
 } as const;
 
 export { UserValidationMessage };

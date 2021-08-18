@@ -48,6 +48,15 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
   );
 
   podcastRouter.post(
+    PodcastsApiPath.SEARCH,
+    handleAsyncApi(async (req, res) => {
+      return res
+        .send(await podcastService.getAllBySearch(req.body))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  podcastRouter.post(
     PodcastsApiPath.ROOT,
     checkAuthMiddleware(HttpMethod.POST),
     validateSchemaMiddleware(podcastCreateValidationSchema),

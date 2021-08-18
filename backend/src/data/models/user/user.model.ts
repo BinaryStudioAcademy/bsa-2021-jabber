@@ -1,6 +1,8 @@
+import { Model } from 'objection';
 import { TableName, UserDTOKey } from '~/common/enums/enums';
 import { UserRole } from '~/common/enums/user/user';
 import { Abstract } from '../abstract/abstract.model';
+import { Image } from '~/data/models/image/image.model';
 
 class User extends Abstract {
   [UserDTOKey.FIRST_NAME]: string;
@@ -21,9 +23,22 @@ class User extends Abstract {
 
   [UserDTOKey.BIO]: string;
 
+  [UserDTOKey.IMAGE]: Image | null;
+
   static get tableName(): string {
     return TableName.USERS;
   }
+
+  static relationMappings = {
+    image: {
+      relation: Model.HasOneRelation,
+      modelClass: Image,
+      join: {
+        from: 'users.image_id',
+        to: 'images.id',
+      },
+    },
+  };
 }
 
 export { User };
