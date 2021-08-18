@@ -10,6 +10,11 @@ const ShownoteValidationMessage = {
   TIMESTAMP_BASE: 'Timestamp must be a number',
   TIMESTAMP_NUMBER_FORMAT: 'Timestamp must be an integer',
   TIMESTAMP_MIN_VALUE: `Timestamp must be greater than or equal to ${ShownoteValidationRule.TIMESTAMP_MIN_VALUE}`,
+  MINUTES_MIN_VALUE: `Minutes must be greater than or equal to ${ShownoteValidationRule.MINUTES_MIN_VALUE}`,
+  MINUTES_BASE: 'Minutes must be a number',
+  SECONDS_MIN_VALUE: `Seconds must be greater than or equal to ${ShownoteValidationRule.SECONDS_MIN_VALUE}`,
+  SECONDS_MAX_VALUE: `Seconds must be less than ${ShownoteValidationRule.SECONDS_MAX_VALUE}`,
+  SECONDS_BASE: 'Seconds must be a number',
 } as const;
 
 export { ShownoteValidationMessage };
