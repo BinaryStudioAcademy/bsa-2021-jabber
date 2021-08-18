@@ -41,7 +41,7 @@ const Header: React.FC = () => {
         </Link>
         {hasUser ? (
           <>
-            <ul className={isShowNav ? getAllowedClasses(styles.navigation, styles.active) : styles.navigation}>
+            <ul className={isShowNav ? getAllowedClasses(styles.navigation, styles.active) : styles.navigation} onClick={():void => setIsShowNav(!isShowNav)}>
               <li className={styles.liNavigation}>
                 <Link to={AppRoute.ROOT} className={styles.link}>
                   Podcasts

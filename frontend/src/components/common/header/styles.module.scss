@@ -181,7 +181,9 @@
 
     .liNavigation {
       margin: 0;
-      padding: 15px;
+      .link {
+        padding: 15px;
+      }
     }
   }
 }
