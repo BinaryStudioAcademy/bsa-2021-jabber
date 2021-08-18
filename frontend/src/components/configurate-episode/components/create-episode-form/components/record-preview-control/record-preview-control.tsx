@@ -37,7 +37,7 @@ const RecordPreviewControl: React.FC<Props> = ({
   const [currentRecord, setRecord] = useState<string | undefined>('');
 
   const liveRecordName = hasLiveRecord
-    ? getFormattedDate(new Date(), DateFormatType.DAY_MONTH_YEAR) + '.wav'
+    ? `${getFormattedDate(new Date(), DateFormatType.DAY_MONTH_YEAR)}.${FileExtension.WAV}`
     : '';
 
   const handleChange = (evt: React.ChangeEvent<FieldValues>): void => {
