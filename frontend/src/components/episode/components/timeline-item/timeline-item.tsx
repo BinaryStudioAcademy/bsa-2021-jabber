@@ -48,6 +48,7 @@ const TimelineItem: React.FC<Props> = ({
           alt={String(comment.userId)}
           label={comment.user.nickname}
           className={styles.avatarWrapper}
+          src={comment.user.image?.url}
         />
         <div className={styles.timelineItemInfo}>
           <div>{comment.user.nickname}</div>
