@@ -1,7 +1,7 @@
 import { ImageWrapper } from 'components/common/common';
 import { Comment } from 'common/types/types';
 import { Dimensions } from '../../common/types/types';
-import { getCommentOffset, getCommentColor, getLeftCommentBlock } from './helpers/helpers';
+import { getCommentOffset, getCommentColor, getOffsetCommentBlock } from './helpers/helpers';
 import styles from './styles.module.scss';
 import { useEffect, useRef, useState } from 'hooks/hooks';
 
@@ -25,13 +25,13 @@ const TimelineItem: React.FC<Props> = ({
   );
   const commentColor = getCommentColor();
 
-  const [leftBlockComment, setLeftBlockComment] = useState(0);
+  const [offsetBlockComment, setOffsetBlockComment] = useState(0);
 
   const commentTextRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (commentTextRef.current){
-      setLeftBlockComment(getLeftCommentBlock(commentOffset, dimensions.playerContainerWidth, commentTextRef.current.clientWidth));
+      setOffsetBlockComment(getOffsetCommentBlock(commentOffset, dimensions.playerContainerWidth, commentTextRef.current.clientWidth));
     }
   }, [commentTextRef.current]);
 
@@ -51,7 +51,7 @@ const TimelineItem: React.FC<Props> = ({
         onClick={handleGoToItemTimestamp}
         className={styles.timelineItemBtn}
       />
-      <div style={{ left: `${leftBlockComment}px` }} className={styles.timelineItemContent}>
+      <div style={{ left: `${offsetBlockComment}px` }} className={styles.timelineItemContent}>
         <ImageWrapper
           width="30"
           height="30"
