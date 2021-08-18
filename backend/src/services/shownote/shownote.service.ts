@@ -15,18 +15,16 @@ class Shownote {
     this.#shownoteRepository = shownoteRepository;
   }
 
-  public async create(
-    ...payload: ShownoteCreatePayload[]
-  ): Promise<TShownote[]> {
-    return await this.#shownoteRepository.create(payload);
+  public create(...payload: ShownoteCreatePayload[]): Promise<TShownote[]> {
+    return this.#shownoteRepository.create(payload);
   }
 
-  public async getAllByEpisodeId(id: number): Promise<TShownote[]> {
-    return await this.#shownoteRepository.getAllByEpisodeId(id);
+  public getAllByEpisodeId(id: number): Promise<TShownote[]> {
+    return this.#shownoteRepository.getAllByEpisodeId(id);
   }
 
-  public async deleteAllByEpisodeId(id: number): Promise<number> {
-    return await this.#shownoteRepository.deleteAllByEpisodeId(id);
+  public deleteAllByEpisodeId(id: number): Promise<number> {
+    return this.#shownoteRepository.deleteAllByEpisodeId(id);
   }
 }
 

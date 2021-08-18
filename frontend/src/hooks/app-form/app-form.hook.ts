@@ -10,10 +10,12 @@ import {
 } from 'react-hook-form';
 import { ValidationSchema } from 'common/types/types';
 import { getFormResolver } from 'helpers/helpers';
+import { FormEvent } from 'common/enums/enums';
 
 type useAppFormProps = {
   defaultValues: Record<string, unknown>;
-  validationSchema: ValidationSchema;
+  validationSchema?: ValidationSchema;
+  modeAction?: FormEvent;
 };
 
 type useAppFormReturn = {
@@ -29,6 +31,7 @@ type useAppFormReturn = {
 const useAppForm = ({
   validationSchema,
   defaultValues,
+  modeAction = FormEvent.ON_SUBMIT,
 }: useAppFormProps): useAppFormReturn => {
   const {
     control,
@@ -39,8 +42,8 @@ const useAppForm = ({
     getValues,
   } = useForm<FieldValues>({
     defaultValues,
-    resolver: getFormResolver(validationSchema),
-    mode: 'onSubmit',
+    resolver: validationSchema ? getFormResolver(validationSchema) : undefined,
+    mode: modeAction,
   });
 
   return { control, register, errors, handleSubmit, getValues, reset, isSubmitSuccessful };

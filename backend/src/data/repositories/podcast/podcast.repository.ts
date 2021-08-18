@@ -2,6 +2,7 @@ import {
   Podcast as TPodcast,
   PodcastCreateDTOPayload,
   PodcastEditDTOPayload,
+  PodcastSearchPayload,
   UserPodcastQueryParams,
 } from '~/common/types/types';
 import { PodcastType } from '~/common/enums/enums';
@@ -19,31 +20,50 @@ class Podcast {
   }
 
   public getAll(): Promise<TPodcast[]> {
-    return this.#PodcastModel.query().where('type', PodcastType.PUBLIC).withGraphJoined('[image, user]');
+    return this.#PodcastModel
+      .query()
+      .where('type', PodcastType.PUBLIC)
+      .withGraphJoined('[image, user]');
   }
 
   public create(payload: PodcastCreateDTOPayload): Promise<TPodcast> {
-    return this.#PodcastModel.query().insert(payload).withGraphFetched('[image, cover]');
+    return this.#PodcastModel
+      .query()
+      .insert(payload)
+      .withGraphFetched('[image, cover]');
   }
 
   public getById(id: number): Promise<TPodcast> {
-    return this.#PodcastModel.query().findById(id).withGraphJoined('[image, cover, user, genre]');
+    return this.#PodcastModel
+      .query()
+      .findById(id)
+      .withGraphJoined('[image, cover, user, genre]');
+  }
+
+  public getAllBySearch(searchData: PodcastSearchPayload): Promise<TPodcast[]> {
+    const { search } = searchData;
+    return this.#PodcastModel
+      .query()
+      .where('type', PodcastType.PUBLIC)
+      .whereRaw(`REPLACE(name, ' ', '') ILIKE REPLACE('%${search}%', ' ', '')`)
+      .withGraphJoined('[image, user]');
   }
 
   public update(id: string, payload: PodcastEditDTOPayload): Promise<TPodcast> {
     return this.#PodcastModel.query().updateAndFetchById(id, payload);
   }
 
-  public getAllByUserId(filterParams: UserPodcastQueryParams): Promise<TPodcast[]> {
-    return this.#PodcastModel.query().where(filterParams).withGraphJoined('[image, user]');
+  public getAllByUserId(
+    filterParams: UserPodcastQueryParams,
+  ): Promise<TPodcast[]> {
+    return this.#PodcastModel
+      .query()
+      .where(filterParams)
+      .withGraphJoined('[image, user]');
   }
 
   public delete(id: number): Promise<TPodcast> {
-    return this.#PodcastModel
-      .query()
-      .deleteById(id)
-      .returning('*')
-      .first();
+    return this.#PodcastModel.query().deleteById(id).returning('*').first();
   }
 }
 

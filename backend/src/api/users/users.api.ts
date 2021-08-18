@@ -5,7 +5,7 @@ import {
   HttpMethod,
   UsersApiPath,
 } from '~/common/enums/enums';
-import { userEdit as userEditValidationSchema } from '~/validation-schemas/validation-schemas';
+import { editUser as editUserValidationSchema } from '~/validation-schemas/validation-schemas';
 import { handleAsyncApi } from '~/helpers/helpers';
 import { user as userService } from '~/services/services';
 import {
@@ -45,7 +45,7 @@ const initUsersApi = ({ apiRouter, userService }: Args): Router => {
     UsersApiPath.$ID,
     checkAuthMiddleware(HttpMethod.PUT),
     checkUserHasPermitToEditMiddleware(),
-    validateSchemaMiddleware(userEditValidationSchema),
+    validateSchemaMiddleware(editUserValidationSchema),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await userService.update(Number(req.params.id), req.body))

@@ -28,6 +28,7 @@ export {
   NotificationDTOKey,
   UserNotificationDTOKey,
   GenreDTOKey,
+  UserFollowerDTOKey,
 } from './db/db';
 export { HttpCode, HttpMethod } from './http/http';
 export {
@@ -45,7 +46,7 @@ export {
 } from './episode/episode';
 export { ShownotePayloadKey } from './shownote/shownote.enum';
 export { StrategyName } from './strategy/strategy';
-export { UserPayloadKey, UserRole } from './user/user';
+export { UserPayloadKey, UserRole, UserValidationMessage } from './user/user';
 export {
   CommentCreatePayloadKey,
   CommentValidationMessage,

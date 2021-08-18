@@ -54,6 +54,7 @@ const UserPage: React.FC = () => {
           loading="lazy"
           label={user?.nickname}
           className={styles.imageWrapper}
+          src={user?.image?.url}
         />
         <div className={styles.mainUserInfo}>
           <div className={styles.userInfoHeader}>

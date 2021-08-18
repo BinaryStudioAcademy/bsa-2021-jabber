@@ -1,1 +1,1 @@
-export { UserPayloadKey } from 'jabber-shared/common/enums/enums';
+export { UserPayloadKey, UserValidationMessage } from 'jabber-shared/common/enums/enums';
