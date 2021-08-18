@@ -1,10 +1,10 @@
-import { Comment as TComment } from 'common/types/types';
+import { Comment } from 'common/types/types';
 import TimelineItem from '../timeline-item/timeline-item';
 import { Dimensions } from '../../common/types/types';
 import styles from './styles.module.scss';
 
 type Props = {
-  comments: TComment[];
+  comments: Comment[];
   onJumpToTimeLine: (timeline: number) => void;
   dimensions: Dimensions;
   duration: number;

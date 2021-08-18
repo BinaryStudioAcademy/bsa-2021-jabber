@@ -1,11 +1,11 @@
 import { ImageWrapper } from 'components/common/common';
-import { Comment as TComment } from 'common/types/types';
+import { Comment } from 'common/types/types';
 import { Dimensions } from '../../common/types/types';
-import { getCommentOffset } from './helpers/helpers';
+import { getCommentOffset, getCommentColor } from './helpers/helpers';
 import styles from './styles.module.scss';
 
 type Props = {
-  comment: TComment;
+  comment: Comment;
   dimensions: Dimensions;
   duration: number;
   onJumpToTimeLine: (timeline: number) => void;
@@ -22,13 +22,20 @@ const TimelineItem: React.FC<Props> = ({
     comment.timestamp,
     dimensions,
   );
+  const commentColor = getCommentColor();
 
   const handleGoToItemTimestamp = (): void => {
     onJumpToTimeLine(comment.timestamp);
   };
 
   return (
-    <li className={styles.timelineItem} style={{ left: `${commentOffset}%` }}>
+    <li
+      className={styles.timelineItem}
+      style={{
+        left: `${commentOffset}%`,
+        backgroundColor: commentColor,
+      }}
+    >
       <button
         onClick={handleGoToItemTimestamp}
         className={styles.timelineItemBtn}
