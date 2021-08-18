@@ -6,3 +6,4 @@ export type {
 export type { PodcastCreateDTOPayload } from './podcast-create-dto-payload.type';
 export type { PodcastEditDTOPayload } from './podcast-edit-dto-payload.type';
 export type { UserPodcastQueryParams } from './user-podcast-query-params.type';
+export type { PodcastLoadFilter } from './podcast-load-filter.type';

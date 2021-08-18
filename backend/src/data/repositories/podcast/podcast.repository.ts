@@ -4,6 +4,7 @@ import {
   PodcastEditDTOPayload,
   PodcastSearchPayload,
   UserPodcastQueryParams,
+  PodcastLoadFilter
 } from '~/common/types/types';
 import { PodcastType } from '~/common/enums/enums';
 import { PodcastModel as PodcastM } from '~/data/models/models';
@@ -19,10 +20,12 @@ class Podcast {
     this.#PodcastModel = PodcastModel;
   }
 
-  public getAll(): Promise<TPodcast[]> {
+  public getAll({ offset, limit }: PodcastLoadFilter): Promise<TPodcast[]> {
     return this.#PodcastModel
       .query()
       .where('type', PodcastType.PUBLIC)
+      .limit(limit)
+      .offset(offset)
       .withGraphJoined('[image, user]');
   }
 

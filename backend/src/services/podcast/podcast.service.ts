@@ -7,7 +7,9 @@ import {
   PodcastEditPayload,
   PodcastSearchPayload,
   UserPodcastQueryParams,
+  PodcastLoadFilter,
 } from '~/common/types/types';
+import { PODCAST_LOAD_LIMIT } from '~/common/constants/constants';
 import {
   podcast as podcastRep,
   image as imageRep,
@@ -45,8 +47,8 @@ class Podcast {
     this.#episodeService = episodeService;
   }
 
-  public getAll(): Promise<TPodcast[]> {
-    return this.#podcastRepository.getAll();
+  public getAll(filter: PodcastLoadFilter = { offset: 0, limit: PODCAST_LOAD_LIMIT }): Promise<TPodcast[]> {
+    return this.#podcastRepository.getAll(filter);
   }
 
   public async create({
