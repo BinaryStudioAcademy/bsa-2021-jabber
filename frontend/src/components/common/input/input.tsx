@@ -5,8 +5,8 @@ import {
   Path,
   FieldValues,
 } from 'react-hook-form';
+import { IconName, InputType } from 'common/enums/enums';
 import { ErrorMessage } from '@hookform/error-message';
-import { InputType } from 'common/enums/enums';
 import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
@@ -18,6 +18,8 @@ type Props = {
   control: Control;
   errors: FieldErrors;
   hasMultipleRows?: boolean;
+  icon?: IconName;
+  className?: string;
   min?: number;
 };
 
@@ -29,6 +31,8 @@ const Input: React.FC<Props> = ({
   placeholder = '',
   type = InputType.TEXT,
   hasMultipleRows = false,
+  icon,
+  className,
   min,
 }) => {
   const { field } = useController({ name, control });
@@ -48,10 +52,13 @@ const Input: React.FC<Props> = ({
           min={min}
           type={type}
           placeholder={placeholder}
-          className={styles.input}
+          className={getAllowedClasses(
+            className,
+            styles.input,
+            styles[`icon--${icon}`],
+          )}
         />
       )}
-
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />
       </span>

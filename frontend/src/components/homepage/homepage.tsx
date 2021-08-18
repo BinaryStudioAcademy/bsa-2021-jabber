@@ -1,7 +1,16 @@
 import { DataStatus } from 'common/enums/enums';
+import { PodcastSearchPayload } from 'common/types/types';
 import { Loader, PodcastList } from 'components/common/common';
-import { useAppSelector, useDispatch, useEffect } from 'hooks/hooks';
+import {
+  useAppSelector,
+  useCallback,
+  useDispatch,
+  useEffect,
+} from 'hooks/hooks';
 import { homepage as homepageActions } from 'store/actions';
+import { Search } from './components/components';
+import { SEARCH_TIMEOUT } from './common/constants';
+import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 const Homepage: React.FC = () => {
@@ -11,19 +20,26 @@ const Homepage: React.FC = () => {
   }));
   const dispatch = useDispatch();
   const hasPodcasts = Boolean(podcasts.length);
+  const isLoading = dataStatus === DataStatus.PENDING;
 
   useEffect(() => {
     dispatch(homepageActions.loadPodcasts());
   }, []);
 
-  if (dataStatus === DataStatus.PENDING) {
-    return <Loader />;
-  }
+  const handleChange = useCallback(
+    setDebounce((payload: PodcastSearchPayload) => {
+      dispatch(homepageActions.loadPodcastsBySearch(payload));
+    }, SEARCH_TIMEOUT),
+    [],
+  );
 
   return (
     <main className={styles.main}>
+      <Search onChange={handleChange} />
       <h2 className={styles.title}>All podcasts</h2>
-      {hasPodcasts ? (
+      {isLoading ? (
+        <Loader />
+      ) : hasPodcasts ? (
         <PodcastList podcasts={podcasts} />
       ) : (
         <span className={styles.oopsMessage}>
