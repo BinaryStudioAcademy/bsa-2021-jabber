@@ -1,7 +1,7 @@
 import {
   TableName,
   UserFollowerDTOKey,
-  } from '~/common/enums/enums';
+} from '~/common/enums/enums';
 import { Abstract } from '../abstract/abstract.model';
 
 class UserNotification extends Abstract {
