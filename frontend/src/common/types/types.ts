@@ -25,6 +25,7 @@ export type {
   Shownote,
   ShownotePayload,
   ShownoteCreatePayload,
+  ShownoteRecord,
 } from './shownote/shownote';
 export type { SignResponse } from './sign/sign';
 export type {
