@@ -70,13 +70,24 @@ const Header: React.FC = () => {
                   className={styles.usersButtonWrapper}
                   onClick={handleMenuToggle}
                 >
-                  <ImageWrapper
-                    width="40"
-                    height="40"
-                    loading="lazy"
-                    label={user?.nickname}
-                    className={styles.imageWrapper}
-                  />
+                  {user?.image ? (
+                    <ImageWrapper
+                      width="40"
+                      height="40"
+                      loading="lazy"
+                      label={user?.nickname}
+                      className={styles.imageWrapper}
+                      src={user?.image.url}
+                    />
+                  ) : (
+                    <ImageWrapper
+                      width="40"
+                      height="40"
+                      loading="lazy"
+                      label={user?.nickname}
+                      className={styles.imageWrapper}
+                    />
+                  )}
                 </button>
                 {isVisible && (
                   <div className={styles.dropDown}>
