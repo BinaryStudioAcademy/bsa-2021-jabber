@@ -22,8 +22,8 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
 
   apiRouter.use(ApiPath.PODCASTS, podcastRouter);
 
-  podcastRouter.get(
-    PodcastsApiPath.ROOT,
+  podcastRouter.post(
+    PodcastsApiPath.ROOT+'a',
     handleAsyncApi(async (req, res) => {
       return res.json(await podcastService.getAll(req.body.filter)).status(HttpCode.OK);
     }),

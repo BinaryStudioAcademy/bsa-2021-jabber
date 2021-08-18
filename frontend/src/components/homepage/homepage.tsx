@@ -1,5 +1,6 @@
 import { DataStatus } from 'common/enums/enums';
 import { PodcastSearchPayload } from 'common/types/types';
+// import { PODCAST_LOAD_LIMIT } from 'common/constants/constants';
 import { Loader, PodcastList } from 'components/common/common';
 import {
   useAppSelector,
@@ -13,6 +14,11 @@ import { SEARCH_TIMEOUT } from './common/constants';
 import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
+const podcastsFilter = {
+  offset: 0,
+  limit: 10, //PODCAST_LOAD_LIMIT,
+};
+
 const Homepage: React.FC = () => {
   const { podcasts, dataStatus } = useAppSelector(({ homepage }) => ({
     podcasts: homepage.podcasts,
@@ -23,7 +29,7 @@ const Homepage: React.FC = () => {
   const isLoading = dataStatus === DataStatus.PENDING;
 
   useEffect(() => {
-    dispatch(homepageActions.loadPodcasts());
+    dispatch(homepageActions.loadPodcasts(podcastsFilter));
   }, []);
 
   const handleChange = useCallback(
@@ -33,6 +39,10 @@ const Homepage: React.FC = () => {
     [],
   );
 
+  const handleMorePodcastsLoad = (): void => {
+    dispatch(homepageActions.loadMorePodcasts(podcastsFilter));
+  };
+
   return (
     <main className={styles.main}>
       <Search onChange={handleChange} />
@@ -40,7 +50,7 @@ const Homepage: React.FC = () => {
       {isLoading ? (
         <Loader />
       ) : hasPodcasts ? (
-        <PodcastList podcasts={podcasts} />
+        <PodcastList podcasts={podcasts} onMorePodcastsLoad={handleMorePodcastsLoad} />
       ) : (
         <span className={styles.oopsMessage}>
           Oops! There&apos;s nothing here

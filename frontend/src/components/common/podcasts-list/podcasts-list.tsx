@@ -5,18 +5,19 @@ import styles from './styles.module.scss';
 
 type Props = {
   podcasts: TPodcast[];
+  onMorePodcastsLoad?: () => void;
 };
 
-const PodcastsList: React.FC<Props> = ({ podcasts }) => (
+const PodcastsList: React.FC<Props> = ({ podcasts, onMorePodcastsLoad }) => (
   <>
     <ul className={styles.list}>
       {podcasts.map((it) => (
         <PodcastItem podcast={it} key={it.id} />
       ))}
     </ul>
-    <div className={styles.loadMoreBtn}>
-      <Button label="See more" buttonColor={ButtonColor.LIGHT_PINK} />
-    </div>
+    {onMorePodcastsLoad && <div className={styles.loadMoreBtn}>
+      <Button label="See more" buttonColor={ButtonColor.LIGHT_PINK} onClick={onMorePodcastsLoad}/>
+    </div>}
   </>
 );
 
