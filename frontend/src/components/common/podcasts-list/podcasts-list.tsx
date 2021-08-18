@@ -16,9 +16,7 @@ const PodcastsList: React.FC<Props> = ({ podcasts, onMorePodcastsLoad, isLoading
         <PodcastItem podcast={it} key={it.id} />
       ))}
     </ul>
-    {onMorePodcastsLoad && !isLoading && <div className={styles.loadMoreBtn}>
-      <Button label="See more" buttonColor={ButtonColor.LIGHT_PINK} onClick={onMorePodcastsLoad}/>
-    </div>}
+    {onMorePodcastsLoad && !isLoading && <Button className={styles.loadMoreBtn} label="See more" buttonColor={ButtonColor.LIGHT_PINK} onClick={onMorePodcastsLoad}/>}
   </>
 );
 

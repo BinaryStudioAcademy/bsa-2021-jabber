@@ -5,7 +5,6 @@ import {
   PodcastEditDTOPayload,
   PodcastCreatePayload,
   PodcastEditPayload,
-  PodcastSearchPayload,
   UserPodcastQueryParams,
   PodcastLoadFilter,
 } from '~/common/types/types';

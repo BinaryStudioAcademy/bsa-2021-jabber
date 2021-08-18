@@ -3,7 +3,7 @@ import {
   PodcastCreateDTOPayload,
   PodcastEditDTOPayload,
   UserPodcastQueryParams,
-  PodcastLoadFilter
+  PodcastLoadFilter,
 } from '~/common/types/types';
 import { PodcastType } from '~/common/enums/enums';
 import { PodcastModel as PodcastM } from '~/data/models/models';
@@ -21,19 +21,19 @@ class Podcast {
 
   public getAll(): Promise<TPodcast[]> {
     return this.#PodcastModel
-    .query()
-    .where('type', PodcastType.PUBLIC)
-    .withGraphJoined('[image, user]');
+      .query()
+      .where('type', PodcastType.PUBLIC)
+      .withGraphJoined('[image, user]');
   }
 
   public getByQuery({ offset, limit, search }: PodcastLoadFilter): Promise<TPodcast[]> {
     return this.#PodcastModel
-    .query()
-    .where('type', PodcastType.PUBLIC)
-    .whereRaw(`REPLACE(name, ' ', '') ILIKE REPLACE('%${search}%', ' ', '')`)
-    .limit(limit)
-    .offset(offset)
-    .withGraphJoined('[image, user]');
+      .query()
+      .where('type', PodcastType.PUBLIC)
+      .whereRaw(`REPLACE(name, ' ', '') ILIKE REPLACE('%${search}%', ' ', '')`)
+      .limit(limit)
+      .offset(offset)
+      .withGraphJoined('[image, user]');
   }
 
   public create(payload: PodcastCreateDTOPayload): Promise<TPodcast> {
