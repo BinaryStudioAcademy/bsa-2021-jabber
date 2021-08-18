@@ -44,6 +44,7 @@ class Podcast {
     const { search } = searchData;
     return this.#PodcastModel
       .query()
+      .where('type', PodcastType.PUBLIC)
       .whereRaw(`REPLACE(name, ' ', '') ILIKE REPLACE('%${search}%', ' ', '')`)
       .withGraphJoined('[image, user]');
   }
