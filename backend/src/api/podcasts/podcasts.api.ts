@@ -4,6 +4,7 @@ import {
   podcastEdit as editPodcastValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { ApiPath, HttpCode, PodcastsApiPath, HttpMethod } from '~/common/enums/enums';
+import { PodcastLoadFilter } from '~/common/types/types';
 import { handleAsyncApi } from '~/helpers/helpers';
 import {
   checkAuth as checkAuthMiddleware,
@@ -22,10 +23,10 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
 
   apiRouter.use(ApiPath.PODCASTS, podcastRouter);
 
-  podcastRouter.post(
-    PodcastsApiPath.ROOT+'a',
+  podcastRouter.get(
+    PodcastsApiPath.ROOT,
     handleAsyncApi(async (req, res) => {
-      return res.json(await podcastService.getAll(req.body.filter)).status(HttpCode.OK);
+      return res.json(await podcastService.getByQuery(req.query as unknown as PodcastLoadFilter)).status(HttpCode.OK);
     }),
   );
 
@@ -43,15 +44,6 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
     handleAsyncApi(async (req, res) => {
       return res
         .send(await podcastService.getById(Number(req.params.id)))
-        .status(HttpCode.OK);
-    }),
-  );
-
-  podcastRouter.post(
-    PodcastsApiPath.SEARCH,
-    handleAsyncApi(async (req, res) => {
-      return res
-        .send(await podcastService.getAllBySearch(req.body))
         .status(HttpCode.OK);
     }),
   );

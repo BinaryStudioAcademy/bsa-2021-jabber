@@ -1,33 +1,24 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Podcast, AsyncThunkConfig, PodcastSearchPayload, PodcastLoadFilter } from 'common/types/types';
+import { Podcast, AsyncThunkConfig, PodcastLoadFilter } from 'common/types/types';
 import { ActionType } from './common';
 
 const loadPodcasts = createAsyncThunk<Podcast[], PodcastLoadFilter, AsyncThunkConfig>
 (ActionType.LOAD_PODCASTS, async (podcastsFilter, { extra }) => {
   const { podcastApi } = extra;
-  const podcasts = await podcastApi.getAll(podcastsFilter);
-
-  return podcasts;
-});
-
-const loadPodcastsBySearch = createAsyncThunk<Podcast[], PodcastSearchPayload, AsyncThunkConfig>
-(ActionType.LOAD_PODCASTS_BY_SEARCH, async (searchValues, { extra }) => {
-  const { podcastApi } = extra;
-  const podcasts = await podcastApi.getAllBySearch(searchValues);
+  const podcasts = await podcastApi.getByQuery(podcastsFilter);
 
   return podcasts;
 });
 
 const loadMorePodcasts = createAsyncThunk<Podcast[], PodcastLoadFilter, AsyncThunkConfig>
-(ActionType.LOAD_PODCASTS, async (podcastsFilter, { extra }) => {
+(ActionType.LOAD_MORE_PODCASTS, async (podcastsFilter, { extra }) => {
   const { podcastApi } = extra;
-  const podcasts = await podcastApi.getAll(podcastsFilter);
+  const podcasts = await podcastApi.getByQuery(podcastsFilter);
 
   return podcasts;
 });
 
 export {
   loadPodcasts,
-  loadPodcastsBySearch,
   loadMorePodcasts,
 };

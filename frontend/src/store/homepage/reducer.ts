@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { Podcast } from 'common/types/types';
-import { loadPodcasts, loadPodcastsBySearch } from './actions';
+import { loadPodcasts, loadMorePodcasts } from './actions';
 
 type State = {
   dataStatus: DataStatus;
@@ -15,6 +15,7 @@ const initialState: State = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder.addCase(loadPodcasts.pending, (state) => {
+    state.podcasts = [];
     state.dataStatus = DataStatus.PENDING;
   });
   builder.addCase(loadPodcasts.fulfilled, (state, action) => {
@@ -25,14 +26,14 @@ const reducer = createReducer(initialState, (builder) => {
     state.dataStatus = DataStatus.REJECTED;
   });
 
-  builder.addCase(loadPodcastsBySearch.pending, (state) => {
+  builder.addCase(loadMorePodcasts.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
   });
-  builder.addCase(loadPodcastsBySearch.fulfilled, (state, action) => {
+  builder.addCase(loadMorePodcasts.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
-    state.podcasts = action.payload;
+    state.podcasts = [...state.podcasts, ...action.payload];
   });
-  builder.addCase(loadPodcastsBySearch.rejected, (state) => {
+  builder.addCase(loadMorePodcasts.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
 });

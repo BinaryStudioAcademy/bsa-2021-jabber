@@ -1,6 +1,5 @@
 import { DataStatus } from 'common/enums/enums';
 import { PodcastSearchPayload } from 'common/types/types';
-// import { PODCAST_LOAD_LIMIT } from 'common/constants/constants';
 import { Loader, PodcastList } from 'components/common/common';
 import {
   useAppSelector,
@@ -10,14 +9,11 @@ import {
 } from 'hooks/hooks';
 import { homepage as homepageActions } from 'store/actions';
 import { Search } from './components/components';
-import { SEARCH_TIMEOUT } from './common/constants';
+import { SEARCH_TIMEOUT, DEFAULT_PODCASTS_FILTER_VALUE } from './common/constants';
 import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
-const podcastsFilter = {
-  offset: 0,
-  limit: 10, //PODCAST_LOAD_LIMIT,
-};
+const podcastsFilter = { ...DEFAULT_PODCASTS_FILTER_VALUE };
 
 const Homepage: React.FC = () => {
   const { podcasts, dataStatus } = useAppSelector(({ homepage }) => ({
@@ -29,17 +25,21 @@ const Homepage: React.FC = () => {
   const isLoading = dataStatus === DataStatus.PENDING;
 
   useEffect(() => {
+    Object.assign(podcastsFilter, DEFAULT_PODCASTS_FILTER_VALUE);
     dispatch(homepageActions.loadPodcasts(podcastsFilter));
   }, []);
 
   const handleChange = useCallback(
-    setDebounce((payload: PodcastSearchPayload) => {
-      dispatch(homepageActions.loadPodcastsBySearch(payload));
+    setDebounce(({ search }: PodcastSearchPayload) => {
+      podcastsFilter.offset = 0;
+      podcastsFilter.search = search;
+      dispatch(homepageActions.loadPodcasts(podcastsFilter));
     }, SEARCH_TIMEOUT),
     [],
   );
 
   const handleMorePodcastsLoad = (): void => {
+    podcastsFilter.offset += podcastsFilter.limit;
     dispatch(homepageActions.loadMorePodcasts(podcastsFilter));
   };
 
@@ -47,10 +47,17 @@ const Homepage: React.FC = () => {
     <main className={styles.main}>
       <Search onChange={handleChange} />
       <h2 className={styles.title}>All podcasts</h2>
-      {isLoading ? (
+      {hasPodcasts ? (
+        <>
+          <PodcastList
+            podcasts={podcasts}
+            onMorePodcastsLoad={handleMorePodcastsLoad}
+            isLoading={isLoading}
+          />
+          {isLoading && <Loader />}
+        </>
+      ) : isLoading ? (
         <Loader />
-      ) : hasPodcasts ? (
-        <PodcastList podcasts={podcasts} onMorePodcastsLoad={handleMorePodcastsLoad} />
       ) : (
         <span className={styles.oopsMessage}>
           Oops! There&apos;s nothing here

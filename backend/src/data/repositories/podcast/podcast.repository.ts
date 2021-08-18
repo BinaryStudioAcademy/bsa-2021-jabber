@@ -2,7 +2,6 @@ import {
   Podcast as TPodcast,
   PodcastCreateDTOPayload,
   PodcastEditDTOPayload,
-  PodcastSearchPayload,
   UserPodcastQueryParams,
   PodcastLoadFilter
 } from '~/common/types/types';
@@ -20,13 +19,21 @@ class Podcast {
     this.#PodcastModel = PodcastModel;
   }
 
-  public getAll({ offset, limit }: PodcastLoadFilter): Promise<TPodcast[]> {
+  public getAll(): Promise<TPodcast[]> {
     return this.#PodcastModel
-      .query()
-      .where('type', PodcastType.PUBLIC)
-      .limit(limit)
-      .offset(offset)
-      .withGraphJoined('[image, user]');
+    .query()
+    .where('type', PodcastType.PUBLIC)
+    .withGraphJoined('[image, user]');
+  }
+
+  public getByQuery({ offset, limit, search }: PodcastLoadFilter): Promise<TPodcast[]> {
+    return this.#PodcastModel
+    .query()
+    .where('type', PodcastType.PUBLIC)
+    .whereRaw(`REPLACE(name, ' ', '') ILIKE REPLACE('%${search}%', ' ', '')`)
+    .limit(limit)
+    .offset(offset)
+    .withGraphJoined('[image, user]');
   }
 
   public create(payload: PodcastCreateDTOPayload): Promise<TPodcast> {
@@ -41,15 +48,6 @@ class Podcast {
       .query()
       .findById(id)
       .withGraphJoined('[image, cover, user, genre]');
-  }
-
-  public getAllBySearch(searchData: PodcastSearchPayload): Promise<TPodcast[]> {
-    const { search } = searchData;
-    return this.#PodcastModel
-      .query()
-      .where('type', PodcastType.PUBLIC)
-      .whereRaw(`REPLACE(name, ' ', '') ILIKE REPLACE('%${search}%', ' ', '')`)
-      .withGraphJoined('[image, user]');
   }
 
   public update(id: string, payload: PodcastEditDTOPayload): Promise<TPodcast> {

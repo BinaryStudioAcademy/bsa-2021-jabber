@@ -47,8 +47,8 @@ class Podcast {
     this.#episodeService = episodeService;
   }
 
-  public getAll(filter: PodcastLoadFilter = { offset: 0, limit: PODCAST_LOAD_LIMIT }): Promise<TPodcast[]> {
-    return this.#podcastRepository.getAll(filter);
+  public getByQuery(filter: PodcastLoadFilter = { offset: 0, limit: PODCAST_LOAD_LIMIT, search: '' }): Promise<TPodcast[]> {
+    return this.#podcastRepository.getByQuery(filter);
   }
 
   public async create({
@@ -110,10 +110,6 @@ class Podcast {
       });
     }
     return podcast;
-  }
-
-  public getAllBySearch(payload: PodcastSearchPayload): Promise<TPodcast[]> {
-    return this.#podcastRepository.getAllBySearch(payload);
   }
 
   public async update(
