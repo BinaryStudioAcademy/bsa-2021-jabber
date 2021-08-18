@@ -10,6 +10,7 @@ enum TableName {
   NOTIFICATIONS = 'notifications',
   USERS_NOTIFICATIONS = 'users_notifications',
   GENRES = 'genres',
+  USERS_FOLLOWERS = 'users_followers',
 }
 
 export { TableName };
