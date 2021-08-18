@@ -33,9 +33,8 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
   });
   const history = useHistory();
 
-  const { dataStatus, hasLiveRecord } = useAppSelector(({ episode, record }) => ({
+  const { dataStatus } = useAppSelector(({ episode }) => ({
     dataStatus: episode.dataStatus,
-    hasLiveRecord: record.hasLiveRecord,
   }));
 
   const isFormDisable = dataStatus === DataStatus.PENDING;
@@ -53,13 +52,11 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
           errors={errors}
           imageUrl={imageUrl}
         />
-        {hasLiveRecord
-          || <RecordPreviewControl
-            name={EpisodePayloadKey.RECORD}
-            control={control}
-            errors={errors}
-          />
-        }
+        <RecordPreviewControl
+          name={EpisodePayloadKey.RECORD}
+          control={control}
+          errors={errors}
+        />
         <Input
           type={InputType.TEXT}
           label="Name episode"

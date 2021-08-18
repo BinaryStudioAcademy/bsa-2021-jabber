@@ -46,13 +46,13 @@ const edit = createAsyncThunk<void, EpisodeFormPayload, AsyncThunkConfig>(
 
     const recordFile = getFileFromFileList(editEpisodePayload.record);
     const imgFile = getFileFromFileList(editEpisodePayload.image);
-
     const liveRecord = await recordAudioService.getLiveRecord();
-    let recordDataUrl = recordFile ? await getDataUrl(recordFile) : null;
 
-    if (record.hasLiveRecord) {
-      recordDataUrl = await getDataUrl(liveRecord);
-    }
+    const recordDataUrl = recordFile
+      ? await getDataUrl(recordFile)
+      : record.hasLiveRecord
+        ? await getDataUrl(liveRecord)
+        : null;
 
     const episode = await episodeApi.update(id, {
       name: editEpisodePayload.name,
