@@ -1,10 +1,9 @@
 import {
   EpisodePayloadKey,
   EpisodeType,
-  ShownotePayloadKey,
   EpisodeStatus,
 } from 'common/enums/enums';
-import { EpisodeFormPayload, ShownotePayload } from 'common/types/types';
+import { EpisodeFormPayload } from 'common/types/types';
 
 const DEFAULT_CREATE_EPISODE_PAYLOAD: EpisodeFormPayload = {
   [EpisodePayloadKey.NAME]: '',
@@ -16,9 +15,4 @@ const DEFAULT_CREATE_EPISODE_PAYLOAD: EpisodeFormPayload = {
   [EpisodePayloadKey.STATUS]: EpisodeStatus.PUBLISHED,
 };
 
-const DEFAULT_SHOWNOTE_PAYLOAD: ShownotePayload = {
-  [ShownotePayloadKey.NAME]: '',
-  [ShownotePayloadKey.TIMESTAMP]: 0,
-};
-
-export { DEFAULT_CREATE_EPISODE_PAYLOAD, DEFAULT_SHOWNOTE_PAYLOAD };
+export { DEFAULT_CREATE_EPISODE_PAYLOAD };

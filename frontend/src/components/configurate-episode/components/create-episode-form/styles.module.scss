@@ -1,9 +1,15 @@
-.fieldset {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-  border: none;
+.episodeForm {
+  form {
+    margin: 0;
+  }
+
+  fieldset {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
 
   .recordLabel {
     display: block;
@@ -28,7 +34,7 @@
       color: #fff;
     }
 
-    input[type="file"] {
+    input[type='file'] {
       display: none;
     }
   }

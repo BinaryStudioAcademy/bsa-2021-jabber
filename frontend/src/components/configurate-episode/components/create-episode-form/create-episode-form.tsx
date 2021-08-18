@@ -1,4 +1,4 @@
-import { EpisodeFormPayload, Option } from 'common/types/types';
+import { EpisodeFormPayload, Option, ShownoteRecord } from 'common/types/types';
 import { getOptions, getFileExtensions } from 'helpers/helpers';
 import {
   ButtonType,
@@ -10,11 +10,21 @@ import {
   EpisodeStatus,
   ButtonColor,
 } from 'common/enums/enums';
+import {
+  useAppForm,
+  useAppSelector,
+  useFieldArray,
+  useHistory,
+} from 'hooks/hooks';
+import {
+  Button,
+  Input,
+  Select,
+  ImagePreviewControl,
+} from 'components/common/common';
 import { episodeCreate as createEpisodeValidationSchema } from 'validation-schemas/validation-schemas';
-import { useAppForm, useAppSelector, useHistory } from 'hooks/hooks';
-import { Button, Input, Select, ImagePreviewControl } from 'components/common/common';
 import { DEFAULT_CREATE_EPISODE_PAYLOAD } from './common/constants';
-import ShownoteInputList from './components/shownote-input-list/shownote-input-list';
+import { ShownoteForm, TimeNavigation } from './components/components';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -31,12 +41,23 @@ const acceptAudioExtension = getFileExtensions(
   FileExtension.WAV,
 );
 
-const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE_EPISODE_PAYLOAD, imageUrl }) => {
+const CreateEpisodeForm: React.FC<Props> = ({
+  onSubmit,
+  payload = DEFAULT_CREATE_EPISODE_PAYLOAD,
+  imageUrl,
+}) => {
   const { control, handleSubmit, errors, register } = useAppForm({
     validationSchema: createEpisodeValidationSchema,
     defaultValues: payload,
   });
+
+  const { fields, remove, append } = useFieldArray({
+    control,
+    name: EpisodePayloadKey.SHOWNOTES,
+  });
+
   const history = useHistory();
+  const shownotes = fields as ShownoteRecord[];
 
   const { dataStatus } = useAppSelector(({ episode }) => ({
     dataStatus: episode.dataStatus,
@@ -49,67 +70,71 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <fieldset disabled={isFormDisable} className={styles.fieldset}>
-        <ImagePreviewControl
-          name={EpisodePayloadKey.IMAGE}
-          control={control}
-          errors={errors}
-          imageUrl={imageUrl}
-        />
-        <label className={styles.recordLabel}>
-          Upload record
-          <input
-            {...register(EpisodePayloadKey.RECORD)}
-            accept={acceptAudioExtension}
-            type={InputType.FILE}
+    <div className={styles.episodeForm}>
+      <form>
+        <fieldset disabled={isFormDisable} className={styles.fieldset}>
+          <ImagePreviewControl
+            name={EpisodePayloadKey.IMAGE}
+            control={control}
+            errors={errors}
+            imageUrl={imageUrl}
           />
-        </label>
-        <Input
-          type={InputType.TEXT}
-          label="Name episode"
-          placeholder="Enter name"
-          name={EpisodePayloadKey.NAME}
-          control={control}
-          errors={errors}
-        />
-        <Input
-          type={InputType.TEXT}
-          label="Description"
-          placeholder="Enter description episode"
-          name={EpisodePayloadKey.DESCRIPTION}
-          control={control}
-          errors={errors}
-          hasMultipleRows
-        />
-        <Select
-          options={selectTypeOptions}
-          label="Type"
-          name={EpisodePayloadKey.TYPE}
-          control={control}
-          errors={errors}
-        />
-        <Select
-          options={selectStatusOptions}
-          label="Status"
-          name={EpisodePayloadKey.STATUS}
-          control={control}
-          errors={errors}
-        />
-        <ShownoteInputList control={control} errors={errors} />
-        <div className={styles.buttonRow}>
-          <Button
-            label="Save"
-            type={ButtonType.SUBMIT}
+          <label className={styles.recordLabel}>
+            Upload record
+            <input
+              {...register(EpisodePayloadKey.RECORD)}
+              accept={acceptAudioExtension}
+              type={InputType.FILE}
+            />
+          </label>
+          <Input
+            type={InputType.TEXT}
+            label="Name episode"
+            placeholder="Enter name"
+            name={EpisodePayloadKey.NAME}
+            control={control}
+            errors={errors}
           />
-          <Button
-            label="Cancel"
-            buttonColor={ButtonColor.LIGHT_PINK}
-            onClick={handleCancel}
+          <Input
+            type={InputType.TEXT}
+            label="Description"
+            placeholder="Enter description episode"
+            name={EpisodePayloadKey.DESCRIPTION}
+            control={control}
+            errors={errors}
+            hasMultipleRows
           />
-        </div>
-      </fieldset>
-    </form >
+          <Select
+            options={selectTypeOptions}
+            label="Type"
+            name={EpisodePayloadKey.TYPE}
+            control={control}
+            errors={errors}
+          />
+          <Select
+            options={selectStatusOptions}
+            label="Status"
+            name={EpisodePayloadKey.STATUS}
+            control={control}
+            errors={errors}
+          />
+        </fieldset>
+      </form>
+      <ShownoteForm shownotes={shownotes} onInsert={append} />
+      <TimeNavigation shownotes={shownotes} onRemove={remove} />
+      <div className={styles.buttonRow}>
+        <Button
+          label="Save"
+          type={ButtonType.SUBMIT}
+          onClick={handleSubmit(onSubmit)}
+        />
+        <Button
+          label="Cancel"
+          buttonColor={ButtonColor.LIGHT_PINK}
+          onClick={handleCancel}
+        />
+      </div>
+    </div>
   );
 };
 
