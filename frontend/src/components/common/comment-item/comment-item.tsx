@@ -10,7 +10,6 @@ type Props = {
 };
 
 const CommentItem: React.FC<Props> = ({ comment, onClick }) => {
-
   const time = getTimeOffset(comment.timestamp);
 
   const handleTimeLineJump = (): void => {
@@ -24,26 +23,41 @@ const CommentItem: React.FC<Props> = ({ comment, onClick }) => {
 
   return (
     <li className={styles.wrapper}>
-      <ImageWrapper
-        width="40"
-        height="40"
-        loading="lazy"
-        alt={String(comment.userId)}
-        label={comment.user.nickname}
-        className={styles.avatarWrapper}
-      />
+      {comment.user.image ? (
+        <ImageWrapper
+          width="40"
+          height="40"
+          loading="lazy"
+          alt={String(comment.userId)}
+          label={comment.user.nickname}
+          className={styles.avatarWrapper}
+          src={comment.user.image.url}
+        />
+      ) : (
+        <ImageWrapper
+          width="40"
+          height="40"
+          loading="lazy"
+          alt={String(comment.userId)}
+          label={comment.user.nickname}
+          className={styles.avatarWrapper}
+        />
+      )}
+
       <div className={styles.intro}>
         <p className={styles.userName}>
           {comment.user.nickname ?? comment.user.firstName}&nbsp;<span>at</span>
           &nbsp;
-          {onClick
-            ? <button
+          {onClick ? (
+            <button
               className={styles.commentAtButton}
-              onClick={handleTimeLineJump}>
+              onClick={handleTimeLineJump}
+            >
               {time}
             </button>
-            : time
-          }
+          ) : (
+            time
+          )}
         </p>
         <p className={styles.text}>{comment.text}</p>
       </div>
