@@ -1,10 +1,11 @@
-import { useAppSelector, useDispatch, useVisible } from 'hooks/hooks';
+import { useAppSelector, useDispatch, useVisible, useState } from 'hooks/hooks';
 import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
 import { Button, Link, ImageWrapper } from 'components/common/common';
 import { auth as authActions } from 'store/actions';
 import logo from 'assets/img/logo.svg';
 import headerBell from 'assets/img/header-bell.svg';
+import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 const Header: React.FC = () => {
@@ -25,6 +26,12 @@ const Header: React.FC = () => {
     dispatch(authActions.resetUser());
   };
 
+  const [isShowNav, setIsShowNav] = useState<boolean>(false);
+
+  const handleShowNav = (): void => {
+    setIsShowNav(!isShowNav);
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.headerWrapper}>
@@ -34,7 +41,7 @@ const Header: React.FC = () => {
         </Link>
         {hasUser ? (
           <>
-            <ul className={styles.navigation}>
+            <ul className={isShowNav ? getAllowedClasses(styles.navigation, styles.active) : styles.navigation} onClick={():void => setIsShowNav(!isShowNav)}>
               <li className={styles.liNavigation}>
                 <Link to={AppRoute.ROOT} className={styles.link}>
                   Podcasts
@@ -113,6 +120,11 @@ const Header: React.FC = () => {
             </Link>
           </div>
         )}
+        <div className={isShowNav ? getAllowedClasses(styles.burgerMenu, styles.active) : styles.burgerMenu} onClick={handleShowNav}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
     </header>
   );
