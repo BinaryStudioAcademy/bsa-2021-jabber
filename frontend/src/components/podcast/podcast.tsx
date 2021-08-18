@@ -118,6 +118,14 @@ const Podcast: React.FC = () => {
                   </div>
                   <p className={styles.infoInner}>{podcast.genre?.name}</p>
                 </li>
+                <li className={styles.infoItem}>
+                  <div
+                    className={getAllowedClasses(styles.infoName, styles.type)}
+                  >
+                    Type
+                  </div>
+                  <p className={styles.infoInner}>{podcast.type}</p>
+                </li>
               </ul>
 
               {podcast.userId === userId && (
