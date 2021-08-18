@@ -5,6 +5,7 @@ import {
   Genre,
   Podcast,
   PodcastFormPayload,
+  DeleteActionPodcastPayload,
   User,
 } from 'common/types/types';
 import { ActionType } from './common';
@@ -76,4 +77,14 @@ const loadGenres = createAsyncThunk<Genre[], undefined, AsyncThunkConfig>
   return genres;
 });
 
-export { create, edit, loadPodcast, loadGenres };
+const deletePodcast = createAsyncThunk<void, DeleteActionPodcastPayload, AsyncThunkConfig>(
+  ActionType.DELETE_PODCAST,
+  async ({ podcastId, userId }, { extra }) => {
+    const { podcastApi, notificationService, navigationService } = extra;
+    await podcastApi.delete(podcastId);
+
+    notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PODCAST_DELETED);
+    navigationService.push(`${AppRoute.USERS}/${userId}`);
+  });
+
+export { create, edit, loadPodcast, loadGenres, deletePodcast };

@@ -4,6 +4,7 @@ export type {
   UserCreatePayload,
   UserEditPayload,
   UserSignInPayload,
+  UserEditFormPayload,
 } from './user/user';
 export type { HttpOptions } from './http/http';
 export type { ValidationSchema } from './validation-schema/validation-schema';
@@ -12,6 +13,8 @@ export type {
   PodcastFormPayload,
   PodcastCreatePayload,
   PodcastEditPayload,
+  DeleteActionPodcastPayload,
+  PodcastSearchPayload,
 } from './podcast/podcast';
 export type {
   Episode,

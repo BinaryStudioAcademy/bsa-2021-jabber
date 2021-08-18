@@ -4,6 +4,7 @@ import {
   useEffect,
   useParams,
   useRef,
+  useState,
 } from 'hooks/hooks';
 import {
   episode as episodeActions,
@@ -17,19 +18,24 @@ import {
   Button,
   Link,
   ImageWrapper,
+  ConfirmPopup,
 } from 'components/common/common';
 import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
-import { getCurrentTime } from './helpers/helpers';
+import {
+  getCurrentTime,
+  getCommentsTimelineDimensions,
+} from './helpers/helpers';
 import { PageParams } from './common/types/types';
-import { ShownotesList } from './components/components';
+import { ShownotesList, ComentsTimeline } from './components/components';
 import styles from './styles.module.scss';
 
 const Episode: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
   const playerRef = useRef<PlayerRef | null>(null);
+  const playerContainerRef = useRef<HTMLDivElement>(null);
 
   const { episode, comments, user, dataStatus, podcast } = useAppSelector(
     ({ episode, auth }) => ({
@@ -41,15 +47,20 @@ const Episode: React.FC = () => {
     }),
   );
 
+  const [playerStatus, setPlayerStatus] = useState<DataStatus>(DataStatus.IDLE);
+
   const hasShownotes = Boolean(episode?.shownotes?.length);
   const hasUser = Boolean(user);
   const isStaging = episode?.status === EpisodeStatus.STAGING;
   const isOwner = user?.id === episode?.userId;
+  const isPlayerLoaded = playerStatus === DataStatus.FULFILLED;
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisodePayload(Number(id)));
   }, []);
+
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState<boolean>(false);
 
   const handleJumpToTimeLine = (timeline: number): void => {
     playerRef.current?.setCurrentTime(timeline);
@@ -74,9 +85,19 @@ const Episode: React.FC = () => {
     );
   };
 
+  const handleShowPopup = (): void => {
+    setIsConfirmPopupOpen(!isConfirmPopupOpen);
+  };
+
   if (dataStatus === DataStatus.PENDING) {
     return <Loader />;
   }
+
+  const commentsTimelineDimensions = getCommentsTimelineDimensions(
+    playerRef,
+    playerContainerRef,
+  );
+  const podcastDuration = playerRef.current?.getPodcastDuration();
 
   return (
     <main className={styles.root}>
@@ -107,11 +128,18 @@ const Episode: React.FC = () => {
                       <span className="visually-hidden">Edit episode</span>
                     </Link>
                     <button
-                      onClick={handleDeleteEpisode}
+                      onClick={handleShowPopup}
                       className={styles.deleteButton}
                     >
                       <span className="visually-hidden">Delete episode</span>
                     </button>
+                    <ConfirmPopup
+                      title="Delete Episode"
+                      description="You are going to delete the episode. Are you sure about this?"
+                      isOpen={isConfirmPopupOpen}
+                      onClose={handleShowPopup}
+                      onConfirm={handleDeleteEpisode}
+                    />
                   </>
                 )}
                 <Link
@@ -143,8 +171,22 @@ const Episode: React.FC = () => {
                 )}
               </div>
             </div>
+            {isPlayerLoaded && commentsTimelineDimensions && podcastDuration && (
+              <ComentsTimeline
+                comments={comments}
+                dimensions={commentsTimelineDimensions}
+                duration={podcastDuration}
+                onJumpToTimeLine={handleJumpToTimeLine}
+              />
+            )}
             {episode.record && (
-              <Player src={episode.record.fileUrl} ref={playerRef} />
+              <div ref={playerContainerRef}>
+                <Player
+                  src={episode.record.fileUrl}
+                  ref={playerRef}
+                  onSetPlayerStatus={setPlayerStatus}
+                />
+              </div>
             )}
           </div>
           <section className={styles.commentsWrapper}>

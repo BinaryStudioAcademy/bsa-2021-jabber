@@ -35,7 +35,7 @@ const UserPage: React.FC = () => {
   const hasUser = Boolean(user);
   const hasPermitToEdit = currentUser?.id === Number(id);
 
-  if (!hasUser) {
+  if (!hasUser && dataStatus === DataStatus.FULFILLED) {
     return (
       <div className={styles.containerUserNotFound}>
         <h1>User Not Found</h1>
@@ -54,6 +54,7 @@ const UserPage: React.FC = () => {
           loading="lazy"
           label={user?.nickname}
           className={styles.imageWrapper}
+          src={user?.image?.url}
         />
         <div className={styles.mainUserInfo}>
           <div className={styles.userInfoHeader}>

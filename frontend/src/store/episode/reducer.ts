@@ -36,7 +36,7 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadCommentsByEpisodeId.fulfilled, (state, action) => {
     state.commentDataStatus = DataStatus.FULFILLED;
-    state.comments = action.payload;
+    state.comments = action.payload.reverse();
   });
   builder.addCase(loadCommentsByEpisodeId.rejected, (state) => {
     state.commentDataStatus = DataStatus.REJECTED;
@@ -51,7 +51,7 @@ const reducer = createReducer(initialState, (builder) => {
     state.commentDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(updateComments, (state, action) => {
-    state.comments.push(action.payload);
+    state.comments = [action.payload, ...state.comments];
   });
 });
 

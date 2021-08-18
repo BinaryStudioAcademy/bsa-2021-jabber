@@ -1,5 +1,6 @@
 import { notification as notificationService } from '../services';
 import { RecordStatus } from 'common/enums/enums';
+import { TIME_SLICE } from './common/constants/constants';
 
 type Constructor = {
   notificationService: typeof notificationService;
@@ -9,7 +10,6 @@ class RecordAudio {
   #notificationService;
   #recorder?: MediaRecorder;
   #audioChunks: Blob[] = [];
-  #audioDataUrl = '';
 
   constructor({ notificationService }: Constructor) {
     this.#notificationService = notificationService;
@@ -21,6 +21,12 @@ class RecordAudio {
     this.#recorder.ondataavailable = ({ data }: BlobEvent): void => {
       this.#audioChunks.push(data);
     };
+
+    this.#recorder.onstop = (): void => {
+      stream.getTracks().forEach((track) => {
+        track.stop();
+      });
+    };
   }
 
   private onError(err: MediaStreamError): void {
@@ -28,7 +34,7 @@ class RecordAudio {
   }
 
   public start(): void {
-    this.#recorder?.start();
+    this.#recorder?.start(TIME_SLICE);
   }
 
   public pause(): void {
@@ -39,14 +45,20 @@ class RecordAudio {
     this.#recorder?.resume();
   }
 
-  public stop(): string {
+  public stop(): void {
     if (this.#recorder?.state !== RecordStatus.INACTIVE) {
       this.#recorder?.stop();
-      const audioBlob = new Blob(this.#audioChunks);
-      this.#audioDataUrl = URL.createObjectURL(audioBlob);
-      this.#audioChunks = [];
     }
-    return this.#audioDataUrl;
+  }
+
+  public getLiveRecord(): Promise<Blob> {
+    return new Promise((resolve, _reject) => {
+      const audioBlob = new Blob(this.#audioChunks, { type: 'audio/wave' });
+
+      this.#audioChunks = [];
+
+      resolve(audioBlob);
+    });
   }
 
   public init(): void {

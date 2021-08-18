@@ -1,16 +1,15 @@
-import { Comment as TComment } from 'common/types/types';
+import { getTimeOffset } from 'helpers/helpers';
+import { Comment } from 'common/types/types';
 import { getDistanceToDateNow } from 'helpers/date/date';
 import ImageWrapper from '../image-wrapper/image-wrapper';
 import styles from './styles.module.scss';
-import { getTimeOffset } from 'helpers/helpers';
 
 type Props = {
-  comment: TComment;
+  comment: Comment;
   onClick?: (payload: number) => void;
 };
 
 const CommentItem: React.FC<Props> = ({ comment, onClick }) => {
-
   const time = getTimeOffset(comment.timestamp);
 
   const handleTimeLineJump = (): void => {
@@ -31,19 +30,22 @@ const CommentItem: React.FC<Props> = ({ comment, onClick }) => {
         alt={String(comment.userId)}
         label={comment.user.nickname}
         className={styles.avatarWrapper}
+        src={comment.user.image?.url}
       />
       <div className={styles.intro}>
         <p className={styles.userName}>
           {comment.user.nickname ?? comment.user.firstName}&nbsp;<span>at</span>
           &nbsp;
-          {onClick
-            ? <button
+          {onClick ? (
+            <button
               className={styles.commentAtButton}
-              onClick={handleTimeLineJump}>
+              onClick={handleTimeLineJump}
+            >
               {time}
             </button>
-            : time
-          }
+          ) : (
+            time
+          )}
         </p>
         <p className={styles.text}>{comment.text}</p>
       </div>

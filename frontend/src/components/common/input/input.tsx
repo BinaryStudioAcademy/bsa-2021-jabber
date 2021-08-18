@@ -5,8 +5,8 @@ import {
   Path,
   FieldValues,
 } from 'react-hook-form';
+import { IconName, InputType } from 'common/enums/enums';
 import { ErrorMessage } from '@hookform/error-message';
-import { InputType } from 'common/enums/enums';
 import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 import React from 'react';
@@ -19,6 +19,8 @@ type Props = {
   control: Control;
   errors: FieldErrors;
   hasMultipleRows?: boolean;
+  icon?: IconName;
+  className?: string;
   min?: number;
 };
 
@@ -33,8 +35,10 @@ const Input = React.forwardRef<Ref, Props>(
       errors,
       placeholder = '',
       type = InputType.TEXT,
-      min,
       hasMultipleRows = false,
+      icon,
+      className,
+      min,
     },
     ref,
   ) => {
@@ -53,14 +57,17 @@ const Input = React.forwardRef<Ref, Props>(
         ) : (
           <input
             {...field}
+            min={min}
             type={type}
             placeholder={placeholder}
-            className={styles.input}
-            min={min}
+            className={getAllowedClasses(
+              className,
+              styles.input,
+              styles[`icon--${icon}`],
+            )}
             ref={ref as React.Ref<HTMLInputElement>}
           />
         )}
-
         <span className={styles.errorWrapper}>
           <ErrorMessage errors={errors} name={name} />
         </span>

@@ -1,12 +1,11 @@
 import { EpisodeFormPayload, Option, ShownoteRecord } from 'common/types/types';
-import { getOptions, getFileExtensions } from 'helpers/helpers';
+import { getOptions } from 'helpers/helpers';
 import {
   ButtonType,
   DataStatus,
   EpisodePayloadKey,
   EpisodeType,
   InputType,
-  FileExtension,
   EpisodeStatus,
   ButtonColor,
 } from 'common/enums/enums';
@@ -25,6 +24,7 @@ import {
 import { episodeCreate as createEpisodeValidationSchema } from 'validation-schemas/validation-schemas';
 import { DEFAULT_CREATE_EPISODE_PAYLOAD } from './common/constants';
 import { ShownoteForm, TimeNavigation } from './components/components';
+import RecordPreviewControl from './components/record-preview-control/record-preview-control';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -36,17 +36,12 @@ type Props = {
 const selectTypeOptions: Option[] = getOptions(Object.values(EpisodeType));
 const selectStatusOptions: Option[] = getOptions(Object.values(EpisodeStatus));
 
-const acceptAudioExtension = getFileExtensions(
-  FileExtension.MP3,
-  FileExtension.WAV,
-);
-
 const CreateEpisodeForm: React.FC<Props> = ({
   onSubmit,
   payload = DEFAULT_CREATE_EPISODE_PAYLOAD,
   imageUrl,
 }) => {
-  const { control, handleSubmit, errors, register } = useAppForm({
+  const { control, handleSubmit, errors } = useAppForm({
     validationSchema: createEpisodeValidationSchema,
     defaultValues: payload,
   });
@@ -59,9 +54,12 @@ const CreateEpisodeForm: React.FC<Props> = ({
   const history = useHistory();
   const shownotes = fields as ShownoteRecord[];
 
-  const { dataStatus } = useAppSelector(({ episode }) => ({
-    dataStatus: episode.dataStatus,
-  }));
+  const { dataStatus, hasLiveRecord } = useAppSelector(
+    ({ episode, record }) => ({
+      dataStatus: episode.dataStatus,
+      hasLiveRecord: record.hasLiveRecord,
+    }),
+  );
 
   const isFormDisable = dataStatus === DataStatus.PENDING;
 
@@ -79,14 +77,12 @@ const CreateEpisodeForm: React.FC<Props> = ({
             errors={errors}
             imageUrl={imageUrl}
           />
-          <label className={styles.recordLabel}>
-            Upload record
-            <input
-              {...register(EpisodePayloadKey.RECORD)}
-              accept={acceptAudioExtension}
-              type={InputType.FILE}
-            />
-          </label>
+          <RecordPreviewControl
+            name={EpisodePayloadKey.RECORD}
+            control={control}
+            errors={errors}
+            hasLiveRecord={hasLiveRecord}
+          />
           <Input
             type={InputType.TEXT}
             label="Name episode"

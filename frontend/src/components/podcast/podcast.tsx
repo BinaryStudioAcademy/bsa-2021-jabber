@@ -1,7 +1,10 @@
-import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
-import { podcast as podcastActions } from 'store/actions';
+import { useAppSelector, useDispatch, useEffect, useParams, useState } from 'hooks/hooks';
+import {
+  podcast as podcastActions,
+  configuratePodcast as configuratePodcastActions,
+} from 'store/actions';
 import { AppRoute, DataStatus } from 'common/enums/enums';
-import { Link, Loader, ImageWrapper } from 'components/common/common';
+import { Link, Loader, ImageWrapper, ConfirmPopup } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
@@ -25,13 +28,28 @@ const Podcast: React.FC = () => {
     dispatch(podcastActions.loadEpisodesByPodcastId(Number(id)));
   }, []);
 
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState<boolean>(false);
+
+  const handleDeletePodcast = (): void => {
+    dispatch(
+      configuratePodcastActions.deletePodcast({
+        podcastId: Number(id),
+        userId: Number(userId),
+      }),
+    );
+  };
+
+  const handleShowPopup = (): void => {
+    setIsConfirmPopupOpen(!isConfirmPopupOpen);
+  };
+
   if (dataStatus === DataStatus.PENDING) {
     return <Loader />;
   }
 
   return (
     <main className={styles.podcast}>
-      {podcast ? (
+      {podcast && dataStatus === DataStatus.FULFILLED ? (
         <>
           <div className={styles.content}>
             <ImageWrapper
@@ -43,10 +61,25 @@ const Podcast: React.FC = () => {
             />
             <div className={styles.podcastInfoWrapper}>
               {isOwner && (
-                <Link
-                  to={`${AppRoute.PODCASTS_EDIT}/${podcast.id}`}
-                  className={styles.editLink}
-                />
+                <>
+                  <Link
+                    to={`${AppRoute.PODCASTS_EDIT}/${podcast.id}`}
+                    className={styles.editLink}
+                  />
+                  <button
+                    onClick={handleShowPopup}
+                    className={styles.deleteButton}
+                  >
+                    <span className="visually-hidden">Delete episode</span>
+                  </button>
+                  <ConfirmPopup
+                    title="Delete Podcast"
+                    description="You are going to delete the podcast. Are you sure about this?"
+                    isOpen={isConfirmPopupOpen}
+                    onClose={handleShowPopup}
+                    onConfirm={handleDeletePodcast}
+                  />
+                </>
               )}
               <h1 className={styles.title}>{podcast.name}</h1>
               <p className={styles.description}>{podcast.description}</p>
@@ -90,13 +123,26 @@ const Podcast: React.FC = () => {
                   </div>
                   <p className={styles.infoInner}>Once a month</p>
                 </li>
+                {podcast.genre && (
+                  <li className={styles.infoItem}>
+                    <div
+                      className={getAllowedClasses(
+                        styles.infoName,
+                        styles.genre,
+                      )}
+                    >
+                      Genre
+                    </div>
+                    <p className={styles.infoInner}>{podcast.genre.name}</p>
+                  </li>
+                )}
                 <li className={styles.infoItem}>
                   <div
-                    className={getAllowedClasses(styles.infoName, styles.genre)}
+                    className={getAllowedClasses(styles.infoName, styles.type)}
                   >
-                    Genre
+                    Type
                   </div>
-                  <p className={styles.infoInner}>{podcast.genre?.name}</p>
+                  <p className={styles.infoInner}>{podcast.type}</p>
                 </li>
               </ul>
 

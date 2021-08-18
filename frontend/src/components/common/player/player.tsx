@@ -9,11 +9,13 @@ import {
   useImperativeHandle,
 } from 'hooks/hooks';
 import { getAllowedClasses } from 'helpers/helpers';
+import { DataStatus } from 'common/enums/enums';
 import {
   ARRAY_SHIFT,
   DEFAULT_SKIP_TIME,
   DEFAULT_CURRENT_TIME,
   MILLISECONDS_IN_SECOND,
+  DEFAULT_DURATION,
 } from './common/constants';
 import { getRatePointerStyle } from './common/helpers';
 import { RateStep } from './common/enums';
@@ -32,6 +34,7 @@ import styles from './styles.module.scss';
 
 type Props = {
   src: string;
+  onSetPlayerStatus: React.Dispatch<React.SetStateAction<DataStatus>>;
   skipTime?: number;
   onClickPrevious?: () => void;
   onClickNext?: () => void;
@@ -40,13 +43,15 @@ type Props = {
 type Ref = {
   setCurrentTime: (seconds: number) => void;
   getCurrentTime: () => number;
+  getPodcastDuration: () => number;
+  getRef: () => React.MutableRefObject<H5AudioPlayer | null>;
 };
 
 const rateSteps = Object.values(RateStep);
 
 const Player = forwardRef<Ref, Props>(
   (
-    { src, skipTime = DEFAULT_SKIP_TIME, onClickNext, onClickPrevious },
+    { src, skipTime = DEFAULT_SKIP_TIME, onClickNext, onClickPrevious, onSetPlayerStatus },
     ref,
   ) => {
     const playerRef = useRef<H5AudioPlayer | null>(null);
@@ -57,17 +62,25 @@ const Player = forwardRef<Ref, Props>(
 
     useImperativeHandle(ref, () => ({
       setCurrentTime: (seconds: number): void => {
-        if (playerRef.current && playerRef.current.audio.current) {
+        if (playerRef.current?.audio.current) {
           playerRef.current.audio.current.currentTime = seconds;
         }
       },
       getCurrentTime: (): number => {
-        if (playerRef.current && playerRef.current.audio.current) {
+        if (playerRef.current?.audio.current) {
           return playerRef.current.audio.current.currentTime;
         }
 
         return DEFAULT_CURRENT_TIME;
       },
+      getPodcastDuration: (): number => {
+        if (playerRef.current?.audio.current) {
+          return playerRef.current.audio.current.duration;
+        }
+
+        return DEFAULT_DURATION;
+      },
+      getRef: (): React.MutableRefObject<H5AudioPlayer | null> => playerRef,
     }));
 
     useEffect(() => {
@@ -84,10 +97,21 @@ const Player = forwardRef<Ref, Props>(
       );
     }, [rateIndex]);
 
+    const handleLoadStart = (): void => {
+      onSetPlayerStatus(DataStatus.PENDING);
+    };
+    const handleLoadedData = (): void => {
+      onSetPlayerStatus(DataStatus.FULFILLED);
+    };
+    const handleError = (): void => {
+      onSetPlayerStatus(DataStatus.REJECTED);
+    };
+
     return (
       <H5AudioPlayer
         ref={playerRef}
         src={src}
+        autoPlay={false}
         showSkipControls={false}
         progressJumpSteps={{
           backward: skipTime,
@@ -95,6 +119,9 @@ const Player = forwardRef<Ref, Props>(
         }}
         onClickNext={onClickNext}
         onClickPrevious={onClickPrevious}
+        onLoadStart={handleLoadStart}
+        onLoadedData={handleLoadedData}
+        onError={handleError}
         customAdditionalControls={[]}
         customVolumeControls={[
           RHAP_UI.VOLUME,

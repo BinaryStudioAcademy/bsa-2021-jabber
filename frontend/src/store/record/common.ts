@@ -4,6 +4,7 @@ enum ActionType {
   PAUSE_RECORD = 'recordAudio/pause-record',
   RESUME_RECORD = 'recordAudio/resume-record',
   STOP_RECORD = 'recordAudio/stop-record',
+  RESET_STATE = 'recordAudio/reset-state',
 }
 
 export { ActionType };
