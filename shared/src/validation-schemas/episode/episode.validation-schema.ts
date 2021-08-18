@@ -1,5 +1,5 @@
 import { Joi } from '~/helpers/helpers';
-import { shownote } from '~/validation-schemas/shownote/shownote';
+import { shownoteCreate } from '~/validation-schemas/shownote/shownote';
 import {
   EpisodeValidationRule,
   EpisodeValidationMessage,
@@ -40,7 +40,7 @@ const episode = Joi.object({
       'string.max': EpisodeValidationMessage.EPISODE_DESCRIPTION_MAX_LENGTH,
     }),
   [EpisodePayloadKey.SHOWNOTES]: Joi.array()
-    .items(shownote)
+    .items(shownoteCreate)
     .unique(
       (a, b) =>
         a[ShownotePayloadKey.TIMESTAMP] === b[ShownotePayloadKey.TIMESTAMP],
