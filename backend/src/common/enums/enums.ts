@@ -28,6 +28,7 @@ export {
   NotificationDTOKey,
   UserNotificationDTOKey,
   GenreDTOKey,
+  UserFollowerDTOKey,
 } from './db/db';
 export { HttpCode, HttpMethod } from './http/http';
 export {

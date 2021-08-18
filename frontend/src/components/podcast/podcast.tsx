@@ -110,14 +110,19 @@ const Podcast: React.FC = () => {
                   </div>
                   <p className={styles.infoInner}>Once a month</p>
                 </li>
-                <li className={styles.infoItem}>
-                  <div
-                    className={getAllowedClasses(styles.infoName, styles.genre)}
-                  >
-                    Genre
-                  </div>
-                  <p className={styles.infoInner}>{podcast.genre?.name}</p>
-                </li>
+                {podcast.genre && (
+                  <li className={styles.infoItem}>
+                    <div
+                      className={getAllowedClasses(
+                        styles.infoName,
+                        styles.genre,
+                      )}
+                    >
+                      Genre
+                    </div>
+                    <p className={styles.infoInner}>{podcast.genre.name}</p>
+                  </li>
+                )}
                 <li className={styles.infoItem}>
                   <div
                     className={getAllowedClasses(styles.infoName, styles.type)}
