@@ -1,0 +1,70 @@
+.shownoteField {
+  margin-top: 15px;
+
+  height: 45px;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #eff0f7;
+  border-radius: 7px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  .time {
+    color: rgba(255, 150, 67, 1);
+    font-size: 16px;
+    font-weight: bold;
+
+    padding-left: 20px;
+    padding-right: 12px;
+  }
+
+  .name {
+    width: 100%;
+  }
+
+  .removeBtn {
+    height: 100%;
+    width: 30px;
+
+    margin-right: 13px;
+    position: relative;
+
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+
+    &:before,
+    &:after {
+      display: block;
+      content: '';
+
+      position: absolute;
+      left: 50%;
+
+      width: 2px;
+      height: 16px;
+
+      background-color: #b8b6b6;
+      box-sizing: content-box;
+      border-radius: 0.4px;
+    }
+
+    &:before {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    &:after {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .removeBtnText {
+      display: none;
+    }
+  }
+}
