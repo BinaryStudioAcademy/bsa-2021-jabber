@@ -1,4 +1,4 @@
-.inputWrapper{
+.inputWrapper {
   position: relative;
 
   .recordLabel {
@@ -25,20 +25,20 @@
     }
   }
 
-  .recordPreview{
+  .recordPreview {
     position: absolute;
     top: 0;
     left: 160px;
     font-size: 16px;
     padding: 9px 0;
-    width: 556px;
+    width: 50%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 }
 
-.errorWrapper{
+.errorWrapper {
   color: var(--color-button-background);
   min-height: 18px;
   margin-top: 5px;

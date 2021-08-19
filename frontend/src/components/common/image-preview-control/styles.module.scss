@@ -1,6 +1,5 @@
-.inputWrapper{
+.inputWrapper {
   position: relative;
-  max-width: 716px;
   width: 100%;
   overflow: hidden;
   cursor: pointer;
@@ -23,7 +22,7 @@
     text-align: center;
   }
 
-  &::before{
+  &::before {
     content: '';
     position: absolute;
     z-index: 99;
@@ -34,7 +33,7 @@
     border-radius: 0 0 5px 5px;
   }
 
-  &::after{
+  &::after {
     content: '';
     position: absolute;
     z-index: 100;
@@ -48,7 +47,7 @@
   }
 }
 
-.errorWrapper{
+.errorWrapper {
   color: var(--color-button-background);
   min-height: 18px;
   margin-top: 5px;
