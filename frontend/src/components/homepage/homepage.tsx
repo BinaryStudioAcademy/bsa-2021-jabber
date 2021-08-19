@@ -6,14 +6,13 @@ import {
   useCallback,
   useDispatch,
   useEffect,
+  useState,
 } from 'hooks/hooks';
 import { homepage as homepageActions } from 'store/actions';
 import { Search } from './components/components';
 import { SEARCH_TIMEOUT, DEFAULT_PODCASTS_FILTER_VALUE } from './common/constants';
 import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
-
-const podcastsFilter = { ...DEFAULT_PODCASTS_FILTER_VALUE };
 
 const Homepage: React.FC = () => {
   const { podcasts, dataStatus } = useAppSelector(({ homepage }) => ({
@@ -24,23 +23,33 @@ const Homepage: React.FC = () => {
   const hasPodcasts = Boolean(podcasts.length);
   const isLoading = dataStatus === DataStatus.PENDING;
 
+  const [podcastsFilter, setPodcastsFilter] = useState(DEFAULT_PODCASTS_FILTER_VALUE);
+
   useEffect(() => {
-    Object.assign(podcastsFilter, DEFAULT_PODCASTS_FILTER_VALUE);
-    dispatch(homepageActions.loadPodcasts(podcastsFilter));
-  }, []);
+    const isNewSearchQuery = podcastsFilter.offset === 0;
+    if (isNewSearchQuery) {
+      dispatch(homepageActions.loadPodcasts(podcastsFilter));
+    } else {
+      dispatch(homepageActions.loadMorePodcasts(podcastsFilter));
+    }
+  }, [podcastsFilter]);
 
   const handleChange = useCallback(
     setDebounce(({ search }: PodcastSearchPayload) => {
-      podcastsFilter.offset = 0;
-      podcastsFilter.search = search;
-      dispatch(homepageActions.loadPodcasts(podcastsFilter));
+      setPodcastsFilter({
+        ...podcastsFilter,
+        offset: 0,
+        search,
+      });
     }, SEARCH_TIMEOUT),
     [],
   );
 
   const handleMorePodcastsLoad = (): void => {
-    podcastsFilter.offset += podcastsFilter.limit;
-    dispatch(homepageActions.loadMorePodcasts(podcastsFilter));
+    setPodcastsFilter({
+      ...podcastsFilter,
+      offset: podcastsFilter.offset + podcastsFilter.limit,
+    });
   };
 
   return (
