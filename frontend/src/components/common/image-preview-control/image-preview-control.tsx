@@ -14,6 +14,7 @@ type Props = {
   label?: string;
   className?: string;
   width?: string;
+  height?: string;
 };
 
 const acceptExtension = getFileExtensions(
@@ -31,6 +32,7 @@ const ImagePreviewControl: React.FC<Props> = ({
   label,
   className,
   width,
+  height = '281',
 }) => {
   const { field } = useController({ name, control });
 
@@ -56,7 +58,7 @@ const ImagePreviewControl: React.FC<Props> = ({
         <ImageWrapper
           src={currentImgUrl ?? imageUrl}
           width={width}
-          height="281"
+          height={height}
           loading="lazy"
           className={className}
         />
