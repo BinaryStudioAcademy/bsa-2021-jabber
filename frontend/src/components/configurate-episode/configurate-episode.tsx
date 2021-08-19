@@ -1,5 +1,5 @@
 import { useDispatch, useParams, useEffect, useAppSelector } from 'hooks/hooks';
-import { configurateEpisode as configurateEpisodeActions } from 'store/actions';
+import { configurateEpisode as configurateEpisodeActions, record as recordActions } from 'store/actions';
 import { EpisodeFormPayload } from 'common/types/types';
 import { DataStatus } from 'common/enums/enums';
 import { mapEpisodeToFormPayload } from './helpers/helpers';
@@ -12,9 +12,10 @@ const ConfigurateEpisode: React.FC = () => {
   const { id, podcastId } = useParams<PageParams>();
   const dispatch = useDispatch();
 
-  const { episode, dataStatus } = useAppSelector(({ configurateEpisode }) => ({
+  const { episode, dataStatus, hasLiveRecord } = useAppSelector(({ configurateEpisode, record }) => ({
     episode: configurateEpisode.episode,
     dataStatus: configurateEpisode.dataStatus,
+    hasLiveRecord: record.hasLiveRecord,
   }));
 
   const mapEpisode = episode ? mapEpisodeToFormPayload(episode) : undefined;
@@ -37,6 +38,14 @@ const ConfigurateEpisode: React.FC = () => {
       dispatch(configurateEpisodeActions.loadEpisode(Number(id)));
     }
   }, []);
+
+  useEffect(() => {
+    if (hasLiveRecord) {
+      return ((): void => {
+        dispatch(recordActions.resetState());
+      });
+    }
+  }, [hasLiveRecord]);
 
   if (isLoading) {
     return <Loader />;

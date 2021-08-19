@@ -1,8 +1,15 @@
 .root {
-  padding: 30px;
+  width: 100%;
+  max-width: 1606px;
+  margin: 0 auto;
+  padding: 30px 15px;
+
+  h1 {
+    margin: 0 0 15px 0;
+  }
 
   h3 {
-    margin: 0;
+    margin: 15px 0;
     text-align: center;
     color: var(--color-primary-light);
   }
@@ -20,6 +27,11 @@
 .content {
   padding: 75px 75px 20px 75px;
   position: relative;
+  background: linear-gradient(
+    0deg,
+    rgba(25, 34, 47, 0.4),
+    rgba(25, 34, 47, 0.4)
+  );
 }
 
 .imageWrapper {
@@ -45,7 +57,8 @@
 }
 
 .descriptionWrapper {
-  width: 45%;
+  width: 724px;
+  min-height: 200px;
   margin-bottom: 45px;
   padding: 35px;
   border-radius: 3px;
@@ -59,6 +72,8 @@
 
 .title {
   margin: 0 0 20px 0;
+  font-size: 40px;
+  line-height: 1.25;
 }
 
 .description {
@@ -100,4 +115,34 @@
   border-top: 1px solid rgba(53, 53, 53, 0.3);
   margin-top: 15px;
   padding-top: 15px;
+}
+
+// Media
+@media (max-width: 991px) {
+  .content {
+    padding: 40px 40px 20px 40px;
+  }
+
+  .descriptionWrapper {
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+@media (max-width: 768px) {
+  .content {
+    padding: 30px 30px 20px 30px;
+  }
+
+  .descriptionWrapper {
+    padding: 20px;
+  }
+
+  .title {
+    margin-bottom: 15px;
+    font-size: 25px;
+  }
+
+  .commentsWrapper {
+    width: 100%;
+  }
 }

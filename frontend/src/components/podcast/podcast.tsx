@@ -1,10 +1,10 @@
-import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
+import { useAppSelector, useDispatch, useEffect, useParams, useState } from 'hooks/hooks';
 import {
   podcast as podcastActions,
   configuratePodcast as configuratePodcastActions,
 } from 'store/actions';
 import { AppRoute, DataStatus } from 'common/enums/enums';
-import { Link, Loader, ImageWrapper } from 'components/common/common';
+import { Link, Loader, ImageWrapper, ConfirmPopup } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
@@ -28,6 +28,8 @@ const Podcast: React.FC = () => {
     dispatch(podcastActions.loadEpisodesByPodcastId(Number(id)));
   }, []);
 
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState<boolean>(false);
+
   const handleDeletePodcast = (): void => {
     dispatch(
       configuratePodcastActions.deletePodcast({
@@ -35,6 +37,10 @@ const Podcast: React.FC = () => {
         userId: Number(userId),
       }),
     );
+  };
+
+  const handleShowPopup = (): void => {
+    setIsConfirmPopupOpen(!isConfirmPopupOpen);
   };
 
   if (dataStatus === DataStatus.PENDING) {
@@ -61,11 +67,18 @@ const Podcast: React.FC = () => {
                     className={styles.editLink}
                   />
                   <button
-                    onClick={handleDeletePodcast}
+                    onClick={handleShowPopup}
                     className={styles.deleteButton}
                   >
                     <span className="visually-hidden">Delete episode</span>
                   </button>
+                  <ConfirmPopup
+                    title="Delete Podcast"
+                    description="You are going to delete the podcast. Are you sure about this?"
+                    isOpen={isConfirmPopupOpen}
+                    onClose={handleShowPopup}
+                    onConfirm={handleDeletePodcast}
+                  />
                 </>
               )}
               <h1 className={styles.title}>{podcast.name}</h1>
@@ -110,14 +123,19 @@ const Podcast: React.FC = () => {
                   </div>
                   <p className={styles.infoInner}>Once a month</p>
                 </li>
-                <li className={styles.infoItem}>
-                  <div
-                    className={getAllowedClasses(styles.infoName, styles.genre)}
-                  >
-                    Genre
-                  </div>
-                  <p className={styles.infoInner}>{podcast.genre?.name}</p>
-                </li>
+                {podcast.genre && (
+                  <li className={styles.infoItem}>
+                    <div
+                      className={getAllowedClasses(
+                        styles.infoName,
+                        styles.genre,
+                      )}
+                    >
+                      Genre
+                    </div>
+                    <p className={styles.infoInner}>{podcast.genre.name}</p>
+                  </li>
+                )}
                 <li className={styles.infoItem}>
                   <div
                     className={getAllowedClasses(styles.infoName, styles.type)}

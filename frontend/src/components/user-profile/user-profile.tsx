@@ -80,7 +80,6 @@ const UserPage: React.FC = () => {
               <a className={styles.emailLink} href={`mailto:${user?.email}`}>
                 {user?.email}
               </a>
-              ;
             </span>
           </div>
           {user?.bio && (
