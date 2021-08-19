@@ -20,7 +20,10 @@ class Comment {
   }
 
   public create(payload: CommentCreatePayload): Promise<TComment> {
-    return this.#CommentModel.query().insert(payload).withGraphFetched('user');
+    return this.#CommentModel
+      .query()
+      .insert(payload)
+      .withGraphFetched('user.image');
   }
 
   public getAllByEpisodeId(id: number): Promise<TComment[]> {
