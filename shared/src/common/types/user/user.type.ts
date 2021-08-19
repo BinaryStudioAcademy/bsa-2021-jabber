@@ -1,4 +1,5 @@
 import { Image } from '~/common/types/types';
+import { UserRole } from '~/common/enums/enums';
 
 type User = {
   id: number;
@@ -13,6 +14,7 @@ type User = {
   createdAt: string;
   updatedAt: string;
   image: Image | null;
+  role: UserRole;
 };
 
 export type { User };

@@ -1,10 +1,13 @@
 import { RequestHandler } from 'express';
 import { HttpError } from '~/exceptions/exceptions';
-import { ErrorMessage, HttpCode } from '~/common/enums/enums';
+import { ErrorMessage, HttpCode, UserRole } from '~/common/enums/enums';
 import { episode as episodeService } from '~/services/services';
 
 const checkUserEpisodeOwner = (): RequestHandler => {
   const handler: RequestHandler = async (req, _res, next) => {
+    if (req.user?.role === UserRole.MASTER) {
+      next()
+    }
     const episodeId = req.params.id;
     const { userId: episodeOwnerId } = await episodeService.getById(Number(episodeId));
 
