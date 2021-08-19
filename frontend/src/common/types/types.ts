@@ -24,7 +24,11 @@ export type {
   CreateActionEpisodePayload,
   DeleteActionEpisodePayload,
 } from './episode/episode';
-export type { Shownote, ShownotePayload } from './shownote/shownote';
+export type {
+  Shownote,
+  ShownotePayload,
+  ShownoteFormPayload,
+} from './shownote/shownote';
 export type { SignResponse } from './sign/sign';
 export type {
   CommentCreatePayload,
