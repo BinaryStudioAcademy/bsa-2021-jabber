@@ -10,7 +10,7 @@ import {
 } from 'hooks/hooks';
 import { homepage as homepageActions } from 'store/actions';
 import { Search } from './components/components';
-import { SEARCH_TIMEOUT, DEFAULT_PODCASTS_FILTER_VALUE, FIRST_PAGE_OFFSET } from './common/constants';
+import { SEARCH_TIMEOUT, DEFAULT_PODCASTS_FILTER_VALUE, INITIAL_PAGE_OFFSET } from './common/constants';
 import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
@@ -26,7 +26,7 @@ const Homepage: React.FC = () => {
   const [podcastsFilter, setPodcastsFilter] = useState<PodcastLoadFilter>(DEFAULT_PODCASTS_FILTER_VALUE);
 
   useEffect(() => {
-    const isNewSearchQuery = podcastsFilter.offset === FIRST_PAGE_OFFSET;
+    const isNewSearchQuery = podcastsFilter.offset === INITIAL_PAGE_OFFSET;
     if (isNewSearchQuery) {
       dispatch(homepageActions.loadPodcasts(podcastsFilter));
     } else {
@@ -38,7 +38,7 @@ const Homepage: React.FC = () => {
     setDebounce(({ search }: PodcastSearchPayload) => {
       setPodcastsFilter({
         ...podcastsFilter,
-        offset: 0,
+        offset: INITIAL_PAGE_OFFSET,
         search,
       });
     }, SEARCH_TIMEOUT),
