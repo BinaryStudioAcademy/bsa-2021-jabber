@@ -30,6 +30,7 @@ import {
 import { PageParams } from './common/types/types';
 import { ShownotesList, ComentsTimeline } from './components/components';
 import styles from './styles.module.scss';
+import { getAllowedClasses } from 'helpers/helpers';
 
 const Episode: React.FC = () => {
   const dispatch = useDispatch();
@@ -150,17 +151,17 @@ const Episode: React.FC = () => {
                   {podcast?.name}
                 </Link>
                 <h1 className={styles.title}>{episode.name}</h1>
+                <p className={styles.description}>{episode.description}</p>
                 <dl className={styles.episodeInfo}>
                   <div className={styles.infoBlock}>
-                    <dt className={styles.infoBlockTitle}>Type: </dt>
+                    <dt className={getAllowedClasses(styles.infoBlockTitle, styles.type)}>Type</dt>
                     <dd className={styles.infoBlockValue}>{episode.type}</dd>
                   </div>
                   <div className={styles.infoBlock}>
-                    <dt className={styles.infoBlockTitle}>Status:</dt>
+                    <dt className={getAllowedClasses(styles.infoBlockTitle, styles.status)}>Status</dt>
                     <dd className={styles.infoBlockValue}>{episode.status}</dd>
                   </div>
                 </dl>
-                <p className={styles.description}>{episode.description}</p>
                 {hasShownotes && (
                   <div className={styles.shownotesWrapper}>
                     <h3>Time navigation</h3>
@@ -172,23 +173,25 @@ const Episode: React.FC = () => {
                 )}
               </div>
             </div>
-            {isPlayerLoaded && commentsTimelineDimensions && podcastDuration && (
-              <ComentsTimeline
-                comments={comments}
-                dimensions={commentsTimelineDimensions}
-                duration={podcastDuration}
-                onJumpToTimeLine={handleJumpToTimeLine}
-              />
-            )}
-            {episode.record && (
-              <div ref={playerContainerRef}>
-                <Player
-                  src={episode.record.fileUrl}
-                  ref={playerRef}
-                  onSetPlayerStatus={setPlayerStatus}
+            <div className={styles.playerWrapper}>
+              {isPlayerLoaded && commentsTimelineDimensions && podcastDuration && (
+                <ComentsTimeline
+                  comments={comments}
+                  dimensions={commentsTimelineDimensions}
+                  duration={podcastDuration}
+                  onJumpToTimeLine={handleJumpToTimeLine}
                 />
-              </div>
-            )}
+              )}
+              {episode.record && (
+                <div ref={playerContainerRef}>
+                  <Player
+                    src={episode.record.fileUrl}
+                    ref={playerRef}
+                    onSetPlayerStatus={setPlayerStatus}
+                  />
+                </div>
+              )}
+            </div>
           </div>
           <section className={styles.commentsWrapper}>
             <h2 className={styles.commentsCounter}>
