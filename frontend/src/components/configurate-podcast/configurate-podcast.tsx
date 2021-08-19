@@ -12,11 +12,11 @@ const ConfiguratePodcast: React.FC = () => {
   const { id } = useParams<PageParams>();
   const dispatch = useDispatch();
 
-  const { podcast, dataStatus, genres, genresDataStatus } = useAppSelector(({ configuratePodcast }) => ({
+  const { podcast, dataStatus, genres, genresDataStatus } = useAppSelector(({ configuratePodcast, genre }) => ({
     podcast: configuratePodcast.podcast,
     dataStatus: configuratePodcast.dataStatus,
-    genres: configuratePodcast.genres,
-    genresDataStatus: configuratePodcast.genresDataStatus,
+    genres: genre.genres,
+    genresDataStatus: genre.dataStatus,
   }));
 
   const isEdit = Boolean(id);
@@ -36,7 +36,6 @@ const ConfiguratePodcast: React.FC = () => {
     if (isEdit) {
       dispatch(configuratePodcastActions.loadPodcast(Number(id)));
     }
-    dispatch(configuratePodcastActions.loadGenres());
   }, []);
 
   if (isLoading) {
