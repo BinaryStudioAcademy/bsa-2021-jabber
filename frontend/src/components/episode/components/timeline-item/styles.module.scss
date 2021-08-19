@@ -17,13 +17,15 @@
   .timelineItemContent {
     position: absolute;
     bottom: 100%;
-    display: none;
+    visibility: hidden;
+    display: flex;
     color: var(--color-primary-light);
   }
 
   &:hover {
     .timelineItemContent {
-      display: flex;
+      visibility: visible;
+
     }
   }
 
@@ -31,5 +33,14 @@
     flex-shrink: 0;
     margin-right: 10px;
     border-radius: 50%;
+  }
+
+  .timelineItemInfo {
+    div {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 200px;
+    }
   }
 }
