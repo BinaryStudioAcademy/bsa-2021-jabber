@@ -1,6 +1,6 @@
 import { DataStatus } from 'common/enums/enums';
 import { PodcastSearchPayload } from 'common/types/types';
-import { Loader, PodcastList } from 'components/common/common';
+import { Loader, PodcastList, PodcastFilter } from 'components/common/common';
 import {
   useAppSelector,
   useCallback,
@@ -14,9 +14,11 @@ import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 const Homepage: React.FC = () => {
-  const { podcasts, dataStatus } = useAppSelector(({ homepage }) => ({
+  const { podcasts, dataStatus, genres, genresDataStatus } = useAppSelector(({ homepage, genre }) => ({
     podcasts: homepage.podcasts,
     dataStatus: homepage.dataStatus,
+    genres: genre.genres,
+    genresDataStatus: genre.dataStatus,
   }));
   const dispatch = useDispatch();
   const hasPodcasts = Boolean(podcasts.length);
@@ -33,12 +35,19 @@ const Homepage: React.FC = () => {
     [],
   );
 
+  // eslint-disable-next-line no-console
+  console.log(genres);
+  // eslint-disable-next-line no-console
+  console.log(genresDataStatus);
+
   return (
     <main className={styles.main}>
       <Search onChange={handleChange} />
       <h2 className={styles.title}>All podcasts</h2>
 
-      <div></div>
+      <div>
+        <PodcastFilter genres={genres} />
+      </div>
 
       {isLoading ? (
         <Loader />

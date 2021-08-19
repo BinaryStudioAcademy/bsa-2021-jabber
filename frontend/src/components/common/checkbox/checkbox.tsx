@@ -3,11 +3,11 @@ import styles from './styles.module.scss';
 
 type Props = {
   label: string;
-  onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
   isRequire?: boolean;
   isDisabled?: boolean;
-  isChecked: boolean;
+  isChecked?: boolean;
 };
 
 const Checkbox: React.FC<Props> = ({
