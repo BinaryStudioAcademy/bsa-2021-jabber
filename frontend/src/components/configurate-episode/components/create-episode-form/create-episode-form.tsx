@@ -62,6 +62,8 @@ const CreateEpisodeForm: React.FC<Props> = ({
           control={control}
           errors={errors}
           imageUrl={imageUrl}
+          className={styles.image}
+          width="100%"
         />
         <RecordPreviewControl
           name={EpisodePayloadKey.RECORD}
@@ -102,11 +104,16 @@ const CreateEpisodeForm: React.FC<Props> = ({
         />
         <TimeNavigation control={control} errors={errors} setValue={setValue} />
         <div className={styles.buttonRow}>
-          <Button label="Save" type={ButtonType.SUBMIT} />
+          <Button
+            label="Save"
+            type={ButtonType.SUBMIT}
+            className={styles.button}
+          />
           <Button
             label="Cancel"
             buttonColor={ButtonColor.LIGHT_PINK}
             onClick={handleCancel}
+            className={styles.button}
           />
         </div>
       </fieldset>
