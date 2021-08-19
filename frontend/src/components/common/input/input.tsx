@@ -1,3 +1,4 @@
+import React, { forwardRef } from 'react';
 import {
   Control,
   FieldErrors,
@@ -21,49 +22,61 @@ type Props = {
   icon?: IconName;
   className?: string;
   min?: number;
+  max?: number;
 };
 
-const Input: React.FC<Props> = ({
-  label,
-  name,
-  control,
-  errors,
-  placeholder = '',
-  type = InputType.TEXT,
-  hasMultipleRows = false,
-  icon,
-  className,
-  min,
-}) => {
-  const { field } = useController({ name, control });
+type Ref = HTMLInputElement | HTMLTextAreaElement;
 
-  return (
-    <label className={styles.inputWrapper}>
-      <span className={styles.label}>{label}</span>
-      {hasMultipleRows ? (
-        <textarea
-          {...field}
-          placeholder={placeholder}
-          className={getAllowedClasses(styles.input, styles.textarea)}
-        />
-      ) : (
-        <input
-          {...field}
-          min={min}
-          type={type}
-          placeholder={placeholder}
-          className={getAllowedClasses(
-            className,
-            styles.input,
-            styles[`icon--${icon}`],
-          )}
-        />
-      )}
-      <span className={styles.errorWrapper}>
-        <ErrorMessage errors={errors} name={name} />
-      </span>
-    </label>
-  );
-};
+const Input = forwardRef<Ref, Props>(
+  (
+    {
+      label,
+      name,
+      control,
+      errors,
+      placeholder = '',
+      type = InputType.TEXT,
+      hasMultipleRows = false,
+      icon,
+      className,
+      min,
+      max,
+    },
+    ref,
+  ) => {
+    const { field } = useController({ name, control });
+
+    return (
+      <label className={styles.inputWrapper}>
+        <span className={styles.label}>{label}</span>
+        {hasMultipleRows ? (
+          <textarea
+            {...field}
+            placeholder={placeholder}
+            className={getAllowedClasses(styles.input, styles.textarea)}
+            ref={ref as React.Ref<HTMLTextAreaElement>}
+          />
+        ) : (
+          <input
+            {...field}
+            min={min}
+            max={max}
+            type={type}
+            placeholder={placeholder}
+            className={getAllowedClasses(
+              className,
+              styles.input,
+              styles[`icon--${icon}`],
+            )}
+            ref={ref as React.Ref<HTMLInputElement>}
+          />
+        )}
+        <span className={styles.errorWrapper}>
+          <ErrorMessage errors={errors} name={name} />
+        </span>
+      </label>
+    );
+  },
+);
 
 export default Input;
