@@ -1,6 +1,6 @@
-import { DataStatus } from 'common/enums/enums';
-import { PodcastSearchPayload } from 'common/types/types';
-import { Loader, PodcastList } from 'components/common/common';
+import { DataStatus, ButtonColor } from 'common/enums/enums';
+import { PodcastSearchPayload, PodcastLoadFilter } from 'common/types/types';
+import { Loader, PodcastList, Button } from 'components/common/common';
 import {
   useAppSelector,
   useCallback,
@@ -10,7 +10,7 @@ import {
 } from 'hooks/hooks';
 import { homepage as homepageActions } from 'store/actions';
 import { Search } from './components/components';
-import { SEARCH_TIMEOUT, DEFAULT_PODCASTS_FILTER_VALUE } from './common/constants';
+import { SEARCH_TIMEOUT, DEFAULT_PODCASTS_FILTER_VALUE, FIRST_PAGE_OFFSET } from './common/constants';
 import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
@@ -23,10 +23,10 @@ const Homepage: React.FC = () => {
   const hasPodcasts = Boolean(podcasts.length);
   const isLoading = dataStatus === DataStatus.PENDING;
 
-  const [podcastsFilter, setPodcastsFilter] = useState(DEFAULT_PODCASTS_FILTER_VALUE);
+  const [podcastsFilter, setPodcastsFilter] = useState<PodcastLoadFilter>(DEFAULT_PODCASTS_FILTER_VALUE);
 
   useEffect(() => {
-    const isNewSearchQuery = podcastsFilter.offset === 0;
+    const isNewSearchQuery = podcastsFilter.offset === FIRST_PAGE_OFFSET;
     if (isNewSearchQuery) {
       dispatch(homepageActions.loadPodcasts(podcastsFilter));
     } else {
@@ -58,12 +58,8 @@ const Homepage: React.FC = () => {
       <h2 className={styles.title}>All podcasts</h2>
       {hasPodcasts ? (
         <>
-          <PodcastList
-            podcasts={podcasts}
-            onMorePodcastsLoad={handleMorePodcastsLoad}
-            isLoading={isLoading}
-          />
-          {isLoading && <Loader />}
+          <PodcastList podcasts={podcasts} />
+          {isLoading ? <Loader /> : <Button className={styles.loadMoreBtn} label="See more" buttonColor={ButtonColor.LIGHT_PINK} onClick={handleMorePodcastsLoad}/> }
         </>
       ) : isLoading ? (
         <Loader />

@@ -31,7 +31,7 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadMorePodcasts.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
-    state.podcasts = [...state.podcasts, ...action.payload];
+    state.podcasts = state.podcasts.concat(action.payload);
   });
   builder.addCase(loadMorePodcasts.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
