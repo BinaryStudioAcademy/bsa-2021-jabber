@@ -4,17 +4,38 @@
   margin: 0;
   padding: 0;
   border: none;
+}
 
+.image {
+  width: 100%;
+}
+
+.buttonRow {
+  display: flex;
+  flex-grow: 1;
+  margin-top: 30px;
+}
+
+.button {
+  padding: 8px 8px;
+  width: 150px;
+  text-align: center;
+}
+
+.button + .button {
+  margin-left: 15px;
+}
+
+@media screen and (max-width: 360px) {
   .buttonRow {
-    display: flex;
-    flex-grow: 1;
-    margin-top: 30px;
+    flex-direction: column;
 
-    button {
-      padding: 8px 80px;
+    .button {
+      width: 100%;
     }
-    button + button {
-      margin-left: 15px;
+
+    .button + .button {
+      margin: 10px 0px;
     }
   }
 }

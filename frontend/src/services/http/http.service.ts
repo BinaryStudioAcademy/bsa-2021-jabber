@@ -1,6 +1,7 @@
 import { HttpError } from 'exceptions/exceptions';
 import { HttpHeader, HttpMethod, StorageKey } from 'common/enums/enums';
 import { HttpOptions } from 'common/types/types';
+import { getStringifiedQuery } from 'helpers/helpers';
 import { GetHeadersProps } from './common/types/types';
 import { storage as storageService } from '../services';
 
@@ -19,14 +20,14 @@ class Http {
     url: string,
     options: Partial<HttpOptions> = {},
   ): Promise<T> {
-    const { method = HttpMethod.GET, payload = null, contentType, hasAuth = true,
+    const { method = HttpMethod.GET, payload = null, contentType, hasAuth = true, query,
     } = options;
     const headers = this.getHeaders({
       contentType,
       hasAuth,
     });
 
-    return fetch(url, {
+    return fetch(this.getUrl(url, query), {
       method,
       headers,
       body: payload,
@@ -34,6 +35,10 @@ class Http {
       .then(this.checkStatus)
       .then((res) => this.parseJSON<T>(res))
       .catch(this.throwError);
+  }
+
+  private getUrl(url: string, query?: Record<string, string | number>): string {
+    return `${url}${query ? `?${getStringifiedQuery(query)}`: ''}`;
   }
 
   private getHeaders({ contentType, hasAuth }: GetHeadersProps): Headers {
