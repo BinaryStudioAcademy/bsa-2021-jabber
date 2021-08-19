@@ -34,10 +34,13 @@
     margin-right: 10px;
     border-radius: 50%;
   }
-  .timelineItemInfo{
-    width: 200px;
-  }
-  .commentText {
-    display: inline-block;
+
+  .timelineItemInfo {
+    div {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 200px;
+    }
   }
 }
