@@ -104,11 +104,16 @@ const CreateEpisodeForm: React.FC<Props> = ({
         />
         <ShownoteInputList control={control} errors={errors} />
         <div className={styles.buttonRow}>
-          <Button label="Save" type={ButtonType.SUBMIT} />
+          <Button
+            label="Save"
+            type={ButtonType.SUBMIT}
+            className={styles.button}
+          />
           <Button
             label="Cancel"
             buttonColor={ButtonColor.LIGHT_PINK}
             onClick={handleCancel}
+            className={styles.button}
           />
         </div>
       </fieldset>

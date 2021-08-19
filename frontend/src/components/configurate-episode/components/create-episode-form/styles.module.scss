@@ -7,7 +7,7 @@
 }
 
 .image {
-  width: 100%; //!important
+  width: 100% !important;
 }
 
 .buttonRow {
@@ -16,13 +16,13 @@
   margin-top: 30px;
 }
 
-button {
+.button {
   padding: 8px 8px;
   width: 150px;
   text-align: center;
 }
 
-button + button {
+.button + .button {
   margin-left: 15px;
 }
 
@@ -30,11 +30,11 @@ button + button {
   .buttonRow {
     flex-direction: column;
 
-    button {
+    .button {
       width: 100%;
     }
 
-    button + button {
+    .button + .button {
       margin: 10px 0px;
     }
   }
