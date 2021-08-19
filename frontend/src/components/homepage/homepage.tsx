@@ -37,6 +37,9 @@ const Homepage: React.FC = () => {
     <main className={styles.main}>
       <Search onChange={handleChange} />
       <h2 className={styles.title}>All podcasts</h2>
+
+      <div></div>
+
       {isLoading ? (
         <Loader />
       ) : hasPodcasts ? (
