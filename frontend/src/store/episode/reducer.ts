@@ -1,7 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { Episode, Comment, Podcast } from 'common/types/types';
-import { loadEpisodePayload, loadCommentsByEpisodeId, createComment, updateComments } from './actions';
+import {
+  loadEpisodePayload,
+  loadCommentsByEpisodeId,
+  createComment,
+  updateComments,
+  deleteComment,
+} from './actions';
 
 type State = {
   dataStatus: DataStatus;
@@ -48,6 +54,16 @@ const reducer = createReducer(initialState, (builder) => {
     state.commentDataStatus = DataStatus.FULFILLED;
   });
   builder.addCase(createComment.rejected, (state) => {
+    state.commentDataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(deleteComment.pending, (state) => {
+    state.commentDataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(deleteComment.fulfilled, (state, action) => {
+    state.commentDataStatus = DataStatus.FULFILLED;
+    state.comments = action.payload;
+  });
+  builder.addCase(deleteComment.rejected, (state) => {
     state.commentDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(updateComments, (state, action) => {

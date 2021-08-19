@@ -1,3 +1,5 @@
+import { useAppSelector, useDispatch } from 'hooks/hooks';
+import { episode as episodeActions } from 'store/actions';
 import { getTimeOffset } from 'helpers/helpers';
 import { Comment } from 'common/types/types';
 import { getDistanceToDateNow } from 'helpers/date/date';
@@ -10,10 +12,21 @@ type Props = {
 };
 
 const CommentItem: React.FC<Props> = ({ comment, onClick }) => {
+  const { user } = useAppSelector(({ auth }) => ({
+    user: auth.user,
+  }));
+  const dispatch = useDispatch();
+
+  const isOwner = user?.id === comment.userId;
+
   const time = getTimeOffset(comment.timestamp);
 
   const handleTimeLineJump = (): void => {
     onClick && onClick(comment.timestamp);
+  };
+
+  const handleDeleteComment = (): void => {
+    dispatch(episodeActions.deleteComment(Number(comment.id)));
   };
 
   const distance = getDistanceToDateNow(
@@ -50,6 +63,13 @@ const CommentItem: React.FC<Props> = ({ comment, onClick }) => {
         <p className={styles.text}>{comment.text}</p>
       </div>
       <div className={styles.date}>{distance} ago</div>
+      {isOwner &&
+        <button
+          onClick={handleDeleteComment}
+          className={styles.deleteButton}
+        >
+          <span className="visually-hidden">Delete episode</span>
+        </button>}
     </li>
   );
 };

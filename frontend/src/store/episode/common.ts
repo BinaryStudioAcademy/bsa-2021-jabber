@@ -6,6 +6,7 @@ enum ActionType {
   LOAD_EPISODE_PAYLOAD = 'podcast/episode-payload',
   CREATE_COMMENT = 'comments/create-comment',
   UPDATE_COMMENTS = 'comments/update-comments',
+  DELETE_COMMENT = 'comment/delete-comment',
 }
 
 type LoadEpisodePayload  = {
