@@ -102,3 +102,45 @@
     margin-top: 15px;
   }
 }
+
+// Media
+@media (max-width: 1165px) {
+
+  .container{
+    padding: 50px 50px;
+  }
+
+  .userInfo {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .imageWrapper {
+      margin: 0;
+      margin-bottom: 20px;
+    }
+
+    .mainUserInfo {
+      .userInfoHeader {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        .headerInfo {
+          margin: 5px 0;
+        }
+      }
+      .bioContainer {
+        width: 100%;
+      }
+    }
+
+    .editLink {
+      position: relative;
+      margin-top: 20px;
+      height: 30px;
+      width: 30px;
+    }
+  }
+}
