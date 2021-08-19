@@ -5,3 +5,12 @@
   width: 70%;
   min-width: 420px;
 }
+
+@media screen and (max-width: 768px) {
+  .columnsWrapper {
+    width: 100%;
+    min-width: auto;
+    columns: auto;
+    margin-top: 10px;
+  }
+}

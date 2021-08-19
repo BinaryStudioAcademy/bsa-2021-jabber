@@ -40,19 +40,26 @@ const create = createAsyncThunk<void, CreateActionEpisodePayload, AsyncThunkConf
 const edit = createAsyncThunk<void, EpisodeFormPayload, AsyncThunkConfig>(
   ActionType.EDIT_EPISODE,
   async (editEpisodePayload, { getState, extra }) => {
-    const { episodeApi, navigationService, notificationService } = extra;
-    const { configurateEpisode, auth } = getState();
+    const { episodeApi, navigationService, notificationService, recordAudioService } = extra;
+    const { configurateEpisode, auth, record } = getState();
     const { id } = <Episode>configurateEpisode.episode;
 
     const recordFile = getFileFromFileList(editEpisodePayload.record);
     const imgFile = getFileFromFileList(editEpisodePayload.image);
+    const liveRecord = await recordAudioService.getLiveRecord();
+
+    const recordDataUrl = recordFile
+      ? await getDataUrl(recordFile)
+      : record.hasLiveRecord
+        ? await getDataUrl(liveRecord)
+        : null;
 
     const episode = await episodeApi.update(id, {
       name: editEpisodePayload.name,
       description: editEpisodePayload.description,
       shownotes: editEpisodePayload.shownotes,
       type: editEpisodePayload.type,
-      recordDataUrl: recordFile ? await getDataUrl(recordFile) : null,
+      recordDataUrl,
       imageDataUrl: imgFile ? await getDataUrl(imgFile) : null,
       userId: (<User>auth.user).id,
       imageId: (<Episode>configurateEpisode.episode).imageId,

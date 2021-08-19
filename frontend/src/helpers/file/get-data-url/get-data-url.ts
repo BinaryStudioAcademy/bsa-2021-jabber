@@ -1,4 +1,4 @@
-const getDataUrl = (file: File): Promise<string> => {
+const getDataUrl = (file: File | Blob): Promise<string> => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
 
