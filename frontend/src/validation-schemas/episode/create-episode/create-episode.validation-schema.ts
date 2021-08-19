@@ -1,10 +1,12 @@
-import { Joi } from 'helpers/helpers';
-import { episode } from 'jabber-shared/validation-schemas/validation-schemas';
+import { getTimestamp, Joi } from 'helpers/helpers';
 import {
   EpisodePayloadKey,
   FileExtension,
   EpisodeValidationMessage,
+  ShownotePayloadKey,
 } from 'common/enums/enums';
+import { episode } from 'jabber-shared/validation-schemas/validation-schemas';
+import { shownoteCreate } from 'validation-schemas/shownote/create-shownote/create-shownote.validation-schema';
 import { fileExtensionValidation } from '../../helpers/helpers';
 
 const episodeCreate = episode.keys({
@@ -24,16 +26,26 @@ const episodeCreate = episode.keys({
     }),
   [EpisodePayloadKey.RECORD]: Joi.object()
     .custom(
-      fileExtensionValidation(
-        FileExtension.MP3,
-        FileExtension.WAV,
-      ),
+      fileExtensionValidation(FileExtension.MP3, FileExtension.WAV),
       'file extension validation',
     )
     .allow(null)
     .messages({
       'file.invalidExtension': EpisodeValidationMessage.DATA_URL_FORMAT,
     }),
+  [EpisodePayloadKey.SHOWNOTES]: Joi.array()
+    .items(shownoteCreate)
+    .unique(
+      (a, b) =>
+        getTimestamp(
+          a[ShownotePayloadKey.MINUTES],
+          a[ShownotePayloadKey.SECONDS],
+        ) ===
+        getTimestamp(
+          b[ShownotePayloadKey.MINUTES],
+          b[ShownotePayloadKey.SECONDS],
+        ),
+    ),
 });
 
 export { episodeCreate };
