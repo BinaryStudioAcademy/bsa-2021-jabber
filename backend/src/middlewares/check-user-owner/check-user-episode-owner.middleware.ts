@@ -6,7 +6,7 @@ import { episode as episodeService } from '~/services/services';
 const checkUserEpisodeOwner = (): RequestHandler => {
   const handler: RequestHandler = async (req, _res, next) => {
     if (req.user?.role === UserRole.MASTER) {
-      next()
+      next();
     }
     const episodeId = req.params.id;
     const { userId: episodeOwnerId } = await episodeService.getById(Number(episodeId));
