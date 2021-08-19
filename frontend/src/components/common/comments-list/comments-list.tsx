@@ -13,7 +13,7 @@ const CommentsList: React.FC<Props> = ({ comments, onClick, hasTimestamps }) => 
     <ul className={styles.list}>
       {comments.map((item) => (
         <CommentItem
-          hasTimestamps={hasTimestamps}
+          hasTimestamp={hasTimestamps}
           onClick={onClick}
           comment={item}
           key={item.id} />
