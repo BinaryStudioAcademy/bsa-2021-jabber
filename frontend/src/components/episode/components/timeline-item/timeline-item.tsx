@@ -52,7 +52,7 @@ const TimelineItem: React.FC<Props> = ({
         />
         <div className={styles.timelineItemInfo}>
           <div>{comment.user.nickname}</div>
-          <div>{comment.text}</div>
+          <div className={styles.commentText}>{comment.text}</div>
         </div>
       </div>
     </li>

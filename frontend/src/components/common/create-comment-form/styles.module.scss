@@ -1,6 +1,7 @@
 .fieldset {
   display: flex;
   align-items: flex-start;
+  flex-direction: column;
   border: none;
   margin: 0;
   padding: 0;
@@ -8,5 +9,6 @@
   label {
     flex-grow: 1;
     margin: -4px 30px 0 0;
+    width: 100%;
   }
 }
