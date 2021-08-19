@@ -4,40 +4,38 @@
   margin: 0;
   padding: 0;
   border: none;
+}
 
-  .image {
-    width: 100% !important;
-  }
+.image {
+  width: 100%; //!important
+}
 
-  .buttonRow {
-    display: flex;
-    flex-grow: 1;
-    margin-top: 30px;
+.buttonRow {
+  display: flex;
+  flex-grow: 1;
+  margin-top: 30px;
+}
 
-    button {
-      padding: 8px 8px;
-      width: 150px;
-      text-align: center;
-    }
+button {
+  padding: 8px 8px;
+  width: 150px;
+  text-align: center;
+}
 
-    button + button {
-      margin-left: 15px;
-    }
-  }
+button + button {
+  margin-left: 15px;
 }
 
 @media screen and (max-width: 360px) {
-  .fieldset {
-    .buttonRow {
-      flex-direction: column;
+  .buttonRow {
+    flex-direction: column;
 
-      button {
-        width: 100%;
-      }
+    button {
+      width: 100%;
+    }
 
-      button + button {
-        margin: 10px 0px;
-      }
+    button + button {
+      margin: 10px 0px;
     }
   }
 }

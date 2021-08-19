@@ -1,41 +1,41 @@
 .inputWrapper {
   position: relative;
+}
 
-  .recordLabel {
-    display: block;
-    align-self: flex-start;
-    cursor: pointer;
-    padding: 8px 15px;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 7px;
-    border-color: var(--color-button-background);
-    font-size: 16px;
-    font-weight: 700;
-    transition: all 1s ease;
-    text-align: center;
-    background-color: var(--color-primary-ligth);
-    color: var(--color-button-background);
-    flex-shrink: 0;
-    max-width: 144px;
+.recordLabel {
+  display: block;
+  align-self: flex-start;
+  cursor: pointer;
+  padding: 8px 15px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 7px;
+  border-color: var(--color-button-background);
+  font-size: 16px;
+  font-weight: 700;
+  transition: all 1s ease;
+  text-align: center;
+  background-color: var(--color-primary-ligth);
+  color: var(--color-button-background);
+  flex-shrink: 0;
+  max-width: 144px;
 
-    &:hover {
-      background-color: var(--color-button-background);
-      color: #fff;
-    }
+  &:hover {
+    background-color: var(--color-button-background);
+    color: #fff;
   }
+}
 
-  .recordPreview {
-    position: absolute;
-    top: 0;
-    left: 160px;
-    font-size: 16px;
-    padding: 9px 0;
-    width: 50%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+.recordPreview {
+  position: absolute;
+  top: 0;
+  left: 160px;
+  font-size: 16px;
+  padding: 9px 0;
+  width: 50%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .errorWrapper {
