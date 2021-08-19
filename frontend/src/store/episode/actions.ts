@@ -56,10 +56,10 @@ const deleteComment = createAsyncThunk<Comment[], number, AsyncThunkConfig>
 
 const updateComments = createAction<Comment>(ActionType.UPDATE_COMMENTS);
 
-export { 
-  loadEpisodePayload, 
-  loadCommentsByEpisodeId, 
-  createComment, 
-  updateComments, 
+export {
+  loadEpisodePayload,
+  loadCommentsByEpisodeId,
+  createComment,
+  updateComments,
   deleteComment,
 };
