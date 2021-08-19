@@ -3,17 +3,17 @@ import { Comment } from 'common/types/types';
 import styles from './styles.module.scss';
 
 type Props = {
-  hasRecord?: boolean;
+  hasTimestamps?: boolean;
   comments: Comment[];
   onClick?: (payload: number) => void;
 };
 
-const CommentsList: React.FC<Props> = ({ comments, onClick, hasRecord }) => {
+const CommentsList: React.FC<Props> = ({ comments, onClick, hasTimestamps }) => {
   return (
     <ul className={styles.list}>
       {comments.map((item) => (
         <CommentItem
-          hasRecord={hasRecord}
+          hasTimestamps={hasTimestamps}
           onClick={onClick}
           comment={item}
           key={item.id} />

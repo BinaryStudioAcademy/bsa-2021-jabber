@@ -7,12 +7,12 @@ import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 
 type Props = {
-  hasRecord?: boolean;
+  hasTimestamps?: boolean;
   comment: Comment;
   onClick?: (payload: number) => void;
 };
 
-const CommentItem: React.FC<Props> = ({ comment, onClick, hasRecord }) => {
+const CommentItem: React.FC<Props> = ({ comment, onClick, hasTimestamps }) => {
   const time = getTimeOffset(comment.timestamp);
 
   const handleTimeLineJump = (): void => {
@@ -40,7 +40,7 @@ const CommentItem: React.FC<Props> = ({ comment, onClick, hasRecord }) => {
           <Link to={`${AppRoute.USERS}/${comment.user.id}`} className={styles.link}>
             {comment.user.nickname ?? comment.user.firstName}
           </Link>
-          {hasRecord && (
+          {hasTimestamps && (
             <>
               &nbsp;<span>at</span>
               &nbsp;
