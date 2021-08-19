@@ -5,9 +5,10 @@ import {
   PodcastEditDTOPayload,
   PodcastCreatePayload,
   PodcastEditPayload,
-  PodcastSearchPayload,
   UserPodcastQueryParams,
+  PodcastLoadFilter,
 } from '~/common/types/types';
+import { PODCAST_LOAD_LIMIT } from '~/common/constants/constants';
 import {
   podcast as podcastRep,
   image as imageRep,
@@ -45,8 +46,8 @@ class Podcast {
     this.#episodeService = episodeService;
   }
 
-  public getAll(): Promise<TPodcast[]> {
-    return this.#podcastRepository.getAll();
+  public getByQuery(filter: PodcastLoadFilter = { offset: 0, limit: PODCAST_LOAD_LIMIT, search: '' }): Promise<TPodcast[]> {
+    return this.#podcastRepository.getByQuery(filter);
   }
 
   public async create({
@@ -108,10 +109,6 @@ class Podcast {
       });
     }
     return podcast;
-  }
-
-  public getAllBySearch(payload: PodcastSearchPayload): Promise<TPodcast[]> {
-    return this.#podcastRepository.getAllBySearch(payload);
   }
 
   public async update(

@@ -17,3 +17,4 @@ export {
   fileExtensionValidation,
 } from './validation-schema/validation-schema';
 export { getAllowedClasses } from './dom/dom';
+export { getStringifiedQuery } from './http/http';
