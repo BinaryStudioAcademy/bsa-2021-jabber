@@ -1,0 +1,30 @@
+.shownoteInput {
+  .inputRow {
+    display: flex;
+    align-items: flex-start;
+
+    .inputTime {
+      margin-right: 15px;
+    }
+
+    label {
+      width: 100%;
+    }
+  }
+
+  .deleteBtn {
+    margin: 5px 0 0 15px;
+    padding: 10px;
+    font-weight: 600;
+  }
+
+  &:first-child {
+    margin-top: 20px;
+  }
+}
+
+.errorWrapper {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-button-background);
+}
