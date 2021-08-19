@@ -3,6 +3,8 @@ import { Comment } from 'common/types/types';
 import { getDistanceToDateNow } from 'helpers/date/date';
 import ImageWrapper from '../image-wrapper/image-wrapper';
 import styles from './styles.module.scss';
+import { Link } from 'components/common/common';
+import { AppRoute } from 'common/enums/enums';
 
 type Props = {
   comment: Comment;
@@ -34,7 +36,10 @@ const CommentItem: React.FC<Props> = ({ comment, onClick }) => {
       />
       <div className={styles.intro}>
         <p className={styles.userName}>
-          {comment.user.nickname ?? comment.user.firstName}&nbsp;<span>at</span>
+          <Link to={`${AppRoute.USERS}/${comment.user.id}`} className={styles.link}>
+            {comment.user.nickname ?? comment.user.firstName}
+          </Link>
+          &nbsp;<span>at</span>
           &nbsp;
           {onClick ? (
             <button
