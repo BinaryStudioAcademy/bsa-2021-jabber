@@ -30,3 +30,16 @@
 .rowWrapper:hover .noteName {
   color: var(--color-link-active);
 }
+
+@media screen and (max-width: 768px) {
+  .time {
+    font-size: 14px;
+  }
+
+  .noteName {
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

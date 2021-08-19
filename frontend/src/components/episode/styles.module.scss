@@ -1,8 +1,8 @@
 .root {
-  padding: 30px;
   width: 100%;
-  max-width: 1577px;
+  max-width: 1606px;
   margin: 0 auto;
+  padding: 30px 15px;
 }
 
 .episodeWrapper {
@@ -15,6 +15,7 @@
     rgba(25, 34, 47, 0.4)
   );
   border-radius: 3px;
+  overflow: hidden
 }
 
 .imageWrapper {
@@ -39,7 +40,7 @@
 .editLink {
   display: block;
   position: absolute;
-  right: 90px;
+  right: 85px;
   top: 35px;
   width: 25px;
   height: 25px;
@@ -49,7 +50,7 @@
 
 .deleteButton {
   position: absolute;
-  right: 45px;
+  right: 35px;
   top: 35px;
   width: 25px;
   height: 25px;
@@ -74,8 +75,8 @@
 
 .descriptionWrapper {
   position: relative;
-  width: 45%;
-  min-width: 490px;
+  width: 724px;
+  min-height: 200px;
   margin-bottom: 45px;
   padding: 35px;
   border-radius: 3px;
@@ -90,6 +91,7 @@
 .title {
   font-size: 40px;
   margin: 0;
+  line-height: 1.25;
 }
 
 .description {
@@ -101,24 +103,45 @@
 }
 
 .episodeInfo {
-  font-size: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 0;
 
   .infoBlock {
     display: flex;
+    flex-direction: column;
+    margin-right: 60px;
 
     .infoBlockValue {
-      margin-left: 10;
+      margin-inline-start: 0;
+    }
+
+    .infoBlockValue:first-letter {
+      text-transform: uppercase;
     }
 
     .infoBlockTitle {
-      font-weight: bold;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      padding-left: 25px;
     }
   }
+}
+
+.type {
+  background: url('../../assets/img/star.svg') no-repeat left center /
+  15px;
+}
+.status {
+  background: url('../../assets/img/fire.svg') no-repeat left center /
+  15px;
 }
 
 .shownotesWrapper {
   display: flex;
   flex-direction: column;
+  margin-top: 30px;
 }
 
 h3 {
@@ -182,6 +205,10 @@ h3 {
   }
 }
 
+.playerWrapper {
+  margin-top: 30px;
+}
+
 .notFound {
   flex-grow: 1;
   text-align: center;
@@ -205,4 +232,62 @@ h3 {
   border-top: 1px solid rgba(53, 53, 53, 0.3);
   margin-top: 15px;
   padding-top: 15px;
+}
+
+// Media
+@media screen and (max-width: 991px) {
+  .episodeWrapper {
+    padding: 40px 40px 20px 40px;
+  }
+
+  .descriptionWrapper {
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .episodeWrapper {
+    padding: 30px 30px 20px 30px;
+  }
+
+  .descriptionWrapper {
+    padding: 20px;
+  }
+
+  .deleteButton {
+    right: 20px;
+  }
+
+  .editLink {
+    right: 55px;
+  }
+
+  .title {
+    margin-bottom: 15px;
+    font-size: 25px;
+  }
+
+  .description {
+    width: auto;
+  }
+
+  .episodeInfo {
+    .infoBlock {
+      margin-right: 20px;
+      .infoBlockTitle {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  h3 {
+    font-size: 18px;
+    color: white;
+    margin: 0;
+  }
+
+  .commentsWrapper {
+    width: 100%;
+  }
 }

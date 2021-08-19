@@ -8,7 +8,7 @@ import {
   Podcast,
   PodcastCreatePayload,
   PodcastEditPayload,
-  PodcastSearchPayload,
+  PodcastLoadFilter,
 } from 'common/types/types';
 import { Http } from 'services/http/http.service';
 
@@ -26,22 +26,12 @@ class PodcastApi {
     this.#apiPrefix = apiPrefix;
   }
 
-  public getAll(): Promise<Podcast[]> {
+  public getByQuery(payload: PodcastLoadFilter): Promise<Podcast[]> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}`,
       {
         method: HttpMethod.GET,
-      },
-    );
-  }
-
-  public getAllBySearch(payload: PodcastSearchPayload): Promise<Podcast[]> {
-    return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.SEARCH}`,
-      {
-        method: HttpMethod.POST,
-        contentType: ContentType.JSON,
-        payload: JSON.stringify(payload),
+        query: payload,
       },
     );
   }

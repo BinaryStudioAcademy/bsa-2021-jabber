@@ -230,3 +230,22 @@
     }
   }
 }
+
+// Media
+@media screen and (max-width: 768px) {
+  :global {
+    .rhap_stacked .rhap_controls-section {
+      flex-direction: column;
+
+      & > div {
+        margin-top: 15px;
+      }
+
+      .rhap_volume-controls {
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+      }
+    }
+  }
+}
