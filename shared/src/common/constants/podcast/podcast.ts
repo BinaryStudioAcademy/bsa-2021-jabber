@@ -1,3 +1,3 @@
-const PODCAST_LOAD_LIMIT = 5;
+const PODCAST_LOAD_LIMIT = 21;
 
 export { PODCAST_LOAD_LIMIT };
