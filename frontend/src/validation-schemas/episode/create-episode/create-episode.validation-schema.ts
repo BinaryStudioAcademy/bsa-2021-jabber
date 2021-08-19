@@ -45,7 +45,11 @@ const episodeCreate = episode.keys({
           b[ShownotePayloadKey.MINUTES],
           b[ShownotePayloadKey.SECONDS],
         ),
-    ),
+    )
+    .messages({
+      'array.required': EpisodeValidationMessage.SHOWNOTES_REQUIRE,
+      'array.unique': EpisodeValidationMessage.SHOWNOTE_DUPLICATE,
+    }),
 });
 
 export { episodeCreate };
