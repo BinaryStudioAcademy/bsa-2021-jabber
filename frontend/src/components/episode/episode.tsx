@@ -51,7 +51,7 @@ const Episode: React.FC = () => {
 
   const hasShownotes = Boolean(episode?.shownotes?.length);
   const hasUser = Boolean(user);
-  const hasTimestamps = Boolean(episode?.record);
+  const hasRecord = Boolean(episode?.record);
   const isStaging = episode?.status === EpisodeStatus.STAGING;
   const isOwner = user?.id === episode?.userId;
   const isPlayerLoaded = playerStatus === DataStatus.FULFILLED;
@@ -197,7 +197,7 @@ const Episode: React.FC = () => {
             {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
             {comments.length ? (
               <CommentsList
-                hasTimestamps={hasTimestamps}
+                hasTimestamps={hasRecord}
                 comments={comments}
                 onClick={handleJumpToTimeLine}
               />
