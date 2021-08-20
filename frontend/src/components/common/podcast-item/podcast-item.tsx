@@ -8,8 +8,8 @@ type Props = {
 };
 
 const PodcastItem: React.FC<Props> = ({ podcast }) => (
-  <div>
-    <li className={styles.wrapper}>
+  <li>
+    <div className={styles.wrapper}>
       <ImageWrapper
         width="195"
         height="195"
@@ -24,11 +24,14 @@ const PodcastItem: React.FC<Props> = ({ podcast }) => (
           {podcast.name}
         </Link>
       </h3>
-    </li>
-    <Link to={`${AppRoute.USERS}/${podcast.user.id}`} className={styles.linkUser}>
-      <p className={styles.author}>{podcast.user.nickname}</p>
+    </div>
+    <Link
+      to={`${AppRoute.USERS}/${podcast.user.id}`}
+      className={styles.linkUser}
+    >
+      {podcast.user.nickname}
     </Link>
-  </div>
+  </li>
 );
 
 export default PodcastItem;
