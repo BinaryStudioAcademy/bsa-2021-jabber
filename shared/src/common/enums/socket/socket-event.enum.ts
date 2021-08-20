@@ -1,5 +1,6 @@
 enum SocketEvent {
   CONNECTION = 'connection',
+  CONNECT = 'connect',
   DISCONNECT = 'disconnect',
   JOIN_ROOM = 'joinRoom',
   LEAVE_ROOM = 'leaveRoom',

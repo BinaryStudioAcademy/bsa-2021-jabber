@@ -4,7 +4,7 @@ import { ENV, SocketEvent, DataStatus } from 'common/enums/enums';
 import { Comment } from 'common/types/types';
 import { ActionType as RecordActionType } from 'store/record/common';
 import { ActionType as EpisodeActionType } from 'store/episode/common';
-import { episode as episodeAction } from 'store/actions';
+import { episode as episodeAction, record as recordAction } from 'store/actions';
 import { PEER_CONNECTION_CONFIG } from './common/constants/constants';
 import { Next } from './common/types/types';
 
@@ -24,14 +24,11 @@ const socket: Middleware = ({ dispatch }) => (next): Next => {
       .then(() => {
         socket.emit(SocketEvent.PEER_ANSWER, id, peerConnection.localDescription);
       });
-    peerConnection.ontrack = (event): void => {
-      const video = document.createElement('video');
-      video.controls = true;
-      video.autoplay = true;
-      video.muted = false;
-      video.srcObject = event.streams[0];
 
+    peerConnection.ontrack = (event): void => {
+      dispatch(recordAction.setLiveStream(event.streams[0]));
     };
+
     peerConnection.onicecandidate = (event): void => {
       if (event.candidate) {
         socket.emit(SocketEvent.PEER_CANDIDATE, id, event.candidate);
@@ -74,7 +71,7 @@ const socket: Middleware = ({ dispatch }) => (next): Next => {
     }
   });
 
-  socket.on('connect', () => {
+  socket.on(SocketEvent.CONNECT, () => {
     socket.emit(SocketEvent.PEER_WATCHER);
   });
 
@@ -86,7 +83,7 @@ const socket: Middleware = ({ dispatch }) => (next): Next => {
     dispatch(episodeAction.updateComments(comment));
   });
 
-  return async (action: AnyAction): Promise<void> => {
+  return (action: AnyAction): void => {
     switch (action.type) {
       case `${EpisodeActionType.LOAD_COMMENTS_BY_EPISODE_ID}/${DataStatus.PENDING}`: {
         socket.emit(SocketEvent.JOIN_ROOM, action.meta.arg);
@@ -103,17 +100,12 @@ const socket: Middleware = ({ dispatch }) => (next): Next => {
       }
 
       case `${RecordActionType.START_RECORD}/${DataStatus.FULFILLED}`: {
-        liveStream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-          audio: true,
-        });
+        liveStream = action.payload;
 
         socket.emit(SocketEvent.PEER_BROADCASTER);
         break;
       }
     }
-    //eslint-disable-next-line
-    console.log(peerConnections);
 
     next(action);
   };
