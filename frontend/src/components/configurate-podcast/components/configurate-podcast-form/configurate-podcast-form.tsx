@@ -9,7 +9,12 @@ import {
 } from 'common/enums/enums';
 import { Option, PodcastFormPayload } from 'common/types/types';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
-import { Input, Button, Select, ImagePreviewControl } from 'components/common/common';
+import {
+  Input,
+  Button,
+  Select,
+  ImagePreviewControl,
+} from 'components/common/common';
 import { DEFAULT_PODCAST_PAYLOAD } from './common/constants';
 import { podcastCreate as podcastCreateSchema } from 'validation-schemas/validation-schemas';
 import { sortGenresByName } from '../../helpers/helpers';
@@ -33,10 +38,12 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
     defaultValues: payload,
   });
 
-  const { createPodcastStatus, podcast } = useAppSelector(({ configuratePodcast }) => ({
-    createPodcastStatus: configuratePodcast.dataStatus,
-    podcast: configuratePodcast.podcast,
-  }));
+  const { createPodcastStatus, podcast } = useAppSelector(
+    ({ configuratePodcast }) => ({
+      createPodcastStatus: configuratePodcast.dataStatus,
+      podcast: configuratePodcast.podcast,
+    }),
+  );
 
   const isFormDisabled = createPodcastStatus === DataStatus.PENDING;
 
@@ -91,12 +98,12 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
         />
         <div className={styles.btnsWrapper}>
           <Button
-            className={styles.btnSave}
+            className={styles.button}
             label="Save"
             type={ButtonType.SUBMIT}
           />
           <Button
-            className={styles.btnCancel}
+            className={styles.button}
             buttonColor={ButtonColor.LIGHT_PINK}
             label="Cancel"
             type={ButtonType.SUBMIT}
