@@ -7,6 +7,7 @@ import {
   createComment,
   updateComments,
   deleteComment,
+  updateCommentsAfterDelete,
 } from './actions';
 
 type State = {
@@ -59,12 +60,14 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(deleteComment.pending, (state) => {
     state.commentDataStatus = DataStatus.PENDING;
   });
-  builder.addCase(deleteComment.fulfilled, (state, action) => {
+  builder.addCase(deleteComment.fulfilled, (state) => {
     state.commentDataStatus = DataStatus.FULFILLED;
-    state.comments = action.payload;
   });
   builder.addCase(deleteComment.rejected, (state) => {
     state.commentDataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(updateCommentsAfterDelete, (state, action) => {
+    state.comments = state.comments.filter((comment) => comment.id !== action.payload.id);
   });
   builder.addCase(updateComments, (state, action) => {
     state.comments = [action.payload, ...state.comments];

@@ -7,6 +7,7 @@ enum ActionType {
   CREATE_COMMENT = 'comments/create-comment',
   UPDATE_COMMENTS = 'comments/update-comments',
   DELETE_COMMENT = 'comment/delete-comment',
+  UPDATE_COMMENTS_AFTER_DELETE = 'comments/update-after-delete',
 }
 
 type LoadEpisodePayload  = {

@@ -24,6 +24,10 @@ class Socket {
       socket.on(SocketEvent.UPDATE_COMMENTS, (comment: Comment) => {
         io.to(String(comment.episodeId)).emit(SocketEvent.UPDATE_COMMENTS, comment);
       });
+
+      socket.on(SocketEvent.UPDATE_COMMENTS_AFTER_DELETE, (comment: Comment) =>{
+        io.to(String(comment.episodeId)).emit(SocketEvent.UPDATE_COMMENTS_AFTER_DELETE, comment);
+      });
     });
   }
 }

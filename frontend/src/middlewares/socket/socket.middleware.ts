@@ -14,6 +14,10 @@ const socket: Middleware = ({ dispatch }) => (next): Next => {
     dispatch(episodeAction.updateComments(comment));
   });
 
+  socket.on(SocketEvent.UPDATE_COMMENTS_AFTER_DELETE, (comment: Comment): void => {
+    dispatch(episodeAction.updateCommentsAfterDelete(comment));
+  });
+
   return (action: AnyAction): void => {
     switch (action.type) {
       case `${EpisodeActionType.LOAD_COMMENTS_BY_EPISODE_ID}/${DataStatus.PENDING}`: {
@@ -22,6 +26,10 @@ const socket: Middleware = ({ dispatch }) => (next): Next => {
       }
       case `${EpisodeActionType.CREATE_COMMENT}/${DataStatus.FULFILLED}`: {
         socket.emit(SocketEvent.UPDATE_COMMENTS, action.payload);
+        break;
+      }
+      case `${EpisodeActionType.DELETE_COMMENT}/${DataStatus.FULFILLED}`: {
+        socket.emit(SocketEvent.UPDATE_COMMENTS_AFTER_DELETE, action.payload);
         break;
       }
     }

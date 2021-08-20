@@ -1,4 +1,5 @@
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
+import { NotificationMessage, NotificationTitle } from 'common/enums/enums';
 import {
   User,
   Episode,
@@ -41,18 +42,17 @@ const createComment = createAsyncThunk<Comment, CommentFormCreatePayload, AsyncT
   return comment;
 });
 
-const deleteComment = createAsyncThunk<Comment[], number, AsyncThunkConfig>
-(ActionType.DELETE_COMMENT, async (id, { extra, getState }) => {
-  const { commentApi } = extra;
-  const { episode } = getState();
-  const comments = episode.comments.filter((comment) => comment.id !== id);
+const deleteComment = createAsyncThunk <Comment, number, AsyncThunkConfig>
+(ActionType.DELETE_COMMENT, async (id, { extra }) => {
+  const { commentApi, notificationService } = extra;
 
-  await commentApi.delete(id);
-
-  return comments;
+  const deletedComment = await commentApi.delete(id);
+  notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.COMMENT_DELETED);
+  return deletedComment;
 });
 
 const updateComments = createAction<Comment>(ActionType.UPDATE_COMMENTS);
+const updateCommentsAfterDelete = createAction<Comment>(ActionType.UPDATE_COMMENTS_AFTER_DELETE);
 
 export {
   loadEpisodePayload,
@@ -60,4 +60,5 @@ export {
   createComment,
   updateComments,
   deleteComment,
+  updateCommentsAfterDelete,
 };
