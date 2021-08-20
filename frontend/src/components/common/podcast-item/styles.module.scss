@@ -5,7 +5,7 @@
   .title {
     margin: 0;
     font-size: 16px;
-    & a:hover  {
+    & a:hover {
       color: var(--color-header-background);
     }
   }
@@ -79,6 +79,15 @@
     bottom: 0;
     left: 0;
     content: '';
+  }
+}
+
+.linkUser {
+  text-decoration: none;
+  color: var(--color-primary-dark);
+
+  &:hover{
+    color: var(--color-header-background)
   }
 }
 
