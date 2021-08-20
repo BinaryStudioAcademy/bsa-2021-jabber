@@ -24,6 +24,7 @@ const Podcast: React.FC = () => {
   const { id } = useParams<PageParams>();
   const isOwner = userId === podcast?.userId;
   const isMaster = userRole === UserRole.MASTER;
+  const isAllowDelete = isOwner || isMaster;
 
   useEffect(() => {
     dispatch(podcastActions.loadPodcast(Number(id)));
@@ -75,7 +76,7 @@ const Podcast: React.FC = () => {
                   className={styles.editLink}
                 />
               )}
-              {(isOwner || isMaster) && (
+              {isAllowDelete && (
                 <>
                   <button
                     onClick={handleShowPopup}

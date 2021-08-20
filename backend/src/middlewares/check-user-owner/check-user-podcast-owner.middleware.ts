@@ -6,7 +6,7 @@ import { podcast as podcastService } from '~/services/services';
 const checkUserPodcastOwner = (): RequestHandler => {
   const handler: RequestHandler = async (req, _res, next) => {
     if (req.user?.role === UserRole.MASTER) {
-      next();
+      return next();
     }
     const podcastId = req.params.id ?? req.body.podcastId;
     const { userId: podcastOwnerId } = await podcastService.getById(Number(podcastId));

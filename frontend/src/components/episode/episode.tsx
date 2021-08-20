@@ -57,6 +57,7 @@ const Episode: React.FC = () => {
   const isOwner = user?.id === episode?.userId;
   const isMaster = user?.role === UserRole.MASTER;
   const isPlayerLoaded = playerStatus === DataStatus.FULFILLED;
+  const isAllowDelete = isOwner || isMaster;
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
@@ -130,7 +131,7 @@ const Episode: React.FC = () => {
                     <span className="visually-hidden">Edit episode</span>
                   </Link>
                 )}
-                {(isOwner || isMaster) && (
+                {isAllowDelete && (
                   <>
                     <button
                       onClick={handleShowPopup}
