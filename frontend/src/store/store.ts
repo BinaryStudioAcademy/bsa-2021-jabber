@@ -17,6 +17,8 @@ import {
   handleError as handleErrorMiddleware,
   socket as socketMiddleware,
 } from 'middlewares/middlewares';
+import { ActionType as RecordActionType } from './record/common';
+import { DataStatus } from 'common/enums/enums';
 
 const extraArgument = {
   authApi,
@@ -32,10 +34,18 @@ const extraArgument = {
   navigationService,
 };
 
+const ignoredActions = [
+  `${RecordActionType.START_RECORD}/${DataStatus.FULFILLED}`,
+  `${RecordActionType.SET_LIVE_STREAM}/${DataStatus.FULFILLED}`,
+];
+
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions,
+      },
       thunk: {
         extraArgument,
       },

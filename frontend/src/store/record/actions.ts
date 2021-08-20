@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { AsyncThunkConfig } from 'common/types/types';
 import { ActionType } from './common';
 
@@ -8,10 +8,12 @@ const initRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
   recordAudioService.init();
 });
 
-const startRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
+const startRecord = createAsyncThunk<MediaStream | undefined, undefined, AsyncThunkConfig>
 (ActionType.START_RECORD, (_arg, { extra }) => {
   const { recordAudioService } = extra;
-  recordAudioService.start();
+  const stream = recordAudioService.start();
+
+  return stream;
 });
 
 const pauseRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
@@ -34,10 +36,13 @@ const stopRecord = createAsyncThunk<string, undefined, AsyncThunkConfig>
   return audioDataUrl;
 });
 
+const setLiveStream = createAction<MediaStream>(ActionType.SET_LIVE_STREAM);
+
 export {
   initRecord,
   startRecord,
   pauseRecord,
   resumeRecord,
   stopRecord,
+  setLiveStream,
 };
