@@ -4,7 +4,7 @@ import {
   configuratePodcast as configuratePodcastActions,
 } from 'store/actions';
 import { AppRoute, DataStatus } from 'common/enums/enums';
-import { Link, Loader, ImageWrapper, ConfirmPopup } from 'components/common/common';
+import { Link, Loader, ImageWrapper, ConfirmPopup, Button } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
@@ -59,6 +59,13 @@ const Podcast: React.FC = () => {
               label={podcast.name}
               className={styles.imageWrapper}
             />
+            {podcast.userId === userId && (
+              <Button
+                className={styles.addEpisodeLink}
+                label="Add episode"
+                href={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
+              />
+            )}
             <div className={styles.podcastInfoWrapper}>
               {isOwner && (
                 <>
@@ -94,7 +101,7 @@ const Podcast: React.FC = () => {
                     className={styles.infoInner}
                     to={`${AppRoute.USERS}/${podcast.userId}`}
                   >
-                    <p>{podcast.user.nickname}</p>
+                    {podcast.user.nickname}
                   </Link>
                 </li>
                 {Boolean(episodes.length) && (
@@ -145,15 +152,6 @@ const Podcast: React.FC = () => {
                   <p className={styles.infoInner}>{podcast.type}</p>
                 </li>
               </ul>
-
-              {podcast.userId === userId && (
-                <Link
-                  to={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
-                  className={styles.addEpisodeLink}
-                >
-                  Add episode
-                </Link>
-              )}
             </div>
           </div>
           {episodes.length ? (
