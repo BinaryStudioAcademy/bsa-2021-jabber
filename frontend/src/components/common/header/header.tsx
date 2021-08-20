@@ -1,4 +1,4 @@
-import { useAppSelector, useDispatch, useVisible, useState } from 'hooks/hooks';
+import { useAppSelector, useDispatch, useState } from 'hooks/hooks';
 import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
 import { Button, Link, ImageWrapper } from 'components/common/common';
@@ -6,6 +6,8 @@ import { auth as authActions } from 'store/actions';
 import logo from 'assets/img/logo.svg';
 import headerBell from 'assets/img/header-bell.svg';
 import { getAllowedClasses } from 'helpers/helpers';
+import Popup from 'reactjs-popup';
+import './popus.styles.scss';
 import styles from './styles.module.scss';
 
 const Header: React.FC = () => {
@@ -15,11 +17,6 @@ const Header: React.FC = () => {
   const hasUser = Boolean(user);
 
   const dispatch = useDispatch();
-  const { ref, isVisible, setIsVisible } = useVisible(false);
-
-  const handleMenuToggle = (): void => {
-    setIsVisible(!isVisible);
-  };
 
   const handleUserExit = (evt: React.MouseEvent): void => {
     evt.preventDefault();
@@ -41,7 +38,14 @@ const Header: React.FC = () => {
         </Link>
         {hasUser ? (
           <>
-            <ul className={isShowNav ? getAllowedClasses(styles.navigation, styles.active) : styles.navigation} onClick={():void => setIsShowNav(!isShowNav)}>
+            <ul
+              className={
+                isShowNav
+                  ? getAllowedClasses(styles.navigation, styles.active)
+                  : styles.navigation
+              }
+              onClick={(): void => setIsShowNav(!isShowNav)}
+            >
               <li className={styles.liNavigation}>
                 <Link to={AppRoute.ROOT} className={styles.link}>
                   Podcasts
@@ -72,32 +76,35 @@ const Header: React.FC = () => {
                   className={styles.notification}
                 />
               </Link>
-              <div className={styles.profile} ref={ref}>
-                <button
-                  className={styles.usersButtonWrapper}
-                  onClick={handleMenuToggle}
+
+              <div className={styles.profile}>
+                <Popup
+                  trigger={
+                    <button className={styles.usersButtonWrapper}>
+                      <ImageWrapper
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        label={user?.nickname}
+                        className={styles.imageWrapper}
+                        src={user?.image?.url}
+                      />
+                    </button>
+                  }
+                  position="bottom center"
+                  closeOnDocumentClick
                 >
-                  <ImageWrapper
-                    width="40"
-                    height="40"
-                    loading="lazy"
-                    label={user?.nickname}
-                    className={styles.imageWrapper}
-                    src={user?.image?.url}
-                  />
-                </button>
-                {isVisible && (
                   <div className={styles.dropDown}>
-                    <ul className={styles.dropDownList}>
-                      <li className={styles.dropDownListElement}>
+                    <div className={styles.dropDownList}>
+                      <div className={styles.dropDownListElement}>
                         <Link
                           to={AppRoute.PODCASTS_EDIT}
                           className={styles.link}
                         >
                           + Add Podcast
                         </Link>
-                      </li>
-                      <li className={styles.dropDownListElement}>
+                      </div>
+                      <div className={styles.dropDownListElement}>
                         <Link
                           to={AppRoute.ROOT}
                           className={styles.link}
@@ -105,11 +112,10 @@ const Header: React.FC = () => {
                         >
                           Exit
                         </Link>
-                      </li>
-                    </ul>
-                    <div className={styles.dropDownArrow}></div>
+                      </div>
+                    </div>
                   </div>
-                )}
+                </Popup>
               </div>
             </div>
           </>
@@ -120,7 +126,14 @@ const Header: React.FC = () => {
             </Link>
           </div>
         )}
-        <div className={isShowNav ? getAllowedClasses(styles.burgerMenu, styles.active) : styles.burgerMenu} onClick={handleShowNav}>
+        <div
+          className={
+            isShowNav
+              ? getAllowedClasses(styles.burgerMenu, styles.active)
+              : styles.burgerMenu
+          }
+          onClick={handleShowNav}
+        >
           <span></span>
           <span></span>
           <span></span>
