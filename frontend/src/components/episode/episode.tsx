@@ -36,13 +36,14 @@ const Episode: React.FC = () => {
   const playerRef = useRef<PlayerRef | null>(null);
   const playerContainerRef = useRef<HTMLDivElement>(null);
 
-  const { episode, comments, user, dataStatus, podcast } = useAppSelector(
-    ({ episode, auth }) => ({
+  const { episode, comments, user, dataStatus, podcast, liveStream } = useAppSelector(
+    ({ episode, auth, record }) => ({
       dataStatus: episode.dataStatus,
       episode: episode.episode,
       comments: episode.comments,
       user: auth.user,
       podcast: episode.podcast,
+      liveStream: record.liveStream,
     }),
   );
 
@@ -172,6 +173,7 @@ const Episode: React.FC = () => {
             {episode.record && (
               <div ref={playerContainerRef}>
                 <Player
+                  srcObject={liveStream}
                   src={episode.record.fileUrl}
                   ref={playerRef}
                   onSetPlayerStatus={setPlayerStatus}
