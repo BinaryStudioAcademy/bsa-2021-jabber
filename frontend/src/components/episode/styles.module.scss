@@ -68,9 +68,10 @@
   font-size: 16px;
   display: inline-block;
   position: absolute;
-  top: 65px;
+  top: 75px;
   right: 75px;
   padding: 12px 22px;
+  z-index: 20;
 }
 
 .descriptionWrapper {
@@ -240,9 +241,17 @@ h3 {
     padding: 40px 40px 20px 40px;
   }
 
+  .btnStartLive {
+    top: auto;
+    left: 60px;
+    right: auto;
+    bottom: 70px;
+  }
+
   .descriptionWrapper {
     width: 100%;
     margin: 0 auto;
+    padding: 20px 20px 100px 20px;
   }
 }
 
@@ -251,8 +260,9 @@ h3 {
     padding: 30px 30px 20px 30px;
   }
 
-  .descriptionWrapper {
-    padding: 20px;
+  .btnStartLive {
+    left: 55px;
+    bottom: 100px;
   }
 
   .deleteButton {

@@ -24,7 +24,11 @@ export {
   EpisodeStatus,
   EpisodeValidationMessage,
 } from './episode/episode';
-export { UserPayloadKey, UserValidationMessage } from './user/user';
+export {
+  UserPayloadKey,
+  UserValidationMessage,
+  UserRole,
+} from './user/user';
 export {
   ButtonType,
   IconName,
@@ -34,7 +38,11 @@ export {
 } from './ui/ui';
 export { DateFormatType } from './date/date';
 export { RecordStatus } from './record/record';
-export { ShownotePayloadKey } from './shownote/shownote';
+export {
+  ShownotePayloadKey,
+  ShownoteValidationMessage,
+  ShownoteValidationRule,
+} from './shownote/shownote';
 export { CommentCreatePayloadKey } from './comment/comment';
 export { SocketEvent } from './socket/socket';
 export {

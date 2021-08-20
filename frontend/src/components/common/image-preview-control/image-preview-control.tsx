@@ -60,7 +60,8 @@ const ImagePreviewControl: React.FC<Props> = ({
           width={width}
           height={height}
           loading="lazy"
-          className={className}
+          label={label}
+          className={styles.defaultImage}
         />
         <input
           {...control.register(name)}
