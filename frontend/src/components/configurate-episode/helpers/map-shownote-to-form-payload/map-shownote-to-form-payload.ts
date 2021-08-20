@@ -1,8 +1,14 @@
-import { Shownote, ShownotePayload } from 'common/types/types';
+import { SECONDS_IN_MINUTE } from 'common/constants/constants';
+import { ShownoteFormPayload, ShownotePayload } from 'common/types/types';
 
-const mapShownoteToFormPayload = (shownote: Shownote): ShownotePayload => ({
-  name: shownote.name,
-  timestamp: shownote.timestamp,
-});
+const mapShownoteToFormPayload = ({
+  name,
+  timestamp,
+}: ShownotePayload): ShownoteFormPayload => {
+  const minutes = Math.floor(timestamp / SECONDS_IN_MINUTE);
+  const seconds = timestamp - minutes * SECONDS_IN_MINUTE;
+
+  return { name, minutes, seconds };
+};
 
 export { mapShownoteToFormPayload };

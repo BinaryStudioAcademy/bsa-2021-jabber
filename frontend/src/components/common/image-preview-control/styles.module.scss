@@ -27,6 +27,15 @@
     background: url('../../../assets/img/icon-camera.svg');
     margin: auto;
   }
+
+  .defaultImage {
+    span {
+      top: calc(50% - 10px);
+
+      font-size: 95px;
+      color: rgba(25, 34, 47, 0.3);
+    }
+  }
 }
 
 .cornerRight {
