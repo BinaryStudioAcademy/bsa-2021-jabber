@@ -1,7 +1,7 @@
 import { ShownotePayloadKey } from '~/common/enums/enums';
+import { ShownoteCommonPayload } from './shownote-common-payload.type';
 
-type ShownotePayload = {
-  [ShownotePayloadKey.NAME]: string;
+type ShownotePayload = ShownoteCommonPayload & {
   [ShownotePayloadKey.TIMESTAMP]: number;
 };
 

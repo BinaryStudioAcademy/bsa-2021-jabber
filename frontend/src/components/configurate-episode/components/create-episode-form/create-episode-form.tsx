@@ -18,8 +18,7 @@ import {
   ImagePreviewControl,
 } from 'components/common/common';
 import { DEFAULT_CREATE_EPISODE_PAYLOAD } from './common/constants';
-import ShownoteInputList from './components/shownote-input-list/shownote-input-list';
-import RecordPreviewControl from './components/record-preview-control/record-preview-control';
+import { RecordPreviewControl, TimeNavigation } from './components/components';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -36,7 +35,7 @@ const CreateEpisodeForm: React.FC<Props> = ({
   payload = DEFAULT_CREATE_EPISODE_PAYLOAD,
   imageUrl,
 }) => {
-  const { control, handleSubmit, errors } = useAppForm({
+  const { control, handleSubmit, errors, setValue } = useAppForm({
     validationSchema: createEpisodeValidationSchema,
     defaultValues: payload,
   });
@@ -103,7 +102,7 @@ const CreateEpisodeForm: React.FC<Props> = ({
           control={control}
           errors={errors}
         />
-        <ShownoteInputList control={control} errors={errors} />
+        <TimeNavigation control={control} errors={errors} setValue={setValue} />
         <div className={styles.buttonRow}>
           <Button
             label="Save"
