@@ -22,10 +22,7 @@ const PodcastFilter: React.FC<Props> = ({
   const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
 
   const handleCancel = (): void => {
-    const currentValues = new Array(genres.length).fill(false);
-    currentState.genres.forEach((id) => {
-      currentValues[genres.findIndex((genre) => genre.id === id)] = true;
-    });
+    const currentValues = new Array<boolean>(genres.length).fill(false).map((_arg, i) => currentState.genres.includes(genres[i].id));
     reset({ genresFilter: currentValues });
     setIsFormVisible(false);
   };
