@@ -1,5 +1,5 @@
 import { DataStatus, ButtonColor } from 'common/enums/enums';
-import { PodcastSearchPayload, PodcastLoadFilter } from 'common/types/types';
+import { PodcastSearchPayload, PodcastLoadFilter, GenresFilter } from 'common/types/types';
 import { Loader, PodcastList, Button, PodcastFilter } from 'components/common/common';
 import {
   useAppSelector,
@@ -24,7 +24,7 @@ const Homepage: React.FC = () => {
   const dispatch = useDispatch();
   const hasPodcasts = Boolean(podcasts.length);
   const isLoading = dataStatus === DataStatus.PENDING;
-
+  const isGenresLoaded = genresDataStatus === DataStatus.FULFILLED;
   const [podcastsFilter, setPodcastsFilter] = useState<PodcastLoadFilter>(DEFAULT_PODCASTS_FILTER_VALUE);
 
   useEffect(() => {
@@ -47,10 +47,20 @@ const Homepage: React.FC = () => {
     [],
   );
 
-  // eslint-disable-next-line no-console
-  console.log(genres);
-  // eslint-disable-next-line no-console
-  console.log(genresDataStatus);
+  const handleSetGenres = (data: GenresFilter): void => {
+    const selectedGenres = data.genresFilter.reduce<number[]>((acc, genre, index) => {
+      if (genre) {
+        acc.push(genres[index].id);
+      }
+      return acc;
+    }, []);
+
+    setPodcastsFilter({
+      ...podcastsFilter,
+      offset: INITIAL_PAGE_OFFSET,
+      genres: selectedGenres,
+    });
+  };
 
   const handleMorePodcastsLoad = (): void => {
     setPodcastsFilter({
@@ -62,8 +72,10 @@ const Homepage: React.FC = () => {
   return (
     <main className={styles.main}>
       <Search onChange={handleChange} />
-      <h2 className={styles.title}>All podcasts</h2>
-      <PodcastFilter genres={genres} />
+      <div className={styles.titleWrapper}>
+        <h2 className={styles.title}>All podcasts</h2>
+        {isGenresLoaded  && <PodcastFilter genres={genres} onSetGenres={handleSetGenres} currentState={podcastsFilter}/>}
+      </div>
       {hasPodcasts ? (
         <>
           <PodcastList podcasts={podcasts} />

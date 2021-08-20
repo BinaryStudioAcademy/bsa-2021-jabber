@@ -1,34 +1,30 @@
+import { Control, useController, Path, FieldValues } from 'react-hook-form';
 import { InputType } from 'common/enums/enums';
 import styles from './styles.module.scss';
 
 type Props = {
   label: string;
-  onChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
-  name: string;
-  isRequire?: boolean;
-  isDisabled?: boolean;
-  isChecked?: boolean;
+  name: Path<FieldValues>;
+  control: Control;
 };
 
 const Checkbox: React.FC<Props> = ({
-  isRequire = false,
-  isDisabled = false,
-  isChecked = false,
   label,
   name,
-  onChange,
-}) => (
-  <label className={styles.checkbox}>
-    <input
-      type={InputType.CHECKBOX}
-      name={name}
-      onChange={onChange}
-      required={isRequire}
-      disabled={isDisabled}
-      checked={isChecked}
-    />
-    {label}
-  </label>
-);
+  control,
+}) => {
+
+  const { field } = useController({ name, control });
+  return (
+    <label className={styles.checkbox}>
+      <input
+        {...field}
+        type={InputType.CHECKBOX}
+        checked={field.value}
+      />
+      {label}
+    </label>
+  );
+};
 
 export default Checkbox;

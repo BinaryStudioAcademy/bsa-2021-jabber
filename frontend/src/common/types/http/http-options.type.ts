@@ -5,7 +5,7 @@ type HttpOptions = {
   contentType: ContentType;
   payload: BodyInit | null;
   hasAuth: boolean;
-  query: Record<string, string | number>
+  query: Record<string, any>;
 };
 
 export type { HttpOptions };

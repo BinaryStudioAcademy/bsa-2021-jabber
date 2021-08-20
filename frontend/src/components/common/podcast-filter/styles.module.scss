@@ -1,4 +1,65 @@
-.wrapper {
-  width: 195px;
+.podcastFilter {
   position: relative;
+  margin-left: 10px;
+  .btnFilter {
+    width: 25px;
+    height: 25px;
+    background: url('../../../assets/img/filter.svg') center center / cover;
+    border: none;
+    cursor: pointer;
+  }
+  .podcastFilterBox {
+    position: absolute;
+    top: 37px;
+    padding: 20px 32px 12px 22px;
+    background-color: white;
+    border-radius: 2px;
+    z-index: 100;
+  }
+  .podcastFilterTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(#353535, 0.1);
+  }
+  .podcastFilterTitle {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .btnClear {
+    border: none;
+    color: rgba(#353535, 0.5);
+    background-color: white;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .fieldset {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+  .genresList {
+    margin: 0 0 20px;
+    padding: 0;
+    columns: 3;
+    column-gap: 70px;
+    list-style: none;
+  }
+  .genreItem {
+    min-width: 130px;
+    max-width: 250px;
+    margin-bottom: 20px;
+  }
+  .btnsWrapper {
+    display: flex;
+  }
+  .btnCancel {
+    margin-left: 15px;
+  }
 }
