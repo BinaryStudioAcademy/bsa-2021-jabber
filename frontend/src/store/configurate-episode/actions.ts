@@ -7,7 +7,7 @@ import {
   EpisodeFormPayload,
   User,
 } from 'common/types/types';
-import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
+import { getDataUrl, getFileFromFileList, mapToShownotePayload } from 'helpers/helpers';
 import { ActionType } from './common';
 import { AppRoute, NotificationMessage, NotificationTitle } from 'common/enums/enums';
 
@@ -23,7 +23,7 @@ const create = createAsyncThunk<void, CreateActionEpisodePayload, AsyncThunkConf
     const episode = await episodeApi.create({
       name: createEpisodePayload.name,
       description: createEpisodePayload.description,
-      shownotes: createEpisodePayload.shownotes,
+      shownotes: createEpisodePayload.shownotes.map(mapToShownotePayload),
       podcastId: createEpisodePayload.podcastId,
       status: createEpisodePayload.status,
       type: createEpisodePayload.type,
@@ -57,7 +57,7 @@ const edit = createAsyncThunk<void, EpisodeFormPayload, AsyncThunkConfig>(
     const episode = await episodeApi.update(id, {
       name: editEpisodePayload.name,
       description: editEpisodePayload.description,
-      shownotes: editEpisodePayload.shownotes,
+      shownotes: editEpisodePayload.shownotes.map(mapToShownotePayload),
       type: editEpisodePayload.type,
       recordDataUrl,
       imageDataUrl: imgFile ? await getDataUrl(imgFile) : null,

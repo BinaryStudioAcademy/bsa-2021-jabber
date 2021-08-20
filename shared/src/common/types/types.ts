@@ -22,6 +22,7 @@ export type {
 } from './episode/episode';
 export type {
   Shownote,
+  ShownoteCommonPayload,
   ShownotePayload,
   ShownoteCreatePayload,
 } from './shownote/shownote';

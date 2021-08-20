@@ -11,10 +11,14 @@ import {
 } from 'common/enums/enums';
 import { episodeCreate as createEpisodeValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm, useAppSelector, useHistory } from 'hooks/hooks';
-import { Button, Input, Select, ImagePreviewControl } from 'components/common/common';
+import {
+  Button,
+  Input,
+  Select,
+  ImagePreviewControl,
+} from 'components/common/common';
 import { DEFAULT_CREATE_EPISODE_PAYLOAD } from './common/constants';
-import ShownoteInputList from './components/shownote-input-list/shownote-input-list';
-import RecordPreviewControl from './components/record-preview-control/record-preview-control';
+import { RecordPreviewControl, TimeNavigation } from './components/components';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -26,17 +30,23 @@ type Props = {
 const selectTypeOptions: Option[] = getOptions(Object.values(EpisodeType));
 const selectStatusOptions: Option[] = getOptions(Object.values(EpisodeStatus));
 
-const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE_EPISODE_PAYLOAD, imageUrl }) => {
-  const { control, handleSubmit, errors } = useAppForm({
+const CreateEpisodeForm: React.FC<Props> = ({
+  onSubmit,
+  payload = DEFAULT_CREATE_EPISODE_PAYLOAD,
+  imageUrl,
+}) => {
+  const { control, handleSubmit, errors, setValue } = useAppForm({
     validationSchema: createEpisodeValidationSchema,
     defaultValues: payload,
   });
   const history = useHistory();
 
-  const { dataStatus, hasLiveRecord } = useAppSelector(({ episode, record }) => ({
-    dataStatus: episode.dataStatus,
-    hasLiveRecord: record.hasLiveRecord,
-  }));
+  const { dataStatus, hasLiveRecord } = useAppSelector(
+    ({ episode, record }) => ({
+      dataStatus: episode.dataStatus,
+      hasLiveRecord: record.hasLiveRecord,
+    }),
+  );
 
   const isFormDisable = dataStatus === DataStatus.PENDING;
 
@@ -52,6 +62,8 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
           control={control}
           errors={errors}
           imageUrl={imageUrl}
+          className={styles.image}
+          width="100%"
         />
         <RecordPreviewControl
           name={EpisodePayloadKey.RECORD}
@@ -90,20 +102,22 @@ const CreateEpisodeForm: React.FC<Props> = ({ onSubmit, payload = DEFAULT_CREATE
           control={control}
           errors={errors}
         />
-        <ShownoteInputList control={control} errors={errors} />
+        <TimeNavigation control={control} errors={errors} setValue={setValue} />
         <div className={styles.buttonRow}>
           <Button
             label="Save"
             type={ButtonType.SUBMIT}
+            className={styles.button}
           />
           <Button
             label="Cancel"
             buttonColor={ButtonColor.LIGHT_PINK}
             onClick={handleCancel}
+            className={styles.button}
           />
         </div>
       </fieldset>
-    </form >
+    </form>
   );
 };
 
