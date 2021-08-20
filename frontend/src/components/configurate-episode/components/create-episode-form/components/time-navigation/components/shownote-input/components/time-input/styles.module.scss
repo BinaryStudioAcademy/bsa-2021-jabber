@@ -1,0 +1,44 @@
+.timeInput {
+  max-width: 117px;
+  width: 100%;
+  position: relative;
+
+  button {
+    margin: 0;
+    padding: 0 5px;
+
+    position: absolute;
+    right: 8px;
+    top: 0;
+
+    color: var(--color-button-background);
+    font-weight: 500;
+    font-size: 16px;
+
+    transform: translateY(-50%);
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    z-index: 35;
+
+    &:first-child {
+      top: calc(5px + 11px);
+    }
+
+    &:last-child {
+      top: calc(5px + 46px - 11px);
+    }
+  }
+
+  .input {
+    padding-right: 27px;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    -moz-appearance: textfield;
+  }
+}

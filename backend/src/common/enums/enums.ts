@@ -44,7 +44,11 @@ export {
   EpisodePayloadKey,
   EpisodeStatus,
 } from './episode/episode';
-export { ShownotePayloadKey } from './shownote/shownote.enum';
+export {
+  ShownotePayloadKey,
+  ShownoteValidationMessage,
+  ShownoteValidationRule,
+} from './shownote/shownote.enum';
 export { StrategyName } from './strategy/strategy';
 export { UserPayloadKey, UserRole, UserValidationMessage } from './user/user';
 export {

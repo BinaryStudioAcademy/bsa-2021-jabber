@@ -20,7 +20,7 @@ import {
   ImageWrapper,
   ConfirmPopup,
 } from 'components/common/common';
-import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
+import { AppRoute, DataStatus, EpisodeStatus, UserRole } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
 import {
@@ -55,7 +55,9 @@ const Episode: React.FC = () => {
   const hasRecord = Boolean(episode?.record);
   const isStaging = episode?.status === EpisodeStatus.STAGING;
   const isOwner = user?.id === episode?.userId;
+  const isMaster = user?.role === UserRole.MASTER;
   const isPlayerLoaded = playerStatus === DataStatus.FULFILLED;
+  const isAllowDelete = isOwner || isMaster;
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
@@ -112,23 +114,25 @@ const Episode: React.FC = () => {
               label={episode.name}
               className={styles.imageWrapper}
             />
+            {isStaging && isOwner && (
+              <Button
+                className={styles.btnStartLive}
+                label="Start Live"
+                href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}
+              />
+            )}
             <div className={styles.episode}>
-              {isStaging && isOwner && (
-                <Button
-                  className={styles.btnStartLive}
-                  label="Start Live"
-                  href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}
-                />
-              )}
               <div className={styles.descriptionWrapper}>
                 {isOwner && (
+                  <Link
+                    to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`}
+                    className={styles.editLink}
+                  >
+                    <span className="visually-hidden">Edit episode</span>
+                  </Link>
+                )}
+                {isAllowDelete && (
                   <>
-                    <Link
-                      to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`}
-                      className={styles.editLink}
-                    >
-                      <span className="visually-hidden">Edit episode</span>
-                    </Link>
                     <button
                       onClick={handleShowPopup}
                       className={styles.deleteButton}

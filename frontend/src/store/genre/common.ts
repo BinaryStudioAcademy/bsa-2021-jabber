@@ -1,5 +1,5 @@
 enum ActionType {
-  LOAD_GENRES = 'configurate-podcast/load-genres',
+  LOAD_GENRES = 'genre/load-genres',
 }
 
 export { ActionType };

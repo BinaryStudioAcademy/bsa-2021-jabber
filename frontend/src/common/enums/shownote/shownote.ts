@@ -1,1 +1,5 @@
-export { ShownotePayloadKey } from 'jabber-shared/common/enums/enums';
+export {
+  ShownotePayloadKey,
+  ShownoteValidationMessage,
+  ShownoteValidationRule,
+} from 'jabber-shared/common/enums/enums';
