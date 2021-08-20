@@ -1,13 +1,5 @@
-import {
-  FileExtension,
-  InputType,
-} from 'common/enums/enums';
-import {
-  FieldValues,
-  useController,
-  Path,
-  Control,
-} from 'react-hook-form';
+import { FileExtension, InputType } from 'common/enums/enums';
+import { FieldValues, useController, Path, Control } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { getFileExtensions, getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
@@ -21,6 +13,8 @@ type Props = {
   imageUrl?: string;
   label?: string;
   className?: string;
+  width?: string;
+  height?: string;
 };
 
 const acceptExtension = getFileExtensions(
@@ -37,6 +31,8 @@ const ImagePreviewControl: React.FC<Props> = ({
   imageUrl,
   label,
   className,
+  width,
+  height = '281',
 }) => {
   const { field } = useController({ name, control });
 
@@ -58,16 +54,14 @@ const ImagePreviewControl: React.FC<Props> = ({
   return (
     <>
       <label className={allowedClassesInputWrapper}>
-        {label &&
-          <span className={styles.cornerRight}>
-            {label}
-          </span>}
+        {label && <span className={styles.cornerRight}>{label}</span>}
         <ImageWrapper
           src={currentImgUrl ?? imageUrl}
-          width="716"
-          height="281"
+          width={width}
+          height={height}
           loading="lazy"
-          className={className}
+          label={label}
+          className={styles.defaultImage}
         />
         <input
           {...control.register(name)}

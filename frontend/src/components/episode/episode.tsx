@@ -18,8 +18,9 @@ import {
   Button,
   Link,
   ImageWrapper,
+  ConfirmPopup,
 } from 'components/common/common';
-import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
+import { AppRoute, DataStatus, EpisodeStatus, UserRole } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
 import {
@@ -29,6 +30,7 @@ import {
 import { PageParams } from './common/types/types';
 import { ShownotesList, ComentsTimeline } from './components/components';
 import styles from './styles.module.scss';
+import { getAllowedClasses } from 'helpers/helpers';
 
 const Episode: React.FC = () => {
   const dispatch = useDispatch();
@@ -51,9 +53,12 @@ const Episode: React.FC = () => {
 
   const hasShownotes = Boolean(episode?.shownotes?.length);
   const hasUser = Boolean(user);
+  const hasRecord = Boolean(episode?.record);
   const isStaging = episode?.status === EpisodeStatus.STAGING;
   const isOwner = user?.id === episode?.userId;
+  const isMaster = user?.role === UserRole.MASTER;
   const isPlayerLoaded = playerStatus === DataStatus.FULFILLED;
+  const isAllowDelete = isOwner || isMaster;
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
@@ -63,6 +68,8 @@ const Episode: React.FC = () => {
       dispatch(episodeActions.leaveEpisode(id));
     });
   }, []);
+
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState<boolean>(false);
 
   const handleJumpToTimeLine = (timeline: number): void => {
     playerRef.current?.setCurrentTime(timeline);
@@ -87,6 +94,10 @@ const Episode: React.FC = () => {
     );
   };
 
+  const handleShowPopup = (): void => {
+    setIsConfirmPopupOpen(!isConfirmPopupOpen);
+  };
+
   if (dataStatus === DataStatus.PENDING) {
     return <Loader />;
   }
@@ -108,29 +119,38 @@ const Episode: React.FC = () => {
               label={episode.name}
               className={styles.imageWrapper}
             />
+            {isStaging && isOwner && (
+              <Button
+                className={styles.btnStartLive}
+                label="Start Live"
+                href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}
+              />
+            )}
             <div className={styles.episode}>
-              {isStaging && isOwner && (
-                <Button
-                  className={styles.btnStartLive}
-                  label="Start Live"
-                  href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}
-                />
-              )}
               <div className={styles.descriptionWrapper}>
                 {isOwner && (
+                  <Link
+                    to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`}
+                    className={styles.editLink}
+                  >
+                    <span className="visually-hidden">Edit episode</span>
+                  </Link>
+                )}
+                {isAllowDelete && (
                   <>
-                    <Link
-                      to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`}
-                      className={styles.editLink}
-                    >
-                      <span className="visually-hidden">Edit episode</span>
-                    </Link>
                     <button
-                      onClick={handleDeleteEpisode}
+                      onClick={handleShowPopup}
                       className={styles.deleteButton}
                     >
                       <span className="visually-hidden">Delete episode</span>
                     </button>
+                    <ConfirmPopup
+                      title="Delete Episode"
+                      description="You are going to delete the episode. Are you sure about this?"
+                      isOpen={isConfirmPopupOpen}
+                      onClose={handleShowPopup}
+                      onConfirm={handleDeleteEpisode}
+                    />
                   </>
                 )}
                 <Link
@@ -140,17 +160,17 @@ const Episode: React.FC = () => {
                   {podcast?.name}
                 </Link>
                 <h1 className={styles.title}>{episode.name}</h1>
+                <p className={styles.description}>{episode.description}</p>
                 <dl className={styles.episodeInfo}>
                   <div className={styles.infoBlock}>
-                    <dt className={styles.infoBlockTitle}>Type: </dt>
+                    <dt className={getAllowedClasses(styles.infoBlockTitle, styles.type)}>Type</dt>
                     <dd className={styles.infoBlockValue}>{episode.type}</dd>
                   </div>
                   <div className={styles.infoBlock}>
-                    <dt className={styles.infoBlockTitle}>Status:</dt>
+                    <dt className={getAllowedClasses(styles.infoBlockTitle, styles.status)}>Status</dt>
                     <dd className={styles.infoBlockValue}>{episode.status}</dd>
                   </div>
                 </dl>
-                <p className={styles.description}>{episode.description}</p>
                 {hasShownotes && (
                   <div className={styles.shownotesWrapper}>
                     <h3>Time navigation</h3>
@@ -162,24 +182,26 @@ const Episode: React.FC = () => {
                 )}
               </div>
             </div>
-            {isPlayerLoaded && commentsTimelineDimensions && podcastDuration && (
-              <ComentsTimeline
-                comments={comments}
-                dimensions={commentsTimelineDimensions}
-                duration={podcastDuration}
-                onJumpToTimeLine={handleJumpToTimeLine}
-              />
-            )}
-            {episode.record && (
-              <div ref={playerContainerRef}>
-                <Player
-                  srcObject={liveStream}
-                  src={episode.record.fileUrl}
-                  ref={playerRef}
-                  onSetPlayerStatus={setPlayerStatus}
+            <div className={styles.playerWrapper}>
+              {isPlayerLoaded && commentsTimelineDimensions && podcastDuration && (
+                <ComentsTimeline
+                  comments={comments}
+                  dimensions={commentsTimelineDimensions}
+                  duration={podcastDuration}
+                  onJumpToTimeLine={handleJumpToTimeLine}
                 />
-              </div>
-            )}
+              )}
+              {episode.record && (
+                <div ref={playerContainerRef}>
+                  <Player
+                    srcObject={liveStream}
+                    src={episode.record.fileUrl}
+                    ref={playerRef}
+                    onSetPlayerStatus={setPlayerStatus}
+                  />
+                </div>
+              )}
+            </div>
           </div>
           <section className={styles.commentsWrapper}>
             <h2 className={styles.commentsCounter}>
@@ -188,6 +210,7 @@ const Episode: React.FC = () => {
             {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
             {comments.length ? (
               <CommentsList
+                hasTimestamps={hasRecord}
                 comments={comments}
                 onClick={handleJumpToTimeLine}
               />

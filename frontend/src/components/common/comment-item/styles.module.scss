@@ -8,6 +8,7 @@
 .avatarWrapper {
   margin-right: 15px;
   border-radius: 50%;
+  min-width: 40px;
 }
 
 .intro {
@@ -21,6 +22,12 @@
   display: flex;
   color: rgba(53, 53, 53, 0.5);
   font-weight: 600;
+  a {
+    max-width: 70px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   span {
     color: rgba(53, 53, 53, 0.3);
   }
@@ -47,5 +54,15 @@
 }
 
 .commentAtButton:hover{
+  color: var(--color-link-active);
+}
+
+.link {
+  color: rgba(53, 53, 53, 0.5);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link:hover {
   color: var(--color-link-active);
 }

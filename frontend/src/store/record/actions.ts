@@ -1,5 +1,6 @@
-import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { AsyncThunkConfig } from 'common/types/types';
+import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
+import { AsyncThunkConfig, Episode } from 'common/types/types';
+import { AppRoute } from 'common/enums/enums';
 import { ActionType } from './common';
 
 const initRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
@@ -28,13 +29,18 @@ const resumeRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
   recordAudioService.resume();
 });
 
-const stopRecord = createAsyncThunk<string, undefined, AsyncThunkConfig>
-(ActionType.STOP_RECORD, (_arg, { extra }) => {
-  const { recordAudioService } = extra;
-  const audioDataUrl = recordAudioService.stop();
+const stopRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
+(ActionType.STOP_RECORD, (_arg, { extra, getState }) => {
+  const { recordAudioService, navigationService } = extra;
+  const { episode } = getState();
+  const { id, podcastId }  = <Episode>episode.episode;
 
-  return audioDataUrl;
+  recordAudioService.stop();
+
+  navigationService.push(`${AppRoute.PODCASTS}/${podcastId}${AppRoute.EPISODES_EDIT}/${id}`);
 });
+
+const resetState = createAction(ActionType.RESET_STATE);
 
 const setLiveStream = createAction<MediaStream>(ActionType.SET_LIVE_STREAM);
 
@@ -45,4 +51,5 @@ export {
   resumeRecord,
   stopRecord,
   setLiveStream,
+  resetState,
 };

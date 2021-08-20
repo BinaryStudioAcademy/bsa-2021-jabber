@@ -10,6 +10,7 @@ export type {
   PodcastCreatePayload,
   PodcastEditPayload,
   PodcastSearchPayload,
+  PodcastLoadFilter,
 } from './podcast/podcast';
 export type { Image, ImageCreatePayload } from './image/image';
 export type { ValidationSchema } from './validation-schema/validation-schema';
@@ -21,6 +22,7 @@ export type {
 } from './episode/episode';
 export type {
   Shownote,
+  ShownoteCommonPayload,
   ShownotePayload,
   ShownoteCreatePayload,
 } from './shownote/shownote';

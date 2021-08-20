@@ -1,29 +1,10 @@
-.inputWrapper{
+.inputWrapper {
   position: relative;
-  max-width: 716px;
   width: 100%;
   overflow: hidden;
   cursor: pointer;
 
-  .cornerRight {
-    transform: rotate(45deg);
-    content: '';
-    position: absolute;
-    right: -55px;
-    top: 45px;
-    z-index: 98;
-    display: block;
-    width: 225px;
-    padding: 5px 0;
-    font-size: 12px;
-    font-weight: 500;
-    background-color: var(--color-button-background);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-    text-align: center;
-  }
-
-  &::before{
+  &::before {
     content: '';
     position: absolute;
     z-index: 99;
@@ -34,7 +15,7 @@
     border-radius: 0 0 5px 5px;
   }
 
-  &::after{
+  &::after {
     content: '';
     position: absolute;
     z-index: 100;
@@ -46,9 +27,36 @@
     background: url('../../../assets/img/icon-camera.svg');
     margin: auto;
   }
+
+  .defaultImage {
+    span {
+      top: calc(50% - 10px);
+
+      font-size: 95px;
+      color: rgba(25, 34, 47, 0.3);
+    }
+  }
 }
 
-.errorWrapper{
+.cornerRight {
+  transform: rotate(45deg);
+  content: '';
+  position: absolute;
+  right: -55px;
+  top: 45px;
+  z-index: 98;
+  display: block;
+  width: 225px;
+  padding: 5px 0;
+  font-size: 12px;
+  font-weight: 500;
+  background-color: var(--color-button-background);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.errorWrapper {
   color: var(--color-button-background);
   min-height: 18px;
   margin-top: 5px;

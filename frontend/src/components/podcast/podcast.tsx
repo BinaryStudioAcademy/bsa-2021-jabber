@@ -1,19 +1,20 @@
-import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
+import { useAppSelector, useDispatch, useEffect, useParams, useState } from 'hooks/hooks';
 import {
   podcast as podcastActions,
   configuratePodcast as configuratePodcastActions,
 } from 'store/actions';
-import { AppRoute, DataStatus } from 'common/enums/enums';
-import { Link, Loader, ImageWrapper } from 'components/common/common';
+import { AppRoute, DataStatus, UserRole } from 'common/enums/enums';
+import { Link, Loader, ImageWrapper, ConfirmPopup, Button } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 import { getAllowedClasses } from 'helpers/helpers';
 
 const Podcast: React.FC = () => {
-  const { userId, podcast, episodes, dataStatus } = useAppSelector(
+  const { userId, podcast, episodes, dataStatus, userRole } = useAppSelector(
     ({ podcast, auth }) => ({
       userId: auth.user?.id,
+      userRole: auth.user?.role,
       podcast: podcast.podcast,
       episodes: podcast.episodes,
       dataStatus: podcast.dataStatus,
@@ -22,11 +23,15 @@ const Podcast: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
   const isOwner = userId === podcast?.userId;
+  const isMaster = userRole === UserRole.MASTER;
+  const isAllowDelete = isOwner || isMaster;
 
   useEffect(() => {
     dispatch(podcastActions.loadPodcast(Number(id)));
     dispatch(podcastActions.loadEpisodesByPodcastId(Number(id)));
   }, []);
+
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState<boolean>(false);
 
   const handleDeletePodcast = (): void => {
     dispatch(
@@ -35,6 +40,10 @@ const Podcast: React.FC = () => {
         userId: Number(userId),
       }),
     );
+  };
+
+  const handleShowPopup = (): void => {
+    setIsConfirmPopupOpen(!isConfirmPopupOpen);
   };
 
   if (dataStatus === DataStatus.PENDING) {
@@ -53,19 +62,35 @@ const Podcast: React.FC = () => {
               label={podcast.name}
               className={styles.imageWrapper}
             />
+            {podcast.userId === userId && (
+              <Button
+                className={styles.addEpisodeLink}
+                label="Add episode"
+                href={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
+              />
+            )}
             <div className={styles.podcastInfoWrapper}>
               {isOwner && (
+                <Link
+                  to={`${AppRoute.PODCASTS_EDIT}/${podcast.id}`}
+                  className={styles.editLink}
+                />
+              )}
+              {isAllowDelete && (
                 <>
-                  <Link
-                    to={`${AppRoute.PODCASTS_EDIT}/${podcast.id}`}
-                    className={styles.editLink}
-                  />
                   <button
-                    onClick={handleDeletePodcast}
+                    onClick={handleShowPopup}
                     className={styles.deleteButton}
                   >
                     <span className="visually-hidden">Delete episode</span>
                   </button>
+                  <ConfirmPopup
+                    title="Delete Podcast"
+                    description="You are going to delete the podcast. Are you sure about this?"
+                    isOpen={isConfirmPopupOpen}
+                    onClose={handleShowPopup}
+                    onConfirm={handleDeletePodcast}
+                  />
                 </>
               )}
               <h1 className={styles.title}>{podcast.name}</h1>
@@ -81,7 +106,7 @@ const Podcast: React.FC = () => {
                     className={styles.infoInner}
                     to={`${AppRoute.USERS}/${podcast.userId}`}
                   >
-                    <p>{podcast.user.nickname}</p>
+                    {podcast.user.nickname}
                   </Link>
                 </li>
                 {Boolean(episodes.length) && (
@@ -110,14 +135,19 @@ const Podcast: React.FC = () => {
                   </div>
                   <p className={styles.infoInner}>Once a month</p>
                 </li>
-                <li className={styles.infoItem}>
-                  <div
-                    className={getAllowedClasses(styles.infoName, styles.genre)}
-                  >
-                    Genre
-                  </div>
-                  <p className={styles.infoInner}>{podcast.genre?.name}</p>
-                </li>
+                {podcast.genre && (
+                  <li className={styles.infoItem}>
+                    <div
+                      className={getAllowedClasses(
+                        styles.infoName,
+                        styles.genre,
+                      )}
+                    >
+                      Genre
+                    </div>
+                    <p className={styles.infoInner}>{podcast.genre.name}</p>
+                  </li>
+                )}
                 <li className={styles.infoItem}>
                   <div
                     className={getAllowedClasses(styles.infoName, styles.type)}
@@ -127,15 +157,6 @@ const Podcast: React.FC = () => {
                   <p className={styles.infoInner}>{podcast.type}</p>
                 </li>
               </ul>
-
-              {podcast.userId === userId && (
-                <Link
-                  to={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
-                  className={styles.addEpisodeLink}
-                >
-                  Add episode
-                </Link>
-              )}
             </div>
           </div>
           {episodes.length ? (

@@ -1,8 +1,8 @@
 .podcast {
-  max-width: 1515px;
+  max-width: 1606px;
   width: 100%;
   margin: 0 auto;
-  padding: 30px;
+  padding: 30px 15px;
 }
 
 .content {
@@ -22,7 +22,7 @@
 .podcastInfoWrapper {
   position: relative;
   width: 724px;
-  min-width: 490px;
+  min-height: 200px;
   padding: 35px;
   border-radius: 3px;
   background: linear-gradient(
@@ -36,7 +36,7 @@
 .editLink {
   display: block;
   position: absolute;
-  right: 90px;
+  right: 85px;
   top: 45px;
   width: 25px;
   height: 25px;
@@ -46,7 +46,7 @@
 
 .deleteButton {
   position: absolute;
-  right: 45px;
+  right: 35px;
   top: 45px;
   width: 25px;
   height: 25px;
@@ -56,18 +56,26 @@
 }
 
 .addEpisodeLink {
-  font-size: 18px;
-  color: var(--color-button-background);
+  font-size: 16px;
+  display: inline-block;
+  position: absolute;
+  top: 76px;
+  right: 75px;
+  padding: 12px 22px;
+  z-index: 20;
 }
 
 .title {
   margin: 0 0 20px 0;
   font-size: 40px;
+  line-height: 1.25;
 }
 
 .description {
-  font-size: 18px;
+  font-size: 14px;
   margin: 0;
+  line-height: 1.25;
+  letter-spacing: 1px;
 }
 
 .imageWrapper {
@@ -137,17 +145,78 @@
 }
 
 .genre {
-  background: url('../../assets/img/radio-waves.svg') no-repeat left center /
-    15px;
+  background: url('../../assets/img/radio-waves.svg') no-repeat left center / 15px;
 }
 
 .type {
-  background: url('../../assets/img/eye-secondary.svg') no-repeat left center / 15px;
+  background: url('../../assets/img/star.svg') no-repeat left center / 15px;
 }
 
 .infoInner {
-  margin: 0;
+  margin-top: 0;
   color: var(--color-primary-light);
   line-height: 16px;
   text-decoration: none;
+}
+
+// Media
+@media screen and (max-width: 991px) {
+  .content {
+    padding: 40px;
+  }
+
+  .podcastInfoWrapper {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .addEpisodeLink {
+    top: auto;
+    left: 55px;
+    right: auto;
+    bottom: 70px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .content {
+    padding: 30px;
+  }
+
+  .addEpisodeLink {
+    bottom: 50px;
+  }
+
+  .podcastInfoWrapper {
+    padding: 20px 20px 80px 20px;
+  }
+
+  .deleteButton {
+    right: 20px;
+    top: 25px;
+  }
+
+  .editLink {
+    right: 55px;
+    top: 25px;
+  }
+
+  .title {
+    margin-bottom: 15px;
+    font-size: 25px;
+  }
+
+  .description {
+    width: auto;
+  }
+
+  .infoList {
+    margin-bottom: 0;
+  }
+
+  .infoItem {
+    width: 110px;
+    margin-right: 20px;
+    margin-bottom: 0;
+  }
 }
