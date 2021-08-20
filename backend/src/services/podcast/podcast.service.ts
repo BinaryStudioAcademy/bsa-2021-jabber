@@ -8,7 +8,6 @@ import {
   UserPodcastQueryParams,
   PodcastLoadFilter,
 } from '~/common/types/types';
-import { PODCAST_LOAD_LIMIT } from '~/common/constants/constants';
 import {
   podcast as podcastRep,
   image as imageRep,
@@ -46,7 +45,7 @@ class Podcast {
     this.#episodeService = episodeService;
   }
 
-  public getByQuery(filter: PodcastLoadFilter = { offset: 0, limit: PODCAST_LOAD_LIMIT, search: '' }): Promise<TPodcast[]> {
+  public getByQuery(filter: PodcastLoadFilter): Promise<TPodcast[]> {
     return this.#podcastRepository.getByQuery(filter);
   }
 
