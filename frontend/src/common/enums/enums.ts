@@ -24,7 +24,11 @@ export {
   EpisodeStatus,
   EpisodeValidationMessage,
 } from './episode/episode';
-export { UserPayloadKey, UserValidationMessage } from './user/user';
+export {
+  UserPayloadKey,
+  UserValidationMessage,
+  UserRole,
+} from './user/user';
 export {
   ButtonType,
   IconName,
