@@ -7,7 +7,12 @@ import {
   ButtonColor,
   AppRoute,
 } from 'common/enums/enums';
-import { Button, Datepicker, Input, ImagePreviewControl } from 'components/common/common';
+import {
+  Button,
+  Datepicker,
+  Input,
+  ImagePreviewControl,
+} from 'components/common/common';
 import { editUser as editUserValidationSchema } from 'validation-schemas/validation-schemas';
 import styles from './styles.module.scss';
 
@@ -37,6 +42,7 @@ const EditUserForm: React.FC<Props> = ({
           control={control}
           errors={errors}
           imageUrl={user?.image?.url}
+          label="User Image"
           className={styles.imagePreview}
         />
         <Input
