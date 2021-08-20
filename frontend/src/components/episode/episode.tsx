@@ -26,6 +26,7 @@ import { PlayerRef } from 'components/common/player/player';
 import {
   getCurrentTime,
   getCommentsTimelineDimensions,
+  getSortedShownotes,
 } from './helpers/helpers';
 import { PageParams } from './common/types/types';
 import { ShownotesList, ComentsTimeline } from './components/components';
@@ -166,7 +167,7 @@ const Episode: React.FC = () => {
                   <div className={styles.shownotesWrapper}>
                     <h3>Time navigation</h3>
                     <ShownotesList
-                      shownotes={episode.shownotes}
+                      shownotes={getSortedShownotes(episode?.shownotes)}
                       onClick={handleJumpToTimeLine}
                     />
                   </div>
