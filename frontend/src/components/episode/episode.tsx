@@ -26,12 +26,11 @@ import { PlayerRef } from 'components/common/player/player';
 import {
   getCurrentTime,
   getCommentsTimelineDimensions,
-  getSortedShownotes,
 } from './helpers/helpers';
 import { PageParams } from './common/types/types';
 import { ShownotesList, ComentsTimeline } from './components/components';
 import styles from './styles.module.scss';
-import { getAllowedClasses } from 'helpers/helpers';
+import { getAllowedClasses, getSortedItems } from 'helpers/helpers';
 
 const Episode: React.FC = () => {
   const dispatch = useDispatch();
@@ -102,6 +101,10 @@ const Episode: React.FC = () => {
   );
   const podcastDuration = playerRef.current?.getPodcastDuration();
 
+  // const sortArr = hasShownotes && getSortedItems(episode?.shownotes, 'timestamp');
+  // eslint-disable-next-line no-console
+  // console.log('sortArr', getSortedItems(episode.shownotes, 'timestamp'));
+
   return (
     <main className={styles.root}>
       {episode ? (
@@ -167,7 +170,7 @@ const Episode: React.FC = () => {
                   <div className={styles.shownotesWrapper}>
                     <h3>Time navigation</h3>
                     <ShownotesList
-                      shownotes={getSortedShownotes(episode?.shownotes)}
+                      shownotes={getSortedItems(episode.shownotes, 'timestamp')}
                       onClick={handleJumpToTimeLine}
                     />
                   </div>
