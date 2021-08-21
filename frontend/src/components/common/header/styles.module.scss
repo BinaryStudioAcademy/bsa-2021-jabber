@@ -90,8 +90,10 @@
   position: absolute;
   left: 20px;
 
-  transform: translate(-50%, 20px);
   opacity: 0;
+  visibility: hidden;
+
+  transform: translate(-50%, 20px);
   transition: transform 0.3s ease, opacity 0.3s ease;
 
   &:before {
@@ -113,6 +115,7 @@
 
   &.active {
     opacity: 1;
+    visibility: visible;
     transform: translate(-50%, 0);
   }
 }
@@ -142,7 +145,6 @@
     color: #fff;
     background-color: var(--color-header-background);
     border-radius: 5px;
-    transition: all 0.3s ease;
 
     &:hover {
       filter: brightness(1.2);
@@ -206,14 +208,17 @@
     color: var(--color-primary-light);
 
     opacity: 0;
+    visibility: hidden;
+    z-index: var(--z-index--level-four);
+
     border-radius: 5px;
     box-shadow: 0px 5px 10px var(--color-primary-dark);
     background-color: var(--color-header-background);
     transition: transform 0.3s ease, opacity 0.3s ease;
-    z-index: var(--z-index--level-four);
 
     &.active {
       opacity: 1;
+      visibility: visible;
       transform: translateY(0);
     }
 
@@ -225,7 +230,6 @@
         color: #fff;
         background-color: var(--color-header-background);
         border-radius: 5px;
-        transition: all 0.3s ease;
 
         &:hover {
           filter: brightness(1.2);
