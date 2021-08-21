@@ -34,6 +34,7 @@ import styles from './styles.module.scss';
 
 type Props = {
   src: string;
+  srcObject: MediaProvider | null;
   onSetPlayerStatus: React.Dispatch<React.SetStateAction<DataStatus>>;
   skipTime?: number;
   onClickPrevious?: () => void;
@@ -53,6 +54,7 @@ const Player = forwardRef<Ref, Props>(
   (
     {
       src,
+      srcObject,
       skipTime = DEFAULT_SKIP_TIME,
       onClickNext,
       onClickPrevious,
@@ -92,8 +94,9 @@ const Player = forwardRef<Ref, Props>(
     useEffect(() => {
       if (playerRef.current && playerRef.current.audio.current) {
         playerRef.current.audio.current.playbackRate = rateSteps[rateIndex];
+        playerRef.current.audio.current.srcObject = srcObject;
       }
-    }, [rateIndex]);
+    }, [rateIndex, srcObject]);
 
     const handleChangeRate = useCallback(() => {
       setRateIndex(
