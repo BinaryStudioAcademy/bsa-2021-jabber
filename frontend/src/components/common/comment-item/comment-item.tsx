@@ -38,18 +38,23 @@ const CommentItem: React.FC<Props> = ({ user, comment, onClick, hasTimestamp }) 
 
   return (
     <li className={styles.wrapper}>
-      <ImageWrapper
-        width="40"
-        height="40"
-        loading="lazy"
-        alt={String(comment.userId)}
-        label={comment.user.nickname}
-        className={styles.avatarWrapper}
-        src={comment.user.image?.url}
-      />
+      <Link to={`${AppRoute.USERS}/${comment.user.id}`} className={styles.link}>
+        <ImageWrapper
+          width="40"
+          height="40"
+          loading="lazy"
+          alt={String(comment.userId)}
+          label={comment.user.nickname}
+          className={styles.avatarWrapper}
+          src={comment.user.image?.url}
+        />
+      </Link>
       <div className={styles.intro}>
         <p className={styles.userName}>
-          <Link to={`${AppRoute.USERS}/${comment.user.id}`} className={styles.link}>
+          <Link
+            to={`${AppRoute.USERS}/${comment.user.id}`}
+            className={styles.link}
+          >
             {comment.user.nickname ?? comment.user.firstName}
           </Link>
           {hasTimestamp && (
