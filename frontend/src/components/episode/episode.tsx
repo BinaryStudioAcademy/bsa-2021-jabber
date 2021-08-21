@@ -20,7 +20,12 @@ import {
   ImageWrapper,
   ConfirmPopup,
 } from 'components/common/common';
-import { AppRoute, DataStatus, EpisodeStatus, UserRole } from 'common/enums/enums';
+import {
+  AppRoute,
+  DataStatus,
+  EpisodeStatus,
+  UserRole,
+} from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
 import {
@@ -121,64 +126,78 @@ const Episode: React.FC = () => {
                 href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}
               />
             )}
-            <div className={styles.episode}>
-              <div className={styles.descriptionWrapper}>
-                {isOwner && (
-                  <Link
-                    to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`}
-                    className={styles.editLink}
-                  >
-                    <span className="visually-hidden">Edit episode</span>
-                  </Link>
-                )}
-                {isAllowDelete && (
-                  <>
-                    <button
-                      onClick={handleShowPopup}
-                      className={styles.deleteButton}
-                    >
-                      <span className="visually-hidden">Delete episode</span>
-                    </button>
-                    <ConfirmPopup
-                      title="Delete Episode"
-                      description="You are going to delete the episode. Are you sure about this?"
-                      isOpen={isConfirmPopupOpen}
-                      onClose={handleShowPopup}
-                      onConfirm={handleDeleteEpisode}
-                    />
-                  </>
-                )}
+            <div className={styles.descriptionWrapper}>
+              {isOwner && (
                 <Link
-                  to={`${AppRoute.PODCASTS}/${episode?.podcastId}`}
-                  className={styles.link}
+                  to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`}
+                  className={styles.editLink}
                 >
-                  {podcast?.name}
+                  <span className="visually-hidden">Edit episode</span>
                 </Link>
-                <h1 className={styles.title}>{episode.name}</h1>
-                <p className={styles.description}>{episode.description}</p>
-                <dl className={styles.episodeInfo}>
-                  <div className={styles.infoBlock}>
-                    <dt className={getAllowedClasses(styles.infoBlockTitle, styles.type)}>Type</dt>
-                    <dd className={styles.infoBlockValue}>{episode.type}</dd>
-                  </div>
-                  <div className={styles.infoBlock}>
-                    <dt className={getAllowedClasses(styles.infoBlockTitle, styles.status)}>Status</dt>
-                    <dd className={styles.infoBlockValue}>{episode.status}</dd>
-                  </div>
-                </dl>
-                {hasShownotes && (
-                  <div className={styles.shownotesWrapper}>
-                    <h3>Time navigation</h3>
-                    <ShownotesList
-                      shownotes={episode.shownotes}
-                      onClick={handleJumpToTimeLine}
-                    />
-                  </div>
-                )}
-              </div>
+              )}
+              {isAllowDelete && (
+                <>
+                  <button
+                    onClick={handleShowPopup}
+                    className={styles.deleteButton}
+                  >
+                    <span className="visually-hidden">Delete episode</span>
+                  </button>
+                  <ConfirmPopup
+                    title="Delete Episode"
+                    description="You are going to delete the episode. Are you sure about this?"
+                    isOpen={isConfirmPopupOpen}
+                    onClose={handleShowPopup}
+                    onConfirm={handleDeleteEpisode}
+                  />
+                </>
+              )}
+              <Link
+                to={`${AppRoute.PODCASTS}/${episode?.podcastId}`}
+                className={styles.link}
+              >
+                {podcast?.name}
+              </Link>
+              <h1 className={styles.title}>{episode.name}</h1>
+              <p className={styles.description}>{episode.description}</p>
+              <dl className={styles.episodeInfo}>
+                <div className={styles.infoBlock}>
+                  <dt
+                    className={getAllowedClasses(
+                      styles.infoBlockTitle,
+                      styles.type,
+                    )}
+                  >
+                    Type
+                  </dt>
+                  <dd className={styles.infoBlockValue}>{episode.type}</dd>
+                </div>
+                <div className={styles.infoBlock}>
+                  <dt
+                    className={getAllowedClasses(
+                      styles.infoBlockTitle,
+                      styles.status,
+                    )}
+                  >
+                    Status
+                  </dt>
+                  <dd className={styles.infoBlockValue}>{episode.status}</dd>
+                </div>
+              </dl>
+              {hasShownotes && (
+                <div className={styles.shownotesWrapper}>
+                  <h3>Time navigation</h3>
+                  <ShownotesList
+                    shownotes={episode.shownotes}
+                    onClick={handleJumpToTimeLine}
+                  />
+                </div>
+              )}
             </div>
             <div className={styles.playerWrapper}>
-              {isPlayerLoaded && commentsTimelineDimensions && podcastDuration && (
+              {isPlayerLoaded &&
+                commentsTimelineDimensions &&
+                podcastDuration && (
                 <ComentsTimeline
                   comments={comments}
                   dimensions={commentsTimelineDimensions}

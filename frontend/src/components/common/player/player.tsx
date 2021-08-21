@@ -51,7 +51,13 @@ const rateSteps = Object.values(RateStep);
 
 const Player = forwardRef<Ref, Props>(
   (
-    { src, skipTime = DEFAULT_SKIP_TIME, onClickNext, onClickPrevious, onSetPlayerStatus },
+    {
+      src,
+      skipTime = DEFAULT_SKIP_TIME,
+      onClickNext,
+      onClickPrevious,
+      onSetPlayerStatus,
+    },
     ref,
   ) => {
     const playerRef = useRef<H5AudioPlayer | null>(null);
@@ -109,6 +115,7 @@ const Player = forwardRef<Ref, Props>(
 
     return (
       <H5AudioPlayer
+        className={styles.player}
         ref={playerRef}
         src={src}
         autoPlay={false}

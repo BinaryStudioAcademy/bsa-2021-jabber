@@ -80,37 +80,37 @@ const EpisodeLive: React.FC = () => {
             </div>
           </>
         )}
-        <h3>Status: {recordStatus}</h3>
-        <div className={styles.buttonRow}>
-          <Button
-            label="&#9210;"
-            buttonColor={ButtonColor.LIGHT_PINK}
-            onClick={handleStart}
-          />
-          {!isPaused ? (
+        <div className={styles.actionWrapper}>
+          <h3>Status: {recordStatus}</h3>
+          <div className={styles.buttonRow}>
             <Button
-              label="&#9208;"
+              label="&#9210;"
               buttonColor={ButtonColor.LIGHT_PINK}
-              onClick={handlePause}
+              onClick={handleStart}
             />
-          ) : (
+            {!isPaused ? (
+              <Button
+                label="&#9208;"
+                buttonColor={ButtonColor.LIGHT_PINK}
+                onClick={handlePause}
+              />
+            ) : (
+              <Button
+                label="&#9654;"
+                buttonColor={ButtonColor.LIGHT_PINK}
+                onClick={handleResume}
+              />
+            )}
             <Button
-              label="&#9654;"
+              label="&#9209;"
               buttonColor={ButtonColor.LIGHT_PINK}
-              onClick={handleResume}
+              onClick={handleStop}
             />
-          )}
-          <Button
-            label="&#9209;"
-            buttonColor={ButtonColor.LIGHT_PINK}
-            onClick={handleStop}
-          />
+          </div>
         </div>
       </div>
       <section className={styles.commentsWrapper}>
-        <h2 className={styles.commentsCounter}>
-          Comments ({comments.length})
-        </h2>
+        <h2 className={styles.commentsCounter}>Comments ({comments.length})</h2>
         {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
         {comments.length ? (
           <CommentsList comments={comments} />
