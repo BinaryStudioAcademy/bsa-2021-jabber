@@ -11,7 +11,9 @@ class PodcastQueryBuilder<M extends Model, R = M[]> extends QueryBuilder<M, R> {
       return this;
     }
 
-    return this.whereRaw(`REPLACE(name, ' ', '') ILIKE REPLACE('%${search}%', ' ', '')`);
+    return this.whereRaw(
+      `REPLACE(name, ' ', '') ILIKE REPLACE('%${search}%', ' ', '')`,
+    );
   }
 
   filterByGenres(genres: number[]): this {
@@ -23,4 +25,4 @@ class PodcastQueryBuilder<M extends Model, R = M[]> extends QueryBuilder<M, R> {
   }
 }
 
-export { PodcastQueryBuilder }
+export { PodcastQueryBuilder };

@@ -4,8 +4,7 @@ import { Abstract } from '../abstract/abstract.model';
 import { Image } from '~/data/models/image/image.model';
 import { User } from '~/data/models/user/user.model';
 import { Genre } from '~/data/models/genre/genre.model';
-import { PodcastQueryBuilder } from './common/podcast-query-builder'
-
+import { PodcastQueryBuilder } from './common/podcast-query-builder';
 
 class Podcast extends Abstract {
   [PodcastDTOKey.NAME]: string;
@@ -34,7 +33,7 @@ class Podcast extends Abstract {
     return TableName.PODCASTS;
   }
 
-  QueryBuilderType!:PodcastQueryBuilder<this>;
+  QueryBuilderType!: PodcastQueryBuilder<this>;
   static QueryBuilder = PodcastQueryBuilder;
 
   static relationMappings = {
