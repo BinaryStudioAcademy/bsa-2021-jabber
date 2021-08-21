@@ -18,8 +18,38 @@
     display: flex;
     justify-content: center;
     margin-top: 15px;
-    button + button {
-      margin-left: 10px;
+
+    .controlButton {
+      width: 40px;
+      height: 40px;
+      background-color: var(--color-player-controls);
+      border: none;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+
+      &:hover,
+      &:disabled {
+        background-color: darken(#fff, 15%);
+      }
+
+      &:disabled {
+        cursor: default;
+      }
+
+      svg {
+        height: 20px;
+        width: 20px;
+        fill: #404040;
+      }
+
+      .playIcon {
+        margin-left: 2px;
+      }
+
+      & + .controlButton {
+        margin-left: 15px;
+      }
     }
   }
 }

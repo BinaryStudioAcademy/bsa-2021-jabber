@@ -3,14 +3,17 @@ import {
   record as recordActions,
   episode as episodeActions,
 } from 'store/actions';
-import { RecordStatus, ButtonColor } from 'common/enums/enums';
+import { RecordStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import {
   CreateCommentForm,
   CommentsList,
   ImageWrapper,
-  Button,
 } from 'components/common/common';
+import { ReactComponent as RecordIcon } from 'assets/img/player/record.svg';
+import { ReactComponent as PauseIcon } from 'assets/img/player/pause.svg';
+import { ReactComponent as PlayIcon } from 'assets/img/player/play.svg';
+import { ReactComponent as StopIcon } from 'assets/img/player/stop.svg';
 import styles from './styles.module.scss';
 
 type PageParams = {
@@ -29,6 +32,8 @@ const EpisodeLive: React.FC = () => {
       user: auth.user,
     }),
   );
+
+  const isInactive = recordStatus === RecordStatus.INACTIVE;
   const isPaused = recordStatus === RecordStatus.PAUSED;
   const hasUser = Boolean(user);
 
@@ -82,29 +87,36 @@ const EpisodeLive: React.FC = () => {
         )}
         <h3>Status: {recordStatus}</h3>
         <div className={styles.buttonRow}>
-          <Button
-            label="&#9210;"
-            buttonColor={ButtonColor.LIGHT_PINK}
+          <button
+            className={styles.controlButton}
             onClick={handleStart}
-          />
+            disabled={!isInactive}
+          >
+            <RecordIcon />
+          </button>
           {!isPaused ? (
-            <Button
-              label="&#9208;"
-              buttonColor={ButtonColor.LIGHT_PINK}
+            <button
+              className={styles.controlButton}
               onClick={handlePause}
-            />
+              disabled={isInactive}
+            >
+              <PauseIcon />
+            </button>
           ) : (
-            <Button
-              label="&#9654;"
-              buttonColor={ButtonColor.LIGHT_PINK}
+            <button
+              className={styles.controlButton}
               onClick={handleResume}
-            />
+            >
+              <PlayIcon className={styles.playIcon} />
+            </button>
           )}
-          <Button
-            label="&#9209;"
-            buttonColor={ButtonColor.LIGHT_PINK}
+          <button
+            className={styles.controlButton}
             onClick={handleStop}
-          />
+            disabled={isInactive}
+          >
+            <StopIcon />
+          </button>
         </div>
       </div>
       <section className={styles.commentsWrapper}>
