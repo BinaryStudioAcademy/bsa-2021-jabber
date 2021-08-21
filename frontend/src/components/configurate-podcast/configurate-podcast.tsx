@@ -35,9 +35,11 @@ const ConfiguratePodcast: React.FC = () => {
   useEffect(() => {
     if (isEdit) {
       dispatch(configuratePodcastActions.loadPodcast(Number(id)));
+    } else {
+      dispatch(configuratePodcastActions.resetState());
     }
     dispatch(configuratePodcastActions.loadGenres());
-  }, []);
+  }, [isEdit]);
 
   if (isLoading) {
     return <Loader />;
