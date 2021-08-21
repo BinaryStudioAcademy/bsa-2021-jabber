@@ -33,11 +33,9 @@ const ConfiguratePodcast: React.FC = () => {
   const mappedGenres = mapGenreToOptions(genres);
 
   useEffect(() => {
-    if (isEdit) {
-      dispatch(configuratePodcastActions.loadPodcast(Number(id)));
-    } else {
-      dispatch(configuratePodcastActions.resetState());
-    }
+    dispatch(isEdit
+      ? configuratePodcastActions.loadPodcast(Number(id))
+      : configuratePodcastActions.resetState());
     dispatch(configuratePodcastActions.loadGenres());
 
     return (): void => {
