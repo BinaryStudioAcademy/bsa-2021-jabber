@@ -21,16 +21,17 @@ import {
   ConfirmPopup,
 } from 'components/common/common';
 import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
-import { CommentFormCreatePayload, Shownote } from 'common/types/types';
+import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
 import {
   getCurrentTime,
   getCommentsTimelineDimensions,
+  getSortedShownotes,
 } from './helpers/helpers';
 import { PageParams } from './common/types/types';
 import { ShownotesList, ComentsTimeline } from './components/components';
 import styles from './styles.module.scss';
-import { getAllowedClasses, getSortedItems } from 'helpers/helpers';
+import { getAllowedClasses } from 'helpers/helpers';
 
 const Episode: React.FC = () => {
   const dispatch = useDispatch();
@@ -101,7 +102,7 @@ const Episode: React.FC = () => {
   );
   const podcastDuration = playerRef.current?.getPodcastDuration();
 
-  const sortCB = (a: Shownote, b: Shownote): number => a.timestamp - b.timestamp;
+  const sortedShownotes = getSortedShownotes(episode?.shownotes ?? []);
 
   return (
     <main className={styles.root}>
@@ -168,7 +169,7 @@ const Episode: React.FC = () => {
                   <div className={styles.shownotesWrapper}>
                     <h3>Time navigation</h3>
                     <ShownotesList
-                      shownotes={getSortedItems(episode.shownotes, sortCB)}
+                      shownotes={sortedShownotes}
                       onClick={handleJumpToTimeLine}
                     />
                   </div>
