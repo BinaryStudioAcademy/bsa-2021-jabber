@@ -48,7 +48,7 @@ const Homepage: React.FC = () => {
         search,
       });
     }, SEARCH_TIMEOUT),
-    [],
+    [podcastsFilter],
   );
 
   const handleSetGenres = (data: GenresFilter): void => {
