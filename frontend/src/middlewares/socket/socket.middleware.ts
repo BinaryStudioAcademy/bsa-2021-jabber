@@ -25,13 +25,15 @@ const socket: Middleware = ({ dispatch }) => (next): Next => {
         socket.emit(SocketEvent.PEER_ANSWER, id, peerConnection.localDescription);
       });
 
-    peerConnection.ontrack = (event): void => {
-      dispatch(recordAction.setLiveStream(event.streams[0]));
+    peerConnection.ontrack = (evt): void => {
+      const [stream] = evt.streams;
+
+      dispatch(recordAction.setLiveStream(stream));
     };
 
-    peerConnection.onicecandidate = (event): void => {
-      if (event.candidate) {
-        socket.emit(SocketEvent.PEER_CANDIDATE, id, event.candidate);
+    peerConnection.onicecandidate = (evt): void => {
+      if (evt.candidate) {
+        socket.emit(SocketEvent.PEER_CANDIDATE, id, evt.candidate);
       }
     };
   });
@@ -46,9 +48,9 @@ const socket: Middleware = ({ dispatch }) => (next): Next => {
 
     liveStream.getTracks().forEach((track) => peerConnection.addTrack(track, liveStream));
 
-    peerConnection.onicecandidate = (event): void => {
-      if (event.candidate) {
-        socket.emit(SocketEvent.PEER_CANDIDATE, id, event.candidate);
+    peerConnection.onicecandidate = (evt): void => {
+      if (evt.candidate) {
+        socket.emit(SocketEvent.PEER_CANDIDATE, id, evt.candidate);
       }
     };
 
