@@ -39,6 +39,10 @@ const ConfiguratePodcast: React.FC = () => {
       dispatch(configuratePodcastActions.resetState());
     }
     dispatch(configuratePodcastActions.loadGenres());
+
+    return (): void => {
+      dispatch(configuratePodcastActions.resetState());
+    };
   }, [isEdit]);
 
   if (isLoading) {

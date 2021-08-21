@@ -67,10 +67,7 @@ const reducer = createReducer(initialState, (builder) => {
     state.dataStatus = DataStatus.REJECTED;
   });
   builder.addCase(resetState, (state) => {
-    state.dataStatus = DataStatus.IDLE;
-    state.genresDataStatus = DataStatus.IDLE;
-    state.podcast = null;
-    state.genres = [];
+    Object.assign(state, initialState);
   });
 });
 
