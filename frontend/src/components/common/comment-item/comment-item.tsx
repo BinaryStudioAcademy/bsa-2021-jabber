@@ -1,7 +1,8 @@
-import { useAppSelector, useDispatch } from 'hooks/hooks';
+import { useDispatch } from 'hooks/hooks';
 import { episode as episodeActions } from 'store/actions';
 import { getTimeOffset } from 'helpers/helpers';
 import { Comment } from 'common/types/types';
+import { User } from 'jabber-shared/common/types/types';
 import { getDistanceToDateNow } from 'helpers/date/date';
 import ImageWrapper from '../image-wrapper/image-wrapper';
 import styles from './styles.module.scss';
@@ -11,13 +12,11 @@ import { AppRoute } from 'common/enums/enums';
 type Props = {
   hasTimestamp?: boolean;
   comment: Comment;
+  user?: User | null;
   onClick?: (payload: number) => void;
 };
 
-const CommentItem: React.FC<Props> = ({ comment, onClick, hasTimestamp }) => {
-  const { user } = useAppSelector(({ auth }) => ({
-    user: auth.user,
-  }));
+const CommentItem: React.FC<Props> = ({ user, comment, onClick, hasTimestamp }) => {
   const dispatch = useDispatch();
 
   const isOwner = user?.id === comment.userId;

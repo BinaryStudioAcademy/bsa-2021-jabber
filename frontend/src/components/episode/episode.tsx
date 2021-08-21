@@ -206,6 +206,7 @@ const Episode: React.FC = () => {
               <CommentsList
                 hasTimestamps={hasRecord}
                 comments={comments}
+                user={user}
                 onClick={handleJumpToTimeLine}
               />
             ) : (
