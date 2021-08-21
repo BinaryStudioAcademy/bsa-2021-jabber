@@ -10,10 +10,7 @@ import {
   CommentsList,
   ImageWrapper,
 } from 'components/common/common';
-import { ReactComponent as RecordIcon } from 'assets/img/player/record.svg';
-import { ReactComponent as PauseIcon } from 'assets/img/player/pause.svg';
-import { ReactComponent as PlayIcon } from 'assets/img/player/play.svg';
-import { ReactComponent as StopIcon } from 'assets/img/player/stop.svg';
+import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 type PageParams = {
@@ -88,35 +85,39 @@ const EpisodeLive: React.FC = () => {
         <h3>Status: {recordStatus}</h3>
         <div className={styles.buttonRow}>
           <button
-            className={styles.controlButton}
+            className={getAllowedClasses(
+              styles.controlButton,
+              styles.recordButton,
+            )}
             onClick={handleStart}
             disabled={!isInactive}
-          >
-            <RecordIcon />
-          </button>
+          />
           {!isPaused ? (
             <button
-              className={styles.controlButton}
+              className={getAllowedClasses(
+                styles.controlButton,
+                styles.pauseButton,
+              )}
               onClick={handlePause}
               disabled={isInactive}
-            >
-              <PauseIcon />
-            </button>
+            />
           ) : (
             <button
-              className={styles.controlButton}
+              className={getAllowedClasses(
+                styles.controlButton,
+                styles.resumeButton,
+              )}
               onClick={handleResume}
-            >
-              <PlayIcon className={styles.playIcon} />
-            </button>
+            />
           )}
           <button
-            className={styles.controlButton}
+            className={getAllowedClasses(
+              styles.controlButton,
+              styles.stopButton,
+            )}
             onClick={handleStop}
             disabled={isInactive}
-          >
-            <StopIcon />
-          </button>
+          />
         </div>
       </div>
       <section className={styles.commentsWrapper}>

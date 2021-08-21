@@ -23,33 +23,44 @@
       width: 40px;
       height: 40px;
       background-color: var(--color-player-controls);
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: 20px 20px;
       border: none;
       border-radius: 4px;
-      transition: background-color 0.3s ease;
       cursor: pointer;
+      opacity: 1;
+      transition: opacity 0.3s ease;
 
       &:hover,
       &:disabled {
-        background-color: darken(#fff, 15%);
+        opacity: 0.7;
       }
 
       &:disabled {
         cursor: default;
       }
 
-      svg {
-        height: 20px;
-        width: 20px;
-        fill: #404040;
-      }
-
-      .playIcon {
-        margin-left: 2px;
-      }
-
       & + .controlButton {
         margin-left: 15px;
       }
+    }
+
+    .recordButton {
+      background-image: url("../../assets/img/player/record.svg");
+    }
+
+    .pauseButton {
+      background-image: url("../../assets/img/player/pause.svg");
+    }
+
+    .resumeButton {
+      background-image: url("../../assets/img/player/play.svg");
+      background-position-x: 11px;
+    }
+
+    .stopButton {
+      background-image: url("../../assets/img/player/stop.svg");
     }
   }
 }
