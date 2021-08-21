@@ -15,6 +15,7 @@ type User = {
   updatedAt: string;
   image: Image | null;
   role: UserRole;
+  followersCount?: string;
 };
 
 export type { User };

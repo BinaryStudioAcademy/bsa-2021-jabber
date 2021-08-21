@@ -29,7 +29,14 @@ class User {
   }
 
   public getById(id: number): Promise<TUser> {
-    return this.#UserModel.query().findById(id).withGraphJoined('[image]');
+    return this.#UserModel.query()
+      .findById(id)
+      .withGraphJoined('[image]')
+      .select(
+        'users.*',
+        this.#UserModel.relatedQuery('userFollowers')
+          .count().as('followersCount'),
+      );
   }
 
   public update(id: number, payload: UserEditDTOPayload): Promise<TUser> {
