@@ -34,6 +34,7 @@ import styles from './styles.module.scss';
 
 type Props = {
   src: string;
+  srcObject: MediaProvider | null;
   onSetPlayerStatus: React.Dispatch<React.SetStateAction<DataStatus>>;
   skipTime?: number;
   onClickPrevious?: () => void;
@@ -51,7 +52,7 @@ const rateSteps = Object.values(RateStep);
 
 const Player = forwardRef<Ref, Props>(
   (
-    { src, skipTime = DEFAULT_SKIP_TIME, onClickNext, onClickPrevious, onSetPlayerStatus },
+    { src, srcObject, skipTime = DEFAULT_SKIP_TIME, onClickNext, onClickPrevious, onSetPlayerStatus },
     ref,
   ) => {
     const playerRef = useRef<H5AudioPlayer | null>(null);
@@ -86,8 +87,9 @@ const Player = forwardRef<Ref, Props>(
     useEffect(() => {
       if (playerRef.current && playerRef.current.audio.current) {
         playerRef.current.audio.current.playbackRate = rateSteps[rateIndex];
+        playerRef.current.audio.current.srcObject = srcObject;
       }
-    }, [rateIndex]);
+    }, [rateIndex, srcObject]);
 
     const handleChangeRate = useCallback(() => {
       setRateIndex(

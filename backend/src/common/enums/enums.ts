@@ -29,6 +29,7 @@ export {
   UserNotificationDTOKey,
   GenreDTOKey,
   UserFollowerDTOKey,
+  PodcastFollowerDTOKey,
 } from './db/db';
 export { HttpCode, HttpMethod } from './http/http';
 export {

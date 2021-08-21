@@ -64,6 +64,7 @@ const CreateEpisodeForm: React.FC<Props> = ({
           imageUrl={imageUrl}
           className={styles.image}
           width="100%"
+          label="Episode Image"
         />
         <RecordPreviewControl
           name={EpisodePayloadKey.RECORD}

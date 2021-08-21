@@ -43,4 +43,6 @@ const createComment = createAsyncThunk<Comment, CommentFormCreatePayload, AsyncT
 
 const updateComments = createAction<Comment>(ActionType.UPDATE_COMMENTS);
 
-export { loadEpisodePayload, loadCommentsByEpisodeId, createComment, updateComments };
+const leaveEpisode = createAction<string>(ActionType.LEAVE_EPISODE);
+
+export { loadEpisodePayload, loadCommentsByEpisodeId, createComment, updateComments, leaveEpisode };

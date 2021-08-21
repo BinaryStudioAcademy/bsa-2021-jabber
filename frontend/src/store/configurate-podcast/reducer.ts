@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { Genre, Podcast } from 'common/types/types';
-import { create, edit, loadPodcast, loadGenres, deletePodcast } from './actions';
+import { create, edit, loadPodcast, loadGenres, deletePodcast, resetState } from './actions';
 
 type State = {
   dataStatus: DataStatus;
@@ -65,6 +65,9 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(deletePodcast.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(resetState, (state) => {
+    Object.assign(state, initialState);
   });
 });
 

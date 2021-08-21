@@ -1,1 +1,1 @@
-export { getRandomItem } from 'jabber-shared/helpers/helpers';
+export { getRandomItem, getSortedItems } from 'jabber-shared/helpers/helpers';
