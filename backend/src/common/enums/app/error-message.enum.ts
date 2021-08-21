@@ -12,6 +12,7 @@ enum ErrorMessage {
   NOT_YOURS_PODCAST = 'This podcast not yours',
   NOT_YOURS_EPISODE = 'This episode not yours',
   NO_PERMISSION_TO_EDIT_USER = 'You do not have permission to edit',
+  ALREADY_FOLLOWING = 'Already following',
 }
 
 export { ErrorMessage };

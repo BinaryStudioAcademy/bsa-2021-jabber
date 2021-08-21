@@ -7,6 +7,7 @@ export {
   CommentsApiPath,
   RecordsApiPath,
   GenresApiPath,
+  UserFollowersApiPath,
 } from './api/api';
 export {
   AppAsyncStorageKey,

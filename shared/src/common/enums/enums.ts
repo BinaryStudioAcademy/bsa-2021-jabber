@@ -8,6 +8,7 @@ export {
   RecordsApiPath,
   NotificationsApiPath,
   GenresApiPath,
+  UserFollowersApiPath,
 } from './api/api';
 export { CustomExceptionName } from './exceptions/exceptions';
 export { ContentType, FileExtension } from './file/file';
@@ -42,3 +43,4 @@ export { ImageCreatePayloadKey } from './image/image';
 export { DateFormatType } from './date/date';
 export { SocketEvent } from './socket/socket';
 export { UserNotificationStatus } from './user-notification/user-notification';
+export { UserFollowerPayloadKey } from './user-follower/user-follower';
