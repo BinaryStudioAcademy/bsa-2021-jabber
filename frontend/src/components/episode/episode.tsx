@@ -21,7 +21,7 @@ import {
   ConfirmPopup,
 } from 'components/common/common';
 import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
-import { CommentFormCreatePayload } from 'common/types/types';
+import { CommentFormCreatePayload, Shownote } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
 import {
   getCurrentTime,
@@ -101,9 +101,7 @@ const Episode: React.FC = () => {
   );
   const podcastDuration = playerRef.current?.getPodcastDuration();
 
-  // const sortArr = hasShownotes && getSortedItems(episode?.shownotes, 'timestamp');
-  // eslint-disable-next-line no-console
-  // console.log('sortArr', getSortedItems(episode.shownotes, 'timestamp'));
+  const sortCB = (a: Shownote, b: Shownote): number => a.timestamp - b.timestamp;
 
   return (
     <main className={styles.root}>
@@ -170,7 +168,7 @@ const Episode: React.FC = () => {
                   <div className={styles.shownotesWrapper}>
                     <h3>Time navigation</h3>
                     <ShownotesList
-                      shownotes={getSortedItems(episode.shownotes, 'timestamp')}
+                      shownotes={getSortedItems(episode.shownotes, sortCB)}
                       onClick={handleJumpToTimeLine}
                     />
                   </div>

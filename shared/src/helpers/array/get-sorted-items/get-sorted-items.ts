@@ -1,9 +1,9 @@
 
 const getSortedItems = <T>(
   items: T[],
-  keyToSort: keyof T,
+  cb: (itemA: T, itemB: T) => number,
 ): T[] => {
-  return [...items].sort((itemA: T, itemB: T): number => itemA[keyToSort] > itemB[keyToSort] ? 1 : -1);
+  return [...items].sort(cb);
 };
 
 export { getSortedItems };
