@@ -1,5 +1,5 @@
-import { useDispatch } from 'hooks/hooks';
-import { episode as episodeActions } from 'store/actions';
+// import { useDispatch } from 'hooks/hooks';
+// import { episode as episodeActions } from 'store/actions';
 import { getTimeOffset } from 'helpers/helpers';
 import { Comment } from 'common/types/types';
 import { User } from 'jabber-shared/common/types/types';
@@ -14,13 +14,11 @@ type Props = {
   comment: Comment;
   user?: User | null;
   onClick?: (payload: number) => void;
+  onCommentDelete?: (commentId: number) => void;
 };
 
-const CommentItem: React.FC<Props> = ({ user, comment, onClick, hasTimestamp }) => {
-  const dispatch = useDispatch();
-
+const CommentItem: React.FC<Props> = ({ user, comment, onClick, hasTimestamp, onCommentDelete }) => {
   const isOwner = user?.id === comment.userId;
-
   const time = getTimeOffset(comment.timestamp);
 
   const handleTimeLineJump = (): void => {
@@ -28,7 +26,7 @@ const CommentItem: React.FC<Props> = ({ user, comment, onClick, hasTimestamp }) 
   };
 
   const handleDeleteComment = (): void => {
-    dispatch(episodeActions.deleteComment(Number(comment.id)));
+    onCommentDelete && onCommentDelete(Number(comment.id));
   };
 
   const distance = getDistanceToDateNow(

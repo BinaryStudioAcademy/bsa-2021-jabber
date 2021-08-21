@@ -8,15 +8,17 @@ type Props = {
   comments: Comment[];
   user?: User | null;
   onClick?: (payload: number) => void;
+  onCommentDelete?: (commentId: number) => void;
 };
 
-const CommentsList: React.FC<Props> = ({ user, comments, onClick, hasTimestamps }) => {
+const CommentsList: React.FC<Props> = ({ user, comments, onClick, hasTimestamps, onCommentDelete }) => {
   return (
     <ul className={styles.list}>
       {comments.map((item) => (
         <CommentItem
           hasTimestamp={hasTimestamps}
           onClick={onClick}
+          onCommentDelete={onCommentDelete}
           comment={item}
           user={user}
           key={item.id} />
