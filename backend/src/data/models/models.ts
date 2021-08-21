@@ -8,3 +8,4 @@ export { Shownote as ShownoteModel } from './shownote/shownote.model';
 export { Notification as NotificationModel } from './notification/notification.model';
 export { UserNotification as UserNotificationModel } from './user-notification/user-notification.model';
 export { Genre as GenreModel } from './genre/genre.model';
+export { PodcastFollower as PodcastFollowerModel } from './podcast-follower/podcast-follower.model';

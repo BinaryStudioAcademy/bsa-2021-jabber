@@ -10,6 +10,7 @@ class RecordAudio {
   #notificationService;
   #recorder?: MediaRecorder;
   #audioChunks: Blob[] = [];
+  #stream?: MediaStream;
 
   constructor({ notificationService }: Constructor) {
     this.#notificationService = notificationService;
@@ -17,6 +18,8 @@ class RecordAudio {
 
   private onSuccess(stream: MediaStream): void {
     this.#recorder = new MediaRecorder(stream);
+
+    this.#stream = stream;
 
     this.#recorder.ondataavailable = ({ data }: BlobEvent): void => {
       this.#audioChunks.push(data);
@@ -33,8 +36,10 @@ class RecordAudio {
     this.#notificationService.error('Error', <string>err.message);
   }
 
-  public start(): void {
+  public start(): MediaStream | undefined {
     this.#recorder?.start(TIME_SLICE);
+
+    return this.#stream;
   }
 
   public pause(): void {

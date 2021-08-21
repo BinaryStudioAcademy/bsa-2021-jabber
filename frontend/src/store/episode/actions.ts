@@ -53,6 +53,7 @@ const deleteComment = createAsyncThunk <Comment, number, AsyncThunkConfig>
 
 const updateComments = createAction<Comment>(ActionType.UPDATE_COMMENTS);
 const updateCommentsAfterDelete = createAction<Comment>(ActionType.UPDATE_COMMENTS_AFTER_DELETE);
+const leaveEpisode = createAction<string>(ActionType.LEAVE_EPISODE);
 
 export {
   loadEpisodePayload,
@@ -61,4 +62,5 @@ export {
   updateComments,
   deleteComment,
   updateCommentsAfterDelete,
+  leaveEpisode,
 };

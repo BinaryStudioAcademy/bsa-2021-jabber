@@ -1,15 +1,17 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { RecordStatus } from 'common/enums/enums';
-import { pauseRecord, resumeRecord, startRecord, stopRecord, resetState } from './actions';
+import { pauseRecord, resumeRecord, startRecord, stopRecord, resetState, setLiveStream } from './actions';
 
 type State = {
   recordStatus: RecordStatus;
   hasLiveRecord: boolean;
+  liveStream: MediaStream | null;
 };
 
 const initialState: State = {
   recordStatus: RecordStatus.INACTIVE,
   hasLiveRecord: false,
+  liveStream: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -28,6 +30,9 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(resetState, (state) => {
     Object.assign(state, initialState);
+  });
+  builder.addCase(setLiveStream, (state, action) => {
+    state.liveStream = action.payload;
   });
 });
 
