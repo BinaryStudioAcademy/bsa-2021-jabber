@@ -1,12 +1,11 @@
 import { useAppSelector, useDispatch, useState } from 'hooks/hooks';
 import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
-import { Button, Link, ImageWrapper } from 'components/common/common';
+import { Button, Link, ImageWrapper, Popup } from 'components/common/common';
 import { auth as authActions } from 'store/actions';
 import logo from 'assets/img/logo.svg';
 import headerBell from 'assets/img/header-bell.svg';
 import { getAllowedClasses } from 'helpers/helpers';
-import Popup from 'reactjs-popup';
 import './popus.styles.scss';
 import styles from './styles.module.scss';
 
