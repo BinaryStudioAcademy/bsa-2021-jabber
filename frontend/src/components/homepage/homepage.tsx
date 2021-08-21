@@ -15,17 +15,21 @@ import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 const Homepage: React.FC = () => {
-  const { podcasts, dataStatus, genres, genresDataStatus } = useAppSelector(({ homepage, genre }) => ({
+  const { podcasts, dataStatus, genres, genresDataStatus } = useAppSelector(({ homepage }) => ({
     podcasts: homepage.podcasts,
     dataStatus: homepage.dataStatus,
-    genres: genre.genres,
-    genresDataStatus: genre.dataStatus,
+    genres: homepage.genres,
+    genresDataStatus: homepage.genresDataStatus,
   }));
   const dispatch = useDispatch();
   const hasPodcasts = Boolean(podcasts.length);
   const isLoading = dataStatus === DataStatus.PENDING;
   const isGenresLoaded = genresDataStatus === DataStatus.FULFILLED;
   const [podcastsFilter, setPodcastsFilter] = useState<PodcastLoadFilter>(DEFAULT_PODCASTS_FILTER_VALUE);
+
+  useEffect(() => {
+    dispatch(homepageActions.loadGenres());
+  }, []);
 
   useEffect(() => {
     const isNewSearchQuery = podcastsFilter.offset === INITIAL_PAGE_OFFSET;

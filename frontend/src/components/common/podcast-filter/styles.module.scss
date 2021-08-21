@@ -16,26 +16,12 @@
     border-radius: 2px;
     z-index: 100;
   }
-  .podcastFilterTop {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .podcastFilterTitle {
     margin-bottom: 20px;
     padding-bottom: 15px;
     border-bottom: 1px solid rgba(#353535, 0.1);
-  }
-  .podcastFilterTitle {
     font-size: 18px;
     font-weight: bold;
-  }
-  .btnClear {
-    border: none;
-    color: rgba(#353535, 0.5);
-    background-color: white;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
   }
   .fieldset {
     display: flex;

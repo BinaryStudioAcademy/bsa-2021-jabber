@@ -8,5 +8,4 @@ export * as record from './record/actions';
 export * as userProfile from './user-profile/actions';
 export * as notification from './notification/actions';
 export * as configurateUser from './configurate-user/actions';
-export * as genre from './genre/actions';
 

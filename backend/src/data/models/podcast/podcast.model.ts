@@ -1,32 +1,11 @@
-import { Model, Page, QueryBuilder } from 'objection';
+import { Model } from 'objection';
 import { TableName, PodcastDTOKey, PodcastType } from '~/common/enums/enums';
 import { Abstract } from '../abstract/abstract.model';
 import { Image } from '~/data/models/image/image.model';
 import { User } from '~/data/models/user/user.model';
 import { Genre } from '~/data/models/genre/genre.model';
+import { PodcastQueryBuilder } from './common/podcast-query-builder'
 
-class PodcastQueryBuilder<M extends Model, R = M[]> extends QueryBuilder<M, R> {
-  ArrayQueryBuilderType!: PodcastQueryBuilder<M, M[]>;
-  SingleQueryBuilderType!: PodcastQueryBuilder<M, M>;
-  NumberQueryBuilderType!: PodcastQueryBuilder<M, number>;
-  PageQueryBuilderType!: PodcastQueryBuilder<M, Page<M>>;
-
-  filterBySearch(search: string): this {
-    if (!search) {
-      return this;
-    }
-
-    return this.whereRaw(`REPLACE(name, ' ', '') ILIKE REPLACE('%${search}%', ' ', '')`);
-  }
-
-  filterByGenres(genres: number[]): this {
-    if (!genres.length) {
-      return this;
-    }
-
-    return this.whereIn('genre_id', genres);
-  }
-}
 
 class Podcast extends Abstract {
   [PodcastDTOKey.NAME]: string;

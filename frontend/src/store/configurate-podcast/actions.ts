@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
 import {
   AsyncThunkConfig,
+  Genre,
   Podcast,
   PodcastFormPayload,
   DeleteActionPodcastPayload,
@@ -68,6 +69,14 @@ const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>
   return podcast;
 });
 
+const loadGenres = createAsyncThunk<Genre[], undefined, AsyncThunkConfig>
+(ActionType.LOAD_GENRES, async (_args, { extra }) => {
+  const { genreApi } = extra;
+  const genres = await genreApi.getAll();
+
+  return genres;
+});
+
 const deletePodcast = createAsyncThunk<void, DeleteActionPodcastPayload, AsyncThunkConfig>(
   ActionType.DELETE_PODCAST,
   async ({ podcastId, userId }, { extra }) => {
@@ -78,4 +87,4 @@ const deletePodcast = createAsyncThunk<void, DeleteActionPodcastPayload, AsyncTh
     navigationService.push(`${AppRoute.USERS}/${userId}`);
   });
 
-export { create, edit, loadPodcast, deletePodcast };
+export { create, edit, loadPodcast, loadGenres, deletePodcast };

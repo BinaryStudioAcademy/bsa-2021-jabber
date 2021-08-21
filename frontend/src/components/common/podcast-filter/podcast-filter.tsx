@@ -27,10 +27,6 @@ const PodcastFilter: React.FC<Props> = ({
     setIsFormVisible(false);
   };
 
-  const handleClearGenres = (): void => {
-    reset({ genresFilter: new Array(genres.length).fill(false) });
-  };
-
   const handleSetGenres = (e?: React.BaseSyntheticEvent): void => {
     setIsFormVisible(false);
     handleSubmit(onSetGenres)(e);
@@ -45,11 +41,8 @@ const PodcastFilter: React.FC<Props> = ({
       <button onClick={handleShowForm} className={styles.btnFilter}></button>
       {isFormVisible && (
         <div className={styles.podcastFilterBox}>
-          <div className={styles.podcastFilterTop}>
-            <span className={styles.podcastFilterTitle}>Filter</span>
-            <button className={styles.btnClear} onClick={handleClearGenres}>
-              Clear all
-            </button>
+          <div className={styles.podcastFilterTitle}>
+            Filter
           </div>
           <form onSubmit={handleSetGenres}>
             <fieldset className={styles.fieldset}>

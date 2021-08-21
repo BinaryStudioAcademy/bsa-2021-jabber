@@ -20,7 +20,7 @@ import EpisodeLive from 'components/episode-live/episode-live';
 import EditUser from 'components/edit-user/edit-user';
 import { useDispatch, useEffect, useAppSelector } from 'hooks/hooks';
 import { storage } from 'services/services';
-import { auth as authActions, genre as genreActions } from 'store/actions';
+import { auth as authActions } from 'store/actions';
 
 const App: React.FC = () => {
   const { user } = useAppSelector(({ auth }) => ({
@@ -36,7 +36,6 @@ const App: React.FC = () => {
     if (hasToken) {
       dispatch(authActions.getCurrentUser());
     }
-    dispatch(genreActions.loadGenres());
   }, []);
 
   if (!hasUser && hasToken) {
