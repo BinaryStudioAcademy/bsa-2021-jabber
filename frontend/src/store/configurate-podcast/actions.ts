@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
 import {
   AsyncThunkConfig,
@@ -87,4 +87,6 @@ const deletePodcast = createAsyncThunk<void, DeleteActionPodcastPayload, AsyncTh
     navigationService.push(`${AppRoute.USERS}/${userId}`);
   });
 
-export { create, edit, loadPodcast, loadGenres, deletePodcast };
+const resetState = createAction(ActionType.RESET_STATE);
+
+export { create, edit, loadPodcast, loadGenres, deletePodcast, resetState };
