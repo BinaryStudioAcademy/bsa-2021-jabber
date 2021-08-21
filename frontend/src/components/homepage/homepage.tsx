@@ -26,6 +26,7 @@ const Homepage: React.FC = () => {
   const isLoading = dataStatus === DataStatus.PENDING;
   const isGenresLoaded = genresDataStatus === DataStatus.FULFILLED;
   const [podcastsFilter, setPodcastsFilter] = useState<PodcastLoadFilter>(DEFAULT_PODCASTS_FILTER_VALUE);
+  const [isFilterVisible, setIsFilterVisible] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(homepageActions.loadGenres());
@@ -51,12 +52,13 @@ const Homepage: React.FC = () => {
     [podcastsFilter],
   );
 
-  const handleSetGenres = (data: GenresFilter): void => {
-    const selectedGenres = data.genresFilter.reduce<number[]>((acc, genre, index) => {
-      if (genre) {
-        acc.push(genres[index].id);
+  const handleSetGenres = ({ genresFilter }: GenresFilter): void => {
+    const selectedGenres = genres.reduce<number[]>((selectedGenres, genre) => {
+      if (genresFilter[genre.key]) {
+        selectedGenres.push(genre.id);
       }
-      return acc;
+
+      return selectedGenres;
     }, []);
 
     setPodcastsFilter({
@@ -64,6 +66,12 @@ const Homepage: React.FC = () => {
       offset: INITIAL_PAGE_OFFSET,
       genres: selectedGenres,
     });
+
+    setIsFilterVisible(false);
+  };
+
+  const handleClosePodcastFilter = (): void => {
+    setIsFilterVisible(false);
   };
 
   const handleMorePodcastsLoad = (): void => {
@@ -78,12 +86,37 @@ const Homepage: React.FC = () => {
       <Search onChange={handleChange} />
       <div className={styles.titleWrapper}>
         <h2 className={styles.title}>All podcasts</h2>
-        {isGenresLoaded  && <PodcastFilter genres={genres} onSetGenres={handleSetGenres} currentState={podcastsFilter}/>}
+
+        {isGenresLoaded && (
+          <div className={styles.filterGroup}>
+            <button
+              onClick={(): void => setIsFilterVisible(!isFilterVisible)}
+              className={styles.btnFilter}
+            />
+            {isFilterVisible && (
+              <PodcastFilter
+                genres={genres}
+                onApply={handleSetGenres}
+                onCancel={handleClosePodcastFilter}
+                currentState={podcastsFilter}
+              />
+            )}
+          </div>
+        )}
       </div>
       {hasPodcasts ? (
         <>
           <PodcastList podcasts={podcasts} />
-          {isLoading ? <Loader /> : <Button className={styles.loadMoreBtn} label="See more" buttonColor={ButtonColor.LIGHT_PINK} onClick={handleMorePodcastsLoad}/> }
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <Button
+              className={styles.loadMoreBtn}
+              label="See more"
+              buttonColor={ButtonColor.LIGHT_PINK}
+              onClick={handleMorePodcastsLoad}
+            />
+          )}
         </>
       ) : isLoading ? (
         <Loader />

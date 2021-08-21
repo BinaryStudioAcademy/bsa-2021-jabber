@@ -1,21 +1,10 @@
 .podcastFilter {
-  position: relative;
-  margin-left: 10px;
-  .btnFilter {
-    width: 25px;
-    height: 25px;
-    background: url('../../../assets/img/filter.svg') center center / cover;
-    border: none;
-    cursor: pointer;
-  }
-  .podcastFilterBox {
-    position: absolute;
-    top: 37px;
-    padding: 20px 32px 12px 22px;
-    background-color: white;
-    border-radius: 2px;
-    z-index: 100;
-  }
+  position: absolute;
+  top: 37px;
+  padding: 20px 32px 12px 22px;
+  background-color: white;
+  border-radius: 2px;
+  z-index: 100;
   .podcastFilterTitle {
     margin-bottom: 20px;
     padding-bottom: 15px;

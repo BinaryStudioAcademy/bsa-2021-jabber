@@ -1,5 +1,5 @@
 type GenresFilter = {
-  genresFilter: boolean[];
+  genresFilter: Record<string, boolean>;
 };
 
 export type { GenresFilter };

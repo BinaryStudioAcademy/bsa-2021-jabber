@@ -15,6 +15,7 @@ const Checkbox: React.FC<Props> = ({
 }) => {
 
   const { field } = useController({ name, control });
+
   return (
     <label className={styles.checkbox}>
       <input

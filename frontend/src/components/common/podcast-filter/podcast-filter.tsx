@@ -1,76 +1,61 @@
 import { Path, FieldValues } from 'react-hook-form';
 import { Genre, GenresFilter, PodcastLoadFilter } from 'common/types/types';
 import { ButtonType, ButtonColor } from 'common/enums/enums';
-import { useAppForm, useState } from 'hooks/hooks';
+import { useAppForm } from 'hooks/hooks';
 import { Button, Checkbox } from 'components/common/common';
 import styles from './styles.module.scss';
 
 type Props = {
   genres: Genre[];
-  onSetGenres: (data: GenresFilter) => void;
+  onApply: (data: GenresFilter) => void;
+  onCancel: () => void;
   currentState: PodcastLoadFilter;
 };
 
 const PodcastFilter: React.FC<Props> = ({
   genres,
-  onSetGenres,
+  onApply,
+  onCancel,
   currentState,
 }) => {
-  const { control, handleSubmit, reset } = useAppForm({
-    defaultValues: { genresFilter: new Array(genres.length).fill(false) },
+
+  const currentValues = genres.reduce<Record<string, boolean>>((State, genre) => {
+    State[genre.key] = currentState.genres.includes(genre.id);
+    return State;
+  }, {});
+
+  const { control, handleSubmit } = useAppForm({
+    defaultValues: { genresFilter: currentValues },
   });
-  const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
-
-  const handleCancel = (): void => {
-    const currentValues = new Array<boolean>(genres.length).fill(false).map((_arg, i) => currentState.genres.includes(genres[i].id));
-    reset({ genresFilter: currentValues });
-    setIsFormVisible(false);
-  };
-
-  const handleSetGenres = (e?: React.BaseSyntheticEvent): void => {
-    setIsFormVisible(false);
-    handleSubmit(onSetGenres)(e);
-  };
-
-  const handleShowForm = (): void => {
-    setIsFormVisible(!isFormVisible);
-  };
 
   return (
     <div className={styles.podcastFilter}>
-      <button onClick={handleShowForm} className={styles.btnFilter}></button>
-      {isFormVisible && (
-        <div className={styles.podcastFilterBox}>
-          <div className={styles.podcastFilterTitle}>
-            Filter
-          </div>
-          <form onSubmit={handleSetGenres}>
-            <fieldset className={styles.fieldset}>
-              <ul className={styles.genresList}>
-                {genres.map((genre, index) => (
-                  <li key={genre.id} className={styles.genreItem}>
-                    <Checkbox
-                      label={genre.name}
-                      name={`genresFilter.${index}` as Path<FieldValues>}
-                      control={control}
-                    />
-                  </li>
-                ))}
-              </ul>
-              <div className={styles.btnsWrapper}>
-                <Button label="Apply" type={ButtonType.SUBMIT} />
-                <Button
-                  className={styles.btnCancel}
-                  buttonColor={ButtonColor.LIGHT_PINK}
-                  label="Cancel"
-                  type={ButtonType.BUTTON}
-                  onClick={handleCancel}
+      <div className={styles.podcastFilterTitle}>Filter</div>
+      <form onSubmit={handleSubmit(onApply)}>
+        <fieldset className={styles.fieldset}>
+          <ul className={styles.genresList}>
+            {genres.map((genre) => (
+              <li key={genre.id} className={styles.genreItem}>
+                <Checkbox
+                  label={genre.name}
+                  name={`genresFilter.${genre.key}` as Path<FieldValues>}
+                  control={control}
                 />
-              </div>
-            </fieldset>
-          </form>
-        </div>
-      )}
+              </li>
+            ))}
+          </ul>
+          <div className={styles.btnsWrapper}>
+            <Button label="Apply" type={ButtonType.SUBMIT} />
+            <Button
+              className={styles.btnCancel}
+              buttonColor={ButtonColor.LIGHT_PINK}
+              label="Cancel"
+              type={ButtonType.BUTTON}
+              onClick={onCancel}
+            />
+          </div>
+        </fieldset>
+      </form>
     </div>
   );
 };
