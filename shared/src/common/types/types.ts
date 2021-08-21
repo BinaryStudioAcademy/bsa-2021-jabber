@@ -32,3 +32,4 @@ export type { SignResponse } from './sign/sign';
 export type { TokenPayload } from './token/token';
 export type { UserNotification } from './user-notification/user-notification';
 export type { Genre } from './genre/genre';
+export type { UserFollower, UserFollowerPayload } from './user-follower/user-follower';
