@@ -17,10 +17,6 @@ class UserFollower {
     this.#userFollowerRepository = userFollowerRepository;
   }
 
-  public getCountByUserId(userId: number): Promise<TUserFollower[]> {
-    return this.#userFollowerRepository.getCountByUserId(userId);
-  }
-
   public async create(payload: UserFollowerPayload): Promise<TUserFollower> {
     const userFollower = await this.#userFollowerRepository.getByUserIdFollowerId(payload);
 

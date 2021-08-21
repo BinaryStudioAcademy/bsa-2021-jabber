@@ -17,15 +17,6 @@ const initUserFollowersApi = ({ apiRouter, userFollowerService }: Args): Router 
 
   apiRouter.use(ApiPath.USER_FOLLOWERS, userFollowerRouter);
 
-  userFollowerRouter.get(
-    UserFollowersApiPath.$ID,
-    handleAsyncApi(async (req, res) => {
-      return res
-        .json(await userFollowerService.getCountByUserId(Number(req.params.id)))
-        .status(HttpCode.OK);
-    }),
-  );
-
   userFollowerRouter.post(
     UserFollowersApiPath.ROOT,
     checkAuthMiddleware(HttpMethod.POST),
