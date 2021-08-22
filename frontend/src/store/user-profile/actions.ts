@@ -29,30 +29,29 @@ const getFollowersCount = createAsyncThunk<number, number, AsyncThunkConfig>(
     return await userFollowerApi.getCountByUserId(userId);
   });
 
-const isFollowedUser = createAsyncThunk<boolean, UserFollowerPayload, AsyncThunkConfig>(
-  ActionType.IS_FOLLOWED_USER,
+const checkIsFollowedUser = createAsyncThunk<boolean, UserFollowerPayload, AsyncThunkConfig>(
+  ActionType.CHECK_IS_FOLLOWED_USER,
   async (payload, { extra }) => {
     const { userFollowerApi } = extra;
-    const userFollower = await userFollowerApi.isFollowed(payload);
 
-    return Boolean(userFollower);
+    return await userFollowerApi.checkIsFollowed(payload);
   },
 );
 
-const followUser = createAsyncThunk<void, UserFollowerPayload, AsyncThunkConfig>(
-  ActionType.FOLLOW_USER,
-  async (payload, { extra }) => {
+const toggleFollowUser = createAsyncThunk<boolean, UserFollowerPayload, AsyncThunkConfig>(
+  ActionType.TOGGLE_FOLLOW_USER,
+  async (payload, { extra, getState }) => {
     const { userFollowerApi } = extra;
+    const { userProfile } = getState();
+
+    if (userProfile.isFollowed) {
+      await userFollowerApi.delete(payload);
+      return false;
+    }
+
     await userFollowerApi.create(payload);
+    return true;
   },
 );
 
-const unfollowUser = createAsyncThunk<void, UserFollowerPayload, AsyncThunkConfig>(
-  ActionType.UNFOLLOW_USER,
-  async (payload, { extra }) => {
-    const { userFollowerApi } = extra;
-    await userFollowerApi.delete(payload);
-  },
-);
-
-export { loadPodcasts, loadUser, getFollowersCount, isFollowedUser, followUser, unfollowUser };
+export { loadPodcasts, loadUser, getFollowersCount, checkIsFollowedUser, toggleFollowUser };

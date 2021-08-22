@@ -6,7 +6,7 @@ import {
   Button,
 } from 'components/common/common';
 import { AppRoute, DataStatus } from 'common/enums/enums';
-import { RootState, UserFollowerPayload } from 'common/types/types';
+import { RootState } from 'common/types/types';
 import { useAppSelector, useParams, useDispatch, useEffect } from 'hooks/hooks';
 import { userProfile as userProfileActions } from 'store/actions';
 import contactLogo from 'assets/img/user-profile/contact.svg';
@@ -52,7 +52,7 @@ const UserPage: React.FC = () => {
 
   useEffect(() => {
     if (user && currentUser) {
-      dispatch(userProfileActions.isFollowedUser({
+      dispatch(userProfileActions.checkIsFollowedUser({
         userId: user.id,
         followerId: currentUser.id,
       }));
@@ -64,17 +64,12 @@ const UserPage: React.FC = () => {
   const hasPermitToEdit = currentUser?.id === Number(id);
   const isLoading = dataStatus === DataStatus.PENDING || followersDataStatus === DataStatus.PENDING;
 
-  const handleFollow = (): void => {
+  const handleToggleFollow = (): void => {
     if (user && currentUser) {
-
-      const payload: UserFollowerPayload = {
+      dispatch(userProfileActions.toggleFollowUser({
         userId: user.id,
         followerId: currentUser.id,
-      };
-
-      isFollowed
-        ? dispatch(userProfileActions.unfollowUser(payload))
-        : dispatch(userProfileActions.followUser(payload));
+      }));
     }
   };
 
@@ -147,7 +142,7 @@ const UserPage: React.FC = () => {
         {isShowFollowButton && (<Button
           className={styles.followButton}
           label={isFollowed ? 'Unfollow' : 'Follow'}
-          onClick={handleFollow}
+          onClick={handleToggleFollow}
         />
         )}
       </div>

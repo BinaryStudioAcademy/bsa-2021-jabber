@@ -21,8 +21,10 @@ class UserFollower {
     return this.#userFollowerRepository.getCountByUserId(userId);
   }
 
-  public isFollowed(payload: UserFollowerPayload): Promise<TUserFollower> {
-    return this.#userFollowerRepository.getByUserIdFollowerId(payload);
+  public async checkIsFollowed(payload: UserFollowerPayload): Promise<boolean> {
+    const userFollower = await this.#userFollowerRepository.getByUserIdFollowerId(payload);
+
+    return Boolean(userFollower);
   }
 
   public async create(payload: UserFollowerPayload): Promise<TUserFollower> {

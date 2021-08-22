@@ -31,12 +31,12 @@ const initUserFollowersApi = ({ apiRouter, userFollowerService }: Args): Router 
     UserFollowersApiPath.$USER_ID_$FOLLOWER_ID,
     checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (req, res) => {
-      const userFollower = await userFollowerService.isFollowed({
+      const isFollowed = await userFollowerService.checkIsFollowed({
         userId: Number(req.params.userId),
         followerId: Number(req.params.followerId),
       });
 
-      return res.json(userFollower || null).status(HttpCode.OK);
+      return res.json(isFollowed).status(HttpCode.OK);
     }),
   );
 

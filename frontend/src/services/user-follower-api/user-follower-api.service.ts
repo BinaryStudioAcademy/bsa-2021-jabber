@@ -29,7 +29,7 @@ class UserFollowerApi {
     );
   }
 
-  public isFollowed(payload: UserFollowerPayload): Promise<UserFollower> {
+  public checkIsFollowed(payload: UserFollowerPayload): Promise<boolean> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.USER_FOLLOWERS}/${payload.userId}/${payload.followerId}`,
       {

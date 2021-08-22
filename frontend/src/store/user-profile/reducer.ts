@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { Podcast, User } from 'common/types/types';
-import { loadPodcasts, loadUser, getFollowersCount, isFollowedUser, followUser, unfollowUser } from './actions';
+import { loadPodcasts, loadUser, getFollowersCount, checkIsFollowedUser, toggleFollowUser } from './actions';
 
 type State = {
   dataStatus: DataStatus;
@@ -52,23 +52,20 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(getFollowersCount.rejected, (state) => {
     state.followersDataStatus = DataStatus.REJECTED;
   });
-  builder.addCase(isFollowedUser.pending, (state) => {
+  builder.addCase(checkIsFollowedUser.pending, (state) => {
     state.followersDataStatus = DataStatus.PENDING;
   });
-  builder.addCase(isFollowedUser.fulfilled, (state, action) => {
+  builder.addCase(checkIsFollowedUser.fulfilled, (state, action) => {
     state.followersDataStatus = DataStatus.FULFILLED;
     state.isFollowed = action.payload;
   });
-  builder.addCase(isFollowedUser.rejected, (state) => {
+  builder.addCase(checkIsFollowedUser.rejected, (state) => {
     state.followersDataStatus = DataStatus.REJECTED;
   });
-  builder.addCase(followUser.fulfilled, (state) => {
-    state.isFollowed = true;
-    state.followersCount++;
-  });
-  builder.addCase(unfollowUser.fulfilled, (state) => {
-    state.isFollowed = false;
-    state.followersCount--;
+  builder.addCase(toggleFollowUser.fulfilled, (state, action) => {
+    state.isFollowed = action.payload;
+
+    action.payload ? state.followersCount++ : state.followersCount--;
   });
 });
 
