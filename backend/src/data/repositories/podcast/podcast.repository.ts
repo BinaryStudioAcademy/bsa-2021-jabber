@@ -27,11 +27,12 @@ class Podcast {
       .withGraphJoined('[image, user]');
   }
 
-  public getPodcastsCount({ search }: PodcastLoadFilter): Promise<number> {
+  public getPodcastsCount({ search = '', genres = [] }: PodcastLoadFilter): Promise<number> {
     return this.#PodcastModel
       .query()
       .where('type', PodcastType.PUBLIC)
-      .whereRaw(`REPLACE(name, ' ', '') ILIKE REPLACE('%${search}%', ' ', '')`)
+      .filterByGenres(genres)
+      .filterBySearch(search)
       .resultSize();
   }
 
