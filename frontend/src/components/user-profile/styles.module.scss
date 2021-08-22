@@ -93,6 +93,36 @@
   }
 }
 
+.followContainer {
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  position: relative;
+
+  &::after {
+    content: "";
+    width: 100%;
+    height: 2px;
+    background-color: #dcdce0;
+    position: absolute;
+    bottom: 0px;
+  }
+
+  .followTitle {
+    margin: 0;
+  }
+
+  .followCount {
+    margin-left: 15px;
+    font-size: 21px;
+  }
+
+  .followButton {
+    margin-left: auto;
+    width: 102px;
+  }
+}
+
 .podcastsByUserContainer {
   .podcastsByUserTitle {
     font-weight: bold;
