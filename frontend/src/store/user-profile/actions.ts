@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Podcast, AsyncThunkConfig, User } from 'common/types/types';
+import { Podcast, AsyncThunkConfig, User, UserFollowerPayload } from 'common/types/types';
 import { ActionType } from './common';
 
 const loadPodcasts = createAsyncThunk<Podcast[], number, AsyncThunkConfig>(
@@ -22,4 +22,36 @@ const loadUser = createAsyncThunk<User, number, AsyncThunkConfig>(
   },
 );
 
-export { loadPodcasts, loadUser };
+const getFollowersCount = createAsyncThunk<number, number, AsyncThunkConfig>(
+  ActionType.GET_FOLLOWERS_COUNT,
+  async (userId, { extra }) => {
+    const { userFollowerApi } = extra;
+    return await userFollowerApi.getCountByUserId(userId);
+  });
+
+const checkIsFollowedUser = createAsyncThunk<boolean, UserFollowerPayload, AsyncThunkConfig>(
+  ActionType.CHECK_IS_FOLLOWED_USER,
+  async (payload, { extra }) => {
+    const { userFollowerApi } = extra;
+
+    return await userFollowerApi.checkIsFollowed(payload);
+  },
+);
+
+const toggleFollowUser = createAsyncThunk<boolean, UserFollowerPayload, AsyncThunkConfig>(
+  ActionType.TOGGLE_FOLLOW_USER,
+  async (payload, { extra, getState }) => {
+    const { userFollowerApi } = extra;
+    const { userProfile } = getState();
+
+    if (userProfile.isFollowed) {
+      await userFollowerApi.delete(payload);
+      return false;
+    }
+
+    await userFollowerApi.create(payload);
+    return true;
+  },
+);
+
+export { loadPodcasts, loadUser, getFollowersCount, checkIsFollowedUser, toggleFollowUser };

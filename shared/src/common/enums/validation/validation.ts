@@ -8,3 +8,4 @@ export { ShownoteValidationMessage } from './shownote-validation-message.enum';
 export { ShownoteValidationRule } from './shownote-validation-rule.enum';
 export { CommentValidationMessage } from './comment-validation-message.enum';
 export { CommentValidationRule } from './comment-validation-rule.enum';
+export { UserFollowerValidationMessage } from './user-follower-validation-message.enum';
