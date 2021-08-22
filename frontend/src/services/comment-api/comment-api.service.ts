@@ -58,6 +58,15 @@ class CommentApi {
       },
     );
   }
+
+  public delete(id: number): Promise<Comment>{
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.COMMENTS}/${id}`,
+      {
+        method: HttpMethod.DELETE,
+      },
+    );
+  }
 }
 
 export { CommentApi };

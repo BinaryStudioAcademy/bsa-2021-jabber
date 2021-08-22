@@ -99,6 +99,10 @@ const Episode: React.FC = () => {
     );
   };
 
+  const handleCommentDelete = (commentId: number): void => {
+    dispatch(episodeActions.deleteComment(commentId));
+  };
+
   const handleShowPopup = (): void => {
     setIsConfirmPopupOpen(!isConfirmPopupOpen);
   };
@@ -233,7 +237,9 @@ const Episode: React.FC = () => {
               <CommentsList
                 hasTimestamps={hasRecord}
                 comments={comments}
-                onClick={handleJumpToTimeLine}
+                user={user}
+                onTimeClick={handleJumpToTimeLine}
+                onCommentDelete={handleCommentDelete}
               />
             ) : (
               <div>There&apos;s no comment yet.</div>
