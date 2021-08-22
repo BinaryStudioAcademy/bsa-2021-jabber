@@ -6,6 +6,7 @@ import {
   PodcastType,
   AppRoute,
   ButtonColor,
+  PodcastPeriodicity,
 } from 'common/enums/enums';
 import { Option, PodcastFormPayload } from 'common/types/types';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
@@ -27,6 +28,7 @@ type Props = {
 };
 
 const selectOptions: Option[] = getOptions(Object.values(PodcastType));
+const periodicityOptions: Option[] = getOptions(Object.values(PodcastPeriodicity));
 
 const ConfiguratePodcastForm: React.FC<Props> = ({
   onSubmit,
@@ -85,6 +87,13 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
           options={selectOptions}
           label="Type"
           name={PodcastPayloadKey.TYPE}
+          control={control}
+          errors={errors}
+        />
+        <Select
+          options={periodicityOptions}
+          label="Рeriodicity"
+          name={PodcastPayloadKey.PERIODICITY}
           control={control}
           errors={errors}
         />

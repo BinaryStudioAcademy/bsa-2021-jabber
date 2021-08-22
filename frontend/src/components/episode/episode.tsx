@@ -20,12 +20,13 @@ import {
   ImageWrapper,
   ConfirmPopup,
 } from 'components/common/common';
-import { AppRoute, DataStatus, EpisodeStatus } from 'common/enums/enums';
+import { AppRoute, DataStatus, EpisodeStatus, UserRole } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
 import {
   getCurrentTime,
   getCommentsTimelineDimensions,
+  getSortedShownotes,
 } from './helpers/helpers';
 import { PageParams } from './common/types/types';
 import { ShownotesList, ComentsTimeline } from './components/components';
@@ -38,13 +39,14 @@ const Episode: React.FC = () => {
   const playerRef = useRef<PlayerRef | null>(null);
   const playerContainerRef = useRef<HTMLDivElement>(null);
 
-  const { episode, comments, user, dataStatus, podcast } = useAppSelector(
-    ({ episode, auth }) => ({
+  const { episode, comments, user, dataStatus, podcast, liveStream } = useAppSelector(
+    ({ episode, auth, record }) => ({
       dataStatus: episode.dataStatus,
       episode: episode.episode,
       comments: episode.comments,
       user: auth.user,
       podcast: episode.podcast,
+      liveStream: record.liveStream,
     }),
   );
 
@@ -55,11 +57,17 @@ const Episode: React.FC = () => {
   const hasRecord = Boolean(episode?.record);
   const isStaging = episode?.status === EpisodeStatus.STAGING;
   const isOwner = user?.id === episode?.userId;
+  const isMaster = user?.role === UserRole.MASTER;
   const isPlayerLoaded = playerStatus === DataStatus.FULFILLED;
+  const isAllowDelete = isOwner || isMaster;
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisodePayload(Number(id)));
+
+    return ((): void => {
+      dispatch(episodeActions.leaveEpisode(id));
+    });
   }, []);
 
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState<boolean>(false);
@@ -101,6 +109,8 @@ const Episode: React.FC = () => {
   );
   const podcastDuration = playerRef.current?.getPodcastDuration();
 
+  const sortedShownotes = getSortedShownotes(episode?.shownotes ?? []);
+
   return (
     <main className={styles.root}>
       {episode ? (
@@ -122,13 +132,15 @@ const Episode: React.FC = () => {
             <div className={styles.episode}>
               <div className={styles.descriptionWrapper}>
                 {isOwner && (
+                  <Link
+                    to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`}
+                    className={styles.editLink}
+                  >
+                    <span className="visually-hidden">Edit episode</span>
+                  </Link>
+                )}
+                {isAllowDelete && (
                   <>
-                    <Link
-                      to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`}
-                      className={styles.editLink}
-                    >
-                      <span className="visually-hidden">Edit episode</span>
-                    </Link>
                     <button
                       onClick={handleShowPopup}
                       className={styles.deleteButton}
@@ -166,7 +178,7 @@ const Episode: React.FC = () => {
                   <div className={styles.shownotesWrapper}>
                     <h3>Time navigation</h3>
                     <ShownotesList
-                      shownotes={episode.shownotes}
+                      shownotes={sortedShownotes}
                       onClick={handleJumpToTimeLine}
                     />
                   </div>
@@ -185,6 +197,7 @@ const Episode: React.FC = () => {
               {episode.record && (
                 <div ref={playerContainerRef}>
                   <Player
+                    srcObject={liveStream}
                     src={episode.record.fileUrl}
                     ref={playerRef}
                     onSetPlayerStatus={setPlayerStatus}

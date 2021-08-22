@@ -3,7 +3,7 @@ import {
   podcast as podcastActions,
   configuratePodcast as configuratePodcastActions,
 } from 'store/actions';
-import { AppRoute, DataStatus } from 'common/enums/enums';
+import { AppRoute, DataStatus, UserRole } from 'common/enums/enums';
 import { Link, Loader, ImageWrapper, ConfirmPopup, Button } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
@@ -11,9 +11,10 @@ import styles from './styles.module.scss';
 import { getAllowedClasses } from 'helpers/helpers';
 
 const Podcast: React.FC = () => {
-  const { userId, podcast, episodes, dataStatus } = useAppSelector(
+  const { userId, podcast, episodes, dataStatus, userRole } = useAppSelector(
     ({ podcast, auth }) => ({
       userId: auth.user?.id,
+      userRole: auth.user?.role,
       podcast: podcast.podcast,
       episodes: podcast.episodes,
       dataStatus: podcast.dataStatus,
@@ -22,6 +23,8 @@ const Podcast: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
   const isOwner = userId === podcast?.userId;
+  const isMaster = userRole === UserRole.MASTER;
+  const isAllowDelete = isOwner || isMaster;
 
   useEffect(() => {
     dispatch(podcastActions.loadPodcast(Number(id)));
@@ -68,11 +71,13 @@ const Podcast: React.FC = () => {
             )}
             <div className={styles.podcastInfoWrapper}>
               {isOwner && (
+                <Link
+                  to={`${AppRoute.PODCASTS_EDIT}/${podcast.id}`}
+                  className={styles.editLink}
+                />
+              )}
+              {isAllowDelete && (
                 <>
-                  <Link
-                    to={`${AppRoute.PODCASTS_EDIT}/${podcast.id}`}
-                    className={styles.editLink}
-                  />
                   <button
                     onClick={handleShowPopup}
                     className={styles.deleteButton}
@@ -128,7 +133,7 @@ const Podcast: React.FC = () => {
                   >
                     Рeriodicity
                   </div>
-                  <p className={styles.infoInner}>Once a month</p>
+                  <p className={styles.infoInner}>{podcast.periodicity}</p>
                 </li>
                 {podcast.genre && (
                   <li className={styles.infoItem}>

@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
 import {
   AsyncThunkConfig,
@@ -27,6 +27,7 @@ const create = createAsyncThunk<void, PodcastFormPayload, AsyncThunkConfig>(
       type: podcastPayload.type,
       imageDataUrl: file ? await getDataUrl(file) : null,
       coverDataUrl: coverFile ? await getDataUrl(coverFile) : null,
+      periodicity: podcastPayload.periodicity,
     });
 
     notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PODCAST_CREATED);
@@ -54,6 +55,7 @@ const edit = createAsyncThunk<void, PodcastFormPayload, AsyncThunkConfig>(
       coverId: coverId,
       coverDataUrl: coverFile ? await getDataUrl(coverFile) : null,
       genreId: Number(podcastPayload.genre),
+      periodicity: podcastPayload.periodicity,
     });
 
     notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PODCAST_UPDATED);
@@ -87,4 +89,6 @@ const deletePodcast = createAsyncThunk<void, DeleteActionPodcastPayload, AsyncTh
     navigationService.push(`${AppRoute.USERS}/${userId}`);
   });
 
-export { create, edit, loadPodcast, loadGenres, deletePodcast };
+const resetState = createAction(ActionType.RESET_STATE);
+
+export { create, edit, loadPodcast, loadGenres, deletePodcast, resetState };
