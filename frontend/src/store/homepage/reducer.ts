@@ -1,29 +1,28 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { PodcastQueryPayload } from 'common/types/types';
+import { Podcast } from 'common/types/types';
 import { loadPodcasts, loadMorePodcasts } from './actions';
 
 type State = {
   dataStatus: DataStatus;
-  podcasts: PodcastQueryPayload;
+  podcasts: Podcast[];
+  podcastsTotalCount: number;
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
-  podcasts: {
-    results: [],
-    totalCount: 0,
-  },
+  podcasts: [],
+  podcastsTotalCount: 0,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder.addCase(loadPodcasts.pending, (state) => {
-    state.podcasts = initialState.podcasts;
     state.dataStatus = DataStatus.PENDING;
   });
   builder.addCase(loadPodcasts.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
-    state.podcasts = action.payload;
+    state.podcasts = action.payload.results;
+    state.podcastsTotalCount = action.payload.totalCount;
   });
   builder.addCase(loadPodcasts.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
@@ -34,7 +33,8 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadMorePodcasts.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
-    state.podcasts.results = state.podcasts.results.concat(action.payload.results);
+    state.podcasts = state.podcasts.concat(action.payload.results);
+    state.podcastsTotalCount = action.payload.totalCount;
   });
   builder.addCase(loadMorePodcasts.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
