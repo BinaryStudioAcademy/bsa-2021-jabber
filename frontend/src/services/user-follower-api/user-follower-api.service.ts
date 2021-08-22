@@ -20,6 +20,15 @@ class UserFollowerApi {
     this.#apiPrefix = apiPrefix;
   }
 
+  public getCountByUserId(userId: number): Promise<number> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.USER_FOLLOWERS}/${userId}`,
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
+
   public isFollowed(payload: UserFollowerPayload): Promise<UserFollower> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.USER_FOLLOWERS}/${payload.userId}/${payload.followerId}`,

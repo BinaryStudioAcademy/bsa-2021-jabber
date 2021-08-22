@@ -19,6 +19,16 @@ const initUserFollowersApi = ({ apiRouter, userFollowerService }: Args): Router 
   apiRouter.use(ApiPath.USER_FOLLOWERS, userFollowerRouter);
 
   userFollowerRouter.get(
+    UserFollowersApiPath.$ID,
+    checkAuthMiddleware(HttpMethod.GET),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await userFollowerService.getCountByUserId(Number(req.params.id)))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  userFollowerRouter.get(
     UserFollowersApiPath.$USER_ID_$FOLLOWER_ID,
     checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (req, res) => {
@@ -36,8 +46,9 @@ const initUserFollowersApi = ({ apiRouter, userFollowerService }: Args): Router 
     checkAuthMiddleware(HttpMethod.POST),
     validateSchemaMiddleware(userFollowerValidationSchema),
     handleAsyncApi(async (req, res) => {
-      const userFollower = await userFollowerService.create(req.body);
-      return res.json(userFollower).status(HttpCode.CREATED);
+      return res
+        .json(await userFollowerService.create(req.body))
+        .status(HttpCode.CREATED);
     }),
   );
 
