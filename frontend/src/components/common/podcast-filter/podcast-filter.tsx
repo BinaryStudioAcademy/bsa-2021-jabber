@@ -3,6 +3,7 @@ import { Genre, GenresFilter, PodcastLoadFilter } from 'common/types/types';
 import { ButtonType, ButtonColor } from 'common/enums/enums';
 import { useAppForm } from 'hooks/hooks';
 import { Button, Checkbox } from 'components/common/common';
+import { getCurrentValues } from './helpers/helpers';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -18,11 +19,7 @@ const PodcastFilter: React.FC<Props> = ({
   onCancel,
   currentState,
 }) => {
-
-  const currentValues = genres.reduce<Record<string, boolean>>((State, genre) => {
-    State[genre.key] = currentState.genres.includes(genre.id);
-    return State;
-  }, {});
+  const currentValues = getCurrentValues(currentState, genres);
 
   const { control, handleSubmit } = useAppForm({
     defaultValues: { genresFilter: currentValues },

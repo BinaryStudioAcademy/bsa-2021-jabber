@@ -11,6 +11,7 @@ import {
 import { homepage as homepageActions } from 'store/actions';
 import { Search } from './components/components';
 import { SEARCH_TIMEOUT, DEFAULT_PODCASTS_FILTER_VALUE, INITIAL_PAGE_OFFSET } from './common/constants';
+import { getSelectedGenres } from './helpers/helpers';
 import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
@@ -52,14 +53,8 @@ const Homepage: React.FC = () => {
     [podcastsFilter],
   );
 
-  const handleSetGenres = ({ genresFilter }: GenresFilter): void => {
-    const selectedGenres = genres.reduce<number[]>((selectedGenres, genre) => {
-      if (genresFilter[genre.key]) {
-        selectedGenres.push(genre.id);
-      }
-
-      return selectedGenres;
-    }, []);
+  const handleSetGenres = (data: GenresFilter): void => {
+    const selectedGenres = getSelectedGenres(data, genres);
 
     setPodcastsFilter({
       ...podcastsFilter,
@@ -81,27 +76,20 @@ const Homepage: React.FC = () => {
     });
   };
 
+  const handleTogglePodcastFilter = (): void => {
+    setIsFilterVisible(!isFilterVisible);
+  };
+
   return (
     <main className={styles.main}>
       <Search onChange={handleChange} />
       <div className={styles.titleWrapper}>
         <h2 className={styles.title}>All podcasts</h2>
-
         {isGenresLoaded && (
-          <div className={styles.filterGroup}>
-            <button
-              onClick={(): void => setIsFilterVisible(!isFilterVisible)}
-              className={styles.btnFilter}
-            />
-            {isFilterVisible && (
-              <PodcastFilter
-                genres={genres}
-                onApply={handleSetGenres}
-                onCancel={handleClosePodcastFilter}
-                currentState={podcastsFilter}
-              />
-            )}
-          </div>
+          <button
+            onClick={handleTogglePodcastFilter}
+            className={styles.btnFilter}
+          />
         )}
       </div>
       {hasPodcasts ? (
@@ -124,6 +112,14 @@ const Homepage: React.FC = () => {
         <span className={styles.oopsMessage}>
           Oops! There&apos;s nothing here
         </span>
+      )}
+      {isFilterVisible && (
+        <PodcastFilter
+          genres={genres}
+          onApply={handleSetGenres}
+          onCancel={handleClosePodcastFilter}
+          currentState={podcastsFilter}
+        />
       )}
     </main>
   );
