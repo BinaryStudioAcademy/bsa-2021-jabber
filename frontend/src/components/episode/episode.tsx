@@ -220,7 +220,7 @@ const Episode: React.FC = () => {
                 hasTimestamps={hasRecord}
                 comments={comments}
                 user={user}
-                onClick={handleJumpToTimeLine}
+                onTimeClick={handleJumpToTimeLine}
                 onCommentDelete={handleCommentDelete}
               />
             ) : (
