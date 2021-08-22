@@ -1,5 +1,5 @@
 import { Model } from 'objection';
-import { TableName, PodcastDTOKey, PodcastType } from '~/common/enums/enums';
+import { TableName, PodcastDTOKey, PodcastType, PodcastPeriodicity } from '~/common/enums/enums';
 import { Abstract } from '../abstract/abstract.model';
 import { Image } from '~/data/models/image/image.model';
 import { User } from '~/data/models/user/user.model';
@@ -27,6 +27,8 @@ class Podcast extends Abstract {
   [PodcastDTOKey.USER]: User;
 
   [PodcastDTOKey.GENRE]: Genre | null;
+
+  [PodcastDTOKey.PERIODICITY]: PodcastPeriodicity;
 
   static get tableName(): string {
     return TableName.PODCASTS;
