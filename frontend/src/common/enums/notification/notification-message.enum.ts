@@ -7,6 +7,7 @@ enum NotificationMessage {
   EPISODE_CREATED = 'Episode has been created successfully 🎉',
   EPISODE_UPDATED = 'Episode has been updated successfully 🎉',
   EPISODE_DELETED = 'Episode has been deleted successfully 🎉',
+  COMMENT_DELETED = 'Comment has been deleted successfully 🎉',
 }
 
 export { NotificationMessage };

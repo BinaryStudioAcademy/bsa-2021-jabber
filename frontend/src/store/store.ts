@@ -12,6 +12,7 @@ import {
   storage as storageService,
   recordAudio as recordAudioService,
   notification as notificationService,
+  userFollowerApi,
 } from 'services/services';
 import {
   handleError as handleErrorMiddleware,
@@ -30,6 +31,7 @@ const extraArgument = {
   recordAudioService,
   notificationService,
   navigationService,
+  userFollowerApi,
 };
 
 const store = configureStore({

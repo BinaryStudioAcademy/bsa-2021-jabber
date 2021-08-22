@@ -7,6 +7,7 @@ import {
   ImageModel,
   ShownoteModel,
   GenreModel,
+  UserFollowerModel,
 } from '~/data/models/models';
 import { User } from './user/user.repository';
 import { Podcast } from './podcast/podcast.repository';
@@ -16,6 +17,7 @@ import { Comment } from './comment/comment.repository';
 import { Record } from './record/record.repository';
 import { Shownote } from './shownote/shownote.repository';
 import { Genre } from './genre/genre.repository';
+import { UserFollower } from './user-follower/user-follower.repository';
 
 const user = new User({
   UserModel,
@@ -49,4 +51,8 @@ const genre = new Genre({
   GenreModel,
 });
 
-export { user, episode, podcast, image, comment, record, shownote, genre };
+const userFollower = new UserFollower({
+  UserFollowerModel,
+});
+
+export { user, episode, podcast, image, comment, record, shownote, genre, userFollower };

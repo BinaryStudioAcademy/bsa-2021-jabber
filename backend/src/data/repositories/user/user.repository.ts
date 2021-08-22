@@ -29,7 +29,9 @@ class User {
   }
 
   public getById(id: number): Promise<TUser> {
-    return this.#UserModel.query().findById(id).withGraphJoined('[image]');
+    return this.#UserModel.query()
+      .findById(id)
+      .withGraphJoined('[image]');
   }
 
   public update(id: number, payload: UserEditDTOPayload): Promise<TUser> {
