@@ -5,7 +5,7 @@ import {
   Link,
   Button,
 } from 'components/common/common';
-import { AppRoute, DataStatus, ButtonColor } from 'common/enums/enums';
+import { AppRoute, DataStatus } from 'common/enums/enums';
 import { RootState, UserFollowerPayload } from 'common/types/types';
 import { useAppSelector, useParams, useDispatch, useEffect } from 'hooks/hooks';
 import { userProfile as userProfileActions } from 'store/actions';
@@ -17,13 +17,23 @@ import styles from './styles.module.scss';
 const UserPage: React.FC = () => {
   const { id } = useParams<PageParams>();
 
-  const { currentUser, user, podcasts, dataStatus, isFollowed } = useAppSelector(
+  const {
+    currentUser,
+    user,
+    podcasts,
+    dataStatus,
+    isFollowed,
+    followersCount,
+    followersDataStatus,
+  } = useAppSelector(
     ({ auth, userProfile }: RootState) => ({
       currentUser: auth.user,
       user: userProfile.user,
       podcasts: userProfile.podcasts,
       dataStatus: userProfile.dataStatus,
       isFollowed: userProfile.isFollowed,
+      followersCount: userProfile.followersCount,
+      followersDataStatus: userProfile.followersDataStatus,
     }),
   );
 
@@ -33,6 +43,12 @@ const UserPage: React.FC = () => {
     dispatch(userProfileActions.loadUser(Number(id)));
     dispatch(userProfileActions.loadPodcasts(Number(id)));
   }, [id]);
+
+  useEffect(() => {
+    if (user) {
+      dispatch(userProfileActions.getFollowersCount(user.id));
+    }
+  }, [user]);
 
   useEffect(() => {
     if (user && currentUser) {
@@ -45,9 +61,11 @@ const UserPage: React.FC = () => {
 
   const hasUser = Boolean(user);
   const hasPermitToEdit = currentUser?.id === Number(id);
+  const isLoading = dataStatus === DataStatus.PENDING || followersDataStatus === DataStatus.PENDING;
 
   const handleFollow = (): void => {
     if (user && currentUser) {
+
       const payload: UserFollowerPayload = {
         userId: user.id,
         followerId: currentUser.id,
@@ -67,9 +85,11 @@ const UserPage: React.FC = () => {
     );
   }
 
-  return dataStatus === DataStatus.PENDING ? (
-    <Loader />
-  ) : (
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  return (
     <div className={styles.container}>
       <main className={styles.userInfo}>
         <ImageWrapper
@@ -122,11 +142,10 @@ const UserPage: React.FC = () => {
       </main>
       <div className={styles.followContainer}>
         <h2 className={styles.followTitle}>Followers:</h2>
-        <span className={styles.followCount}>{user?.followersCount}</span>
+        <span className={styles.followCount}>{followersCount}</span>
         <Button
           className={styles.followButton}
           label={isFollowed ? 'Unfollow' : 'Follow'}
-          buttonColor={isFollowed ? ButtonColor.LIGHT_PINK : ButtonColor.PINK}
           onClick={handleFollow}
         />
       </div>
