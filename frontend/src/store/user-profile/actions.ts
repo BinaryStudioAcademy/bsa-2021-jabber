@@ -35,11 +35,7 @@ const isFollowedUser = createAsyncThunk<boolean, UserFollowerPayload, AsyncThunk
     const { userFollowerApi } = extra;
     const userFollower = await userFollowerApi.isFollowed(payload);
 
-    if (userFollower) {
-      return true;
-    }
-
-    return false;
+    return Boolean(userFollower);
   },
 );
 
