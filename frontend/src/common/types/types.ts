@@ -16,6 +16,7 @@ export type {
   DeleteActionPodcastPayload,
   PodcastSearchPayload,
   PodcastLoadFilter,
+  PodcastQueryPayload,
 } from './podcast/podcast';
 export type {
   Episode,

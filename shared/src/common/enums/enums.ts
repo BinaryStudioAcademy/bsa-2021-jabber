@@ -18,6 +18,7 @@ export {
   PodcastPayloadKey,
   PodcastType,
   PodcastSearchPayloadKey,
+  PodcastPeriodicity,
 } from './podcast/podcast';
 export {
   UserValidationRule,

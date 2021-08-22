@@ -4,9 +4,11 @@ import {
   PodcastValidationMessage,
   PodcastPayloadKey,
   PodcastType,
+  PodcastPeriodicity,
 } from '~/common/enums/enums';
 
 const podcastType = Object.values(PodcastType);
+const podcastPeriodicity = Object.values(PodcastPeriodicity);
 
 const podcast = Joi.object({
   [PodcastPayloadKey.NAME]: Joi.string()
@@ -30,6 +32,7 @@ const podcast = Joi.object({
       'string.max': PodcastValidationMessage.PODCAST_DESCRIPTION_MAX_LENGTH,
     }),
   [PodcastPayloadKey.TYPE]: Joi.string().valid(...podcastType),
+  [PodcastPayloadKey.PERIODICITY]: Joi.string().valid(...podcastPeriodicity),
 });
 
 export { podcast };
