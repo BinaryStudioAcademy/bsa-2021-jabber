@@ -19,11 +19,15 @@ const initUserFollowersApi = ({ apiRouter, userFollowerService }: Args): Router 
   apiRouter.use(ApiPath.USER_FOLLOWERS, userFollowerRouter);
 
   userFollowerRouter.get(
-    UserFollowersApiPath.ROOT,
+    UserFollowersApiPath.$USER_ID_$FOLLOWER_ID,
     checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (req, res) => {
-      const userFollower = await userFollowerService.isFollowed(req.body);
-      return res.json(userFollower).status(HttpCode.OK);
+      const userFollower = await userFollowerService.isFollowed({
+        userId: Number(req.params.userId),
+        followerId: Number(req.params.followerId),
+      });
+
+      return res.json(userFollower || null).status(HttpCode.OK);
     }),
   );
 

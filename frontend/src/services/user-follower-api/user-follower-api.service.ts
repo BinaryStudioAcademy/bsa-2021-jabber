@@ -22,11 +22,9 @@ class UserFollowerApi {
 
   public isFollowed(payload: UserFollowerPayload): Promise<UserFollower> {
     return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.USER_FOLLOWERS}`,
+      `${this.#apiPrefix}${ApiPath.USER_FOLLOWERS}/${payload.userId}/${payload.followerId}`,
       {
         method: HttpMethod.GET,
-        contentType: ContentType.JSON,
-        payload: JSON.stringify(payload),
       },
     );
   }
