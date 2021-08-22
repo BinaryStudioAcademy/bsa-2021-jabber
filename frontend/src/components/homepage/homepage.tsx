@@ -7,12 +7,19 @@ import {
   useDispatch,
   useEffect,
   useState,
+  useParams,
 } from 'hooks/hooks';
 import { homepage as homepageActions } from 'store/actions';
 import { Search } from './components/components';
+import { navigation as navigationService } from 'services/services';
+import { getStringifiedQuery, parseQueryString } from 'helpers/helpers';
 import { SEARCH_TIMEOUT, DEFAULT_PODCASTS_FILTER_VALUE, INITIAL_PAGE_OFFSET } from './common/constants';
 import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
+
+// type QueryParams = {
+//   params: string;
+// };
 
 const Homepage: React.FC = () => {
   const { podcasts, dataStatus, genres, genresDataStatus } = useAppSelector(({ homepage }) => ({
@@ -32,22 +39,62 @@ const Homepage: React.FC = () => {
     dispatch(homepageActions.loadGenres());
   }, []);
 
+  const { params } = useParams<{ params: string | undefined }>();
+
   useEffect(() => {
-    const isNewSearchQuery = podcastsFilter.offset === INITIAL_PAGE_OFFSET;
-    if (isNewSearchQuery) {
-      dispatch(homepageActions.loadPodcasts(podcastsFilter));
+    // eslint-disable-next-line no-console
+    console.log(params);
+
+    if (params) {
+      // eslint-disable-next-line no-console
+      console.log(parseQueryString(params));
+      const parsedQuery = parseQueryString(params) as PodcastLoadFilter;
+      setPodcastsFilter({
+        ...podcastsFilter,
+        search: parsedQuery.search || '',
+        genres: parsedQuery.genres || [],
+        limit: parsedQuery.limit || 0,
+        offset: Number(parsedQuery.offset) || 0,
+      });
+
+      // eslint-disable-next-line no-console
+      console.log(parsedQuery);
+
+      const isNewSearchQuery = parsedQuery.offset === INITIAL_PAGE_OFFSET;
+      if (isNewSearchQuery) {
+        dispatch(homepageActions.loadPodcasts(parsedQuery));
+      } else {
+        dispatch(homepageActions.loadMorePodcasts(parsedQuery));
+      }
     } else {
-      dispatch(homepageActions.loadMorePodcasts(podcastsFilter));
+      dispatch(homepageActions.loadPodcasts(DEFAULT_PODCASTS_FILTER_VALUE));
     }
-  }, [podcastsFilter]);
+
+  }, [params]);
+
+  // useEffect(() => {
+  //   const isNewSearchQuery = podcastsFilter.offset === INITIAL_PAGE_OFFSET;
+  //   if (isNewSearchQuery) {
+  //     dispatch(homepageActions.loadPodcasts(podcastsFilter));
+  //   } else {
+  //     dispatch(homepageActions.loadMorePodcasts(podcastsFilter));
+  //   }
+  // }, [podcastsFilter]);
 
   const handleChange = useCallback(
     setDebounce(({ search }: PodcastSearchPayload) => {
-      setPodcastsFilter({
-        ...podcastsFilter,
-        offset: INITIAL_PAGE_OFFSET,
-        search,
-      });
+      // setPodcastsFilter({
+      //   ...podcastsFilter,
+      //   offset: INITIAL_PAGE_OFFSET,
+      //   search,
+      // });
+      navigationService.push(
+        getStringifiedQuery({
+          ...podcastsFilter,
+          offset: INITIAL_PAGE_OFFSET,
+          search,
+        }),
+      );
     }, SEARCH_TIMEOUT),
     [podcastsFilter],
   );
@@ -61,11 +108,19 @@ const Homepage: React.FC = () => {
       return selectedGenres;
     }, []);
 
-    setPodcastsFilter({
-      ...podcastsFilter,
-      offset: INITIAL_PAGE_OFFSET,
-      genres: selectedGenres,
-    });
+    // setPodcastsFilter({
+    //   ...podcastsFilter,
+    //   offset: INITIAL_PAGE_OFFSET,
+    //   genres: selectedGenres,
+    // });
+
+    navigationService.push(
+      getStringifiedQuery({
+        ...podcastsFilter,
+        offset: INITIAL_PAGE_OFFSET,
+        genres: selectedGenres,
+      }),
+    );
 
     setIsFilterVisible(false);
   };
