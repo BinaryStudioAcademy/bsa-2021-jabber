@@ -37,6 +37,7 @@ export {
   PodcastValidationMessage,
   PodcastValidationRule,
   PodcastType,
+  PodcastPeriodicity,
 } from './podcast/podcast';
 export { ResourceType } from './file/file';
 export {
