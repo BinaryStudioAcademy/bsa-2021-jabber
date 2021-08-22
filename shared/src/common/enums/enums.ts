@@ -30,6 +30,7 @@ export {
   ShownoteValidationMessage,
   CommentValidationRule,
   CommentValidationMessage,
+  UserFollowerValidationMessage,
 } from './validation/validation';
 export {
   EpisodePayloadKey,

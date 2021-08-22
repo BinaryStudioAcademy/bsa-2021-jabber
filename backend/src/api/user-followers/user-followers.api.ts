@@ -4,8 +4,9 @@ import { userFollower as userFollowerService } from '~/services/services';
 import { handleAsyncApi } from '~/helpers/helpers';
 import {
   checkAuth as checkAuthMiddleware,
-  // validateSchema as validateSchemaMiddleware,
+  validateSchema as validateSchemaMiddleware,
 } from '~/middlewares/middlewares';
+import { userFollower as userFollowerValidationSchema } from '~/validation-schemas/validation-schemas';
 
 type Args = {
   apiRouter: Router;
@@ -20,7 +21,7 @@ const initUserFollowersApi = ({ apiRouter, userFollowerService }: Args): Router 
   userFollowerRouter.post(
     UserFollowersApiPath.ROOT,
     checkAuthMiddleware(HttpMethod.POST),
-    // validateSchemaMiddleware(episodeCreateValidationSchema),
+    validateSchemaMiddleware(userFollowerValidationSchema),
     handleAsyncApi(async (req, res) => {
       const userFollower = await userFollowerService.create(req.body);
       return res.json(userFollower).status(HttpCode.CREATED);
