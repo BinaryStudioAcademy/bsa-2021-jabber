@@ -14,6 +14,7 @@ enum PodcastPayloadKey {
   TYPE = 'type',
   GENRE_ID = 'genreId',
   GENRE = 'genre',
+  PERIODICITY = 'periodicity',
 }
 
 export { PodcastPayloadKey };
