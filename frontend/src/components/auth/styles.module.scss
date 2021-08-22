@@ -12,7 +12,7 @@
 .formWrapper {
   padding: 50px;
   margin-bottom: 0;
-  min-width: 480px;
+  width: 480px;
   background-color: var(--color-primary-light);
   border-radius: 5px;
 }
@@ -29,11 +29,5 @@
   .formWrapper {
     width: 100%;
     padding: 20px;
-  }
-}
-
-@media screen and (max-width: 350px) {
-  .authPage {
-    padding: 0px;
   }
 }
