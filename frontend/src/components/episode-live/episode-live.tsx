@@ -3,14 +3,14 @@ import {
   record as recordActions,
   episode as episodeActions,
 } from 'store/actions';
-import { RecordStatus, ButtonColor } from 'common/enums/enums';
+import { RecordStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import {
   CreateCommentForm,
   CommentsList,
   ImageWrapper,
-  Button,
 } from 'components/common/common';
+import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 type PageParams = {
@@ -29,6 +29,8 @@ const EpisodeLive: React.FC = () => {
       user: auth.user,
     }),
   );
+
+  const isInactive = recordStatus === RecordStatus.INACTIVE;
   const isPaused = recordStatus === RecordStatus.PAUSED;
   const hasUser = Boolean(user);
 
@@ -82,28 +84,39 @@ const EpisodeLive: React.FC = () => {
         )}
         <h3>Status: {recordStatus}</h3>
         <div className={styles.buttonRow}>
-          <Button
-            label="&#9210;"
-            buttonColor={ButtonColor.LIGHT_PINK}
+          <button
+            className={getAllowedClasses(
+              styles.controlButton,
+              styles.recordButton,
+            )}
             onClick={handleStart}
+            disabled={!isInactive}
           />
           {!isPaused ? (
-            <Button
-              label="&#9208;"
-              buttonColor={ButtonColor.LIGHT_PINK}
+            <button
+              className={getAllowedClasses(
+                styles.controlButton,
+                styles.pauseButton,
+              )}
               onClick={handlePause}
+              disabled={isInactive}
             />
           ) : (
-            <Button
-              label="&#9654;"
-              buttonColor={ButtonColor.LIGHT_PINK}
+            <button
+              className={getAllowedClasses(
+                styles.controlButton,
+                styles.resumeButton,
+              )}
               onClick={handleResume}
             />
           )}
-          <Button
-            label="&#9209;"
-            buttonColor={ButtonColor.LIGHT_PINK}
+          <button
+            className={getAllowedClasses(
+              styles.controlButton,
+              styles.stopButton,
+            )}
             onClick={handleStop}
+            disabled={isInactive}
           />
         </div>
       </div>
