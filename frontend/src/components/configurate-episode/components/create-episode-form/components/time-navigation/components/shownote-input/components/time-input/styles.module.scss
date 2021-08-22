@@ -19,7 +19,7 @@
     border: none;
     background-color: transparent;
     cursor: pointer;
-    z-index: 35;
+    z-index: var(--z-index--level-one);
 
     &:first-child {
       top: calc(5px + 11px);

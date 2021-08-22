@@ -82,48 +82,48 @@ const EpisodeLive: React.FC = () => {
             </div>
           </>
         )}
-        <h3>Status: {recordStatus}</h3>
-        <div className={styles.buttonRow}>
-          <button
-            className={getAllowedClasses(
-              styles.controlButton,
-              styles.recordButton,
-            )}
-            onClick={handleStart}
-            disabled={!isInactive}
-          />
-          {!isPaused ? (
+        <div className={styles.actionWrapper}>
+          <h3>Status: {recordStatus}</h3>
+          <div className={styles.buttonRow}>
             <button
               className={getAllowedClasses(
                 styles.controlButton,
-                styles.pauseButton,
+                styles.recordButton,
               )}
-              onClick={handlePause}
+              onClick={handleStart}
+              disabled={!isInactive}
+            />
+            {!isPaused ? (
+              <button
+                className={getAllowedClasses(
+                  styles.controlButton,
+                  styles.pauseButton,
+                )}
+                onClick={handlePause}
+                disabled={isInactive}
+              />
+            ) : (
+              <button
+                className={getAllowedClasses(
+                  styles.controlButton,
+                  styles.resumeButton,
+                )}
+                onClick={handleResume}
+              />
+            )}
+            <button
+              className={getAllowedClasses(
+                styles.controlButton,
+                styles.stopButton,
+              )}
+              onClick={handleStop}
               disabled={isInactive}
             />
-          ) : (
-            <button
-              className={getAllowedClasses(
-                styles.controlButton,
-                styles.resumeButton,
-              )}
-              onClick={handleResume}
-            />
-          )}
-          <button
-            className={getAllowedClasses(
-              styles.controlButton,
-              styles.stopButton,
-            )}
-            onClick={handleStop}
-            disabled={isInactive}
-          />
+          </div>
         </div>
       </div>
       <section className={styles.commentsWrapper}>
-        <h2 className={styles.commentsCounter}>
-          Comments ({comments.length})
-        </h2>
+        <h2 className={styles.commentsCounter}>Comments ({comments.length})</h2>
         {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
         {comments.length ? (
           <CommentsList comments={comments} />
