@@ -17,6 +17,10 @@ class UserFollower {
     this.#userFollowerRepository = userFollowerRepository;
   }
 
+  public getCountByUserId(userId: number): Promise<number> {
+    return this.#userFollowerRepository.getCountByUserId(userId);
+  }
+
   public isFollowed(payload: UserFollowerPayload): Promise<TUserFollower> {
     return this.#userFollowerRepository.getByUserIdFollowerId(payload);
   }

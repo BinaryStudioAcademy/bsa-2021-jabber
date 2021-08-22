@@ -12,8 +12,10 @@ class UserFollower {
     this.#UserFollowerModel = UserFollowerModel;
   }
 
-  public getCountByUserId(userId: number): Promise<TUserFollower[]> {
-    return this.#UserFollowerModel.query().where('user_id', userId).count();
+  public getCountByUserId(userId: number): Promise<number> {
+    return this.#UserFollowerModel.query()
+      .where('user_id', userId)
+      .resultSize();
   }
 
   public getByUserIdFollowerId({ userId, followerId }: UserFollowerPayload): Promise<TUserFollower> {
