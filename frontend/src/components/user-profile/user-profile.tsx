@@ -60,6 +60,7 @@ const UserPage: React.FC = () => {
   }, [user, currentUser]);
 
   const hasUser = Boolean(user);
+  const hasCurrentUser = Boolean(currentUser);
   const hasPermitToEdit = currentUser?.id === Number(id);
   const isLoading = dataStatus === DataStatus.PENDING || followersDataStatus === DataStatus.PENDING;
 
@@ -143,11 +144,11 @@ const UserPage: React.FC = () => {
       <div className={styles.followContainer}>
         <h2 className={styles.followTitle}>Followers:</h2>
         <span className={styles.followCount}>{followersCount}</span>
-        <Button
+        {hasCurrentUser && <Button
           className={styles.followButton}
           label={isFollowed ? 'Unfollow' : 'Follow'}
           onClick={handleFollow}
-        />
+        />}
       </div>
       <div className={styles.podcastsByUserContainer}>
         <h2 className={styles.podcastsByUserTitle}>My Podcasts</h2>
