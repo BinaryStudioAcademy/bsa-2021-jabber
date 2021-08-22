@@ -40,15 +40,15 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
     defaultValues: payload,
   });
 
-  const { savePodcastStatus, podcast } = useAppSelector(
+  const { formDataStatus, podcast } = useAppSelector(
     ({ configuratePodcast }) => ({
-      savePodcastStatus: configuratePodcast.saveDataStatus,
+      formDataStatus: configuratePodcast.formDataStatus,
       podcast: configuratePodcast.podcast,
 
     }),
   );
 
-  const isFormDisabled = savePodcastStatus === DataStatus.PENDING;
+  const isFormDisabled = formDataStatus === DataStatus.PENDING;
 
   const sortedGenres = sortGenresByName(genres);
 
