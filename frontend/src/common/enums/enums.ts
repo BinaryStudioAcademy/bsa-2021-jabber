@@ -17,6 +17,7 @@ export {
   PodcastValidationMessage,
   PodcastType,
   PodcastSearchPayloadKey,
+  PodcastPeriodicity,
 } from './podcast/podcast';
 export {
   EpisodePayloadKey,

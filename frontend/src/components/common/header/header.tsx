@@ -1,4 +1,4 @@
-import { useAppSelector, useDispatch, useVisible, useState } from 'hooks/hooks';
+import { useAppSelector, useDispatch, useVisible } from 'hooks/hooks';
 import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
 import { Button, Link, ImageWrapper } from 'components/common/common';
@@ -12,24 +12,34 @@ const Header: React.FC = () => {
   const { user } = useAppSelector(({ auth }: RootState) => ({
     user: auth.user,
   }));
+
   const hasUser = Boolean(user);
 
   const dispatch = useDispatch();
-  const { ref, isVisible, setIsVisible } = useVisible(false);
+
+  const {
+    ref: profileRef,
+    isVisible: isProfileVisible,
+    setIsVisible: setProfileIsVisible,
+  } = useVisible(false);
+
+  const {
+    ref: burgerRef,
+    isVisible: isBurgerVisible,
+    setIsVisible: setBurgerIsVisible,
+  } = useVisible(false);
 
   const handleMenuToggle = (): void => {
-    setIsVisible(!isVisible);
+    setProfileIsVisible(!isProfileVisible);
+  };
+
+  const handleBurgerToggle = (): void => {
+    setBurgerIsVisible(!isBurgerVisible);
   };
 
   const handleUserExit = (evt: React.MouseEvent): void => {
     evt.preventDefault();
     dispatch(authActions.resetUser());
-  };
-
-  const [isShowNav, setIsShowNav] = useState<boolean>(false);
-
-  const handleShowNav = (): void => {
-    setIsShowNav(!isShowNav);
   };
 
   return (
@@ -41,13 +51,18 @@ const Header: React.FC = () => {
         </Link>
         {hasUser ? (
           <>
-            <ul className={isShowNav ? getAllowedClasses(styles.navigation, styles.active) : styles.navigation} onClick={():void => setIsShowNav(!isShowNav)}>
-              <li className={styles.liNavigation}>
+            <ul
+              className={getAllowedClasses(
+                styles.navigation,
+                isBurgerVisible && styles.active,
+              )}
+            >
+              <li className={styles.navigationItem}>
                 <Link to={AppRoute.ROOT} className={styles.link}>
                   Podcasts
                 </Link>
               </li>
-              <li className={styles.liNavigation}>
+              <li className={styles.navigationItem}>
                 <Link
                   to={`${AppRoute.USERS}/${user?.id}`}
                   className={styles.link}
@@ -72,9 +87,9 @@ const Header: React.FC = () => {
                   className={styles.notification}
                 />
               </Link>
-              <div className={styles.profile} ref={ref}>
+              <div className={styles.profile} ref={profileRef}>
                 <button
-                  className={styles.usersButtonWrapper}
+                  className={styles.profileBtn}
                   onClick={handleMenuToggle}
                 >
                   <ImageWrapper
@@ -86,31 +101,42 @@ const Header: React.FC = () => {
                     src={user?.image?.url}
                   />
                 </button>
-                {isVisible && (
-                  <div className={styles.dropDown}>
-                    <ul className={styles.dropDownList}>
-                      <li className={styles.dropDownListElement}>
-                        <Link
-                          to={AppRoute.PODCASTS_EDIT}
-                          className={styles.link}
-                        >
-                          + Add Podcast
-                        </Link>
-                      </li>
-                      <li className={styles.dropDownListElement}>
-                        <Link
-                          to={AppRoute.ROOT}
-                          className={styles.link}
-                          onClick={handleUserExit}
-                        >
-                          Exit
-                        </Link>
-                      </li>
-                    </ul>
-                    <div className={styles.dropDownArrow}></div>
-                  </div>
-                )}
+                <div
+                  className={getAllowedClasses(
+                    styles.dropDown,
+                    isProfileVisible && styles.active,
+                  )}
+                >
+                  <ul className={styles.dropDownList}>
+                    <li className={styles.dropDownListItem}>
+                      <Link to={AppRoute.PODCASTS_EDIT} className={styles.link}>
+                        + Add Podcast
+                      </Link>
+                    </li>
+                    <li className={styles.dropDownListItem}>
+                      <Link
+                        to={AppRoute.ROOT}
+                        className={styles.link}
+                        onClick={handleUserExit}
+                      >
+                        Exit
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               </div>
+            </div>
+            <div
+              className={getAllowedClasses(
+                styles.burgerMenu,
+                isBurgerVisible && styles.active,
+              )}
+              onClick={handleBurgerToggle}
+              ref={burgerRef}
+            >
+              <span></span>
+              <span></span>
+              <span></span>
             </div>
           </>
         ) : (
@@ -120,11 +146,6 @@ const Header: React.FC = () => {
             </Link>
           </div>
         )}
-        <div className={isShowNav ? getAllowedClasses(styles.burgerMenu, styles.active) : styles.burgerMenu} onClick={handleShowNav}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
       </div>
     </header>
   );

@@ -1,113 +1,118 @@
-.playerRewindSeconds {
-  position: absolute;
-
-  left: 50%;
-  top: 62%;
-
-  transform: translate(-50%, -50%);
-
-  color: var(--color-player-controls);
-  font-size: 10px;
-  font-weight: bold;
-}
-
-.playerCommonBtn {
-  transition: opacity ease 0.08s;
-
-  &:hover {
-    opacity: 1;
-  }
-
-  & svg {
-    height: 100%;
-    width: 100%;
-  }
-}
-
-.playerMainBtn {
-  width: 40px;
-  height: 40px;
-
+.player {
   position: relative;
+  z-index: var(--z-index--level-one);
 
-  border-radius: 4px;
-  background-color: var(--color-player-controls);
-
-  & svg {
-    height: 20px;
-
+  .playerRewindSeconds {
     position: absolute;
 
     left: 50%;
-    top: 50%;
-
-    fill: #404040;
-    transform: translate(-50%, -50%);
-  }
-}
-
-.playerPlayBtn {
-  & svg {
-    left: 52%;
-  }
-}
-
-.playerNextBtn,
-.playerPreviousBtn {
-  height: 20px;
-  opacity: 0.7;
-  fill: var(--color-player-controls);
-}
-
-.playerRewindBtn {
-  position: relative;
-  opacity: 0.5;
-
-  svg {
-    fill: var(--color-player-controls);
-    height: 23px;
-  }
-}
-
-.playerVolumeBtn {
-  fill: var(--color-player-slider);
-  height: 20px;
-}
-
-.playerRateBtn {
-  margin-left: 20px;
-
-  height: 26px;
-  width: 36px;
-
-  position: relative;
-  background-color: transparent;
-  border: 0;
-  cursor: pointer;
-
-  & span {
-    position: absolute;
-
-    left: 50%;
-    top: 81%;
+    top: 62%;
 
     transform: translate(-50%, -50%);
-    font-size: 12px;
+
+    color: var(--color-player-controls);
+    font-size: 10px;
     font-weight: bold;
-    color: var(--color-player-playback-rate);
   }
 
-  & svg {
-    position: absolute;
-    transform: translate(-50%, -50%);
+  .playerCommonBtn {
+    transition: opacity ease 0.08s;
 
-    left: 50%;
-    top: 40%;
+    &:hover {
+      opacity: 1;
+    }
 
-    fill: var(--color-player-playback-rate);
+    & svg {
+      height: 100%;
+      width: 100%;
+    }
+  }
 
-    &:nth-child(2) {
-      transform-origin: bottom center;
+  .playerMainBtn {
+    width: 40px;
+    height: 40px;
+
+    position: relative;
+
+    border-radius: 4px;
+    background-color: var(--color-player-controls);
+
+    & svg {
+      height: 20px;
+
+      position: absolute;
+
+      left: 50%;
+      top: 50%;
+
+      fill: #404040;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .playerPlayBtn {
+    & svg {
+      left: 52%;
+    }
+  }
+
+  .playerNextBtn,
+  .playerPreviousBtn {
+    height: 20px;
+    opacity: 0.7;
+    fill: var(--color-player-controls);
+  }
+
+  .playerRewindBtn {
+    position: relative;
+    opacity: 0.5;
+
+    svg {
+      fill: var(--color-player-controls);
+      height: 23px;
+    }
+  }
+
+  .playerVolumeBtn {
+    fill: var(--color-player-slider);
+    height: 20px;
+  }
+
+  .playerRateBtn {
+    margin-left: 20px;
+
+    height: 26px;
+    width: 36px;
+
+    position: relative;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+
+    & span {
+      position: absolute;
+
+      left: 50%;
+      top: 81%;
+
+      transform: translate(-50%, -50%);
+      font-size: 12px;
+      font-weight: bold;
+      color: var(--color-player-playback-rate);
+    }
+
+    & svg {
+      position: absolute;
+      transform: translate(-50%, -50%);
+
+      left: 50%;
+      top: 40%;
+
+      fill: var(--color-player-playback-rate);
+
+      &:nth-child(2) {
+        transform-origin: bottom center;
+      }
     }
   }
 }

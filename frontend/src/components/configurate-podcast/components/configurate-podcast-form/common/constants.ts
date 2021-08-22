@@ -1,4 +1,4 @@
-import { PodcastPayloadKey, PodcastType } from 'common/enums/enums';
+import { PodcastPayloadKey, PodcastType, PodcastPeriodicity } from 'common/enums/enums';
 import { PodcastFormPayload } from 'common/types/types';
 
 const DEFAULT_PODCAST_PAYLOAD: PodcastFormPayload = {
@@ -8,6 +8,7 @@ const DEFAULT_PODCAST_PAYLOAD: PodcastFormPayload = {
   [PodcastPayloadKey.COVER]: null,
   [PodcastPayloadKey.TYPE]: PodcastType.PUBLIC,
   [PodcastPayloadKey.GENRE]: null,
+  [PodcastPayloadKey.PERIODICITY]: PodcastPeriodicity.WEEKLY,
 };
 
 export { DEFAULT_PODCAST_PAYLOAD };
