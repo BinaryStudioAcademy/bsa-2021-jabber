@@ -12,7 +12,8 @@
 .formWrapper {
   padding: 50px;
   margin-bottom: 0;
-  width: 480px;
+  width: 100%;
+  max-width: 480px;
   background-color: var(--color-primary-light);
   border-radius: 5px;
 }
@@ -27,7 +28,6 @@
   }
 
   .formWrapper {
-    width: 100%;
     padding: 20px;
   }
 }
