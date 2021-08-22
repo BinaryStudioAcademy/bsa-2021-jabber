@@ -22,6 +22,13 @@ const loadUser = createAsyncThunk<User, number, AsyncThunkConfig>(
   },
 );
 
+const getFollowersCount = createAsyncThunk<number, number, AsyncThunkConfig>(
+  ActionType.GET_FOLLOWERS_COUNT,
+  async (userId, { extra }) => {
+    const { userFollowerApi } = extra;
+    return await userFollowerApi.getCountByUserId(userId);
+  });
+
 const isFollowedUser = createAsyncThunk<boolean, UserFollowerPayload, AsyncThunkConfig>(
   ActionType.IS_FOLLOWED_USER,
   async (payload, { extra }) => {
@@ -52,4 +59,4 @@ const unfollowUser = createAsyncThunk<void, UserFollowerPayload, AsyncThunkConfi
   },
 );
 
-export { loadPodcasts, loadUser, isFollowedUser, followUser, unfollowUser };
+export { loadPodcasts, loadUser, getFollowersCount, isFollowedUser, followUser, unfollowUser };
