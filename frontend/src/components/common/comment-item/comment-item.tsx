@@ -24,11 +24,11 @@ const CommentItem: React.FC<Props> = ({
   const time = getTimeOffset(comment.timestamp);
 
   const handleTimeLineJump = (): void => {
-    onTimeClick && onTimeClick(comment.timestamp);
+    onTimeClick?.(comment.timestamp);
   };
 
   const handleDeleteComment = (): void => {
-    onCommentDelete && onCommentDelete(Number(comment.id));
+    onCommentDelete?.(Number(comment.id));
   };
 
   const distance = getDistanceToDateNow(
