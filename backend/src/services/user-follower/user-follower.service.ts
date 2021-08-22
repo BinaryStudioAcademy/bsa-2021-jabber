@@ -17,6 +17,10 @@ class UserFollower {
     this.#userFollowerRepository = userFollowerRepository;
   }
 
+  public isFollowed(payload: UserFollowerPayload): Promise<TUserFollower> {
+    return this.#userFollowerRepository.getByUserIdFollowerId(payload);
+  }
+
   public async create(payload: UserFollowerPayload): Promise<TUserFollower> {
     const userFollower = await this.#userFollowerRepository.getByUserIdFollowerId(payload);
 
