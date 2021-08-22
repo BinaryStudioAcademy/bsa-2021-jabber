@@ -1,4 +1,4 @@
-export { getRandomItem } from './array/array';
+export { getRandomItem, getSortedItems } from './array/array';
 export { checkIsOneOf } from './boolean/boolean';
 export {
   getFormattedISODate,

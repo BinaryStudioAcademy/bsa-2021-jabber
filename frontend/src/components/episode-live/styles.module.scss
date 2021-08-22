@@ -18,8 +18,49 @@
     display: flex;
     justify-content: center;
     margin-top: 15px;
-    button + button {
-      margin-left: 10px;
+
+    .controlButton {
+      width: 40px;
+      height: 40px;
+      background-color: var(--color-player-controls);
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: 20px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+
+      &:hover,
+      &:disabled {
+        opacity: 0.7;
+      }
+
+      &:disabled {
+        cursor: default;
+      }
+
+      & + .controlButton {
+        margin-left: 15px;
+      }
+    }
+
+    .recordButton {
+      background-image: url("../../assets/img/player/record.svg");
+    }
+
+    .pauseButton {
+      background-image: url("../../assets/img/player/pause.svg");
+    }
+
+    .resumeButton {
+      background-image: url("../../assets/img/player/play.svg");
+      background-position-x: 11px;
+    }
+
+    .stopButton {
+      background-image: url("../../assets/img/player/stop.svg");
     }
   }
 }
@@ -34,13 +75,15 @@
   );
 }
 
+.actionWrapper {
+  position: relative;
+}
+
 .imageWrapper {
   position: absolute;
 
   left: 0;
   top: 0;
-
-  z-index: -1;
 
   & div {
     background-color: #989ea6;
@@ -57,6 +100,7 @@
 }
 
 .descriptionWrapper {
+  position: relative;
   width: 724px;
   min-height: 200px;
   margin-bottom: 45px;

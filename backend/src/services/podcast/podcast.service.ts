@@ -7,6 +7,7 @@ import {
   PodcastEditPayload,
   UserPodcastQueryParams,
   PodcastLoadFilter,
+  PodcastQueryPayload,
 } from '~/common/types/types';
 import {
   podcast as podcastRep,
@@ -45,8 +46,15 @@ class Podcast {
     this.#episodeService = episodeService;
   }
 
-  public getByQuery(filter: PodcastLoadFilter): Promise<TPodcast[]> {
-    return this.#podcastRepository.getByQuery(filter);
+  public async getByQuery(filter: PodcastLoadFilter): Promise<PodcastQueryPayload> {
+    const [podcasts, totalCount] = await Promise.all([
+      this.#podcastRepository.getByQuery(filter),
+      this.#podcastRepository.getPodcastsCount(filter),
+    ]);
+    return {
+      results: podcasts,
+      totalCount: totalCount,
+    };
   }
 
   public async create({
@@ -57,6 +65,7 @@ class Podcast {
     coverDataUrl,
     type,
     genreId,
+    periodicity,
   }: PodcastCreatePayload): Promise<TPodcast> {
     const newPodcast: PodcastCreateDTOPayload = {
       name,
@@ -66,6 +75,7 @@ class Podcast {
       coverId: null,
       type,
       genreId,
+      periodicity,
     };
 
     if (imageDataUrl) {
@@ -122,6 +132,7 @@ class Podcast {
       coverDataUrl,
       coverId,
       genreId,
+      periodicity,
     }: PodcastEditPayload,
   ): Promise<TPodcast> {
     const updatePodcast: PodcastEditDTOPayload = {
@@ -131,6 +142,7 @@ class Podcast {
       imageId: imageId,
       coverId: coverId,
       genreId,
+      periodicity,
     };
 
     let deleteImageId: number | null = null;

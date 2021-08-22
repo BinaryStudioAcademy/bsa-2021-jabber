@@ -12,11 +12,22 @@
 .formWrapper {
   padding: 50px;
   margin-bottom: 0;
-  min-width: 480px;
+  width: 100%;
+  max-width: 480px;
   background-color: var(--color-primary-light);
   border-radius: 5px;
 }
 
 .formLogo {
   margin-bottom: 45px;
+}
+
+@media screen and (max-width: 550px) {
+  .authPage {
+    padding: 20px;
+  }
+
+  .formWrapper {
+    padding: 20px;
+  }
 }

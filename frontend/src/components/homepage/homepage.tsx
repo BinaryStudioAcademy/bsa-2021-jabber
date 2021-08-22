@@ -16,16 +16,19 @@ import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 const Homepage: React.FC = () => {
-  const { podcasts, dataStatus, genres, genresDataStatus } = useAppSelector(({ homepage }) => ({
+  const { podcasts, dataStatus, genres, genresDataStatus, podcastsTotalCount } = useAppSelector(({ homepage }) => ({
     podcasts: homepage.podcasts,
     dataStatus: homepage.dataStatus,
     genres: homepage.genres,
     genresDataStatus: homepage.genresDataStatus,
+    podcastsTotalCount: homepage.podcastsTotalCount,
   }));
   const dispatch = useDispatch();
   const hasPodcasts = Boolean(podcasts.length);
   const isLoading = dataStatus === DataStatus.PENDING;
   const isGenresLoaded = genresDataStatus === DataStatus.FULFILLED;
+  const hasMorePodcasts = podcastsTotalCount > podcasts.length;
+
   const [podcastsFilter, setPodcastsFilter] = useState<PodcastLoadFilter>(DEFAULT_PODCASTS_FILTER_VALUE);
   const [isFilterVisible, setIsFilterVisible] = useState<boolean>(false);
 
@@ -95,16 +98,15 @@ const Homepage: React.FC = () => {
       {hasPodcasts ? (
         <>
           <PodcastList podcasts={podcasts} />
-          {isLoading ? (
-            <Loader />
-          ) : (
+          {isLoading
+            ? <Loader />
+            : hasMorePodcasts &&
             <Button
               className={styles.loadMoreBtn}
               label="See more"
               buttonColor={ButtonColor.LIGHT_PINK}
               onClick={handleMorePodcastsLoad}
-            />
-          )}
+            />}
         </>
       ) : isLoading ? (
         <Loader />

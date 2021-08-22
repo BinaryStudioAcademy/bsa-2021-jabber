@@ -41,14 +41,14 @@ const CreateEpisodeForm: React.FC<Props> = ({
   });
   const history = useHistory();
 
-  const { dataStatus, hasLiveRecord } = useAppSelector(
-    ({ episode, record }) => ({
-      dataStatus: episode.dataStatus,
+  const { formDataStatus, hasLiveRecord } = useAppSelector(
+    ({ configurateEpisode, record }) => ({
+      formDataStatus: configurateEpisode.formDataStatus,
       hasLiveRecord: record.hasLiveRecord,
     }),
   );
 
-  const isFormDisable = dataStatus === DataStatus.PENDING;
+  const isFormDisabled = formDataStatus === DataStatus.PENDING;
 
   const handleCancel = (): void => {
     history.goBack();
@@ -56,7 +56,7 @@ const CreateEpisodeForm: React.FC<Props> = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <fieldset disabled={isFormDisable} className={styles.fieldset}>
+      <fieldset disabled={isFormDisabled} className={styles.fieldset}>
         <ImagePreviewControl
           name={EpisodePayloadKey.IMAGE}
           control={control}
@@ -95,6 +95,7 @@ const CreateEpisodeForm: React.FC<Props> = ({
           name={EpisodePayloadKey.TYPE}
           control={control}
           errors={errors}
+          isDisabled={isFormDisabled}
         />
         <Select
           options={selectStatusOptions}
@@ -102,6 +103,7 @@ const CreateEpisodeForm: React.FC<Props> = ({
           name={EpisodePayloadKey.STATUS}
           control={control}
           errors={errors}
+          isDisabled={isFormDisabled}
         />
         <TimeNavigation control={control} errors={errors} setValue={setValue} />
         <div className={styles.buttonRow}>

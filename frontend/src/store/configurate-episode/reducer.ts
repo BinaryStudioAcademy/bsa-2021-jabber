@@ -1,36 +1,38 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { Episode } from 'common/types/types';
-import { create, edit, loadEpisode, deleteEpisode } from './actions';
+import { create, edit, loadEpisode, deleteEpisode, resetState } from './actions';
 
 type State = {
   dataStatus: DataStatus;
+  formDataStatus: DataStatus;
   episode: Episode | null;
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
+  formDataStatus: DataStatus.IDLE,
   episode: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder.addCase(create.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
+    state.formDataStatus = DataStatus.PENDING;
   });
   builder.addCase(create.fulfilled, (state) => {
     Object.assign(state, initialState);
   });
   builder.addCase(create.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
+    state.formDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(edit.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
+    state.formDataStatus = DataStatus.PENDING;
   });
   builder.addCase(edit.fulfilled, (state) => {
     Object.assign(state, initialState);
   });
   builder.addCase(edit.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
+    state.formDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(loadEpisode.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
@@ -51,6 +53,9 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(deleteEpisode.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(resetState, (state) => {
+    Object.assign(state, initialState);
   });
 });
 

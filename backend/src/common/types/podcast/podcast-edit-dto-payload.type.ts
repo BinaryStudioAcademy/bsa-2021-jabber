@@ -1,4 +1,4 @@
-import { PodcastType } from '~/common/enums/enums';
+import { PodcastType, PodcastPeriodicity } from '~/common/enums/enums';
 
 type PodcastEditDTOPayload = {
   name: string;
@@ -7,6 +7,7 @@ type PodcastEditDTOPayload = {
   description: string;
   type: PodcastType;
   genreId: number | null;
+  periodicity: PodcastPeriodicity;
 };
 
 export type { PodcastEditDTOPayload };

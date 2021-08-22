@@ -3,6 +3,7 @@ import {
   PodcastList,
   ImageWrapper,
   Link,
+  Button,
 } from 'components/common/common';
 import { AppRoute, DataStatus } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
@@ -16,12 +17,23 @@ import styles from './styles.module.scss';
 const UserPage: React.FC = () => {
   const { id } = useParams<PageParams>();
 
-  const { currentUser, user, podcasts, dataStatus } = useAppSelector(
+  const {
+    currentUser,
+    user,
+    podcasts,
+    dataStatus,
+    isFollowed,
+    followersCount,
+    followersDataStatus,
+  } = useAppSelector(
     ({ auth, userProfile }: RootState) => ({
       currentUser: auth.user,
       user: userProfile.user,
       podcasts: userProfile.podcasts,
       dataStatus: userProfile.dataStatus,
+      isFollowed: userProfile.isFollowed,
+      followersCount: userProfile.followersCount,
+      followersDataStatus: userProfile.followersDataStatus,
     }),
   );
 
@@ -32,8 +44,34 @@ const UserPage: React.FC = () => {
     dispatch(userProfileActions.loadPodcasts(Number(id)));
   }, [id]);
 
+  useEffect(() => {
+    if (user) {
+      dispatch(userProfileActions.getFollowersCount(user.id));
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user && currentUser) {
+      dispatch(userProfileActions.checkIsFollowedUser({
+        userId: user.id,
+        followerId: currentUser.id,
+      }));
+    }
+  }, [user, currentUser]);
+
   const hasUser = Boolean(user);
+  const isShowFollowButton = Boolean(currentUser) && currentUser?.id !== user?.id;
   const hasPermitToEdit = currentUser?.id === Number(id);
+  const isLoading = dataStatus === DataStatus.PENDING || followersDataStatus === DataStatus.PENDING;
+
+  const handleToggleFollow = (): void => {
+    if (user && currentUser) {
+      dispatch(userProfileActions.toggleFollowUser({
+        userId: user.id,
+        followerId: currentUser.id,
+      }));
+    }
+  };
 
   if (!hasUser && dataStatus === DataStatus.FULFILLED) {
     return (
@@ -43,9 +81,11 @@ const UserPage: React.FC = () => {
     );
   }
 
-  return dataStatus === DataStatus.PENDING ? (
-    <Loader />
-  ) : (
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  return (
     <div className={styles.container}>
       <main className={styles.userInfo}>
         <ImageWrapper
@@ -96,6 +136,16 @@ const UserPage: React.FC = () => {
           />
         )}
       </main>
+      <div className={styles.followContainer}>
+        <h2 className={styles.followTitle}>Followers:</h2>
+        <span className={styles.followCount}>{followersCount}</span>
+        {isShowFollowButton && (<Button
+          className={styles.followButton}
+          label={isFollowed ? 'Unfollow' : 'Follow'}
+          onClick={handleToggleFollow}
+        />
+        )}
+      </div>
       <div className={styles.podcastsByUserContainer}>
         <h2 className={styles.podcastsByUserTitle}>My Podcasts</h2>
         {podcasts.length ? (
