@@ -62,7 +62,7 @@
   top: 76px;
   right: 75px;
   padding: 12px 22px;
-  z-index: 20;
+  z-index: var(--z-index--level-two);
 }
 
 .title {
@@ -80,9 +80,10 @@
 
 .imageWrapper {
   position: absolute;
+
   left: 0;
   top: 0;
-  z-index: -1;
+
   & div {
     background-color: #989ea6;
   }
@@ -145,7 +146,8 @@
 }
 
 .genre {
-  background: url('../../assets/img/radio-waves.svg') no-repeat left center / 15px;
+  background: url('../../assets/img/radio-waves.svg') no-repeat left center /
+    15px;
 }
 
 .type {
