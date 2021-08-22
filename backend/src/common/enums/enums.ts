@@ -29,6 +29,7 @@ export {
   UserNotificationDTOKey,
   GenreDTOKey,
   UserFollowerDTOKey,
+  PodcastFollowerDTOKey,
 } from './db/db';
 export { HttpCode, HttpMethod } from './http/http';
 export {
@@ -36,6 +37,7 @@ export {
   PodcastValidationMessage,
   PodcastValidationRule,
   PodcastType,
+  PodcastPeriodicity,
 } from './podcast/podcast';
 export { ResourceType } from './file/file';
 export {
