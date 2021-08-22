@@ -1,6 +1,5 @@
 import { getTimeOffset } from 'helpers/helpers';
 import { Comment } from 'common/types/types';
-// import { User } from 'jabber-shared/common/types/types';
 import { getDistanceToDateNow } from 'helpers/date/date';
 import ImageWrapper from '../image-wrapper/image-wrapper';
 import styles from './styles.module.scss';
