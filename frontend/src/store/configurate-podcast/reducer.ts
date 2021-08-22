@@ -6,6 +6,7 @@ import { create, edit, loadPodcast, loadGenres, deletePodcast, resetState } from
 type State = {
   dataStatus: DataStatus;
   genresDataStatus: DataStatus;
+  formDataStatus: DataStatus;
   podcast: Podcast | null;
   genres: Genre[];
 };
@@ -13,28 +14,29 @@ type State = {
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
   genresDataStatus: DataStatus.IDLE,
+  formDataStatus: DataStatus.IDLE,
   podcast: null,
   genres: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder.addCase(create.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
+    state.formDataStatus = DataStatus.PENDING;
   });
   builder.addCase(create.fulfilled, (state) => {
     Object.assign(state, initialState);
   });
   builder.addCase(create.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
+    state.formDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(edit.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
+    state.formDataStatus = DataStatus.PENDING;
   });
   builder.addCase(edit.fulfilled, (state) => {
     Object.assign(state, initialState);
   });
   builder.addCase(edit.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
+    state.formDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(loadPodcast.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
