@@ -15,9 +15,10 @@ import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 const Homepage: React.FC = () => {
-  const { podcasts, dataStatus } = useAppSelector(({ homepage }) => ({
-    podcasts: homepage.podcasts,
+  const { dataStatus, podcasts, totalCount } = useAppSelector(({ homepage }) => ({
     dataStatus: homepage.dataStatus,
+    podcasts: homepage.podcasts.results,
+    totalCount: homepage.podcasts.totalCount,
   }));
   const dispatch = useDispatch();
   const hasPodcasts = Boolean(podcasts.length);
@@ -59,7 +60,10 @@ const Homepage: React.FC = () => {
       {hasPodcasts ? (
         <>
           <PodcastList podcasts={podcasts} />
-          {isLoading ? <Loader /> : <Button className={styles.loadMoreBtn} label="See more" buttonColor={ButtonColor.LIGHT_PINK} onClick={handleMorePodcastsLoad}/> }
+          {isLoading
+            ? <Loader />
+            : (totalCount > podcasts.length) &&
+            <Button className={styles.loadMoreBtn} label="See more" buttonColor={ButtonColor.LIGHT_PINK} onClick={handleMorePodcastsLoad} />}
         </>
       ) : isLoading ? (
         <Loader />

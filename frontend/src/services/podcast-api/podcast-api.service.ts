@@ -6,6 +6,7 @@ import {
 } from 'common/enums/enums';
 import {
   Podcast,
+  PodcastQueryPayload,
   PodcastCreatePayload,
   PodcastEditPayload,
   PodcastLoadFilter,
@@ -26,7 +27,7 @@ class PodcastApi {
     this.#apiPrefix = apiPrefix;
   }
 
-  public getByQuery(payload: PodcastLoadFilter): Promise<Podcast[]> {
+  public getByQuery(payload: PodcastLoadFilter): Promise<PodcastQueryPayload> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.ROOT}`,
       {
