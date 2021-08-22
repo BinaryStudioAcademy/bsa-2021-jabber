@@ -7,6 +7,7 @@ import {
   PodcastEditPayload,
   UserPodcastQueryParams,
   PodcastLoadFilter,
+  PodcastQueryResult,
 } from '~/common/types/types';
 import { PODCAST_LOAD_LIMIT } from '~/common/constants/constants';
 import {
@@ -46,8 +47,15 @@ class Podcast {
     this.#episodeService = episodeService;
   }
 
-  public getByQuery(filter: PodcastLoadFilter = { offset: 0, limit: PODCAST_LOAD_LIMIT, search: '' }): Promise<TPodcast[]> {
-    return this.#podcastRepository.getByQuery(filter);
+  public async getByQuery(filter: PodcastLoadFilter = { offset: 0, limit: PODCAST_LOAD_LIMIT, search: '' }): Promise<PodcastQueryResult> {
+    const [podcasts, totalCount] = await Promise.all([
+      this.#podcastRepository.getByQuery(filter),
+      this.#podcastRepository.getPodcastsCount(filter),
+    ]);
+    return {
+      results: podcasts,
+      totalCount: totalCount,
+    };
   }
 
   public async create({
