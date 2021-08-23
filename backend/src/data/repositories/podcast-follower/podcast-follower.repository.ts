@@ -15,20 +15,29 @@ class PodcastFollower {
     this.#PodcastFollowerModel = PodcastFollowerModel;
   }
 
-  public getPodcastFollower(podcastFollowerPayload: PodcastFollowerPayload): Promise<TPodcastFollover> {
-    return this.#PodcastFollowerModel.query().findOne({
-      podcastId: podcastFollowerPayload.podcastId,
-      followerId: podcastFollowerPayload.followerId,
-    });
+  public getCountByPodcastId(podcastId: number): Promise<number> {
+    return this.#PodcastFollowerModel.query()
+      .where('podcast_id', podcastId)
+      .resultSize();
+  }
+
+  public getByPodcastIdFollowerId({ podcastId, followerId }: PodcastFollowerPayload): Promise<TPodcastFollover> {
+    return this.#PodcastFollowerModel.query()
+      .findOne({
+        'podcast_id': podcastId,
+        'follower_id': followerId,
+      });
   }
 
   public create(payload: PodcastFollowerPayload): Promise<TPodcastFollover> {
     return this.#PodcastFollowerModel.query().insert(payload);
   }
 
-  public delete(id: number): Promise<TPodcastFollover> {
+  public delete({ podcastId, followerId }: PodcastFollowerPayload): Promise<TPodcastFollover> {
     return this.#PodcastFollowerModel.query()
-      .deleteById(id)
+      .delete()
+      .where('podcast_id', podcastId)
+      .where('follower_id', followerId)
       .returning('*')
       .first();
   }
