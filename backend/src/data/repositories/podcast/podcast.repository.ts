@@ -6,6 +6,7 @@ import {
   PodcastLoadFilter,
 } from '~/common/types/types';
 import { PodcastType } from '~/common/enums/enums';
+import { PODCAST_LOAD_LIMIT } from '~/common/constants/constants';
 import { PodcastModel as PodcastM } from '~/data/models/models';
 
 type Constructor = {
@@ -26,19 +27,21 @@ class Podcast {
       .withGraphJoined('[image, user]');
   }
 
-  public getPodcastsCount({ search }: PodcastLoadFilter): Promise<number> {
+  public getPodcastsCount({ search = '', genres = [] }: PodcastLoadFilter): Promise<number> {
     return this.#PodcastModel
       .query()
       .where('type', PodcastType.PUBLIC)
-      .whereRaw(`REPLACE(name, ' ', '') ILIKE REPLACE('%${search}%', ' ', '')`)
+      .filterByGenres(genres)
+      .filterBySearch(search)
       .resultSize();
   }
 
-  public getByQuery({ offset, limit, search }: PodcastLoadFilter): Promise<TPodcast[]> {
+  public getByQuery({ offset = 0, limit = PODCAST_LOAD_LIMIT, search = '', genres = [] }: PodcastLoadFilter): Promise<TPodcast[]> {
     return this.#PodcastModel
       .query()
       .where('type', PodcastType.PUBLIC)
-      .whereRaw(`REPLACE(name, ' ', '') ILIKE REPLACE('%${search}%', ' ', '')`)
+      .filterByGenres(genres)
+      .filterBySearch(search)
       .limit(limit)
       .offset(offset)
       .withGraphJoined('[image, user]');

@@ -1,0 +1,42 @@
+.podcastFilter {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px 32px 12px 22px;
+  background-color: white;
+  border-radius: 2px;
+  z-index: 100;
+  .podcastFilterTitle {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(#353535, 0.1);
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .fieldset {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+  .genresList {
+    margin: 0 0 20px;
+    padding: 0;
+    columns: 3;
+    column-gap: 70px;
+    list-style: none;
+  }
+  .genreItem {
+    min-width: 130px;
+    max-width: 250px;
+    margin-bottom: 20px;
+  }
+  .btnsWrapper {
+    display: flex;
+  }
+  .btnCancel {
+    margin-left: 15px;
+  }
+}

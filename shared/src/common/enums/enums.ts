@@ -8,6 +8,7 @@ export {
   RecordsApiPath,
   NotificationsApiPath,
   GenresApiPath,
+  PodcastsFollowersApiPath,
   UserFollowersApiPath,
 } from './api/api';
 export { CustomExceptionName } from './exceptions/exceptions';
@@ -32,6 +33,7 @@ export {
   CommentValidationRule,
   CommentValidationMessage,
   UserFollowerValidationMessage,
+  PodcastFollowerValidationMessage,
 } from './validation/validation';
 export {
   EpisodePayloadKey,
@@ -45,4 +47,5 @@ export { ImageCreatePayloadKey } from './image/image';
 export { DateFormatType } from './date/date';
 export { SocketEvent } from './socket/socket';
 export { UserNotificationStatus } from './user-notification/user-notification';
+export { PodcastFollowerPayloadKey } from './podcast-follower/podcast-follower';
 export { UserFollowerPayloadKey } from './user-follower/user-follower';

@@ -11,13 +11,25 @@ import styles from './styles.module.scss';
 import { getAllowedClasses } from 'helpers/helpers';
 
 const Podcast: React.FC = () => {
-  const { userId, podcast, episodes, dataStatus, userRole } = useAppSelector(
+  const {
+    userId,
+    podcast,
+    episodes,
+    dataStatus,
+    userRole,
+    isFollowed,
+    followersCount,
+    followersDataStatus,
+  } = useAppSelector(
     ({ podcast, auth }) => ({
       userId: auth.user?.id,
       userRole: auth.user?.role,
       podcast: podcast.podcast,
       episodes: podcast.episodes,
       dataStatus: podcast.dataStatus,
+      isFollowed: podcast.isFollowed,
+      followersCount: podcast.followersCount,
+      followersDataStatus: podcast.followersDataStatus,
     }),
   );
   const dispatch = useDispatch();
@@ -25,11 +37,22 @@ const Podcast: React.FC = () => {
   const isOwner = userId === podcast?.userId;
   const isMaster = userRole === UserRole.MASTER;
   const isAllowDelete = isOwner || isMaster;
+  const isShowFollowButton = Boolean(userId) && !isOwner;
+  const isLoading = dataStatus === DataStatus.PENDING && followersDataStatus === DataStatus.PENDING;
 
   useEffect(() => {
     dispatch(podcastActions.loadPodcast(Number(id)));
     dispatch(podcastActions.loadEpisodesByPodcastId(Number(id)));
   }, []);
+
+  useEffect(() => {
+    if (podcast && userId) {
+      dispatch(podcastActions.checkIsFollowedPodcast({
+        podcastId: podcast.id,
+        followerId: userId,
+      }));
+    }
+  }, [podcast, userId]);
 
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState<boolean>(false);
 
@@ -46,7 +69,16 @@ const Podcast: React.FC = () => {
     setIsConfirmPopupOpen(!isConfirmPopupOpen);
   };
 
-  if (dataStatus === DataStatus.PENDING) {
+  const handleToggleFollow = (): void => {
+    if (podcast && userId) {
+      dispatch(podcastActions.toggleFollowPodcast({
+        podcastId: podcast.id,
+        followerId: userId,
+      }));
+    }
+  };
+
+  if (isLoading) {
     return <Loader />;
   }
 
@@ -67,8 +99,8 @@ const Podcast: React.FC = () => {
                 className={styles.addEpisodeLink}
                 label="Add episode"
                 href={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
-              />
-            )}
+              />)
+            }
             <div className={styles.podcastInfoWrapper}>
               {isOwner && (
                 <Link
@@ -158,6 +190,16 @@ const Podcast: React.FC = () => {
                 </li>
               </ul>
             </div>
+          </div>
+          <div className={styles.followContainer}>
+            <h2 className={styles.followTitle}>Followers:</h2>
+            <span className={styles.followCount}>{followersCount}</span>
+            {isShowFollowButton &&
+            (<Button
+              className={styles.followButton}
+              label={isFollowed ? 'Unfollow' : 'Follow'}
+              onClick={handleToggleFollow}
+            />)}
           </div>
           {episodes.length ? (
             <EpisodeTable episodes={episodes} />

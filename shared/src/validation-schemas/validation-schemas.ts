@@ -4,3 +4,4 @@ export { episode } from './episode/episode';
 export { shownote } from './shownote/shownote';
 export { comment } from './comment/comment';
 export { userFollower } from './user-follower/user-follower';
+export { podcastFollower } from './podcast-follower/podcast-follower';

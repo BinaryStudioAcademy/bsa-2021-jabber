@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { PodcastQueryPayload, AsyncThunkConfig, PodcastLoadFilter } from 'common/types/types';
+import { PodcastQueryPayload, AsyncThunkConfig, PodcastLoadFilter, Genre } from 'common/types/types';
 import { ActionType } from './common';
 
 const loadPodcasts = createAsyncThunk<PodcastQueryPayload, PodcastLoadFilter, AsyncThunkConfig>
@@ -18,7 +18,16 @@ const loadMorePodcasts = createAsyncThunk<PodcastQueryPayload, PodcastLoadFilter
   return podcasts;
 });
 
+const loadGenres = createAsyncThunk<Genre[], undefined, AsyncThunkConfig>
+(ActionType.LOAD_GENRES, async (_args, { extra }) => {
+  const { genreApi } = extra;
+  const genres = await genreApi.getAll();
+
+  return genres;
+});
+
 export {
   loadPodcasts,
   loadMorePodcasts,
+  loadGenres,
 };
