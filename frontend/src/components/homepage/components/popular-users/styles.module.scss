@@ -10,6 +10,8 @@
   .usersRow {
     display: flex;
     justify-content: space-between;
+    margin: 0;
+    padding: 0;
     grid-gap: 35px;
     overflow-x: scroll;
     -ms-overflow-style: none;

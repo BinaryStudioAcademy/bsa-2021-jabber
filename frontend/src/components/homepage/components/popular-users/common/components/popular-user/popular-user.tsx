@@ -10,22 +10,24 @@ type Props = {
 const PopularUser: React.FC<Props> = ({ user }: Props) => {
 
   return (
-    <Link className={styles.root}
-      to={`${AppRoute.USERS}/${user.id}`}
-    >
-      <ImageWrapper
-        width="195"
-        height="195"
-        loading="lazy"
-        src={user.image?.url}
-        className={styles.imageWrapper}
-      />
-      <div className={styles.userName}>
-        {user.firstName}
-        {' '}
-        {user.lastName}
-      </div>
-    </Link>
+    <li className={styles.root}>
+      <Link className={styles.link}
+        to={`${AppRoute.USERS}/${user.id}`}
+      >
+        <ImageWrapper
+          width="195"
+          height="195"
+          loading="lazy"
+          src={user.image?.url}
+          className={styles.imageWrapper}
+        />
+        <div className={styles.userName}>
+          {user.firstName}
+          {' '}
+          {user.lastName}
+        </div>
+      </Link>
+    </li>
   );
 };
 

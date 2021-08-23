@@ -12,11 +12,11 @@ const PopularUsers: React.FC<Props> = ({ popularUsers }: Props) => {
   return (
     <div className={styles.root}>
       <h2 className={styles.title}>Popular podcaster</h2>
-      <div className={styles.usersRow}>
+      <ul className={styles.usersRow}>
         {popularUsers.map((user) => (
           <PopularUser key={user.id} user={user} />
         ))}
-      </div>
+      </ul>
     </div>
   );
 };
