@@ -13,6 +13,7 @@ import {
   recordAudio as recordAudioService,
   notification as notificationService,
   userFollowerApi,
+  podcastFollowerApi,
 } from 'services/services';
 import {
   handleError as handleErrorMiddleware,
@@ -32,6 +33,7 @@ const extraArgument = {
   notificationService,
   navigationService,
   userFollowerApi,
+  podcastFollowerApi,
 };
 
 const store = configureStore({
