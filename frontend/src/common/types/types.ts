@@ -5,6 +5,7 @@ export type {
   UserEditPayload,
   UserSignInPayload,
   UserEditFormPayload,
+  UserPopularLoadFilter,
 } from './user/user';
 export type { HttpOptions } from './http/http';
 export type { ValidationSchema } from './validation-schema/validation-schema';

@@ -3,6 +3,7 @@ export type {
   UserCreatePayload,
   UserSignInPayload,
   UserEditPayload,
+  UserPopularLoadFilter,
 } from './user/user';
 export type {
   Podcast,
