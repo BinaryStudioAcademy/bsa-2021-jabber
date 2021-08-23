@@ -8,6 +8,7 @@ const DEFAULT_PODCASTS_FILTER_VALUE: PodcastLoadFilter = {
   search: '',
   offset: 0,
   limit: PODCAST_LOAD_LIMIT,
+  genres: [],
 };
 
 export { SEARCH_TIMEOUT, INITIAL_PAGE_OFFSET, DEFAULT_PODCASTS_FILTER_VALUE };
