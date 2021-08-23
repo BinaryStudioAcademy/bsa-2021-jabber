@@ -14,11 +14,11 @@ type Args = {
 };
 
 const initPodcastFollowersApi = ({ apiRouter, podcastFollowerService }: Args): Router => {
-  const userFollowerRouter = Router();
+  const podcastFollowerRouter = Router();
 
-  apiRouter.use(ApiPath.PODCAST_FOLLOWERS, userFollowerRouter);
+  apiRouter.use(ApiPath.PODCAST_FOLLOWERS, podcastFollowerRouter);
 
-  userFollowerRouter.get(
+  podcastFollowerRouter.get(
     PodcastsFollowersApiPath.$ID,
     handleAsyncApi(async (req, res) => {
       return res
@@ -27,7 +27,7 @@ const initPodcastFollowersApi = ({ apiRouter, podcastFollowerService }: Args): R
     }),
   );
 
-  userFollowerRouter.get(
+  podcastFollowerRouter.get(
     PodcastsFollowersApiPath.$PODCAST_ID_$FOLLOWER_ID,
     checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (req, res) => {
@@ -40,7 +40,7 @@ const initPodcastFollowersApi = ({ apiRouter, podcastFollowerService }: Args): R
     }),
   );
 
-  userFollowerRouter.post(
+  podcastFollowerRouter.post(
     PodcastsFollowersApiPath.ROOT,
     checkAuthMiddleware(HttpMethod.POST),
     validateSchemaMiddleware(podcastFollowerValidationSchema),
@@ -51,7 +51,7 @@ const initPodcastFollowersApi = ({ apiRouter, podcastFollowerService }: Args): R
     }),
   );
 
-  userFollowerRouter.delete(
+  podcastFollowerRouter.delete(
     PodcastsFollowersApiPath.ROOT,
     checkAuthMiddleware(HttpMethod.DELETE),
     handleAsyncApi(async (req, res) => {
@@ -61,7 +61,7 @@ const initPodcastFollowersApi = ({ apiRouter, podcastFollowerService }: Args): R
     }),
   );
 
-  return userFollowerRouter;
+  return podcastFollowerRouter;
 };
 
 export { initPodcastFollowersApi };

@@ -22,9 +22,9 @@ const loadEpisodesByPodcastId = createAsyncThunk<Episode[], number, AsyncThunkCo
 
 const getFollowersCount = createAsyncThunk<number, number, AsyncThunkConfig>(
   ActionType.GET_FOLLOWERS_COUNT,
-  async (userId, { extra }) => {
+  async (podcastId, { extra }) => {
     const { podcastFollowerApi } = extra;
-    return await podcastFollowerApi.getCountByPodcastId(userId);
+    return await podcastFollowerApi.getCountByPodcastId(podcastId);
   });
 
 const checkIsFollowedPodcast = createAsyncThunk<boolean, PodcastFollowerPayload, AsyncThunkConfig>(
