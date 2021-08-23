@@ -9,13 +9,13 @@ import { AppRoute } from 'common/enums/enums';
 type Props = {
   hasTimestamp?: boolean;
   comment: Comment;
-  isOwner: boolean;
+  isAllowDelete: boolean;
   onTimeClick?: (payload: number) => void;
   onCommentDelete?: (commentId: number) => void;
 };
 
 const CommentItem: React.FC<Props> = ({
-  isOwner,
+  isAllowDelete,
   comment,
   onTimeClick,
   hasTimestamp,
@@ -77,7 +77,7 @@ const CommentItem: React.FC<Props> = ({
         <p className={styles.text}>{comment.text}</p>
       </div>
       <div className={styles.date}>{distance} ago</div>
-      {isOwner &&
+      {isAllowDelete &&
         <button
           onClick={handleDeleteComment}
           className={styles.deleteButton}

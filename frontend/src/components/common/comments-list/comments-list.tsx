@@ -1,5 +1,6 @@
 import { CommentItem } from 'components/common/common';
 import { Comment } from 'common/types/types';
+import { UserRole } from 'common/enums/enums';
 import { User } from 'jabber-shared/common/types/types';
 import styles from './styles.module.scss';
 
@@ -18,6 +19,9 @@ const CommentsList: React.FC<Props> = ({
   hasTimestamps,
   onCommentDelete,
 }) => {
+
+  const isMaster = user?.role === UserRole.MASTER;
+
   return (
     <ul className={styles.list}>
       {comments.map((item) => (
@@ -26,7 +30,7 @@ const CommentsList: React.FC<Props> = ({
           onTimeClick={onTimeClick}
           onCommentDelete={onCommentDelete}
           comment={item}
-          isOwner={user?.id === item.userId}
+          isAllowDelete={user?.id === item.userId || isMaster}
           key={item.id} />
       ))}
     </ul>
