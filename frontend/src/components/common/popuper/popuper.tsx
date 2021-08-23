@@ -4,7 +4,7 @@ type Props = {
   trigger: JSX.Element,
 };
 
-const PopUp: React.FC<Props> = ({
+const Popuper: React.FC<Props> = ({
   trigger,
   children,
 }) => {
@@ -22,4 +22,4 @@ const PopUp: React.FC<Props> = ({
   );
 };
 
-export default PopUp;
+export default Popuper;

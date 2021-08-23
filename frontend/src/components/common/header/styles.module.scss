@@ -153,6 +153,19 @@
   visibility: hidden;
 }
 
+:global {
+  .popup-arrow {
+    color: var(--color-header-background);
+    filter: brightness(1.2);
+  }
+
+  .popup-content {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
+}
+
 // Media
 @media screen and (max-width: 991px) {
   .burgerMenu {

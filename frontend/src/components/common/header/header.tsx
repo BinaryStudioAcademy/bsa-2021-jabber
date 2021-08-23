@@ -1,7 +1,7 @@
 import { useAppSelector, useDispatch, useVisible } from 'hooks/hooks';
 import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
-import { Button, Link, ImageWrapper, PopUp } from 'components/common/common';
+import { Button, Link, ImageWrapper, Popuper } from 'components/common/common';
 import { auth as authActions } from 'store/actions';
 import logo from 'assets/img/logo.svg';
 import headerBell from 'assets/img/header-bell.svg';
@@ -90,7 +90,7 @@ const Header: React.FC = () => {
               </Link>
 
               <div className={styles.profile} ref={profileRef}>
-                <PopUp
+                <Popuper
                   trigger={
                     <button
                       className={styles.profileBtn}
@@ -130,10 +130,10 @@ const Header: React.FC = () => {
                       </li>
                     </ul>
                   </div>
-                </PopUp>
+                </Popuper>
               </div>
             </div>
-            <PopUp
+            <Popuper
               trigger={
                 <div
                   className={getAllowedClasses(
@@ -170,7 +170,7 @@ const Header: React.FC = () => {
                   </Link>
                 </li>
               </ul>
-            </PopUp>
+            </Popuper>
           </>
         ) : (
           <div className={styles.signIn}>
