@@ -18,6 +18,7 @@ const PopularUser: React.FC<Props> = ({ user }: Props) => {
           width="195"
           height="195"
           loading="lazy"
+          label={user?.firstName}
           src={user.image?.url}
           className={styles.imageWrapper}
         />
