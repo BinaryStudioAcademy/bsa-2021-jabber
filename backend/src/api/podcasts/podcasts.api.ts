@@ -11,7 +11,10 @@ import {
   checkUserPodcastOwner as checkUserPodcastOwnerMiddleware,
   validateSchema as validateSchemaMiddleware,
 } from '~/middlewares/middlewares';
-import { podcast as podcastService } from '~/services/services';
+import {
+  podcast as podcastService,
+  podcastFollower as podcastFollowerService,
+} from '~/services/services';
 
 type Args = {
   apiRouter: Router;
@@ -78,6 +81,19 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
     handleAsyncApi(async (req, res) => {
       return res
         .json(await podcastService.delete(Number(req.params.id)))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  podcastRouter.post(
+    PodcastsApiPath.FOLLOW_$ID,
+    checkAuthMiddleware(HttpMethod.POST),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await podcastFollowerService.setFollow({
+          podcastId: Number(req.params.id),
+          followerId: Number(req.user?.id),
+        }))
         .status(HttpCode.OK);
     }),
   );

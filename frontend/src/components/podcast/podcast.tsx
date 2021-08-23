@@ -46,6 +46,10 @@ const Podcast: React.FC = () => {
     setIsConfirmPopupOpen(!isConfirmPopupOpen);
   };
 
+  const handleSubscribePodcast = (): void => {
+    dispatch(podcastActions.subscribePodcast(podcast.id));
+  };
+
   if (dataStatus === DataStatus.PENDING) {
     return <Loader />;
   }
@@ -62,13 +66,22 @@ const Podcast: React.FC = () => {
               label={podcast.name}
               className={styles.imageWrapper}
             />
-            {podcast.userId === userId && (
-              <Button
-                className={styles.addEpisodeLink}
-                label="Add episode"
-                href={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
-              />
-            )}
+            {podcast.userId === userId
+              ? (
+                <Button
+                  className={styles.addEpisodeLink}
+                  label="Add episode"
+                  href={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
+                />
+              )
+              : (
+                <Button
+                  className={styles.addEpisodeLink}
+                  label="Subscribe"
+                  onClick={handleSubscribePodcast}
+                />
+              )
+            }
             <div className={styles.podcastInfoWrapper}>
               {isOwner && (
                 <Link

@@ -11,6 +11,7 @@ import {
   record as recordRepository,
   image as imageRepository,
   genre as genreRepository,
+  podcastFollower as podcastFollowerRepository,
 } from '~/data/repositories/repositories';
 import { AsyncLocalStorage } from './async-storage/async-storage.service';
 import { Logger } from './logger/logger.service';
@@ -27,6 +28,7 @@ import { Passport } from './passport/passport.service';
 import { Image } from './image/image.service';
 import { Genre } from './genre/genre.service';
 import { Socket } from './socket/socket.service';
+import { PodcastFollower } from './podcast-follower/podcast-follower.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -102,6 +104,10 @@ const genre = new Genre({
   genreRepository,
 });
 
+const podcastFollower = new PodcastFollower({
+  podcastFollowerRepository,
+});
+
 const socket = new Socket();
 
 export {
@@ -120,4 +126,5 @@ export {
   image,
   genre,
   socket,
+  podcastFollower,
 };
