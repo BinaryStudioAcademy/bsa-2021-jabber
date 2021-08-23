@@ -1,5 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { PodcastQueryPayload, AsyncThunkConfig, PodcastLoadFilter } from 'common/types/types';
+import {
+  PodcastQueryPayload,
+  AsyncThunkConfig,
+  PodcastLoadFilter,
+  User,
+  UserPopularLoadFilter,
+} from 'common/types/types';
 import { ActionType } from './common';
 
 const loadPodcasts = createAsyncThunk<PodcastQueryPayload, PodcastLoadFilter, AsyncThunkConfig>
@@ -18,7 +24,16 @@ const loadMorePodcasts = createAsyncThunk<PodcastQueryPayload, PodcastLoadFilter
   return podcasts;
 });
 
+const loadPopularUsers = createAsyncThunk<User[], UserPopularLoadFilter, AsyncThunkConfig>
+(ActionType.LOAD_POPULAR_USERS, async (filter, { extra }) => {
+  const { userApi } = extra;
+  const popularUsers = await userApi.getPopular(filter);
+
+  return popularUsers;
+});
+
 export {
   loadPodcasts,
   loadMorePodcasts,
+  loadPopularUsers,
 };
