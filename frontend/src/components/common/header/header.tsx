@@ -6,7 +6,6 @@ import { auth as authActions } from 'store/actions';
 import logo from 'assets/img/logo.svg';
 import headerBell from 'assets/img/header-bell.svg';
 import { getAllowedClasses } from 'helpers/helpers';
-import './popus.styles.scss';
 import styles from './styles.module.scss';
 
 const Header: React.FC = () => {
