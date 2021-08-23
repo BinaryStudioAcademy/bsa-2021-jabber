@@ -5,6 +5,7 @@ import {
   PodcastLoadFilter,
   User,
   UserPopularLoadFilter,
+  Genre,
 } from 'common/types/types';
 import { ActionType } from './common';
 
@@ -32,8 +33,17 @@ const loadPopularUsers = createAsyncThunk<User[], UserPopularLoadFilter, AsyncTh
   return popularUsers;
 });
 
+const loadGenres = createAsyncThunk<Genre[], undefined, AsyncThunkConfig>
+(ActionType.LOAD_GENRES, async (_args, { extra }) => {
+  const { genreApi } = extra;
+  const genres = await genreApi.getAll();
+
+  return genres;
+});
+
 export {
   loadPodcasts,
   loadMorePodcasts,
   loadPopularUsers,
+  loadGenres,
 };

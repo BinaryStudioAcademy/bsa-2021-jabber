@@ -8,6 +8,7 @@ const DEFAULT_PODCASTS_FILTER_VALUE: PodcastLoadFilter = {
   search: '',
   offset: 0,
   limit: PODCAST_LOAD_LIMIT,
+  genres: [],
 };
 
 const DEFAULT_USER_POPULAR_FILTER_VALUE: UserPopularLoadFilter = {
