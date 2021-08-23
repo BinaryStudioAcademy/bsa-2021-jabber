@@ -133,18 +133,44 @@ const Header: React.FC = () => {
                 </PopUp>
               </div>
             </div>
-            <div
-              className={getAllowedClasses(
-                styles.burgerMenu,
-                isBurgerVisible && styles.active,
-              )}
-              onClick={handleBurgerToggle}
-              ref={burgerRef}
+            <PopUp
+              trigger={
+                <div
+                  className={getAllowedClasses(
+                    styles.burgerMenu,
+                    isBurgerVisible && styles.active,
+                  )}
+                  onClick={handleBurgerToggle}
+                  ref={burgerRef}
+                >
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              }
             >
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
+              <ul
+                className={getAllowedClasses(
+                  styles.navigation,
+                  styles.burgerNav,
+                  isBurgerVisible && styles.active,
+                )}
+              >
+                <li className={styles.navigationItem}>
+                  <Link to={AppRoute.ROOT} className={styles.link}>
+                    Podcasts
+                  </Link>
+                </li>
+                <li className={styles.navigationItem}>
+                  <Link
+                    to={`${AppRoute.USERS}/${user?.id}`}
+                    className={styles.link}
+                  >
+                    My Profile
+                  </Link>
+                </li>
+              </ul>
+            </PopUp>
           </>
         ) : (
           <div className={styles.signIn}>
