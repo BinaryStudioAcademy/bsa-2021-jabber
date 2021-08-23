@@ -4,7 +4,7 @@ import {
   HttpMethod,
   UsersApiPath,
 } from 'common/enums/enums';
-import { User, UserEditPayload } from 'common/types/types';
+import { User, UserEditPayload, UserPopularLoadFilter } from 'common/types/types';
 import { Http } from 'services/http/http.service';
 
 type Constructor = {
@@ -37,6 +37,16 @@ class UserApi {
         method: HttpMethod.PUT,
         contentType: ContentType.JSON,
         payload: JSON.stringify(payload),
+      },
+    );
+  }
+
+  public getPopular(query: UserPopularLoadFilter): Promise<User[]> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.USERS}${UsersApiPath.POPULAR}`,
+      {
+        method: HttpMethod.GET,
+        query,
       },
     );
   }

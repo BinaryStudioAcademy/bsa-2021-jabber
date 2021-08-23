@@ -22,7 +22,7 @@ const create = createAsyncThunk<void, PodcastFormPayload, AsyncThunkConfig>(
     const podcast = await podcastApi.create({
       userId: (<User>auth.user).id,
       description: podcastPayload.description,
-      genreId: Number(podcastPayload.genre),
+      genreId: (podcastPayload.genre === null) ? null : Number(podcastPayload.genre),
       name: podcastPayload.name,
       type: podcastPayload.type,
       imageDataUrl: file ? await getDataUrl(file) : null,

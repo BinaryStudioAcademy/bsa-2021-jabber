@@ -9,23 +9,38 @@ import {
   useState,
 } from 'hooks/hooks';
 import { homepage as homepageActions } from 'store/actions';
-import { Search } from './components/components';
-import { SEARCH_TIMEOUT, DEFAULT_PODCASTS_FILTER_VALUE, INITIAL_PAGE_OFFSET } from './common/constants';
+import { Search, PopularUsers } from './components/components';
+import {
+  SEARCH_TIMEOUT,
+  DEFAULT_PODCASTS_FILTER_VALUE,
+  INITIAL_PAGE_OFFSET,
+  DEFAULT_USER_POPULAR_FILTER_VALUE,
+} from './common/constants';
 import { getSelectedGenres } from './helpers/helpers';
 import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 const Homepage: React.FC = () => {
-  const { podcasts, dataStatus, genres, genresDataStatus, podcastsTotalCount } = useAppSelector(({ homepage }) => ({
+  const {
+    podcasts,
+    dataStatus,
+    genres,
+    genresDataStatus,
+    podcastsTotalCount,
+    popularUsers,
+    popularUsersDataStatus,
+  } = useAppSelector(({ homepage }) => ({
     podcasts: homepage.podcasts,
     dataStatus: homepage.dataStatus,
     genres: homepage.genres,
     genresDataStatus: homepage.genresDataStatus,
     podcastsTotalCount: homepage.podcastsTotalCount,
+    popularUsers: homepage.popularUsers,
+    popularUsersDataStatus: homepage.popularUsersDataStatus,
   }));
   const dispatch = useDispatch();
   const hasPodcasts = Boolean(podcasts.length);
-  const isLoading = dataStatus === DataStatus.PENDING;
+  const isLoading = dataStatus === DataStatus.PENDING || popularUsersDataStatus === DataStatus.PENDING;
   const isGenresLoaded = genresDataStatus === DataStatus.FULFILLED;
   const hasMorePodcasts = podcastsTotalCount > podcasts.length;
 
@@ -34,6 +49,7 @@ const Homepage: React.FC = () => {
 
   useEffect(() => {
     dispatch(homepageActions.loadGenres());
+    dispatch(homepageActions.loadPopularUsers(DEFAULT_USER_POPULAR_FILTER_VALUE));
   }, []);
 
   useEffect(() => {
@@ -86,6 +102,7 @@ const Homepage: React.FC = () => {
   return (
     <main className={styles.main}>
       <Search onChange={handleChange} />
+      <PopularUsers popularUsers={popularUsers} />
       <div className={styles.titleWrapper}>
         <h2 className={styles.title}>All podcasts</h2>
         {isGenresLoaded && (

@@ -3,6 +3,7 @@ import {
   TokenPayload,
   UserEditPayload,
   UserEditDTOPayload,
+  UserPopularLoadFilter,
 } from '~/common/types/types';
 import { user as userRep, image as imageRep } from '~/data/repositories/repositories';
 import { ErrorMessage, HttpCode } from '~/common/enums/enums';
@@ -106,6 +107,9 @@ class User {
 
     return user;
   }
-}
 
+  public getPopular(filter: UserPopularLoadFilter): Promise<TUser[]> {
+    return this.#userRepository.getPopular(filter);
+  }
+}
 export { User };
