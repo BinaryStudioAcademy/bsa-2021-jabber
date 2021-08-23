@@ -27,6 +27,15 @@ class Podcast {
       .withGraphJoined('[image, user]');
   }
 
+  public getPodcastsCount({ search = '', genres = [] }: PodcastLoadFilter): Promise<number> {
+    return this.#PodcastModel
+      .query()
+      .where('type', PodcastType.PUBLIC)
+      .filterByGenres(genres)
+      .filterBySearch(search)
+      .resultSize();
+  }
+
   public getByQuery({ offset = 0, limit = PODCAST_LOAD_LIMIT, search = '', genres = [] }: PodcastLoadFilter): Promise<TPodcast[]> {
     return this.#PodcastModel
       .query()

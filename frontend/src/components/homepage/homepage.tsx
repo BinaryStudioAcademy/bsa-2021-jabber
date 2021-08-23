@@ -14,6 +14,7 @@ import { Search } from './components/components';
 import { navigation as navigationService } from 'services/services';
 import { getStringifiedQuery, parseQueryString } from 'helpers/helpers';
 import { SEARCH_TIMEOUT, DEFAULT_PODCASTS_FILTER_VALUE, INITIAL_PAGE_OFFSET } from './common/constants';
+import { getSelectedGenres } from './helpers/helpers';
 import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
@@ -22,16 +23,19 @@ import styles from './styles.module.scss';
 // };
 
 const Homepage: React.FC = () => {
-  const { podcasts, dataStatus, genres, genresDataStatus } = useAppSelector(({ homepage }) => ({
+  const { podcasts, dataStatus, genres, genresDataStatus, podcastsTotalCount } = useAppSelector(({ homepage }) => ({
     podcasts: homepage.podcasts,
     dataStatus: homepage.dataStatus,
     genres: homepage.genres,
     genresDataStatus: homepage.genresDataStatus,
+    podcastsTotalCount: homepage.podcastsTotalCount,
   }));
   const dispatch = useDispatch();
   const hasPodcasts = Boolean(podcasts.length);
   const isLoading = dataStatus === DataStatus.PENDING;
   const isGenresLoaded = genresDataStatus === DataStatus.FULFILLED;
+  const hasMorePodcasts = podcastsTotalCount > podcasts.length;
+
   const [podcastsFilter, setPodcastsFilter] = useState<PodcastLoadFilter>(DEFAULT_PODCASTS_FILTER_VALUE);
   const [isFilterVisible, setIsFilterVisible] = useState<boolean>(false);
 
@@ -49,6 +53,7 @@ const Homepage: React.FC = () => {
       // eslint-disable-next-line no-console
       console.log(parseQueryString(params));
       const parsedQuery = parseQueryString(params) as PodcastLoadFilter;
+      parsedQuery.offset = Number(parsedQuery.offset);
       setPodcastsFilter({
         ...podcastsFilter,
         search: parsedQuery.search || '',
@@ -67,6 +72,7 @@ const Homepage: React.FC = () => {
         dispatch(homepageActions.loadMorePodcasts(parsedQuery));
       }
     } else {
+      setPodcastsFilter(DEFAULT_PODCASTS_FILTER_VALUE);
       dispatch(homepageActions.loadPodcasts(DEFAULT_PODCASTS_FILTER_VALUE));
     }
 
@@ -99,14 +105,8 @@ const Homepage: React.FC = () => {
     [podcastsFilter],
   );
 
-  const handleSetGenres = ({ genresFilter }: GenresFilter): void => {
-    const selectedGenres = genres.reduce<number[]>((selectedGenres, genre) => {
-      if (genresFilter[genre.key]) {
-        selectedGenres.push(genre.id);
-      }
-
-      return selectedGenres;
-    }, []);
+  const handleSetGenres = (data: GenresFilter): void => {
+    const selectedGenres = getSelectedGenres(data, genres);
 
     // setPodcastsFilter({
     //   ...podcastsFilter,
@@ -136,42 +136,34 @@ const Homepage: React.FC = () => {
     });
   };
 
+  const handleTogglePodcastFilter = (): void => {
+    setIsFilterVisible(!isFilterVisible);
+  };
+
   return (
     <main className={styles.main}>
       <Search onChange={handleChange} />
       <div className={styles.titleWrapper}>
         <h2 className={styles.title}>All podcasts</h2>
-
         {isGenresLoaded && (
-          <div className={styles.filterGroup}>
-            <button
-              onClick={(): void => setIsFilterVisible(!isFilterVisible)}
-              className={styles.btnFilter}
-            />
-            {isFilterVisible && (
-              <PodcastFilter
-                genres={genres}
-                onApply={handleSetGenres}
-                onCancel={handleClosePodcastFilter}
-                currentState={podcastsFilter}
-              />
-            )}
-          </div>
+          <button
+            onClick={handleTogglePodcastFilter}
+            className={styles.btnFilter}
+          />
         )}
       </div>
       {hasPodcasts ? (
         <>
           <PodcastList podcasts={podcasts} />
-          {isLoading ? (
-            <Loader />
-          ) : (
+          {isLoading
+            ? <Loader />
+            : hasMorePodcasts &&
             <Button
               className={styles.loadMoreBtn}
               label="See more"
               buttonColor={ButtonColor.LIGHT_PINK}
               onClick={handleMorePodcastsLoad}
-            />
-          )}
+            />}
         </>
       ) : isLoading ? (
         <Loader />
@@ -179,6 +171,14 @@ const Homepage: React.FC = () => {
         <span className={styles.oopsMessage}>
           Oops! There&apos;s nothing here
         </span>
+      )}
+      {isFilterVisible && (
+        <PodcastFilter
+          genres={genres}
+          onApply={handleSetGenres}
+          onCancel={handleClosePodcastFilter}
+          currentState={podcastsFilter}
+        />
       )}
     </main>
   );

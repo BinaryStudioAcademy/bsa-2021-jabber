@@ -17,6 +17,7 @@ export type {
   PodcastSearchPayload,
   PodcastLoadFilter,
   GenresFilter,
+  PodcastQueryPayload,
 } from './podcast/podcast';
 export type {
   Episode,
@@ -40,3 +41,4 @@ export type {
 export type { Option } from './ui/option';
 export type { UserNotification } from './notification/notification';
 export type { Genre } from './genre/genre';
+export type { UserFollower, UserFollowerPayload } from './user-follower/user-follower';

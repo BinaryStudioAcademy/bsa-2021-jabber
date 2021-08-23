@@ -11,13 +11,10 @@
     align-items: center;
     margin: 0 0 25px;
   }
-  .filterGroup {
-    position: relative;
-    margin-left: 10px;
-  }
   .btnFilter {
     width: 25px;
     height: 25px;
+    margin-left: 10px;
     background: url('../../assets/img/filter.svg') center center / cover;
     border: none;
     cursor: pointer;

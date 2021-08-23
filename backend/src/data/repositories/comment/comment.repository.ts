@@ -34,7 +34,7 @@ class Comment {
   }
 
   public getById(id: string): Promise<TComment> {
-    return this.#CommentModel.query().findOne(id).withGraphFetched('user');
+    return this.#CommentModel.query().findById(id).withGraphFetched('user');
   }
 
   public deleteAllByEpisodeId(id: number): Promise<TComment[]> {
@@ -43,6 +43,14 @@ class Comment {
       .delete()
       .where('episode_id', id)
       .returning('*');
+  }
+
+  public delete(id: number): Promise<TComment> {
+    return this.#CommentModel
+      .query()
+      .deleteById(id)
+      .returning('*')
+      .first();
   }
 }
 

@@ -7,6 +7,7 @@ enum ApiPath {
   RECORDS = '/records',
   NOTIFICATIONS = '/notifications',
   GENRES = '/genres',
+  USER_FOLLOWERS = '/user-followers',
 }
 
 export { ApiPath };

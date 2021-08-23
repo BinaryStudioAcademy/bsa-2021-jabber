@@ -6,6 +6,7 @@ import {
 import {
   validateSchema as validateSchemaMiddleware,
   checkAuth as checkAuthMiddleware,
+  checkUserCommentOwner as checkUserCommentOwnerMiddleware,
 } from '~/middlewares/middlewares';
 import { comment as commentService } from '~/services/services';
 import { handleAsyncApi } from '~/helpers/helpers';
@@ -41,6 +42,26 @@ const initCommentsApi = ({ apiRouter, commentService }: Args): Router => {
     handleAsyncApi(async (req, res) => {
       return res
         .json(await commentService.getAllByEpisodeId(Number(req.params.id)))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  commentRouter.get(
+    CommentsApiPath.$ID,
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await commentService.getById(Number(req.params.id)))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  commentRouter.delete(
+    CommentsApiPath.$ID,
+    checkAuthMiddleware(HttpMethod.DELETE),
+    checkUserCommentOwnerMiddleware(),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await commentService.delete(Number(req.params.id)))
         .status(HttpCode.OK);
     }),
   );
