@@ -88,10 +88,6 @@
   width: 170px;
 
   position: absolute;
-  left: 20px;
-
-  opacity: 0;
-  visibility: hidden;
 
   transform: translate(-50%, 20px);
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -126,7 +122,7 @@
   margin: 0;
 
   position: absolute;
-  left: 0;
+  left: -25px;
   top: 10px;
 
   background-color: var(--color-header-background);
@@ -182,6 +178,10 @@
         margin-left: 3px;
       }
     }
+  }
+
+  .dropDownList {
+    left: 0;
   }
 
   .userInfo {

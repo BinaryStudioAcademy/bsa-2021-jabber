@@ -1,7 +1,7 @@
 import { useAppSelector, useDispatch, useVisible } from 'hooks/hooks';
 import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
-import { Button, Link, ImageWrapper } from 'components/common/common'; // Popup
+import { Button, Link, ImageWrapper, PopUp } from 'components/common/common';
 import { auth as authActions } from 'store/actions';
 import logo from 'assets/img/logo.svg';
 import headerBell from 'assets/img/header-bell.svg';
@@ -88,43 +88,49 @@ const Header: React.FC = () => {
                   className={styles.notification}
                 />
               </Link>
+
               <div className={styles.profile} ref={profileRef}>
-                <button
-                  className={styles.profileBtn}
-                  onClick={handleMenuToggle}
+                <PopUp
+                  trigger={
+                    <button
+                      className={styles.profileBtn}
+                      onClick={handleMenuToggle}
+                    >
+                      <ImageWrapper
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        label={user?.nickname}
+                        className={styles.imageWrapper}
+                        src={user?.image?.url}
+                      />
+                    </button>
+                  }
                 >
-                  <ImageWrapper
-                    width="40"
-                    height="40"
-                    loading="lazy"
-                    label={user?.nickname}
-                    className={styles.imageWrapper}
-                    src={user?.image?.url}
-                  />
-                </button>
-                <div
-                  className={getAllowedClasses(
-                    styles.dropDown,
-                    isProfileVisible && styles.active,
-                  )}
-                >
-                  <ul className={styles.dropDownList}>
-                    <li className={styles.dropDownListItem}>
-                      <Link to={AppRoute.PODCASTS_EDIT} className={styles.link}>
-                        + Add Podcast
-                      </Link>
-                    </li>
-                    <li className={styles.dropDownListItem}>
-                      <Link
-                        to={AppRoute.ROOT}
-                        className={styles.link}
-                        onClick={handleUserExit}
-                      >
-                        Exit
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
+                  <div
+                    className={getAllowedClasses(
+                      styles.dropDown,
+                      isProfileVisible && styles.active,
+                    )}
+                  >
+                    <ul className={styles.dropDownList}>
+                      <li className={styles.dropDownListItem}>
+                        <Link to={AppRoute.PODCASTS_EDIT} className={styles.link}>
+                          + Add Podcast
+                        </Link>
+                      </li>
+                      <li className={styles.dropDownListItem}>
+                        <Link
+                          to={AppRoute.ROOT}
+                          className={styles.link}
+                          onClick={handleUserExit}
+                        >
+                          Exit
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </PopUp>
               </div>
             </div>
             <div
