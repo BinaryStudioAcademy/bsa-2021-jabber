@@ -2,8 +2,6 @@
   min-height: 290px;
   margin-bottom: 40px;
 
-
-
   .title {
     font-size: 24px;
     margin: 0 0 25px;
@@ -12,5 +10,7 @@
   .usersRow {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    grid-gap: 35px;
   }
 }
