@@ -17,8 +17,8 @@ class PodcastFollower {
     this.#podcastFollowerRepository = podcastFollowerRepository;
   }
 
-  public getCountByPodcastId(userId: number): Promise<number> {
-    return this.#podcastFollowerRepository.getCountByPodcastId(userId);
+  public getCountByPodcastId(podcastId: number): Promise<number> {
+    return this.#podcastFollowerRepository.getCountByPodcastId(podcastId);
   }
 
   public async checkIsFollowed(payload: PodcastFollowerPayload): Promise<boolean> {
