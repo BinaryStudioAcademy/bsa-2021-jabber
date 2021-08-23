@@ -1,7 +1,7 @@
 import { useAppSelector, useDispatch, useVisible } from 'hooks/hooks';
 import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
-import { Button, Link, ImageWrapper } from 'components/common/common';
+import { Button, Link, ImageWrapper, Popuper } from 'components/common/common';
 import { auth as authActions } from 'store/actions';
 import logo from 'assets/img/logo.svg';
 import headerBell from 'assets/img/header-bell.svg';
@@ -87,57 +87,89 @@ const Header: React.FC = () => {
                   className={styles.notification}
                 />
               </Link>
+
               <div className={styles.profile} ref={profileRef}>
-                <button
-                  className={styles.profileBtn}
-                  onClick={handleMenuToggle}
+                <Popuper
+                  trigger={
+                    <button
+                      className={styles.profileBtn}
+                      onClick={handleMenuToggle}
+                    >
+                      <ImageWrapper
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        label={user?.nickname}
+                        className={styles.imageWrapper}
+                        src={user?.image?.url}
+                      />
+                    </button>
+                  }
                 >
-                  <ImageWrapper
-                    width="40"
-                    height="40"
-                    loading="lazy"
-                    label={user?.nickname}
-                    className={styles.imageWrapper}
-                    src={user?.image?.url}
-                  />
-                </button>
-                <div
-                  className={getAllowedClasses(
-                    styles.dropDown,
-                    isProfileVisible && styles.active,
-                  )}
-                >
-                  <ul className={styles.dropDownList}>
-                    <li className={styles.dropDownListItem}>
-                      <Link to={AppRoute.PODCASTS_EDIT} className={styles.link}>
-                        + Add Podcast
-                      </Link>
-                    </li>
-                    <li className={styles.dropDownListItem}>
-                      <Link
-                        to={AppRoute.ROOT}
-                        className={styles.link}
-                        onClick={handleUserExit}
-                      >
-                        Exit
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
+                  <div
+                    className={getAllowedClasses(
+                      styles.dropDown,
+                      isProfileVisible && styles.active,
+                    )}
+                  >
+                    <ul className={styles.dropDownList}>
+                      <li className={styles.dropDownListItem}>
+                        <Link to={AppRoute.PODCASTS_EDIT} className={styles.link}>
+                          + Add Podcast
+                        </Link>
+                      </li>
+                      <li className={styles.dropDownListItem}>
+                        <Link
+                          to={AppRoute.ROOT}
+                          className={styles.link}
+                          onClick={handleUserExit}
+                        >
+                          Exit
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </Popuper>
               </div>
             </div>
-            <div
-              className={getAllowedClasses(
-                styles.burgerMenu,
-                isBurgerVisible && styles.active,
-              )}
-              onClick={handleBurgerToggle}
-              ref={burgerRef}
+            <Popuper
+              trigger={
+                <div
+                  className={getAllowedClasses(
+                    styles.burgerMenu,
+                    isBurgerVisible && styles.active,
+                  )}
+                  onClick={handleBurgerToggle}
+                  ref={burgerRef}
+                >
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              }
             >
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
+              <ul
+                className={getAllowedClasses(
+                  styles.navigation,
+                  styles.burgerNav,
+                  isBurgerVisible && styles.active,
+                )}
+              >
+                <li className={styles.navigationItem}>
+                  <Link to={AppRoute.ROOT} className={styles.link}>
+                    Podcasts
+                  </Link>
+                </li>
+                <li className={styles.navigationItem}>
+                  <Link
+                    to={`${AppRoute.USERS}/${user?.id}`}
+                    className={styles.link}
+                  >
+                    My Profile
+                  </Link>
+                </li>
+              </ul>
+            </Popuper>
           </>
         ) : (
           <div className={styles.signIn}>
