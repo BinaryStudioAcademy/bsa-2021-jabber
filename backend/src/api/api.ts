@@ -9,6 +9,7 @@ import {
   record as recordService,
   genre as genreService,
   userFollower as userFollowerService,
+  podcastFollower as podcastFollowerService,
 } from '~/services/services';
 import { initAuthApi } from './auth/auth.api';
 import { initUsersApi } from './users/users.api';
@@ -18,6 +19,7 @@ import { initCommentsApi } from './comments/comments.api';
 import { initRecordsApi } from './records/records.api';
 import { initGenreApi } from './genre/genre.api';
 import { initUserFollowersApi } from './user-followers/user-followers.api';
+import { initPodcastFollowersApi } from './podcast-followers/podcast-followers.api';
 
 const initApi = (app: Router): Router => {
   const apiRouter = Router();
@@ -62,6 +64,11 @@ const initApi = (app: Router): Router => {
   initUserFollowersApi({
     apiRouter,
     userFollowerService,
+  });
+
+  initPodcastFollowersApi({
+    apiRouter,
+    podcastFollowerService,
   });
 
   return apiRouter;
