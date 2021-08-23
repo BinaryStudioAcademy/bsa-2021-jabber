@@ -37,7 +37,7 @@ class Http {
       .catch(this.throwError);
   }
 
-  private getUrl(url: string, query?: Record<string, string | number>): string {
+  private getUrl(url: string, query?: Record<string, unknown>): string {
     return `${url}${query ? `?${getStringifiedQuery(query)}`: ''}`;
   }
 

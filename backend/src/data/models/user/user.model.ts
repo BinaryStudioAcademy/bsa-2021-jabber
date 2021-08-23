@@ -3,6 +3,7 @@ import { TableName, UserDTOKey } from '~/common/enums/enums';
 import { UserRole } from '~/common/enums/user/user';
 import { Abstract } from '../abstract/abstract.model';
 import { Image } from '~/data/models/image/image.model';
+import { UserFollower } from '~/data/models/user-follower/user-follower.model';
 
 class User extends Abstract {
   [UserDTOKey.FIRST_NAME]: string;
@@ -36,6 +37,14 @@ class User extends Abstract {
       join: {
         from: 'users.image_id',
         to: 'images.id',
+      },
+    },
+    followers: {
+      relation: Model.HasManyRelation,
+      modelClass: UserFollower,
+      join: {
+        from: 'users.id',
+        to: 'users_followers.user_id',
       },
     },
   };

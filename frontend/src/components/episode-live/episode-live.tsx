@@ -126,7 +126,7 @@ const EpisodeLive: React.FC = () => {
         <h2 className={styles.commentsCounter}>Comments ({comments.length})</h2>
         {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
         {comments.length ? (
-          <CommentsList comments={comments} />
+          <CommentsList comments={comments} user={user}/>
         ) : (
           <div className={styles.placeholder}>There&apos;s no comment yet.</div>
         )}

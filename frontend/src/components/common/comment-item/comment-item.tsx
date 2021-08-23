@@ -9,14 +9,26 @@ import { AppRoute } from 'common/enums/enums';
 type Props = {
   hasTimestamp?: boolean;
   comment: Comment;
-  onClick?: (payload: number) => void;
+  isAllowDelete: boolean;
+  onTimeClick?: (payload: number) => void;
+  onCommentDelete?: (commentId: number) => void;
 };
 
-const CommentItem: React.FC<Props> = ({ comment, onClick, hasTimestamp }) => {
+const CommentItem: React.FC<Props> = ({
+  isAllowDelete,
+  comment,
+  onTimeClick,
+  hasTimestamp,
+  onCommentDelete,
+}) => {
   const time = getTimeOffset(comment.timestamp);
 
   const handleTimeLineJump = (): void => {
-    onClick && onClick(comment.timestamp);
+    onTimeClick?.(comment.timestamp);
+  };
+
+  const handleDeleteComment = (): void => {
+    onCommentDelete?.(Number(comment.id));
   };
 
   const distance = getDistanceToDateNow(
@@ -49,7 +61,7 @@ const CommentItem: React.FC<Props> = ({ comment, onClick, hasTimestamp }) => {
             <>
               &nbsp;<span>at</span>
               &nbsp;
-              {onClick ? (
+              {onTimeClick ? (
                 <button
                   className={styles.commentAtButton}
                   onClick={handleTimeLineJump}
@@ -65,6 +77,13 @@ const CommentItem: React.FC<Props> = ({ comment, onClick, hasTimestamp }) => {
         <p className={styles.text}>{comment.text}</p>
       </div>
       <div className={styles.date}>{distance} ago</div>
+      {isAllowDelete &&
+        <button
+          onClick={handleDeleteComment}
+          className={styles.deleteButton}
+        >
+          <span className="visually-hidden">Delete episode</span>
+        </button>}
     </li>
   );
 };
