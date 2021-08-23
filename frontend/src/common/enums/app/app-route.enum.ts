@@ -1,5 +1,6 @@
 enum AppRoute {
   ROOT = '/',
+  ROOT_$QUERY = '/:params',
   SIGN_IN = '/sign-in',
   SIGN_UP = '/sign-up',
   PODCASTS = '/podcasts',

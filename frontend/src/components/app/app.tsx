@@ -91,7 +91,7 @@ const App: React.FC = () => {
           exact
         />
         <AuthPublicRouter path={AppRoute.ROOT} component={Homepage} exact />
-        <AuthPublicRouter path={AppRoute.ROOT + ':params'} component={Homepage} exact />
+        <AuthPublicRouter path={AppRoute.ROOT_$QUERY} component={Homepage} exact />
         <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />
       </Switch>
       <Toaster />

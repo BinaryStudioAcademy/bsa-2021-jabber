@@ -12,9 +12,9 @@ import {
 import { homepage as homepageActions } from 'store/actions';
 import { Search } from './components/components';
 import { navigation as navigationService } from 'services/services';
-import { getStringifiedQuery, parseQueryString } from 'helpers/helpers';
+import { getStringifiedQuery } from 'helpers/helpers';
 import { SEARCH_TIMEOUT, DEFAULT_PODCASTS_FILTER_VALUE, INITIAL_PAGE_OFFSET } from './common/constants';
-import { getSelectedGenres } from './helpers/helpers';
+import { getSelectedGenres, getParsedQuery } from './helpers/helpers';
 import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
@@ -46,24 +46,11 @@ const Homepage: React.FC = () => {
   const { params } = useParams<{ params: string | undefined }>();
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(params);
 
     if (params) {
-      // eslint-disable-next-line no-console
-      console.log(parseQueryString(params));
-      const parsedQuery = parseQueryString(params) as PodcastLoadFilter;
-      parsedQuery.offset = Number(parsedQuery.offset);
-      setPodcastsFilter({
-        ...podcastsFilter,
-        search: parsedQuery.search || '',
-        genres: parsedQuery.genres || [],
-        limit: parsedQuery.limit || 0,
-        offset: Number(parsedQuery.offset) || 0,
-      });
+      const parsedQuery = getParsedQuery(params);
 
-      // eslint-disable-next-line no-console
-      console.log(parsedQuery);
+      setPodcastsFilter(parsedQuery);
 
       const isNewSearchQuery = parsedQuery.offset === INITIAL_PAGE_OFFSET;
       if (isNewSearchQuery) {
@@ -78,22 +65,8 @@ const Homepage: React.FC = () => {
 
   }, [params]);
 
-  // useEffect(() => {
-  //   const isNewSearchQuery = podcastsFilter.offset === INITIAL_PAGE_OFFSET;
-  //   if (isNewSearchQuery) {
-  //     dispatch(homepageActions.loadPodcasts(podcastsFilter));
-  //   } else {
-  //     dispatch(homepageActions.loadMorePodcasts(podcastsFilter));
-  //   }
-  // }, [podcastsFilter]);
-
   const handleChange = useCallback(
     setDebounce(({ search }: PodcastSearchPayload) => {
-      // setPodcastsFilter({
-      //   ...podcastsFilter,
-      //   offset: INITIAL_PAGE_OFFSET,
-      //   search,
-      // });
       navigationService.push(
         getStringifiedQuery({
           ...podcastsFilter,
@@ -107,12 +80,6 @@ const Homepage: React.FC = () => {
 
   const handleSetGenres = (data: GenresFilter): void => {
     const selectedGenres = getSelectedGenres(data, genres);
-
-    // setPodcastsFilter({
-    //   ...podcastsFilter,
-    //   offset: INITIAL_PAGE_OFFSET,
-    //   genres: selectedGenres,
-    // });
 
     navigationService.push(
       getStringifiedQuery({
@@ -130,10 +97,12 @@ const Homepage: React.FC = () => {
   };
 
   const handleMorePodcastsLoad = (): void => {
-    setPodcastsFilter({
-      ...podcastsFilter,
-      offset: podcastsFilter.offset + podcastsFilter.limit,
-    });
+    navigationService.push(
+      getStringifiedQuery({
+        ...podcastsFilter,
+        offset: podcastsFilter.offset + podcastsFilter.limit,
+      }),
+    );
   };
 
   const handleTogglePodcastFilter = (): void => {
