@@ -1,6 +1,7 @@
 enum PodcastsFollowersApiPath {
   ROOT = '/',
-  PODCAST_$ID = '/podcast/:id',
+  $ID = '/:id',
+  $PODCAST_ID_$FOLLOWER_ID = '/:podcastId/:followerId',
 }
 
 export { PodcastsFollowersApiPath };

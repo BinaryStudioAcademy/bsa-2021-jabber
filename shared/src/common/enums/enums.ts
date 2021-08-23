@@ -33,6 +33,7 @@ export {
   CommentValidationRule,
   CommentValidationMessage,
   UserFollowerValidationMessage,
+  PodcastFollowerValidationMessage,
 } from './validation/validation';
 export {
   EpisodePayloadKey,
