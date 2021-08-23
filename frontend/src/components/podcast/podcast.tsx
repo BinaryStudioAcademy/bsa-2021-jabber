@@ -146,7 +146,7 @@ const Podcast: React.FC = () => {
                   >
                     Рeriodicity
                   </div>
-                  <p className={styles.infoInner}>Once a month</p>
+                  <p className={styles.infoInner}>{podcast.periodicity}</p>
                 </li>
                 {podcast.genre && (
                   <li className={styles.infoItem}>

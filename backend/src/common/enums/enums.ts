@@ -7,6 +7,7 @@ export {
   CommentsApiPath,
   RecordsApiPath,
   GenresApiPath,
+  UserFollowersApiPath,
 } from './api/api';
 export {
   AppAsyncStorageKey,
@@ -37,6 +38,7 @@ export {
   PodcastValidationMessage,
   PodcastValidationRule,
   PodcastType,
+  PodcastPeriodicity,
 } from './podcast/podcast';
 export { ResourceType } from './file/file';
 export {

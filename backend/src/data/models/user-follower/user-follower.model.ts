@@ -4,7 +4,7 @@ import {
 } from '~/common/enums/enums';
 import { Abstract } from '../abstract/abstract.model';
 
-class UserNotification extends Abstract {
+class UserFollower extends Abstract {
   [UserFollowerDTOKey.USER_ID]: number;
 
   [UserFollowerDTOKey.FOLLOWER_ID]: number;
@@ -14,4 +14,4 @@ class UserNotification extends Abstract {
   }
 }
 
-export { UserNotification };
+export { UserFollower };

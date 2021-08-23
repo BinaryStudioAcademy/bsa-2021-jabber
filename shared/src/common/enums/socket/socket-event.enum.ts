@@ -5,6 +5,7 @@ enum SocketEvent {
   JOIN_ROOM = 'joinRoom',
   LEAVE_ROOM = 'leaveRoom',
   UPDATE_COMMENTS = 'updateComments',
+  UPDATE_COMMENTS_AFTER_DELETE = 'updateCommentsAfterDelete',
   PEER_BROADCASTER = 'peerBroadcaster',
   PEER_WATCHER = 'peerWatcher',
   PEER_DISCONNECT = 'peerDisconnect',

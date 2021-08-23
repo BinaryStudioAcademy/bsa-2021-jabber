@@ -2,6 +2,7 @@
   display: flex;
   min-height: 80px;
   background-color: var(--color-header-background);
+  z-index: var(--z-index--level-two);
 }
 
 .headerWrapper {
@@ -27,7 +28,7 @@
   list-style: none;
 }
 
-.liNavigation {
+.navigationItem {
   margin-right: 50px;
 }
 
@@ -56,7 +57,7 @@
   position: relative;
 }
 
-.usersButtonWrapper {
+.profileBtn {
   height: 40px;
   width: 40px;
 
@@ -84,52 +85,79 @@
 }
 
 .dropDown {
-  position: relative;
+  width: 170px;
+
+  position: absolute;
+  left: 20px;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translate(-50%, 20px);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+
+  &:before {
+    content: '';
+
+    width: 20px;
+    height: 20px;
+    display: block;
+
+    position: absolute;
+    top: 0;
+    left: 50%;
+
+    background-color: var(--color-header-background);
+    box-shadow: 0px 5px 10px var(--color-primary-dark);
+    transform-origin: center center;
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+  }
 }
 
 .dropDownList {
-  background-color: var(--color-header-background);
+  width: 100%;
   padding: 5px 10px;
-  width: 160px;
+  margin: 0;
+
+  position: absolute;
+  left: 0;
+  top: 10px;
+
+  background-color: var(--color-header-background);
+  border-radius: 5px;
+  box-shadow: 0px 5px 10px var(--color-primary-dark);
+
   text-align: center;
-  position: absolute;
-  top: -10px;
-  left: -60px;
-  border-radius: 5px;
-  z-index: 2;
-  box-shadow: 0px 5px 10px var(--color-primary-dark);
   list-style: none;
+  z-index: var(--z-index--level-four);
 }
 
-.dropDownArrow {
-  background-color: var(--color-header-background);
-  width: 20px;
-  height: 20px;
-  top: -5px;
-  left: 12px;
-  position: absolute;
-  transform: rotate(45deg);
-  z-index: 1;
-  box-shadow: 0px 5px 10px var(--color-primary-dark);
-}
+.dropDownListItem {
+  padding: 5px 0;
 
-.dropDownListElement {
-  background-color: var(--color-header-background);
-  color: #fff;
-  border-radius: 5px;
-  margin: 5px 0;
-  transition: all 0.3s ease;
-}
+  .link {
+    color: #fff;
+    background-color: var(--color-header-background);
+    border-radius: 5px;
 
-.dropDownListElement:hover {
-  filter: brightness(1.2);
+    &:hover {
+      filter: brightness(1.2);
+    }
+  }
 }
 
 // Media
 @media screen and (max-width: 991px) {
   .burgerMenu {
-    width: 30px;
+    width: 25px;
     cursor: pointer;
+
     span {
       display: block;
       width: 100%;
@@ -138,15 +166,18 @@
       background-color: var(--color-primary-light);
       transition: all 0.3s ease;
     }
-    &.active{
-      span:nth-child(1){
+
+    &.active {
+      span:nth-child(1) {
         transform: rotate(45deg) translate(2px, 11px);
         margin-left: 3px;
       }
-      span:nth-child(2){
+
+      span:nth-child(2) {
         transform: scale(0);
       }
-      span:nth-child(3){
+
+      span:nth-child(3) {
         transform: rotate(-45deg) translate(0, -10px);
         margin-left: 3px;
       }
@@ -157,35 +188,52 @@
     padding-right: 30px;
   }
 
-  .userInfo > *:first-child{
+  .userInfo > *:first-child {
     display: none;
   }
 
   .navigation {
-    opacity: 0;
-    transform: scale(0) translateY(100%);
-    position: absolute;
-    flex-direction: column;
-    min-width: 200px;
-    top: 85%;
-    right: 30px;
+    min-width: 170px;
     margin: 0;
-    background-color: var(--color-header-background);
+    padding: 5px 10px;
+    flex-direction: column;
+
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 10px;
+
+    transform: translateY(20px);
+    font-weight: normal;
+    font-size: 14px;
     color: var(--color-primary-light);
+
+    opacity: 0;
+    visibility: hidden;
+    z-index: var(--z-index--level-four);
+
     border-radius: 5px;
-    box-shadow: 0px 3px 5px var(--color-primary-dark);
-    z-index: 10;
-    transition: translateY 0.5s ease, opacity 0.8s ease;
+    box-shadow: 0px 5px 10px var(--color-primary-dark);
+    background-color: var(--color-header-background);
+    transition: transform 0.3s ease, opacity 0.3s ease;
 
     &.active {
       opacity: 1;
-      transform: scale(1) translateY(0);
+      visibility: visible;
+      transform: translateY(0);
     }
 
-    .liNavigation {
+    .navigationItem {
       margin: 0;
+      padding: 5px 0;
+
       .link {
-        padding: 15px;
+        color: #fff;
+        background-color: var(--color-header-background);
+        border-radius: 5px;
+
+        &:hover {
+          filter: brightness(1.2);
+        }
       }
     }
   }

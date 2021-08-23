@@ -7,4 +7,5 @@ export {
   CommentsApiPath,
   RecordsApiPath,
   GenresApiPath,
+  UserFollowersApiPath,
 } from 'jabber-shared/common/enums/enums';
