@@ -1,17 +1,21 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { Podcast } from 'common/types/types';
-import { loadPodcasts, loadMorePodcasts } from './actions';
+import { Podcast, Genre } from 'common/types/types';
+import { loadPodcasts, loadMorePodcasts, loadGenres } from './actions';
 
 type State = {
   dataStatus: DataStatus;
+  genresDataStatus: DataStatus;
   podcasts: Podcast[];
+  genres: Genre[];
   podcastsTotalCount: number;
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
+  genresDataStatus: DataStatus.IDLE,
   podcasts: [],
+  genres: [],
   podcastsTotalCount: 0,
 };
 
@@ -38,6 +42,16 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadMorePodcasts.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(loadGenres.pending, (state) => {
+    state.genresDataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(loadGenres.fulfilled, (state, action) => {
+    state.genresDataStatus = DataStatus.FULFILLED;
+    state.genres = action.payload;
+  });
+  builder.addCase(loadGenres.rejected, (state) => {
+    state.genresDataStatus = DataStatus.REJECTED;
   });
 });
 
