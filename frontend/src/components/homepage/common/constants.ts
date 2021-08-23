@@ -1,4 +1,4 @@
-import { PODCAST_LOAD_LIMIT } from 'common/constants/constants';
+import { PODCAST_LOAD_LIMIT, POPULAR_USERS_LOAD_LIMIT } from 'common/constants/constants';
 import { PodcastLoadFilter, UserPopularLoadFilter } from 'common/types/types';
 
 const SEARCH_TIMEOUT = 1000;
@@ -11,7 +11,7 @@ const DEFAULT_PODCASTS_FILTER_VALUE: PodcastLoadFilter = {
 };
 
 const DEFAULT_USER_POPULAR_FILTER_VALUE: UserPopularLoadFilter = {
-  limit: 6,
+  limit: POPULAR_USERS_LOAD_LIMIT,
 };
 
 export {
