@@ -1,5 +1,6 @@
-import { DataStatus, ButtonColor } from 'common/enums/enums';
+import { DataStatus, ButtonColor, AppRoute } from 'common/enums/enums';
 import { PodcastSearchPayload, PodcastLoadFilter, GenresFilter } from 'common/types/types';
+import { PODCAST_LOAD_LIMIT } from 'common/constants/constants';
 import { Loader, PodcastList, Button, PodcastFilter } from 'components/common/common';
 import {
   useAppSelector,
@@ -18,10 +19,6 @@ import { getSelectedGenres, getParsedQuery } from './helpers/helpers';
 import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
-// type QueryParams = {
-//   params: string;
-// };
-
 const Homepage: React.FC = () => {
   const { podcasts, dataStatus, genres, genresDataStatus, podcastsTotalCount } = useAppSelector(({ homepage }) => ({
     podcasts: homepage.podcasts,
@@ -30,17 +27,20 @@ const Homepage: React.FC = () => {
     genresDataStatus: homepage.genresDataStatus,
     podcastsTotalCount: homepage.podcastsTotalCount,
   }));
+  const [isFilterVisible, setIsFilterVisible] = useState<boolean>(false);
+  const [podcastsFilter, setPodcastsFilter] = useState<PodcastLoadFilter>(DEFAULT_PODCASTS_FILTER_VALUE);
   const dispatch = useDispatch();
+
   const hasPodcasts = Boolean(podcasts.length);
   const isLoading = dataStatus === DataStatus.PENDING;
   const isGenresLoaded = genresDataStatus === DataStatus.FULFILLED;
-  const hasMorePodcasts = podcastsTotalCount > podcasts.length;
-
-  const [podcastsFilter, setPodcastsFilter] = useState<PodcastLoadFilter>(DEFAULT_PODCASTS_FILTER_VALUE);
-  const [isFilterVisible, setIsFilterVisible] = useState<boolean>(false);
+  const hasMorePodcasts = podcastsTotalCount > podcastsFilter.offset + PODCAST_LOAD_LIMIT;
 
   useEffect(() => {
     dispatch(homepageActions.loadGenres());
+    return (): void => {
+      dispatch(homepageActions.leaveHomepage());
+    };
   }, []);
 
   const { params } = useParams<{ params: string | undefined }>();
@@ -50,19 +50,23 @@ const Homepage: React.FC = () => {
     if (params) {
       const parsedQuery = getParsedQuery(params);
 
+      if (!parsedQuery) {
+        navigationService.push(AppRoute.ROOT);
+        return;
+      }
+
+      const isСonsistentLoad = parsedQuery.offset === podcastsFilter.offset + PODCAST_LOAD_LIMIT;
       setPodcastsFilter(parsedQuery);
 
-      const isNewSearchQuery = parsedQuery.offset === INITIAL_PAGE_OFFSET;
-      if (isNewSearchQuery) {
-        dispatch(homepageActions.loadPodcasts(parsedQuery));
-      } else {
+      if (isСonsistentLoad) {
         dispatch(homepageActions.loadMorePodcasts(parsedQuery));
+      } else {
+        dispatch(homepageActions.loadPodcasts(parsedQuery));
       }
     } else {
       setPodcastsFilter(DEFAULT_PODCASTS_FILTER_VALUE);
       dispatch(homepageActions.loadPodcasts(DEFAULT_PODCASTS_FILTER_VALUE));
     }
-
   }, [params]);
 
   const handleChange = useCallback(
@@ -100,7 +104,7 @@ const Homepage: React.FC = () => {
     navigationService.push(
       getStringifiedQuery({
         ...podcastsFilter,
-        offset: podcastsFilter.offset + podcastsFilter.limit,
+        offset: podcastsFilter.offset + PODCAST_LOAD_LIMIT,
       }),
     );
   };
@@ -111,7 +115,7 @@ const Homepage: React.FC = () => {
 
   return (
     <main className={styles.main}>
-      <Search onChange={handleChange} />
+      <Search onChange={handleChange} currentState={podcastsFilter.search} />
       <div className={styles.titleWrapper}>
         <h2 className={styles.title}>All podcasts</h2>
         {isGenresLoaded && (

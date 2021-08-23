@@ -7,7 +7,6 @@ const parseQuery = Joi.object({
     .integer()
     .allow(0)
     .positive(),
-  [PodcastLoadFilterKey.LIMIT]: Joi.number().optional().integer().positive(),
   [PodcastLoadFilterKey.SEARCH]: Joi.string().optional().allow(''),
   [PodcastLoadFilterKey.GENRES]: Joi.array().optional().items(Joi.number()),
 });

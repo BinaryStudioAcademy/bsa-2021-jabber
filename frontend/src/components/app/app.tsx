@@ -90,8 +90,7 @@ const App: React.FC = () => {
           component={EpisodeLive}
           exact
         />
-        <AuthPublicRouter path={AppRoute.ROOT} component={Homepage} exact />
-        <AuthPublicRouter path={AppRoute.ROOT_$QUERY} component={Homepage} exact />
+        <AuthPublicRouter path={[AppRoute.ROOT, AppRoute.ROOT_$QUERY]} component={Homepage} exact />
         <AuthPublicRouter path={AppRoute.ANY} component={NotFound} exact />
       </Switch>
       <Toaster />
