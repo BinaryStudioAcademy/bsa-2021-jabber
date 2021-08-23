@@ -9,20 +9,27 @@ import {
   useState,
 } from 'hooks/hooks';
 import { homepage as homepageActions } from 'store/actions';
-import { Search } from './components/components';
-import { SEARCH_TIMEOUT, DEFAULT_PODCASTS_FILTER_VALUE, INITIAL_PAGE_OFFSET } from './common/constants';
+import { Search, PopularUsers } from './components/components';
+import {
+  SEARCH_TIMEOUT,
+  DEFAULT_PODCASTS_FILTER_VALUE,
+  INITIAL_PAGE_OFFSET,
+  DEFAULT_USER_POPULAR_FILTER_VALUE,
+} from './common/constants';
 import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 const Homepage: React.FC = () => {
-  const { dataStatus, podcasts, podcastsTotalCount } = useAppSelector(({ homepage }) => ({
+  const { dataStatus, podcasts, podcastsTotalCount, popularUsers, popularUsersDataStatus } = useAppSelector(({ homepage }) => ({
     dataStatus: homepage.dataStatus,
     podcasts: homepage.podcasts,
     podcastsTotalCount: homepage.podcastsTotalCount,
+    popularUsers: homepage.popularUsers,
+    popularUsersDataStatus: homepage.popularUsersDataStatus,
   }));
   const dispatch = useDispatch();
   const hasPodcasts = Boolean(podcasts.length);
-  const isLoading = dataStatus === DataStatus.PENDING;
+  const isLoading = dataStatus === DataStatus.PENDING || popularUsersDataStatus === DataStatus.PENDING;
   const hasMorePodcasts = podcastsTotalCount > podcasts.length;
 
   const [podcastsFilter, setPodcastsFilter] = useState<PodcastLoadFilter>(DEFAULT_PODCASTS_FILTER_VALUE);
@@ -35,6 +42,10 @@ const Homepage: React.FC = () => {
       dispatch(homepageActions.loadMorePodcasts(podcastsFilter));
     }
   }, [podcastsFilter]);
+
+  useEffect(() => {
+    dispatch(homepageActions.loadPopularUsers(DEFAULT_USER_POPULAR_FILTER_VALUE));
+  }, []);
 
   const handleChange = useCallback(
     setDebounce(({ search }: PodcastSearchPayload) => {
@@ -57,6 +68,7 @@ const Homepage: React.FC = () => {
   return (
     <main className={styles.main}>
       <Search onChange={handleChange} />
+      <PopularUsers popularUsers={popularUsers} />
       <h2 className={styles.title}>All podcasts</h2>
       {hasPodcasts ? (
         <>
