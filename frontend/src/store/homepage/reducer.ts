@@ -57,17 +57,17 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadPopularUsers.rejected, (state) => {
     state.popularUsersDataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(loadGenres.pending, (state) => {
+    state.genresDataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(loadGenres.fulfilled, (state, action) => {
+    state.genresDataStatus = DataStatus.FULFILLED;
 
-    builder.addCase(loadGenres.pending, (state) => {
-      state.genresDataStatus = DataStatus.PENDING;
-    });
-    builder.addCase(loadGenres.fulfilled, (state, action) => {
-      state.genresDataStatus = DataStatus.FULFILLED;
-      state.genres = action.payload;
-    });
-    builder.addCase(loadGenres.rejected, (state) => {
-      state.genresDataStatus = DataStatus.REJECTED;
-    });
+    state.genres = action.payload;
+  });
+  builder.addCase(loadGenres.rejected, (state) => {
+    state.genresDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(leaveHomepage, (state) => {
     state.podcasts = [];
