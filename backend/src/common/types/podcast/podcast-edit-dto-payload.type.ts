@@ -6,7 +6,7 @@ type PodcastEditDTOPayload = {
   coverId: number | null;
   description: string;
   type: PodcastType;
-  genreId: number | null;
+  genreId: number;
   periodicity: PodcastPeriodicity;
 };
 
