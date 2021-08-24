@@ -92,8 +92,11 @@ const Player = forwardRef<Ref, Props>(
     }));
 
     useEffect(() => {
-      if (playerRef.current && playerRef.current.audio.current) {
+      const hasSrcObject = Boolean(srcObject);
+      if (playerRef.current?.audio.current) {
         playerRef.current.audio.current.playbackRate = rateSteps[rateIndex];
+      }
+      if (hasSrcObject && playerRef.current?.audio.current) {
         playerRef.current.audio.current.srcObject = srcObject;
       }
     }, [rateIndex, srcObject]);
