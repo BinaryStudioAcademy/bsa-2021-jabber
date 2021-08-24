@@ -13,6 +13,7 @@ import {
   genre as genreRepository,
   podcastFollower as podcastFollowerRepository,
   userFollower as userFollowerRepository,
+  invitationCode as invitationCodeRepository,
 } from '~/data/repositories/repositories';
 import { AsyncLocalStorage } from './async-storage/async-storage.service';
 import { Logger } from './logger/logger.service';
@@ -90,6 +91,7 @@ const episode = new Episode({
 const podcast = new Podcast({
   podcastRepository,
   imageRepository,
+  invitationCodeRepository,
   fileStorage,
   imageService: image,
   episodeService: episode,
