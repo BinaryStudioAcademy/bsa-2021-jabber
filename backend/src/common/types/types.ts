@@ -40,4 +40,4 @@ export type { Genre } from './genre/genre';
 export type { PodcastSearchPayload } from './search/podcast-search';
 export type { PodcastFollower, PodcastFollowerPayload } from './podcast-follower/podcast-follower';
 export type { UserFollower, UserFollowerPayload } from './user-follower/user-follower';
-
+export type { InvitationCode, InvitationCodePayload } from './invitation-code/invitation-code';
