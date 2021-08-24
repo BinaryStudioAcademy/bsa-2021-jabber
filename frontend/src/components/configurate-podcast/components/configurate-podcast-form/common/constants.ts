@@ -9,6 +9,7 @@ const DEFAULT_PODCAST_PAYLOAD: PodcastFormPayload = {
   [PodcastPayloadKey.TYPE]: PodcastType.PUBLIC,
   [PodcastPayloadKey.GENRE]: null,
   [PodcastPayloadKey.PERIODICITY]: PodcastPeriodicity.WEEKLY,
+  [PodcastPayloadKey.INVITATION_CODE]: '',
 };
 
 export { DEFAULT_PODCAST_PAYLOAD };

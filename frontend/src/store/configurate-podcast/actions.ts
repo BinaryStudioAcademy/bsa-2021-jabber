@@ -28,6 +28,7 @@ const create = createAsyncThunk<void, PodcastFormPayload, AsyncThunkConfig>(
       imageDataUrl: file ? await getDataUrl(file) : null,
       coverDataUrl: coverFile ? await getDataUrl(coverFile) : null,
       periodicity: podcastPayload.periodicity,
+      invitationCode: podcastPayload.invitationCode,
     });
 
     notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PODCAST_CREATED);
@@ -56,6 +57,7 @@ const edit = createAsyncThunk<void, PodcastFormPayload, AsyncThunkConfig>(
       coverDataUrl: coverFile ? await getDataUrl(coverFile) : null,
       genreId: Number(podcastPayload.genre),
       periodicity: podcastPayload.periodicity,
+      invitationCode: podcastPayload.invitationCode,
     });
 
     notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PODCAST_UPDATED);

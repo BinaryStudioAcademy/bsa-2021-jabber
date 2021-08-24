@@ -1,4 +1,5 @@
-import { getOptions } from 'helpers/helpers';
+
+import { getOptions, getUuid } from 'helpers/helpers';
 import {
   PodcastPayloadKey,
   ButtonType,
@@ -9,7 +10,7 @@ import {
   PodcastPeriodicity,
 } from 'common/enums/enums';
 import { Option, PodcastFormPayload } from 'common/types/types';
-import { useAppForm, useAppSelector } from 'hooks/hooks';
+import { useAppForm, useAppSelector, useEffect } from 'hooks/hooks';
 import {
   Input,
   Button,
@@ -35,7 +36,7 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
   payload = DEFAULT_PODCAST_PAYLOAD,
   genres,
 }) => {
-  const { control, handleSubmit, errors } = useAppForm({
+  const { control, handleSubmit, errors, setValue, watch } = useAppForm({
     validationSchema: podcastCreateSchema,
     defaultValues: payload,
   });
@@ -48,9 +49,21 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
     }),
   );
 
+  const isPodcastPrivate = watch(PodcastPayloadKey.TYPE) === PodcastType.PRIVATE;
+
   const isFormDisabled = formDataStatus === DataStatus.PENDING;
 
   const sortedGenres = sortGenresByName(genres);
+
+  const handleGenerateCode = (): void => {
+    setValue(PodcastPayloadKey.INVITATION_CODE, getUuid());
+  };
+
+  useEffect(() => {
+    if (!isPodcastPrivate) {
+      setValue(PodcastPayloadKey.INVITATION_CODE, '');
+    }
+  }, [isPodcastPrivate]);
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -93,6 +106,17 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
           errors={errors}
           isDisabled={isFormDisabled}
         />
+        {isPodcastPrivate &&
+          (<div className={styles.invitationCode}>
+            <Input
+              name={PodcastPayloadKey.INVITATION_CODE}
+              control={control}
+              errors={errors}
+              label="Invitation code"
+              placeholder="Generate new code"
+            />
+            <Button label="Generate" onClick={handleGenerateCode} />
+          </div>)}
         <Select
           options={periodicityOptions}
           label="Рeriodicity"

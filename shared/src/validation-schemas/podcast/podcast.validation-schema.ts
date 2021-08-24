@@ -33,6 +33,7 @@ const podcast = Joi.object({
     }),
   [PodcastPayloadKey.TYPE]: Joi.string().valid(...podcastType),
   [PodcastPayloadKey.PERIODICITY]: Joi.string().valid(...podcastPeriodicity),
+  [PodcastPayloadKey.INVITATION_CODE]: Joi.string().allow(''),
 });
 
 export { podcast };
