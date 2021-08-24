@@ -1,11 +1,11 @@
 import { PodcastLoadFilter } from 'common/types/types';
 import { parseQueryString } from 'helpers/helpers';
-import { parseQuery as parseQueryValidationSchema } from 'validation-schemas/validation-schemas';
+import { parsedQuery as parsedQueryValidationSchema } from 'validation-schemas/validation-schemas';
 
 const getParsedQuery = (params: string): (PodcastLoadFilter | null) => {
 
   const parsedValues = parseQueryString(params) as PodcastLoadFilter;
-  const { error } = parseQueryValidationSchema.validate(parsedValues);
+  const { error } = parsedQueryValidationSchema.validate(parsedValues);
 
   if (error) {
     return null;
@@ -14,7 +14,7 @@ const getParsedQuery = (params: string): (PodcastLoadFilter | null) => {
   return {
     offset: Number(parsedValues.offset),
     search: parsedValues.search,
-    genres: parsedValues.genres ? parsedValues.genres.map((genreId) => Number(genreId)) : [],
+    genres: parsedValues.genres?.map((genreId) => Number(genreId)) ?? [],
   };
 };
 

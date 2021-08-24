@@ -8,7 +8,7 @@ import {
   useDispatch,
   useEffect,
   useState,
-  useParams,
+  useLocation,
 } from 'hooks/hooks';
 import { homepage as homepageActions } from 'store/actions';
 import { getStringifiedQuery } from 'helpers/helpers';
@@ -59,12 +59,11 @@ const Homepage: React.FC = () => {
     };
   }, []);
 
-  const { params } = useParams<{ params: string | undefined }>();
+  const { search } = useLocation<{ params: string | undefined }>();
 
   useEffect(() => {
-
-    if (params) {
-      const parsedQuery = getParsedQuery(params);
+    if (search) {
+      const parsedQuery = getParsedQuery(search);
 
       if (!parsedQuery) {
         navigationService.push(AppRoute.ROOT);
@@ -74,26 +73,22 @@ const Homepage: React.FC = () => {
       const isСonsistentLoad = parsedQuery.offset === podcastsFilter.offset + PODCAST_LOAD_LIMIT;
       setPodcastsFilter(parsedQuery);
 
-      if (isСonsistentLoad) {
-        dispatch(homepageActions.loadMorePodcasts(parsedQuery));
-      } else {
-        dispatch(homepageActions.loadPodcasts(parsedQuery));
-      }
+      dispatch(isСonsistentLoad ? homepageActions.loadMorePodcasts(parsedQuery) : homepageActions.loadPodcasts(parsedQuery));
     } else {
       setPodcastsFilter(DEFAULT_PODCASTS_FILTER_VALUE);
       dispatch(homepageActions.loadPodcasts(DEFAULT_PODCASTS_FILTER_VALUE));
     }
-  }, [params]);
+  }, [search]);
 
   const handleChange = useCallback(
     setDebounce(({ search }: PodcastSearchPayload) => {
-      navigationService.push(
-        getStringifiedQuery({
+      navigationService.push({
+        search: getStringifiedQuery({
           ...podcastsFilter,
           offset: INITIAL_PAGE_OFFSET,
           search,
         }),
-      );
+      });
     }, SEARCH_TIMEOUT),
     [podcastsFilter],
   );
@@ -101,13 +96,13 @@ const Homepage: React.FC = () => {
   const handleSetGenres = (data: GenresFilter): void => {
     const selectedGenres = getSelectedGenres(data, genres);
 
-    navigationService.push(
-      getStringifiedQuery({
+    navigationService.push({
+      search: getStringifiedQuery({
         ...podcastsFilter,
         offset: INITIAL_PAGE_OFFSET,
         genres: selectedGenres,
       }),
-    );
+    });
 
     setIsFilterVisible(false);
   };
@@ -117,12 +112,12 @@ const Homepage: React.FC = () => {
   };
 
   const handleMorePodcastsLoad = (): void => {
-    navigationService.push(
-      getStringifiedQuery({
+    navigationService.push({
+      search: getStringifiedQuery({
         ...podcastsFilter,
         offset: podcastsFilter.offset + PODCAST_LOAD_LIMIT,
       }),
-    );
+    });
   };
 
   const handleTogglePodcastFilter = (): void => {

@@ -1,4 +1,4 @@
-import { History } from 'history';
+import { History, LocationDescriptor, LocationState } from 'history';
 import { AppRoute } from 'common/enums/enums';
 
 type Constructor = {
@@ -12,7 +12,7 @@ class Navigation {
     this.#history = history;
   }
 
-  public push(path: AppRoute | string): void {
+  public push(path: AppRoute | string | LocationDescriptor<LocationState>): void {
     this.#history.push(path);
   }
 

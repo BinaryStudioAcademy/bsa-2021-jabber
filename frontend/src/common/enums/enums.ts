@@ -18,7 +18,6 @@ export {
   PodcastType,
   PodcastSearchPayloadKey,
   PodcastPeriodicity,
-  PodcastLoadFilterKey,
 } from './podcast/podcast';
 export {
   EpisodePayloadKey,

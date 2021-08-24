@@ -1,7 +1,7 @@
 import { PodcastSearchPayloadKey } from '~/common/enums/enums';
 
 type PodcastSearchPayload = {
-  [PodcastSearchPayloadKey.PODCAST_SEARCH]: string,
+  [PodcastSearchPayloadKey.SEARCH]: string,
 };
 
 export type { PodcastSearchPayload };
