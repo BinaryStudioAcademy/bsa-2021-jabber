@@ -132,13 +132,14 @@ const Homepage: React.FC = () => {
           Oops! There&apos;s nothing here
         </span>
       )}
-      <PodcastFilter
-        genres={genres}
-        onApply={handleSetGenres}
-        onCancel={handleClosePodcastFilter}
-        currentState={podcastsFilter}
-        isVisible={isFilterVisible}
-      />
+      {isFilterVisible && (
+        <PodcastFilter
+          genres={genres}
+          onApply={handleSetGenres}
+          onCancel={handleClosePodcastFilter}
+          currentState={podcastsFilter}
+        />
+      )}
     </main>
   );
 };

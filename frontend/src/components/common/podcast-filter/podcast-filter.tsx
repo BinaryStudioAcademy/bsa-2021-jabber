@@ -11,7 +11,6 @@ type Props = {
   onApply: (data: GenresFilter) => void;
   onCancel: () => void;
   currentState: PodcastLoadFilter;
-  isVisible: boolean;
 };
 
 const PodcastFilter: React.FC<Props> = ({
@@ -19,7 +18,6 @@ const PodcastFilter: React.FC<Props> = ({
   onApply,
   onCancel,
   currentState,
-  isVisible,
 }) => {
   const currentValues = getCurrentValues(currentState, genres);
 
@@ -28,7 +26,7 @@ const PodcastFilter: React.FC<Props> = ({
   });
 
   return (
-    <Modal isShowModal={isVisible} onCloseModal={onCancel}>
+    <Modal isShowModal={true} onCloseModal={onCancel}>
       <div className={styles.podcastFilter}>
         <div className={styles.podcastFilterTitle}>Filter</div>
         <form onSubmit={handleSubmit(onApply)}>
