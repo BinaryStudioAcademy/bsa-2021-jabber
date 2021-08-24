@@ -27,7 +27,7 @@ class Podcast extends Abstract {
 
   [PodcastDTOKey.USER]: User;
 
-  [PodcastDTOKey.GENRE]: Genre;
+  [PodcastDTOKey.GENRE]: Genre | null;
 
   [PodcastDTOKey.PERIODICITY]: PodcastPeriodicity;
 
