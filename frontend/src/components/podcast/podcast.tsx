@@ -38,7 +38,7 @@ const Podcast: React.FC = () => {
   const isMaster = userRole === UserRole.MASTER;
   const isAllowDelete = isOwner || isMaster;
   const isShowFollowButton = Boolean(userId) && !isOwner;
-  const isLoading = dataStatus !== DataStatus.FULFILLED && followersDataStatus !== DataStatus.FULFILLED;
+  const isLoading = dataStatus === DataStatus.PENDING || followersDataStatus === DataStatus.PENDING;
 
   useEffect(() => {
     dispatch(podcastActions.loadPodcast(Number(id)));
@@ -195,11 +195,11 @@ const Podcast: React.FC = () => {
             <h2 className={styles.followTitle}>Followers:</h2>
             <span className={styles.followCount}>{followersCount}</span>
             {isShowFollowButton &&
-            (<Button
-              className={styles.followButton}
-              label={isFollowed ? 'Unfollow' : 'Follow'}
-              onClick={handleToggleFollow}
-            />)}
+              (<Button
+                className={styles.followButton}
+                label={isFollowed ? 'Unfollow' : 'Follow'}
+                onClick={handleToggleFollow}
+              />)}
           </div>
           {episodes.length ? (
             <EpisodeTable episodes={episodes} />
