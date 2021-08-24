@@ -1,6 +1,6 @@
 import { DataStatus, ButtonColor } from 'common/enums/enums';
 import { PodcastSearchPayload, PodcastLoadFilter, GenresFilter } from 'common/types/types';
-import { Loader, PodcastList, Button, PodcastFilter } from 'components/common/common';
+import { Loader, PodcastList, Button, PodcastFilterPopup } from 'components/common/common';
 import {
   useAppSelector,
   useCallback,
@@ -45,7 +45,7 @@ const Homepage: React.FC = () => {
   const hasMorePodcasts = podcastsTotalCount > podcasts.length;
 
   const [podcastsFilter, setPodcastsFilter] = useState<PodcastLoadFilter>(DEFAULT_PODCASTS_FILTER_VALUE);
-  const [isFilterVisible, setIsFilterVisible] = useState<boolean>(false);
+  const [isFilterPopupOpen, setIsFilterPopupOpen] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(homepageActions.loadGenres());
@@ -81,11 +81,11 @@ const Homepage: React.FC = () => {
       genres: selectedGenres,
     });
 
-    setIsFilterVisible(false);
+    setIsFilterPopupOpen(false);
   };
 
   const handleClosePodcastFilter = (): void => {
-    setIsFilterVisible(false);
+    setIsFilterPopupOpen(false);
   };
 
   const handleMorePodcastsLoad = (): void => {
@@ -96,7 +96,7 @@ const Homepage: React.FC = () => {
   };
 
   const handleTogglePodcastFilter = (): void => {
-    setIsFilterVisible(!isFilterVisible);
+    setIsFilterPopupOpen(!isFilterPopupOpen);
   };
 
   return (
@@ -132,14 +132,13 @@ const Homepage: React.FC = () => {
           Oops! There&apos;s nothing here
         </span>
       )}
-      {isFilterVisible && (
-        <PodcastFilter
-          genres={genres}
-          onApply={handleSetGenres}
-          onCancel={handleClosePodcastFilter}
-          currentState={podcastsFilter}
-        />
-      )}
+      <PodcastFilterPopup
+        isOpen={isFilterPopupOpen}
+        genres={genres}
+        onApply={handleSetGenres}
+        onCancel={handleClosePodcastFilter}
+        currentState={podcastsFilter}
+      />
     </main>
   );
 };
