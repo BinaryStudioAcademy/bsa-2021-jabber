@@ -3,11 +3,11 @@ import { PodcastLoadFilterKey } from 'common/enums/enums';
 
 const parseQuery = Joi.object({
   [PodcastLoadFilterKey.OFFSET]: Joi.number()
-    .optional()
     .integer()
     .allow(0)
-    .positive(),
-  [PodcastLoadFilterKey.SEARCH]: Joi.string().optional().allow(''),
+    .positive()
+    .required(),
+  [PodcastLoadFilterKey.SEARCH]: Joi.string().allow('').required(),
   [PodcastLoadFilterKey.GENRES]: Joi.array().optional().items(Joi.number()),
 });
 

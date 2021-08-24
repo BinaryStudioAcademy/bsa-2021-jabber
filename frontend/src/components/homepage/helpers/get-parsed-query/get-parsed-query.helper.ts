@@ -1,7 +1,6 @@
 import { PodcastLoadFilter } from 'common/types/types';
 import { parseQueryString } from 'helpers/helpers';
 import { parseQuery as parseQueryValidationSchema } from 'validation-schemas/validation-schemas';
-import { DEFAULT_PODCASTS_FILTER_VALUE } from '../../common/constants';
 
 const getParsedQuery = (params: string): (PodcastLoadFilter | null) => {
 
@@ -13,9 +12,9 @@ const getParsedQuery = (params: string): (PodcastLoadFilter | null) => {
   }
 
   return {
-    offset: parsedValues.offset ? Number(parsedValues.offset) : DEFAULT_PODCASTS_FILTER_VALUE.offset,
-    search: parsedValues.search || DEFAULT_PODCASTS_FILTER_VALUE.search,
-    genres: parsedValues.genres ? parsedValues.genres.map((genreId) => Number(genreId)) : DEFAULT_PODCASTS_FILTER_VALUE.genres,
+    offset: Number(parsedValues.offset),
+    search: parsedValues.search,
+    genres: parsedValues.genres ? parsedValues.genres.map((genreId) => Number(genreId)) : [],
   };
 };
 

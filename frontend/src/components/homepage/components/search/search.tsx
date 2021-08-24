@@ -12,8 +12,8 @@ type Props = {
 
 const Search: React.FC<Props> = ({ onChange, currentState }) => {
   const { control, errors, getValues, reset } = useAppForm({
-    defaultValues: { search: DEFAULT_PODCAST_SEARCH_PAYLOAD },
-    modeAction: FormEvent.ON_SUBMIT,
+    defaultValues: DEFAULT_PODCAST_SEARCH_PAYLOAD,
+    modeAction: FormEvent.ON_CHANGE,
   });
 
   useEffect(() => {
