@@ -1,7 +1,7 @@
 import { DataStatus, ButtonColor, AppRoute } from 'common/enums/enums';
 import { PodcastSearchPayload, PodcastLoadFilter, GenresFilter } from 'common/types/types';
 import { PODCAST_LOAD_LIMIT } from 'common/constants/constants';
-import { Loader, PodcastList, Button, PodcastFilter } from 'components/common/common';
+import { Loader, PodcastList, Button, PodcastFilterPopup } from 'components/common/common';
 import {
   useAppSelector,
   useCallback,
@@ -42,7 +42,7 @@ const Homepage: React.FC = () => {
     popularUsers: homepage.popularUsers,
     popularUsersDataStatus: homepage.popularUsersDataStatus,
   }));
-  const [isFilterVisible, setIsFilterVisible] = useState<boolean>(false);
+  const [isFilterPopupOpen, setIsFilterPopupOpen] = useState<boolean>(false);
   const [podcastsFilter, setPodcastsFilter] = useState<PodcastLoadFilter>(DEFAULT_PODCASTS_FILTER_VALUE);
   const dispatch = useDispatch();
 
@@ -104,11 +104,11 @@ const Homepage: React.FC = () => {
       }),
     });
 
-    setIsFilterVisible(false);
+    setIsFilterPopupOpen(false);
   };
 
   const handleClosePodcastFilter = (): void => {
-    setIsFilterVisible(false);
+    setIsFilterPopupOpen(false);
   };
 
   const handleMorePodcastsLoad = (): void => {
@@ -121,7 +121,7 @@ const Homepage: React.FC = () => {
   };
 
   const handleTogglePodcastFilter = (): void => {
-    setIsFilterVisible(!isFilterVisible);
+    setIsFilterPopupOpen(!isFilterPopupOpen);
   };
 
   return (
@@ -157,14 +157,13 @@ const Homepage: React.FC = () => {
           Oops! There&apos;s nothing here
         </span>
       )}
-      {isFilterVisible && (
-        <PodcastFilter
-          genres={genres}
-          onApply={handleSetGenres}
-          onCancel={handleClosePodcastFilter}
-          currentState={podcastsFilter}
-        />
-      )}
+      <PodcastFilterPopup
+        isOpen={isFilterPopupOpen}
+        genres={genres}
+        onApply={handleSetGenres}
+        onCancel={handleClosePodcastFilter}
+        currentState={podcastsFilter}
+      />
     </main>
   );
 };
