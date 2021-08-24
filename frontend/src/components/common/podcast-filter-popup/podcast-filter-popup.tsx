@@ -1,7 +1,7 @@
 import { Path, FieldValues } from 'react-hook-form';
 import { Genre, GenresFilter, PodcastLoadFilter } from 'common/types/types';
 import { ButtonType, ButtonColor } from 'common/enums/enums';
-import { useAppForm } from 'hooks/hooks';
+import { useAppForm, useEffect } from 'hooks/hooks';
 import { Button, Checkbox, Modal } from 'components/common/common';
 import { getCurrentValues } from './helpers/helpers';
 import styles from './styles.module.scss';
@@ -11,22 +11,28 @@ type Props = {
   onApply: (data: GenresFilter) => void;
   onCancel: () => void;
   currentState: PodcastLoadFilter;
+  isOpen: boolean;
 };
 
-const PodcastFilter: React.FC<Props> = ({
+const PodcastFilterPopup: React.FC<Props> = ({
   genres,
   onApply,
   onCancel,
   currentState,
+  isOpen,
 }) => {
   const currentValues = getCurrentValues(currentState, genres);
 
-  const { control, handleSubmit } = useAppForm({
+  const { control, handleSubmit, reset } = useAppForm({
     defaultValues: { genresFilter: currentValues },
   });
 
+  useEffect(() => {
+    isOpen && reset({ genresFilter: currentValues });
+  }, [isOpen]);
+
   return (
-    <Modal isShowModal={true} onCloseModal={onCancel}>
+    <Modal isShowModal={isOpen} onCloseModal={onCancel}>
       <div className={styles.podcastFilter}>
         <div className={styles.podcastFilterTitle}>Filter</div>
         <form onSubmit={handleSubmit(onApply)}>
@@ -59,4 +65,4 @@ const PodcastFilter: React.FC<Props> = ({
   );
 };
 
-export default PodcastFilter;
+export default PodcastFilterPopup;
