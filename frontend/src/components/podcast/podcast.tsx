@@ -38,7 +38,7 @@ const Podcast: React.FC = () => {
   const isMaster = userRole === UserRole.MASTER;
   const isAllowDelete = isOwner || isMaster;
   const isShowFollowButton = Boolean(userId) && !isOwner;
-  const isLoading = dataStatus === DataStatus.PENDING && followersDataStatus === DataStatus.PENDING;
+  const isLoading = dataStatus !== DataStatus.FULFILLED && followersDataStatus !== DataStatus.FULFILLED;
 
   useEffect(() => {
     dispatch(podcastActions.loadPodcast(Number(id)));
@@ -77,7 +77,8 @@ const Podcast: React.FC = () => {
       }));
     }
   };
-
+  // eslint-disable-next-line no-console
+  console.log(isLoading);
   if (isLoading) {
     return <Loader />;
   }
