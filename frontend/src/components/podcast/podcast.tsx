@@ -77,8 +77,7 @@ const Podcast: React.FC = () => {
       }));
     }
   };
-  // eslint-disable-next-line no-console
-  console.log(isLoading);
+
   if (isLoading) {
     return <Loader />;
   }
