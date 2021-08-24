@@ -17,7 +17,7 @@ type Podcast = {
   type: PodcastType;
   genreId: number | null;
   user: User;
-  genre: Genre;
+  genre: Genre | null;
   periodicity: PodcastPeriodicity;
 };
 
