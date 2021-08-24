@@ -55,7 +55,7 @@
   cursor: pointer;
 }
 
-.addEpisodeLink {
+.addEpisodeLink, .followButton {
   font-size: 16px;
   display: inline-block;
   position: absolute;
@@ -154,6 +154,10 @@
   background: url('../../assets/img/star.svg') no-repeat left center / 15px;
 }
 
+.followers {
+  background: url('../../assets/img/customer.svg') no-repeat left center / 15px;
+}
+
 .infoInner {
   margin-top: 0;
   color: var(--color-primary-light);
@@ -180,36 +184,6 @@
     left: 55px;
     right: auto;
     bottom: 70px;
-  }
-}
-
-.followContainer {
-  display: flex;
-  align-items: center;
-  padding: 16px 0;
-  position: relative;
-
-  &::after {
-    content: "";
-    width: 100%;
-    height: 2px;
-    background-color: #dcdce0;
-    position: absolute;
-    bottom: 0px;
-  }
-
-  .followTitle {
-    margin: 0;
-  }
-
-  .followCount {
-    margin-left: 15px;
-    font-size: 21px;
-  }
-
-  .followButton {
-    margin-left: auto;
-    width: 102px;
   }
 }
 
