@@ -15,6 +15,7 @@ enum PodcastPayloadKey {
   GENRE_ID = 'genreId',
   GENRE = 'genre',
   PERIODICITY = 'periodicity',
+  INVITATION_CODE = 'invitationCode',
 }
 
 export { PodcastPayloadKey };
