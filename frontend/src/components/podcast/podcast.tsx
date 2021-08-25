@@ -50,6 +50,7 @@ const Podcast: React.FC = () => {
         podcastId: podcast.id,
         followerId: userId,
       }));
+      dispatch(podcastActions.getFollowersCount(podcast.id));
     }
   }, [podcast, userId]);
 
