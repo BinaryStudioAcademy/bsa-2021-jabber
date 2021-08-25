@@ -37,7 +37,6 @@ const Podcast: React.FC = () => {
   const isOwner = userId === podcast?.userId;
   const isMaster = userRole === UserRole.MASTER;
   const isAllowDelete = isOwner || isMaster;
-  const isShowFollowButton = Boolean(userId) && !isOwner;
   const isLoading = dataStatus === DataStatus.PENDING && followersDataStatus === DataStatus.PENDING;
 
   useEffect(() => {
@@ -51,6 +50,7 @@ const Podcast: React.FC = () => {
         podcastId: podcast.id,
         followerId: userId,
       }));
+      dispatch(podcastActions.getFollowersCount(podcast.id));
     }
   }, [podcast, userId]);
 
@@ -94,12 +94,21 @@ const Podcast: React.FC = () => {
               label={podcast.name}
               className={styles.imageWrapper}
             />
-            {podcast.userId === userId && (
-              <Button
-                className={styles.addEpisodeLink}
-                label="Add episode"
-                href={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
-              />)
+            {podcast.userId === userId
+              ? (
+                <Button
+                  className={styles.addEpisodeLink}
+                  label="Add episode"
+                  href={`${AppRoute.PODCASTS}/${podcast.id}${AppRoute.EPISODES_EDIT}`}
+                />
+              )
+              : userId && (
+                <Button
+                  className={styles.followButton}
+                  label={isFollowed ? 'Unfollow' : 'Follow'}
+                  onClick={handleToggleFollow}
+                />
+              )
             }
             <div className={styles.podcastInfoWrapper}>
               {isOwner && (
@@ -188,18 +197,16 @@ const Podcast: React.FC = () => {
                   </div>
                   <p className={styles.infoInner}>{podcast.type}</p>
                 </li>
+                <li className={styles.infoItem}>
+                  <div
+                    className={getAllowedClasses(styles.infoName, styles.followers)}
+                  >
+                    Followers
+                  </div>
+                  <p className={styles.infoInner}>{followersCount}</p>
+                </li>
               </ul>
             </div>
-          </div>
-          <div className={styles.followContainer}>
-            <h2 className={styles.followTitle}>Followers:</h2>
-            <span className={styles.followCount}>{followersCount}</span>
-            {isShowFollowButton &&
-            (<Button
-              className={styles.followButton}
-              label={isFollowed ? 'Unfollow' : 'Follow'}
-              onClick={handleToggleFollow}
-            />)}
           </div>
           {episodes.length ? (
             <EpisodeTable episodes={episodes} />
