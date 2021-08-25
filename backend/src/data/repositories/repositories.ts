@@ -7,6 +7,7 @@ import {
   ImageModel,
   ShownoteModel,
   GenreModel,
+  CommentReactionModel,
 } from '~/data/models/models';
 import { User } from './user/user.repository';
 import { Podcast } from './podcast/podcast.repository';
@@ -16,6 +17,7 @@ import { Comment } from './comment/comment.repository';
 import { Record } from './record/record.repository';
 import { Shownote } from './shownote/shownote.repository';
 import { Genre } from './genre/genre.repository';
+import { CommentReaction } from './comment-reaction/comment-reaction.repository';
 
 const user = new User({
   UserModel,
@@ -41,6 +43,10 @@ const comment = new Comment({
   CommentModel,
 });
 
+const commentReaction = new CommentReaction({
+  CommentReactionModel,
+});
+
 const record = new Record({
   RecordModel,
 });
@@ -49,4 +55,4 @@ const genre = new Genre({
   GenreModel,
 });
 
-export { user, episode, podcast, image, comment, record, shownote, genre };
+export { user, episode, podcast, image, comment, record, shownote, genre, commentReaction };

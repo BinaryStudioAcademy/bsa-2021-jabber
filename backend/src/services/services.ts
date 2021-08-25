@@ -11,6 +11,7 @@ import {
   record as recordRepository,
   image as imageRepository,
   genre as genreRepository,
+  commentReaction as commentReactionRepository,
 } from '~/data/repositories/repositories';
 import { AsyncLocalStorage } from './async-storage/async-storage.service';
 import { Logger } from './logger/logger.service';
@@ -27,6 +28,7 @@ import { Passport } from './passport/passport.service';
 import { Image } from './image/image.service';
 import { Genre } from './genre/genre.service';
 import { Socket } from './socket/socket.service';
+import { CommentReaction } from './comment-reaction/comment-reaction.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -61,6 +63,10 @@ const shownote = new Shownote({
 
 const comment = new Comment({
   commentRepository,
+});
+
+const commentReaction = new CommentReaction({
+  commentReactionRepository,
 });
 
 const record = new Record({
@@ -120,4 +126,5 @@ export {
   image,
   genre,
   socket,
+  commentReaction,
 };
