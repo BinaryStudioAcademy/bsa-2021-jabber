@@ -11,11 +11,14 @@ const PopularUsers: React.FC<Props> = ({ popularUsers }: Props) => {
   return (
     <div className={styles.root}>
       <h2 className={styles.title}>Popular podcaster</h2>
-      <ul className={getAllowedClasses(styles.usersRow, popularUsers.length >=5 && styles.groupPodcastes)}>
+      <ul
+        className={getAllowedClasses(
+          styles.usersRow,
+          popularUsers.length >= 5 && styles.groupPodcastes,
+        )}
+      >
         {popularUsers.map((user) => (
-          <>
-            <PopularUser key={user.id} user={user} />
-          </>
+          <PopularUser key={user.id} user={user} />
         ))}
       </ul>
     </div>
