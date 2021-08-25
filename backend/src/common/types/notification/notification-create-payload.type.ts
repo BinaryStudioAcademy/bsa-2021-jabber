@@ -1,7 +1,7 @@
-import { NotificationCreatePayloadKey } from '~/common/enums/enums';
+import { NotificationCreatePayloadKey, NotificationTitle } from '~/common/enums/enums';
 
 type NotificationCreatePayload = {
-  [NotificationCreatePayloadKey.TITLE]: string;
+  [NotificationCreatePayloadKey.TITLE]: NotificationTitle;
   [NotificationCreatePayloadKey.MESSAGE]: string;
 };
 
