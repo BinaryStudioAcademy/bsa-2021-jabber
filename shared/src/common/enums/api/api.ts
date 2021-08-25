@@ -7,3 +7,4 @@ export { CommentsApiPath } from './comments-api-path.enum';
 export { RecordsApiPath } from './records-api-path.enum';
 export { NotificationsApiPath } from './notifications-api-path.enum';
 export { GenresApiPath } from './genre-api-path.enum';
+export { CommentReactionsApiPath } from './comment-reactions-api-path.enum';
