@@ -8,6 +8,8 @@ import {
   ShownoteModel,
   GenreModel,
   CommentReactionModel,
+  PodcastFollowerModel,
+  UserFollowerModel,
 } from '~/data/models/models';
 import { User } from './user/user.repository';
 import { Podcast } from './podcast/podcast.repository';
@@ -18,6 +20,8 @@ import { Record } from './record/record.repository';
 import { Shownote } from './shownote/shownote.repository';
 import { Genre } from './genre/genre.repository';
 import { CommentReaction } from './comment-reaction/comment-reaction.repository';
+import { PodcastFollower } from './podcast-follower/podcast-follower.repository';
+import { UserFollower } from './user-follower/user-follower.repository';
 
 const user = new User({
   UserModel,
@@ -55,4 +59,12 @@ const genre = new Genre({
   GenreModel,
 });
 
-export { user, episode, podcast, image, comment, record, shownote, genre, commentReaction };
+const podcastFollower = new PodcastFollower({
+  PodcastFollowerModel,
+});
+
+const userFollower = new UserFollower({
+  UserFollowerModel,
+});
+
+export { user, episode, podcast, image, comment, record, shownote, genre, userFollower, podcastFollower, commentReaction };

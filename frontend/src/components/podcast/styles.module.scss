@@ -55,7 +55,7 @@
   cursor: pointer;
 }
 
-.addEpisodeLink {
+.addEpisodeLink, .followButton {
   font-size: 16px;
   display: inline-block;
   position: absolute;
@@ -154,6 +154,10 @@
   background: url('../../assets/img/star.svg') no-repeat left center / 15px;
 }
 
+.followers {
+  background: url('../../assets/img/customer.svg') no-repeat left center / 15px;
+}
+
 .infoInner {
   margin-top: 0;
   color: var(--color-primary-light);
@@ -175,7 +179,7 @@
     margin: 0 auto;
   }
 
-  .addEpisodeLink {
+  .addEpisodeLink, .followButton {
     top: auto;
     left: 55px;
     right: auto;
@@ -188,7 +192,7 @@
     padding: 30px;
   }
 
-  .addEpisodeLink {
+  .addEpisodeLink, .followButton {
     bottom: 50px;
   }
 

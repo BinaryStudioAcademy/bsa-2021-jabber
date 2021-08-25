@@ -5,7 +5,6 @@ import {
   CommentReaction as TCommentReaction,
   CommentReactionCreatePayload,
 } from '~/common/types/types';
-import { comment } from '../repositories';
 
 type Constructor = {
   CommentReactionModel: typeof CommentReactionM;

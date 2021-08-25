@@ -14,17 +14,19 @@ import styles from './styles.module.scss';
 const EditUser: React.FC = () => {
   const { id } = useParams<PageParams>();
 
-  const { currentUser, user, dataStatus } = useAppSelector(
-    ({ auth, userProfile }: RootState) => ({
+  const { currentUser, user, dataStatus, formDataStatus } = useAppSelector(
+    ({ auth, userProfile, configurateUser }: RootState) => ({
       currentUser: auth.user,
       user: userProfile.user,
       dataStatus: userProfile.dataStatus,
+      formDataStatus: configurateUser.dataStatus,
     }),
   );
 
   const dispatch = useDispatch();
 
-  const isFormDisabled = dataStatus === DataStatus.PENDING;
+  const isLoading = dataStatus === DataStatus.PENDING;
+  const isFormDisabled = formDataStatus === DataStatus.PENDING;
   const hasPermitToEdit = currentUser?.id === Number(id);
 
   useEffect(() => {
@@ -45,7 +47,7 @@ const EditUser: React.FC = () => {
     return <Redirect to={`${AppRoute.USERS_EDIT}/${currentUser?.id}`} />;
   }
 
-  if (isFormDisabled) {
+  if (isLoading) {
     return <Loader />;
   }
 

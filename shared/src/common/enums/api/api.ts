@@ -8,3 +8,5 @@ export { RecordsApiPath } from './records-api-path.enum';
 export { NotificationsApiPath } from './notifications-api-path.enum';
 export { GenresApiPath } from './genre-api-path.enum';
 export { CommentReactionsApiPath } from './comment-reactions-api-path.enum';
+export { PodcastsFollowersApiPath } from './podcasts-followers-api-path.enum';
+export { UserFollowersApiPath } from './user-followers-api-path.enum';

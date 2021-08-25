@@ -11,8 +11,8 @@ const PodcastItem: React.FC<Props> = ({ podcast }) => (
   <li>
     <div className={styles.wrapper}>
       <ImageWrapper
-        width="195"
-        height="195"
+        width="225"
+        height="225"
         loading="lazy"
         src={podcast.image?.url}
         alt={podcast.name}

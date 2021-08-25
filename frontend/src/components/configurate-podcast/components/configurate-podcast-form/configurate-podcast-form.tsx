@@ -40,14 +40,15 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
     defaultValues: payload,
   });
 
-  const { createPodcastStatus, podcast } = useAppSelector(
+  const { formDataStatus, podcast } = useAppSelector(
     ({ configuratePodcast }) => ({
-      createPodcastStatus: configuratePodcast.dataStatus,
+      formDataStatus: configuratePodcast.formDataStatus,
       podcast: configuratePodcast.podcast,
+
     }),
   );
 
-  const isFormDisabled = createPodcastStatus === DataStatus.PENDING;
+  const isFormDisabled = formDataStatus === DataStatus.PENDING;
 
   const sortedGenres = sortGenresByName(genres);
 
@@ -82,6 +83,7 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
           name={PodcastPayloadKey.GENRE}
           control={control}
           errors={errors}
+          isDisabled={isFormDisabled}
         />
         <Select
           options={selectOptions}
@@ -89,6 +91,7 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
           name={PodcastPayloadKey.TYPE}
           control={control}
           errors={errors}
+          isDisabled={isFormDisabled}
         />
         <Select
           options={periodicityOptions}
@@ -96,6 +99,7 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
           name={PodcastPayloadKey.PERIODICITY}
           control={control}
           errors={errors}
+          isDisabled={isFormDisabled}
         />
         <Input
           name={PodcastPayloadKey.DESCRIPTION}

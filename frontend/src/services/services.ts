@@ -13,6 +13,8 @@ import { UserApi } from './user-api/user-api.service';
 import { UserNotificationApi } from './user-notification-api/user-notification.service';
 import { GenreApi } from './genre-api/genre-api.service';
 import { CommentReactionApi } from './comment-reaction-api/comment-reaction-api.service';
+import { UserFollowerApi } from './user-follower-api/user-follower-api.service';
+import { PodcastFollowerApi } from './podcast-follower-api/podcast-follower-api.service';
 
 const storage = new Storage({
   storage: localStorage,
@@ -67,6 +69,16 @@ const recordAudio = new RecordAudio({
   notificationService: notification,
 });
 
+const userFollowerApi = new UserFollowerApi({
+  http,
+  apiPrefix: ENV.API_PATH,
+});
+
+const podcastFollowerApi = new PodcastFollowerApi({
+  http,
+  apiPrefix: ENV.API_PATH,
+});
+
 const commentReactionApi = new CommentReactionApi({
   http,
   apiPrefix: ENV.API_PATH,
@@ -85,4 +97,6 @@ export {
   userNotificationApi,
   genreApi,
   commentReactionApi,
+  userFollowerApi,
+  podcastFollowerApi,
 };

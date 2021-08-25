@@ -16,14 +16,14 @@ class CommentReaction {
     this.#commentReactionRepository = commentReactionRepository;
   }
 
-  public getCountByCommentId(commentId: number): Promise<number>{
+  public getCountByCommentId(commentId: number): Promise<number> {
     return this.#commentReactionRepository.getCountByCommentId(commentId);
   }
 
   public async create(userId: number, commentId: number): Promise<TCommentReaction> {
-    const commentReaction = await this.#commentReactionRepository.getByUserIdCommentId({userId, commentId});
+    const commentReaction = await this.#commentReactionRepository.getByUserIdCommentId({ userId, commentId });
 
-    if(commentReaction){
+    if (commentReaction) {
       throw new HttpError({
         status: HttpCode.BAD_REQUEST,
         message: ErrorMessage.BAD_REQUEST,

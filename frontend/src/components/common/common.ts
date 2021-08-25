@@ -25,3 +25,5 @@ export { default as Player } from './player/player';
 export { default as ImageWrapper } from './image-wrapper/image-wrapper';
 export { default as Modal } from './modal/modal';
 export { default as ConfirmPopup } from './confirm-popup/confirm-popup';
+export { default as Popuper } from './popuper/popuper';
+export { default as PodcastFilterPopup } from './podcast-filter-popup/podcast-filter-popup';

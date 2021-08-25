@@ -9,6 +9,8 @@ import {
   record as recordService,
   genre as genreService,
   commentReaction as commentReactionService,
+  userFollower as userFollowerService,
+  podcastFollower as podcastFollowerService,
 } from '~/services/services';
 import { initAuthApi } from './auth/auth.api';
 import { initUsersApi } from './users/users.api';
@@ -18,6 +20,8 @@ import { initCommentsApi } from './comments/comments.api';
 import { initRecordsApi } from './records/records.api';
 import { initGenreApi } from './genre/genre.api';
 import { initCommentReactionsApi } from './comment-reactions/comment-reactions.api';
+import { initUserFollowersApi } from './user-followers/user-followers.api';
+import { initPodcastFollowersApi } from './podcast-followers/podcast-followers.api';
 
 const initApi = (app: Router): Router => {
   const apiRouter = Router();
@@ -62,6 +66,16 @@ const initApi = (app: Router): Router => {
   initCommentReactionsApi({
     apiRouter,
     commentReactionService,
+  });
+  
+  initUserFollowersApi({
+    apiRouter,
+    userFollowerService,
+  });
+
+  initPodcastFollowersApi({
+    apiRouter,
+    podcastFollowerService,
   });
 
   return apiRouter;

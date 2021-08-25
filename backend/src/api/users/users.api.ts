@@ -5,6 +5,7 @@ import {
   HttpMethod,
   UsersApiPath,
 } from '~/common/enums/enums';
+import { UserPopularLoadFilter } from '~/common/types/types';
 import { editUser as editUserValidationSchema } from '~/validation-schemas/validation-schemas';
 import { handleAsyncApi } from '~/helpers/helpers';
 import { user as userService } from '~/services/services';
@@ -29,6 +30,15 @@ const initUsersApi = ({ apiRouter, userService }: Args): Router => {
     checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (_req, res) => {
       return res.json(await userService.getAll()).status(HttpCode.OK);
+    }),
+  );
+
+  userRouter.get(
+    UsersApiPath.POPULAR,
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await userService.getPopular(req.query as unknown as UserPopularLoadFilter))
+        .status(HttpCode.OK);
     }),
   );
 

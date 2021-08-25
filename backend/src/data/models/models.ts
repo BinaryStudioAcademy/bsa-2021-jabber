@@ -10,3 +10,4 @@ export { UserNotification as UserNotificationModel } from './user-notification/u
 export { Genre as GenreModel } from './genre/genre.model';
 export { PodcastFollower as PodcastFollowerModel } from './podcast-follower/podcast-follower.model';
 export { CommentReaction as CommentReactionModel } from './comment-reaction/comment-reaction.model';
+export { UserFollower as UserFollowerModel } from './user-follower/user-follower.model';
