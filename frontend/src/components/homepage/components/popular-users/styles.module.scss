@@ -10,10 +10,6 @@
 
 .groupPodcastes {
   justify-content: space-between;
-
-  li {
-    margin-right: 0px;
-  }
 }
 
 .usersRow {
@@ -25,7 +21,6 @@
 
   li {
     margin-bottom: 15px;
-    margin-right: 35px;
 
     &::-webkit-scrollbar {
       height: 10px;
