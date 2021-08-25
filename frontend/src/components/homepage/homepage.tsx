@@ -9,11 +9,11 @@ import {
   useEffect,
   useState,
   useLocation,
+  useHistory,
 } from 'hooks/hooks';
 import { homepage as homepageActions } from 'store/actions';
 import { getStringifiedQuery } from 'helpers/helpers';
 import { Search, PopularUsers } from './components/components';
-import { navigation as navigationService } from 'services/services';
 import {
   SEARCH_TIMEOUT,
   DEFAULT_PODCASTS_FILTER_VALUE,
@@ -45,6 +45,7 @@ const Homepage: React.FC = () => {
   const [isFilterPopupOpen, setIsFilterPopupOpen] = useState<boolean>(false);
   const [podcastsFilter, setPodcastsFilter] = useState<PodcastLoadFilter>(DEFAULT_PODCASTS_FILTER_VALUE);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const hasPodcasts = Boolean(podcasts.length);
   const isLoading = dataStatus === DataStatus.PENDING || popularUsersDataStatus === DataStatus.PENDING;
@@ -66,7 +67,7 @@ const Homepage: React.FC = () => {
       const parsedQuery = getParsedQuery(search);
 
       if (!parsedQuery) {
-        navigationService.push(AppRoute.ROOT);
+        history.push(AppRoute.ROOT);
         return;
       }
 
@@ -82,7 +83,7 @@ const Homepage: React.FC = () => {
 
   const handleChange = useCallback(
     setDebounce(({ search }: PodcastSearchPayload) => {
-      navigationService.push({
+      history.push({
         search: getStringifiedQuery({
           ...podcastsFilter,
           offset: INITIAL_PAGE_OFFSET,
@@ -96,7 +97,7 @@ const Homepage: React.FC = () => {
   const handleSetGenres = (data: GenresFilter): void => {
     const selectedGenres = getSelectedGenres(data, genres);
 
-    navigationService.push({
+    history.push({
       search: getStringifiedQuery({
         ...podcastsFilter,
         offset: INITIAL_PAGE_OFFSET,
@@ -112,7 +113,7 @@ const Homepage: React.FC = () => {
   };
 
   const handleMorePodcastsLoad = (): void => {
-    navigationService.push({
+    history.push({
       search: getStringifiedQuery({
         ...podcastsFilter,
         offset: podcastsFilter.offset + PODCAST_LOAD_LIMIT,

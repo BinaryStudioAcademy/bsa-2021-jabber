@@ -18,7 +18,6 @@ export { UserPayloadKey, UserRole } from './user/user';
 export {
   PodcastPayloadKey,
   PodcastType,
-  PodcastSearchPayloadKey,
   PodcastPeriodicity,
 } from './podcast/podcast';
 export {
