@@ -70,6 +70,17 @@
   cursor: pointer;
 }
 
+.likeButton{
+  position: absolute;
+  right: 40px;
+  top: 20px;
+  width: 16px;
+  height: 16px;
+  background: url('../../../assets/img/comment/heart-regular.svg') center center / cover;
+  border: none;
+  cursor: pointer;
+}
+
 .link {
   color: rgba(53, 53, 53, 0.5);
   font-weight: 600;

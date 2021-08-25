@@ -1,5 +1,5 @@
 import { CommentItem } from 'components/common/common';
-import { Comment } from 'common/types/types';
+import { Comment, CommentReactionCreatePayload } from 'common/types/types';
 import { User } from 'jabber-shared/common/types/types';
 import styles from './styles.module.scss';
 
@@ -9,6 +9,7 @@ type Props = {
   user?: User | null;
   onTimeClick?: (payload: number) => void;
   onCommentDelete?: (commentId: number) => void;
+  onCommentLike?: (payload: CommentReactionCreatePayload) => void;
 };
 
 const CommentsList: React.FC<Props> = ({
@@ -17,6 +18,7 @@ const CommentsList: React.FC<Props> = ({
   onTimeClick,
   hasTimestamps,
   onCommentDelete,
+  onCommentLike,
 }) => {
   return (
     <ul className={styles.list}>
@@ -25,6 +27,7 @@ const CommentsList: React.FC<Props> = ({
           hasTimestamp={hasTimestamps}
           onTimeClick={onTimeClick}
           onCommentDelete={onCommentDelete}
+          onCommentLike={onCommentLike}
           comment={item}
           isOwner={user?.id === item.userId}
           key={item.id} />
