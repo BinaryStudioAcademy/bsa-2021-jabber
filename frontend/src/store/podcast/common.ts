@@ -4,6 +4,7 @@ enum ActionType {
   GET_FOLLOWERS_COUNT = 'podcast/get-followers-count',
   CHECK_IS_FOLLOWED_PODCAST = 'podcast/check-is-followed-podcast',
   TOGGLE_FOLLOW_PODCAST = 'podcast/toggle-follow-podcast',
+  PODCAST_INVITE = 'podcast/podcast-invite',
 }
 
 export { ActionType };
