@@ -30,6 +30,10 @@ class InvitationCode {
       .delete()
       .where('podcast_id', podcastId);
   }
+
+  public getByCode(code: string): Promise<TInvitationCode> {
+    return this.#InvitationCodeModel.query().findOne({ 'code': code });
+  }
 }
 
 export { InvitationCode };

@@ -88,6 +88,10 @@ const episode = new Episode({
   fileStorage,
 });
 
+const podcastFollower = new PodcastFollower({
+  podcastFollowerRepository,
+});
+
 const podcast = new Podcast({
   podcastRepository,
   imageRepository,
@@ -95,6 +99,7 @@ const podcast = new Podcast({
   fileStorage,
   imageService: image,
   episodeService: episode,
+  podcastFollowerService: podcastFollower,
 });
 
 const passport = new Passport({
@@ -106,10 +111,6 @@ const passport = new Passport({
 
 const genre = new Genre({
   genreRepository,
-});
-
-const podcastFollower = new PodcastFollower({
-  podcastFollowerRepository,
 });
 
 const socket = new Socket();

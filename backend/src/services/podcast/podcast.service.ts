@@ -16,7 +16,7 @@ import {
 } from '~/data/repositories/repositories';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
 import { HttpError } from '~/exceptions/exceptions';
-import { image, episode } from '~/services/services';
+import { image, episode, podcastFollower } from '~/services/services';
 
 type Constructor = {
   podcastRepository: typeof podcastRep;
@@ -25,6 +25,7 @@ type Constructor = {
   fileStorage: FileStorage;
   imageService: typeof image;
   episodeService: typeof episode;
+  podcastFollowerService: typeof podcastFollower;
 };
 
 class Podcast {
@@ -34,6 +35,7 @@ class Podcast {
   #fileStorage: FileStorage;
   #imageService: typeof image;
   #episodeService: typeof episode;
+  #podcastFollowerService: typeof podcastFollower;
 
   constructor({
     podcastRepository,
@@ -42,6 +44,7 @@ class Podcast {
     fileStorage,
     imageService,
     episodeService,
+    podcastFollowerService,
   }: Constructor) {
     this.#podcastRepository = podcastRepository;
     this.#imageRepository = imageRepository;
@@ -49,6 +52,7 @@ class Podcast {
     this.#imageService = imageService;
     this.#episodeService = episodeService;
     this.#invitationCodeRepository = invitationCodeRepository;
+    this.#podcastFollowerService = podcastFollowerService;
   }
 
   public async getByQuery(filter: PodcastLoadFilter): Promise<PodcastQueryPayload> {
@@ -196,6 +200,20 @@ class Podcast {
       updatePodcast.coverId = image.id;
     }
 
+    if (invitationCode) {
+      const hasInvitationCode = await this.#invitationCodeRepository.getByCode(invitationCode);
+
+      hasInvitationCode ?
+        await this.#invitationCodeRepository.update({
+          podcastId: Number(id),
+          code: invitationCode,
+        })
+        : await this.#invitationCodeRepository.create({
+          podcastId: Number(id),
+          code: invitationCode,
+        });
+    }
+
     const podcast = await this.#podcastRepository.update(id, updatePodcast);
 
     if (deleteImageId) {
@@ -208,13 +226,6 @@ class Podcast {
       const { publicId } = await this.#imageRepository.getById(deleteCoverId);
       await this.#fileStorage.delete(publicId);
       await this.#imageRepository.delete(deleteCoverId);
-    }
-
-    if (invitationCode) {
-      await this.#invitationCodeRepository.update({
-        podcastId: podcast.id,
-        code: invitationCode,
-      });
     }
 
     return podcast;
@@ -266,6 +277,24 @@ class Podcast {
     }
 
     return podcast;
+  }
+
+  public async invite(code: string, userId: number): Promise<TPodcast> {
+    const invitationCode = await this.#invitationCodeRepository.getByCode(code);
+
+    if (!invitationCode) {
+      throw new HttpError({
+        status: HttpCode.BAD_REQUEST,
+        message: ErrorMessage.PODCAST_NOT_FOUND,
+      });
+    }
+
+    await this.#podcastFollowerService.create({
+      podcastId: invitationCode.podcastId,
+      followerId: userId,
+    });
+
+    return this.#podcastRepository.getById(invitationCode.podcastId);
   }
 }
 
