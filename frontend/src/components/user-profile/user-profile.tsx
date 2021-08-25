@@ -25,17 +25,15 @@ const UserPage: React.FC = () => {
     isFollowed,
     followersCount,
     followersDataStatus,
-  } = useAppSelector(
-    ({ auth, userProfile }: RootState) => ({
-      currentUser: auth.user,
-      user: userProfile.user,
-      podcasts: userProfile.podcasts,
-      dataStatus: userProfile.dataStatus,
-      isFollowed: userProfile.isFollowed,
-      followersCount: userProfile.followersCount,
-      followersDataStatus: userProfile.followersDataStatus,
-    }),
-  );
+  } = useAppSelector(({ auth, userProfile }: RootState) => ({
+    currentUser: auth.user,
+    user: userProfile.user,
+    podcasts: userProfile.podcasts,
+    dataStatus: userProfile.dataStatus,
+    isFollowed: userProfile.isFollowed,
+    followersCount: userProfile.followersCount,
+    followersDataStatus: userProfile.followersDataStatus,
+  }));
 
   const dispatch = useDispatch();
 
@@ -52,24 +50,31 @@ const UserPage: React.FC = () => {
 
   useEffect(() => {
     if (user && currentUser) {
-      dispatch(userProfileActions.checkIsFollowedUser({
-        userId: user.id,
-        followerId: currentUser.id,
-      }));
+      dispatch(
+        userProfileActions.checkIsFollowedUser({
+          userId: user.id,
+          followerId: currentUser.id,
+        }),
+      );
     }
   }, [user, currentUser]);
 
   const hasUser = Boolean(user);
-  const isShowFollowButton = Boolean(currentUser) && currentUser?.id !== user?.id;
-  const hasPermitToEdit = currentUser?.id === Number(id);
-  const isLoading = dataStatus === DataStatus.PENDING || followersDataStatus === DataStatus.PENDING;
+  const isShowFollowButton =
+    Boolean(currentUser) && currentUser?.id !== user?.id;
+  const isOwnPage = currentUser?.id === Number(id);
+  const isLoading =
+    dataStatus === DataStatus.PENDING ||
+    followersDataStatus === DataStatus.PENDING;
 
   const handleToggleFollow = (): void => {
     if (user && currentUser) {
-      dispatch(userProfileActions.toggleFollowUser({
-        userId: user.id,
-        followerId: currentUser.id,
-      }));
+      dispatch(
+        userProfileActions.toggleFollowUser({
+          userId: user.id,
+          followerId: currentUser.id,
+        }),
+      );
     }
   };
 
@@ -129,23 +134,28 @@ const UserPage: React.FC = () => {
             </div>
           )}
         </div>
-        {hasPermitToEdit && (
+        {isOwnPage ? (
           <Link
             to={`${AppRoute.USERS_EDIT}/${id}`}
             className={styles.editLink}
           />
+        ) : (
+          <div className={styles.followContainer}>
+            <div className={styles.followCountContainer}>
+              <span className={styles.followCount}>{followersCount}</span>
+              <span className={styles.followTitle}>Followers</span>
+            </div>
+            {isShowFollowButton && (
+              <Button
+                className={styles.followButton}
+                label={isFollowed ? 'Unfollow' : 'Follow'}
+                onClick={handleToggleFollow}
+              />
+            )}
+          </div>
         )}
       </main>
-      <div className={styles.followContainer}>
-        <h2 className={styles.followTitle}>Followers:</h2>
-        <span className={styles.followCount}>{followersCount}</span>
-        {isShowFollowButton && (<Button
-          className={styles.followButton}
-          label={isFollowed ? 'Unfollow' : 'Follow'}
-          onClick={handleToggleFollow}
-        />
-        )}
-      </div>
+
       <div className={styles.podcastsByUserContainer}>
         <h2 className={styles.podcastsByUserTitle}>My Podcasts</h2>
         {podcasts.length ? (
