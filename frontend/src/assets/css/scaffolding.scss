@@ -5,7 +5,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scrollbar-width: none;
 }
 
 body {
@@ -24,6 +24,10 @@ body {
   background-color: var(--color-primary-light);
   text-rendering: optimizeSpeed;
   overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0;
 }
 
 img {
