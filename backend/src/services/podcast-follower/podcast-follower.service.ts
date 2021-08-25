@@ -27,6 +27,10 @@ class PodcastFollower {
     return Boolean(podcastFollower);
   }
 
+  public getAllFollowersByPodcastId(podcastId: number): Promise<TPodcastFollower[]> {
+    return this.#podcastFollowerRepository.getAllFollowersByPodcastId(podcastId);
+  }
+
   public async create(payload: PodcastFollowerPayload): Promise<TPodcastFollower> {
     const podcastFollower = await this.#podcastFollowerRepository.getByPodcastIdFollowerId(payload);
 

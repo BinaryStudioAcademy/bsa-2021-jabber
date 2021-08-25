@@ -1,4 +1,4 @@
-import { HttpCode, ErrorMessage } from '~/common/enums/enums';
+import { HttpCode, ErrorMessage, UserNotificationStatus, NotificationTitle } from '~/common/enums/enums';
 import {
   Episode as TEpisode,
   EpisodeCreateDTOPayload,
@@ -10,8 +10,10 @@ import {
   episode as episodeRep,
   record as recordRep,
   image as imageRep,
+  podcast as podcastRep,
+  userNotification as userNotificationRep,
 } from '~/data/repositories/repositories';
-import { shownote, comment, record, image } from '~/services/services';
+import { shownote, comment, record, image, podcastFollower, notification } from '~/services/services';
 import { HttpError } from '~/exceptions/exceptions';
 
 type Constructor = {
@@ -19,10 +21,14 @@ type Constructor = {
   shownoteService: typeof shownote;
   imageRepository: typeof imageRep;
   recordRepository: typeof recordRep;
+  podcastRepository: typeof podcastRep;
+  userNotificationRepository: typeof userNotificationRep;
   fileStorage: FileStorage;
   commentService: typeof comment;
   recordService: typeof record;
   imageService: typeof image;
+  podcastFollowerService: typeof podcastFollower;
+  notificationService: typeof notification;
 };
 
 class Episode {
@@ -31,9 +37,13 @@ class Episode {
   #fileStorage: FileStorage;
   #recordRepository: typeof recordRep;
   #imageRepository: typeof imageRep;
+  #podcastRepository: typeof podcastRep;
   #commentService: typeof comment;
   #recordService: typeof record;
   #imageService: typeof image;
+  #podcastFollowerService: typeof podcastFollower;
+  #notificationService: typeof notification;
+  #userNotificationRepository: typeof userNotificationRep;
 
   constructor({
     episodeRepository,
@@ -41,18 +51,26 @@ class Episode {
     fileStorage,
     recordRepository,
     imageRepository,
+    podcastRepository,
     commentService,
     recordService,
     imageService,
+    podcastFollowerService,
+    notificationService,
+    userNotificationRepository,
   }: Constructor) {
     this.#episodeRepository = episodeRepository;
     this.#shownoteService = shownoteService;
     this.#fileStorage = fileStorage;
     this.#recordRepository = recordRepository;
     this.#imageRepository = imageRepository;
+    this.#podcastRepository = podcastRepository;
     this.#commentService = commentService;
     this.#recordService = recordService;
     this.#imageService = imageService;
+    this.#podcastFollowerService = podcastFollowerService;
+    this.#notificationService = notificationService;
+    this.#userNotificationRepository = userNotificationRepository;
   }
 
   public getAll(): Promise<TEpisode[]> {
@@ -129,6 +147,21 @@ class Episode {
         fileSize: bytes,
       });
     }
+
+    const podcast = await this.#podcastRepository.getById(episode.podcastId);
+    const notification = await this.#notificationService.create({
+      title: NotificationTitle.NEW_EPISODE,
+      message: `New episode "${episode.name}" released on podcast "${podcast.name}"`,
+    });
+    const podcastFollowers = await this.#podcastFollowerService.getAllFollowersByPodcastId(podcastId);
+
+    podcastFollowers.forEach((podcastFollower) =>
+      this.#userNotificationRepository.create({
+        userId: podcastFollower.id,
+        notificationId: notification.id,
+        status: UserNotificationStatus.UNCHECKED,
+      }).then(),
+    );
 
     return episode;
   }
