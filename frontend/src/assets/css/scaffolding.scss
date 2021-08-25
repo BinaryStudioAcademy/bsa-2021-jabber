@@ -5,7 +5,20 @@
 }
 
 html {
+  width:100vw;
   scrollbar-width: none;
+}
+
+::-webkit-scrollbar{
+  height: 10px;
+  width: 8px;
+  background: #ffffff;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:vertical{
+  background-color: rgba(62, 71, 82, 0.3);
+  border-radius: 10px;
 }
 
 body {
@@ -24,10 +37,6 @@ body {
   background-color: var(--color-primary-light);
   text-rendering: optimizeSpeed;
   overflow-x: hidden;
-}
-
-::-webkit-scrollbar {
-  width: 0;
 }
 
 img {
