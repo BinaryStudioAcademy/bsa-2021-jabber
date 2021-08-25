@@ -5,7 +5,7 @@ type PodcastCreatePayload = PodcastPayload & {
   [PodcastPayloadKey.COVER_DATA_URL]: string | null;
   [PodcastPayloadKey.IMAGE_DATA_URL]: string | null;
   [PodcastPayloadKey.USER_ID]: number;
-  [PodcastPayloadKey.GENRE_ID]: number | null;
+  [PodcastPayloadKey.GENRE_ID]: number;
 };
 
 export type { PodcastCreatePayload };
