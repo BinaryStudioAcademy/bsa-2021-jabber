@@ -34,6 +34,10 @@ class InvitationCode {
   public getByCode(code: string): Promise<TInvitationCode> {
     return this.#InvitationCodeModel.query().findOne({ 'code': code });
   }
+
+  public getByPodcastId(podcastId: number): Promise<TInvitationCode> {
+    return this.#InvitationCodeModel.query().findOne('podcast_id', podcastId);
+  }
 }
 
 export { InvitationCode };

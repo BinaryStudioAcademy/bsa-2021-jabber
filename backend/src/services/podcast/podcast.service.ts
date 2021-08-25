@@ -200,20 +200,6 @@ class Podcast {
       updatePodcast.coverId = image.id;
     }
 
-    if (invitationCode) {
-      const hasInvitationCode = await this.#invitationCodeRepository.getByCode(invitationCode);
-
-      hasInvitationCode ?
-        await this.#invitationCodeRepository.update({
-          podcastId: Number(id),
-          code: invitationCode,
-        })
-        : await this.#invitationCodeRepository.create({
-          podcastId: Number(id),
-          code: invitationCode,
-        });
-    }
-
     const podcast = await this.#podcastRepository.update(id, updatePodcast);
 
     if (deleteImageId) {
@@ -226,6 +212,20 @@ class Podcast {
       const { publicId } = await this.#imageRepository.getById(deleteCoverId);
       await this.#fileStorage.delete(publicId);
       await this.#imageRepository.delete(deleteCoverId);
+    }
+
+    if (invitationCode) {
+      const hasInvitationCode = await this.#invitationCodeRepository.getByPodcastId(podcast.id);
+
+      hasInvitationCode ?
+        await this.#invitationCodeRepository.update({
+          podcastId: Number(id),
+          code: invitationCode,
+        })
+        : await this.#invitationCodeRepository.create({
+          podcastId: Number(id),
+          code: invitationCode,
+        });
     }
 
     return podcast;
