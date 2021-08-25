@@ -6,6 +6,8 @@ import {
   Comment,
   CommentFormCreatePayload,
   AsyncThunkConfig,
+  CommentReaction,
+  CommentReactionCreatePayload,
 } from 'common/types/types';
 import { ActionType, LoadEpisodePayload } from './common';
 
@@ -42,6 +44,12 @@ const createComment = createAsyncThunk<Comment, CommentFormCreatePayload, AsyncT
   return comment;
 });
 
+const likeComment = createAsyncThunk <CommentReaction, CommentReactionCreatePayload, AsyncThunkConfig>
+(ActionType.LIKE_COMMENT, async (payload, { extra }) =>{
+  const { commentReactionApi } = extra;
+  return await commentReactionApi.create(payload);
+});
+
 const deleteComment = createAsyncThunk <Comment, number, AsyncThunkConfig>
 (ActionType.DELETE_COMMENT, async (id, { extra }) => {
   const { commentApi, notificationService } = extra;
@@ -60,6 +68,7 @@ export {
   loadCommentsByEpisodeId,
   createComment,
   updateComments,
+  likeComment,
   deleteComment,
   updateCommentsAfterDelete,
   leaveEpisode,
