@@ -37,7 +37,7 @@ const Podcast: React.FC = () => {
   const isOwner = userId === podcast?.userId;
   const isMaster = userRole === UserRole.MASTER;
   const isAllowDelete = isOwner || isMaster;
-  const isLoading = dataStatus === DataStatus.PENDING && followersDataStatus === DataStatus.PENDING;
+  const isLoading = dataStatus === DataStatus.PENDING || followersDataStatus === DataStatus.PENDING;
 
   useEffect(() => {
     dispatch(podcastActions.loadPodcast(Number(id)));
