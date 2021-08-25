@@ -6,7 +6,7 @@
   padding: 20px 32px 12px 22px;
   background-color: white;
   border-radius: 2px;
-  z-index: 100;
+  z-index: var(--z-index--level-one);
 
   .podcastFilterTitle {
     margin-bottom: 20px;
