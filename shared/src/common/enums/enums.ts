@@ -45,6 +45,6 @@ export { RecordCreatePayloadKey } from './record/record';
 export { ImageCreatePayloadKey } from './image/image';
 export { DateFormatType } from './date/date';
 export { SocketEvent } from './socket/socket';
-export { UserNotificationStatus } from './user-notification/user-notification';
+export { UserNotificationStatus, UserNotificationPayloadKey } from './user-notification/user-notification';
 export { PodcastFollowerPayloadKey } from './podcast-follower/podcast-follower';
 export { UserFollowerPayloadKey } from './user-follower/user-follower';

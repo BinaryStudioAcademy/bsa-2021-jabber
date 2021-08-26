@@ -39,4 +39,5 @@ export type { TokenPayload } from './token/token';
 export type { Genre } from './genre/genre';
 export type { PodcastFollower, PodcastFollowerPayload } from './podcast-follower/podcast-follower';
 export type { UserFollower, UserFollowerPayload } from './user-follower/user-follower';
-
+export type { Notification, NotificationCreatePayload } from './notification/notification';
+export type { UserNotification, UserNotificationCreatePayload } from './user-notification/user-notification';
