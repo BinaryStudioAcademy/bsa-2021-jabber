@@ -21,7 +21,7 @@ class PodcastFollower {
       .resultSize();
   }
 
-  public getAllFollowersByPodcastId(podcastId: number): Promise<TPodcastFollower[]> {
+  public getAllByPodcastId(podcastId: number): Promise<TPodcastFollower[]> {
     return this.#PodcastFollowerModel.query()
       .where('podcast_id', podcastId);
   }

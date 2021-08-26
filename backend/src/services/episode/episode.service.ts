@@ -1,4 +1,10 @@
-import { HttpCode, ErrorMessage, UserNotificationStatus, NotificationTitle } from '~/common/enums/enums';
+import {
+  HttpCode,
+  ErrorMessage,
+  UserNotificationStatus,
+  NotificationTitle,
+  EpisodeType,
+} from '~/common/enums/enums';
 import {
   Episode as TEpisode,
   EpisodeCreateDTOPayload,
@@ -148,20 +154,25 @@ class Episode {
       });
     }
 
-    const podcast = await this.#podcastRepository.getById(episode.podcastId);
-    const notification = await this.#notificationService.create({
-      title: NotificationTitle.NEW_EPISODE,
-      message: `New episode "${episode.name}" released on podcast "${podcast.name}"`,
-    });
-    const podcastFollowers = await this.#podcastFollowerService.getAllFollowersByPodcastId(podcastId);
+    if (episode.type !== EpisodeType.UNLISTED) {
+      const podcast = await this.#podcastRepository.getById(episode.podcastId);
+      const notification = await this.#notificationService.create({
+        title: NotificationTitle.NEW_EPISODE,
+        message: `New episode "${episode.name}" released on podcast "${podcast.name}"`,
+      });
+      const podcastFollowers =
+        await this.#podcastFollowerService.getAllByPodcastId(podcastId);
 
-    podcastFollowers.forEach((podcastFollower) =>
-      this.#userNotificationRepository.create({
-        userId: podcastFollower.id,
-        notificationId: notification.id,
-        status: UserNotificationStatus.UNCHECKED,
-      }).then(),
-    );
+      await Promise.all(
+        podcastFollowers.map((podcastFollower) => {
+          return this.#userNotificationRepository.create({
+            userId: podcastFollower.id,
+            notificationId: notification.id,
+            status: UserNotificationStatus.UNCHECKED,
+          });
+        }),
+      );
+    }
 
     return episode;
   }
