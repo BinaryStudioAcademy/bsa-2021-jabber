@@ -85,6 +85,15 @@ class PodcastApi {
       },
     );
   }
+
+  public invite(code: string): Promise<Podcast> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.INVITE}/${code}`,
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
 }
 
 export { PodcastApi };

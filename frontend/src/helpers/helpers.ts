@@ -20,3 +20,4 @@ export {
 export { getAllowedClasses } from './dom/dom';
 export { mapToShownotePayload } from './shownote/shownote';
 export { getStringifiedQuery, parseQueryString } from './http/http';
+export { getRandomId } from './string/string';
