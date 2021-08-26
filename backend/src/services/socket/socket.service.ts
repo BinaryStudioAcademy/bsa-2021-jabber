@@ -15,26 +15,32 @@ class Socket {
   }
 
   private handler(io: Server): void {
-    let roomId: string;
-    let broadcaster: string;
+    const broadcasters = new Map();
 
     io.on(SocketEvent.CONNECTION, (socket) => {
 
-      socket.on(SocketEvent.JOIN_ROOM, (id: number) => {
-        roomId = String(id);
+      socket.on(SocketEvent.JOIN_ROOM, (roomId: string) => {
         socket.join(roomId);
 
-        if (broadcaster) {
-          socket.emit(SocketEvent.PEER_BROADCASTER);
+        if (broadcasters.has(roomId)) {
+          socket.emit(SocketEvent.PEER_BROADCASTER, roomId);
         }
       });
 
-      socket.on(SocketEvent.LEAVE_ROOM, (id: string) => {
-        socket.leave(id);
+      socket.on(SocketEvent.LEAVE_ROOM, (roomId: string) => {
+        socket.leave(roomId);
 
-        if (broadcaster) {
-          io.to(broadcaster).emit(SocketEvent.PEER_DISCONNECT, socket.id);
+        if (broadcasters.has(roomId)) {
+          io.to(broadcasters.get(roomId)).emit(SocketEvent.PEER_DISCONNECT, socket.id);
         }
+      });
+
+      socket.on(SocketEvent.DISCONNECTING, () => {
+        socket.rooms.forEach((roomId: string) => {
+          if (broadcasters.has(roomId)) {
+            socket.to(broadcasters.get(roomId)).emit(SocketEvent.PEER_DISCONNECT, socket.id);
+          }
+        });
       });
 
       socket.on(SocketEvent.UPDATE_COMMENTS, (comment: Comment) => {
@@ -43,15 +49,19 @@ class Socket {
         io.to(id).emit(SocketEvent.UPDATE_COMMENTS, comment);
       });
 
-      //streaming
-
-      socket.on(SocketEvent.PEER_BROADCASTER, () => {
-        broadcaster = socket.id;
-        io.to(roomId).emit(SocketEvent.PEER_BROADCASTER);
+      socket.on(SocketEvent.UPDATE_COMMENTS_AFTER_DELETE, (comment: Comment) => {
+        io.to(String(comment.episodeId)).emit(SocketEvent.UPDATE_COMMENTS_AFTER_DELETE, comment);
       });
 
-      socket.on(SocketEvent.PEER_WATCHER, () => {
-        socket.to(broadcaster).emit(SocketEvent.PEER_WATCHER, socket.id);
+      //streaming
+
+      socket.on(SocketEvent.PEER_BROADCASTER, (roomId: string) => {
+        broadcasters.set(roomId, socket.id);
+        io.to(roomId).emit(SocketEvent.PEER_BROADCASTER, roomId);
+      });
+
+      socket.on(SocketEvent.PEER_WATCHER, (roomId: string) => {
+        io.to(broadcasters.get(roomId)).emit(SocketEvent.PEER_WATCHER, socket.id);
       });
 
       socket.on(SocketEvent.PEER_OFFER, (id: string, message: RTCSessionDescription | null) => {
@@ -66,12 +76,13 @@ class Socket {
         socket.to(id).emit(SocketEvent.PEER_CANDIDATE, socket.id, message);
       });
 
-      socket.on(SocketEvent.DISCONNECT, () => {
-        socket.to(broadcaster).emit(SocketEvent.PEER_DISCONNECT, socket.id);
+      socket.on(SocketEvent.PEER_CANDIDATE, (id: string, message: RTCIceCandidate) => {
+        socket.to(id).emit(SocketEvent.PEER_CANDIDATE, socket.id, message);
       });
 
-      socket.on(SocketEvent.UPDATE_COMMENTS_AFTER_DELETE, (comment: Comment) =>{
-        io.to(String(comment.episodeId)).emit(SocketEvent.UPDATE_COMMENTS_AFTER_DELETE, comment);
+      socket.on(SocketEvent.PEER_CLOSE, (roomId: string) => {
+        socket.emit(SocketEvent.PEER_CLOSE);
+        broadcasters.delete(roomId);
       });
     });
   }

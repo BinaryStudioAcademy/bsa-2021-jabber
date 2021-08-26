@@ -1,5 +1,5 @@
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
-import { AsyncThunkConfig, Episode } from 'common/types/types';
+import { AsyncThunkConfig, Episode, StartRecordActionPayload } from 'common/types/types';
 import { AppRoute } from 'common/enums/enums';
 import { ActionType } from './common';
 
@@ -9,12 +9,15 @@ const initRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
   recordAudioService.init();
 });
 
-const startRecord = createAsyncThunk<MediaStream | undefined, undefined, AsyncThunkConfig>
-(ActionType.START_RECORD, (_arg, { extra }) => {
+const startRecord = createAsyncThunk<StartRecordActionPayload, string, AsyncThunkConfig>
+(ActionType.START_RECORD, (id, { extra }) => {
   const { recordAudioService } = extra;
   const stream = recordAudioService.start();
 
-  return stream;
+  return {
+    stream,
+    id,
+  };
 });
 
 const pauseRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
@@ -29,7 +32,7 @@ const resumeRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
   recordAudioService.resume();
 });
 
-const stopRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
+const stopRecord = createAsyncThunk<void, string, AsyncThunkConfig>
 (ActionType.STOP_RECORD, (_arg, { extra, getState }) => {
   const { recordAudioService, navigationService } = extra;
   const { episode } = getState();
