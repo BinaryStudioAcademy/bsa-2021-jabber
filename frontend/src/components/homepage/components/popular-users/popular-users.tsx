@@ -7,6 +7,8 @@ type Props = {
   popularUsers: User[];
 };
 
+const MAXIMUM_PODCASTERS_WITHOUT_MARKUP = 5;
+
 const PopularUsers: React.FC<Props> = ({ popularUsers }: Props) => {
   return (
     <div className={styles.root}>
@@ -14,7 +16,7 @@ const PopularUsers: React.FC<Props> = ({ popularUsers }: Props) => {
       <ul
         className={getAllowedClasses(
           styles.usersRow,
-          popularUsers.length >= 5 && styles.groupPodcastes,
+          popularUsers.length >= MAXIMUM_PODCASTERS_WITHOUT_MARKUP && styles.groupPodcastes,
         )}
       >
         {popularUsers.map((user) => (
