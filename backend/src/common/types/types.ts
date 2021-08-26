@@ -6,6 +6,7 @@ export type {
   UserEditPayload,
   UserEditDTOPayload,
   UserPopularLoadFilter,
+  UserResetPasswordPayload,
 } from './user/user';
 export type {
   Podcast,

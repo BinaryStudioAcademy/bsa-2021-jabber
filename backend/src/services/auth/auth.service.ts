@@ -2,6 +2,7 @@ import {
   UserCreatePayload,
   UserSignInPayload,
   SignResponse,
+  UserResetPasswordPayload,
 } from '~/common/types/types';
 import { user as userRep } from '~/data/repositories/repositories';
 import { encrypt, checkIsCryptsEqual } from '~/helpers/helpers';
@@ -69,6 +70,23 @@ class Auth {
       token,
       user,
     };
+  }
+
+  public async resetPassword(payload: UserResetPasswordPayload): Promise<boolean> {
+    const { email } = payload;
+
+    const user = await this.#userRepository.getByEmail(email);
+
+    const hasUser = Boolean(user);
+
+    if (!hasUser) {
+      throw new HttpError({
+        status: HttpCode.NOT_FOUND,
+        message: ErrorMessage.EMAIL_DOES_NOT_EXIST,
+      });
+    }
+
+    return true;
   }
 }
 

@@ -15,6 +15,7 @@ enum ErrorMessage {
   NOT_YOURS_COMMENT = 'This comment not yours',
   NO_PERMISSION_TO_EDIT_USER = 'You do not have permission to edit',
   ALREADY_FOLLOWING = 'Already following',
+  EMAIL_DOES_NOT_EXIST = 'Email does not exist',
 }
 
 export { ErrorMessage };

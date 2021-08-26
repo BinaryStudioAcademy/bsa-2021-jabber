@@ -34,9 +34,7 @@ const Auth: React.FC = () => {
   };
 
   const handleResetPasswordSubmit = (payload: UserResetPasswordPayload): void => {
-    // dispatch(authActions.signIn(payload));
-    // eslint-disable-next-line no-console
-    console.log(payload);
+    dispatch(authActions.resetPassword(payload));
   };
 
   const getScreen = (screen: string): React.ReactElement | null => {

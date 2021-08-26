@@ -9,6 +9,7 @@ import {
   UserSignInPayload,
   SignResponse,
   User,
+  UserResetPasswordPayload,
 } from 'common/types/types';
 import { Http } from 'services/http/http.service';
 
@@ -41,6 +42,18 @@ class AuthApi {
   public signIn(payload: UserSignInPayload): Promise<SignResponse> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.AUTH}${AuthApiPath.SIGN_IN}`,
+      {
+        method: HttpMethod.POST,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
+        hasAuth: false,
+      },
+    );
+  }
+
+  public resetPassword(payload: UserResetPasswordPayload): Promise<void> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.AUTH}${AuthApiPath.RESET_PASSWORD}`,
       {
         method: HttpMethod.POST,
         contentType: ContentType.JSON,
