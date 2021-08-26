@@ -6,7 +6,8 @@
   padding: 20px 32px 12px 22px;
   background-color: white;
   border-radius: 2px;
-  z-index: 100;
+  z-index: var(--z-index--level-one);
+
   .podcastFilterTitle {
     margin-bottom: 20px;
     padding-bottom: 15px;
@@ -38,5 +39,25 @@
   }
   .btnCancel {
     margin-left: 15px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .podcastFilter {
+    width: 95%;
+
+    .genresList {
+      columns: 2;
+    }
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .podcastFilter {
+    .genreItem {
+      min-width: 30px;
+      max-width: 100px;
+      margin-bottom: 15px;
+    }
   }
 }
