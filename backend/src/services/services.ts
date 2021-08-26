@@ -13,6 +13,8 @@ import {
   genre as genreRepository,
   podcastFollower as podcastFollowerRepository,
   userFollower as userFollowerRepository,
+  notification as notificationRepository,
+  userNotification as userNotificationRepository,
 } from '~/data/repositories/repositories';
 import { AsyncLocalStorage } from './async-storage/async-storage.service';
 import { Logger } from './logger/logger.service';
@@ -31,6 +33,7 @@ import { Genre } from './genre/genre.service';
 import { Socket } from './socket/socket.service';
 import { PodcastFollower } from './podcast-follower/podcast-follower.service';
 import { UserFollower } from './user-follower/user-follower.service';
+import { Notification } from './notification/notification.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -76,15 +79,27 @@ const image = new Image({
   fileStorage,
 });
 
+const podcastFollower = new PodcastFollower({
+  podcastFollowerRepository,
+});
+
+const notification = new Notification({
+  notificationRepository,
+});
+
 const episode = new Episode({
   episodeRepository,
   shownoteService: shownote,
   commentService: comment,
   recordService: record,
   imageService: image,
+  podcastFollowerService: podcastFollower,
+  notificationService: notification,
   imageRepository,
+  podcastRepository,
   recordRepository,
   fileStorage,
+  userNotificationRepository,
 });
 
 const podcast = new Podcast({
@@ -104,10 +119,6 @@ const passport = new Passport({
 
 const genre = new Genre({
   genreRepository,
-});
-
-const podcastFollower = new PodcastFollower({
-  podcastFollowerRepository,
 });
 
 const socket = new Socket();
@@ -134,4 +145,5 @@ export {
   socket,
   podcastFollower,
   userFollower,
+  notification,
 };

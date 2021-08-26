@@ -1,5 +1,5 @@
 import {
-  PodcastFollower as TPodcastFollover,
+  PodcastFollower as TPodcastFollower,
   PodcastFollowerPayload,
 } from '~/common/types/types';
 import { PodcastFollowerModel as PodcastFollowerM } from '~/data/models/models';
@@ -21,7 +21,12 @@ class PodcastFollower {
       .resultSize();
   }
 
-  public getByPodcastIdFollowerId({ podcastId, followerId }: PodcastFollowerPayload): Promise<TPodcastFollover> {
+  public getAllByPodcastId(podcastId: number): Promise<TPodcastFollower[]> {
+    return this.#PodcastFollowerModel.query()
+      .where('podcast_id', podcastId);
+  }
+
+  public getByPodcastIdFollowerId({ podcastId, followerId }: PodcastFollowerPayload): Promise<TPodcastFollower> {
     return this.#PodcastFollowerModel.query()
       .findOne({
         'podcast_id': podcastId,
@@ -29,11 +34,11 @@ class PodcastFollower {
       });
   }
 
-  public create(payload: PodcastFollowerPayload): Promise<TPodcastFollover> {
+  public create(payload: PodcastFollowerPayload): Promise<TPodcastFollower> {
     return this.#PodcastFollowerModel.query().insert(payload);
   }
 
-  public delete({ podcastId, followerId }: PodcastFollowerPayload): Promise<TPodcastFollover> {
+  public delete({ podcastId, followerId }: PodcastFollowerPayload): Promise<TPodcastFollower> {
     return this.#PodcastFollowerModel.query()
       .delete()
       .where('podcast_id', podcastId)

@@ -3,7 +3,6 @@ export {
   PodcastValidationRule,
   PodcastValidationMessage,
   PodcastType,
-  PodcastSearchPayloadKey,
   PodcastPeriodicity,
 } from 'jabber-shared/common/enums/enums';
-
+export { PodcastSearchPayloadKey } from './podcast-search-payload.key.enum';
