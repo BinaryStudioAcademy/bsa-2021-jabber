@@ -1,11 +1,11 @@
 import { AppRoute } from 'common/enums/enums';
 import { auth as authActions } from 'store/actions';
-import { UserCreatePayload, UserSignInPayload } from 'common/types/types';
+import { UserCreatePayload, UserSignInPayload, UserResetPasswordPayload } from 'common/types/types';
 import { DateFormatType } from 'common/enums/enums';
 import { useAppSelector, useDispatch, useLocation } from 'hooks/hooks';
 import { Redirect } from 'components/common/common';
 import logo from 'assets/img/logo-dark.svg';
-import { SignInForm, SignUpForm } from './components/components';
+import { SignInForm, SignUpForm, ResetPasswordForm } from './components/components';
 import { getFormattedDate } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
@@ -33,6 +33,12 @@ const Auth: React.FC = () => {
     dispatch(authActions.signIn(payload));
   };
 
+  const handleResetPasswordSubmit = (payload: UserResetPasswordPayload): void => {
+    // dispatch(authActions.signIn(payload));
+    // eslint-disable-next-line no-console
+    console.log(payload);
+  };
+
   const getScreen = (screen: string): React.ReactElement | null => {
     switch (screen) {
       case AppRoute.SIGN_UP: {
@@ -40,6 +46,9 @@ const Auth: React.FC = () => {
       }
       case AppRoute.SIGN_IN: {
         return <SignInForm onSubmit={handleSignInSubmit} />;
+      }
+      case AppRoute.RESET_PASSWORD: {
+        return <ResetPasswordForm onSubmit={handleResetPasswordSubmit} />;
       }
     }
 

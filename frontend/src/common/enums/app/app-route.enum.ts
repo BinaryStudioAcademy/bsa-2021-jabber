@@ -2,6 +2,7 @@ enum AppRoute {
   ROOT = '/',
   SIGN_IN = '/sign-in',
   SIGN_UP = '/sign-up',
+  RESET_PASSWORD = '/reset-password',
   PODCASTS = '/podcasts',
   PODCASTS_$ID = '/podcasts/:id',
   PODCASTS_EDIT = '/podcasts/edit',

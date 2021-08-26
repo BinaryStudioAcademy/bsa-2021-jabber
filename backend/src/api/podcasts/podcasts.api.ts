@@ -11,7 +11,7 @@ import {
   checkUserPodcastOwner as checkUserPodcastOwnerMiddleware,
   validateSchema as validateSchemaMiddleware,
 } from '~/middlewares/middlewares';
-import { podcast as podcastService } from '~/services/services';
+import { podcast as podcastService, mailer as mailerService } from '~/services/services';
 
 type Args = {
   apiRouter: Router;
@@ -53,6 +53,7 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
     checkAuthMiddleware(HttpMethod.POST),
     validateSchemaMiddleware(podcastCreateValidationSchema),
     handleAsyncApi(async (req, res) => {
+      mailerService.sendMail();
       return res
         .json(await podcastService.create(req.body))
         .status(HttpCode.CREATED);
