@@ -42,7 +42,7 @@ const ResetPasswordForm: React.FC<Props> = ({ onSubmit }) => {
           control={control}
           errors={errors}
         />
-        <Button label="Sign In" type={ButtonType.SUBMIT} />
+        <Button label="Reset Password" type={ButtonType.SUBMIT} />
       </fieldset>
     </form>
   );

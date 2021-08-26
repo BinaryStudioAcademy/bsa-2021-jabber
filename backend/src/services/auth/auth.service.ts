@@ -5,7 +5,7 @@ import {
   UserResetPasswordPayload,
 } from '~/common/types/types';
 import { user as userRep } from '~/data/repositories/repositories';
-import { encrypt, checkIsCryptsEqual } from '~/helpers/helpers';
+import { encrypt, checkIsCryptsEqual, getRandomId } from '~/helpers/helpers';
 import { HttpError } from '~/exceptions/exceptions';
 import { HttpCode, ErrorMessage } from '~/common/enums/enums';
 import { token } from '../services';
@@ -74,9 +74,7 @@ class Auth {
 
   public async resetPassword(payload: UserResetPasswordPayload): Promise<boolean> {
     const { email } = payload;
-
     const user = await this.#userRepository.getByEmail(email);
-
     const hasUser = Boolean(user);
 
     if (!hasUser) {
@@ -86,6 +84,11 @@ class Auth {
       });
     }
 
+    const newPassword = getRandomId(6);
+
+    await this.#userRepository.updatePassword(user.id, {password: await encrypt(newPassword)});
+
+    console.log(newPassword);
     return true;
   }
 }

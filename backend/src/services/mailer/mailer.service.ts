@@ -1,5 +1,9 @@
+
 class Mailer {
-  constructor() {
+  constructor() {}
+
+  public async sendMail() {
+    console.log('test');
   }
 }
 

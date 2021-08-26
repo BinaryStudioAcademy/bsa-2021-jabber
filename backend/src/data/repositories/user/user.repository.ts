@@ -3,6 +3,7 @@ import {
   UserCreatePayload,
   UserEditDTOPayload,
   UserPopularLoadFilter,
+  UserUpdatePasswordDTOPayload,
 } from '~/common/types/types';
 import { UserModel as UserM } from '~/data/models/models';
 
@@ -37,6 +38,10 @@ class User {
 
   public update(id: number, payload: UserEditDTOPayload): Promise<TUser> {
     return this.#UserModel.query().updateAndFetchById(id, payload);
+  }
+
+  public updatePassword(id: number, payload: UserUpdatePasswordDTOPayload): Promise<TUser> {
+    return this.#UserModel.query().patch(payload).findById(id);
   }
 
   public getPopular(filter: UserPopularLoadFilter): Promise<TUser[]> {
