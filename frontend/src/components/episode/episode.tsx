@@ -9,6 +9,7 @@ import {
 import {
   episode as episodeActions,
   configurateEpisode as configurateEpisodeActions,
+  record as recordActions,
 } from 'store/actions';
 import {
   Loader,
@@ -64,6 +65,7 @@ const Episode: React.FC = () => {
   const isMaster = user?.role === UserRole.MASTER;
   const isPlayerLoaded = playerStatus === DataStatus.FULFILLED;
   const isAllowDelete = isOwner || isMaster;
+  const isPlayerShow = Boolean(episode?.record?.fileUrl) || Boolean(liveStream);
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
@@ -71,6 +73,7 @@ const Episode: React.FC = () => {
 
     return (): void => {
       dispatch(episodeActions.leaveEpisode(id));
+      dispatch(recordActions.resetState());
     };
   }, []);
 
@@ -220,11 +223,11 @@ const Episode: React.FC = () => {
                   onJumpToTimeLine={handleJumpToTimeLine}
                 />
               )}
-              {episode.record && (
+              {isPlayerShow && (
                 <div ref={playerContainerRef}>
                   <Player
                     srcObject={liveStream}
-                    src={episode.record.fileUrl}
+                    src={episode?.record?.fileUrl ?? ''}
                     ref={playerRef}
                     onSetPlayerStatus={setPlayerStatus}
                   />

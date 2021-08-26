@@ -114,7 +114,18 @@ const Header: React.FC = () => {
                   >
                     <ul className={styles.dropDownList}>
                       <li className={styles.dropDownListItem}>
-                        <Link to={AppRoute.PODCASTS_EDIT} className={styles.link}>
+                        <Link
+                          to={`${AppRoute.USERS}/${user?.id}`}
+                          className={styles.link}
+                        >
+                          My Profile
+                        </Link>
+                      </li>
+                      <li className={styles.dropDownListItem}>
+                        <Link
+                          to={AppRoute.PODCASTS_EDIT}
+                          className={styles.link}
+                        >
                           + Add Podcast
                         </Link>
                       </li>
@@ -158,14 +169,6 @@ const Header: React.FC = () => {
                 <li className={styles.navigationItem}>
                   <Link to={AppRoute.ROOT} className={styles.link}>
                     Podcasts
-                  </Link>
-                </li>
-                <li className={styles.navigationItem}>
-                  <Link
-                    to={`${AppRoute.USERS}/${user?.id}`}
-                    className={styles.link}
-                  >
-                    My Profile
                   </Link>
                 </li>
               </ul>

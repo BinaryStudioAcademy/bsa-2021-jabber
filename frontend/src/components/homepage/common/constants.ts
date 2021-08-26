@@ -1,4 +1,3 @@
-import { PODCAST_LOAD_LIMIT } from 'common/constants/constants';
 import { PodcastLoadFilter, UserPopularLoadFilter } from 'common/types/types';
 
 const SEARCH_TIMEOUT = 1000;
@@ -8,7 +7,6 @@ const POPULAR_USERS_LOAD_LIMIT = 6;
 const DEFAULT_PODCASTS_FILTER_VALUE: PodcastLoadFilter = {
   search: '',
   offset: 0,
-  limit: PODCAST_LOAD_LIMIT,
   genres: [],
 };
 

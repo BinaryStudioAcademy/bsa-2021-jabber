@@ -48,3 +48,4 @@ export type { UserNotification } from './notification/notification';
 export type { Genre } from './genre/genre';
 export type { UserFollower, UserFollowerPayload } from './user-follower/user-follower';
 export type { PodcastFollower, PodcastFollowerPayload } from './podcast-follower/podcast-follower';
+export type { StartRecordActionPayload } from './store/store';
