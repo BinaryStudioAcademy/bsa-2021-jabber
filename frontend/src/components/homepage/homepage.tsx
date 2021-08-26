@@ -1,5 +1,6 @@
-import { DataStatus, ButtonColor } from 'common/enums/enums';
+import { DataStatus, ButtonColor, AppRoute } from 'common/enums/enums';
 import { PodcastSearchPayload, PodcastLoadFilter, GenresFilter } from 'common/types/types';
+import { PODCAST_LOAD_LIMIT } from 'common/constants/constants';
 import { Loader, PodcastList, Button, PodcastFilterPopup } from 'components/common/common';
 import {
   useAppSelector,
@@ -7,8 +8,11 @@ import {
   useDispatch,
   useEffect,
   useState,
+  useLocation,
+  useHistory,
 } from 'hooks/hooks';
 import { homepage as homepageActions } from 'store/actions';
+import { getStringifiedQuery } from 'helpers/helpers';
 import { Search, PopularUsers } from './components/components';
 import {
   SEARCH_TIMEOUT,
@@ -16,7 +20,7 @@ import {
   INITIAL_PAGE_OFFSET,
   DEFAULT_USER_POPULAR_FILTER_VALUE,
 } from './common/constants';
-import { getSelectedGenres } from './helpers/helpers';
+import { getSelectedGenres, getParsedQuery } from './helpers/helpers';
 import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
@@ -38,35 +42,53 @@ const Homepage: React.FC = () => {
     popularUsers: homepage.popularUsers,
     popularUsersDataStatus: homepage.popularUsersDataStatus,
   }));
+  const [isFilterPopupOpen, setIsFilterPopupOpen] = useState<boolean>(false);
+  const [podcastsFilter, setPodcastsFilter] = useState<PodcastLoadFilter>(DEFAULT_PODCASTS_FILTER_VALUE);
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const hasPodcasts = Boolean(podcasts.length);
   const isLoading = dataStatus === DataStatus.PENDING || popularUsersDataStatus === DataStatus.PENDING;
   const isGenresLoaded = genresDataStatus === DataStatus.FULFILLED;
-  const hasMorePodcasts = podcastsTotalCount > podcasts.length;
-
-  const [podcastsFilter, setPodcastsFilter] = useState<PodcastLoadFilter>(DEFAULT_PODCASTS_FILTER_VALUE);
-  const [isFilterPopupOpen, setIsFilterPopupOpen] = useState<boolean>(false);
+  const hasMorePodcasts = podcastsTotalCount > podcastsFilter.offset + PODCAST_LOAD_LIMIT;
 
   useEffect(() => {
     dispatch(homepageActions.loadGenres());
     dispatch(homepageActions.loadPopularUsers(DEFAULT_USER_POPULAR_FILTER_VALUE));
+    return (): void => {
+      dispatch(homepageActions.leaveHomepage());
+    };
   }, []);
 
+  const { search } = useLocation<{ params: string | undefined }>();
+
   useEffect(() => {
-    const isNewSearchQuery = podcastsFilter.offset === INITIAL_PAGE_OFFSET;
-    if (isNewSearchQuery) {
-      dispatch(homepageActions.loadPodcasts(podcastsFilter));
+    if (search) {
+      const parsedQuery = getParsedQuery(search);
+
+      if (!parsedQuery) {
+        history.push(AppRoute.ROOT);
+        return;
+      }
+
+      const isСonsistentLoad = parsedQuery.offset === podcastsFilter.offset + PODCAST_LOAD_LIMIT;
+      setPodcastsFilter(parsedQuery);
+
+      dispatch(isСonsistentLoad ? homepageActions.loadMorePodcasts(parsedQuery) : homepageActions.loadPodcasts(parsedQuery));
     } else {
-      dispatch(homepageActions.loadMorePodcasts(podcastsFilter));
+      setPodcastsFilter(DEFAULT_PODCASTS_FILTER_VALUE);
+      dispatch(homepageActions.loadPodcasts(DEFAULT_PODCASTS_FILTER_VALUE));
     }
-  }, [podcastsFilter]);
+  }, [search]);
 
   const handleChange = useCallback(
     setDebounce(({ search }: PodcastSearchPayload) => {
-      setPodcastsFilter({
-        ...podcastsFilter,
-        offset: INITIAL_PAGE_OFFSET,
-        search,
+      history.push({
+        search: getStringifiedQuery({
+          ...podcastsFilter,
+          offset: INITIAL_PAGE_OFFSET,
+          search,
+        }),
       });
     }, SEARCH_TIMEOUT),
     [podcastsFilter],
@@ -75,10 +97,12 @@ const Homepage: React.FC = () => {
   const handleSetGenres = (data: GenresFilter): void => {
     const selectedGenres = getSelectedGenres(data, genres);
 
-    setPodcastsFilter({
-      ...podcastsFilter,
-      offset: INITIAL_PAGE_OFFSET,
-      genres: selectedGenres,
+    history.push({
+      search: getStringifiedQuery({
+        ...podcastsFilter,
+        offset: INITIAL_PAGE_OFFSET,
+        genres: selectedGenres,
+      }),
     });
 
     setIsFilterPopupOpen(false);
@@ -89,9 +113,11 @@ const Homepage: React.FC = () => {
   };
 
   const handleMorePodcastsLoad = (): void => {
-    setPodcastsFilter({
-      ...podcastsFilter,
-      offset: podcastsFilter.offset + podcastsFilter.limit,
+    history.push({
+      search: getStringifiedQuery({
+        ...podcastsFilter,
+        offset: podcastsFilter.offset + PODCAST_LOAD_LIMIT,
+      }),
     });
   };
 
@@ -101,7 +127,7 @@ const Homepage: React.FC = () => {
 
   return (
     <main className={styles.main}>
-      <Search onChange={handleChange} />
+      <Search onChange={handleChange} currentState={podcastsFilter.search} />
       <PopularUsers popularUsers={popularUsers} />
       <div className={styles.titleWrapper}>
         <h2 className={styles.title}>All podcasts</h2>

@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import {
   PodcastQueryPayload,
   AsyncThunkConfig,
@@ -41,9 +41,12 @@ const loadGenres = createAsyncThunk<Genre[], undefined, AsyncThunkConfig>
   return genres;
 });
 
+const leaveHomepage = createAction(ActionType.LEAVE_HOMEPAGE);
+
 export {
   loadPodcasts,
   loadMorePodcasts,
   loadPopularUsers,
   loadGenres,
+  leaveHomepage,
 };

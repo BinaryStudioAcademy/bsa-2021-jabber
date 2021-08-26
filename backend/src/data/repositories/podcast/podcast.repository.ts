@@ -36,13 +36,13 @@ class Podcast {
       .resultSize();
   }
 
-  public getByQuery({ offset = 0, limit = PODCAST_LOAD_LIMIT, search = '', genres = [] }: PodcastLoadFilter): Promise<TPodcast[]> {
+  public getByQuery({ offset = 0, search = '', genres = [] }: PodcastLoadFilter): Promise<TPodcast[]> {
     return this.#PodcastModel
       .query()
       .where('type', PodcastType.PUBLIC)
       .filterByGenres(genres)
       .filterBySearch(search)
-      .limit(limit)
+      .limit(PODCAST_LOAD_LIMIT)
       .offset(offset)
       .withGraphJoined('[image, user]');
   }

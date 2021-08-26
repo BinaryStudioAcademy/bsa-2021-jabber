@@ -10,7 +10,6 @@ export type {
   PodcastPayload,
   PodcastCreatePayload,
   PodcastEditPayload,
-  PodcastSearchPayload,
   PodcastLoadFilter,
   PodcastQueryPayload,
 } from './podcast/podcast';

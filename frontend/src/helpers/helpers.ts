@@ -19,4 +19,4 @@ export {
 } from './validation-schema/validation-schema';
 export { getAllowedClasses } from './dom/dom';
 export { mapToShownotePayload } from './shownote/shownote';
-export { getStringifiedQuery } from './http/http';
+export { getStringifiedQuery, parseQueryString } from './http/http';
