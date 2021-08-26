@@ -44,7 +44,7 @@ const EpisodeLive: React.FC = () => {
   }, []);
 
   const handleStart = (): void => {
-    dispatch(recordActions.startRecord());
+    dispatch(recordActions.startRecord(id));
   };
 
   const handlePause = (): void => {
@@ -56,7 +56,7 @@ const EpisodeLive: React.FC = () => {
   };
 
   const handleStop = (): void => {
-    dispatch(recordActions.stopRecord());
+    dispatch(recordActions.stopRecord(id));
   };
 
   const handleCreateComment = (payload: CommentFormCreatePayload): void => {
