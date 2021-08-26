@@ -118,7 +118,7 @@ const Header: React.FC = () => {
                           to={AppRoute.PODCASTS_EDIT}
                           className={styles.link}
                         >
-                          + Add Podcast
+                          + Create Podcast
                         </Link>
                       </li>
                       <li className={styles.dropDownListItem}>
