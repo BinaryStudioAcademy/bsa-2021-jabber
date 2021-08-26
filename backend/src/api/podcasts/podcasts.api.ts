@@ -4,7 +4,7 @@ import {
   podcastEdit as editPodcastValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { ApiPath, HttpCode, PodcastsApiPath, HttpMethod } from '~/common/enums/enums';
-import { PodcastLoadFilter } from '~/common/types/types';
+import { PodcastLoadFilter, User } from '~/common/types/types';
 import { handleAsyncApi } from '~/helpers/helpers';
 import {
   checkAuth as checkAuthMiddleware,
@@ -78,6 +78,16 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
     handleAsyncApi(async (req, res) => {
       return res
         .json(await podcastService.delete(Number(req.params.id)))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  podcastRouter.get(
+    PodcastsApiPath.INVITE_$CODE,
+    checkAuthMiddleware(HttpMethod.GET),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await podcastService.invite(req.params.code, (<User>req.user).id))
         .status(HttpCode.OK);
     }),
   );
