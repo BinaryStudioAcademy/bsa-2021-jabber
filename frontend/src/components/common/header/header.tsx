@@ -62,14 +62,6 @@ const Header: React.FC = () => {
                   Podcasts
                 </Link>
               </li>
-              <li className={styles.navigationItem}>
-                <Link
-                  to={`${AppRoute.USERS}/${user?.id}`}
-                  className={styles.link}
-                >
-                  My Profile
-                </Link>
-              </li>
             </ul>
             <div className={styles.userInfo}>
               <Button
