@@ -1,5 +1,5 @@
 
-import { getOptions, getUuid } from 'helpers/helpers';
+import { getOptions, getRandomId } from 'helpers/helpers';
 import {
   PodcastPayloadKey,
   ButtonType,
@@ -56,7 +56,7 @@ const ConfiguratePodcastForm: React.FC<Props> = ({
   const sortedGenres = sortGenresByName(genres);
 
   const handleGenerateCode = (): void => {
-    setValue(PodcastPayloadKey.INVITATION_CODE, getUuid());
+    setValue(PodcastPayloadKey.INVITATION_CODE, getRandomId());
   };
 
   useEffect(() => {
