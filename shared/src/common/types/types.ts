@@ -21,6 +21,7 @@ export type {
   EpisodeCreatePayload,
   EpisodeEditPayload,
   EpisodePayload,
+  EpisodeLoadFilter,
 } from './episode/episode';
 export type {
   Shownote,

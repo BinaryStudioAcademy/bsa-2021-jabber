@@ -27,6 +27,7 @@ export type {
   EpisodeFormPayload,
   CreateActionEpisodePayload,
   DeleteActionEpisodePayload,
+  LoadEpisodesByPodcastIdPayload,
 } from './episode/episode';
 export type {
   Shownote,

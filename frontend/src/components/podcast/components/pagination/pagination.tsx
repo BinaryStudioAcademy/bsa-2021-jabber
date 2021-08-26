@@ -5,12 +5,10 @@ type Props = {
   setPageSize: (size: number) => void;
   setPage: (page: number) => void;
   pageIndex: number;
-  pageCount: number;
   pageSize: number;
 };
 
 const Pagination: React.FC<Props> = ({
-  pageCount,
   pageSize,
   setPageSize,
   setPage,
@@ -35,7 +33,7 @@ const Pagination: React.FC<Props> = ({
   };
 
   const canPreviousPage = pageIndex !== 1;
-  const canNextPage = pageIndex !== pageCount;
+  const canNextPage = pageIndex !== 2;
 
   return (
     <div className={styles.pagination}>
@@ -43,7 +41,7 @@ const Pagination: React.FC<Props> = ({
         PREV
       </button>
       <span>
-        {'Page: '}
+        Page:
         <input
           type="number"
           value={pageIndex}
@@ -51,7 +49,7 @@ const Pagination: React.FC<Props> = ({
           className={styles.input}
         />
         <strong>
-          {` of ${pageCount} `}
+          {` of ${2} `}
         </strong>
       </span>
       <select

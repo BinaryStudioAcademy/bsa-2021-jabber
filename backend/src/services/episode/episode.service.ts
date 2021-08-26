@@ -13,6 +13,7 @@ import {
 } from '~/data/repositories/repositories';
 import { shownote, comment, record, image } from '~/services/services';
 import { HttpError } from '~/exceptions/exceptions';
+import {LoadEpisodesByPodcastIdPayload} from "../../../../shared/build/common/types/episode/load-episodes-by-podcast-id-payload.type";
 
 type Constructor = {
   episodeRepository: typeof episodeRep;
@@ -214,8 +215,8 @@ class Episode {
     return episode;
   }
 
-  public getAllByPodcastId(id: number): Promise<TEpisode[]> {
-    return this.#episodeRepository.getAllByPodcastId(id);
+  public getByQueryByPodcastId(loadEpisodesByPodcastIdPayload: LoadEpisodesByPodcastIdPayload): Promise<TEpisode[]> {
+    return this.#episodeRepository.getByQueryByPodcastId(loadEpisodesByPodcastIdPayload);
   }
 
   public async delete(id: number): Promise<TEpisode> {

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Podcast, AsyncThunkConfig, Episode, PodcastFollowerPayload } from 'common/types/types';
+import { Podcast, AsyncThunkConfig, Episode, PodcastFollowerPayload, LoadEpisodesByPodcastIdPayload } from 'common/types/types';
 import { ActionType } from './common';
 
 const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>(
@@ -12,10 +12,10 @@ const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>(
   },
 );
 
-const loadEpisodesByPodcastId = createAsyncThunk<Episode[], number, AsyncThunkConfig>
-(ActionType.LOAD_PODCAST_EPISODES, async (id, { extra }) => {
+const loadEpisodesByPodcastId = createAsyncThunk<Episode[], LoadEpisodesByPodcastIdPayload, AsyncThunkConfig>
+(ActionType.LOAD_PODCAST_EPISODES, async (loadEpisodesByPodcastIdPayload, { extra }) => {
   const { episodeApi } = extra;
-  const episodes = await episodeApi.getAllByPodcastId(id);
+  const episodes = await episodeApi.getByQueryByPodcastId(loadEpisodesByPodcastIdPayload);
 
   return episodes;
 });

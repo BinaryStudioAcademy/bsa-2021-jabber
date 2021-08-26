@@ -41,7 +41,7 @@ const Podcast: React.FC = () => {
 
   const [episodeFilter, setEpisodeFilter] = useState({
     offset: 1,
-    row: 5,
+    limit: 5,
   });
 
   useEffect(() => {
@@ -49,7 +49,10 @@ const Podcast: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(podcastActions.loadEpisodesByPodcastId(Number(id)));
+    dispatch(podcastActions.loadEpisodesByPodcastId({
+      podcastId: Number(id),
+      filter: episodeFilter,
+    }));
   }, [episodeFilter]);
 
   useEffect(() => {
@@ -86,17 +89,17 @@ const Podcast: React.FC = () => {
     }
   };
 
-  const setRowEpisodeFilter = (row: number): void => {
+  const setRowEpisodeFilter = (limit: number): void => {
     setEpisodeFilter({
       offset: episodeFilter.offset,
-      row,
+      limit,
     });
   };
 
   const setOffsetEpisodeFilter = (offset: number): void => {
     setEpisodeFilter({
-      offset: offset,
-      row: episodeFilter.row,
+      offset,
+      limit: episodeFilter.limit,
     });
   };
 
@@ -234,11 +237,10 @@ const Podcast: React.FC = () => {
             <>
               <EpisodeTable episodes={episodes} />
               <Pagination
-                setPageSize={setOffsetEpisodeFilter}
-                setPage={setRowEpisodeFilter}
+                setPageSize={setRowEpisodeFilter}
+                setPage={setOffsetEpisodeFilter}
                 pageIndex={episodeFilter.offset}
-                pageSize={episodeFilter.row}
-                pageCount={pageCount}
+                pageSize={episodeFilter.limit}
               />
             </>
           ) : (
