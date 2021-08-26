@@ -166,7 +166,7 @@ class Episode {
       await Promise.all(
         podcastFollowers.map((podcastFollower) => {
           return this.#userNotificationRepository.create({
-            userId: podcastFollower.id,
+            userId: podcastFollower.followerId,
             notificationId: notification.id,
             status: UserNotificationStatus.UNCHECKED,
           });
