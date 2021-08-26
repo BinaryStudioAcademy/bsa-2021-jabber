@@ -32,7 +32,7 @@ const resumeRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
   recordAudioService.resume();
 });
 
-const stopRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
+const stopRecord = createAsyncThunk<void, string, AsyncThunkConfig>
 (ActionType.STOP_RECORD, (_arg, { extra, getState }) => {
   const { recordAudioService, navigationService } = extra;
   const { episode } = getState();

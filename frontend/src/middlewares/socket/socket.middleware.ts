@@ -77,6 +77,12 @@ const socket: Middleware = ({ dispatch }) => (next): Next => {
     socket.emit(SocketEvent.PEER_WATCHER, roomId);
   });
 
+  socket.on(SocketEvent.PEER_CLOSE, () => {
+    peerConnections.forEach((connection: RTCPeerConnection) => {
+      connection.close();
+    });
+  });
+
   socket.on(SocketEvent.UPDATE_COMMENTS, (comment: Comment): void => {
     dispatch(episodeAction.updateComments(comment));
   });
@@ -103,12 +109,15 @@ const socket: Middleware = ({ dispatch }) => (next): Next => {
         socket.emit(SocketEvent.LEAVE_ROOM, action.payload);
         break;
       }
-
       case `${RecordActionType.START_RECORD}/${DataStatus.FULFILLED}`: {
         const { stream, id } = action.payload;
         liveStream = stream;
 
         socket.emit(SocketEvent.PEER_BROADCASTER, id);
+        break;
+      }
+      case `${RecordActionType.STOP_RECORD}/${DataStatus.FULFILLED}`: {
+        socket.emit(SocketEvent.PEER_CLOSE, action.meta.arg);
         break;
       }
     }

@@ -13,6 +13,7 @@ enum SocketEvent {
   PEER_OFFER = 'peerOffer',
   PEER_ANSWER = 'peerAnswer',
   PEER_CANDIDATE = 'peerCandidate',
+  PEER_CLOSE = 'peerClose',
 }
 
 export { SocketEvent };

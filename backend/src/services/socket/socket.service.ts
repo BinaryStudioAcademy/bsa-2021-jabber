@@ -79,6 +79,11 @@ class Socket {
       socket.on(SocketEvent.PEER_CANDIDATE, (id: string, message: RTCIceCandidate) => {
         socket.to(id).emit(SocketEvent.PEER_CANDIDATE, socket.id, message);
       });
+
+      socket.on(SocketEvent.PEER_CLOSE, (roomId: string) => {
+        socket.emit(SocketEvent.PEER_CLOSE);
+        broadcasters.delete(roomId);
+      });
     });
   }
 }

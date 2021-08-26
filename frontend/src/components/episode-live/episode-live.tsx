@@ -56,7 +56,7 @@ const EpisodeLive: React.FC = () => {
   };
 
   const handleStop = (): void => {
-    dispatch(recordActions.stopRecord());
+    dispatch(recordActions.stopRecord(id));
   };
 
   const handleCreateComment = (payload: CommentFormCreatePayload): void => {
