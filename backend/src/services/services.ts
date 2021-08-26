@@ -13,6 +13,7 @@ import {
   genre as genreRepository,
   podcastFollower as podcastFollowerRepository,
   userFollower as userFollowerRepository,
+  invitationCode as invitationCodeRepository,
   notification as notificationRepository,
   userNotification as userNotificationRepository,
 } from '~/data/repositories/repositories';
@@ -105,9 +106,11 @@ const episode = new Episode({
 const podcast = new Podcast({
   podcastRepository,
   imageRepository,
+  invitationCodeRepository,
   fileStorage,
   imageService: image,
   episodeService: episode,
+  podcastFollowerService: podcastFollower,
 });
 
 const passport = new Passport({

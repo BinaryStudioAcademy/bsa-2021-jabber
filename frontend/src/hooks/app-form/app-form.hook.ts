@@ -8,6 +8,7 @@ import {
   UseFormGetValues,
   UseFormReset,
   UseFormSetValue,
+  UseFormWatch,
 } from 'react-hook-form';
 import { ValidationSchema } from 'common/types/types';
 import { getFormResolver } from 'helpers/helpers';
@@ -28,6 +29,7 @@ type useAppFormReturn = {
   getValues: UseFormGetValues<FieldValues>;
   reset: UseFormReset<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
+  watch: UseFormWatch<FieldValues>;
 };
 
 const useAppForm = ({
@@ -43,6 +45,7 @@ const useAppForm = ({
     formState: { errors, isSubmitSuccessful },
     getValues,
     setValue,
+    watch,
   } = useForm<FieldValues>({
     defaultValues,
     resolver: validationSchema ? getFormResolver(validationSchema) : undefined,
@@ -58,6 +61,7 @@ const useAppForm = ({
     reset,
     isSubmitSuccessful,
     setValue,
+    watch,
   };
 };
 
