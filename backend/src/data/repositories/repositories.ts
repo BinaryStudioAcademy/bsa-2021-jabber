@@ -9,6 +9,7 @@ import {
   GenreModel,
   PodcastFollowerModel,
   UserFollowerModel,
+  InvitationCodeModel,
   NotificationModel,
   UserNotificationModel,
 } from '~/data/models/models';
@@ -22,6 +23,7 @@ import { Shownote } from './shownote/shownote.repository';
 import { Genre } from './genre/genre.repository';
 import { PodcastFollower } from './podcast-follower/podcast-follower.repository';
 import { UserFollower } from './user-follower/user-follower.repository';
+import { InvitationCode } from './invitation-code/invitation-code.repository';
 import { Notification } from './notification/notification.repository';
 import { UserNotification } from './user-notification/user-notification.repository';
 
@@ -65,6 +67,10 @@ const userFollower = new UserFollower({
   UserFollowerModel,
 });
 
+const invitationCode = new InvitationCode({
+  InvitationCodeModel,
+});
+
 const notification = new Notification({
   NotificationModel,
 });
@@ -84,6 +90,7 @@ export {
   genre,
   userFollower,
   podcastFollower,
+  invitationCode,
   notification,
   userNotification,
 };

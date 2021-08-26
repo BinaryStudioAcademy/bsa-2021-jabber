@@ -27,6 +27,25 @@
   margin: 0 auto;
 }
 
+.invitationCode {
+  display: flex;
+  align-items: center;
+
+  label {
+    flex-grow: 1;
+    margin-right: 15px;
+    pointer-events: none;
+
+    span {
+      user-select: none;
+    }
+  }
+
+  button {
+    padding: 10px 15px;
+  }
+}
+
 @media screen and (max-width: 550px) {
   .button {
     width: 50%;
