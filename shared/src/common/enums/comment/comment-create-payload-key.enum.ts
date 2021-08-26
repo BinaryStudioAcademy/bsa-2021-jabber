@@ -3,7 +3,7 @@ enum CommentCreatePayloadKey {
   USER_ID = 'userId',
   EPISODE_ID = 'episodeId',
   TIMESTAMP = 'timestamp',
-  // LIKES_COUNT = 'likesCount',
+  COMMENT_REACTIONS = 'commentReactions',
 }
 
 export { CommentCreatePayloadKey };

@@ -27,7 +27,9 @@ const CommentsList: React.FC<Props> = ({
   return (
     <ul className={styles.list}>
       {comments.map((item) => {
+        const isOwner = user?.id === item.userId;
         const isAllowDelete = user?.id === item.userId || isMaster;
+        const isLiked = item.commentReactions?.some((reaction) => reaction.userId === user?.id);
         return (
           <CommentItem
             hasTimestamp={hasTimestamps}
@@ -35,8 +37,10 @@ const CommentsList: React.FC<Props> = ({
             onCommentDelete={onCommentDelete}
             comment={item}
             onCommentLike={onCommentLike}
+            isOwner={isOwner}
+            isLiked={isLiked}
             isAllowDelete={isAllowDelete}
-            key={item.id}/>
+            key={item.id} />
         );
       })}
     </ul>

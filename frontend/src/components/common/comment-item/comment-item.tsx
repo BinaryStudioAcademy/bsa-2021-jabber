@@ -1,4 +1,4 @@
-import { getTimeOffset } from 'helpers/helpers';
+import { getAllowedClasses, getTimeOffset } from 'helpers/helpers';
 import { Comment, CommentReactionCreatePayload } from 'common/types/types';
 import { getDistanceToDateNow } from 'helpers/date/date';
 import ImageWrapper from '../image-wrapper/image-wrapper';
@@ -10,12 +10,16 @@ type Props = {
   hasTimestamp?: boolean;
   comment: Comment;
   isAllowDelete: boolean;
+  isOwner: boolean;
+  isLiked: boolean;
   onTimeClick?: (payload: number) => void;
   onCommentDelete?: (commentId: number) => void;
   onCommentLike?: (payload: CommentReactionCreatePayload) => void;
 };
 
 const CommentItem: React.FC<Props> = ({
+  isLiked,
+  isOwner,
   isAllowDelete,
   comment,
   onTimeClick,
@@ -24,7 +28,7 @@ const CommentItem: React.FC<Props> = ({
   onCommentLike,
 }) => {
   const time = getTimeOffset(comment.timestamp);
- 
+
   const handleTimeLineJump = (): void => {
     onTimeClick?.(comment.timestamp);
   };
@@ -40,6 +44,12 @@ const CommentItem: React.FC<Props> = ({
   const distance = getDistanceToDateNow(
     new Date(comment.createdAt),
     Date.now(),
+  );
+  const filled = isLiked ? 'Filled' : '';
+
+  const allowedClasses = getAllowedClasses(
+    styles.likeButton,
+    styles[`like${filled}`],
   );
 
   return (
@@ -83,19 +93,26 @@ const CommentItem: React.FC<Props> = ({
         <p className={styles.text}>{comment.text}</p>
       </div>
       <div className={styles.date}>{distance} ago</div>
-      <button
-        onClick={handleLikeComment}
-        className={styles.likeButton}
-      >
-        <span className="visually-hidden">like</span>
-      </button>
-      {isAllowDelete &&
-        <button
-          onClick={handleDeleteComment}
-          className={styles.deleteButton}
-        >
-          <span className="visually-hidden">Delete episode</span>
-        </button>}
+      <div className={styles.btnsWrapper}>
+        <div className={styles.btnLikeWrapper}>
+          <button
+            onClick={handleLikeComment}
+            className={allowedClasses}
+            disabled={isOwner}
+          >
+          </button>
+          <span className={styles.likesCount}>
+            {comment.commentReactions?.length ?? 0}
+          </span>
+        </div>
+        {isAllowDelete &&
+          <button
+            onClick={handleDeleteComment}
+            className={styles.deleteButton}
+          >
+            <span className="visually-hidden">Delete episode</span>
+          </button>}
+      </div>
     </li>
   );
 };

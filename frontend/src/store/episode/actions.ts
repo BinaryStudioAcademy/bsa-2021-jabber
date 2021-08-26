@@ -6,7 +6,6 @@ import {
   Comment,
   CommentFormCreatePayload,
   AsyncThunkConfig,
-  CommentReaction,
   CommentReactionCreatePayload,
 } from 'common/types/types';
 import { ActionType, LoadEpisodePayload } from './common';
@@ -44,10 +43,13 @@ const createComment = createAsyncThunk<Comment, CommentFormCreatePayload, AsyncT
   return comment;
 });
 
-const likeComment = createAsyncThunk <CommentReaction, CommentReactionCreatePayload, AsyncThunkConfig>
+const likeComment = createAsyncThunk <Comment, CommentReactionCreatePayload, AsyncThunkConfig>
 (ActionType.LIKE_COMMENT, async (payload, { extra }) =>{
-  const { commentReactionApi } = extra;
-  return await commentReactionApi.create(payload);
+  const { commentReactionApi, commentApi } = extra;
+
+  const commentReaction = await commentReactionApi.create(payload);
+  const comment = await commentApi.getById(commentReaction.commentId);
+  return comment;
 });
 
 const deleteComment = createAsyncThunk <Comment, number, AsyncThunkConfig>
@@ -61,6 +63,7 @@ const deleteComment = createAsyncThunk <Comment, number, AsyncThunkConfig>
 
 const updateComments = createAction<Comment>(ActionType.UPDATE_COMMENTS);
 const updateCommentsAfterDelete = createAction<Comment>(ActionType.UPDATE_COMMENTS_AFTER_DELETE);
+const updateCommentsAfterLike = createAction<Comment>(ActionType.UPDATE_COMMENTS_AFTER_LIKE);
 const leaveEpisode = createAction<string>(ActionType.LEAVE_EPISODE);
 
 export {
@@ -71,5 +74,6 @@ export {
   likeComment,
   deleteComment,
   updateCommentsAfterDelete,
+  updateCommentsAfterLike,
   leaveEpisode,
 };

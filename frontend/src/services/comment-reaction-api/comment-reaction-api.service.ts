@@ -20,7 +20,7 @@ class CommentReactionApi {
     this.#apiPrefix = apiPrefix;
   }
 
-  public getCommentReactionTotalCount(commentId: number): Promise<number> {
+  public getCommentReactions(commentId: number): Promise<CommentReaction[]> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.COMMENT_REACTIONS}/${commentId}`,
       {
