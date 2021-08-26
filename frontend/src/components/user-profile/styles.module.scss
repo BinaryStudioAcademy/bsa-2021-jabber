@@ -97,31 +97,29 @@
 
 .followContainer {
   display: flex;
-  align-items: center;
+  justify-content: center;
   padding: 16px 0;
   position: relative;
 
-  &::after {
-    content: "";
-    width: 100%;
-    height: 2px;
-    background-color: #dcdce0;
-    position: absolute;
-    bottom: 0px;
-  }
+  .followCountContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  .followTitle {
-    margin: 0;
-  }
+    .followCount {
+      font-size: 16px;
+      font-weight: bold;
+    }
 
-  .followCount {
-    margin-left: 15px;
-    font-size: 21px;
+    .followTitle {
+      font-size: 14px;
+    }
   }
 
   .followButton {
-    margin-left: auto;
+    margin-left: 20px;
     width: 102px;
+    height: 43px;
   }
 }
 
@@ -174,5 +172,9 @@
       height: 30px;
       width: 30px;
     }
+  }
+
+  .followContainer{
+    margin-top: 20px;
   }
 }

@@ -29,9 +29,10 @@ const podcastEdit = podcast.keys({
   ],
   [PodcastPayloadKey.GENRE_ID]: Joi.number()
     .integer()
-    .allow(null)
+    .required()
     .messages({
-      'number.required': PodcastValidationMessage.GENRE_ID_NUMBER_FORMAT,
+      'number.integer': PodcastValidationMessage.GENRE_ID_NUMBER_FORMAT,
+      'number.required': PodcastValidationMessage.GENRE_REQUIRE,
     }),
 });
 

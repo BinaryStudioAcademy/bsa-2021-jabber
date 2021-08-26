@@ -7,7 +7,7 @@ const DEFAULT_PODCAST_PAYLOAD: PodcastFormPayload = {
   [PodcastPayloadKey.IMAGE]: null,
   [PodcastPayloadKey.COVER]: null,
   [PodcastPayloadKey.TYPE]: PodcastType.PUBLIC,
-  [PodcastPayloadKey.GENRE]: null,
+  [PodcastPayloadKey.GENRE]: '',
   [PodcastPayloadKey.PERIODICITY]: PodcastPeriodicity.WEEKLY,
 };
 
