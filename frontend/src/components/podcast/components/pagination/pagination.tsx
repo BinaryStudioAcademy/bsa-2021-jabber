@@ -2,45 +2,40 @@ import { PageSizes } from './common/constants/constants';
 import styles from './styles.module.scss';
 
 type Props = {
-  previousPage: () => void;
-  canPreviousPage: boolean;
+  setPageSize: (size: number) => void;
+  setPage: (page: number) => void;
   pageIndex: number;
-  gotoPage: (page: number) => void;
   pageCount: number;
   pageSize: number;
-  setPageSize: (pageSize: number) => void;
-  nextPage: () => void;
-  canNextPage: boolean;
 };
 
 const Pagination: React.FC<Props> = ({
-  previousPage,
-  canPreviousPage ,
-  pageIndex,
-  gotoPage,
   pageCount,
   pageSize,
   setPageSize,
-  nextPage,
-  canNextPage,
+  setPage,
+  pageIndex,
 }) => {
 
   const handlePreviousPage = (): void => {
-    previousPage();
+    setPage(pageIndex - 1);
   };
 
   const handleNextPage = (): void => {
-    nextPage();
+    setPage(pageIndex + 1);
   };
 
   const changePages = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const page = e.target?.value ? Number(e.target?.value) - 1 : 0;
-    gotoPage(page);
+    const page = e.target?.value ? Number(e.target?.value) : pageIndex;
+    setPage(page);
   };
 
   const changePageSizes = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     setPageSize(Number(e.target.value));
   };
+
+  const canPreviousPage = pageIndex !== 1;
+  const canNextPage = pageIndex !== pageCount;
 
   return (
     <div className={styles.pagination}>
@@ -51,7 +46,7 @@ const Pagination: React.FC<Props> = ({
         {'Page: '}
         <input
           type="number"
-          value={pageIndex + 1}
+          value={pageIndex}
           onChange={changePages}
           className={styles.input}
         />

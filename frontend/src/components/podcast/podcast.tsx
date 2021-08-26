@@ -5,7 +5,7 @@ import {
 } from 'store/actions';
 import { AppRoute, DataStatus, UserRole } from 'common/enums/enums';
 import { Link, Loader, ImageWrapper, ConfirmPopup, Button } from 'components/common/common';
-import { EpisodeTable } from './components/components';
+import { EpisodeTable, Pagination } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 import { getAllowedClasses } from 'helpers/helpers';
@@ -39,10 +39,18 @@ const Podcast: React.FC = () => {
   const isAllowDelete = isOwner || isMaster;
   const isLoading = dataStatus === DataStatus.PENDING && followersDataStatus === DataStatus.PENDING;
 
+  const [episodeFilter, setEpisodeFilter] = useState({
+    offset: 1,
+    row: 5,
+  });
+
   useEffect(() => {
     dispatch(podcastActions.loadPodcast(Number(id)));
-    dispatch(podcastActions.loadEpisodesByPodcastId(Number(id)));
   }, []);
+
+  useEffect(() => {
+    dispatch(podcastActions.loadEpisodesByPodcastId(Number(id)));
+  }, [episodeFilter]);
 
   useEffect(() => {
     if (podcast && userId) {
@@ -76,6 +84,20 @@ const Podcast: React.FC = () => {
         followerId: userId,
       }));
     }
+  };
+
+  const setRowEpisodeFilter = (row: number): void => {
+    setEpisodeFilter({
+      offset: episodeFilter.offset,
+      row,
+    });
+  };
+
+  const setOffsetEpisodeFilter = (offset: number): void => {
+    setEpisodeFilter({
+      offset: offset,
+      row: episodeFilter.row,
+    });
   };
 
   if (isLoading) {
@@ -209,7 +231,16 @@ const Podcast: React.FC = () => {
             </div>
           </div>
           {episodes.length ? (
-            <EpisodeTable episodes={episodes} />
+            <>
+              <EpisodeTable episodes={episodes} />
+              <Pagination
+                setPageSize={setOffsetEpisodeFilter}
+                setPage={setRowEpisodeFilter}
+                pageIndex={episodeFilter.offset}
+                pageSize={episodeFilter.row}
+                pageCount={pageCount}
+              />
+            </>
           ) : (
             <div className={styles.placeholder}>
               There are no episodes in this podcast yet.
