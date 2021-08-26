@@ -1,13 +1,12 @@
 import { User } from 'common/types/types';
 import { PopularUser } from './common/components/components';
 import { getAllowedClasses } from 'helpers/helpers';
+import { MAXIMUM_PODCASTERS_WITHOUT_MARKUP } from './common/constants';
 import styles from './styles.module.scss';
 
 type Props = {
   popularUsers: User[];
 };
-
-const MAXIMUM_PODCASTERS_WITHOUT_MARKUP = 5;
 
 const PopularUsers: React.FC<Props> = ({ popularUsers }: Props) => {
   return (
