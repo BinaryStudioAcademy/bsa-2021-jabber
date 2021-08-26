@@ -73,12 +73,8 @@ const socket: Middleware = ({ dispatch }) => (next): Next => {
     }
   });
 
-  socket.on(SocketEvent.CONNECT, () => {
-    socket.emit(SocketEvent.PEER_WATCHER);
-  });
-
-  socket.on(SocketEvent.PEER_BROADCASTER, () => {
-    socket.emit(SocketEvent.PEER_WATCHER);
+  socket.on(SocketEvent.PEER_BROADCASTER, (roomId: string) => {
+    socket.emit(SocketEvent.PEER_WATCHER, roomId);
   });
 
   socket.on(SocketEvent.UPDATE_COMMENTS, (comment: Comment): void => {
@@ -92,7 +88,7 @@ const socket: Middleware = ({ dispatch }) => (next): Next => {
   return (action: AnyAction): void => {
     switch (action.type) {
       case `${EpisodeActionType.LOAD_COMMENTS_BY_EPISODE_ID}/${DataStatus.PENDING}`: {
-        socket.emit(SocketEvent.JOIN_ROOM, action.meta.arg);
+        socket.emit(SocketEvent.JOIN_ROOM, String(action.meta.arg));
         break;
       }
       case `${EpisodeActionType.CREATE_COMMENT}/${DataStatus.FULFILLED}`: {
@@ -109,9 +105,10 @@ const socket: Middleware = ({ dispatch }) => (next): Next => {
       }
 
       case `${RecordActionType.START_RECORD}/${DataStatus.FULFILLED}`: {
-        liveStream = action.payload;
+        const { stream, id } = action.payload;
+        liveStream = stream;
 
-        socket.emit(SocketEvent.PEER_BROADCASTER);
+        socket.emit(SocketEvent.PEER_BROADCASTER, id);
         break;
       }
     }
