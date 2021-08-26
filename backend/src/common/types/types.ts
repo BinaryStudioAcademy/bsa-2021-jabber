@@ -31,7 +31,7 @@ export type {
   ShownotePayload,
   ShownoteCreatePayload,
 } from './shownote/shownote';
-export type { Comment, CommentCreatePayload } from './comment/comment';
+export type { Comment, CommentCreateDTOPayload, CommentCreatePayload } from './comment/comment';
 export type { CommentReaction, CommentReactionCreatePayload } from './comment-reaction/comment-reaction';
 export type { Record, RecordCreatePayload } from './record/record';
 export type { UploadFileResponse, DeleteFileResponse } from './file/file';

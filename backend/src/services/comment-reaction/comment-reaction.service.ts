@@ -20,13 +20,17 @@ class CommentReaction {
     return this.#commentReactionRepository.getCountByCommentId(commentId);
   }
 
+  public getByCommentId(commentId: number): Promise<TCommentReaction[]> {
+    return this.#commentReactionRepository.getByCommentId(commentId);
+  }
+
   public async create(userId: number, commentId: number): Promise<TCommentReaction> {
     const commentReaction = await this.#commentReactionRepository.getByUserIdCommentId({ userId, commentId });
 
     if (commentReaction) {
       throw new HttpError({
         status: HttpCode.BAD_REQUEST,
-        message: ErrorMessage.BAD_REQUEST,
+        message: ErrorMessage.ALREADY_LIKED,
       });
     }
     return this.#commentReactionRepository.create({ userId, commentId });

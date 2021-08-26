@@ -25,6 +25,11 @@ class CommentReaction {
       });
   }
 
+  public getByCommentId(commentId: number): Promise<TCommentReaction[]> {
+    return this.#CommentReactionModel.query()
+      .where('comment_id', commentId);
+  }
+
   public getCountByCommentId(commentId: number): Promise<number> {
     return this.#CommentReactionModel.query()
       .where('comment_id', commentId)

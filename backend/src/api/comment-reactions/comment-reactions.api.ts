@@ -21,7 +21,7 @@ const initCommentReactionsApi = ({ apiRouter, commentReactionService }: Args): R
     checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (req, res) => {
       return res
-        .json(await commentReactionService.getCountByCommentId(Number(req.params.commentId)))
+        .json(await commentReactionService.getByCommentId(Number(req.params.commentId)))
         .status(HttpCode.OK);
     }),
   );
