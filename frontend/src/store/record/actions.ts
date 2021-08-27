@@ -4,9 +4,10 @@ import { AppRoute } from 'common/enums/enums';
 import { ActionType } from './common';
 
 const initRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
-(ActionType.INIT_RECORD, (_arg, { extra }) => {
+(ActionType.INIT_RECORD, async (_arg, { extra }) => {
   const { recordAudioService } = extra;
-  recordAudioService.init();
+
+  await recordAudioService.init();
 });
 
 const startRecord = createAsyncThunk<StartRecordActionPayload, string, AsyncThunkConfig>
