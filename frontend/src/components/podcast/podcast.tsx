@@ -1,14 +1,12 @@
 import { useAppSelector, useDispatch, useEffect, useParams, useState } from 'hooks/hooks';
-import {
-  podcast as podcastActions,
-  configuratePodcast as configuratePodcastActions,
-} from 'store/actions';
+import { configuratePodcast as configuratePodcastActions, podcast as podcastActions } from 'store/actions';
 import { AppRoute, DataStatus, UserRole } from 'common/enums/enums';
-import { Link, Loader, ImageWrapper, ConfirmPopup, Button } from 'components/common/common';
+import { Button, ConfirmPopup, ImageWrapper, Link, Loader } from 'components/common/common';
 import { EpisodeTable, Pagination } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 import { getAllowedClasses } from 'helpers/helpers';
+import { getFilterEpisode } from './healper/healper';
 
 const Podcast: React.FC = () => {
   const {
@@ -20,6 +18,8 @@ const Podcast: React.FC = () => {
     isFollowed,
     followersCount,
     followersDataStatus,
+    countEpisodes,
+    episodesDataStatus,
   } = useAppSelector(
     ({ podcast, auth }) => ({
       userId: auth.user?.id,
@@ -30,6 +30,8 @@ const Podcast: React.FC = () => {
       isFollowed: podcast.isFollowed,
       followersCount: podcast.followersCount,
       followersDataStatus: podcast.followersDataStatus,
+      countEpisodes: podcast.totalCount,
+      episodesDataStatus: podcast.episodesDataStatus,
     }),
   );
   const dispatch = useDispatch();
@@ -37,11 +39,12 @@ const Podcast: React.FC = () => {
   const isOwner = userId === podcast?.userId;
   const isMaster = userRole === UserRole.MASTER;
   const isAllowDelete = isOwner || isMaster;
-  const isLoading = dataStatus === DataStatus.PENDING && followersDataStatus === DataStatus.PENDING;
+  const isLoading = dataStatus === DataStatus.PENDING || followersDataStatus === DataStatus.PENDING;
+  const isEpisodesLoading = episodesDataStatus === DataStatus.PENDING;
 
-  const [episodeFilter, setEpisodeFilter] = useState({
-    offset: 1,
-    limit: 5,
+  const [episodePagination, setEpisodePagination] = useState({
+    page: 1,
+    row: 5,
   });
 
   useEffect(() => {
@@ -51,9 +54,9 @@ const Podcast: React.FC = () => {
   useEffect(() => {
     dispatch(podcastActions.loadEpisodesByPodcastId({
       podcastId: Number(id),
-      filter: episodeFilter,
+      filter: getFilterEpisode(episodePagination.page, episodePagination.row),
     }));
-  }, [episodeFilter]);
+  }, [episodePagination]);
 
   useEffect(() => {
     if (podcast && userId) {
@@ -89,17 +92,17 @@ const Podcast: React.FC = () => {
     }
   };
 
-  const setRowEpisodeFilter = (limit: number): void => {
-    setEpisodeFilter({
-      offset: episodeFilter.offset,
-      limit,
+  const setRowEpisodeFilter = (row: number): void => {
+    setEpisodePagination({
+      page: 1,
+      row,
     });
   };
 
-  const setOffsetEpisodeFilter = (offset: number): void => {
-    setEpisodeFilter({
-      offset,
-      limit: episodeFilter.limit,
+  const setOffsetEpisodeFilter = (page: number): void => {
+    setEpisodePagination({
+      page,
+      row: episodePagination.row,
     });
   };
 
@@ -186,7 +189,7 @@ const Podcast: React.FC = () => {
                       Episodes
                     </div>
                     <p className={styles.infoInner}>
-                      {episodes.length} episodes
+                      {countEpisodes} episodes
                     </p>
                   </li>
                 )}
@@ -235,12 +238,13 @@ const Podcast: React.FC = () => {
           </div>
           {episodes.length ? (
             <>
-              <EpisodeTable episodes={episodes} />
+              {isEpisodesLoading ? <Loader/>  : <EpisodeTable episodes={episodes} /> }
               <Pagination
-                setPageSize={setRowEpisodeFilter}
+                setRow={setRowEpisodeFilter}
                 setPage={setOffsetEpisodeFilter}
-                pageIndex={episodeFilter.offset}
-                pageSize={episodeFilter.limit}
+                pageIndex={episodePagination.page}
+                pageSize={episodePagination.row}
+                totalCountEpisodes={countEpisodes}
               />
             </>
           ) : (
