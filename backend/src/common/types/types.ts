@@ -27,6 +27,7 @@ export type {
   EpisodeEditDTOPayload,
   EpisodeLoadFilter,
   LoadEpisodesByPodcastIdPayload,
+  EpisodeQueryPayload,
 } from './episode/episode';
 export type {
   Shownote,
