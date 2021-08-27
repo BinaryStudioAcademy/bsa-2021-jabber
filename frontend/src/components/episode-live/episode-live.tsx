@@ -62,7 +62,7 @@ const EpisodeLive: React.FC = () => {
   const handleCreateComment = (payload: CommentFormCreatePayload): void => {
     dispatch(episodeActions.createComment(payload));
   };
-  
+
   const handleCommentDelete = (commentId: number): void => {
     dispatch(episodeActions.deleteComment(commentId));
   };
