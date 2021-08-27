@@ -48,9 +48,12 @@ const logger = new Logger({
   asyncStorage: appAsyncStorage,
 });
 
+const mailer = new Mailer();
+
 const auth = new Auth({
   userRepository,
   tokenService: token,
+  mailer,
 });
 
 const fileStorage = new FileStorage({
@@ -130,8 +133,6 @@ const socket = new Socket();
 const userFollower = new UserFollower({
   userFollowerRepository,
 });
-
-const mailer = new Mailer();
 
 export {
   auth,

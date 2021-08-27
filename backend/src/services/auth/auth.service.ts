@@ -9,19 +9,24 @@ import { encrypt, checkIsCryptsEqual, getRandomId } from '~/helpers/helpers';
 import { HttpError } from '~/exceptions/exceptions';
 import { HttpCode, ErrorMessage } from '~/common/enums/enums';
 import { token } from '../services';
+import { Mailer } from '~/services/mailer/mailer.service';
+
 
 type Constructor = {
   userRepository: typeof userRep;
   tokenService: typeof token;
+  mailer: Mailer;
 };
 
 class Auth {
   #userRepository: typeof userRep;
   #tokenService: typeof token;
+  #mailer: Mailer;
 
-  constructor({ userRepository, tokenService }: Constructor) {
+  constructor({ userRepository, tokenService, mailer }: Constructor) {
     this.#userRepository = userRepository;
     this.#tokenService = tokenService;
+    this.#mailer = mailer;
   }
 
   public async signUp(payload: UserCreatePayload): Promise<SignResponse> {
@@ -88,7 +93,8 @@ class Auth {
 
     await this.#userRepository.updatePassword(user.id, {password: await encrypt(newPassword)});
 
-    console.log(newPassword);
+    this.#mailer.sendMail();
+
     return true;
   }
 }
