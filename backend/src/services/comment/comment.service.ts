@@ -52,8 +52,8 @@ class Comment {
     }
     return this.#commentReactionRepository.create({ userId, commentId });
   }
-  
-  public delete(id: number): Promise<TComment>{
+
+  public delete(id: number): Promise<TComment> {
     return this.#commentRepository.delete(id);
   }
 
