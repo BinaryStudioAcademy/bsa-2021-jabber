@@ -1,20 +1,25 @@
 import { ErrorMessage, HttpCode } from '~/common/enums/enums';
 import {
   Comment as TComment,
+  CommentReaction as TCommentReaction,
   CommentCreatePayload,
 } from '~/common/types/types';
 import { comment as commentRep } from '~/data/repositories/repositories';
+import { commentReaction as commentReactionRep } from '~/data/repositories/repositories';
 import { HttpError } from '~/exceptions/exceptions';
 
 type Constructor = {
   commentRepository: typeof commentRep;
+  commentReactionRepository: typeof commentReactionRep;
 };
 
 class Comment {
   #commentRepository: typeof commentRep;
+  #commentReactionRepository: typeof commentReactionRep;
 
-  constructor({ commentRepository }: Constructor) {
+  constructor({ commentRepository, commentReactionRepository }: Constructor) {
     this.#commentRepository = commentRepository;
+    this.#commentReactionRepository = commentReactionRepository;
   }
 
   public getAll(): Promise<TComment[]> {
@@ -36,6 +41,18 @@ class Comment {
     return this.#commentRepository.create(payload);
   }
 
+  public async createCommentReaction(userId: number, commentId: number): Promise<TCommentReaction> {
+    const commentReaction = await this.#commentReactionRepository.getByUserIdCommentId({ userId, commentId });
+
+    if (commentReaction) {
+      throw new HttpError({
+        status: HttpCode.BAD_REQUEST,
+        message: ErrorMessage.ALREADY_LIKED,
+      });
+    }
+    return this.#commentReactionRepository.create({ userId, commentId });
+  }
+  
   public delete(id: number): Promise<TComment>{
     return this.#commentRepository.delete(id);
   }

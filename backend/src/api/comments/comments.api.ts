@@ -37,6 +37,16 @@ const initCommentsApi = ({ apiRouter, commentService }: Args): Router => {
     }),
   );
 
+  commentRouter.post(
+    CommentsApiPath.COMMENT_REACTIONS,
+    checkAuthMiddleware(HttpMethod.POST),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await commentService.createCommentReaction(Number(req.user?.id), Number(req.body.commentId)))
+        .status(HttpCode.CREATED);
+    }),
+  );
+
   commentRouter.get(
     CommentsApiPath.EPISODE_ID,
     handleAsyncApi(async (req, res) => {

@@ -5,7 +5,7 @@ import {
   CommentsApiPath,
 } from 'common/enums/enums';
 import { Http } from 'services/http/http.service';
-import { Comment, CommentCreatePayload } from 'common/types/types';
+import { Comment, CommentCreatePayload, CommentReaction, CommentReactionCreatePayload } from 'common/types/types';
 
 type Constructor = {
   http: Http;
@@ -50,6 +50,26 @@ class CommentApi {
     );
   }
 
+  public createCommentReaction(payload: CommentReactionCreatePayload): Promise<CommentReaction> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.COMMENTS}${CommentsApiPath.COMMENT_REACTIONS}`,
+      {
+        method: HttpMethod.POST,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
+      },
+    );
+  }
+
+  public getCommentReactions(commentId: number): Promise<CommentReaction[]> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.COMMENTS}${CommentsApiPath.COMMENT_REACTIONS}/${commentId}`,
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
+
   public getAllByEpisodeId(episodeId: number): Promise<Comment[]> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.COMMENTS}${CommentsApiPath.EPISODE}/${episodeId}`,
@@ -59,7 +79,7 @@ class CommentApi {
     );
   }
 
-  public delete(id: number): Promise<Comment>{
+  public delete(id: number): Promise<Comment> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.COMMENTS}/${id}`,
       {
