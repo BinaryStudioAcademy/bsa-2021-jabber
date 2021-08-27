@@ -2,9 +2,10 @@
   display: flex;
   justify-content: center;
   gap: 10px;
+  width: 100%;
+  padding: 15px 0;
   position: absolute;
   bottom: 0;
-  width: 100%;
 
   .btnNext, .btnPrev {
     height: 30px;

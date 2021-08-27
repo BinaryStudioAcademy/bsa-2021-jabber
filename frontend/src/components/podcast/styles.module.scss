@@ -1,8 +1,10 @@
 .podcast {
   max-width: 1606px;
   width: 100%;
+  min-height: calc(100vh - 80px);
   margin: 0 auto;
-  padding: 30px 15px;
+  padding: 30px 15px 60px;
+  position: relative;
 }
 
 .content {
