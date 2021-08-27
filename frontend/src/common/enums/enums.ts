@@ -7,7 +7,6 @@ export {
   CommentsApiPath,
   NotificationsApiPath,
   GenresApiPath,
-  CommentReactionsApiPath,
 } from './api/api';
 export { AppRoute, ENV, DataStatus, StorageKey, RainbowColor } from './app/app';
 export { HttpHeader, HttpMethod } from './http/http';

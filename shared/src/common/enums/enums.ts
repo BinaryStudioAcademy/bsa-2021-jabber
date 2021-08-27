@@ -8,7 +8,6 @@ export {
   RecordsApiPath,
   NotificationsApiPath,
   GenresApiPath,
-  CommentReactionsApiPath,
   PodcastsFollowersApiPath,
   UserFollowersApiPath,
 } from './api/api';

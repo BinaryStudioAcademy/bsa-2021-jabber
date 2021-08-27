@@ -7,7 +7,6 @@ enum ApiPath {
   RECORDS = '/records',
   NOTIFICATIONS = '/notifications',
   GENRES = '/genres',
-  COMMENT_REACTIONS = '/comment-reactions',
   PODCAST_FOLLOWERS = '/podcast-followers',
   USER_FOLLOWERS = '/user-followers',
 }

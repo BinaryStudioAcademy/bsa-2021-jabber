@@ -45,9 +45,9 @@ const createComment = createAsyncThunk<Comment, CommentFormCreatePayload, AsyncT
 
 const likeComment = createAsyncThunk <Comment, CommentReactionCreatePayload, AsyncThunkConfig>
 (ActionType.LIKE_COMMENT, async (payload, { extra }) =>{
-  const { commentReactionApi, commentApi } = extra;
+  const { commentApi } = extra;
 
-  const commentReaction = await commentReactionApi.create(payload);
+  const commentReaction = await commentApi.createCommentReaction(payload);
   const comment = await commentApi.getById(commentReaction.commentId);
   return comment;
 });

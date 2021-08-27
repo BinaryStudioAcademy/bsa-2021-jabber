@@ -33,7 +33,6 @@ import { Passport } from './passport/passport.service';
 import { Image } from './image/image.service';
 import { Genre } from './genre/genre.service';
 import { Socket } from './socket/socket.service';
-import { CommentReaction } from './comment-reaction/comment-reaction.service';
 import { PodcastFollower } from './podcast-follower/podcast-follower.service';
 import { UserFollower } from './user-follower/user-follower.service';
 import { Notification } from './notification/notification.service';
@@ -71,10 +70,7 @@ const shownote = new Shownote({
 
 const comment = new Comment({
   commentRepository,
-});
-
-const commentReaction = new CommentReaction({
-  commentReactionRepository,
+  commentReactionRepository
 });
 
 const record = new Record({
@@ -152,7 +148,6 @@ export {
   image,
   genre,
   socket,
-  commentReaction,
   podcastFollower,
   userFollower,
   notification,
