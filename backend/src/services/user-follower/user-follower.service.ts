@@ -43,6 +43,10 @@ class UserFollower {
   public delete(payload: UserFollowerPayload): Promise<TUserFollower> {
     return this.#userFollowerRepository.delete(payload);
   }
+
+  public getAllByUserId(userId: number): Promise<TUserFollower[]> {
+    return this.#userFollowerRepository.getAllByUserId(userId);
+  }
 }
 
 export { UserFollower };

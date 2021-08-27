@@ -40,6 +40,15 @@ const initUserFollowersApi = ({ apiRouter, userFollowerService }: Args): Router 
     }),
   );
 
+  userFollowerRouter.get(
+    UserFollowersApiPath.$USER_ID_FOLLOWERS,
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await userFollowerService.getAllByUserId(Number(req.params.id)))
+        .status(HttpCode.OK);
+    }),
+  );
+
   userFollowerRouter.post(
     UserFollowersApiPath.ROOT,
     checkAuthMiddleware(HttpMethod.POST),
