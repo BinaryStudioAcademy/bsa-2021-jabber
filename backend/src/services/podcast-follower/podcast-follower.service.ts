@@ -47,6 +47,10 @@ class PodcastFollower {
   public delete(payload: PodcastFollowerPayload): Promise<TPodcastFollower> {
     return this.#podcastFollowerRepository.delete(payload);
   }
+
+  public async deleteAllByPodcastId(id: number): Promise<void> {
+    await this.#podcastFollowerRepository.deleteAllByPodcastId(id);
+  }
 }
 
 export { PodcastFollower };
