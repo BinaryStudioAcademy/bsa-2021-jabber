@@ -67,7 +67,7 @@ const initApi = (app: Router): Router => {
     apiRouter,
     commentReactionService,
   });
-  
+
   initUserFollowersApi({
     apiRouter,
     userFollowerService,
