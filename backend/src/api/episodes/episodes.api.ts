@@ -52,6 +52,18 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
     }),
   );
 
+  episodeRouter.get(
+    EpisodesApiPath.PODCAST_$ID,
+    handleAsyncApi(async (req, res) => {
+      return res
+        .send(await episodeService.getByQueryByPodcastId({
+          podcastId: Number(req.params.id),
+          filter: req.query as unknown as EpisodeLoadFilter,
+        }))
+        .status(HttpCode.OK);
+    }),
+  );
+
   episodeRouter.post(
     EpisodesApiPath.ROOT,
     checkAuthMiddleware(HttpMethod.POST),

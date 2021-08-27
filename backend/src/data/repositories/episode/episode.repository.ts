@@ -3,9 +3,8 @@ import {
   Episode as TEpisode,
   EpisodeCreateDTOPayload,
   EpisodeEditDTOPayload,
-  LoadEpisodesByPodcastIdPayload, PodcastLoadFilter,
+  LoadEpisodesByPodcastIdPayload,
 } from '~/common/types/types';
-import {PodcastType} from "../../../../../shared/build";
 
 type Constructor = {
   EpisodeModel: typeof EpisodeM;
@@ -24,6 +23,10 @@ class Episode {
 
   public getById(id: number): Promise<TEpisode> {
     return this.#EpisodeModel.query().findById(id).withGraphJoined('[record, image, shownotes]');
+  }
+
+  public getAllByPodcastId(id: number): Promise<TEpisode[]> {
+    return this.#EpisodeModel.query().where('podcast_id', id);
   }
 
   public getEpisodeCountByPodcastId(id: number): Promise<number> {

@@ -4,6 +4,8 @@ import {
   EpisodeCreateDTOPayload,
   EpisodeCreatePayload,
   EpisodeEditPayload,
+  EpisodeQueryPayload,
+  LoadEpisodesByPodcastIdPayload,
 } from '~/common/types/types';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
 import {
@@ -13,7 +15,6 @@ import {
 } from '~/data/repositories/repositories';
 import { shownote, comment, record, image } from '~/services/services';
 import { HttpError } from '~/exceptions/exceptions';
-import {LoadEpisodesByPodcastIdPayload} from "../../../../shared/build/common/types/episode/load-episodes-by-podcast-id-payload.type";
 
 type Constructor = {
   episodeRepository: typeof episodeRep;
@@ -215,8 +216,18 @@ class Episode {
     return episode;
   }
 
-  public getByQueryByPodcastId(loadEpisodesByPodcastIdPayload: LoadEpisodesByPodcastIdPayload): Promise<TEpisode[]> {
-    return this.#episodeRepository.getByQueryByPodcastId(loadEpisodesByPodcastIdPayload);
+  public getEpisodeCountByPodcastId(id: number): Promise<number> {
+    return this.#episodeRepository.getEpisodeCountByPodcastId(id)
+  }
+
+  public async getByQueryByPodcastId(loadEpisodesByPodcastIdPayload: LoadEpisodesByPodcastIdPayload): Promise<EpisodeQueryPayload> {
+    const results = await this.#episodeRepository.getByQueryByPodcastId(loadEpisodesByPodcastIdPayload);
+    const totalCount = await this.#episodeRepository.getEpisodeCountByPodcastId(loadEpisodesByPodcastIdPayload.podcastId);
+
+    return {
+      results,
+      totalCount,
+    }
   }
 
   public async delete(id: number): Promise<TEpisode> {
