@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Podcast, AsyncThunkConfig, EpisodeQueryPayload, PodcastFollowerPayload, LoadEpisodesByPodcastIdPayload } from 'common/types/types';
+import { AppRoute, NotificationTitle } from 'common/enums/enums';
 import { ActionType } from './common';
 
 const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>(
@@ -52,4 +53,20 @@ const toggleFollowPodcast = createAsyncThunk<boolean, PodcastFollowerPayload, As
   },
 );
 
-export { loadPodcast, loadEpisodesByPodcastId, getFollowersCount, checkIsFollowedPodcast, toggleFollowPodcast };
+const podcastInvite = createAsyncThunk<void, string, AsyncThunkConfig>(
+  ActionType.PODCAST_INVITE,
+  async (code, { extra }) => {
+    const { podcastApi, navigationService, notificationService } = extra;
+
+    try {
+      const podcast = await podcastApi.invite(code);
+
+      navigationService.push(`${AppRoute.PODCASTS}/${podcast.id}`);
+    } catch (err) {
+      navigationService.push(`${AppRoute.ROOT}`);
+      notificationService.error(NotificationTitle.ERROR, err.message);
+    }
+
+  });
+
+export { loadPodcast, loadEpisodesByPodcastId, getFollowersCount, checkIsFollowedPodcast, toggleFollowPodcast, podcastInvite };

@@ -12,38 +12,47 @@ import {
 import {
   podcast as podcastRep,
   image as imageRep,
+  invitationCode as invitationCodeRep,
 } from '~/data/repositories/repositories';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
 import { HttpError } from '~/exceptions/exceptions';
-import { image, episode } from '~/services/services';
+import { image, episode, podcastFollower } from '~/services/services';
 
 type Constructor = {
   podcastRepository: typeof podcastRep;
   imageRepository: typeof imageRep;
+  invitationCodeRepository: typeof invitationCodeRep;
   fileStorage: FileStorage;
   imageService: typeof image;
   episodeService: typeof episode;
+  podcastFollowerService: typeof podcastFollower;
 };
 
 class Podcast {
   #podcastRepository: typeof podcastRep;
   #imageRepository: typeof imageRep;
+  #invitationCodeRepository: typeof invitationCodeRep;
   #fileStorage: FileStorage;
   #imageService: typeof image;
   #episodeService: typeof episode;
+  #podcastFollowerService: typeof podcastFollower;
 
   constructor({
     podcastRepository,
     imageRepository,
+    invitationCodeRepository,
     fileStorage,
     imageService,
     episodeService,
+    podcastFollowerService,
   }: Constructor) {
     this.#podcastRepository = podcastRepository;
     this.#imageRepository = imageRepository;
     this.#fileStorage = fileStorage;
     this.#imageService = imageService;
     this.#episodeService = episodeService;
+    this.#invitationCodeRepository = invitationCodeRepository;
+    this.#podcastFollowerService = podcastFollowerService;
   }
 
   public async getByQuery(filter: PodcastLoadFilter): Promise<PodcastQueryPayload> {
@@ -66,6 +75,7 @@ class Podcast {
     type,
     genreId,
     periodicity,
+    invitationCode,
   }: PodcastCreatePayload): Promise<TPodcast> {
     const newPodcast: PodcastCreateDTOPayload = {
       name,
@@ -106,7 +116,16 @@ class Podcast {
       newPodcast.coverId = image.id;
     }
 
-    return this.#podcastRepository.create(newPodcast);
+    const podcast = await this.#podcastRepository.create(newPodcast);
+
+    if (invitationCode) {
+      await this.#invitationCodeRepository.create({
+        podcastId: podcast.id,
+        code: invitationCode,
+      });
+    }
+
+    return podcast;
   }
 
   public async getById(id: number): Promise<TPodcast> {
@@ -134,6 +153,7 @@ class Podcast {
       coverId,
       genreId,
       periodicity,
+      invitationCode,
     }: PodcastEditPayload,
   ): Promise<TPodcast> {
     const updatePodcast: PodcastEditDTOPayload = {
@@ -195,6 +215,20 @@ class Podcast {
       await this.#imageRepository.delete(deleteCoverId);
     }
 
+    if (invitationCode) {
+      const hasInvitationCode = await this.#invitationCodeRepository.getByPodcastId(podcast.id);
+
+      hasInvitationCode ?
+        await this.#invitationCodeRepository.update({
+          podcastId: Number(id),
+          code: invitationCode,
+        })
+        : await this.#invitationCodeRepository.create({
+          podcastId: Number(id),
+          code: invitationCode,
+        });
+    }
+
     return podcast;
   }
 
@@ -231,6 +265,8 @@ class Podcast {
       await this.#episodeService.deleteAllByPodcastId(id);
     }
 
+    await this.#invitationCodeRepository.delete(id);
+
     await this.#podcastRepository.delete(id);
 
     if (podcast.imageId) {
@@ -242,6 +278,24 @@ class Podcast {
     }
 
     return podcast;
+  }
+
+  public async invite(code: string, userId: number): Promise<TPodcast> {
+    const invitationCode = await this.#invitationCodeRepository.getByCode(code);
+
+    if (!invitationCode) {
+      throw new HttpError({
+        status: HttpCode.BAD_REQUEST,
+        message: ErrorMessage.PODCAST_NOT_FOUND,
+      });
+    }
+
+    await this.#podcastFollowerService.create({
+      podcastId: invitationCode.podcastId,
+      followerId: userId,
+    });
+
+    return this.#podcastRepository.getById(invitationCode.podcastId);
   }
 }
 
