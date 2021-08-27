@@ -59,6 +59,15 @@ class UserFollowerApi {
       },
     );
   }
+
+  public getAllByUserId(userId: number): Promise<UserFollower[]> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.USER_FOLLOWERS}/${userId}/followers`,
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
 }
 
 export { UserFollowerApi };
