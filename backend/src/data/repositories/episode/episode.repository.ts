@@ -36,7 +36,7 @@ class Episode {
       .resultSize();
   }
 
-  public getByQueryByPodcastId({podcastId, filter}: LoadEpisodesByPodcastIdPayload): Promise<TEpisode[]> {
+  public getByQueryByPodcastId({ podcastId, filter }: LoadEpisodesByPodcastIdPayload): Promise<TEpisode[]> {
     return this.#EpisodeModel.query()
       .where('podcast_id', podcastId)
       .limit(filter.limit)

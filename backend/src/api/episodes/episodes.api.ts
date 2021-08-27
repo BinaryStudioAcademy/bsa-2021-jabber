@@ -12,7 +12,7 @@ import {
   checkUserEpisodeOwner as checkUserEpisodeOwnerMiddleware,
   validateSchema as validateSchemaMiddleware,
 } from '~/middlewares/middlewares';
-import { EpisodeLoadFilter } from "~/common/types/types";
+import { EpisodeLoadFilter } from '~/common/types/types';
 
 type Args = {
   apiRouter: Router;

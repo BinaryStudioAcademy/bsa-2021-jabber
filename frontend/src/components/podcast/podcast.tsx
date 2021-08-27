@@ -7,6 +7,7 @@ import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 import { getAllowedClasses } from 'helpers/helpers';
 import { getFilterEpisode } from './healper/healper';
+import { DEFAULT_EPISODE_PAGINATION } from './common/constatnts/constants';
 
 const Podcast: React.FC = () => {
   const {
@@ -42,10 +43,7 @@ const Podcast: React.FC = () => {
   const isLoading = dataStatus === DataStatus.PENDING || followersDataStatus === DataStatus.PENDING;
   const isEpisodesLoading = episodesDataStatus === DataStatus.PENDING;
 
-  const [episodePagination, setEpisodePagination] = useState({
-    page: 1,
-    row: 5,
-  });
+  const [episodePagination, setEpisodePagination] = useState(DEFAULT_EPISODE_PAGINATION);
 
   useEffect(() => {
     dispatch(podcastActions.loadPodcast(Number(id)));

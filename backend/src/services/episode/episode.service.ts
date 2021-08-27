@@ -261,7 +261,7 @@ class Episode {
   }
 
   public getEpisodeCountByPodcastId(id: number): Promise<number> {
-    return this.#episodeRepository.getEpisodeCountByPodcastId(id)
+    return this.#episodeRepository.getEpisodeCountByPodcastId(id);
   }
 
   public async getByQueryByPodcastId(loadEpisodesByPodcastIdPayload: LoadEpisodesByPodcastIdPayload): Promise<EpisodeQueryPayload> {
@@ -271,7 +271,7 @@ class Episode {
     return {
       results,
       totalCount,
-    }
+    };
   }
 
   public async delete(id: number): Promise<TEpisode> {
