@@ -70,7 +70,7 @@ const shownote = new Shownote({
 
 const comment = new Comment({
   commentRepository,
-  commentReactionRepository
+  commentReactionRepository,
 });
 
 const record = new Record({
