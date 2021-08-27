@@ -10,11 +10,7 @@ const EpisodeTable: React.FC<Props> = ({ episodes }) => {
   const columns = getColumns();
   const rows = getRows(episodes);
 
-  return <Table
-    columns={columns}
-    data={rows}
-
-  />;
+  return <Table columns={columns} data={rows} />;
 };
 
 export default EpisodeTable;

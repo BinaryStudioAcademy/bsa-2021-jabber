@@ -9,21 +9,12 @@ type Props = {
 };
 
 const Table: React.FC<Props> = ({ columns, data = [] }) => {
-  const tableInstance = useTable(
-    {
-      columns: columns as Column<Record<string, string>>[],
-      data: data as Record<string, string>[],
-    },
-    useSortBy,
-  );
+  const tableInstance = useTable({
+    columns: columns as Column<Record<string, string>>[],
+    data: data as Record<string, string>[],
+  }, useSortBy);
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = tableInstance;
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
 
   return (
     <table {...getTableProps()} className={styles.table}>
