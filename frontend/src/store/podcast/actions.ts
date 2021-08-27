@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Podcast, AsyncThunkConfig, Episode, PodcastFollowerPayload, LoadEpisodesByPodcastIdPayload } from 'common/types/types';
+import { Podcast, AsyncThunkConfig, EpisodeQueryPayload, PodcastFollowerPayload, LoadEpisodesByPodcastIdPayload } from 'common/types/types';
 import { ActionType } from './common';
 
 const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>(
@@ -12,13 +12,13 @@ const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>(
   },
 );
 
-const loadEpisodesByPodcastId = createAsyncThunk<Episode[], LoadEpisodesByPodcastIdPayload, AsyncThunkConfig>
-(ActionType.LOAD_PODCAST_EPISODES, async (loadEpisodesByPodcastIdPayload, { extra }) => {
-  const { episodeApi } = extra;
-  const episodes = await episodeApi.getByQueryByPodcastId(loadEpisodesByPodcastIdPayload);
+const loadEpisodesByPodcastId = createAsyncThunk<EpisodeQueryPayload, LoadEpisodesByPodcastIdPayload, AsyncThunkConfig>(
+  ActionType.LOAD_PODCAST_EPISODES, async (loadEpisodesByPodcastIdPayload, { extra }) => {
+    const { episodeApi } = extra;
+    const result = await episodeApi.getByQueryByPodcastId(loadEpisodesByPodcastIdPayload);
 
-  return episodes;
-});
+    return result;
+  });
 
 const getFollowersCount = createAsyncThunk<number, number, AsyncThunkConfig>(
   ActionType.GET_FOLLOWERS_COUNT,
