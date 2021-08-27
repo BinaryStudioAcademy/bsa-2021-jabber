@@ -1,19 +1,23 @@
-import { PageSizes } from './common/constants/constants';
+import { PAGE_SIZE } from './common/constants/constants';
 import styles from './styles.module.scss';
 
 type Props = {
-  setPageSize: (size: number) => void;
+  setRow: (row: number) => void;
   setPage: (page: number) => void;
   pageIndex: number;
   pageSize: number;
+  totalCountEpisodes: number;
 };
 
 const Pagination: React.FC<Props> = ({
   pageSize,
-  setPageSize,
+  setRow,
   setPage,
   pageIndex,
+  totalCountEpisodes,
 }) => {
+
+  const countPage = Math.ceil(totalCountEpisodes / pageSize);
 
   const handlePreviousPage = (): void => {
     setPage(pageIndex - 1);
@@ -24,16 +28,21 @@ const Pagination: React.FC<Props> = ({
   };
 
   const changePages = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const page = e.target?.value ? Number(e.target?.value) : pageIndex;
-    setPage(page);
+    const newPage = Number(e.target.value);
+
+    if(!newPage || newPage === pageIndex || newPage > countPage || newPage < 1){
+      return;
+    }
+
+    setPage(newPage);
   };
 
   const changePageSizes = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    setPageSize(Number(e.target.value));
+    setRow(Number(e.target.value));
   };
 
   const canPreviousPage = pageIndex !== 1;
-  const canNextPage = pageIndex !== 2;
+  const canNextPage = pageIndex !== countPage;
 
   return (
     <div className={styles.pagination}>
@@ -49,7 +58,7 @@ const Pagination: React.FC<Props> = ({
           className={styles.input}
         />
         <strong>
-          {` of ${2} `}
+          {` of ${countPage} `}
         </strong>
       </span>
       <select
@@ -57,7 +66,7 @@ const Pagination: React.FC<Props> = ({
         onChange={changePageSizes}
         className={styles.input}
       >
-        {PageSizes.map((pageSize): JSX.Element => (
+        {PAGE_SIZE.map((pageSize): JSX.Element => (
           <option key={pageSize} value={pageSize}>
             Row {pageSize}
           </option>

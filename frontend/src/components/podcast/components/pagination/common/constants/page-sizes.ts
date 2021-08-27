@@ -1,3 +1,3 @@
-const PageSizes = [5, 10, 20];
+const PAGE_SIZE = [5, 10, 20];
 
-export { PageSizes };
+export { PAGE_SIZE };

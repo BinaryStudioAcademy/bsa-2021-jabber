@@ -1,1 +1,1 @@
-export { PageSizes } from './page-sizes';
+export { PAGE_SIZE } from './page-sizes';
