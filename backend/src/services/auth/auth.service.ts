@@ -5,12 +5,11 @@ import {
   UserResetPasswordPayload,
 } from '~/common/types/types';
 import { user as userRep } from '~/data/repositories/repositories';
-import { encrypt, checkIsCryptsEqual, getRandomId } from '~/helpers/helpers';
+import { encrypt, checkIsCryptsEqual, getRandomId, getResetPasswordMessageTemplate } from '~/helpers/helpers';
 import { HttpError } from '~/exceptions/exceptions';
 import { HttpCode, ErrorMessage } from '~/common/enums/enums';
 import { token } from '../services';
 import { Mailer } from '~/services/mailer/mailer.service';
-
 
 type Constructor = {
   userRepository: typeof userRep;
@@ -91,9 +90,16 @@ class Auth {
 
     const newPassword = getRandomId(6);
 
-    await this.#userRepository.updatePassword(user.id, {password: await encrypt(newPassword)});
+    await this.#userRepository.updatePassword(user.id, { password: await encrypt(newPassword) });
 
-    this.#mailer.sendMail();
+    const isEmailSent = await this.#mailer.sendMail(getResetPasswordMessageTemplate(newPassword, user.email));
+
+    if (!isEmailSent) {
+      throw new HttpError({
+        status: HttpCode.INTERNAL_SERVER_ERROR,
+        message: ErrorMessage.EMAIL_SENDING_ERROR,
+      });
+    }
 
     return true;
   }

@@ -48,7 +48,10 @@ const logger = new Logger({
   asyncStorage: appAsyncStorage,
 });
 
-const mailer = new Mailer();
+const mailer = new Mailer({
+  mailerApiKey: <string>ENV.MAILER.API_KEY,
+  mailerEmail: <string>ENV.MAILER.EMAIL,
+});
 
 const auth = new Auth({
   userRepository,

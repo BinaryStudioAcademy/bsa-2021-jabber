@@ -1,29 +1,29 @@
 import sgMail from '@sendgrid/mail';
+import { MailTemplate } from '~/common/types/types';
 
-const SENDGRID_API_KEY = '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';
+type Constructor = {
+  mailerApiKey: string;
+  mailerEmail: string;
+};
 
 class Mailer {
-  public sendMail(): void {
-    sgMail.setApiKey(SENDGRID_API_KEY);
+  #mailerEmail: string;
 
-    const msg = {
-      to: 'artem.totality@gmail.com', // Change to your recipient
-      from: 'acid_jazz@ukr.net', // Change to your verified sender
-      subject: 'Sending with SendGrid is Fun',
-      text: 'and easy to do anywhere, even with Node.js',
-      html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-    };
-    sgMail
-      .send(msg)
-      .then(() => {
-        // eslint-disable-next-line no-console
-        console.log('Email sent');
-      })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.error(error);
+  constructor({ mailerApiKey, mailerEmail }: Constructor) {
+    sgMail.setApiKey(mailerApiKey);
+    this.#mailerEmail = mailerEmail;
+  }
+
+  public async sendMail(message: MailTemplate): Promise<boolean> {
+    try {
+      await sgMail.send({
+        ...message,
+        from: this.#mailerEmail,
       });
-    return;
+      return true;
+    } catch {
+      return false;
+    }
   }
 }
 
