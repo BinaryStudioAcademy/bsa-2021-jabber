@@ -50,7 +50,7 @@ class CommentApi {
     );
   }
 
-  public createCommentReaction(payload: CommentReactionCreatePayload): Promise<CommentReaction> {
+  public createCommentReaction(payload: CommentReactionCreatePayload): Promise<Comment> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.COMMENTS}${CommentsApiPath.COMMENT_REACTIONS}`,
       {
@@ -82,6 +82,14 @@ class CommentApi {
   public delete(id: number): Promise<Comment> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.COMMENTS}/${id}`,
+      {
+        method: HttpMethod.DELETE,
+      },
+    );
+  }
+  public deleteCommentReaction(payload: CommentReactionCreatePayload): Promise<Comment> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.COMMENTS}${CommentsApiPath.COMMENT_REACTIONS}/${payload.commentId}`,
       {
         method: HttpMethod.DELETE,
       },

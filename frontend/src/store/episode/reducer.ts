@@ -8,7 +8,7 @@ import {
   updateComments,
   deleteComment,
   updateCommentsAfterDelete,
-  likeComment,
+  toggleCommentLike,
   updateCommentsAfterLike,
 } from './actions';
 
@@ -60,13 +60,13 @@ const reducer = createReducer(initialState, (builder) => {
     state.commentDataStatus = DataStatus.REJECTED;
   });
 
-  builder.addCase(likeComment.pending, (state) => {
+  builder.addCase(toggleCommentLike.pending, (state) => {
     state.commentDataStatus = DataStatus.PENDING;
   });
-  builder.addCase(likeComment.fulfilled, (state) => {
+  builder.addCase(toggleCommentLike.fulfilled, (state) => {
     state.commentDataStatus = DataStatus.FULFILLED;
   });
-  builder.addCase(likeComment.rejected, (state) => {
+  builder.addCase(toggleCommentLike.rejected, (state) => {
     state.commentDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(deleteComment.pending, (state) => {
