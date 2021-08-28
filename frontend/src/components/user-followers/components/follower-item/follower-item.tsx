@@ -23,7 +23,7 @@ const FollowerItem: React.FC<Props> = ({ follower }) => {
           className={styles.imageWrapper}
         />
         <div className={styles.userName}>
-          {follower.firstName}
+          {follower.nickname}
         </div>
       </Link>
     </li>

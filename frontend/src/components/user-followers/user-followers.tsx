@@ -18,16 +18,16 @@ const UserFollowersPage: React.FC = () => {
     followers: userProfile.followers,
   }));
 
-  // eslint-disable-next-line no-console
-  console.log('followers', followers);
-
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Followers:</h2>
       <div className={styles.followersList}>
-        {followers.map((follower) => (
-          <FollowerItem key={follower.id} follower={follower} />
-        ))}
+        {followers.length
+          ? followers.map((follower) => (
+            <FollowerItem key={follower.id} follower={follower} />
+          ))
+          : <div  className={styles.placeholder}>No followers yet</div>
+        }
       </div>
     </div>
   );

@@ -7,5 +7,12 @@
 
 .followersList {
   display: flex;
-  gap: 15px;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.placeholder {
+  font-weight: 600;
+  color: var(--color-header-background);
+  margin: 0 auto;
 }
