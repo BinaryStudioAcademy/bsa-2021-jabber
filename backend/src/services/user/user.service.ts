@@ -111,5 +111,9 @@ class User {
   public getPopular(filter: UserPopularLoadFilter): Promise<TUser[]> {
     return this.#userRepository.getPopular(filter);
   }
+
+  public getFollowersByUserId(userId: number): Promise<TUser[]> {
+    return this.#userRepository.getFollowersByUserId(userId);
+  }
 }
 export { User };

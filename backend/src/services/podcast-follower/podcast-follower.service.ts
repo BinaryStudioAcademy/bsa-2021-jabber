@@ -47,6 +47,10 @@ class PodcastFollower {
   public delete(payload: PodcastFollowerPayload): Promise<TPodcastFollower> {
     return this.#podcastFollowerRepository.delete(payload);
   }
+
+  public deleteAllByPodcastId(id: number): Promise<TPodcastFollower[]> {
+    return this.#podcastFollowerRepository.deleteAllByPodcastId(id);
+  }
 }
 
 export { PodcastFollower };

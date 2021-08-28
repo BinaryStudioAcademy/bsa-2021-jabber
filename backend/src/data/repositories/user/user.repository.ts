@@ -3,6 +3,7 @@ import {
   UserCreatePayload,
   UserEditDTOPayload,
   UserPopularLoadFilter,
+  UserUpdatePasswordDTOPayload,
 } from '~/common/types/types';
 import { UserModel as UserM } from '~/data/models/models';
 
@@ -39,6 +40,10 @@ class User {
     return this.#UserModel.query().updateAndFetchById(id, payload);
   }
 
+  public updatePassword(id: number, payload: UserUpdatePasswordDTOPayload): Promise<TUser> {
+    return this.#UserModel.query().patch(payload).findById(id);
+  }
+
   public getPopular(filter: UserPopularLoadFilter): Promise<TUser[]> {
     const { limit } = filter;
 
@@ -46,13 +51,20 @@ class User {
       .withGraphJoined('[image]')
       .select(
         'users.*',
-        this.#UserModel.relatedQuery('followers')
+        this.#UserModel.relatedQuery('popularUsers')
           .count()
           .as('followersCount'),
       )
       .orderBy('followersCount', 'DESC')
       .omit(['followersCount'])
       .limit(limit);
+  }
+
+  public getFollowersByUserId(userId: number): Promise<TUser[]> {
+    return this.#UserModel.query()
+      .withGraphJoined('[image]')
+      .joinRelated('[followers]')
+      .where('user_id', userId);
   }
 }
 

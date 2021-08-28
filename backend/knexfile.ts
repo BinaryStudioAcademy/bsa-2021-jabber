@@ -6,7 +6,7 @@ const DEFAULT_ENV_CONFIG: Knex.Config = {
   connection: ENV.DB.CONNECTION_STRING,
   pool: {
     min: ENV.DB.POOL_MIN,
-    max: ENV.DB.POOL_MIN,
+    max: ENV.DB.POOL_MAX,
   },
   migrations: {
     directory: './src/data/migrations',
