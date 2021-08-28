@@ -38,12 +38,6 @@ class UserFollower {
       .returning('*')
       .first();
   }
-
-  public getAllByUserId(userId: number): Promise<TUserFollower[]> {
-    return this.#UserFollowerModel.query()
-      .where('user_id', userId)
-      .withGraphJoined('[user]');
-  }
 }
 
 export { UserFollower };

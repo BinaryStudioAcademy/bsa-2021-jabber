@@ -27,28 +27,6 @@ const initUserFollowersApi = ({ apiRouter, userFollowerService }: Args): Router 
     }),
   );
 
-  userFollowerRouter.get(
-    UserFollowersApiPath.$USER_ID_$FOLLOWER_ID,
-    checkAuthMiddleware(HttpMethod.GET),
-    handleAsyncApi(async (req, res) => {
-      const isFollowed = await userFollowerService.checkIsFollowed({
-        userId: Number(req.params.userId),
-        followerId: Number(req.params.followerId),
-      });
-
-      return res.json(isFollowed).status(HttpCode.OK);
-    }),
-  );
-
-  userFollowerRouter.get(
-    UserFollowersApiPath.$USER_ID_FOLLOWERS,
-    handleAsyncApi(async (req, res) => {
-      return res
-        .json(await userFollowerService.getAllByUserId(Number(req.params.id)))
-        .status(HttpCode.OK);
-    }),
-  );
-
   userFollowerRouter.post(
     UserFollowersApiPath.ROOT,
     checkAuthMiddleware(HttpMethod.POST),

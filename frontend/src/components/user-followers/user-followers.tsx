@@ -2,8 +2,8 @@ import styles from './styles.module.scss';
 import { useAppSelector, useParams, useDispatch, useEffect } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
 import { PageParams } from './common/types/types';
-import { userFollowers as userFollowersActions } from 'store/actions';
-// import FollowerItem from './components/follower-item/follower-item';
+import { userProfile as userProfileActions } from 'store/actions';
+import FollowerItem from './components/follower-item/follower-item';
 
 const UserFollowersPage: React.FC = () => {
   const { id } = useParams<PageParams>();
@@ -11,11 +11,11 @@ const UserFollowersPage: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(userFollowersActions.loadFollowersByUserId(Number(id)));
+    dispatch(userProfileActions.loadFollowersByUserId(Number(id)));
   }, [id]);
 
-  const { followers } = useAppSelector(({ userFollowers }: RootState) => ({
-    followers: userFollowers,
+  const { followers } = useAppSelector(({ userProfile }: RootState) => ({
+    followers: userProfile.followers,
   }));
 
   // eslint-disable-next-line no-console
@@ -25,9 +25,9 @@ const UserFollowersPage: React.FC = () => {
     <div className={styles.container}>
       <h2 className={styles.title}>Followers:</h2>
       <div className={styles.followersList}>
-        {/* {followers.map((follower) => (
-          <FollowerItem key={follower.id} user={follower} />
-        ))} */}
+        {followers.map((follower) => (
+          <FollowerItem key={follower.id} follower={follower} />
+        ))}
       </div>
     </div>
   );

@@ -146,10 +146,8 @@ const UserPage: React.FC = () => {
             to={`${AppRoute.USERS}/${id}${AppRoute.FOLLOWERS}`}
             className={styles.followCountContainer}
           >
-            {/* <div className={styles.followCountContainer}> */}
             <span className={styles.followCount}>{followersCount}</span>
             <span className={styles.followTitle}>Followers</span>
-            {/* </div> */}
           </Link>
 
           {isShowFollowButton && (
