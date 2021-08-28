@@ -39,12 +39,20 @@ class User extends Abstract {
         to: 'images.id',
       },
     },
-    followers: {
+    popularUsers: {
       relation: Model.HasManyRelation,
       modelClass: UserFollower,
       join: {
         from: 'users.id',
         to: 'users_followers.user_id',
+      },
+    },
+    followers: {
+      relation: Model.HasOneRelation,
+      modelClass: UserFollower,
+      join: {
+        from: 'users.id',
+        to: 'users_followers.follower_id',
       },
     },
   };

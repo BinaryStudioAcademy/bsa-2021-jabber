@@ -1,0 +1,30 @@
+.followerItem {
+  cursor: pointer;
+  max-width: 195px;
+  list-style: none;
+}
+
+.link {
+  text-decoration: none;
+  .userName {
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--color-primary-dark);
+    transition: color 0.3s ease;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }&:hover {
+    .userName {
+      color: var(--color-header-background);
+    }
+  }
+}
+
+.imageWrapper {
+  border-radius: 50%;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 80px;
+}

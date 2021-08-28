@@ -1,20 +1,31 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { RecordStatus } from 'common/enums/enums';
-import { pauseRecord, resumeRecord, startRecord, stopRecord, resetState, setLiveStream } from './actions';
+import { DataStatus, RecordStatus } from 'common/enums/enums';
+import { pauseRecord, resumeRecord, startRecord, stopRecord, resetState, setLiveStream, initRecord } from './actions';
 
 type State = {
   recordStatus: RecordStatus;
+  recordInitStatus: DataStatus;
   hasLiveRecord: boolean;
   liveStream: MediaStream | null;
 };
 
 const initialState: State = {
   recordStatus: RecordStatus.INACTIVE,
+  recordInitStatus: DataStatus.IDLE,
   hasLiveRecord: false,
   liveStream: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
+  builder.addCase(initRecord.pending, (state) => {
+    state.recordInitStatus = DataStatus.PENDING;
+  });
+  builder.addCase(initRecord.fulfilled, (state) => {
+    state.recordInitStatus = DataStatus.FULFILLED;
+  });
+  builder.addCase(initRecord.rejected, (state) => {
+    state.recordInitStatus = DataStatus.REJECTED;
+  });
   builder.addCase(startRecord.fulfilled, (state) => {
     state.recordStatus = RecordStatus.RECORDING;
   });
