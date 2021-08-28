@@ -48,7 +48,7 @@ const App: React.FC = () => {
     <>
       <Switch>
         <Route
-          path={[AppRoute.SIGN_UP, AppRoute.SIGN_IN]}
+          path={[AppRoute.SIGN_UP, AppRoute.SIGN_IN, AppRoute.RESET_PASSWORD]}
           component={Auth}
           exact
         />
