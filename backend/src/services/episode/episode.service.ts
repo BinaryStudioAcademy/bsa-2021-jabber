@@ -272,7 +272,10 @@ class Episode {
       });
     }
 
-    await this.#commentService.deleteAllByEpisodeId(id);
+    const comments = await this.#commentService.getAllByEpisodeId(episode.id);
+    if(comments){
+      await Promise.all(comments.map((comment) => this.#commentService.delete(comment.id)));
+    }
 
     const record = await this.#recordService.getByEpisodeId(id);
     if (record) {

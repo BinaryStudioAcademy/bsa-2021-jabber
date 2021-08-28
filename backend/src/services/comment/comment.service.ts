@@ -53,7 +53,8 @@ class Comment {
     return this.#commentReactionRepository.create({ userId, commentId });
   }
 
-  public delete(id: number): Promise<TComment> {
+  public async delete(id: number): Promise<TComment> {
+    await this.#commentReactionRepository.deleteAllByCommentId(id);
     return this.#commentRepository.delete(id);
   }
 
