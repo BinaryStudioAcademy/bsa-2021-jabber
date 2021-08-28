@@ -1,20 +1,10 @@
-import { notification as notificationService } from '../services';
 import { RecordStatus } from 'common/enums/enums';
 import { TIME_SLICE } from './common/constants/constants';
 
-type Constructor = {
-  notificationService: typeof notificationService;
-};
-
 class RecordAudio {
-  #notificationService;
   #recorder?: MediaRecorder;
   #audioChunks: Blob[] = [];
   #stream?: MediaStream;
-
-  constructor({ notificationService }: Constructor) {
-    this.#notificationService = notificationService;
-  }
 
   private onSuccess(stream: MediaStream): void {
     this.#recorder = new MediaRecorder(stream);
@@ -42,10 +32,6 @@ class RecordAudio {
         track.stop();
       });
     };
-  }
-
-  private onError(err: MediaStreamError): void {
-    this.#notificationService.error('Error', <string>err.message);
   }
 
   public start(): MediaStream | undefined {
@@ -78,11 +64,10 @@ class RecordAudio {
     });
   }
 
-  public init(): void {
-    navigator.getUserMedia(
-      { audio: true },
-      (stream) => this.onSuccess(stream),
-      (err) => this.onError(err));
+  public async init(): Promise<void> {
+    return navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then((stream) => this.onSuccess(stream));
   }
 }
 

@@ -3,7 +3,7 @@ import {
   record as recordActions,
   episode as episodeActions,
 } from 'store/actions';
-import { RecordStatus } from 'common/enums/enums';
+import { RecordStatus, DataStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import {
   CreateCommentForm,
@@ -21,15 +21,17 @@ const EpisodeLive: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
 
-  const { recordStatus, user, episode, comments } = useAppSelector(
+  const { recordStatus, user, episode, comments, recordInitStatus } = useAppSelector(
     ({ record, auth, episode }) => ({
       recordStatus: record.recordStatus,
+      recordInitStatus: record.recordInitStatus,
       episode: episode.episode,
       comments: episode.comments,
       user: auth.user,
     }),
   );
 
+  const isRecordAllowed = recordInitStatus === DataStatus.FULFILLED;
   const isInactive = recordStatus === RecordStatus.INACTIVE;
   const isPaused = recordStatus === RecordStatus.PAUSED;
   const hasUser = Boolean(user);
@@ -44,7 +46,9 @@ const EpisodeLive: React.FC = () => {
   }, []);
 
   const handleStart = (): void => {
-    dispatch(recordActions.startRecord(id));
+    isRecordAllowed
+      ? dispatch(recordActions.startRecord(id))
+      : dispatch(recordActions.initRecord());
   };
 
   const handlePause = (): void => {
