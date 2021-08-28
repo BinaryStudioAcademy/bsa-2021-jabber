@@ -3,7 +3,7 @@ enum UsersApiPath {
   $ID = '/:id',
   POPULAR = '/popular',
   FOLLOWERS = '/followers',
-  $USER_ID_FOLLOWERS = '/:id/followers',
+  $USER_ID_FOLLOWERS = '/:userId/followers',
 }
 
 export { UsersApiPath };
