@@ -25,6 +25,18 @@ class RecordAudio {
       this.#audioChunks.push(data);
     };
 
+    this.#recorder.onpause = (): void => {
+      stream.getTracks().forEach((track) => {
+        track.enabled = false;
+      });
+    };
+
+    this.#recorder.onresume = (): void => {
+      stream.getTracks().forEach((track) => {
+        track.enabled = true;
+      });
+    };
+
     this.#recorder.onstop = (): void => {
       stream.getTracks().forEach((track) => {
         track.stop();

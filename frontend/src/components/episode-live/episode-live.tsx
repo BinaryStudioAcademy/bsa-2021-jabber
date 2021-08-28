@@ -44,7 +44,7 @@ const EpisodeLive: React.FC = () => {
   }, []);
 
   const handleStart = (): void => {
-    dispatch(recordActions.startRecord());
+    dispatch(recordActions.startRecord(id));
   };
 
   const handlePause = (): void => {
@@ -56,11 +56,15 @@ const EpisodeLive: React.FC = () => {
   };
 
   const handleStop = (): void => {
-    dispatch(recordActions.stopRecord());
+    dispatch(recordActions.stopRecord(id));
   };
 
   const handleCreateComment = (payload: CommentFormCreatePayload): void => {
     dispatch(episodeActions.createComment(payload));
+  };
+
+  const handleCommentDelete = (commentId: number): void => {
+    dispatch(episodeActions.deleteComment(commentId));
   };
 
   return (
@@ -126,7 +130,11 @@ const EpisodeLive: React.FC = () => {
         <h2 className={styles.commentsCounter}>Comments ({comments.length})</h2>
         {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
         {comments.length ? (
-          <CommentsList comments={comments} user={user}/>
+          <CommentsList
+            comments={comments}
+            user={user}
+            onCommentDelete={handleCommentDelete}
+          />
         ) : (
           <div className={styles.placeholder}>There&apos;s no comment yet.</div>
         )}

@@ -62,14 +62,6 @@ const Header: React.FC = () => {
                   Podcasts
                 </Link>
               </li>
-              <li className={styles.navigationItem}>
-                <Link
-                  to={`${AppRoute.USERS}/${user?.id}`}
-                  className={styles.link}
-                >
-                  My Profile
-                </Link>
-              </li>
             </ul>
             <div className={styles.userInfo}>
               <Button
@@ -126,7 +118,7 @@ const Header: React.FC = () => {
                           to={AppRoute.PODCASTS_EDIT}
                           className={styles.link}
                         >
-                          + Add Podcast
+                          + Create Podcast
                         </Link>
                       </li>
                       <li className={styles.dropDownListItem}>
