@@ -3,6 +3,8 @@
   background-color: #00000000;
   border: none;
   text-align: left;
+  max-width: 200px;
+  display: flex;
 
   &:hover {
     cursor: pointer;
@@ -23,6 +25,8 @@
   flex-grow: 0.8;
   line-height: 1.6;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition: all 1s ease;
   color: var(--color-primary-light);
 }
@@ -32,14 +36,14 @@
 }
 
 @media screen and (max-width: 768px) {
+  .rowWrapper {
+    max-width: 100%;
+  }
   .time {
     font-size: 14px;
   }
 
   .noteName {
     font-size: 13px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 }
