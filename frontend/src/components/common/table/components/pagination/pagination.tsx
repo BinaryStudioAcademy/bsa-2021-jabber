@@ -1,9 +1,9 @@
-import { PAGE_SIZE } from './common/constants/constants';
+import { PAGE_SIZE, PAGINATION_START_VALUE, PAGINATION_STEP } from './common/constants/constants';
 import styles from './styles.module.scss';
 
 type Props = {
-  setRow: (row: number) => void;
-  setPage: (page: number) => void;
+  handleSetRow: (row: number) => void;
+  handleSetPage: (page: number) => void;
   pageIndex: number;
   pageSize: number;
   totalCountEpisodes: number;
@@ -11,8 +11,8 @@ type Props = {
 
 const Pagination: React.FC<Props> = ({
   pageSize,
-  setRow,
-  setPage,
+  handleSetRow,
+  handleSetPage,
   pageIndex,
   totalCountEpisodes,
 }) => {
@@ -20,34 +20,34 @@ const Pagination: React.FC<Props> = ({
   const countPage = Math.ceil(totalCountEpisodes / pageSize);
 
   const handlePreviousPage = (): void => {
-    setPage(pageIndex - 1);
+    handleSetPage(pageIndex - PAGINATION_STEP);
   };
 
   const handleNextPage = (): void => {
-    setPage(pageIndex + 1);
+    handleSetPage(pageIndex + PAGINATION_STEP);
   };
 
-  const changePages = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const newPage = Number(e.target.value);
+  const changePages = (evt: React.ChangeEvent<HTMLInputElement>): void => {
+    const newPage = Number(evt.target.value);
 
-    if(!newPage || newPage === pageIndex || newPage > countPage || newPage < 1){
+    if(!newPage || newPage === pageIndex || newPage > countPage || newPage < PAGINATION_START_VALUE){
       return;
     }
 
-    setPage(newPage);
+    handleSetPage(newPage);
   };
 
-  const changePageSizes = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    setRow(Number(e.target.value));
+  const changePageSizes = (evt: React.ChangeEvent<HTMLSelectElement>): void => {
+    handleSetRow(Number(evt.target.value));
   };
 
-  const canPreviousPage = pageIndex !== 1;
+  const canPreviousPage = pageIndex !== PAGINATION_START_VALUE;
   const canNextPage = pageIndex !== countPage;
 
   return (
     <div className={styles.pagination}>
       <button className={styles.btnPrev} onClick={handlePreviousPage} disabled={!canPreviousPage}>
-        PREV
+        prev
       </button>
       <span>
         Page:
@@ -73,7 +73,7 @@ const Pagination: React.FC<Props> = ({
         ))}
       </select>
       <button className={styles.btnNext} onClick={handleNextPage} disabled={!canNextPage}>
-        NEXT
+        next
       </button>
     </div>
   );

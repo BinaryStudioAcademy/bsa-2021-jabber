@@ -14,6 +14,7 @@
     color: var(--color-primary-light);
     border: none;
     cursor: pointer;
+    text-transform: uppercase;
   }
 
   .btnNext:disabled, .btnPrev:disabled {

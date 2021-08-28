@@ -2,12 +2,12 @@ import { useAppSelector, useDispatch, useEffect, useParams, useState } from 'hoo
 import { configuratePodcast as configuratePodcastActions, podcast as podcastActions } from 'store/actions';
 import { AppRoute, DataStatus, UserRole } from 'common/enums/enums';
 import { Button, ConfirmPopup, ImageWrapper, Link, Loader } from 'components/common/common';
-import { EpisodeTable, Pagination } from './components/components';
+import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 import { getAllowedClasses } from 'helpers/helpers';
 import { getFilterEpisode } from './healper/healper';
-import { DEFAULT_EPISODE_PAGINATION } from './common/constatnts/constants';
+import { DEFAULT_EPISODE_PAGINATION, DEFAULT_EPISODE_PAGE } from './common/constatnts/constants';
 
 const Podcast: React.FC = () => {
   const {
@@ -92,7 +92,7 @@ const Podcast: React.FC = () => {
 
   const setRowEpisodeFilter = (row: number): void => {
     setEpisodePagination({
-      page: 1,
+      page: DEFAULT_EPISODE_PAGE,
       row,
     });
   };
@@ -234,22 +234,22 @@ const Podcast: React.FC = () => {
               </ul>
             </div>
           </div>
-          {episodes.length ? (
-            <>
-              {isEpisodesLoading ? <Loader/>  : <EpisodeTable episodes={episodes} /> }
-              <Pagination
-                setRow={setRowEpisodeFilter}
-                setPage={setOffsetEpisodeFilter}
+          {episodes.length
+            ? isEpisodesLoading
+              ? <Loader/>
+              : <EpisodeTable
+                episodes={episodes}
+                handleSetRow={setRowEpisodeFilter}
+                handleSetPage={setOffsetEpisodeFilter}
                 pageIndex={episodePagination.page}
                 pageSize={episodePagination.row}
                 totalCountEpisodes={countEpisodes}
               />
-            </>
-          ) : (
-            <div className={styles.placeholder}>
-              There are no episodes in this podcast yet.
-            </div>
-          )}
+            : (
+              <div className={styles.placeholder}>
+                There are no episodes in this podcast yet.
+              </div>
+            )}
         </>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such podcast</h1>
