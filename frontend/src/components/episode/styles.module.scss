@@ -61,8 +61,10 @@
 }
 
 .link {
-  color: #f3427f;
+  color: var(--color-button-background);
   text-decoration: none;
+  max-width: 80%;
+  display: inline-block;
 }
 
 .btnStartLive {
@@ -94,6 +96,7 @@
   font-size: 40px;
   margin: 0;
   line-height: 1.25;
+  max-width: 80%;
 }
 
 .description {
@@ -184,6 +187,12 @@ h3 {
 }
 
 // Media
+@media screen and (max-width: 1024px) {
+  .episodeWrapper {
+    padding: 40px 40px 20px 40px;
+  }
+}
+
 @media screen and (max-width: 991px) {
   .episodeWrapper {
     padding: 40px 40px 20px 40px;
@@ -193,7 +202,11 @@ h3 {
     top: auto;
     left: 60px;
     right: auto;
-    bottom: 70px;
+    bottom: 80px;
+  }
+
+  .btnWithPlayer {
+    bottom: 160px;
   }
 
   .descriptionWrapper {
@@ -209,8 +222,12 @@ h3 {
   }
 
   .btnStartLive {
-    left: 55px;
-    bottom: 100px;
+    left: 50px;
+    // bottom: 100px;
+  }
+
+  .btnWithPlayer {
+    bottom: 230px;
   }
 
   .deleteButton {
@@ -247,5 +264,30 @@ h3 {
 
   .commentsWrapper {
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .episodeWrapper {
+    padding: 20px;
+  }
+
+  .link, .title {
+    width: 100%;
+  }
+
+  .deleteButton {
+    top: auto;
+    bottom: 35px;
+  }
+
+  .editLink {
+    top: auto;
+    bottom: 35px;
+  }
+
+  .btnStartLive {
+    left: 40px;
+    bottom: 70px;
   }
 }
