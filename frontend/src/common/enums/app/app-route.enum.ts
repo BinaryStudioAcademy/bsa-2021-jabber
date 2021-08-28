@@ -20,6 +20,8 @@ enum AppRoute {
   USERS_EDIT = '/users/edit',
   USERS_EDIT_$ID = '/users/edit/:id',
   NOTIFICATIONS = '/notifications',
+  USERS_$ID_FOLLOWERS = '/users/:id/followers',
+  FOLLOWERS = '/followers',
   ANY = '*',
 }
 

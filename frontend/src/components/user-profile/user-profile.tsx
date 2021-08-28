@@ -133,27 +133,32 @@ const UserPage: React.FC = () => {
               <span className={styles.bioText}>{user?.bio}</span>
             </div>
           )}
+
         </div>
-        {isOwnPage ? (
+        {isOwnPage && (
           <Link
             to={`${AppRoute.USERS_EDIT}/${id}`}
             className={styles.editLink}
           />
-        ) : (
-          <div className={styles.followContainer}>
-            <div className={styles.followCountContainer}>
-              <span className={styles.followCount}>{followersCount}</span>
-              <span className={styles.followTitle}>Followers</span>
-            </div>
-            {isShowFollowButton && (
-              <Button
-                className={styles.followButton}
-                label={isFollowed ? 'Unfollow' : 'Follow'}
-                onClick={handleToggleFollow}
-              />
-            )}
-          </div>
         )}
+        <div className={styles.followContainer}>
+          <Link
+            to={`${AppRoute.USERS}/${id}${AppRoute.FOLLOWERS}`}
+            className={styles.followCountContainer}
+          >
+            <span className={styles.followCount}>{followersCount}</span>
+            <span className={styles.followTitle}>Followers</span>
+          </Link>
+
+          {isShowFollowButton && (
+            <Button
+              className={styles.followButton}
+              label={isFollowed ? 'Unfollow' : 'Follow'}
+              onClick={handleToggleFollow}
+            />
+          )}
+        </div>
+
       </main>
 
       <div className={styles.podcastsByUserContainer}>

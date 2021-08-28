@@ -46,13 +46,20 @@ class User {
       .withGraphJoined('[image]')
       .select(
         'users.*',
-        this.#UserModel.relatedQuery('followers')
+        this.#UserModel.relatedQuery('popularUsers')
           .count()
           .as('followersCount'),
       )
       .orderBy('followersCount', 'DESC')
       .omit(['followersCount'])
       .limit(limit);
+  }
+
+  public getFollowersByUserId(userId: number): Promise<TUser[]> {
+    return this.#UserModel.query()
+      .withGraphJoined('[image]')
+      .joinRelated('[followers]')
+      .where('user_id', userId);
   }
 }
 

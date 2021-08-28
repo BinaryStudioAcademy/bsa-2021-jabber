@@ -51,6 +51,15 @@ const initUsersApi = ({ apiRouter, userService }: Args): Router => {
     }),
   );
 
+  userRouter.get(
+    UsersApiPath.$USER_ID_FOLLOWERS,
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await userService.getFollowersByUserId(Number(req.params.userId)))
+        .status(HttpCode.OK);
+    }),
+  );
+
   userRouter.put(
     UsersApiPath.$ID,
     checkAuthMiddleware(HttpMethod.PUT),
