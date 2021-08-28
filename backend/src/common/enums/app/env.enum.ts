@@ -12,6 +12,8 @@ const {
   DB_DIALECT,
   CLOUDINARY_URL,
   SECRET_KEY,
+  SENDGRID_API_KEY,
+  SENDGRID_VERIFIED_EMAIL,
 } = process.env;
 
 const ENV = {
@@ -33,6 +35,10 @@ const ENV = {
   },
   JWT: {
     SECRET: SECRET_KEY,
+  },
+  MAILER: {
+    API_KEY: SENDGRID_API_KEY,
+    EMAIL: SENDGRID_VERIFIED_EMAIL,
   },
 };
 
