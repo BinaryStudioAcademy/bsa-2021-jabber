@@ -1,14 +1,24 @@
 import NotificationItem from './components/notification-item';
 import { RootState } from 'common/types/types';
-import { useAppSelector } from 'hooks/hooks';
+import { useAppSelector, useEffect, useDispatch } from 'hooks/hooks';
+import { notification as notificationAction } from 'store/actions';
 import styles from './styles.module.scss';
 
 const Notifications: React.FC = () => {
-  const { notifications } = useAppSelector(({ notification }: RootState) => ({
+  const { notifications, userId } = useAppSelector(({ notification, auth }: RootState) => ({
     notifications: notification.notifications,
+    userId: auth.user?.id,
   }));
 
+  const dispatch = useDispatch();
+
   const hasNotificaions = Boolean(notifications.length);
+
+  useEffect(() => {
+    if (userId) {
+      dispatch(notificationAction.loadNotifications(userId));
+    }
+  }, []);
 
   if (!hasNotificaions) {
     return (
@@ -20,9 +30,9 @@ const Notifications: React.FC = () => {
 
   return (
     <ul className={styles.container}>
-      {notifications.map((notification) => {
-        <NotificationItem notification={notification} key={notification.id} />;
-      })}
+      {notifications.map((notification) => (
+        <NotificationItem notification={notification} key={notification.id} />
+      ))}
     </ul>
   );
 };

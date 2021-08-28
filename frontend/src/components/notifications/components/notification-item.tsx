@@ -1,14 +1,18 @@
 import notificationIcon from 'assets/img/notification-icon.png';
 import { UserNotification } from 'common/types/types';
-import { AppRoute } from 'common/enums/enums';
+import { AppRoute, DateFormatType } from 'common/enums/enums';
 import { Link } from 'components/common/common';
 import styles from './styles.module.scss';
+import { getFormattedDate } from 'helpers/helpers';
 
 type Props = {
   notification: UserNotification;
 };
 
 const NotificationItem: React.FC<Props> = ({ notification }) => {
+
+  const formatedDate = getFormattedDate(new Date(notification.notification.updatedAt), DateFormatType.DAY_MONTH_YEAR);
+
   return (
     <li className={styles.container}>
       <div className={styles.notificationLogo}>
@@ -31,7 +35,7 @@ const NotificationItem: React.FC<Props> = ({ notification }) => {
       <div className={styles.notificationStatus}>
         <button className={styles.buttonEye} />
         <span className={styles.notificationDate}>
-          {notification.notification.createdAt}
+          {formatedDate}
         </span>
       </div>
     </li>

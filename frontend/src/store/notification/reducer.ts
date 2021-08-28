@@ -17,9 +17,9 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(loadNotifications.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
   });
-  builder.addCase(loadNotifications.fulfilled, (state) => {
+  builder.addCase(loadNotifications.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
-    state.notifications = [];
+    state.notifications = action.payload;
   });
   builder.addCase(loadNotifications.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
