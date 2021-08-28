@@ -37,7 +37,7 @@ const Pagination: React.FC<Props> = ({
     handleSetPage(newPage);
   };
 
-  const changePageSizes = (evt: React.ChangeEvent<HTMLSelectElement>): void => {
+  const handlePageSizesChange = (evt: React.ChangeEvent<HTMLSelectElement>): void => {
     handleSetRow(Number(evt.target.value));
   };
 
@@ -63,7 +63,7 @@ const Pagination: React.FC<Props> = ({
       </span>
       <select
         value={pageSize}
-        onChange={changePageSizes}
+        onChange={handlePageSizesChange}
         className={styles.input}
       >
         {PAGE_SIZE.map((pageSize): JSX.Element => (
