@@ -1,7 +1,8 @@
 import { CommentItem } from 'components/common/common';
-import { Comment, CommentReactionCreatePayload } from 'common/types/types';
+import { Comment } from 'common/types/types';
 import { UserRole } from 'common/enums/enums';
 import { User } from 'jabber-shared/common/types/types';
+import { checkIsLiked } from './helpers/helpers';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -10,7 +11,7 @@ type Props = {
   user?: User | null;
   onTimeClick?: (payload: number) => void;
   onCommentDelete?: (commentId: number) => void;
-  onCommentLike?: (payload: CommentReactionCreatePayload) => void;
+  toggleCommentLike?: (commentId: number) => void;
 };
 
 const CommentsList: React.FC<Props> = ({
@@ -19,7 +20,7 @@ const CommentsList: React.FC<Props> = ({
   onTimeClick,
   hasTimestamps,
   onCommentDelete,
-  onCommentLike,
+  toggleCommentLike,
 }) => {
 
   const isMaster = user?.role === UserRole.MASTER;
@@ -29,14 +30,14 @@ const CommentsList: React.FC<Props> = ({
       {comments.map((item) => {
         const isOwner = user?.id === item.userId;
         const isAllowDelete = user?.id === item.userId || isMaster;
-        const isLiked = item.commentReactions?.some((reaction) => reaction.userId === user?.id);
+        const isLiked = checkIsLiked(item, user?.id);
         return (
           <CommentItem
             hasTimestamp={hasTimestamps}
             onTimeClick={onTimeClick}
             onCommentDelete={onCommentDelete}
             comment={item}
-            onCommentLike={onCommentLike}
+            toggleCommentLike={toggleCommentLike}
             isOwner={isOwner}
             isLiked={isLiked}
             isAllowDelete={isAllowDelete}

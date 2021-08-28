@@ -27,7 +27,7 @@ import {
   EpisodeStatus,
   UserRole,
 } from 'common/enums/enums';
-import { CommentFormCreatePayload, CommentReactionCreatePayload } from 'common/types/types';
+import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
 import {
   getCurrentTime,
@@ -106,8 +106,8 @@ const Episode: React.FC = () => {
     dispatch(episodeActions.deleteComment(commentId));
   };
 
-  const handleCommentLike = (payload: CommentReactionCreatePayload): void => {
-    dispatch(episodeActions.likeComment(payload));
+  const handleCommentLike = (commentId: number): void => {
+    dispatch(episodeActions.toggleCommentLike(commentId));
   };
 
   const handleShowPopup = (): void => {
@@ -247,7 +247,7 @@ const Episode: React.FC = () => {
                 user={user}
                 onTimeClick={handleJumpToTimeLine}
                 onCommentDelete={handleCommentDelete}
-                onCommentLike={handleCommentLike}
+                toggleCommentLike={handleCommentLike}
               />
             ) : (
               <div>There&apos;s no comment yet.</div>

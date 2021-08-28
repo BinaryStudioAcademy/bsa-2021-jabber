@@ -1,5 +1,5 @@
 import { getAllowedClasses, getTimeOffset } from 'helpers/helpers';
-import { Comment, CommentReactionCreatePayload } from 'common/types/types';
+import { Comment } from 'common/types/types';
 import { getDistanceToDateNow } from 'helpers/date/date';
 import ImageWrapper from '../image-wrapper/image-wrapper';
 import styles from './styles.module.scss';
@@ -14,7 +14,7 @@ type Props = {
   isLiked: boolean;
   onTimeClick?: (payload: number) => void;
   onCommentDelete?: (commentId: number) => void;
-  onCommentLike?: (payload: CommentReactionCreatePayload) => void;
+  toggleCommentLike?: (commentId: number) => void;
 };
 
 const CommentItem: React.FC<Props> = ({
@@ -25,7 +25,7 @@ const CommentItem: React.FC<Props> = ({
   onTimeClick,
   hasTimestamp,
   onCommentDelete,
-  onCommentLike,
+  toggleCommentLike,
 }) => {
   const time = getTimeOffset(comment.timestamp);
 
@@ -38,18 +38,17 @@ const CommentItem: React.FC<Props> = ({
   };
 
   const handleLikeComment = (): void => {
-    onCommentLike?.({ commentId: comment.id });
+    toggleCommentLike?.(comment.id);
   };
 
   const distance = getDistanceToDateNow(
     new Date(comment.createdAt),
     Date.now(),
   );
-  const filled = isLiked ? 'Filled' : '';
 
   const allowedClasses = getAllowedClasses(
     styles.likeButton,
-    styles[`like${filled}`],
+    isLiked && styles.likeButtonField,
   );
 
   return (
