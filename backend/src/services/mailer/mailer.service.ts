@@ -3,22 +3,19 @@ import { MailTemplate } from '~/common/types/types';
 
 type Constructor = {
   mailerApiKey: string;
-  mailerEmail: string;
 };
 
 class Mailer {
-  #mailerEmail: string;
 
-  constructor({ mailerApiKey, mailerEmail }: Constructor) {
+  constructor({ mailerApiKey }: Constructor) {
     sgMail.setApiKey(mailerApiKey);
-    this.#mailerEmail = mailerEmail;
   }
 
-  public async sendMail(message: MailTemplate): Promise<boolean> {
+  public async sendMail(message: MailTemplate, mailerEmail: string): Promise<boolean> {
     try {
       await sgMail.send({
         ...message,
-        from: this.#mailerEmail,
+        from: mailerEmail,
       });
       return true;
     } catch {

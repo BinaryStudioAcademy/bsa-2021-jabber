@@ -50,7 +50,6 @@ const logger = new Logger({
 
 const mailer = new Mailer({
   mailerApiKey: <string>ENV.MAILER.API_KEY,
-  mailerEmail: <string>ENV.MAILER.EMAIL,
 });
 
 const auth = new Auth({

@@ -7,7 +7,8 @@ import {
 import { user as userRep } from '~/data/repositories/repositories';
 import { encrypt, checkIsCryptsEqual, getRandomId, getResetPasswordMessageTemplate } from '~/helpers/helpers';
 import { HttpError } from '~/exceptions/exceptions';
-import { HttpCode, ErrorMessage } from '~/common/enums/enums';
+import { HttpCode, ErrorMessage, ENV } from '~/common/enums/enums';
+import { USER_NEW_PASSWORD_LENGTH } from '~/common/constants/constants';
 import { token } from '../services';
 import { Mailer } from '~/services/mailer/mailer.service';
 
@@ -88,11 +89,11 @@ class Auth {
       });
     }
 
-    const newPassword = getRandomId(6);
+    const newPassword = getRandomId(USER_NEW_PASSWORD_LENGTH);
 
     await this.#userRepository.updatePassword(user.id, { password: await encrypt(newPassword) });
 
-    const isEmailSent = await this.#mailer.sendMail(getResetPasswordMessageTemplate(newPassword, user.email));
+    const isEmailSent = await this.#mailer.sendMail(getResetPasswordMessageTemplate(newPassword, user.email), <string>ENV.MAILER.EMAIL);
 
     if (!isEmailSent) {
       throw new HttpError({

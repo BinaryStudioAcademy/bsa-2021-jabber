@@ -1,5 +1,7 @@
-import { UserPayload } from './user-payload.type';
+import { UserPayloadKey } from '~/common/enums/enums';
 
-type UserResetPasswordPayload = UserPayload;
+type UserResetPasswordPayload = {
+  [UserPayloadKey.EMAIL]: string;
+};
 
 export type { UserResetPasswordPayload };
