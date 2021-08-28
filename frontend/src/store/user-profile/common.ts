@@ -4,7 +4,7 @@ enum ActionType {
   GET_FOLLOWERS_COUNT = 'user-profile/get-followers-count',
   CHECK_IS_FOLLOWED_USER = 'user-profile/check-is-followed-user',
   TOGGLE_FOLLOW_USER = 'user-profile/toggle-follow-user',
-  LOAD_FOLLOWERS_BY_USER_ID = 'user-followers/load-followers-by-user-id',
+  LOAD_FOLLOWERS_BY_USER_ID = 'user-profile/load-followers-by-user-id',
 }
 
 export { ActionType };
