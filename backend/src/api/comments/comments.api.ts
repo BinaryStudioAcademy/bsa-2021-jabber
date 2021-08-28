@@ -76,6 +76,16 @@ const initCommentsApi = ({ apiRouter, commentService }: Args): Router => {
     }),
   );
 
+  commentRouter.delete(
+    CommentsApiPath.COMMENT_REACTIONS_$COMMENT_ID,
+    checkAuthMiddleware(HttpMethod.DELETE),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await commentService.deleteCommentReaction(Number(req.user?.id), Number(req.params.commentId)))
+        .status(HttpCode.OK);
+    }),
+  );
+
   return commentRouter;
 };
 

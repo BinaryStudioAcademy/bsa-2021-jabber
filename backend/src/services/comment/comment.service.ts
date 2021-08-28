@@ -65,6 +65,10 @@ class Comment {
   public deleteAllByEpisodeId(id: number): Promise<TComment[]> {
     return this.#commentRepository.deleteAllByEpisodeId(id);
   }
+
+  public deleteCommentReaction(userId: number, commentId: number): Promise<TCommentReaction> {
+    return this.#commentReactionRepository.deleteByUserIdCommentId({ userId, commentId })
+  }
 }
 
 export { Comment };
