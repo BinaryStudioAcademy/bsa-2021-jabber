@@ -4,10 +4,15 @@ import {
   FileExtension,
   EpisodeValidationMessage,
   ShownotePayloadKey,
+  EpisodeStatus,
 } from 'common/enums/enums';
 import { episode } from 'jabber-shared/validation-schemas/validation-schemas';
 import { shownoteCreate } from 'validation-schemas/shownote/create-shownote/create-shownote.validation-schema';
 import { fileExtensionValidation } from '../../helpers/helpers';
+
+const episodeStatus = Object.values(EpisodeStatus).filter(
+  (status) => status != EpisodeStatus.LIVE,
+);
 
 const episodeCreate = episode.keys({
   [EpisodePayloadKey.IMAGE]: Joi.object()
@@ -49,6 +54,12 @@ const episodeCreate = episode.keys({
     .messages({
       'array.required': EpisodeValidationMessage.SHOWNOTES_REQUIRE,
       'array.unique': EpisodeValidationMessage.SHOWNOTE_DUPLICATE,
+    }),
+  [EpisodePayloadKey.STATUS]: Joi.string()
+    .valid(...episodeStatus)
+    .required()
+    .messages({
+      'string.empty': EpisodeValidationMessage.STATUS_REQUIRE,
     }),
 });
 
