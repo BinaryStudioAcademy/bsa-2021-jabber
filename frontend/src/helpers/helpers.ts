@@ -11,6 +11,7 @@ export {
   getDataUrl,
   getFileExtensions,
   getFileFromFileList,
+  getBlobDuration,
 } from './file/file';
 export { setDebounce } from './debounce/debounce';
 export {
