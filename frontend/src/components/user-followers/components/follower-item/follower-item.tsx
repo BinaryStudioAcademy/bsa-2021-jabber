@@ -1,33 +1,33 @@
-import { User } from 'common/types/types';
 import { AppRoute } from 'common/enums/enums';
 import { ImageWrapper, Link } from 'components/common/common';
+import { User } from 'common/types/types';
 import styles from './styles.module.scss';
 
 type Props = {
-  user: User;
+  follower: User;
 };
 
-const PopularUser: React.FC<Props> = ({ user }: Props) => {
+const FollowerItem: React.FC<Props> = ({ follower }) => {
 
   return (
-    <li className={styles.root}>
+    <li className={styles.followerItem}>
       <Link className={styles.link}
-        to={`${AppRoute.USERS}/${user.id}`}
+        to={`${AppRoute.USERS}/${follower.id}`}
       >
         <ImageWrapper
           width="195"
           height="195"
           loading="lazy"
-          label={user?.firstName}
-          src={user.image?.url}
+          label={follower.nickname}
+          src={follower.image?.url}
           className={styles.imageWrapper}
         />
         <div className={styles.userName}>
-          {user.nickname}
+          {follower.nickname}
         </div>
       </Link>
     </li>
   );
 };
 
-export default PopularUser;
+export default FollowerItem;

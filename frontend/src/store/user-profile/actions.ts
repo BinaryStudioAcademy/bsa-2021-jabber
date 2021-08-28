@@ -54,4 +54,13 @@ const toggleFollowUser = createAsyncThunk<boolean, UserFollowerPayload, AsyncThu
   },
 );
 
-export { loadPodcasts, loadUser, getFollowersCount, checkIsFollowedUser, toggleFollowUser };
+const loadFollowersByUserId = createAsyncThunk<User[], number, AsyncThunkConfig>(
+  ActionType.LOAD_FOLLOWERS_BY_USER_ID,
+  async (userId, { extra }) => {
+    const { userApi } = extra;
+    const followers = await userApi.getFollowers(userId);
+    return  followers;
+  },
+);
+
+export { loadPodcasts, loadUser, getFollowersCount, checkIsFollowedUser, toggleFollowUser, loadFollowersByUserId };
