@@ -7,21 +7,23 @@ import { Pagination } from './components/components';
 type Props = {
   columns: Column[];
   data: unknown[];
-  handleSetRow: (row: number) => void;
-  handleSetPage: (page: number) => void;
-  pageIndex: number;
-  pageSize: number;
-  totalCountEpisodes: number;
+  onSetRow?: (row: number) => void;
+  onSetPage?: (page: number) => void;
+  pageIndex?: number;
+  pageSize?: number;
+  totalCountItems?: number;
+  hasPagination?: boolean;
 };
 
 const Table: React.FC<Props> = ({
   columns,
   data = [],
   pageSize,
-  handleSetRow,
-  handleSetPage,
+  onSetRow,
+  onSetPage,
   pageIndex,
-  totalCountEpisodes,
+  totalCountItems,
+  hasPagination= false,
 }) => {
   const tableInstance = useTable({
     columns: columns as Column<Record<string, string>>[],
@@ -68,13 +70,13 @@ const Table: React.FC<Props> = ({
           })}
         </tbody>
       </table>
-      <Pagination
-        handleSetRow={handleSetRow}
-        handleSetPage={handleSetPage}
-        pageIndex={pageIndex}
-        pageSize={pageSize}
-        totalCountEpisodes={totalCountEpisodes}
-      />
+      { hasPagination && <Pagination
+        onSetRow={onSetRow as (row: number) => void}
+        onSetPage={onSetPage as (page: number) => void}
+        pageIndex={pageIndex as number }
+        pageSize={pageSize as number }
+        totalCountItems={totalCountItems as number}
+      /> }
     </div>
   );
 };

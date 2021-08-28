@@ -1,1 +1,1 @@
-export { getFilterEpisode } from './get-filter-episode/get-filter-episode';
+export { getFilterEpisode } from './get-filter-episode/get-filter-episode.healper';

@@ -4,18 +4,18 @@ import { getColumns, getRows } from './helpers/helpers';
 
 type Props = {
   episodes: Episode[];
-  handleSetRow: (row: number) => void;
-  handleSetPage: (page: number) => void;
-  pageIndex: number;
-  pageSize: number;
-  totalCountEpisodes: number;
+  onSetRow?: (row: number) => void;
+  onSetPage?: (page: number) => void;
+  pageIndex?: number;
+  pageSize?: number;
+  totalCountEpisodes?: number;
 };
 
 const EpisodeTable: React.FC<Props> = ({
   episodes ,
   pageSize,
-  handleSetRow,
-  handleSetPage,
+  onSetRow,
+  onSetPage,
   pageIndex,
   totalCountEpisodes,
 }) => {
@@ -25,11 +25,12 @@ const EpisodeTable: React.FC<Props> = ({
   return <Table
     columns={columns}
     data={rows}
-    handleSetRow={handleSetRow}
-    handleSetPage={handleSetPage}
+    onSetRow={onSetRow}
+    onSetPage={onSetPage}
     pageIndex={pageIndex}
     pageSize={pageSize}
-    totalCountEpisodes={totalCountEpisodes}
+    totalCountItems={totalCountEpisodes}
+    hasPagination
   />;
 };
 

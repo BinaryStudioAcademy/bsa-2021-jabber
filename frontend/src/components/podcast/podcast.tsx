@@ -90,14 +90,14 @@ const Podcast: React.FC = () => {
     }
   };
 
-  const setRowEpisodeFilter = (row: number): void => {
+  const handleSetRowEpisodeFilter = (row: number): void => {
     setEpisodePagination({
       page: DEFAULT_EPISODE_PAGE,
       row,
     });
   };
 
-  const setOffsetEpisodeFilter = (page: number): void => {
+  const handleSetOffsetEpisodeFilter = (page: number): void => {
     setEpisodePagination({
       page,
       row: episodePagination.row,
@@ -239,8 +239,8 @@ const Podcast: React.FC = () => {
               ? <Loader/>
               : <EpisodeTable
                 episodes={episodes}
-                handleSetRow={setRowEpisodeFilter}
-                handleSetPage={setOffsetEpisodeFilter}
+                onSetRow={handleSetRowEpisodeFilter}
+                onSetPage={handleSetOffsetEpisodeFilter}
                 pageIndex={episodePagination.page}
                 pageSize={episodePagination.row}
                 totalCountEpisodes={countEpisodes}

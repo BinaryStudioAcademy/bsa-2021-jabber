@@ -2,43 +2,43 @@ import { PAGE_SIZE, PAGINATION_START_VALUE, PAGINATION_STEP } from './common/con
 import styles from './styles.module.scss';
 
 type Props = {
-  handleSetRow: (row: number) => void;
-  handleSetPage: (page: number) => void;
+  onSetRow: (row: number) => void;
+  onSetPage: (page: number) => void;
   pageIndex: number;
   pageSize: number;
-  totalCountEpisodes: number;
+  totalCountItems: number;
 };
 
 const Pagination: React.FC<Props> = ({
   pageSize,
-  handleSetRow,
-  handleSetPage,
+  onSetRow,
+  onSetPage,
   pageIndex,
-  totalCountEpisodes,
+  totalCountItems,
 }) => {
 
-  const countPage = Math.ceil(totalCountEpisodes / pageSize);
+  const countPage = Math.ceil(totalCountItems / pageSize);
 
   const handlePreviousPage = (): void => {
-    handleSetPage(pageIndex - PAGINATION_STEP);
+    onSetRow(pageIndex - PAGINATION_STEP);
   };
 
   const handleNextPage = (): void => {
-    handleSetPage(pageIndex + PAGINATION_STEP);
+    onSetPage(pageIndex + PAGINATION_STEP);
   };
 
-  const changePages = (evt: React.ChangeEvent<HTMLInputElement>): void => {
+  const handlePagesChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
     const newPage = Number(evt.target.value);
 
     if(!newPage || newPage === pageIndex || newPage > countPage || newPage < PAGINATION_START_VALUE){
       return;
     }
 
-    handleSetPage(newPage);
+    onSetPage(newPage);
   };
 
   const handlePageSizesChange = (evt: React.ChangeEvent<HTMLSelectElement>): void => {
-    handleSetRow(Number(evt.target.value));
+    onSetRow(Number(evt.target.value));
   };
 
   const canPreviousPage = pageIndex !== PAGINATION_START_VALUE;
@@ -54,7 +54,7 @@ const Pagination: React.FC<Props> = ({
         <input
           type="number"
           value={pageIndex}
-          onChange={changePages}
+          onChange={handlePagesChange}
           className={styles.input}
         />
         <strong>
