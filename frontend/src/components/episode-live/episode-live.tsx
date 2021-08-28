@@ -67,6 +67,10 @@ const EpisodeLive: React.FC = () => {
     dispatch(episodeActions.createComment(payload));
   };
 
+  const handleCommentDelete = (commentId: number): void => {
+    dispatch(episodeActions.deleteComment(commentId));
+  };
+
   return (
     <main className={styles.root}>
       <h1>Record podcast</h1>
@@ -130,7 +134,11 @@ const EpisodeLive: React.FC = () => {
         <h2 className={styles.commentsCounter}>Comments ({comments.length})</h2>
         {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
         {comments.length ? (
-          <CommentsList comments={comments} user={user}/>
+          <CommentsList
+            comments={comments}
+            user={user}
+            onCommentDelete={handleCommentDelete}
+          />
         ) : (
           <div className={styles.placeholder}>There&apos;s no comment yet.</div>
         )}
