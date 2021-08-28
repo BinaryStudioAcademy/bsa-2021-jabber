@@ -33,7 +33,7 @@ class Comment {
       .withGraphFetched('[user.image, commentReactions]');
   }
 
-  public getById(id: string): Promise<TComment> {
+  public getById(id: number): Promise<TComment> {
     return this.#CommentModel
       .query()
       .findById(id)

@@ -1,7 +1,6 @@
 import { ErrorMessage, HttpCode } from '~/common/enums/enums';
 import {
   Comment as TComment,
-  CommentReaction as TCommentReaction,
   CommentCreatePayload,
 } from '~/common/types/types';
 import { comment as commentRep } from '~/data/repositories/repositories';
@@ -27,7 +26,7 @@ class Comment {
   }
 
   public async getById(id: number): Promise<TComment> {
-    const comment = await this.#commentRepository.getById(String(id));
+    const comment = await this.#commentRepository.getById(id);
     if (!comment) {
       throw new HttpError({
         status: HttpCode.NOT_FOUND,
@@ -41,16 +40,9 @@ class Comment {
     return this.#commentRepository.create(payload);
   }
 
-  public async createCommentReaction(userId: number, commentId: number): Promise<TCommentReaction> {
-    const commentReaction = await this.#commentReactionRepository.getByUserIdCommentId({ userId, commentId });
-
-    if (commentReaction) {
-      throw new HttpError({
-        status: HttpCode.BAD_REQUEST,
-        message: ErrorMessage.ALREADY_LIKED,
-      });
-    }
-    return this.#commentReactionRepository.create({ userId, commentId });
+  public async createCommentReaction(userId: number, commentId: number): Promise<TComment> {
+    const commentReaction = await this.#commentReactionRepository.create({ userId, commentId });
+    return this.#commentRepository.getById(commentReaction.commentId);
   }
 
   public async delete(id: number): Promise<TComment> {
@@ -66,8 +58,9 @@ class Comment {
     return this.#commentRepository.deleteAllByEpisodeId(id);
   }
 
-  public deleteCommentReaction(userId: number, commentId: number): Promise<TCommentReaction> {
-    return this.#commentReactionRepository.deleteByUserIdCommentId({ userId, commentId })
+  public async deleteCommentReaction(userId: number, commentId: number): Promise<TComment> {
+    const deletedCommentReaction = await this.#commentReactionRepository.deleteByUserIdCommentId({ userId, commentId });
+    return this.#commentRepository.getById(deletedCommentReaction.commentId);
   }
 }
 
