@@ -23,17 +23,17 @@
 
   li {
     margin-bottom: 15px;
+  }
 
-    &::-webkit-scrollbar {
-      height: 10px;
-      width: 5px;
-      background: #ffffff;
-      border-radius: 10px;
-    }
+  &::-webkit-scrollbar {
+    height: 10px;
+    width: 5px;
+    background: #ffffff;
+    border-radius: 10px;
+  }
 
-    &::-webkit-scrollbar-thumb:horizontal {
-      background-color: rgba(62, 71, 82, 0.3);
-      border-radius: 10px;
-    }
+  &::-webkit-scrollbar-thumb:horizontal {
+    background-color: rgba(62, 71, 82, 0.3);
+    border-radius: 10px;
   }
 }
