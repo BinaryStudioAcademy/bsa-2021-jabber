@@ -8,8 +8,8 @@ export async function up(knex: Knex): Promise<void> {
 
   return knex.schema.createTable(TABLE_NAME, (table) => {
     table.increments('id').primary();
-    table.integer('user_id').notNullable().references('id').inTable('users').onDelete('CASCADE');
-    table.integer('comment_id').notNullable().references('id').inTable('comments').onDelete('CASCADE');
+    table.integer('user_id').notNullable().references('id').inTable('users');
+    table.integer('comment_id').notNullable().references('id').inTable('comments');
     table.dateTime('created_at').notNullable().defaultTo(dateNowISO);
     table.dateTime('updated_at').notNullable().defaultTo(dateNowISO);
   });
