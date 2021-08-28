@@ -4,11 +4,11 @@ import { getColumns, getRows } from './helpers/helpers';
 
 type Props = {
   episodes: Episode[];
-  onSetRow?: (row: number) => void;
-  onSetPage?: (page: number) => void;
-  pageIndex?: number;
-  pageSize?: number;
-  totalCountEpisodes?: number;
+  onSetRow: (row: number) => void;
+  onSetPage: (page: number) => void;
+  pageIndex: number;
+  pageSize: number;
+  totalCountEpisodes: number;
 };
 
 const EpisodeTable: React.FC<Props> = ({
