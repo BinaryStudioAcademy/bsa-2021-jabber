@@ -37,7 +37,7 @@ const CommentItem: React.FC<Props> = ({
     onCommentDelete?.(Number(comment.id));
   };
 
-  const handleLikeComment = (): void => {
+  const handleCommentLikeToggle = (): void => {
     toggleCommentLike?.(comment.id);
   };
 
@@ -95,7 +95,7 @@ const CommentItem: React.FC<Props> = ({
       <div className={styles.btnsWrapper}>
         <div className={styles.btnLikeWrapper}>
           <button
-            onClick={handleLikeComment}
+            onClick={handleCommentLikeToggle}
             className={allowedClasses}
             disabled={isOwner}
           >

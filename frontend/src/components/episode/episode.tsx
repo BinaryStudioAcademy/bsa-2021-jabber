@@ -106,7 +106,7 @@ const Episode: React.FC = () => {
     dispatch(episodeActions.deleteComment(commentId));
   };
 
-  const handleCommentLike = (commentId: number): void => {
+  const handleCommentLikeToggle = (commentId: number): void => {
     dispatch(episodeActions.toggleCommentLike(commentId));
   };
 
@@ -247,7 +247,7 @@ const Episode: React.FC = () => {
                 user={user}
                 onTimeClick={handleJumpToTimeLine}
                 onCommentDelete={handleCommentDelete}
-                toggleCommentLike={handleCommentLike}
+                toggleCommentLike={handleCommentLikeToggle}
               />
             ) : (
               <div>There&apos;s no comment yet.</div>

@@ -48,8 +48,7 @@ const toggleCommentLike = createAsyncThunk <Comment, number, AsyncThunkConfig>
   const { auth } = getState();
   const currentComment = await commentApi.getById(commentId);
   const checkIsLiked = currentComment.commentReactions.some((reaction) => reaction.userId === auth.user?.id);
-  
-  const comment = checkIsLiked 
+  const comment = checkIsLiked
     ? await commentApi.deleteCommentReaction({ commentId })
     : await commentApi.createCommentReaction({ commentId });
 
