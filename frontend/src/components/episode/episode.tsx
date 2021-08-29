@@ -139,7 +139,12 @@ const Episode: React.FC = () => {
             />
             {isStaging && isOwner && (
               <Button
-                className={styles.btnStartLive}
+                className={ isPlayerShow
+                  ? getAllowedClasses(
+                    styles.btnStartLive,
+                    styles.btnWithPlayer,
+                  )
+                  : styles.btnStartLive}
                 label="Start Live"
                 href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}
               />

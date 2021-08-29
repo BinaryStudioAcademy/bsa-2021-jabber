@@ -1,0 +1,43 @@
+.pagination{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 15px 0;
+  position: absolute;
+  bottom: 0;
+
+  .btnNext, .btnPrev {
+    height: 30px;
+    background-color: var(--color-header-background);
+    padding: 0 15px;
+    color: var(--color-primary-light);
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+
+  .btnNext:disabled, .btnPrev:disabled {
+    opacity: 0.6;
+  }
+
+  .btnPrev::before {
+    content: '\2039';
+    padding: 5px;
+    position: relative;
+    top: -1px;
+  }
+
+  .btnNext::after {
+    content: '\203A';
+    padding: 5px;
+    position: relative;
+    top: -1px;
+  }
+
+  .input {
+    border: none;
+    width: 80px;
+    height: 30px;
+  }
+}

@@ -10,6 +10,8 @@ import {
   EpisodeCreateDTOPayload,
   EpisodeCreatePayload,
   EpisodeEditPayload,
+  EpisodeQueryPayload,
+  LoadEpisodesByPodcastIdPayload,
 } from '~/common/types/types';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
 import {
@@ -258,8 +260,18 @@ class Episode {
     return episode;
   }
 
-  public getAllByPodcastId(id: number): Promise<TEpisode[]> {
-    return this.#episodeRepository.getAllByPodcastId(id);
+  public getEpisodeCountByPodcastId(id: number): Promise<number> {
+    return this.#episodeRepository.getEpisodeCountByPodcastId(id);
+  }
+
+  public async getByQueryByPodcastId(loadEpisodesByPodcastIdPayload: LoadEpisodesByPodcastIdPayload): Promise<EpisodeQueryPayload> {
+    const results = await this.#episodeRepository.getByQueryByPodcastId(loadEpisodesByPodcastIdPayload);
+    const totalCount = await this.#episodeRepository.getEpisodeCountByPodcastId(loadEpisodesByPodcastIdPayload.podcastId);
+
+    return {
+      results,
+      totalCount,
+    };
   }
 
   public async delete(id: number): Promise<TEpisode> {
