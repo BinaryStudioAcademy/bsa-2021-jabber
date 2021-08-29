@@ -17,11 +17,21 @@ const initNotificationApi = ({ apiRouter, userNotificationService }: Args): Rout
   apiRouter.use(ApiPath.NOTIFICATIONS, notificationRouter);
 
   notificationRouter.get(
-    NotificationsApiPath.$ID,
+    NotificationsApiPath.USER,
     checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (req, res) => {
       return res
-        .json(await userNotificationService.getAllByUserId(Number(req.params.id)))
+        .json(await userNotificationService.getAllByUserId(Number(req.user?.id)))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  notificationRouter.put(
+    NotificationsApiPath.$ID_STATUS,
+    checkAuthMiddleware(HttpMethod.PUT),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await userNotificationService.changeStatus(Number(req.params.id)))
         .status(HttpCode.OK);
     }),
   );
