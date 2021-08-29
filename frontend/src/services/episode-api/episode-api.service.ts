@@ -13,6 +13,8 @@ import {
   LoadEpisodesByPodcastIdPayload,
   UserFavouriteEpisode,
   UserFavouriteEpisodePayload,
+  UserFavouriteEpisodeResponse,
+  LoadFavouriteEpisodesPayload,
 } from 'common/types/types';
 
 type Constructor = {
@@ -94,11 +96,12 @@ class EpisodeApi {
     );
   }
 
-  public getFavoriteEpisodesByUserId(userId: number): Promise<Episode[]> {
+  public getFavoriteEpisodesByUserId({ userId, filter }: LoadFavouriteEpisodesPayload): Promise<UserFavouriteEpisodeResponse> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.EPISODES}/${EpisodesApiPath.FAVOURITES}/${userId}`,
       {
         method: HttpMethod.GET,
+        query: filter,
       },
     );
   }
