@@ -4,6 +4,7 @@ export type {
   UserSignInPayload,
   UserEditPayload,
   UserPopularLoadFilter,
+  UserResetPasswordPayload,
 } from './user/user';
 export type {
   Podcast,
@@ -20,6 +21,9 @@ export type {
   EpisodeCreatePayload,
   EpisodeEditPayload,
   EpisodePayload,
+  EpisodeLoadFilter,
+  LoadEpisodesByPodcastIdPayload,
+  EpisodeQueryPayload,
 } from './episode/episode';
 export type {
   Shownote,

@@ -46,6 +46,13 @@ class PodcastFollower {
       .returning('*')
       .first();
   }
+
+  public deleteAllByPodcastId(id: number): Promise<TPodcastFollower[]> {
+    return this.#PodcastFollowerModel.query()
+      .delete()
+      .where('podcast_id', id)
+      .returning('*');
+  }
 }
 
 export { PodcastFollower };
