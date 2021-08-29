@@ -11,6 +11,7 @@ import {
   record as recordRepository,
   image as imageRepository,
   genre as genreRepository,
+  commentReaction as commentReactionRepository,
   podcastFollower as podcastFollowerRepository,
   userFollower as userFollowerRepository,
   invitationCode as invitationCodeRepository,
@@ -35,6 +36,7 @@ import { Socket } from './socket/socket.service';
 import { PodcastFollower } from './podcast-follower/podcast-follower.service';
 import { UserFollower } from './user-follower/user-follower.service';
 import { Notification } from './notification/notification.service';
+import { Mailer } from './mailer/mailer.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -47,9 +49,14 @@ const logger = new Logger({
   asyncStorage: appAsyncStorage,
 });
 
+const mailer = new Mailer({
+  mailerApiKey: <string>ENV.MAILER.API_KEY,
+});
+
 const auth = new Auth({
   userRepository,
   tokenService: token,
+  mailer,
 });
 
 const fileStorage = new FileStorage({
@@ -69,6 +76,7 @@ const shownote = new Shownote({
 
 const comment = new Comment({
   commentRepository,
+  commentReactionRepository,
 });
 
 const record = new Record({
@@ -149,4 +157,5 @@ export {
   podcastFollower,
   userFollower,
   notification,
+  mailer,
 };

@@ -10,8 +10,10 @@ import {
   checkAuth as checkAuthMiddleware,
   checkUserPodcastOwner as checkUserPodcastOwnerMiddleware,
   checkUserEpisodeOwner as checkUserEpisodeOwnerMiddleware,
+  checkUserHasPermitToEpisode as checkUserHasPermitToEpisodeMiddleware,
   validateSchema as validateSchemaMiddleware,
 } from '~/middlewares/middlewares';
+import { EpisodeLoadFilter } from '~/common/types/types';
 
 type Args = {
   apiRouter: Router;
@@ -32,6 +34,7 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
 
   episodeRouter.get(
     EpisodesApiPath.$ID,
+    checkUserHasPermitToEpisodeMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
         .send(await episodeService.getById(Number(req.params.id)))
@@ -43,7 +46,10 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
     EpisodesApiPath.PODCAST_$ID,
     handleAsyncApi(async (req, res) => {
       return res
-        .send(await episodeService.getAllByPodcastId(Number(req.params.id)))
+        .send(await episodeService.getByQueryByPodcastId({
+          podcastId: Number(req.params.id),
+          filter: req.query as unknown as EpisodeLoadFilter,
+        }))
         .status(HttpCode.OK);
     }),
   );

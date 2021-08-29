@@ -6,6 +6,8 @@ export type {
   UserEditPayload,
   UserEditDTOPayload,
   UserPopularLoadFilter,
+  UserResetPasswordPayload,
+  UserUpdatePasswordDTOPayload,
 } from './user/user';
 export type {
   Podcast,
@@ -25,13 +27,17 @@ export type {
   EpisodeEditPayload,
   EpisodeCreateDTOPayload,
   EpisodeEditDTOPayload,
+  EpisodeLoadFilter,
+  LoadEpisodesByPodcastIdPayload,
+  EpisodeQueryPayload,
 } from './episode/episode';
 export type {
   Shownote,
   ShownotePayload,
   ShownoteCreatePayload,
 } from './shownote/shownote';
-export type { Comment, CommentCreatePayload } from './comment/comment';
+export type { Comment, CommentCreateDTOPayload, CommentCreatePayload } from './comment/comment';
+export type { CommentReaction, CommentReactionCreatePayload } from './comment-reaction/comment-reaction';
 export type { Record, RecordCreatePayload } from './record/record';
 export type { UploadFileResponse, DeleteFileResponse } from './file/file';
 export type { SignResponse } from './sign/sign';
@@ -42,3 +48,4 @@ export type { UserFollower, UserFollowerPayload } from './user-follower/user-fol
 export type { Notification, NotificationCreatePayload } from './notification/notification';
 export type { UserNotification, UserNotificationCreatePayload } from './user-notification/user-notification';
 export type { InvitationCode, InvitationCodePayload } from './invitation-code/invitation-code';
+export type { MailTemplate } from './mail/mail';

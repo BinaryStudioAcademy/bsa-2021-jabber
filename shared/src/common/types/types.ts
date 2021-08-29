@@ -4,6 +4,7 @@ export type {
   UserSignInPayload,
   UserEditPayload,
   UserPopularLoadFilter,
+  UserResetPasswordPayload,
 } from './user/user';
 export type {
   Podcast,
@@ -20,6 +21,9 @@ export type {
   EpisodeCreatePayload,
   EpisodeEditPayload,
   EpisodePayload,
+  EpisodeLoadFilter,
+  LoadEpisodesByPodcastIdPayload,
+  EpisodeQueryPayload,
 } from './episode/episode';
 export type {
   Shownote,
@@ -28,6 +32,7 @@ export type {
   ShownoteCreatePayload,
 } from './shownote/shownote';
 export type { Comment, CommentCreatePayload } from './comment/comment';
+export type { CommentReaction, CommentReactionCreatePayload } from './comment-reaction/comment-reaction';
 export type { Record, RecordCreatePayload } from './record/record';
 export type { SignResponse } from './sign/sign';
 export type { TokenPayload } from './token/token';

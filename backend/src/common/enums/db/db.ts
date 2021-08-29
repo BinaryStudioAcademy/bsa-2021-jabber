@@ -12,4 +12,5 @@ export { UserNotificationDTOKey } from './user-notification-dto-key.enum';
 export { GenreDTOKey } from './genre-dto-key.enum';
 export { UserFollowerDTOKey } from './user-follower-dto-key.enum';
 export { PodcastFollowerDTOKey } from './podcast-follower-dto-key.enum';
+export { CommentReactionDTOKey } from './comment-reaction-dto.enum';
 export { InvitationCodeDTOKey } from './invitation-code-dto-key.enum';

@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
   signUp as signUpValidationSchema,
   signIn as signInValidationSchema,
+  resetPassword as resetPasswordValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { ApiPath, HttpCode, AuthApiPath } from '~/common/enums/enums';
 import { handleAsyncApi, extractAuthToken } from '~/helpers/helpers';
@@ -50,6 +51,16 @@ const initAuthApi = ({ apiRouter, authService }: Args): Router => {
       const token = extractAuthToken(req.headers.authorization);
 
       res.send(await userService.getByToken(String(token))).status(HttpCode.OK);
+    }),
+  );
+
+  userRouter.post(
+    AuthApiPath.RESET_PASSWORD,
+    validateSchemaMiddleware(resetPasswordValidationSchema),
+    handleAsyncApi(async (req, res) => {
+      const isSuccess = await authService.resetPassword(req.body);
+
+      return res.json(isSuccess).status(HttpCode.OK);
     }),
   );
 

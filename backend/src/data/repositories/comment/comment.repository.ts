@@ -1,7 +1,7 @@
 import { CommentModel as CommentM } from '~/data/models/models';
 import {
   Comment as TComment,
-  CommentCreatePayload,
+  CommentCreateDTOPayload,
 } from '~/common/types/types';
 
 type Constructor = {
@@ -19,7 +19,7 @@ class Comment {
     return this.#CommentModel.query().withGraphFetched('user');
   }
 
-  public create(payload: CommentCreatePayload): Promise<TComment> {
+  public create(payload: CommentCreateDTOPayload): Promise<TComment> {
     return this.#CommentModel
       .query()
       .insert(payload)
@@ -30,11 +30,14 @@ class Comment {
     return this.#CommentModel
       .query()
       .where('episode_id', id)
-      .withGraphFetched('user.image');
+      .withGraphFetched('[user.image, commentReactions]');
   }
 
-  public getById(id: string): Promise<TComment> {
-    return this.#CommentModel.query().findById(id).withGraphFetched('user');
+  public getById(id: number): Promise<TComment> {
+    return this.#CommentModel
+      .query()
+      .findById(id)
+      .withGraphFetched('[user, commentReactions]');
   }
 
   public deleteAllByEpisodeId(id: number): Promise<TComment[]> {

@@ -71,6 +71,10 @@ const EpisodeLive: React.FC = () => {
     dispatch(episodeActions.deleteComment(commentId));
   };
 
+  const handleCommentLikeToggle = (commentId: number): void => {
+    dispatch(episodeActions.toggleCommentLike(commentId));
+  };
+
   return (
     <main className={styles.root}>
       <h1>Record podcast</h1>
@@ -138,6 +142,7 @@ const EpisodeLive: React.FC = () => {
             comments={comments}
             user={user}
             onCommentDelete={handleCommentDelete}
+            onToggleCommentLike={handleCommentLikeToggle}
           />
         ) : (
           <div className={styles.placeholder}>There&apos;s no comment yet.</div>

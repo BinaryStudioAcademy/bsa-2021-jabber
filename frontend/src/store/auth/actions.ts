@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { UserCreatePayload, AsyncThunkConfig, User, UserSignInPayload } from 'common/types/types';
-import { StorageKey } from 'common/enums/enums';
+import { UserCreatePayload, AsyncThunkConfig, User, UserSignInPayload, UserResetPasswordPayload } from 'common/types/types';
+import { StorageKey, AppRoute } from 'common/enums/enums';
 import { ActionType } from './common';
 import { NotificationMessage, NotificationTitle } from 'common/enums/enums';
 
@@ -42,4 +42,13 @@ const resetUser = createAsyncThunk<void, undefined, AsyncThunkConfig>
   storageService.removeItem(StorageKey.TOKEN);
 });
 
-export { signUp, signIn, getCurrentUser, resetUser };
+const resetPassword = createAsyncThunk<void, UserResetPasswordPayload, AsyncThunkConfig>
+(ActionType.RESET_PASSWORD, async (resetPasswordPayload, { extra }) => {
+  const { authApi, notificationService, navigationService } = extra;
+  await authApi.resetPassword(resetPasswordPayload);
+
+  notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PASSWORD_RESETED);
+  navigationService.push(AppRoute.SIGN_IN);
+});
+
+export { signUp, signIn, getCurrentUser, resetUser, resetPassword };
