@@ -5,7 +5,7 @@ import {
   Link,
   Button,
 } from 'components/common/common';
-import { AppRoute, DataStatus } from 'common/enums/enums';
+import { AppRoute, ButtonColor, DataStatus } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
 import { useAppSelector, useParams, useDispatch, useEffect } from 'hooks/hooks';
 import { userProfile as userProfileActions } from 'store/actions';
@@ -155,6 +155,7 @@ const UserPage: React.FC = () => {
               className={styles.followButton}
               label={isFollowed ? 'Unfollow' : 'Follow'}
               onClick={handleToggleFollow}
+              buttonColor={isFollowed ? ButtonColor.LIGHT_PINK : ButtonColor.PINK }
             />
           )}
         </div>

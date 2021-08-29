@@ -4,13 +4,34 @@ import { getColumns, getRows } from './helpers/helpers';
 
 type Props = {
   episodes: Episode[];
+  onSetRow: (row: number) => void;
+  onSetPage: (page: number) => void;
+  pageIndex: number;
+  pageSize: number;
+  totalCountEpisodes: number;
 };
 
-const EpisodeTable: React.FC<Props> = ({ episodes }) => {
+const EpisodeTable: React.FC<Props> = ({
+  episodes ,
+  pageSize,
+  onSetRow,
+  onSetPage,
+  pageIndex,
+  totalCountEpisodes,
+}) => {
   const columns = getColumns();
   const rows = getRows(episodes);
 
-  return <Table columns={columns} data={rows} />;
+  return <Table
+    columns={columns}
+    data={rows}
+    onSetRow={onSetRow}
+    onSetPage={onSetPage}
+    pageIndex={pageIndex}
+    pageSize={pageSize}
+    totalCountItems={totalCountEpisodes}
+    hasPagination
+  />;
 };
 
 export default EpisodeTable;

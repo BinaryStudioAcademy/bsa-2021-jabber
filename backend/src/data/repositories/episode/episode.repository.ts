@@ -3,6 +3,7 @@ import {
   Episode as TEpisode,
   EpisodeCreateDTOPayload,
   EpisodeEditDTOPayload,
+  LoadEpisodesByPodcastIdPayload,
 } from '~/common/types/types';
 
 type Constructor = {
@@ -26,6 +27,20 @@ class Episode {
 
   public getAllByPodcastId(id: number): Promise<TEpisode[]> {
     return this.#EpisodeModel.query().where('podcast_id', id);
+  }
+
+  public getEpisodeCountByPodcastId(id: number): Promise<number> {
+    return this.#EpisodeModel
+      .query()
+      .where('podcast_id', id)
+      .resultSize();
+  }
+
+  public getByQueryByPodcastId({ podcastId, filter }: LoadEpisodesByPodcastIdPayload): Promise<TEpisode[]> {
+    return this.#EpisodeModel.query()
+      .where('podcast_id', podcastId)
+      .limit(filter.limit)
+      .offset(filter.offset);
   }
 
   public create(payload: EpisodeCreateDTOPayload): Promise<TEpisode> {

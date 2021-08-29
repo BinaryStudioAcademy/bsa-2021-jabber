@@ -5,7 +5,13 @@ import {
   HttpMethod,
 } from 'common/enums/enums';
 import { Http } from 'services/http/http.service';
-import { Episode, EpisodeCreatePayload, EpisodeEditPayload } from 'common/types/types';
+import {
+  Episode,
+  EpisodeCreatePayload,
+  EpisodeEditPayload,
+  EpisodeQueryPayload,
+  LoadEpisodesByPodcastIdPayload,
+} from 'common/types/types';
 
 type Constructor = {
   http: Http;
@@ -39,11 +45,12 @@ class EpisodeApi {
     );
   }
 
-  public getAllByPodcastId(id: number): Promise<Episode[]> {
+  public getByQueryByPodcastId({ podcastId, filter }: LoadEpisodesByPodcastIdPayload): Promise<EpisodeQueryPayload> {
     return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.EPISODES}${EpisodesApiPath.PODCAST}/${id}`,
+      `${this.#apiPrefix}${ApiPath.EPISODES}${EpisodesApiPath.PODCAST}/${podcastId}`,
       {
         method: HttpMethod.GET,
+        query: filter,
       },
     );
   }
