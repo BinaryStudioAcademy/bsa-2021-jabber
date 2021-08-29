@@ -87,7 +87,9 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
             type="button"
             className={isVisible ? getAllowedClasses(styles.showPasswordBtn, styles.visible) : styles.showPasswordBtn}
             onClick={handleToggleVisible}
-          />
+          >
+            <span className="visually-hidden">Toggle password visibility</span>
+          </button>
         </div>
         <Datepicker
           label="Birthdate"
