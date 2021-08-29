@@ -33,6 +33,7 @@ export {
   UserFollowerDTOKey,
   PodcastFollowerDTOKey,
   InvitationCodeDTOKey,
+  UserFavouriteEpisodeDTOKey,
 } from './db/db';
 export { HttpCode, HttpMethod } from './http/http';
 export {
@@ -63,3 +64,7 @@ export {
 export { SocketEvent } from './socket/socket';
 export { UserNotificationStatus } from './user-notification/user-notification';
 export { NotificationTitle, NotificationCreatePayloadKey } from './notification/notification';
+export {
+  UserFavouriteEpisodePayloadKey,
+  UserFavouriteEpisodeValidationMessage,
+} from './user-favourite-episode/user-favourite-episode';

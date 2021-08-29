@@ -18,6 +18,7 @@ enum ErrorMessage {
   THIS_IS_A_PRIVATE_PODCAST = 'This is a private podcast',
   EMAIL_DOES_NOT_EXIST = 'Email does not exist',
   EMAIL_SENDING_ERROR = 'Email sending error',
+  ALREADY_IN_FAVOURITES = 'Already in favourites',
 }
 
 export { ErrorMessage };

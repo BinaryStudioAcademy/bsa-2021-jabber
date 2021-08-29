@@ -13,6 +13,7 @@ enum TableName {
   USERS_FOLLOWERS = 'users_followers',
   PODCASTS_FOLLOWERS = 'podcasts_followers',
   INVITATION_CODES = 'invitation_codes',
+  USERS_FAVOURITE_EPISODES = 'users_favourite_episodes',
 }
 
 export { TableName };
