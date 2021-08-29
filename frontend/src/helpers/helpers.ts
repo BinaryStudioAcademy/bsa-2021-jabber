@@ -23,3 +23,4 @@ export { mapToShownotePayload } from './shownote/shownote';
 export { getStringifiedQuery, parseQueryString } from './http/http';
 export { getRandomId } from './string/string';
 export { getFilterEpisode } from './episode/episode';
+export { checkIsLiked } from './comment/comment';

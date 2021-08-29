@@ -1,4 +1,4 @@
-import { User } from '../user/user.type';
+import { User, CommentReaction } from '~/common/types/types';
 
 type Comment = {
   id: number;
@@ -9,6 +9,7 @@ type Comment = {
   updatedAt: string;
   user: User;
   timestamp: number;
+  commentReactions: CommentReaction[];
 };
 
 export type { Comment };

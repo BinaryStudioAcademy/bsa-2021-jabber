@@ -44,6 +44,10 @@ export type {
   Comment,
   CommentFormCreatePayload,
 } from './comment/comment';
+export type {
+  CommentReaction,
+  CommentReactionCreatePayload,
+} from './comment-reaction/comment-reaction';
 export type { Option } from './ui/option';
 export type { UserNotification } from './notification/notification';
 export type { Genre } from './genre/genre';

@@ -41,6 +41,7 @@ export {
 } from './episode/episode';
 export { ShownotePayloadKey } from './shownote/shownote';
 export { CommentCreatePayloadKey } from './comment/comment';
+export { CommentReactionCreatePayloadKey } from './comment-reaction/comment-reaction';
 export { RecordCreatePayloadKey } from './record/record';
 export { ImageCreatePayloadKey } from './image/image';
 export { DateFormatType } from './date/date';
