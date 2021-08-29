@@ -128,7 +128,9 @@ const Homepage: React.FC = () => {
   return (
     <main className={styles.main}>
       <Search onChange={handleChange} currentState={podcastsFilter.search} />
-      <PopularUsers popularUsers={popularUsers} />
+      {isLoading
+        ? <Loader />
+        : <PopularUsers popularUsers={popularUsers} />}
       <div className={styles.titleWrapper}>
         <h2 className={styles.title}>All podcasts</h2>
         {isGenresLoaded && (

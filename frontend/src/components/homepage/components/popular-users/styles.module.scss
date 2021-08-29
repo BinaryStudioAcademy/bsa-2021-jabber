@@ -12,6 +12,15 @@
   justify-content: space-between;
 }
 
+.oopsMessage {
+  display: block;
+  color: var(--color-header-background);
+  font-size: 22px;
+  width: max-content;
+  margin: 127px auto;
+  font-weight: bold;
+}
+
 .usersRow {
   display: flex;
   margin: 0;
