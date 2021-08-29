@@ -12,3 +12,4 @@ export { checkUserCommentOwner } from './check-user-comment-owner/check-user-com
 export { injectSocket } from './inject-socket/inject-socket.middleware';
 export { checkUserHasPermitToEdit } from './check-user-has-permit-to-edit/check-user-has-permit-to-edit.middleware';
 export { identifyUser } from './identify-user/identify-user.middleware';
+export { CheckUserHasPermitToPodcast } from './check-user-has-permit-to-podcast/check-user-has-permit-to-podcast.middleware';
