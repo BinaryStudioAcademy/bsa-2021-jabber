@@ -130,6 +130,7 @@ class Podcast {
 
   public async getById(id: number): Promise<TPodcast> {
     const podcast = await this.#podcastRepository.getById(id);
+
     if (!podcast) {
       throw new HttpError({
         status: HttpCode.NOT_FOUND,
@@ -257,7 +258,7 @@ class Podcast {
       });
     }
 
-    const episodes = await this.#episodeService.getAllByPodcastId(id);
+    const episodes = await this.#episodeService.getEpisodeCountByPodcastId(id);
     const isEpisodesExist = Boolean(episodes);
 
     if (isEpisodesExist) {

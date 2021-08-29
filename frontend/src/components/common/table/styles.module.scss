@@ -1,3 +1,9 @@
+.tableWrapper {
+  min-height: 230px;
+  position: relative;
+  padding-bottom: 40px;
+}
+
 .table {
   width: 100%;
   border-spacing: 0;
@@ -50,4 +56,9 @@
       }
     }
   }
+}
+
+.pagination{
+  display: flex;
+  justify-content: center;
 }
