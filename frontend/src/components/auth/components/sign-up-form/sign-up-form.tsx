@@ -9,9 +9,9 @@ import {
 import { signUp as signUpValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm, useAppSelector, useState } from 'hooks/hooks';
 import { Button, Input, Link, Datepicker } from 'components/common/common';
+import { getAllowedClasses } from 'helpers/helpers';
 import { DEFAULT_REGISTER_PAYLOAD } from './common/constants';
 import styles from './styles.module.scss';
-import { getAllowedClasses } from 'helpers/helpers';
 
 type Props = {
   onSubmit: (payload: UserCreatePayload) => void;
@@ -28,10 +28,10 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
 
   const isFormDisabled = authStatus === DataStatus.PENDING;
 
-  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
 
   const handleToggleVisible = (): void => {
-    setIsVisible(!isVisible);
+    setIsVisiblePassword(!isVisiblePassword);
   };
 
   return (
@@ -76,7 +76,7 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
         />
         <div className={styles.passwordWrapper}>
           <Input
-            type={isVisible ? InputType.TEXT : InputType.PASSWORD}
+            type={isVisiblePassword ? InputType.TEXT : InputType.PASSWORD}
             label="Password"
             placeholder="Enter your password"
             name={UserPayloadKey.PASSWORD}
@@ -85,7 +85,7 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
           />
           <button
             type="button"
-            className={isVisible ? getAllowedClasses(styles.showPasswordBtn, styles.visible) : styles.showPasswordBtn}
+            className={getAllowedClasses(styles.showPasswordBtn, isVisiblePassword && styles.visible)}
             onClick={handleToggleVisible}
           >
             <span className="visually-hidden">Toggle password visibility</span>
