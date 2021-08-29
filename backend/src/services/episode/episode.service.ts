@@ -12,6 +12,8 @@ import {
   EpisodeEditPayload,
   EpisodeQueryPayload,
   LoadEpisodesByPodcastIdPayload,
+  UserFavouriteEpisodeResponse,
+  LoadFavouriteEpisodesPayload,
 } from '~/common/types/types';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
 import {
@@ -307,8 +309,14 @@ class Episode {
     await Promise.all(episodes.map((episode) => this.delete(episode.id)));
   }
 
-  public getFavouritesByUserId(id: number): Promise<TEpisode[]> {
-    return this.#episodeRepository.getFavouritesByUserId(id);
+  public async getFavouriteByQueryByUserId(payload: LoadFavouriteEpisodesPayload): Promise<UserFavouriteEpisodeResponse> {
+    const episodes = await this.#episodeRepository.getFavouriteByQueryByUserId(payload);
+    const totalCount = await this.#episodeRepository.getFavouriteCountByUserId(payload.userId);
+
+    return {
+      episodes,
+      totalCount,
+    };
   }
 }
 

@@ -4,6 +4,7 @@ import {
   EpisodeCreateDTOPayload,
   EpisodeEditDTOPayload,
   LoadEpisodesByPodcastIdPayload,
+  LoadFavouriteEpisodesPayload,
 } from '~/common/types/types';
 
 type Constructor = {
@@ -65,11 +66,23 @@ class Episode {
       .first();
   }
 
-  public getFavouritesByUserId(id: number): Promise<TEpisode[]> {
+  public getFavouriteByQueryByUserId({ userId, filter }: LoadFavouriteEpisodesPayload): Promise<TEpisode[]> {
+    const { limit, offset } = filter;
+
     return this.#EpisodeModel
       .query()
       .joinRelated('[favourites]')
-      .where('favourites.user_id', id);
+      .where('favourites.user_id', userId)
+      .limit(limit)
+      .offset(offset);
+  }
+
+  public getFavouriteCountByUserId(id: number): Promise<number> {
+    return this.#EpisodeModel
+      .query()
+      .joinRelated('[favourites]')
+      .where('favourites.user_id', id)
+      .resultSize();
   }
 }
 

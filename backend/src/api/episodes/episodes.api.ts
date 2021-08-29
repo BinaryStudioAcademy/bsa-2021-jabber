@@ -62,7 +62,10 @@ const initEpisodesApi = ({ apiRouter, episodeService, userFavouriteEpisodeServic
     checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (req, res) => {
       return res
-        .send(await episodeService.getFavouritesByUserId(Number(req.params.id)))
+        .send(await episodeService.getFavouriteByQueryByUserId({
+          userId: Number(req.params.id),
+          filter: req.query as unknown as EpisodeLoadFilter,
+        }))
         .status(HttpCode.OK);
     }),
   );
