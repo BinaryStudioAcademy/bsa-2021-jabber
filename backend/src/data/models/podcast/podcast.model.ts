@@ -4,6 +4,7 @@ import { Abstract } from '../abstract/abstract.model';
 import { Image } from '~/data/models/image/image.model';
 import { User } from '~/data/models/user/user.model';
 import { Genre } from '~/data/models/genre/genre.model';
+import { InvitationCode } from '~/data/models/invitation-code/invitation-code.model';
 import { QueryBuilder } from './common/query-builder/query-builder';
 
 class Podcast extends Abstract {
@@ -30,6 +31,8 @@ class Podcast extends Abstract {
   [PodcastDTOKey.GENRE]: Genre | null;
 
   [PodcastDTOKey.PERIODICITY]: PodcastPeriodicity;
+
+  [PodcastDTOKey.INVITATION_CODE]: InvitationCode | null;
 
   static get tableName(): string {
     return TableName.PODCASTS;
@@ -71,6 +74,14 @@ class Podcast extends Abstract {
         to: 'genres.id',
       },
     },
+    invitationCode: {
+      relation: Model.HasOneRelation,
+      modelClass: InvitationCode,
+      join: {
+        from: 'podcasts.id',
+        to: 'invitation_codes.podcast_id',
+      },
+    }
   };
 }
 

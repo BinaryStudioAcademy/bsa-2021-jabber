@@ -1,12 +1,13 @@
 import { useAppSelector, useDispatch, useEffect, useParams, useState } from 'hooks/hooks';
 import { configuratePodcast as configuratePodcastActions, podcast as podcastActions } from 'store/actions';
-import { AppRoute, DataStatus, UserRole } from 'common/enums/enums';
+import { AppRoute, DataStatus, UserRole, PodcastType, NotificationTitle, NotificationMessage } from 'common/enums/enums';
 import { Button, ConfirmPopup, ImageWrapper, Link, Loader } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
-import { getAllowedClasses } from 'helpers/helpers';
+import { getAllowedClasses, copyToClipboard } from 'helpers/helpers';
 import { getFilterEpisode } from './helpers/helpers';
+import { notification as notificationService } from 'services/services';
 import { DEFAULT_EPISODE_PAGINATION, DEFAULT_EPISODE_PAGE } from './common/constatnts/constants';
 
 const Podcast: React.FC = () => {
@@ -102,6 +103,13 @@ const Podcast: React.FC = () => {
       page,
       row: episodePagination.row,
     });
+  };
+
+  const handleCopyInviteLink = (): void => {
+    copyToClipboard(
+      `${window.location.host}${AppRoute.PODCASTS_INVITE}/${podcast?.invitationCode?.code}`,
+    );
+    notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.INVITATION_LINK_COPIED);
   };
 
   if (isLoading) {
@@ -221,7 +229,9 @@ const Podcast: React.FC = () => {
                   >
                     Type
                   </div>
-                  <p className={styles.infoInner}>{podcast.type}</p>
+                  {podcast.type !== PodcastType.PRIVATE ?
+                    <p className={styles.infoInner}>{podcast.type}</p> : <button className={styles.copyInvitation} onClick={handleCopyInviteLink}>Private (copy link)</button>
+                  }
                 </li>
                 <li className={styles.infoItem}>
                   <div
