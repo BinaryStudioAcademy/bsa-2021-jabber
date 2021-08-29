@@ -7,6 +7,7 @@ enum SocketEvent {
   LEAVE_ROOM = 'leaveRoom',
   UPDATE_COMMENTS = 'updateComments',
   UPDATE_COMMENTS_AFTER_DELETE = 'updateCommentsAfterDelete',
+  UPDATE_COMMENTS_AFTER_LIKE = 'updateCommentsAfterLike',
   PEER_BROADCASTER = 'peerBroadcaster',
   PEER_WATCHER = 'peerWatcher',
   PEER_DISCONNECT = 'peerDisconnect',

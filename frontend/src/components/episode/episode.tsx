@@ -106,6 +106,10 @@ const Episode: React.FC = () => {
     dispatch(episodeActions.deleteComment(commentId));
   };
 
+  const handleCommentLikeToggle = (commentId: number): void => {
+    dispatch(episodeActions.toggleCommentLike(commentId));
+  };
+
   const handleShowPopup = (): void => {
     setIsConfirmPopupOpen(!isConfirmPopupOpen);
   };
@@ -248,6 +252,7 @@ const Episode: React.FC = () => {
                 user={user}
                 onTimeClick={handleJumpToTimeLine}
                 onCommentDelete={handleCommentDelete}
+                onToggleCommentLike={handleCommentLikeToggle}
               />
             ) : (
               <div>There&apos;s no comment yet.</div>

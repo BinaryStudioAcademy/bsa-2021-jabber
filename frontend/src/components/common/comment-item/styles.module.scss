@@ -59,16 +59,50 @@
   color: var(--color-link-active);
 }
 
-.deleteButton{
+.btnsWrapper{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   position: absolute;
-  right: 15px;
+  right: 10;
   top: 20px;
-  width: 15px;
+  width: 60px;
   height: 15px;
+
+  .btnLikeWrapper{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .likeButton{
+      margin-right: 5px;
+      flex: 1;
+      width: 16px;
+      height: 16px;
+      background: url('../../../assets/img/comment/heart-regular.svg') center center / cover;
+      border: none;
+      cursor: pointer;
+
+      .likesCount{
+        margin-left: 10px;
+      }
+    }
+    .likeButtonField{
+      background: url('../../../assets/img/comment/heart-solid.svg');
+    }
+  }
+}
+
+.deleteButton{
+  width: 14px;
+  height: 14px;
   background: url('../../../assets/img/trash-bucket.svg') center center / cover;
   border: none;
   cursor: pointer;
+
+  margin-left: 10px;
 }
+
 
 .link {
   color: rgba(53, 53, 53, 0.5);

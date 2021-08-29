@@ -11,6 +11,7 @@ import {
   record as recordRepository,
   image as imageRepository,
   genre as genreRepository,
+  commentReaction as commentReactionRepository,
   podcastFollower as podcastFollowerRepository,
   userFollower as userFollowerRepository,
   invitationCode as invitationCodeRepository,
@@ -75,6 +76,7 @@ const shownote = new Shownote({
 
 const comment = new Comment({
   commentRepository,
+  commentReactionRepository,
 });
 
 const record = new Record({
