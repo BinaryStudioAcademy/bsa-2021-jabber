@@ -22,7 +22,7 @@ class UserNotification {
 
     const updatedStatus = notification.status === UserNotificationStatus.CHECKED
       ? UserNotificationStatus.UNCHECKED
-      : UserNotificationStatus.CHECKED
+      : UserNotificationStatus.CHECKED;
 
     return this.#userNotificationRepository.updateStatus(id, updatedStatus);
   }
