@@ -81,7 +81,7 @@ class Podcast extends Abstract {
         from: 'podcasts.id',
         to: 'invitation_codes.podcast_id',
       },
-    }
+    },
   };
 }
 

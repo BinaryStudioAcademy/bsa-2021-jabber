@@ -4,7 +4,6 @@ import { User } from '../user/user.type';
 import { Genre } from '../genre/genre.type';
 import { InvitationCode } from '../invitation-code/invitation-code';
 
-
 type Podcast = {
   id: number;
   name: string;
