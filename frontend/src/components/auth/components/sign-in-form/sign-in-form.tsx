@@ -7,10 +7,11 @@ import {
   UserPayloadKey,
 } from 'common/enums/enums';
 import { signIn as signInValidationSchema } from 'validation-schemas/validation-schemas';
-import { useAppForm, useAppSelector } from 'hooks/hooks';
+import { useAppForm, useAppSelector, useState } from 'hooks/hooks';
 import styles from './styles.module.scss';
 import { Button, Input, Link } from 'components/common/common';
 import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
+import { getAllowedClasses } from 'helpers/helpers';
 
 type Props = {
   onSubmit: (payload: UserSignInPayload) => void;
@@ -27,6 +28,12 @@ const SignInForm: React.FC<Props> = ({ onSubmit }) => {
   }));
 
   const isFormDisable = authStatus === DataStatus.PENDING;
+
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  const handleToggleVisible = (): void => {
+    setIsVisible(!isVisible);
+  };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -47,14 +54,21 @@ const SignInForm: React.FC<Props> = ({ onSubmit }) => {
           control={control}
           errors={errors}
         />
-        <Input
-          type={InputType.PASSWORD}
-          label="Password"
-          placeholder="Enter your password"
-          name={UserPayloadKey.PASSWORD}
-          control={control}
-          errors={errors}
-        />
+        <div className={styles.passwordWrapper}>
+          <Input
+            type={isVisible ? InputType.TEXT : InputType.PASSWORD}
+            label="Password"
+            placeholder="Enter your password"
+            name={UserPayloadKey.PASSWORD}
+            control={control}
+            errors={errors}
+          />
+          <button
+            type="button"
+            className={isVisible ? getAllowedClasses(styles.showPasswordBtn, styles.visible) : styles.showPasswordBtn}
+            onClick={handleToggleVisible}
+          ></button>
+        </div>
         <div className={styles.formSubtitle}>
           <Link to={AppRoute.RESET_PASSWORD} className={styles.link}>
             Forgot your password?

@@ -29,3 +29,25 @@
 .button {
   margin-top: 5px;
 }
+
+.passwordWrapper {
+  position: relative;
+}
+
+.showPasswordBtn {
+  position: absolute;
+  padding: 0;
+  border: none;
+  width: 20px;
+  height: 20px;
+  top: 35px;
+  right: 30px;
+  background-color: rgba(40, 40, 40, 0.5);
+  mask: url('../../../../assets/img/eye-invisible.svg') no-repeat 50% 50%;
+  mask-size: 19px;
+}
+
+.visible {
+  mask: url('../../../../assets/img/eye.svg') no-repeat 50% 50%;
+  mask-size: 19px;
+}

@@ -7,10 +7,11 @@ import {
   UserPayloadKey,
 } from 'common/enums/enums';
 import { signUp as signUpValidationSchema } from 'validation-schemas/validation-schemas';
-import { useAppForm, useAppSelector } from 'hooks/hooks';
+import { useAppForm, useAppSelector, useState } from 'hooks/hooks';
 import { Button, Input, Link, Datepicker } from 'components/common/common';
 import { DEFAULT_REGISTER_PAYLOAD } from './common/constants';
 import styles from './styles.module.scss';
+import { getAllowedClasses } from 'helpers/helpers';
 
 type Props = {
   onSubmit: (payload: UserCreatePayload) => void;
@@ -26,6 +27,12 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
   }));
 
   const isFormDisabled = authStatus === DataStatus.PENDING;
+
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  const handleToggleVisible = (): void => {
+    setIsVisible(!isVisible);
+  };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -67,14 +74,21 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
           control={control}
           errors={errors}
         />
-        <Input
-          type={InputType.PASSWORD}
-          label="Password"
-          placeholder="Enter your password"
-          name={UserPayloadKey.PASSWORD}
-          control={control}
-          errors={errors}
-        />
+        <div className={styles.passwordWrapper}>
+          <Input
+            type={isVisible ? InputType.TEXT : InputType.PASSWORD}
+            label="Password"
+            placeholder="Enter your password"
+            name={UserPayloadKey.PASSWORD}
+            control={control}
+            errors={errors}
+          />
+          <button
+            type="button"
+            className={isVisible ? getAllowedClasses(styles.showPasswordBtn, styles.visible) : styles.showPasswordBtn}
+            onClick={handleToggleVisible}
+          ></button>
+        </div>
         <Datepicker
           label="Birthdate"
           name={UserPayloadKey.BIRTHDATE}
