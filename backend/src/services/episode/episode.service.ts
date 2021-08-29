@@ -273,7 +273,8 @@ class Episode {
     }
 
     const comments = await this.#commentService.getAllByEpisodeId(episode.id);
-    if(comments){
+    const hasComments = Boolean(comments.length);
+    if(hasComments){
       await Promise.all(comments.map((comment) => this.#commentService.delete(comment.id)));
     }
 
