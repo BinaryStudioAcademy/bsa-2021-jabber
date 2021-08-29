@@ -8,6 +8,7 @@ import {
   AsyncThunkConfig,
 } from 'common/types/types';
 import { ActionType, LoadEpisodePayload } from './common';
+import { checkIsLiked } from 'helpers/helpers';
 
 const loadEpisodePayload = createAsyncThunk<LoadEpisodePayload, number, AsyncThunkConfig>
 (ActionType.LOAD_EPISODE_PAYLOAD, async (id, { extra }) => {
@@ -47,8 +48,8 @@ const toggleCommentLike = createAsyncThunk <Comment, number, AsyncThunkConfig>
   const { commentApi } = extra;
   const { auth } = getState();
   const currentComment = await commentApi.getById(commentId);
-  const checkIsLiked = currentComment.commentReactions.some((reaction) => reaction.userId === auth.user?.id);
-  const comment = checkIsLiked
+  const isLiked = checkIsLiked(currentComment, auth.user?.id);
+  const comment = isLiked
     ? await commentApi.deleteCommentReaction({ commentId })
     : await commentApi.createCommentReaction({ commentId });
 

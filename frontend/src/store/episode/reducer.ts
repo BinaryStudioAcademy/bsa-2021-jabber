@@ -11,6 +11,7 @@ import {
   toggleCommentLike,
   updateCommentsAfterLike,
 } from './actions';
+import { getSortedItems } from 'jabber-shared/helpers/helpers';
 
 type State = {
   dataStatus: DataStatus;
@@ -81,8 +82,11 @@ const reducer = createReducer(initialState, (builder) => {
 
   builder.addCase(updateCommentsAfterLike, (state, action) => {
     const filtered = state.comments.filter((comment) => comment.id !== action.payload.id);
-    const commetns = [action.payload, ...filtered].sort((commentA, commentB) => commentB.id - commentA.id);
-    state.comments = commetns;
+    const comments = getSortedItems(
+      [action.payload, ...filtered],
+      (commentA, commentB) => new Date(commentB.createdAt).getTime() - new Date(commentA.createdAt).getTime(),
+    );
+    state.comments = comments;
   });
   builder.addCase(updateCommentsAfterDelete, (state, action) => {
     state.comments = state.comments.filter((comment) => comment.id !== action.payload.id);
