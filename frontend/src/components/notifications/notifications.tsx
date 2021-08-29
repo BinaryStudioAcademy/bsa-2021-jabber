@@ -5,19 +5,20 @@ import { notification as notificationAction } from 'store/actions';
 import styles from './styles.module.scss';
 
 const Notifications: React.FC = () => {
-  const { notifications, userId } = useAppSelector(({ notification, auth }: RootState) => ({
+  const { notifications } = useAppSelector(({ notification }: RootState) => ({
     notifications: notification.notifications,
-    userId: auth.user?.id,
   }));
 
   const dispatch = useDispatch();
 
   const hasNotificaions = Boolean(notifications.length);
 
+  const handleChangeNotificationStatus = (id: number): void => {
+    dispatch(notificationAction.changeStatus(id));
+  };
+
   useEffect(() => {
-    if (userId) {
-      dispatch(notificationAction.loadNotifications(userId));
-    }
+    dispatch(notificationAction.loadCurrentUserNotifications());
   }, []);
 
   if (!hasNotificaions) {
@@ -31,7 +32,11 @@ const Notifications: React.FC = () => {
   return (
     <ul className={styles.container}>
       {notifications.map((notification) => (
-        <NotificationItem notification={notification} key={notification.id} />
+        <NotificationItem
+          notification={notification}
+          key={notification.id}
+          onChangeStatus={handleChangeNotificationStatus}
+        />
       ))}
     </ul>
   );
