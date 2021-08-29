@@ -41,3 +41,4 @@ export type { PodcastFollower, PodcastFollowerPayload } from './podcast-follower
 export type { UserFollower, UserFollowerPayload } from './user-follower/user-follower';
 export type { InvitationCode, InvitationCodePayload } from './invitation-code/invitation-code';
 export type { Notification } from './notification/notification';
+export type { UserFavouriteEpisode, UserFavouriteEpisodePayload } from './user-favourite-episode/user-favourite-episode';
