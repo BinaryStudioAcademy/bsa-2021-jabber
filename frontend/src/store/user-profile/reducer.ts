@@ -1,26 +1,38 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { Podcast, User } from 'common/types/types';
-import { loadPodcasts, loadUser, getFollowersCount, checkIsFollowedUser, toggleFollowUser, loadFollowersByUserId } from './actions';
+import { Podcast, User, Episode } from 'common/types/types';
+import {
+  loadPodcasts,
+  loadUser,
+  getFollowersCount,
+  checkIsFollowedUser,
+  toggleFollowUser,
+  loadFollowersByUserId,
+  loadFavouriteEpisodes,
+} from './actions';
 
 type State = {
   dataStatus: DataStatus;
   followersDataStatus: DataStatus;
+  favouriteEpisodesDataStatus: DataStatus;
   podcasts: Podcast[];
   user: User | null;
   isFollowed: boolean;
   followersCount: number;
   followers: User[];
+  favouriteEpisodes: Episode[];
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
   followersDataStatus: DataStatus.IDLE,
+  favouriteEpisodesDataStatus: DataStatus.IDLE,
   podcasts: [],
   user: null,
   isFollowed: false,
   followersCount: 0,
   followers: [],
+  favouriteEpisodes: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -79,6 +91,17 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadFollowersByUserId.rejected, (state) => {
     state.followersDataStatus = DataStatus.REJECTED;
+  });
+
+  builder.addCase(loadFavouriteEpisodes.pending, (state) => {
+    state.favouriteEpisodesDataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(loadFavouriteEpisodes.fulfilled, (state, action) => {
+    state.favouriteEpisodesDataStatus = DataStatus.FULFILLED;
+    state.favouriteEpisodes = action.payload;
+  });
+  builder.addCase(loadFavouriteEpisodes.rejected, (state) => {
+    state.favouriteEpisodesDataStatus = DataStatus.REJECTED;
   });
 });
 
