@@ -25,19 +25,27 @@ type Props = {
   onSubmit: (payload: EpisodeFormPayload) => void;
   payload?: EpisodeFormPayload;
   imageUrl?: string;
+  fileUrl?: string;
 };
 
 const selectTypeOptions: Option[] = getOptions(Object.values(EpisodeType));
-const selectStatusOptions: Option[] = getOptions(Object.values(EpisodeStatus));
+const selectStatusOptions: Option[] = getOptions(
+  Object.values(EpisodeStatus).filter((status) => status != EpisodeStatus.LIVE),
+);
 
 const CreateEpisodeForm: React.FC<Props> = ({
   onSubmit,
   payload = DEFAULT_CREATE_EPISODE_PAYLOAD,
   imageUrl,
+  fileUrl,
 }) => {
   const { control, handleSubmit, errors, setValue } = useAppForm({
     validationSchema: createEpisodeValidationSchema,
-    defaultValues: payload,
+    defaultValues: {
+      ...payload,
+      [EpisodePayloadKey.STATUS]: fileUrl ? EpisodeStatus.PUBLISHED : EpisodeStatus.STAGING,
+      [EpisodePayloadKey.RECORD_DATA_URL]: fileUrl,
+    },
   });
   const history = useHistory();
 
@@ -71,6 +79,7 @@ const CreateEpisodeForm: React.FC<Props> = ({
           control={control}
           errors={errors}
           hasLiveRecord={hasLiveRecord}
+          fileUrl={fileUrl}
         />
         <Input
           type={InputType.TEXT}

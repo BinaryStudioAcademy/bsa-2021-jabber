@@ -8,11 +8,7 @@ import {
 } from 'common/enums/enums';
 import { episode } from 'jabber-shared/validation-schemas/validation-schemas';
 import { shownoteCreate } from 'validation-schemas/shownote/create-shownote/create-shownote.validation-schema';
-import { fileExtensionValidation } from '../../helpers/helpers';
-
-const episodeStatus = Object.values(EpisodeStatus).filter(
-  (status) => status != EpisodeStatus.LIVE,
-);
+import { fileExtensionValidation, emptyFileListValidation } from '../../helpers/helpers';
 
 const episodeCreate = episode.keys({
   [EpisodePayloadKey.IMAGE]: Joi.object()
@@ -55,12 +51,30 @@ const episodeCreate = episode.keys({
       'array.required': EpisodeValidationMessage.SHOWNOTES_REQUIRE,
       'array.unique': EpisodeValidationMessage.SHOWNOTE_DUPLICATE,
     }),
-  [EpisodePayloadKey.STATUS]: Joi.string()
-    .valid(...episodeStatus)
-    .required()
-    .messages({
-      'string.empty': EpisodeValidationMessage.STATUS_REQUIRE,
+  [EpisodePayloadKey.STATUS]: Joi.when(EpisodePayloadKey.RECORD, {
+    is: Joi.object().allow(null).custom(
+      emptyFileListValidation,
+      'empty file list validation',
+    ),
+    then: Joi.valid(EpisodeStatus.STAGING),
+    otherwise: Joi.valid(EpisodeStatus.PUBLISHED),
+  }).messages({
+    'any.only': EpisodeValidationMessage.INVALID_EPISOD_STATUS,
+  }),
+  [EpisodePayloadKey.STATUS]: Joi.when(EpisodePayloadKey.RECORD_DATA_URL, {
+    is: Joi.string().required(),
+    then: Joi.valid(EpisodeStatus.PUBLISHED),
+    otherwise: Joi.when(EpisodePayloadKey.RECORD, {
+      is: Joi.object()
+        .allow(null)
+        .custom(emptyFileListValidation, 'empty file list validation'),
+      then: Joi.valid(EpisodeStatus.STAGING),
+      otherwise: Joi.valid(EpisodeStatus.PUBLISHED),
     }),
+  }).messages({
+    'any.only': EpisodeValidationMessage.INVALID_EPISOD_STATUS,
+  }),
+  [EpisodePayloadKey.RECORD_DATA_URL]: Joi.string().optional(),
 });
 
 export { episodeCreate };

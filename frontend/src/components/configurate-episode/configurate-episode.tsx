@@ -70,6 +70,7 @@ const ConfigurateEpisode: React.FC = () => {
         </h1>
         <CreateEpisodeForm
           imageUrl={episode?.image?.url}
+          fileUrl={episode?.record?.fileUrl}
           onSubmit={handleFormSubmit}
           payload={mapEpisode}
         />

@@ -2,7 +2,6 @@ import {
   FieldValues,
   Path,
   Control,
-  useController,
 } from 'react-hook-form';
 import { useState } from 'hooks/hooks';
 import { ErrorMessage } from '@hookform/error-message';
@@ -19,6 +18,7 @@ type Props = {
   control: Control;
   errors: FieldValues;
   hasLiveRecord: boolean;
+  fileUrl?: string;
 };
 
 const acceptAudioExtension = getFileExtensions(
@@ -31,9 +31,8 @@ const RecordPreviewControl: React.FC<Props> = ({
   control,
   errors,
   hasLiveRecord,
+  fileUrl,
 }) => {
-  const { field } = useController({ name, control });
-
   const [currentRecord, setRecord] = useState<string>('');
 
   const liveRecordName = hasLiveRecord ? getLiveRecordName() : '';
@@ -46,12 +45,10 @@ const RecordPreviewControl: React.FC<Props> = ({
       setRecord('');
       return;
     }
-
     setRecord(file.name);
-    field.onChange(evt.target.files);
   };
 
-  return (
+  return !hasLiveRecord ? (
     <>
       <label className={styles.inputWrapper}>
         <label className={styles.recordLabel}>
@@ -64,12 +61,17 @@ const RecordPreviewControl: React.FC<Props> = ({
             onChange={handleChange}
           />
         </label>
-        <span className={styles.recordPreview}>{currentRecord || liveRecordName}</span>
+        <span className={styles.recordPreview}>{currentRecord ? currentRecord : fileUrl ? 'current episode' : ''}</span>
       </label>
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />
       </span>
     </>
+  ) : (
+    <div className={styles.liveRecorPreview}>
+      <span className={styles.liveRecorPreviewCaption}>Live record:</span>
+      <span className={styles.liveRecordFileName}>{liveRecordName}</span>
+    </div>
   );
 };
 
