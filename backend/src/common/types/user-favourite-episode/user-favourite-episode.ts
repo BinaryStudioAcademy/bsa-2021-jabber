@@ -1,1 +1,5 @@
-export type { UserFavouriteEpisode, UserFavouriteEpisodePayload } from 'jabber-shared/common/types/types';
+export type {
+  UserFavouriteEpisode,
+  UserFavouriteEpisodePayload,
+  UserFavouriteEpisodeResponse,
+} from 'jabber-shared/common/types/types';
