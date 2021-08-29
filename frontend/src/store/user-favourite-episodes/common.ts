@@ -1,5 +1,5 @@
 enum ActionType {
-  LOAD_FAVOURITE_EPISODES = 'favourites/load-favourite-episodes',
+  LOAD_FAVOURITE_EPISODES = 'user-favourite-episodes/load-favourite-episodes',
 }
 
 export { ActionType };
