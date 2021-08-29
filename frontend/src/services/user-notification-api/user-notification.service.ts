@@ -16,13 +16,24 @@ class UserNotificationApi {
     this.#apiPrefix = apiPrefix;
   }
 
-  public getAllById(id: number): Promise<UserNotification[]> {
+  public getAllById(): Promise<UserNotification[]> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.NOTIFICATIONS}${
-        NotificationsApiPath.ROOT
-      }${id}`,
+        NotificationsApiPath.USER
+      }`,
       {
         method: HttpMethod.GET,
+      },
+    );
+  }
+
+  public changeNotificationStatus(id: number): Promise<UserNotification> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.NOTIFICATIONS}/${id}${
+        NotificationsApiPath.STATUS
+      }`,
+      {
+        method: HttpMethod.PUT,
       },
     );
   }
