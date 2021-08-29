@@ -60,7 +60,7 @@ const UserFavouriteEpisodesPage: React.FC = () => {
         />
         : (
           <div className={styles.placeholder}>
-            There are no episodes in this podcast yet.
+            There are no episodes in favourites yet.
           </div>
         )}
     </div>

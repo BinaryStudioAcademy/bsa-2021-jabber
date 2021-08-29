@@ -115,7 +115,7 @@ const Episode: React.FC = () => {
     setIsConfirmPopupOpen(!isConfirmPopupOpen);
   };
 
-  const toggleFavorite = (): void => {
+  const handleToggleFavorite = (): void => {
     dispatch(episodeActions.toggleFavourite());
   };
 
@@ -156,9 +156,9 @@ const Episode: React.FC = () => {
             )}
             {hasUser && !isOwner && (
               <Button
-                label={isFavourite ? 'Unfavourite' : 'Favourite'}
+                label={isFavourite ? 'In Favourites' : 'Favourite'}
                 buttonColor={isFavourite ? ButtonColor.LIGHT_PINK : ButtonColor.PINK}
-                onClick={toggleFavorite}
+                onClick={handleToggleFavorite}
                 className={getAllowedClasses(styles.btnStartLive, styles.favouriteButton)}
               />
             )}
