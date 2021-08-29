@@ -1,12 +1,10 @@
 import { useAppSelector, useDispatch, useEffect, useParams, useState } from 'hooks/hooks';
 import { configuratePodcast as configuratePodcastActions, podcast as podcastActions } from 'store/actions';
 import { AppRoute, DataStatus, UserRole } from 'common/enums/enums';
-import { Button, ConfirmPopup, ImageWrapper, Link, Loader } from 'components/common/common';
-import { EpisodeTable } from './components/components';
+import { Button, ConfirmPopup, ImageWrapper, Link, Loader, EpisodeTable } from 'components/common/common';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
-import { getAllowedClasses } from 'helpers/helpers';
-import { getFilterEpisode } from './helpers/helpers';
+import { getAllowedClasses, getFilterEpisode } from 'helpers/helpers';
 import { DEFAULT_EPISODE_PAGINATION, DEFAULT_EPISODE_PAGE } from './common/constatnts/constants';
 
 const Podcast: React.FC = () => {
