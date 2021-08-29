@@ -22,6 +22,7 @@ import PodcastInvite from 'components/podcast-invite/podcast-invite';
 import { useDispatch, useEffect, useAppSelector } from 'hooks/hooks';
 import { storage } from 'services/services';
 import { auth as authActions } from 'store/actions';
+import UserFollowersPage from 'components/user-followers/user-followers';
 
 const App: React.FC = () => {
   const { user } = useAppSelector(({ auth }) => ({
@@ -47,7 +48,7 @@ const App: React.FC = () => {
     <>
       <Switch>
         <Route
-          path={[AppRoute.SIGN_UP, AppRoute.SIGN_IN]}
+          path={[AppRoute.SIGN_UP, AppRoute.SIGN_IN, AppRoute.RESET_PASSWORD]}
           component={Auth}
           exact
         />
@@ -94,6 +95,11 @@ const App: React.FC = () => {
         <AuthPublicRouter
           path={AppRoute.EPISODES_$ID_LIVE}
           component={EpisodeLive}
+          exact
+        />
+        <AuthPublicRouter
+          path={AppRoute.USERS_$ID_FOLLOWERS}
+          component={UserFollowersPage}
           exact
         />
         <AuthPublicRouter path={AppRoute.ROOT} component={Homepage} exact />

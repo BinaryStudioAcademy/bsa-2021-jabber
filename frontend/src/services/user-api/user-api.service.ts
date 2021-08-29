@@ -50,6 +50,15 @@ class UserApi {
       },
     );
   }
+
+  public getFollowers(userId: number): Promise<User[]> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.USERS}/${userId}${UsersApiPath.FOLLOWERS}`,
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
 }
 
 export { UserApi };

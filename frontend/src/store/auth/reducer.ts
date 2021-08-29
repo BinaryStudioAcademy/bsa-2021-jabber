@@ -57,6 +57,15 @@ const reducer = createReducer(initialState, (builder) => {
       state.user = action.payload;
     },
   );
+  builder.addCase(authActions.resetPassword.pending, (state) => {
+    state.dataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(authActions.resetPassword.fulfilled, (state) => {
+    state.dataStatus = DataStatus.FULFILLED;
+  });
+  builder.addCase(authActions.resetPassword.rejected, (state) => {
+    state.dataStatus = DataStatus.REJECTED;
+  });
 });
 
 export { reducer };

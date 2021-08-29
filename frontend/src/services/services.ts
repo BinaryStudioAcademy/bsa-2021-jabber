@@ -64,9 +64,7 @@ const userNotificationApi = new UserNotificationApi({
   apiPrefix: ENV.API_PATH,
 });
 
-const recordAudio = new RecordAudio({
-  notificationService: notification,
-});
+const recordAudio = new RecordAudio();
 
 const userFollowerApi = new UserFollowerApi({
   http,

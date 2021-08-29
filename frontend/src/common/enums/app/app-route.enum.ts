@@ -2,6 +2,7 @@ enum AppRoute {
   ROOT = '/',
   SIGN_IN = '/sign-in',
   SIGN_UP = '/sign-up',
+  RESET_PASSWORD = '/reset-password',
   PODCASTS = '/podcasts',
   PODCASTS_$ID = '/podcasts/:id',
   PODCASTS_EDIT = '/podcasts/edit',
@@ -20,6 +21,8 @@ enum AppRoute {
   USERS_EDIT = '/users/edit',
   USERS_EDIT_$ID = '/users/edit/:id',
   NOTIFICATIONS = '/notifications',
+  USERS_$ID_FOLLOWERS = '/users/:id/followers',
+  FOLLOWERS = '/followers',
   ANY = '*',
 }
 

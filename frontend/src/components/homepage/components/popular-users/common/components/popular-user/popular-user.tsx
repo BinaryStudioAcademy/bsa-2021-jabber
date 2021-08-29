@@ -23,9 +23,7 @@ const PopularUser: React.FC<Props> = ({ user }: Props) => {
           className={styles.imageWrapper}
         />
         <div className={styles.userName}>
-          {user.firstName}
-          {' '}
-          {user.lastName}
+          {user.nickname}
         </div>
       </Link>
     </li>

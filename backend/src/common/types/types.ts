@@ -6,6 +6,8 @@ export type {
   UserEditPayload,
   UserEditDTOPayload,
   UserPopularLoadFilter,
+  UserResetPasswordPayload,
+  UserUpdatePasswordDTOPayload,
 } from './user/user';
 export type {
   Podcast,
@@ -45,3 +47,4 @@ export type { UserFollower, UserFollowerPayload } from './user-follower/user-fol
 export type { Notification, NotificationCreatePayload } from './notification/notification';
 export type { UserNotification, UserNotificationCreatePayload } from './user-notification/user-notification';
 export type { InvitationCode, InvitationCodePayload } from './invitation-code/invitation-code';
+export type { MailTemplate } from './mail/mail';

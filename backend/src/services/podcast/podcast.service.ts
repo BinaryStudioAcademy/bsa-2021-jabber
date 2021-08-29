@@ -265,6 +265,12 @@ class Podcast {
       await this.#episodeService.deleteAllByPodcastId(id);
     }
 
+    const countFollowers = await this.#podcastFollowerService.getCountByPodcastId(id);
+
+    if(countFollowers) {
+      await this.#podcastFollowerService.deleteAllByPodcastId(id);
+    }
+
     await this.#invitationCodeRepository.delete(id);
 
     await this.#podcastRepository.delete(id);
