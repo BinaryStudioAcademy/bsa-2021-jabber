@@ -50,4 +50,5 @@ export {
   NotificationMessage,
   NotificationTitle,
 } from './notification/notification';
+export { UserNotificationStatus } from './user-notification/user-notification';
 export { FormEvent } from './form/form-event';
