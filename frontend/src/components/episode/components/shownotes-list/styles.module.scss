@@ -10,7 +10,12 @@
   .columnsWrapper {
     width: 100%;
     min-width: auto;
-    columns: auto;
     margin-top: 10px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .columnsWrapper {
+    columns: auto;
   }
 }
