@@ -1,7 +1,6 @@
 import {
-  Notification as TNotification,
   UserNotification as TUserNotification,
-  UserNotificationCreatePayload
+  UserNotificationCreatePayload,
 } from '~/common/types/types';
 import { UserNotificationModel as UserNotificationM } from '~/data/models/models';
 

@@ -9,7 +9,7 @@ class UserNotification {
   #userNotificationRepository: typeof userNotificationRep;
 
   constructor({ userNotificationRepository }: Constructor) {
-    this.#userNotificationRepository = userNotificationRep;
+    this.#userNotificationRepository = userNotificationRepository;
   }
 
   public getAllByUserId(id: number): Promise<TUserNotification[]> {

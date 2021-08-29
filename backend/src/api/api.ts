@@ -76,7 +76,7 @@ const initApi = (app: Router): Router => {
   initNotificationApi({
     apiRouter,
     userNotificationService,
-  })
+  });
 
   return apiRouter;
 };
