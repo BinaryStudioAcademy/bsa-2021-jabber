@@ -16,6 +16,7 @@ import {
   invitationCode as invitationCodeRepository,
   notification as notificationRepository,
   userNotification as userNotificationRepository,
+  userFavouriteEpisode as userFavouriteEpisodeRepository,
 } from '~/data/repositories/repositories';
 import { AsyncLocalStorage } from './async-storage/async-storage.service';
 import { Logger } from './logger/logger.service';
@@ -36,6 +37,7 @@ import { PodcastFollower } from './podcast-follower/podcast-follower.service';
 import { UserFollower } from './user-follower/user-follower.service';
 import { Notification } from './notification/notification.service';
 import { Mailer } from './mailer/mailer.service';
+import { UserFavouriteEpisode } from './user-favourite-episode/user-favourite-episode.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -136,6 +138,10 @@ const userFollower = new UserFollower({
   userFollowerRepository,
 });
 
+const userFavouriteEpisode = new UserFavouriteEpisode({
+  userFavouriteEpisodeRepository,
+});
+
 export {
   auth,
   appAsyncStorage,
@@ -156,4 +162,5 @@ export {
   userFollower,
   notification,
   mailer,
+  userFavouriteEpisode,
 };

@@ -13,3 +13,4 @@ export { GenreDTOKey } from './genre-dto-key.enum';
 export { UserFollowerDTOKey } from './user-follower-dto-key.enum';
 export { PodcastFollowerDTOKey } from './podcast-follower-dto-key.enum';
 export { InvitationCodeDTOKey } from './invitation-code-dto-key.enum';
+export { UserFavouriteEpisodeDTOKey } from './user-favourite-episode-dto-key.enum';

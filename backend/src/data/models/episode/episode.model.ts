@@ -5,6 +5,7 @@ import { Abstract } from '../abstract/abstract.model';
 import { Image } from '~/data/models/image/image.model';
 import { Shownote } from '~/data/models/shownote/shownote.model';
 import { Record } from '~/data/models/record/record.model';
+import { UserFavouriteEpisode } from '~/data/models/user-favourite-episode/user-favourite-episode.model';
 
 class Episode extends Abstract {
   [EpisodeDTOKey.NAME]: string;
@@ -54,6 +55,14 @@ class Episode extends Abstract {
       join: {
         from: 'episodes.id',
         to: 'records.episode_id',
+      },
+    },
+    favourites: {
+      relation: Model.HasManyRelation,
+      modelClass: UserFavouriteEpisode,
+      join: {
+        from: 'episodes.id',
+        to: 'users_favourite_episodes.episode_id',
       },
     },
   };

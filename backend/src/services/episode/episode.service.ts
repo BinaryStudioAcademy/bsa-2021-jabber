@@ -306,6 +306,10 @@ class Episode {
     const episodes = await this.#episodeRepository.getAllByPodcastId(id);
     await Promise.all(episodes.map((episode) => this.delete(episode.id)));
   }
+
+  public getFavouritesByUserId(id: number): Promise<TEpisode[]> {
+    return this.#episodeRepository.getFavouritesByUserId(id);
+  }
 }
 
 export { Episode };

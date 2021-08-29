@@ -10,6 +10,7 @@ import {
   genre as genreService,
   userFollower as userFollowerService,
   podcastFollower as podcastFollowerService,
+  userFavouriteEpisode as userFavouriteEpisodeService,
 } from '~/services/services';
 import { initAuthApi } from './auth/auth.api';
 import { initUsersApi } from './users/users.api';
@@ -44,6 +45,7 @@ const initApi = (app: Router): Router => {
   initEpisodesApi({
     apiRouter,
     episodeService,
+    userFavouriteEpisodeService,
   });
 
   initCommentsApi({

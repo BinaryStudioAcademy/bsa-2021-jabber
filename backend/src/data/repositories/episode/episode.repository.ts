@@ -64,6 +64,13 @@ class Episode {
       .returning('*')
       .first();
   }
+
+  public getFavouritesByUserId(id: number): Promise<TEpisode[]> {
+    return this.#EpisodeModel
+      .query()
+      .joinRelated('[favourites]')
+      .where('favourites.user_id', id);
+  }
 }
 
 export { Episode };
