@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { UserNotification } from 'common/types/types';
-import { loadNotifications } from './actions';
+import { loadCurrentUserNotifications, changeStatus } from './actions';
 
 type State = {
   dataStatus: DataStatus;
@@ -14,14 +14,29 @@ const initialState: State = {
 };
 
 const reducer = createReducer(initialState, (builder) => {
-  builder.addCase(loadNotifications.pending, (state) => {
+  builder.addCase(loadCurrentUserNotifications.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
   });
-  builder.addCase(loadNotifications.fulfilled, (state, action) => {
+  builder.addCase(loadCurrentUserNotifications.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.notifications = action.payload;
   });
-  builder.addCase(loadNotifications.rejected, (state) => {
+  builder.addCase(loadCurrentUserNotifications.rejected, (state) => {
+    state.dataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(changeStatus.pending, (state) => {
+    state.dataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(changeStatus.fulfilled, (state, action) => {
+    state.dataStatus = DataStatus.FULFILLED;
+    state.notifications = state.notifications.map((notification) => {
+      if (notification.id === action.payload.id) {
+        return action.payload;
+      }
+      return notification;
+    });
+  });
+  builder.addCase(changeStatus.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
 });
