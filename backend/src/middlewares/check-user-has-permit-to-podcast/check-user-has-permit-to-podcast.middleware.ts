@@ -3,7 +3,7 @@ import { HttpError } from '~/exceptions/exceptions';
 import { ErrorMessage, HttpCode, UserRole, PodcastType } from '~/common/enums/enums';
 import { podcast as podcastService, podcastFollower as podcastFollowerService } from '~/services/services';
 
-const CheckUserHasPermitToPodcast = (): RequestHandler => {
+const checkUserHasPermitToPodcast = (): RequestHandler => {
   const handler: RequestHandler = async (req, _res, next) => {
     if (req.user?.role === UserRole.MASTER) {
       return next();
@@ -37,4 +37,4 @@ const CheckUserHasPermitToPodcast = (): RequestHandler => {
   return handler;
 };
 
-export { CheckUserHasPermitToPodcast };
+export { checkUserHasPermitToPodcast };

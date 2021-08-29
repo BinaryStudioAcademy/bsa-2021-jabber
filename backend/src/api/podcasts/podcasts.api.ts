@@ -10,7 +10,7 @@ import {
   checkAuth as checkAuthMiddleware,
   checkUserPodcastOwner as checkUserPodcastOwnerMiddleware,
   validateSchema as validateSchemaMiddleware,
-  CheckUserHasPermitToPodcast as CheckUserHasPermitToPodcastMiddleware,
+  checkUserHasPermitToPodcast as checkUserHasPermitToPodcastMiddleware,
 } from '~/middlewares/middlewares';
 import { podcast as podcastService } from '~/services/services';
 
@@ -42,7 +42,7 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
 
   podcastRouter.get(
     PodcastsApiPath.$ID,
-    CheckUserHasPermitToPodcastMiddleware(),
+    checkUserHasPermitToPodcastMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
         .send(await podcastService.getById(Number(req.params.id)))
