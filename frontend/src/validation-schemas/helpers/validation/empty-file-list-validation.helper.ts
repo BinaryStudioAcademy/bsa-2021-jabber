@@ -6,9 +6,9 @@ const emptyFileListValidation = (image: FileList, helpers: Joi.CustomHelpers<Fil
 
   if (!file) {
     return image;
-  } else {
-    return helpers.error('file.fileListIsNotEmpty');
   }
+
+  return helpers.error('file.fileListIsNotEmpty');
 };
 
 export { emptyFileListValidation };

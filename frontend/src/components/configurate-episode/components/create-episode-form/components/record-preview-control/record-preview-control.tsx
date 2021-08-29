@@ -61,7 +61,7 @@ const RecordPreviewControl: React.FC<Props> = ({
             onChange={handleChange}
           />
         </label>
-        <span className={styles.recordPreview}>{currentRecord ? currentRecord : fileUrl ? 'current episode' : ''}</span>
+        <span className={styles.recordPreview}>{currentRecord ?? fileUrl ? 'current episode' : ''}</span>
       </label>
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />

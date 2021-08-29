@@ -30,7 +30,7 @@ type Props = {
 
 const selectTypeOptions: Option[] = getOptions(Object.values(EpisodeType));
 const selectStatusOptions: Option[] = getOptions(
-  Object.values(EpisodeStatus).filter((status) => status != EpisodeStatus.LIVE),
+  Object.values(EpisodeStatus).filter((status) => status !== EpisodeStatus.LIVE),
 );
 
 const CreateEpisodeForm: React.FC<Props> = ({
