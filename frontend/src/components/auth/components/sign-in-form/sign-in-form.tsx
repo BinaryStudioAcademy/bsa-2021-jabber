@@ -55,6 +55,11 @@ const SignInForm: React.FC<Props> = ({ onSubmit }) => {
           control={control}
           errors={errors}
         />
+        <div className={styles.formSubtitle}>
+          <Link to={AppRoute.RESET_PASSWORD} className={styles.link}>
+            Forgot your password?
+          </Link>
+        </div>
         <Button label="Sign In" type={ButtonType.SUBMIT} />
       </fieldset>
     </form>
