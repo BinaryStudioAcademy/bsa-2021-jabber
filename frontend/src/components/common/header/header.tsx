@@ -167,6 +167,9 @@ const Header: React.FC = () => {
                   <Link to={AppRoute.ROOT} className={styles.link}>
                     Podcasts
                   </Link>
+                  <Link to={`${AppRoute.USERS}/${user?.id}${AppRoute.FAVOURITES}`} className={styles.link}>
+                    Favourites
+                  </Link>
                 </li>
               </ul>
             </Popuper>
