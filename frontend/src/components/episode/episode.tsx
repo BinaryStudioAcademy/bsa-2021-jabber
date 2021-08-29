@@ -247,7 +247,7 @@ const Episode: React.FC = () => {
                 user={user}
                 onTimeClick={handleJumpToTimeLine}
                 onCommentDelete={handleCommentDelete}
-                toggleCommentLike={handleCommentLikeToggle}
+                onToggleCommentLike={handleCommentLikeToggle}
               />
             ) : (
               <div>There&apos;s no comment yet.</div>

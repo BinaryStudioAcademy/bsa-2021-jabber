@@ -1,10 +1,11 @@
-import { getAllowedClasses, getTimeOffset } from 'helpers/helpers';
 import { Comment } from 'common/types/types';
-import { getDistanceToDateNow } from 'helpers/date/date';
-import ImageWrapper from '../image-wrapper/image-wrapper';
-import styles from './styles.module.scss';
 import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
+import { getDistanceToDateNow } from 'helpers/date/date';
+import { getAllowedClasses, getTimeOffset } from 'helpers/helpers';
+import { DEFAULT_COMMENT_COUNT } from './common/constants';
+import ImageWrapper from '../image-wrapper/image-wrapper';
+import styles from './styles.module.scss';
 
 type Props = {
   hasTimestamp?: boolean;
@@ -14,7 +15,7 @@ type Props = {
   isLiked: boolean;
   onTimeClick?: (payload: number) => void;
   onCommentDelete?: (commentId: number) => void;
-  toggleCommentLike?: (commentId: number) => void;
+  onToggleCommentLike?: (commentId: number) => void;
 };
 
 const CommentItem: React.FC<Props> = ({
@@ -25,7 +26,7 @@ const CommentItem: React.FC<Props> = ({
   onTimeClick,
   hasTimestamp,
   onCommentDelete,
-  toggleCommentLike,
+  onToggleCommentLike,
 }) => {
   const time = getTimeOffset(comment.timestamp);
 
@@ -38,7 +39,7 @@ const CommentItem: React.FC<Props> = ({
   };
 
   const handleCommentLikeToggle = (): void => {
-    toggleCommentLike?.(comment.id);
+    onToggleCommentLike?.(comment.id);
   };
 
   const distance = getDistanceToDateNow(
@@ -101,7 +102,7 @@ const CommentItem: React.FC<Props> = ({
           >
           </button>
           <span className={styles.likesCount}>
-            {comment.commentReactions?.length ?? 0}
+            {comment.commentReactions?.length ?? DEFAULT_COMMENT_COUNT}
           </span>
         </div>
         {isAllowDelete &&
