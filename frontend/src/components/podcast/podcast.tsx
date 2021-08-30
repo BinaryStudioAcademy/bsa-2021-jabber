@@ -2,7 +2,7 @@ import { useAppSelector, useDispatch, useEffect, useParams, useState } from 'hoo
 import { configuratePodcast as configuratePodcastActions, podcast as podcastActions } from 'store/actions';
 import { AppRoute, DataStatus, UserRole } from 'common/enums/enums';
 import { Button, ConfirmPopup, ImageWrapper, Link, Loader } from 'components/common/common';
-import { EpisodeTable } from './common/components/components';
+import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 import { getAllowedClasses, getFilterEpisode } from 'helpers/helpers';

@@ -4,7 +4,7 @@ import { RootState } from 'common/types/types';
 import { PageParams } from './common/types/types';
 import { DataStatus } from 'common/enums/enums';
 import { Loader } from 'components/common/common';
-import { FavouriteEpisodeTable } from './common/components/components';
+import { FavouriteEpisodeTable } from './components/components';
 import { userFavouriteEpisodes as userFavouriteEpisodesActions } from 'store/actions';
 import { getFilterEpisode } from 'helpers/helpers';
 import { DEFAULT_EPISODE_PAGINATION, DEFAULT_EPISODE_PAGE } from './common/constants/constants';
