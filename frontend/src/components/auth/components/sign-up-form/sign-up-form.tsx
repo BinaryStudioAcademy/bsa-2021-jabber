@@ -7,8 +7,9 @@ import {
   UserPayloadKey,
 } from 'common/enums/enums';
 import { signUp as signUpValidationSchema } from 'validation-schemas/validation-schemas';
-import { useAppForm, useAppSelector } from 'hooks/hooks';
+import { useAppForm, useAppSelector, useState } from 'hooks/hooks';
 import { Button, Input, Link, Datepicker } from 'components/common/common';
+import { getAllowedClasses } from 'helpers/helpers';
 import { DEFAULT_REGISTER_PAYLOAD } from './common/constants';
 import styles from './styles.module.scss';
 
@@ -26,6 +27,12 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
   }));
 
   const isFormDisabled = authStatus === DataStatus.PENDING;
+
+  const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
+
+  const handleToggleVisible = (): void => {
+    setIsVisiblePassword(!isVisiblePassword);
+  };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -67,14 +74,23 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
           control={control}
           errors={errors}
         />
-        <Input
-          type={InputType.PASSWORD}
-          label="Password"
-          placeholder="Enter your password"
-          name={UserPayloadKey.PASSWORD}
-          control={control}
-          errors={errors}
-        />
+        <div className={styles.passwordWrapper}>
+          <Input
+            type={isVisiblePassword ? InputType.TEXT : InputType.PASSWORD}
+            label="Password"
+            placeholder="Enter your password"
+            name={UserPayloadKey.PASSWORD}
+            control={control}
+            errors={errors}
+          />
+          <button
+            type="button"
+            className={getAllowedClasses(styles.showPasswordBtn, isVisiblePassword && styles.visible)}
+            onClick={handleToggleVisible}
+          >
+            <span className="visually-hidden">Toggle password visibility</span>
+          </button>
+        </div>
         <Datepicker
           label="Birthdate"
           name={UserPayloadKey.BIRTHDATE}
