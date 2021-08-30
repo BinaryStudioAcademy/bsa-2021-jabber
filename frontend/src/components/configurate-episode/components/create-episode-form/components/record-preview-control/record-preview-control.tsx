@@ -16,7 +16,7 @@ type Props = {
   name: Path<FieldValues>;
   control: Control;
   errors: FieldValues;
-  fileUrl?: string;
+  fileUrl: string | null;
 };
 
 const acceptAudioExtension = getFileExtensions(

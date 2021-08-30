@@ -14,7 +14,7 @@ const DEFAULT_CREATE_EPISODE_PAYLOAD: EpisodeFormPayload = {
   [EpisodePayloadKey.IMAGE]: null,
   [EpisodePayloadKey.RECORD]: null,
   [EpisodePayloadKey.STATUS]: EpisodeStatus.STAGING,
-  [EpisodePayloadKey.RECORD_DATA_URL]: undefined,
+  [EpisodePayloadKey.RECORD_DATA_URL]: null,
 };
 
 const DEFAULT_SHOWNOTE_PAYLOAD: ShownoteFormPayload = {

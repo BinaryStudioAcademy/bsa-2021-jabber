@@ -23,11 +23,7 @@ const ConfigurateEpisode: React.FC = () => {
     }),
   );
 
-  const mapEpisode = episode ? mapEpisodeToFormPayload(episode) : undefined;
-
-  if (liveRecordDataUrl && mapEpisode) {
-    mapEpisode.recordDataUrl = liveRecordDataUrl;
-  }
+  const mapEpisode = episode ? mapEpisodeToFormPayload(episode, liveRecordDataUrl) : undefined;
 
   const isEdit = Boolean(id);
 
