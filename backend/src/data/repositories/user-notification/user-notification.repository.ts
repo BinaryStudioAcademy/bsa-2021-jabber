@@ -1,9 +1,9 @@
 import {
   UserNotification as TUserNotification,
   UserNotificationCreatePayload,
+  UserNotificationEditDTOPayload
 } from '~/common/types/types';
 import { UserNotificationModel as UserNotificationM } from '~/data/models/models';
-import { UserNotificationStatus } from '~/common/enums/enums';
 
 type Constructor = {
   UserNotificationModel: typeof UserNotificationM;
@@ -30,9 +30,9 @@ class UserNotification {
     return this.#UserNotificationModel.query().findById(id);
   }
 
-  public updateStatus(id: number, status: UserNotificationStatus): Promise<TUserNotification>{
+  public update(id: number, payload: UserNotificationEditDTOPayload): Promise<TUserNotification>{
     return this.#UserNotificationModel.query()
-      .patchAndFetchById(id, { status }).withGraphFetched('[notification]');
+      .patchAndFetchById(id, payload).withGraphFetched('[notification]');
   }
 }
 

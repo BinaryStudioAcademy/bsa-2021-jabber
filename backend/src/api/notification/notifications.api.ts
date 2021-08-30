@@ -27,11 +27,11 @@ const initNotificationApi = ({ apiRouter, userNotificationService }: Args): Rout
   );
 
   notificationRouter.put(
-    NotificationsApiPath.$ID_STATUS,
+    NotificationsApiPath.$ID,
     checkAuthMiddleware(HttpMethod.PUT),
     handleAsyncApi(async (req, res) => {
       return res
-        .json(await userNotificationService.changeStatus(Number(req.params.id)))
+        .json(await userNotificationService.update(Number(req.params.id), req.body))
         .status(HttpCode.OK);
     }),
   );

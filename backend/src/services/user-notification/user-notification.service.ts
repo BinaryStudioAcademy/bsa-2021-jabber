@@ -1,5 +1,4 @@
-import { UserNotification as TUserNotification } from '~/common/types/types';
-import { UserNotificationStatus } from '~/common/enums/enums';
+import { UserNotificationEditDTOPayload, UserNotification as TUserNotification } from '~/common/types/types';
 import { userNotification as userNotificationRep } from '~/data/repositories/repositories';
 
 type Constructor = {
@@ -17,14 +16,9 @@ class UserNotification {
     return this.#userNotificationRepository.getAllByUserId(id);
   }
 
-  public async changeStatus(id: number):  Promise<TUserNotification> {
-    const notification = await this.#userNotificationRepository.getById(id);
-
-    const updatedStatus = notification.status === UserNotificationStatus.CHECKED
-      ? UserNotificationStatus.UNCHECKED
-      : UserNotificationStatus.CHECKED;
-
-    return this.#userNotificationRepository.updateStatus(id, updatedStatus);
+  public async update(id: number, { status }: TUserNotification):  Promise<TUserNotification> {
+    const updateUserNotification: UserNotificationEditDTOPayload = { status };
+    return this.#userNotificationRepository.update(id, updateUserNotification);
   }
 }
 
