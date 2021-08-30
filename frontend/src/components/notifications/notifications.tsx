@@ -1,6 +1,7 @@
 import NotificationItem from './components/notification-item';
-import { RootState } from 'common/types/types';
-import { useAppSelector } from 'hooks/hooks';
+import { RootState, UserNotification } from 'common/types/types';
+import { useAppSelector, useEffect, useDispatch } from 'hooks/hooks';
+import { notification as notificationAction } from 'store/actions';
 import styles from './styles.module.scss';
 
 const Notifications: React.FC = () => {
@@ -8,7 +9,17 @@ const Notifications: React.FC = () => {
     notifications: notification.notifications,
   }));
 
+  const dispatch = useDispatch();
+
   const hasNotificaions = Boolean(notifications.length);
+
+  const handleChangeNotificationStatus = (payload: UserNotification): void => {
+    dispatch(notificationAction.changeStatus(payload));
+  };
+
+  useEffect(() => {
+    dispatch(notificationAction.loadCurrentUserNotifications());
+  }, []);
 
   if (!hasNotificaions) {
     return (
@@ -20,9 +31,13 @@ const Notifications: React.FC = () => {
 
   return (
     <ul className={styles.container}>
-      {notifications.map((notification) => {
-        <NotificationItem notification={notification} key={notification.id} />;
-      })}
+      {notifications.map((notification) => (
+        <NotificationItem
+          notification={notification}
+          key={notification.id}
+          onChangeStatus={handleChangeNotificationStatus}
+        />
+      ))}
     </ul>
   );
 };

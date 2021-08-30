@@ -39,6 +39,7 @@ import { UserFollower } from './user-follower/user-follower.service';
 import { Notification } from './notification/notification.service';
 import { Mailer } from './mailer/mailer.service';
 import { UserFavouriteEpisode } from './user-favourite-episode/user-favourite-episode.service';
+import { UserNotification } from './user-notification/user-notification.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -144,6 +145,10 @@ const userFavouriteEpisode = new UserFavouriteEpisode({
   userFavouriteEpisodeRepository,
 });
 
+const userNotification = new UserNotification({
+  userNotificationRepository,
+});
+
 export {
   auth,
   appAsyncStorage,
@@ -165,4 +170,5 @@ export {
   notification,
   mailer,
   userFavouriteEpisode,
+  userNotification,
 };

@@ -303,6 +303,19 @@ class Podcast {
 
     return this.#podcastRepository.getById(invitationCode.podcastId);
   }
+
+  public async getInvitationCodeById(id: number): Promise<string> {
+    const invitationCode = await this.#invitationCodeRepository.getByPodcastId(id);
+
+    if (!invitationCode) {
+      throw new HttpError({
+        status: HttpCode.NOT_FOUND,
+        message: ErrorMessage.INVITATION_CODE_DOES_NOT_EXIST,
+      });
+    }
+
+    return invitationCode.code;
+  }
 }
 
 export { Podcast };

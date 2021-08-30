@@ -1,6 +1,6 @@
 import { useAppSelector, useDispatch, useEffect, useParams, useState } from 'hooks/hooks';
 import { configuratePodcast as configuratePodcastActions, podcast as podcastActions } from 'store/actions';
-import { AppRoute, DataStatus, UserRole } from 'common/enums/enums';
+import { AppRoute, DataStatus, UserRole, PodcastType } from 'common/enums/enums';
 import { Button, ConfirmPopup, ImageWrapper, Link, Loader } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
@@ -101,6 +101,12 @@ const Podcast: React.FC = () => {
       page,
       row: episodePagination.row,
     });
+  };
+
+  const handleCopyInviteLink = (): void => {
+    if (podcast) {
+      dispatch(podcastActions.copyInviteLink(podcast?.id));
+    }
   };
 
   if (isLoading) {
@@ -220,7 +226,9 @@ const Podcast: React.FC = () => {
                   >
                     Type
                   </div>
-                  <p className={styles.infoInner}>{podcast.type}</p>
+                  {podcast.type !== PodcastType.PRIVATE ?
+                    <p className={styles.infoInner}>{podcast.type}</p> : <button className={styles.copyInvitation} onClick={handleCopyInviteLink}>Private (copy link)</button>
+                  }
                 </li>
                 <li className={styles.infoItem}>
                   <div

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Podcast, AsyncThunkConfig, EpisodeQueryPayload, PodcastFollowerPayload, LoadEpisodesByPodcastIdPayload } from 'common/types/types';
-import { AppRoute, NotificationTitle } from 'common/enums/enums';
+import { AppRoute, NotificationTitle, NotificationMessage } from 'common/enums/enums';
+import { copyToClipboard } from 'helpers/helpers';
 import { ActionType } from './common';
 
 const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>(
@@ -69,4 +70,25 @@ const podcastInvite = createAsyncThunk<void, string, AsyncThunkConfig>(
 
   });
 
-export { loadPodcast, loadEpisodesByPodcastId, getFollowersCount, checkIsFollowedPodcast, toggleFollowPodcast, podcastInvite };
+const copyInviteLink = createAsyncThunk<void, number, AsyncThunkConfig>(
+  ActionType.COPY_INVITE_LINK,
+  async (id, { extra }) => {
+    const { podcastApi, notificationService } = extra;
+
+    const invitationCode = await podcastApi.invitationCode(id);
+
+    copyToClipboard(
+      `${window.location.host}${AppRoute.PODCASTS_INVITE}/${invitationCode}`,
+    );
+    notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.INVITATION_LINK_COPIED);
+  });
+
+export {
+  loadPodcast,
+  loadEpisodesByPodcastId,
+  getFollowersCount,
+  checkIsFollowedPodcast,
+  toggleFollowPodcast,
+  podcastInvite,
+  copyInviteLink,
+};
