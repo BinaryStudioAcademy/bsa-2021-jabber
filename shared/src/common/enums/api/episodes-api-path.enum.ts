@@ -4,7 +4,7 @@ enum EpisodesApiPath {
   PODCAST = '/podcast',
   PODCAST_$ID = '/podcast/:id',
   FAVOURITES = '/favourites',
-  FAVOURITES_$ID = '/favourites/:id',
+  FAVOURITES_$USER_ID = '/favourites/:userId',
   FAVOURITES_$ID_EPISODES = '/favourites/:id/episodes',
 
 }
