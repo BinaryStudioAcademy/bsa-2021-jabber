@@ -1,7 +1,8 @@
 import { useAppSelector, useDispatch, useEffect, useParams, useState } from 'hooks/hooks';
 import { configuratePodcast as configuratePodcastActions, podcast as podcastActions } from 'store/actions';
 import { AppRoute, DataStatus, UserRole } from 'common/enums/enums';
-import { Button, ConfirmPopup, ImageWrapper, Link, Loader, EpisodeTable } from 'components/common/common';
+import { Button, ConfirmPopup, ImageWrapper, Link, Loader } from 'components/common/common';
+import { EpisodeTable } from './common/components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 import { getAllowedClasses, getFilterEpisode } from 'helpers/helpers';
@@ -234,7 +235,7 @@ const Podcast: React.FC = () => {
           </div>
           {episodes.length
             ? isEpisodesLoading
-              ? <Loader/>
+              ? <Loader />
               : <EpisodeTable
                 episodes={episodes}
                 onSetRow={handleSetRowEpisodeFilter}
