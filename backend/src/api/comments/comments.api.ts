@@ -37,6 +37,16 @@ const initCommentsApi = ({ apiRouter, commentService }: Args): Router => {
     }),
   );
 
+  commentRouter.post(
+    CommentsApiPath.COMMENT_REACTIONS,
+    checkAuthMiddleware(HttpMethod.POST),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await commentService.createCommentReaction(Number(req.user?.id), Number(req.body.commentId)))
+        .status(HttpCode.CREATED);
+    }),
+  );
+
   commentRouter.get(
     CommentsApiPath.EPISODE_ID,
     handleAsyncApi(async (req, res) => {
@@ -62,6 +72,16 @@ const initCommentsApi = ({ apiRouter, commentService }: Args): Router => {
     handleAsyncApi(async (req, res) => {
       return res
         .json(await commentService.delete(Number(req.params.id)))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  commentRouter.delete(
+    CommentsApiPath.COMMENT_REACTIONS_$COMMENT_ID,
+    checkAuthMiddleware(HttpMethod.DELETE),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await commentService.deleteCommentReaction(Number(req.user?.id), Number(req.params.commentId)))
         .status(HttpCode.OK);
     }),
   );

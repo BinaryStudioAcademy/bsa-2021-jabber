@@ -10,6 +10,7 @@ import {
   checkAuth as checkAuthMiddleware,
   checkUserPodcastOwner as checkUserPodcastOwnerMiddleware,
   validateSchema as validateSchemaMiddleware,
+  checkUserHasPermitToPodcast as checkUserHasPermitToPodcastMiddleware,
 } from '~/middlewares/middlewares';
 import { podcast as podcastService } from '~/services/services';
 
@@ -41,6 +42,7 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
 
   podcastRouter.get(
     PodcastsApiPath.$ID,
+    checkUserHasPermitToPodcastMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
         .send(await podcastService.getById(Number(req.params.id)))
@@ -88,6 +90,16 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
     handleAsyncApi(async (req, res) => {
       return res
         .json(await podcastService.invite(req.params.code, (<User>req.user).id))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  podcastRouter.get(
+    PodcastsApiPath.INVITATION_CODE_$ID,
+    checkUserHasPermitToPodcastMiddleware(),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await podcastService.getInvitationCodeById(Number(req.params.id)))
         .status(HttpCode.OK);
     }),
   );

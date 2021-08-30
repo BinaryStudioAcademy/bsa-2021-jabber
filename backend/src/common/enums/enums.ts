@@ -33,6 +33,7 @@ export {
   GenreDTOKey,
   UserFollowerDTOKey,
   PodcastFollowerDTOKey,
+  CommentReactionDTOKey,
   InvitationCodeDTOKey,
 } from './db/db';
 export { HttpCode, HttpMethod } from './http/http';
@@ -59,6 +60,7 @@ export { StrategyName } from './strategy/strategy';
 export { UserPayloadKey, UserRole, UserValidationMessage } from './user/user';
 export {
   CommentCreatePayloadKey,
+  CommentReactionCreatePayloadKey,
   CommentValidationMessage,
 } from './comment/comment';
 export { SocketEvent } from './socket/socket';

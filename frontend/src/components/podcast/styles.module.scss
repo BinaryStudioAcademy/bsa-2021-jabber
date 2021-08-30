@@ -1,6 +1,7 @@
 .podcast {
   max-width: 1606px;
   width: 100%;
+  min-height: calc(100vh - 80px);
   margin: 0 auto;
   padding: 30px 15px;
 }
@@ -69,6 +70,7 @@
   margin: 0 0 20px 0;
   font-size: 40px;
   line-height: 1.25;
+  max-width: 80%;
 }
 
 .description {
@@ -127,6 +129,14 @@
   font-weight: 700;
   margin-bottom: 10px;
   padding-left: 25px;
+}
+
+.copyInvitation {
+  padding: 0;
+  color: inherit;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .host {
@@ -192,10 +202,6 @@
     padding: 30px;
   }
 
-  .addEpisodeLink, .followButton {
-    bottom: 50px;
-  }
-
   .podcastInfoWrapper {
     padding: 20px 20px 80px 20px;
   }
@@ -213,6 +219,7 @@
   .title {
     margin-bottom: 15px;
     font-size: 25px;
+    width: 100%;
   }
 
   .description {
@@ -227,5 +234,26 @@
     width: 110px;
     margin-right: 20px;
     margin-bottom: 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .content {
+    padding: 20px;
+  }
+
+  .deleteButton {
+    top: auto;
+    bottom: 35px;
+  }
+
+  .editLink {
+    top: auto;
+    bottom: 35px;
+  }
+
+  .addEpisodeLink, .followButton {
+    left: 40px;
+    bottom: 40px;
   }
 }

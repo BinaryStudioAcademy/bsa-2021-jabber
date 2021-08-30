@@ -12,17 +12,21 @@ import {
 type State = {
   dataStatus: DataStatus;
   followersDataStatus: DataStatus;
+  episodesDataStatus: DataStatus;
   podcast: Podcast | null;
   episodes: Episode[];
   isFollowed: boolean;
   followersCount: number;
+  totalCount: number;
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
   followersDataStatus: DataStatus.IDLE,
+  episodesDataStatus: DataStatus.IDLE,
   podcast: null,
   episodes: [],
+  totalCount: 0,
   isFollowed: false,
   followersCount: 0,
 };
@@ -40,14 +44,15 @@ const reducer = createReducer(initialState, (builder) => {
   });
 
   builder.addCase(loadEpisodesByPodcastId.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
+    state.episodesDataStatus = DataStatus.PENDING;
   });
   builder.addCase(loadEpisodesByPodcastId.fulfilled, (state, action) => {
-    state.dataStatus = DataStatus.FULFILLED;
-    state.episodes = action.payload;
+    state.episodesDataStatus = DataStatus.FULFILLED;
+    state.episodes = action.payload.results;
+    state.totalCount = action.payload.totalCount;
   });
   builder.addCase(loadEpisodesByPodcastId.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
+    state.episodesDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(getFollowersCount.pending, (state) => {
     state.followersDataStatus = DataStatus.PENDING;

@@ -10,6 +10,8 @@ import {
   EpisodeCreateDTOPayload,
   EpisodeCreatePayload,
   EpisodeEditPayload,
+  EpisodeQueryPayload,
+  LoadEpisodesByPodcastIdPayload,
 } from '~/common/types/types';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
 import {
@@ -258,8 +260,18 @@ class Episode {
     return episode;
   }
 
-  public getAllByPodcastId(id: number): Promise<TEpisode[]> {
-    return this.#episodeRepository.getAllByPodcastId(id);
+  public getEpisodeCountByPodcastId(id: number): Promise<number> {
+    return this.#episodeRepository.getEpisodeCountByPodcastId(id);
+  }
+
+  public async getByQueryByPodcastId(loadEpisodesByPodcastIdPayload: LoadEpisodesByPodcastIdPayload): Promise<EpisodeQueryPayload> {
+    const results = await this.#episodeRepository.getByQueryByPodcastId(loadEpisodesByPodcastIdPayload);
+    const totalCount = await this.#episodeRepository.getEpisodeCountByPodcastId(loadEpisodesByPodcastIdPayload.podcastId);
+
+    return {
+      results,
+      totalCount,
+    };
   }
 
   public async delete(id: number): Promise<TEpisode> {
@@ -272,7 +284,11 @@ class Episode {
       });
     }
 
-    await this.#commentService.deleteAllByEpisodeId(id);
+    const comments = await this.#commentService.getAllByEpisodeId(episode.id);
+    const hasComments = Boolean(comments.length);
+    if(hasComments){
+      await Promise.all(comments.map((comment) => this.#commentService.delete(comment.id)));
+    }
 
     const record = await this.#recordService.getByEpisodeId(id);
     if (record) {

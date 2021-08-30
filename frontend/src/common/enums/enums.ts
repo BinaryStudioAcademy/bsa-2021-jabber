@@ -45,6 +45,7 @@ export {
   ShownoteValidationRule,
 } from './shownote/shownote';
 export { CommentCreatePayloadKey } from './comment/comment';
+export { CommentReactionCreatePayloadKey } from './comment-reaction/comment-reaction';
 export { SocketEvent } from './socket/socket';
 export {
   NotificationMessage,

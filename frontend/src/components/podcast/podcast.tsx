@@ -1,14 +1,13 @@
 import { useAppSelector, useDispatch, useEffect, useParams, useState } from 'hooks/hooks';
-import {
-  podcast as podcastActions,
-  configuratePodcast as configuratePodcastActions,
-} from 'store/actions';
-import { AppRoute, DataStatus, UserRole } from 'common/enums/enums';
-import { Link, Loader, ImageWrapper, ConfirmPopup, Button } from 'components/common/common';
+import { configuratePodcast as configuratePodcastActions, podcast as podcastActions } from 'store/actions';
+import { AppRoute, DataStatus, UserRole, PodcastType } from 'common/enums/enums';
+import { Button, ConfirmPopup, ImageWrapper, Link, Loader } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
 import { getAllowedClasses } from 'helpers/helpers';
+import { getFilterEpisode } from './helpers/helpers';
+import { DEFAULT_EPISODE_PAGINATION, DEFAULT_EPISODE_PAGE } from './common/constatnts/constants';
 
 const Podcast: React.FC = () => {
   const {
@@ -20,6 +19,8 @@ const Podcast: React.FC = () => {
     isFollowed,
     followersCount,
     followersDataStatus,
+    countEpisodes,
+    episodesDataStatus,
   } = useAppSelector(
     ({ podcast, auth }) => ({
       userId: auth.user?.id,
@@ -30,6 +31,8 @@ const Podcast: React.FC = () => {
       isFollowed: podcast.isFollowed,
       followersCount: podcast.followersCount,
       followersDataStatus: podcast.followersDataStatus,
+      countEpisodes: podcast.totalCount,
+      episodesDataStatus: podcast.episodesDataStatus,
     }),
   );
   const dispatch = useDispatch();
@@ -38,11 +41,20 @@ const Podcast: React.FC = () => {
   const isMaster = userRole === UserRole.MASTER;
   const isAllowDelete = isOwner || isMaster;
   const isLoading = dataStatus === DataStatus.PENDING || followersDataStatus === DataStatus.PENDING;
+  const isEpisodesLoading = episodesDataStatus === DataStatus.PENDING;
+
+  const [episodePagination, setEpisodePagination] = useState(DEFAULT_EPISODE_PAGINATION);
 
   useEffect(() => {
     dispatch(podcastActions.loadPodcast(Number(id)));
-    dispatch(podcastActions.loadEpisodesByPodcastId(Number(id)));
   }, []);
+
+  useEffect(() => {
+    dispatch(podcastActions.loadEpisodesByPodcastId({
+      podcastId: Number(id),
+      filter: getFilterEpisode(episodePagination.page, episodePagination.row),
+    }));
+  }, [episodePagination]);
 
   useEffect(() => {
     if (podcast && userId) {
@@ -75,6 +87,26 @@ const Podcast: React.FC = () => {
         podcastId: podcast.id,
         followerId: userId,
       }));
+    }
+  };
+
+  const handleSetRowEpisodeFilter = (row: number): void => {
+    setEpisodePagination({
+      page: DEFAULT_EPISODE_PAGE,
+      row,
+    });
+  };
+
+  const handleSetOffsetEpisodeFilter = (page: number): void => {
+    setEpisodePagination({
+      page,
+      row: episodePagination.row,
+    });
+  };
+
+  const handleCopyInviteLink = (): void => {
+    if (podcast) {
+      dispatch(podcastActions.copyInviteLink(podcast?.id));
     }
   };
 
@@ -161,7 +193,7 @@ const Podcast: React.FC = () => {
                       Episodes
                     </div>
                     <p className={styles.infoInner}>
-                      {episodes.length} episodes
+                      {countEpisodes} episodes
                     </p>
                   </li>
                 )}
@@ -195,7 +227,9 @@ const Podcast: React.FC = () => {
                   >
                     Type
                   </div>
-                  <p className={styles.infoInner}>{podcast.type}</p>
+                  {podcast.type !== PodcastType.PRIVATE ?
+                    <p className={styles.infoInner}>{podcast.type}</p> : <button className={styles.copyInvitation} onClick={handleCopyInviteLink}>Private (copy link)</button>
+                  }
                 </li>
                 <li className={styles.infoItem}>
                   <div
@@ -208,13 +242,22 @@ const Podcast: React.FC = () => {
               </ul>
             </div>
           </div>
-          {episodes.length ? (
-            <EpisodeTable episodes={episodes} />
-          ) : (
-            <div className={styles.placeholder}>
-              There are no episodes in this podcast yet.
-            </div>
-          )}
+          {episodes.length
+            ? isEpisodesLoading
+              ? <Loader/>
+              : <EpisodeTable
+                episodes={episodes}
+                onSetRow={handleSetRowEpisodeFilter}
+                onSetPage={handleSetOffsetEpisodeFilter}
+                pageIndex={episodePagination.page}
+                pageSize={episodePagination.row}
+                totalCountEpisodes={countEpisodes}
+              />
+            : (
+              <div className={styles.placeholder}>
+                There are no episodes in this podcast yet.
+              </div>
+            )}
         </>
       ) : (
         <h1 className={styles.notFound}>Oops. There is no such podcast</h1>

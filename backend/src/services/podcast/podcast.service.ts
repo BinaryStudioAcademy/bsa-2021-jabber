@@ -130,6 +130,7 @@ class Podcast {
 
   public async getById(id: number): Promise<TPodcast> {
     const podcast = await this.#podcastRepository.getById(id);
+
     if (!podcast) {
       throw new HttpError({
         status: HttpCode.NOT_FOUND,
@@ -257,7 +258,7 @@ class Podcast {
       });
     }
 
-    const episodes = await this.#episodeService.getAllByPodcastId(id);
+    const episodes = await this.#episodeService.getEpisodeCountByPodcastId(id);
     const isEpisodesExist = Boolean(episodes);
 
     if (isEpisodesExist) {
@@ -301,6 +302,19 @@ class Podcast {
     });
 
     return this.#podcastRepository.getById(invitationCode.podcastId);
+  }
+
+  public async getInvitationCodeById(id: number): Promise<string> {
+    const invitationCode = await this.#invitationCodeRepository.getByPodcastId(id);
+
+    if (!invitationCode) {
+      throw new HttpError({
+        status: HttpCode.NOT_FOUND,
+        message: ErrorMessage.INVITATION_CODE_DOES_NOT_EXIST,
+      });
+    }
+
+    return invitationCode.code;
   }
 }
 

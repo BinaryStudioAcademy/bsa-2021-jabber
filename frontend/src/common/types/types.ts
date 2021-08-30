@@ -28,6 +28,9 @@ export type {
   EpisodeFormPayload,
   CreateActionEpisodePayload,
   DeleteActionEpisodePayload,
+  LoadEpisodesByPodcastIdPayload,
+  EpisodeLoadFilter,
+  EpisodeQueryPayload,
 } from './episode/episode';
 export type {
   Shownote,
@@ -40,6 +43,10 @@ export type {
   Comment,
   CommentFormCreatePayload,
 } from './comment/comment';
+export type {
+  CommentReaction,
+  CommentReactionCreatePayload,
+} from './comment-reaction/comment-reaction';
 export type { Option } from './ui/option';
 export type { UserNotification } from './notification/notification';
 export type { Genre } from './genre/genre';

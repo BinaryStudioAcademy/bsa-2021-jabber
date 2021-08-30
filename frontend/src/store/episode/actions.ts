@@ -8,6 +8,7 @@ import {
   AsyncThunkConfig,
 } from 'common/types/types';
 import { ActionType, LoadEpisodePayload } from './common';
+import { checkIsLiked } from 'helpers/helpers';
 
 const loadEpisodePayload = createAsyncThunk<LoadEpisodePayload, number, AsyncThunkConfig>
 (ActionType.LOAD_EPISODE_PAYLOAD, async (id, { extra }) => {
@@ -42,6 +43,19 @@ const createComment = createAsyncThunk<Comment, CommentFormCreatePayload, AsyncT
   return comment;
 });
 
+const toggleCommentLike = createAsyncThunk <Comment, number, AsyncThunkConfig>
+(ActionType.LIKE_COMMENT, async (commentId, { extra, getState }) =>{
+  const { commentApi } = extra;
+  const { auth } = getState();
+  const currentComment = await commentApi.getById(commentId);
+  const isLiked = checkIsLiked(currentComment, auth.user?.id);
+  const comment = isLiked
+    ? await commentApi.deleteCommentReaction({ commentId })
+    : await commentApi.createCommentReaction({ commentId });
+
+  return comment;
+});
+
 const deleteComment = createAsyncThunk <Comment, number, AsyncThunkConfig>
 (ActionType.DELETE_COMMENT, async (id, { extra }) => {
   const { commentApi, notificationService } = extra;
@@ -53,6 +67,7 @@ const deleteComment = createAsyncThunk <Comment, number, AsyncThunkConfig>
 
 const updateComments = createAction<Comment>(ActionType.UPDATE_COMMENTS);
 const updateCommentsAfterDelete = createAction<Comment>(ActionType.UPDATE_COMMENTS_AFTER_DELETE);
+const updateCommentsAfterLike = createAction<Comment>(ActionType.UPDATE_COMMENTS_AFTER_LIKE);
 const leaveEpisode = createAction<string>(ActionType.LEAVE_EPISODE);
 
 export {
@@ -60,7 +75,9 @@ export {
   loadCommentsByEpisodeId,
   createComment,
   updateComments,
+  toggleCommentLike,
   deleteComment,
   updateCommentsAfterDelete,
+  updateCommentsAfterLike,
   leaveEpisode,
 };

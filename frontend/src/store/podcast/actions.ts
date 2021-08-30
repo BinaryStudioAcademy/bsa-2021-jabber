@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Podcast, AsyncThunkConfig, Episode, PodcastFollowerPayload } from 'common/types/types';
-import { AppRoute, NotificationTitle } from 'common/enums/enums';
+import { Podcast, AsyncThunkConfig, EpisodeQueryPayload, PodcastFollowerPayload, LoadEpisodesByPodcastIdPayload } from 'common/types/types';
+import { AppRoute, NotificationTitle, NotificationMessage } from 'common/enums/enums';
+import { copyToClipboard } from 'helpers/helpers';
 import { ActionType } from './common';
 
 const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>(
@@ -13,13 +14,13 @@ const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>(
   },
 );
 
-const loadEpisodesByPodcastId = createAsyncThunk<Episode[], number, AsyncThunkConfig>
-(ActionType.LOAD_PODCAST_EPISODES, async (id, { extra }) => {
-  const { episodeApi } = extra;
-  const episodes = await episodeApi.getAllByPodcastId(id);
+const loadEpisodesByPodcastId = createAsyncThunk<EpisodeQueryPayload, LoadEpisodesByPodcastIdPayload, AsyncThunkConfig>(
+  ActionType.LOAD_PODCAST_EPISODES, async (loadEpisodesByPodcastIdPayload, { extra }) => {
+    const { episodeApi } = extra;
+    const result = await episodeApi.getByQueryByPodcastId(loadEpisodesByPodcastIdPayload);
 
-  return episodes;
-});
+    return result;
+  });
 
 const getFollowersCount = createAsyncThunk<number, number, AsyncThunkConfig>(
   ActionType.GET_FOLLOWERS_COUNT,
@@ -69,4 +70,25 @@ const podcastInvite = createAsyncThunk<void, string, AsyncThunkConfig>(
 
   });
 
-export { loadPodcast, loadEpisodesByPodcastId, getFollowersCount, checkIsFollowedPodcast, toggleFollowPodcast, podcastInvite };
+const copyInviteLink = createAsyncThunk<void, number, AsyncThunkConfig>(
+  ActionType.COPY_INVITE_LINK,
+  async (id, { extra }) => {
+    const { podcastApi, notificationService } = extra;
+
+    const invitationCode = await podcastApi.invitationCode(id);
+
+    copyToClipboard(
+      `${window.location.host}${AppRoute.PODCASTS_INVITE}/${invitationCode}`,
+    );
+    notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.INVITATION_LINK_COPIED);
+  });
+
+export {
+  loadPodcast,
+  loadEpisodesByPodcastId,
+  getFollowersCount,
+  checkIsFollowedPodcast,
+  toggleFollowPodcast,
+  podcastInvite,
+  copyInviteLink,
+};

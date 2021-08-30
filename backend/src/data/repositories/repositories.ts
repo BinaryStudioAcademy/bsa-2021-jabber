@@ -7,6 +7,7 @@ import {
   ImageModel,
   ShownoteModel,
   GenreModel,
+  CommentReactionModel,
   PodcastFollowerModel,
   UserFollowerModel,
   InvitationCodeModel,
@@ -21,6 +22,7 @@ import { Comment } from './comment/comment.repository';
 import { Record } from './record/record.repository';
 import { Shownote } from './shownote/shownote.repository';
 import { Genre } from './genre/genre.repository';
+import { CommentReaction } from './comment-reaction/comment-reaction.repository';
 import { PodcastFollower } from './podcast-follower/podcast-follower.repository';
 import { UserFollower } from './user-follower/user-follower.repository';
 import { InvitationCode } from './invitation-code/invitation-code.repository';
@@ -49,6 +51,10 @@ const shownote = new Shownote({
 
 const comment = new Comment({
   CommentModel,
+});
+
+const commentReaction = new CommentReaction({
+  CommentReactionModel,
 });
 
 const record = new Record({
@@ -93,4 +99,5 @@ export {
   invitationCode,
   notification,
   userNotification,
+  commentReaction,
 };

@@ -4,6 +4,7 @@ enum CommentDTOKey {
   USER_ID = 'userId',
   TIMESTAMP = 'timestamp',
   USER = 'user',
+  COMMENT_REACTIONS = 'commentReactions',
 }
 
 export { CommentDTOKey };
