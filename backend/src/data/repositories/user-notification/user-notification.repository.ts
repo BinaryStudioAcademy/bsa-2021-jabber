@@ -1,7 +1,7 @@
 import {
   UserNotification as TUserNotification,
   UserNotificationCreatePayload,
-  UserNotificationEditDTOPayload
+  UserNotificationEditDTOPayload,
 } from '~/common/types/types';
 import { UserNotificationModel as UserNotificationM } from '~/data/models/models';
 
@@ -32,7 +32,8 @@ class UserNotification {
 
   public update(id: number, payload: UserNotificationEditDTOPayload): Promise<TUserNotification>{
     return this.#UserNotificationModel.query()
-      .patchAndFetchById(id, payload).withGraphFetched('[notification]');
+      .patchAndFetchById(id, payload)
+      .withGraphFetched('[notification]');
   }
 }
 
