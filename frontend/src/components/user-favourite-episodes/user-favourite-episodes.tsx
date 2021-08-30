@@ -3,7 +3,8 @@ import { useAppSelector, useParams, useDispatch, useEffect, useState } from 'hoo
 import { RootState } from 'common/types/types';
 import { PageParams } from './common/types/types';
 import { DataStatus } from 'common/enums/enums';
-import { Loader, EpisodeTable } from 'components/common/common';
+import { Loader } from 'components/common/common';
+import { FavouriteEpisodeTable } from './common/components/components';
 import { userFavouriteEpisodes as userFavouriteEpisodesActions } from 'store/actions';
 import { getFilterEpisode } from 'helpers/helpers';
 import { DEFAULT_EPISODE_PAGINATION, DEFAULT_EPISODE_PAGE } from './common/constants/constants';
@@ -50,7 +51,7 @@ const UserFavouriteEpisodesPage: React.FC = () => {
     <div className={styles.container}>
       <h1 className={styles.title}>Favourite episodes:</h1>
       {episodes.length
-        ? <EpisodeTable
+        ? <FavouriteEpisodeTable
           episodes={episodes}
           onSetRow={handleSetRowEpisodeFilter}
           onSetPage={handleSetOffsetEpisodeFilter}

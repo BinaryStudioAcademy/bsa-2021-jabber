@@ -4,10 +4,10 @@ import { ActionType } from './common';
 
 const loadFavouriteEpisodes = createAsyncThunk<UserFavouriteEpisodeResponse, LoadFavouriteEpisodesPayload, AsyncThunkConfig>(
   ActionType.LOAD_FAVOURITE_EPISODES,
-  async (payload, { extra }) => {
+  (payload, { extra }) => {
     const { episodeApi } = extra;
 
-    return await episodeApi.getFavoriteEpisodesByUserId(payload);
+    return episodeApi.getFavoriteEpisodesByUserId(payload);
   },
 );
 
