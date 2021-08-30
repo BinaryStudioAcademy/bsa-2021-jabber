@@ -1,5 +1,5 @@
 import NotificationItem from './components/notification-item';
-import { RootState } from 'common/types/types';
+import { RootState, UserNotification } from 'common/types/types';
 import { useAppSelector, useEffect, useDispatch } from 'hooks/hooks';
 import { notification as notificationAction } from 'store/actions';
 import styles from './styles.module.scss';
@@ -13,8 +13,8 @@ const Notifications: React.FC = () => {
 
   const hasNotificaions = Boolean(notifications.length);
 
-  const handleChangeNotificationStatus = (id: number): void => {
-    dispatch(notificationAction.changeStatus(id));
+  const handleChangeNotificationStatus = (payload: UserNotification): void => {
+    dispatch(notificationAction.changeStatus(payload));
   };
 
   useEffect(() => {

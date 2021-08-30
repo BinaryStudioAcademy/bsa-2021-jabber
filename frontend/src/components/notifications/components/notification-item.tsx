@@ -6,7 +6,7 @@ import { getAllowedClasses, getFormattedDate } from 'helpers/helpers';
 
 type Props = {
   notification: UserNotification;
-  onChangeStatus: (id: number) => void;
+  onChangeStatus: (updateNotification: UserNotification) => void;
 };
 
 const NotificationItem: React.FC<Props> = ({ notification, onChangeStatus }) => {
@@ -15,11 +15,18 @@ const NotificationItem: React.FC<Props> = ({ notification, onChangeStatus }) => 
 
   const allowedClassesCheckButton = getAllowedClasses(
     styles.buttonEye,
-    isChecked ? styles.checked : styles.unchecked,
+    isChecked && styles.checked,
   );
 
-  const handleChangeStatus = (): void => {
-    onChangeStatus(notification.id);
+  const handleChangeNotificationStatus = (): void => {
+    const newStatus = isChecked
+      ? UserNotificationStatus.UNCHECKED
+      : UserNotificationStatus.CHECKED;
+
+    onChangeStatus({
+      ...notification,
+      status: newStatus,
+    });
   };
 
   return (
@@ -39,7 +46,7 @@ const NotificationItem: React.FC<Props> = ({ notification, onChangeStatus }) => 
         </p>
       </div>
       <div className={styles.notificationStatus}>
-        <button className={allowedClassesCheckButton} onClick={handleChangeStatus} />
+        <button className={allowedClassesCheckButton} onClick={handleChangeNotificationStatus} />
         <span className={styles.notificationDate}>
           {formatedDate}
         </span>

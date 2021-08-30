@@ -1,4 +1,4 @@
-import { ApiPath, HttpMethod, NotificationsApiPath } from 'common/enums/enums';
+import { ApiPath, ContentType, HttpMethod, NotificationsApiPath } from 'common/enums/enums';
 import { UserNotification } from 'common/types/types';
 import { Http } from 'services/http/http.service';
 
@@ -27,13 +27,13 @@ class UserNotificationApi {
     );
   }
 
-  public changeNotificationStatus(id: number): Promise<UserNotification> {
+  public update(payload: UserNotification): Promise<UserNotification> {
     return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.NOTIFICATIONS}/${id}${
-        NotificationsApiPath.STATUS
-      }`,
+      `${this.#apiPrefix}${ApiPath.NOTIFICATIONS}/${payload.id}`,
       {
         method: HttpMethod.PUT,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
       },
     );
   }

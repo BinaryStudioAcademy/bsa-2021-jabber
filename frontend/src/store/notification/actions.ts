@@ -10,10 +10,10 @@ const loadCurrentUserNotifications = createAsyncThunk<UserNotification[], undefi
   return notifications;
 });
 
-const changeStatus = createAsyncThunk<UserNotification, number, AsyncThunkConfig>
-(ActionType.CHANGE_STATUS, async (id, { extra }) => {
+const changeStatus = createAsyncThunk<UserNotification, UserNotification, AsyncThunkConfig>
+(ActionType.CHANGE_STATUS, async (payload, { extra }) => {
   const { userNotificationApi } = extra;
-  const notification = await userNotificationApi.changeNotificationStatus(id);
+  const notification = await userNotificationApi.update(payload);
 
   return notification;
 });
