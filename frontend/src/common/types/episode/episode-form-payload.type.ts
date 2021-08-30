@@ -6,6 +6,7 @@ type EpisodeFormPayload = EpisodePayload & {
   [EpisodePayloadKey.IMAGE]: FileList | null;
   [EpisodePayloadKey.RECORD]: FileList | null;
   [EpisodePayloadKey.SHOWNOTES]: ShownoteFormPayload[];
+  [EpisodePayloadKey.RECORD_DATA_URL]: string | undefined;
 };
 
 export type { EpisodeFormPayload };

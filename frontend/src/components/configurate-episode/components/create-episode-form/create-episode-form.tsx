@@ -29,9 +29,7 @@ type Props = {
 };
 
 const selectTypeOptions: Option[] = getOptions(Object.values(EpisodeType));
-const selectStatusOptions: Option[] = getOptions(
-  Object.values(EpisodeStatus).filter((status) => status !== EpisodeStatus.LIVE),
-);
+const selectStatusOptions: Option[] = getOptions([EpisodeStatus.STAGING, EpisodeStatus.PUBLISHED]);
 
 const CreateEpisodeForm: React.FC<Props> = ({
   onSubmit,
@@ -41,11 +39,7 @@ const CreateEpisodeForm: React.FC<Props> = ({
 }) => {
   const { control, handleSubmit, errors, setValue } = useAppForm({
     validationSchema: createEpisodeValidationSchema,
-    defaultValues: {
-      ...payload,
-      [EpisodePayloadKey.STATUS]: fileUrl ? EpisodeStatus.PUBLISHED : EpisodeStatus.STAGING,
-      [EpisodePayloadKey.RECORD_DATA_URL]: fileUrl,
-    },
+    defaultValues: payload,
   });
   const history = useHistory();
 
