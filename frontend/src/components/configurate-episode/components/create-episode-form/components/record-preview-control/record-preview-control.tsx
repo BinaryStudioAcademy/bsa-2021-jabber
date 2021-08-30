@@ -6,7 +6,6 @@ import {
 import { useState } from 'hooks/hooks';
 import { ErrorMessage } from '@hookform/error-message';
 import { getFileExtensions } from 'helpers/helpers';
-import { getLiveRecordName } from './helpers/helpers';
 import {
   InputType,
   FileExtension,
@@ -17,7 +16,6 @@ type Props = {
   name: Path<FieldValues>;
   control: Control;
   errors: FieldValues;
-  hasLiveRecord: boolean;
   fileUrl?: string;
 };
 
@@ -30,12 +28,9 @@ const RecordPreviewControl: React.FC<Props> = ({
   name,
   control,
   errors,
-  hasLiveRecord,
   fileUrl,
 }) => {
   const [currentRecord, setRecord] = useState<string>('');
-
-  const liveRecordName = hasLiveRecord ? getLiveRecordName() : '';
 
   const handleChange = (evt: React.ChangeEvent<FieldValues>): void => {
     const [file] = evt.target.files ?? [];
@@ -48,7 +43,7 @@ const RecordPreviewControl: React.FC<Props> = ({
     setRecord(file.name);
   };
 
-  return !hasLiveRecord ? (
+  return (
     <>
       <label className={styles.inputWrapper}>
         <label className={styles.recordLabel}>
@@ -67,11 +62,6 @@ const RecordPreviewControl: React.FC<Props> = ({
         <ErrorMessage errors={errors} name={name} />
       </span>
     </>
-  ) : (
-    <div className={styles.liveRecorPreview}>
-      <span className={styles.liveRecorPreviewCaption}>Live record:</span>
-      <span className={styles.liveRecordFileName}>{liveRecordName}</span>
-    </div>
   );
 };
 

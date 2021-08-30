@@ -5,15 +5,15 @@ import { pauseRecord, resumeRecord, startRecord, stopRecord, resetState, setLive
 type State = {
   recordStatus: RecordStatus;
   recordInitStatus: DataStatus;
-  hasLiveRecord: boolean;
   liveStream: MediaStream | null;
+  liveRecordDataUrl: string | null;
 };
 
 const initialState: State = {
   recordStatus: RecordStatus.INACTIVE,
   recordInitStatus: DataStatus.IDLE,
-  hasLiveRecord: false,
   liveStream: null,
+  liveRecordDataUrl: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -35,9 +35,9 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(resumeRecord.fulfilled, (state) => {
     state.recordStatus = RecordStatus.RECORDING;
   });
-  builder.addCase(stopRecord.fulfilled, (state) => {
+  builder.addCase(stopRecord.fulfilled, (state, action) => {
     state.recordStatus = RecordStatus.INACTIVE;
-    state.hasLiveRecord = true;
+    state.liveRecordDataUrl = action.payload;
   });
   builder.addCase(resetState, (state) => {
     Object.assign(state, initialState);

@@ -15,15 +15,19 @@ const ConfigurateEpisode: React.FC = () => {
   const { id, podcastId } = useParams<PageParams>();
   const dispatch = useDispatch();
 
-  const { episode, dataStatus, hasLiveRecord } = useAppSelector(
+  const { episode, dataStatus,  liveRecordDataUrl } = useAppSelector(
     ({ configurateEpisode, record }) => ({
       episode: configurateEpisode.episode,
       dataStatus: configurateEpisode.dataStatus,
-      hasLiveRecord: record.hasLiveRecord,
+      liveRecordDataUrl: record.liveRecordDataUrl,
     }),
   );
 
   const mapEpisode = episode ? mapEpisodeToFormPayload(episode) : undefined;
+
+  if (liveRecordDataUrl && mapEpisode) {
+    mapEpisode.recordDataUrl = liveRecordDataUrl;
+  }
 
   const isEdit = Boolean(id);
 
@@ -51,12 +55,12 @@ const ConfigurateEpisode: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (hasLiveRecord) {
+    if (liveRecordDataUrl) {
       return (): void => {
         dispatch(recordActions.resetState());
       };
     }
-  }, [hasLiveRecord]);
+  }, [liveRecordDataUrl]);
 
   if (isLoading) {
     return <Loader />;
@@ -70,7 +74,6 @@ const ConfigurateEpisode: React.FC = () => {
         </h1>
         <CreateEpisodeForm
           imageUrl={episode?.image?.url}
-          fileUrl={episode?.record?.fileUrl}
           onSubmit={handleFormSubmit}
           payload={mapEpisode}
         />
