@@ -60,12 +60,12 @@ const initEpisodesApi = ({ apiRouter, episodeService, userFavouriteEpisodeServic
   );
 
   episodeRouter.get(
-    EpisodesApiPath.FAVOURITES_$ID,
+    EpisodesApiPath.FAVOURITES_$USER_ID,
     checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (req, res) => {
       return res
         .send(await episodeService.getFavouriteByQueryByUserId({
-          userId: Number(req.params.id),
+          userId: Number(req.params.userId),
           filter: req.query as unknown as EpisodeLoadFilter,
         }))
         .status(HttpCode.OK);

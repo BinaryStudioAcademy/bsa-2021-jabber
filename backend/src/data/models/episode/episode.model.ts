@@ -5,6 +5,7 @@ import { Abstract } from '../abstract/abstract.model';
 import { Image } from '~/data/models/image/image.model';
 import { Shownote } from '~/data/models/shownote/shownote.model';
 import { Record } from '~/data/models/record/record.model';
+import { Podcast } from '~/data/models/podcast/podcast.model';
 import { UserFavouriteEpisode } from '~/data/models/user-favourite-episode/user-favourite-episode.model';
 
 class Episode extends Abstract {
@@ -63,6 +64,14 @@ class Episode extends Abstract {
       join: {
         from: 'episodes.id',
         to: 'users_favourite_episodes.episode_id',
+      },
+    },
+    podcast: {
+      relation: Model.HasOneRelation,
+      modelClass: Podcast,
+      join: {
+        from: 'episodes.podcast_id',
+        to: 'podcasts.id',
       },
     },
   };

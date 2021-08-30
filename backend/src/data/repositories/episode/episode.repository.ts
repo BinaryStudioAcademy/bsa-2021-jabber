@@ -71,6 +71,7 @@ class Episode {
 
     return this.#EpisodeModel
       .query()
+      .withGraphJoined('[podcast]')
       .joinRelated('[favourites]')
       .where('favourites.user_id', userId)
       .limit(limit)
