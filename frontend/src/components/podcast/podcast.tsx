@@ -42,6 +42,7 @@ const Podcast: React.FC = () => {
   const isAllowDelete = isOwner || isMaster;
   const isLoading = dataStatus === DataStatus.PENDING || followersDataStatus === DataStatus.PENDING;
   const isEpisodesLoading = episodesDataStatus === DataStatus.PENDING;
+  const isPrivatePodcast = podcast?.type === PodcastType.PRIVATE;
 
   const [episodePagination, setEpisodePagination] = useState(DEFAULT_EPISODE_PAGINATION);
 
@@ -227,7 +228,7 @@ const Podcast: React.FC = () => {
                   >
                     Type
                   </div>
-                  {isOwner && podcast.type === PodcastType.PRIVATE ?
+                  {isOwner && isPrivatePodcast ?
                     <button className={styles.copyInvitation} onClick={handleCopyInviteLink}>Private (copy link)</button> : <p className={styles.infoInner}>{podcast.type}</p>
                   }
                 </li>
