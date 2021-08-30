@@ -227,8 +227,8 @@ const Podcast: React.FC = () => {
                   >
                     Type
                   </div>
-                  {podcast.type !== PodcastType.PRIVATE ?
-                    <p className={styles.infoInner}>{podcast.type}</p> : <button className={styles.copyInvitation} onClick={handleCopyInviteLink}>Private (copy link)</button>
+                  {isOwner && podcast.type === PodcastType.PRIVATE ?
+                    <button className={styles.copyInvitation} onClick={handleCopyInviteLink}>Private (copy link)</button> : <p className={styles.infoInner}>{podcast.type}</p>
                   }
                 </li>
                 <li className={styles.infoItem}>
