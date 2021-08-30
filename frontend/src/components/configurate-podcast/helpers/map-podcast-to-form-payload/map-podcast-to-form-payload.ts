@@ -8,7 +8,7 @@ const mapPodcastToFormPayload = (podcast: Podcast): PodcastFormPayload => ({
   type: podcast.type,
   genre: podcast.genreId?.toString() ?? null,
   periodicity: podcast.periodicity,
-  invitationCode: '',
+  invitationCode: podcast.invitationCode ?? '',
 });
 
 export { mapPodcastToFormPayload };
