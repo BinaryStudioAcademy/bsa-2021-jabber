@@ -9,6 +9,7 @@ export {
   GenresApiPath,
   UserFollowersApiPath,
   PodcastsFollowersApiPath,
+  NotificationsApiPath,
 } from './api/api';
 export {
   AppAsyncStorageKey,

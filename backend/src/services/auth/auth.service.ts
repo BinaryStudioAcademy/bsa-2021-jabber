@@ -91,8 +91,6 @@ class Auth {
 
     const newPassword = getRandomId(USER_NEW_PASSWORD_LENGTH);
 
-    await this.#userRepository.updatePassword(user.id, { password: await encrypt(newPassword) });
-
     const isEmailSent = await this.#mailer.sendMail(getResetPasswordMessageTemplate(newPassword, user.email), <string>ENV.MAILER.EMAIL);
 
     if (!isEmailSent) {
@@ -101,6 +99,8 @@ class Auth {
         message: ErrorMessage.EMAIL_SENDING_ERROR,
       });
     }
+
+    await this.#userRepository.updatePassword(user.id, { password: await encrypt(newPassword) });
 
     return true;
   }

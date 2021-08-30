@@ -37,6 +37,7 @@ import { PodcastFollower } from './podcast-follower/podcast-follower.service';
 import { UserFollower } from './user-follower/user-follower.service';
 import { Notification } from './notification/notification.service';
 import { Mailer } from './mailer/mailer.service';
+import { UserNotification } from './user-notification/user-notification.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -138,6 +139,10 @@ const userFollower = new UserFollower({
   userFollowerRepository,
 });
 
+const userNotification = new UserNotification({
+  userNotificationRepository,
+});
+
 export {
   auth,
   appAsyncStorage,
@@ -158,4 +163,5 @@ export {
   userFollower,
   notification,
   mailer,
+  userNotification,
 };

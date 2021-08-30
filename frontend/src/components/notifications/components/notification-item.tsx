@@ -1,14 +1,34 @@
 import notificationIcon from 'assets/img/notification-icon.png';
 import { UserNotification } from 'common/types/types';
-import { AppRoute } from 'common/enums/enums';
-import { Link } from 'components/common/common';
+import { DateFormatType, UserNotificationStatus } from 'common/enums/enums';
 import styles from './styles.module.scss';
+import { getAllowedClasses, getFormattedDate } from 'helpers/helpers';
 
 type Props = {
   notification: UserNotification;
+  onChangeStatus: (updateNotification: UserNotification) => void;
 };
 
-const NotificationItem: React.FC<Props> = ({ notification }) => {
+const NotificationItem: React.FC<Props> = ({ notification, onChangeStatus }) => {
+  const formatedDate = getFormattedDate(new Date(notification.notification.updatedAt), DateFormatType.DAY_MONTH_YEAR);
+  const isChecked = notification.status === UserNotificationStatus.CHECKED;
+
+  const allowedClassesCheckButton = getAllowedClasses(
+    styles.buttonEye,
+    isChecked && styles.checked,
+  );
+
+  const handleChangeNotificationStatus = (): void => {
+    const newStatus = isChecked
+      ? UserNotificationStatus.UNCHECKED
+      : UserNotificationStatus.CHECKED;
+
+    onChangeStatus({
+      ...notification,
+      status: newStatus,
+    });
+  };
+
   return (
     <li className={styles.container}>
       <div className={styles.notificationLogo}>
@@ -24,14 +44,11 @@ const NotificationItem: React.FC<Props> = ({ notification }) => {
         <p className={styles.notificationText}>
           {notification.notification.message}
         </p>
-        <Link to={AppRoute.NOTIFICATIONS} className={styles.link}>
-          See message
-        </Link>
       </div>
       <div className={styles.notificationStatus}>
-        <button className={styles.buttonEye} />
+        <button className={allowedClassesCheckButton} onClick={handleChangeNotificationStatus} />
         <span className={styles.notificationDate}>
-          {notification.notification.createdAt}
+          {formatedDate}
         </span>
       </div>
     </li>
