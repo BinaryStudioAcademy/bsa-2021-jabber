@@ -11,7 +11,6 @@ enum PodcastDTOKey {
   USER = 'user',
   GENRE = 'genre',
   PERIODICITY = 'periodicity',
-  INVITATION_CODE= 'invitationCode',
 }
 
 export { PodcastDTOKey };

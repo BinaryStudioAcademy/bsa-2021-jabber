@@ -2,7 +2,6 @@ import { Image } from '~/common/types/image/image.type';
 import { PodcastType, PodcastPeriodicity } from '~/common/enums/enums';
 import { User } from '../user/user.type';
 import { Genre } from '../genre/genre.type';
-import { InvitationCode } from '../invitation-code/invitation-code';
 
 type Podcast = {
   id: number;
@@ -20,7 +19,6 @@ type Podcast = {
   user: User;
   genre: Genre | null;
   periodicity: PodcastPeriodicity;
-  invitationCode: InvitationCode | null;
 };
 
 export type { Podcast };

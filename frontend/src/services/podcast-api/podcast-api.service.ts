@@ -94,6 +94,15 @@ class PodcastApi {
       },
     );
   }
+
+  public invitationCode(id: number): Promise<string> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PODCASTS}${PodcastsApiPath.INVITATION_CODE}/${id}`,
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
 }
 
 export { PodcastApi };
