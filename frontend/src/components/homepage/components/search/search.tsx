@@ -24,8 +24,12 @@ const Search: React.FC<Props> = ({ onChange, currentState }) => {
     onChange(getValues() as PodcastSearchPayload);
   };
 
+  const handlePreventReloading = (e: React.ChangeEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+  };
+
   return (
-    <form onChange={handleChange}>
+    <form onChange={handleChange} onSubmitCapture={handlePreventReloading}>
       <div className={styles.searchBlock}>
         <Input
           label=""
