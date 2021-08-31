@@ -1,6 +1,7 @@
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import { AsyncThunkConfig, Episode, StartRecordActionPayload } from 'common/types/types';
 import { AppRoute } from 'common/enums/enums';
+import { getDataUrl } from 'helpers/helpers';
 import { ActionType } from './common';
 
 const initRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
@@ -33,15 +34,18 @@ const resumeRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
   recordAudioService.resume();
 });
 
-const stopRecord = createAsyncThunk<void, string, AsyncThunkConfig>
-(ActionType.STOP_RECORD, (_arg, { extra, getState }) => {
+const stopRecord = createAsyncThunk<string, string, AsyncThunkConfig>
+(ActionType.STOP_RECORD, async (_arg, { extra, getState }) => {
   const { recordAudioService, navigationService } = extra;
   const { episode } = getState();
   const { id, podcastId }  = <Episode>episode.episode;
 
   recordAudioService.stop();
+  const liveRecord = await recordAudioService.getLiveRecord();
+  const liveRecordDataUrl = await getDataUrl(liveRecord);
 
   navigationService.push(`${AppRoute.PODCASTS}/${podcastId}${AppRoute.EPISODES_EDIT}/${id}`);
+  return liveRecordDataUrl;
 });
 
 const resetState = createAction(ActionType.RESET_STATE);

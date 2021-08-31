@@ -5,6 +5,7 @@ enum ActionType {
   CHECK_IS_FOLLOWED_PODCAST = 'podcast/check-is-followed-podcast',
   TOGGLE_FOLLOW_PODCAST = 'podcast/toggle-follow-podcast',
   PODCAST_INVITE = 'podcast/podcast-invite',
+  COPY_INVITE_LINK = 'podcast/copy-invite-link',
 }
 
 export { ActionType };

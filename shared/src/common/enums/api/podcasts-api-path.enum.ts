@@ -6,6 +6,8 @@ enum PodcastsApiPath {
   USERS_$ID = '/users/:id',
   INVITE = '/invite',
   INVITE_$CODE = '/invite/:code',
+  INVITATION_CODE = '/invitation-code',
+  INVITATION_CODE_$ID = '/invitation-code/:id',
 }
 
 export { PodcastsApiPath };

@@ -1,6 +1,6 @@
 import { useAppSelector, useDispatch, useEffect, useParams, useState } from 'hooks/hooks';
 import { configuratePodcast as configuratePodcastActions, podcast as podcastActions } from 'store/actions';
-import { AppRoute, DataStatus, UserRole } from 'common/enums/enums';
+import { AppRoute, DataStatus, UserRole, PodcastType } from 'common/enums/enums';
 import { Button, ConfirmPopup, ImageWrapper, Link, Loader } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
@@ -42,6 +42,7 @@ const Podcast: React.FC = () => {
   const isAllowDelete = isOwner || isMaster;
   const isLoading = dataStatus === DataStatus.PENDING || followersDataStatus === DataStatus.PENDING;
   const isEpisodesLoading = episodesDataStatus === DataStatus.PENDING;
+  const isPrivatePodcast = podcast?.type === PodcastType.PRIVATE;
 
   const [episodePagination, setEpisodePagination] = useState(DEFAULT_EPISODE_PAGINATION);
 
@@ -102,6 +103,12 @@ const Podcast: React.FC = () => {
       page,
       row: episodePagination.row,
     });
+  };
+
+  const handleCopyInviteLink = (): void => {
+    if (podcast) {
+      dispatch(podcastActions.copyInviteLink(podcast?.id));
+    }
   };
 
   if (isLoading) {
@@ -221,7 +228,9 @@ const Podcast: React.FC = () => {
                   >
                     Type
                   </div>
-                  <p className={styles.infoInner}>{podcast.type}</p>
+                  {isOwner && isPrivatePodcast ?
+                    <button className={styles.copyInvitation} onClick={handleCopyInviteLink}>Private (copy link)</button> : <p className={styles.infoInner}>{podcast.type}</p>
+                  }
                 </li>
                 <li className={styles.infoItem}>
                   <div

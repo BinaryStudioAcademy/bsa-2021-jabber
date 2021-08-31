@@ -94,6 +94,16 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
     }),
   );
 
+  podcastRouter.get(
+    PodcastsApiPath.INVITATION_CODE_$ID,
+    checkUserHasPermitToPodcastMiddleware(),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await podcastService.getInvitationCodeById(Number(req.params.id)))
+        .status(HttpCode.OK);
+    }),
+  );
+
   return podcastRouter;
 };
 

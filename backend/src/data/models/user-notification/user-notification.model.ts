@@ -25,7 +25,7 @@ class UserNotification extends Abstract {
       relation: Model.HasOneRelation,
       modelClass: Notification,
       join: {
-        from: 'users-notifications.notification_id',
+        from: 'users_notifications.notification_id',
         to: 'notifications.id',
       },
     },
