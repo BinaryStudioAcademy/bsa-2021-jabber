@@ -29,7 +29,7 @@ const CreateCommentForm: React.FC<Props> = ({ onSubmit }) => {
   const isFormDisable = commentDataStatus === DataStatus.PENDING;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} >
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)} >
       <fieldset disabled={isFormDisable} className={styles.fieldset}>
         <Input
           name={CommentCreatePayloadKey.TEXT}

@@ -24,8 +24,12 @@ const Search: React.FC<Props> = ({ onChange, currentState }) => {
     onChange(getValues() as PodcastSearchPayload);
   };
 
+  const handleSubmit = (evt: React.ChangeEvent<HTMLFormElement>): void => {
+    evt.preventDefault();
+  };
+
   return (
-    <form onChange={handleChange}>
+    <form onChange={handleChange} onSubmit={handleSubmit}>
       <div className={styles.searchBlock}>
         <Input
           label=""
