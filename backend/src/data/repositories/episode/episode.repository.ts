@@ -21,6 +21,10 @@ class Episode {
     return this.#EpisodeModel.query();
   }
 
+  public getAllInRandomOrder(): Promise<TEpisode[]> {
+    return this.#EpisodeModel.query().orderByRaw('random()');
+  }
+
   public getById(id: number): Promise<TEpisode> {
     return this.#EpisodeModel.query().findById(id).withGraphJoined('[record, image, shownotes]');
   }
