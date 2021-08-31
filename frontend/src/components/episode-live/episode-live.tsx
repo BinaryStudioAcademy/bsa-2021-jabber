@@ -35,6 +35,8 @@ const EpisodeLive: React.FC = () => {
   const isInactive = recordStatus === RecordStatus.INACTIVE;
   const isPaused = recordStatus === RecordStatus.PAUSED;
   const hasUser = Boolean(user);
+  const isEpisodeStatusLive = episode?.status === EpisodeStatus.LIVE;
+  const isDisabledStartRecord = !isEpisodeStatusLive && !isInactive;
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
@@ -110,7 +112,7 @@ const EpisodeLive: React.FC = () => {
                 styles.recordButton,
               )}
               onClick={handleStart}
-              disabled={!isInactive}
+              disabled={isDisabledStartRecord}
             />
             {!isPaused ? (
               <button
@@ -141,7 +143,7 @@ const EpisodeLive: React.FC = () => {
           </div>
         </div>
       </div>
-      <section className={styles.commentsWrapper}>
+      {isEpisodeStatusLive && <section className={styles.commentsWrapper}>
         <h2 className={styles.commentsCounter}>Comments ({comments.length})</h2>
         {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
         {comments.length ? (
@@ -154,7 +156,7 @@ const EpisodeLive: React.FC = () => {
         ) : (
           <div className={styles.placeholder}>There&apos;s no comment yet.</div>
         )}
-      </section>
+      </section>}
     </main>
   );
 };
