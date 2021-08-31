@@ -32,6 +32,7 @@ export type {
   EpisodeLoadFilter,
   EpisodeQueryPayload,
   LoadFavouriteEpisodesPayload,
+  EpisodeWithPodcast,
 } from './episode/episode';
 export type {
   Shownote,

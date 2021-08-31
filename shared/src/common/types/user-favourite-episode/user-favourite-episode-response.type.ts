@@ -1,8 +1,8 @@
 import { UserFavouriteEpisodePayloadKey } from '~/common/enums/enums';
-import { Episode } from '~/common/types/types';
+import { EpisodeWithPodcast } from '~/common/types/types';
 
 type UserFavouriteEpisodeResponse = {
-  [UserFavouriteEpisodePayloadKey.EPISODES]: Episode[];
+  [UserFavouriteEpisodePayloadKey.EPISODES]: EpisodeWithPodcast[];
   [UserFavouriteEpisodePayloadKey.TOTAL_COUNT]: number;
 };
 

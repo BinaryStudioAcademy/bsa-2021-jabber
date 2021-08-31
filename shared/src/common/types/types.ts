@@ -25,6 +25,7 @@ export type {
   LoadEpisodesByPodcastIdPayload,
   EpisodeQueryPayload,
   LoadFavouriteEpisodesPayload,
+  EpisodeWithPodcast,
 } from './episode/episode';
 export type {
   Shownote,

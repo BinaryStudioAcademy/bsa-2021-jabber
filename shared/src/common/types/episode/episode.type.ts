@@ -1,5 +1,5 @@
 import { EpisodeType, EpisodeStatus } from '~/common/enums/enums';
-import { Image, Shownote, Record, Podcast } from '~/common/types/types';
+import { Image, Shownote, Record } from '~/common/types/types';
 
 type Episode = {
   id: number;
@@ -15,7 +15,6 @@ type Episode = {
   type: EpisodeType;
   shownotes: Shownote[];
   description: string;
-  podcast?: Podcast;
 };
 
 export type { Episode };
