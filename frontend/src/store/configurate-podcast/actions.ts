@@ -2,14 +2,14 @@ import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
 import {
   AsyncThunkConfig,
+  DeleteActionPodcastPayload,
   Genre,
   Podcast,
   PodcastFormPayload,
-  DeleteActionPodcastPayload,
   User,
 } from 'common/types/types';
-import { ActionType } from './common';
-import { AppRoute, NotificationMessage, NotificationTitle } from 'common/enums/enums';
+import { ActionType, LoadPodcastPayload } from './common';
+import { AppRoute, NotificationMessage, NotificationTitle, PodcastType } from 'common/enums/enums';
 
 const create = createAsyncThunk<void, PodcastFormPayload, AsyncThunkConfig>(
   ActionType.CREATE_PODCAST,
@@ -65,12 +65,20 @@ const edit = createAsyncThunk<void, PodcastFormPayload, AsyncThunkConfig>(
     navigationService.push(`${AppRoute.PODCASTS}/${podcast.id}`);
   });
 
-const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>
+const loadPodcast = createAsyncThunk<LoadPodcastPayload, number, AsyncThunkConfig>
 (ActionType.LOAD_PODCAST, async (id, { extra }) => {
   const { podcastApi } = extra;
   const podcast = await podcastApi.getById(id);
+  const invitationCode = podcast.type === PodcastType.PRIVATE
+    ? await podcastApi.invitationCode(id)
+    : '';
 
-  return podcast;
+  const podcastPayload = {
+    podcast: podcast,
+    invitationCode: invitationCode,
+  };
+
+  return podcastPayload;
 });
 
 const loadGenres = createAsyncThunk<Genre[], undefined, AsyncThunkConfig>
