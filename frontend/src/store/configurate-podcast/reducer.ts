@@ -1,13 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { Genre, Podcast } from 'common/types/types';
+import { Genre, ConfigurationPodcastPayload } from 'common/types/types';
 import { create, edit, loadPodcast, loadGenres, deletePodcast, resetState } from './actions';
 
 type State = {
   dataStatus: DataStatus;
   genresDataStatus: DataStatus;
   formDataStatus: DataStatus;
-  podcast: Podcast | null;
+  podcast: ConfigurationPodcastPayload | null;
   genres: Genre[];
 };
 

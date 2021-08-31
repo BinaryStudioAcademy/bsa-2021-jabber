@@ -20,6 +20,7 @@ export type {
   PodcastLoadFilter,
   GenresFilter,
   PodcastQueryPayload,
+  ConfigurationPodcastPayload,
 } from './podcast/podcast';
 export type {
   Episode,

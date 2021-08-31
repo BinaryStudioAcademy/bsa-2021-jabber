@@ -7,6 +7,7 @@ import {
   Podcast,
   PodcastFormPayload,
   User,
+  ConfigurationPodcastPayload,
 } from 'common/types/types';
 import { ActionType } from './common';
 import { AppRoute, NotificationMessage, NotificationTitle, PodcastType } from 'common/enums/enums';
@@ -65,7 +66,7 @@ const edit = createAsyncThunk<void, PodcastFormPayload, AsyncThunkConfig>(
     navigationService.push(`${AppRoute.PODCASTS}/${podcast.id}`);
   });
 
-const loadPodcast = createAsyncThunk<Podcast, number, AsyncThunkConfig>
+const loadPodcast = createAsyncThunk<ConfigurationPodcastPayload, number, AsyncThunkConfig>
 (ActionType.LOAD_PODCAST, async (id, { extra }) => {
   const { podcastApi } = extra;
   const podcast = await podcastApi.getById(id);

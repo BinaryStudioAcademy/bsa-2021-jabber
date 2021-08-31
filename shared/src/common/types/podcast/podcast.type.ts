@@ -19,7 +19,6 @@ type Podcast = {
   user: User;
   genre: Genre | null;
   periodicity: PodcastPeriodicity;
-  invitationCode?: string;
 };
 
 export type { Podcast };
