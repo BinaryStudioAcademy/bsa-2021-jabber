@@ -2,7 +2,7 @@ import { Column } from 'react-table';
 import { INCREASE_CONT_FOR_IDX } from 'common/constants/constants';
 import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
-import { EpisodeNameRow, PodcastNameRow } from '../types/types';
+import { EpisodeNameRow, PodcastNameRow } from '../../types/types';
 
 const getColumns = (): Column[] => {
   const columns: Column[] = [

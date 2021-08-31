@@ -1,14 +1,14 @@
 import { Table } from 'components/common/common';
-import { Episode } from 'common/types/types';
+import { EpisodeWithPodcast } from 'common/types/types';
 import { getColumns, getRows } from './helpers/helpers';
 
 type Props = {
-  episodes: Episode[];
+  episodes: EpisodeWithPodcast[];
   onSetRow: (row: number) => void;
   onSetPage: (page: number) => void;
   pageIndex: number;
   pageSize: number;
-  totalCountEpisodes: number;
+  episodesTotalCount: number;
 };
 
 const FavouriteEpisodeTable: React.FC<Props> = ({
@@ -17,7 +17,7 @@ const FavouriteEpisodeTable: React.FC<Props> = ({
   onSetRow,
   onSetPage,
   pageIndex,
-  totalCountEpisodes,
+  episodesTotalCount,
 }) => {
   const columns = getColumns();
   const rows = getRows(episodes);
@@ -29,7 +29,7 @@ const FavouriteEpisodeTable: React.FC<Props> = ({
     onSetPage={onSetPage}
     pageIndex={pageIndex}
     pageSize={pageSize}
-    totalCountItems={totalCountEpisodes}
+    totalCountItems={episodesTotalCount}
     hasPagination
   />;
 };

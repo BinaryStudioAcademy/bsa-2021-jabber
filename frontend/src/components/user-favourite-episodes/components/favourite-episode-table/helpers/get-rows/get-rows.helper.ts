@@ -1,14 +1,14 @@
-import { Episode, Podcast } from 'common/types/types';
-import { formatDate } from './get-formatted-date';
+import { EpisodeWithPodcast } from 'common/types/types';
+import { formatDate } from '../helpers';
 
-const getRows = (episodes: Episode[]): Record<string, string >[] => {
+const getRows = (episodes: EpisodeWithPodcast[]): Record<string, string>[] => {
   const rows = episodes.map((episode) => ({
     name: episode.name,
     description: episode.description,
     podcastId: String(episode.podcastId),
     createdAt: formatDate(new Date(episode.createdAt)),
     episodeId: String(episode.id),
-    podcastName: (<Podcast>episode.podcast).name,
+    podcastName: episode.podcast.name,
   }));
 
   return rows;
