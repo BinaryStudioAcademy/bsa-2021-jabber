@@ -36,7 +36,7 @@ const EpisodeLive: React.FC = () => {
   const isPaused = recordStatus === RecordStatus.PAUSED;
   const hasUser = Boolean(user);
   const isEpisodeStatusLive = episode?.status === EpisodeStatus.LIVE;
-  const isDisabledStartRecord = !isEpisodeStatusLive && !isInactive;
+  const isDisabledStartRecord = !isEpisodeStatusLive || !isInactive;
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
