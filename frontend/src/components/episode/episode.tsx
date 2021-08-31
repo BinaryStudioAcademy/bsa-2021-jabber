@@ -68,7 +68,6 @@ const Episode: React.FC = () => {
   const isPlayerLoaded = playerStatus === DataStatus.FULFILLED;
   const isAllowDelete = isOwner || isMaster;
   const isPlayerShow = Boolean(episode?.record?.fileUrl) || Boolean(liveStream);
-  const isCommentFormShow = hasUser && !isStaging;
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
@@ -121,17 +120,6 @@ const Episode: React.FC = () => {
     return <Loader />;
   }
 
-  const handleClickStartLive = (): void => {
-    if (episode) {
-      dispatch(episodeActions.changeEpisodeStatus({
-        ...episode,
-        status: EpisodeStatus.LIVE,
-      }));
-
-      history.push(`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`);
-    }
-  };
-
   const commentsTimelineDimensions = getCommentsTimelineDimensions(
     playerRef,
     playerContainerRef,
@@ -160,7 +148,7 @@ const Episode: React.FC = () => {
                   )
                   : styles.btnStartLive}
                 label="Start Live"
-                onClick={handleClickStartLive}
+                href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}
               />
             )}
             <div className={styles.descriptionWrapper}>
@@ -258,7 +246,7 @@ const Episode: React.FC = () => {
             <h2 className={styles.commentsCounter}>
               Comments ({comments.length})
             </h2>
-            {isCommentFormShow && <CreateCommentForm onSubmit={handleCreateComment} />}
+            {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
             {comments.length ? (
               <CommentsList
                 hasTimestamps={hasRecord}

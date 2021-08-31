@@ -4,11 +4,11 @@ import {
   episode as episodeActions,
 } from 'store/actions';
 import { RecordStatus, DataStatus, EpisodeStatus } from 'common/enums/enums';
-import { CommentFormCreatePayload, Episode } from 'common/types/types';
+import { CommentFormCreatePayload } from 'common/types/types';
 import {
   CreateCommentForm,
   CommentsList,
-  ImageWrapper,
+  ImageWrapper, Button,
 } from 'components/common/common';
 import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
@@ -35,24 +35,27 @@ const EpisodeLive: React.FC = () => {
   const isInactive = recordStatus === RecordStatus.INACTIVE;
   const isPaused = recordStatus === RecordStatus.PAUSED;
   const hasUser = Boolean(user);
+  const isOwner = user?.id === episode?.userId;
   const isEpisodeStatusLive = episode?.status === EpisodeStatus.LIVE;
   const isDisabledStartRecord = !isEpisodeStatusLive || !isInactive;
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisodePayload(Number(id)));
-
-    return (): void => {
-      dispatch(episodeActions.changeEpisodeStatus({
-        ...episode as Episode,
-        status: EpisodeStatus.STAGING,
-      }));
-    };
   }, []);
 
   useEffect(() => {
     dispatch(recordActions.initRecord());
   }, []);
+
+  const handleClickStartLive = (): void => {
+    if (episode && isOwner) {
+      dispatch(episodeActions.changeEpisodeStatus({
+        ...episode,
+        status: EpisodeStatus.LIVE,
+      }));
+    }
+  };
 
   const handleStart = (): void => {
     isRecordAllowed
@@ -96,6 +99,11 @@ const EpisodeLive: React.FC = () => {
               alt={episode.name}
               label={episode.name}
               className={styles.imageWrapper}
+            />
+            <Button
+              className={ styles.btnChangeStatus }
+              label="Go to live"
+              onClick={handleClickStartLive}
             />
             <div className={styles.descriptionWrapper}>
               <h1 className={styles.title}>{episode.name}</h1>
