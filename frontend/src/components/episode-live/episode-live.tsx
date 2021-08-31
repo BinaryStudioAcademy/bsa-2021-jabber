@@ -8,7 +8,8 @@ import { CommentFormCreatePayload } from 'common/types/types';
 import {
   CreateCommentForm,
   CommentsList,
-  ImageWrapper, Button,
+  ImageWrapper,
+  Button,
 } from 'components/common/common';
 import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
