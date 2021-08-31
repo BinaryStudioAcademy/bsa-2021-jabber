@@ -9,6 +9,7 @@ type State = {
   formDataStatus: DataStatus;
   podcast: Podcast | null;
   genres: Genre[];
+  invitationCode: string;
 };
 
 const initialState: State = {
@@ -17,6 +18,7 @@ const initialState: State = {
   formDataStatus: DataStatus.IDLE,
   podcast: null,
   genres: [],
+  invitationCode: '',
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -43,7 +45,8 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadPodcast.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
-    state.podcast = action.payload;
+    state.podcast = action.payload.podcast;
+    state.invitationCode = action.payload.invitationCode;
   });
   builder.addCase(loadPodcast.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;

@@ -1,6 +1,6 @@
 import { Podcast, PodcastFormPayload } from 'common/types/types';
 
-const mapPodcastToFormPayload = (podcast: Podcast): PodcastFormPayload => ({
+const mapPodcastToFormPayload = (podcast: Podcast, invitationCode: string): PodcastFormPayload => ({
   name: podcast.name,
   description: podcast.description,
   image: null,
@@ -8,7 +8,7 @@ const mapPodcastToFormPayload = (podcast: Podcast): PodcastFormPayload => ({
   type: podcast.type,
   genre: podcast.genreId?.toString() ?? null,
   periodicity: podcast.periodicity,
-  invitationCode: '',
+  invitationCode: invitationCode,
 });
 
 export { mapPodcastToFormPayload };
