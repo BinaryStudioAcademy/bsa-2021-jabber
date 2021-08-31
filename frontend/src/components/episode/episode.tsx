@@ -109,7 +109,7 @@ const Episode: React.FC = () => {
   };
 
   const handleCommentLikeToggle = (commentId: number): void => {
-    user ? dispatch(episodeActions.toggleCommentLike(commentId)) : history.push(AppRoute.SIGN_IN);
+    hasUser ? dispatch(episodeActions.toggleCommentLike(commentId)) : history.push(AppRoute.SIGN_IN);
   };
 
   const handleShowPopup = (): void => {
