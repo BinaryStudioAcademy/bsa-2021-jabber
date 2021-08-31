@@ -37,7 +37,7 @@ class Comment {
     return this.#CommentModel
       .query()
       .findById(id)
-      .withGraphFetched('[user, commentReactions]');
+      .withGraphFetched('[user.image, commentReactions]');
   }
 
   public deleteAllByEpisodeId(id: number): Promise<TComment[]> {
