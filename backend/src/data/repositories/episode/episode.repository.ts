@@ -1,6 +1,7 @@
 import { EpisodeModel as EpisodeM } from '~/data/models/models';
 import {
   Episode as TEpisode,
+  EpisodeWithPodcast as TEpisodeWithPodcast,
   EpisodeCreateDTOPayload,
   EpisodeEditDTOPayload,
   LoadEpisodesByPodcastIdPayload,
@@ -66,7 +67,7 @@ class Episode {
       .first();
   }
 
-  public getFavouriteByQueryByUserId({ userId, filter }: LoadFavouriteEpisodesPayload): Promise<TEpisode[]> {
+  public getFavouriteByQueryByUserId({ userId, filter }: LoadFavouriteEpisodesPayload): Promise<TEpisodeWithPodcast[]> {
     const { limit, offset } = filter;
 
     return this.#EpisodeModel

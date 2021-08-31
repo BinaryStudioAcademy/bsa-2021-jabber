@@ -29,6 +29,8 @@ class Episode extends Abstract {
 
   [EpisodeDTOKey.STATUS]: EpisodeStatus;
 
+  [EpisodeDTOKey.PODCAST]: Podcast;
+
   static get tableName(): string {
     return TableName.EPISODES;
   }

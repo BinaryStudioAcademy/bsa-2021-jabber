@@ -122,6 +122,7 @@ const initEpisodesApi = ({ apiRouter, episodeService, userFavouriteEpisodeServic
   episodeRouter.delete(
     EpisodesApiPath.FAVOURITES,
     checkAuthMiddleware(HttpMethod.DELETE),
+    validateSchemaMiddleware(userFavouriteEpisodeValidationSchema),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await userFavouriteEpisodeService.delete(req.body))
