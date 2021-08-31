@@ -3,7 +3,7 @@ import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import { getDistanceToDateNow } from 'helpers/date/date';
 import { getAllowedClasses, getTimeOffset } from 'helpers/helpers';
-import { DEFAULT_COMMENT_COUNT } from './common/constants';
+import { DEFAULT_COMMENT_VALUE } from './common/constants';
 import ImageWrapper from '../image-wrapper/image-wrapper';
 import styles from './styles.module.scss';
 
@@ -53,65 +53,67 @@ const CommentItem: React.FC<Props> = ({
   );
 
   return (
-    <li className={styles.wrapper}>
-      <Link to={`${AppRoute.USERS}/${comment.user.id}`} className={styles.link}>
-        <ImageWrapper
-          width="40"
-          height="40"
-          loading="lazy"
-          alt={String(comment.userId)}
-          label={comment.user.nickname}
-          className={styles.avatarWrapper}
-          src={comment.user.image?.url}
-        />
-      </Link>
-      <div className={styles.intro}>
-        <p className={styles.userName}>
-          <Link
-            to={`${AppRoute.USERS}/${comment.user.id}`}
-            className={styles.link}
-          >
-            {comment.user.nickname ?? comment.user.firstName}
-          </Link>
-          {hasTimestamp && (
-            <>
-              &nbsp;<span>at</span>
-              &nbsp;
-              {onTimeClick ? (
-                <button
-                  className={styles.commentAtButton}
-                  onClick={handleTimeLineJump}
-                >
-                  {time}
-                </button>
-              ) : (
-                time
-              )}
-            </>
-          )}
-        </p>
-        <p className={styles.text}>{comment.text}</p>
+    <li className={styles.commentWrapper}>
+      <div className={styles.commentInfo}>
+        <Link
+          to={`${AppRoute.USERS}/${comment.user.id}`}
+          className={styles.avatarLink}
+        >
+          <ImageWrapper
+            width="40"
+            height="40"
+            loading="lazy"
+            alt={String(comment.userId)}
+            label={comment.user.nickname}
+            className={styles.avatarWrapper}
+            src={comment.user.image?.url}
+          />
+        </Link>
+        <div className={styles.content}>
+          <div className={styles.contentTop}>
+            <Link
+              to={`${AppRoute.USERS}/${comment.user.id}`}
+              className={styles.contentUser}
+            >
+              {comment.user.nickname ?? comment.user.firstName}
+            </Link>
+            {hasTimestamp && (
+              <div className={styles.contentTimestamp}>
+                <span>at</span>
+                &nbsp;
+                {onTimeClick ? (
+                  <button
+                    className={styles.commentAtButton}
+                    onClick={handleTimeLineJump}
+                  >
+                    {time}
+                  </button>
+                ) : (
+                  time
+                )}
+              </div>
+            )}
+            <div className={styles.contentDate}>{distance} ago</div>
+          </div>
+          <div className={styles.contentText}>{comment.text}</div>
+        </div>
       </div>
-      <div className={styles.date}>{distance} ago</div>
       <div className={styles.btnsWrapper}>
+        {isAllowDelete && (
+          <button onClick={handleDeleteComment} className={styles.deleteButton}>
+            <span className="visually-hidden">Delete episode</span>
+          </button>
+        )}
         <div className={styles.btnLikeWrapper}>
           <button
             onClick={handleCommentLikeToggle}
             className={allowedClasses}
             disabled={isOwner}
-          >
-          </button>
+          ></button>
           <span className={styles.likesCount}>
-            {comment.commentReactions?.length ?? DEFAULT_COMMENT_COUNT}
+            {comment.commentReactions?.length || DEFAULT_COMMENT_VALUE}
           </span>
         </div>
-        {isAllowDelete &&
-          <button
-            onClick={handleDeleteComment}
-            className={styles.deleteButton}
-          >
-            <span className="visually-hidden">Delete episode</span>
-          </button>}
       </div>
     </li>
   );
