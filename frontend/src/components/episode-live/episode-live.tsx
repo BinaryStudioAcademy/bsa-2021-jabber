@@ -3,8 +3,8 @@ import {
   record as recordActions,
   episode as episodeActions,
 } from 'store/actions';
-import { RecordStatus, DataStatus } from 'common/enums/enums';
-import { CommentFormCreatePayload } from 'common/types/types';
+import { RecordStatus, DataStatus, EpisodeStatus } from 'common/enums/enums';
+import { CommentFormCreatePayload, Episode } from 'common/types/types';
 import {
   CreateCommentForm,
   CommentsList,
@@ -39,6 +39,13 @@ const EpisodeLive: React.FC = () => {
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisodePayload(Number(id)));
+
+    return (): void => {
+      dispatch(episodeActions.changeEpisodeStatus({
+        ...episode as Episode,
+        status: EpisodeStatus.STAGING,
+      }));
+    };
   }, []);
 
   useEffect(() => {
