@@ -22,7 +22,7 @@ class Episode {
   }
 
   public getAllInRandomOrder(): Promise<TEpisode[]> {
-    return this.#EpisodeModel.query().orderByRaw('random()');
+    return this.#EpisodeModel.query().where('type', 'public').orderByRaw('random()');
   }
 
   public getById(id: number): Promise<TEpisode> {
