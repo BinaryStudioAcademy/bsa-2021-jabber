@@ -8,7 +8,7 @@
 .episodeWrapper {
   position: relative;
   padding: 75px 75px 20px 75px;
-  min-height: 375px;
+  min-height: 200px;
   background: linear-gradient(
     0deg,
     rgba(25, 34, 47, 0.4),
@@ -58,6 +58,10 @@
   background: url('../../assets/img/trash-bucket.svg') center center / cover;
   border: none;
   cursor: pointer;
+}
+
+.favouriteButton {
+  min-width: 141px;
 }
 
 .link {
@@ -168,8 +172,6 @@ h3 {
 }
 
 .commentsWrapper {
-  width: 60%;
-  margin-right: auto;
   padding: 30px 0;
 }
 

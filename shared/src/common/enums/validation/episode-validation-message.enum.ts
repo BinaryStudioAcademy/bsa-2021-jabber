@@ -17,6 +17,7 @@ const EpisodeValidationMessage = {
   STATUS_REQUIRE: 'Episode status is required',
   DATA_URL_FORMAT_IMG: 'Cover image must be valid jpeg, png or svg file',
   DATA_URL_FORMAT: 'Cover record must be valid mp3 or wav file',
+  INVALID_EPISOD_STATUS: 'Invalid episode status',
 } as const;
 
 export { EpisodeValidationMessage };

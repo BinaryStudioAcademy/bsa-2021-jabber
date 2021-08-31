@@ -2,9 +2,13 @@ import { Router } from 'express';
 import {
   episodeCreate as episodeCreateValidationSchema,
   episodeEdit as episodeEditValidationSchema,
+  userFavouriteEpisode as userFavouriteEpisodeValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { ApiPath, HttpCode, EpisodesApiPath, HttpMethod } from '~/common/enums/enums';
-import { episode as episodeService } from '~/services/services';
+import {
+  episode as episodeService,
+  userFavouriteEpisode as userFavouriteEpisodeService,
+} from '~/services/services';
 import { handleAsyncApi } from '~/helpers/helpers';
 import {
   checkAuth as checkAuthMiddleware,
@@ -13,14 +17,15 @@ import {
   checkUserHasPermitToEpisode as checkUserHasPermitToEpisodeMiddleware,
   validateSchema as validateSchemaMiddleware,
 } from '~/middlewares/middlewares';
-import { EpisodeLoadFilter } from '~/common/types/types';
+import { EpisodeLoadFilter, User } from '~/common/types/types';
 
 type Args = {
   apiRouter: Router;
   episodeService: typeof episodeService;
+  userFavouriteEpisodeService: typeof userFavouriteEpisodeService;
 };
 
-const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
+const initEpisodesApi = ({ apiRouter, episodeService, userFavouriteEpisodeService }: Args): Router => {
   const episodeRouter = Router();
 
   apiRouter.use(ApiPath.EPISODES, episodeRouter);
@@ -29,6 +34,15 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
     EpisodesApiPath.ROOT,
     handleAsyncApi(async (_req, res) => {
       return res.json(await episodeService.getAll()).status(HttpCode.OK);
+    }),
+  );
+
+  episodeRouter.get(
+    EpisodesApiPath.POPULAR,
+    handleAsyncApi(async (_req, res) => {
+      return res
+        .json(await episodeService.getAllInRandomOrder())
+        .status(HttpCode.OK);
     }),
   );
 
@@ -54,6 +68,32 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
     }),
   );
 
+  episodeRouter.get(
+    EpisodesApiPath.FAVOURITES_$USER_ID,
+    checkAuthMiddleware(HttpMethod.GET),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .send(await episodeService.getFavouriteByQueryByUserId({
+          userId: Number(req.params.userId),
+          filter: req.query as unknown as EpisodeLoadFilter,
+        }))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  episodeRouter.get(
+    EpisodesApiPath.FAVOURITES_$ID_EPISODES,
+    checkAuthMiddleware(HttpMethod.GET),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .send(await userFavouriteEpisodeService.checkEpisodeIsFavorite({
+          episodeId: Number(req.params.id),
+          userId: (<User>req.user).id,
+        }))
+        .status(HttpCode.OK);
+    }),
+  );
+
   episodeRouter.post(
     EpisodesApiPath.ROOT,
     checkAuthMiddleware(HttpMethod.POST),
@@ -65,6 +105,17 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
     }),
   );
 
+  episodeRouter.post(
+    EpisodesApiPath.FAVOURITES,
+    checkAuthMiddleware(HttpMethod.POST),
+    validateSchemaMiddleware(userFavouriteEpisodeValidationSchema),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await userFavouriteEpisodeService.create(req.body))
+        .status(HttpCode.CREATED);
+    }),
+  );
+
   episodeRouter.put(
     EpisodesApiPath.$ID,
     checkAuthMiddleware(HttpMethod.PUT),
@@ -73,6 +124,17 @@ const initEpisodesApi = ({ apiRouter, episodeService }: Args): Router => {
     handleAsyncApi(async (req, res) => {
       return res
         .json(await episodeService.update(req.params.id, req.body))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  episodeRouter.delete(
+    EpisodesApiPath.FAVOURITES,
+    checkAuthMiddleware(HttpMethod.DELETE),
+    validateSchemaMiddleware(userFavouriteEpisodeValidationSchema),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await userFavouriteEpisodeService.delete(req.body))
         .status(HttpCode.OK);
     }),
   );

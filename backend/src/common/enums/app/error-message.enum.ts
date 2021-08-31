@@ -19,6 +19,7 @@ enum ErrorMessage {
   THIS_IS_A_PRIVATE_EPISODE = 'This is a private episode',
   EMAIL_DOES_NOT_EXIST = 'Email does not exist',
   EMAIL_SENDING_ERROR = 'Email sending error',
+  ALREADY_IN_FAVOURITES = 'Already in favourites',
   INVITATION_CODE_DOES_NOT_EXIST = 'Invitation code does not exist',
 }
 

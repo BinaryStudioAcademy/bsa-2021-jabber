@@ -1,3 +1,0 @@
-const DEFAULT_COMMENT_COUNT = 0;
-
-export { DEFAULT_COMMENT_COUNT };

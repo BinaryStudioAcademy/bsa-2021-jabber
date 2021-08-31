@@ -5,8 +5,7 @@ import { Button, ConfirmPopup, ImageWrapper, Link, Loader } from 'components/com
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
-import { getAllowedClasses } from 'helpers/helpers';
-import { getFilterEpisode } from './helpers/helpers';
+import { getAllowedClasses, getFilterEpisode } from 'helpers/helpers';
 import { DEFAULT_EPISODE_PAGINATION, DEFAULT_EPISODE_PAGE } from './common/constatnts/constants';
 
 const Podcast: React.FC = () => {
@@ -42,6 +41,7 @@ const Podcast: React.FC = () => {
   const isAllowDelete = isOwner || isMaster;
   const isLoading = dataStatus === DataStatus.PENDING || followersDataStatus === DataStatus.PENDING;
   const isEpisodesLoading = episodesDataStatus === DataStatus.PENDING;
+  const isPrivatePodcast = podcast?.type === PodcastType.PRIVATE;
 
   const [episodePagination, setEpisodePagination] = useState(DEFAULT_EPISODE_PAGINATION);
 
@@ -227,8 +227,8 @@ const Podcast: React.FC = () => {
                   >
                     Type
                   </div>
-                  {podcast.type !== PodcastType.PRIVATE ?
-                    <p className={styles.infoInner}>{podcast.type}</p> : <button className={styles.copyInvitation} onClick={handleCopyInviteLink}>Private (copy link)</button>
+                  {isOwner && isPrivatePodcast ?
+                    <button className={styles.copyInvitation} onClick={handleCopyInviteLink}>Private (copy link)</button> : <p className={styles.infoInner}>{podcast.type}</p>
                   }
                 </li>
                 <li className={styles.infoItem}>
@@ -244,7 +244,7 @@ const Podcast: React.FC = () => {
           </div>
           {episodes.length
             ? isEpisodesLoading
-              ? <Loader/>
+              ? <Loader />
               : <EpisodeTable
                 episodes={episodes}
                 onSetRow={handleSetRowEpisodeFilter}

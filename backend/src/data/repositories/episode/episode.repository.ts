@@ -1,10 +1,13 @@
 import { EpisodeModel as EpisodeM } from '~/data/models/models';
 import {
   Episode as TEpisode,
+  EpisodeWithPodcast as TEpisodeWithPodcast,
   EpisodeCreateDTOPayload,
   EpisodeEditDTOPayload,
   LoadEpisodesByPodcastIdPayload,
+  LoadFavouriteEpisodesPayload,
 } from '~/common/types/types';
+import { EpisodeType } from '~/common/enums/enums';
 
 type Constructor = {
   EpisodeModel: typeof EpisodeM;
@@ -19,6 +22,10 @@ class Episode {
 
   public getAll(): Promise<TEpisode[]> {
     return this.#EpisodeModel.query();
+  }
+
+  public getAllInRandomOrder(): Promise<TEpisode[]> {
+    return this.#EpisodeModel.query().where('type', EpisodeType.PUBLIC).orderByRaw('random()');
   }
 
   public getById(id: number): Promise<TEpisode> {
@@ -63,6 +70,26 @@ class Episode {
       .deleteById(id)
       .returning('*')
       .first();
+  }
+
+  public getFavouriteByQueryByUserId({ userId, filter }: LoadFavouriteEpisodesPayload): Promise<TEpisodeWithPodcast[]> {
+    const { limit, offset } = filter;
+
+    return this.#EpisodeModel
+      .query()
+      .withGraphJoined('[podcast]')
+      .joinRelated('[favourites]')
+      .where('favourites.user_id', userId)
+      .limit(limit)
+      .offset(offset);
+  }
+
+  public getFavouriteCountByUserId(id: number): Promise<number> {
+    return this.#EpisodeModel
+      .query()
+      .joinRelated('[favourites]')
+      .where('favourites.user_id', id)
+      .resultSize();
   }
 }
 

@@ -12,3 +12,4 @@ export { PodcastFollower as PodcastFollowerModel } from './podcast-follower/podc
 export { CommentReaction as CommentReactionModel } from './comment-reaction/comment-reaction.model';
 export { UserFollower as UserFollowerModel } from './user-follower/user-follower.model';
 export { InvitationCode as InvitationCodeModel } from './invitation-code/invitation-code.model';
+export { UserFavouriteEpisode as UserFavouriteEpisodeModel } from './user-favourite-episode/user-favourite-episode.model';
