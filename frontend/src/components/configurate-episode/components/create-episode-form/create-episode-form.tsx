@@ -28,7 +28,7 @@ type Props = {
 };
 
 const selectTypeOptions: Option[] = getOptions(Object.values(EpisodeType));
-const selectStatusOptions: Option[] = getOptions(Object.values(EpisodeStatus));
+const selectStatusOptions: Option[] = getOptions([EpisodeStatus.STAGING, EpisodeStatus.PUBLISHED]);
 
 const CreateEpisodeForm: React.FC<Props> = ({
   onSubmit,
@@ -41,10 +41,9 @@ const CreateEpisodeForm: React.FC<Props> = ({
   });
   const history = useHistory();
 
-  const { formDataStatus, hasLiveRecord } = useAppSelector(
-    ({ configurateEpisode, record }) => ({
+  const { formDataStatus } = useAppSelector(
+    ({ configurateEpisode }) => ({
       formDataStatus: configurateEpisode.formDataStatus,
-      hasLiveRecord: record.hasLiveRecord,
     }),
   );
 
@@ -70,7 +69,7 @@ const CreateEpisodeForm: React.FC<Props> = ({
           name={EpisodePayloadKey.RECORD}
           control={control}
           errors={errors}
-          hasLiveRecord={hasLiveRecord}
+          fileUrl={payload.recordDataUrl}
         />
         <Input
           type={InputType.TEXT}
