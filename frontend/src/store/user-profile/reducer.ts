@@ -1,7 +1,14 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { Podcast, User } from 'common/types/types';
-import { loadPodcasts, loadUser, getFollowersCount, checkIsFollowedUser, toggleFollowUser, loadFollowersByUserId } from './actions';
+import {
+  loadPodcasts,
+  loadUser,
+  getFollowersCount,
+  checkIsFollowedUser,
+  toggleFollowUser,
+  loadFollowersByUserId,
+} from './actions';
 
 type State = {
   dataStatus: DataStatus;

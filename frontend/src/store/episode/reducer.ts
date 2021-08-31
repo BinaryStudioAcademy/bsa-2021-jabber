@@ -8,6 +8,8 @@ import {
   updateComments,
   deleteComment,
   updateCommentsAfterDelete,
+  checkEpisodeIsFavorite,
+  toggleFavourite,
   toggleCommentLike,
   updateCommentsAfterLike,
 } from './actions';
@@ -16,6 +18,8 @@ import { getSortedItems } from 'jabber-shared/helpers/helpers';
 type State = {
   dataStatus: DataStatus;
   commentDataStatus: DataStatus;
+  favouriteDataStatus: DataStatus;
+  isFavourite: boolean;
   episode: Episode | null;
   comments: Comment[];
   podcast: Podcast | null;
@@ -24,6 +28,8 @@ type State = {
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
   commentDataStatus: DataStatus.IDLE,
+  favouriteDataStatus: DataStatus.IDLE,
+  isFavourite: false,
   episode: null,
   comments: [],
   podcast: null,
@@ -93,6 +99,19 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(updateComments, (state, action) => {
     state.comments = [action.payload, ...state.comments];
+  });
+  builder.addCase(checkEpisodeIsFavorite.pending, (state) => {
+    state.favouriteDataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(checkEpisodeIsFavorite.fulfilled, (state, action) => {
+    state.favouriteDataStatus = DataStatus.FULFILLED;
+    state.isFavourite = action.payload;
+  });
+  builder.addCase(checkEpisodeIsFavorite.rejected, (state) => {
+    state.favouriteDataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(toggleFavourite.fulfilled, (state, action) => {
+    state.isFavourite = action.payload;
   });
 });
 

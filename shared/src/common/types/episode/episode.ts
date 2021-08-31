@@ -4,4 +4,6 @@ export type { EpisodeEditPayload } from './episode-edit-payload.type';
 export type { EpisodePayload } from './episode-payload.type';
 export type { EpisodeLoadFilter } from './episode-load-filter.type';
 export type { LoadEpisodesByPodcastIdPayload } from './load-episodes-by-podcast-id-payload.type';
+export type { LoadFavouriteEpisodesPayload } from './load-favourite-episodes-payload.type';
 export type { EpisodeQueryPayload } from './episode-query-payload.type';
+export type { EpisodeWithPodcast } from './episode-with-podcast.type';

@@ -31,6 +31,8 @@ export type {
   LoadEpisodesByPodcastIdPayload,
   EpisodeLoadFilter,
   EpisodeQueryPayload,
+  LoadFavouriteEpisodesPayload,
+  EpisodeWithPodcast,
 } from './episode/episode';
 export type {
   Shownote,
@@ -53,3 +55,8 @@ export type { Genre } from './genre/genre';
 export type { UserFollower, UserFollowerPayload } from './user-follower/user-follower';
 export type { PodcastFollower, PodcastFollowerPayload } from './podcast-follower/podcast-follower';
 export type { StartRecordActionPayload } from './store/store';
+export type {
+  UserFavouriteEpisode,
+  UserFavouriteEpisodePayload,
+  UserFavouriteEpisodeResponse,
+} from './user-favourite-episode/user-favorite-episode';

@@ -27,6 +27,7 @@ import {
   DataStatus,
   EpisodeStatus,
   UserRole,
+  ButtonColor,
 } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
@@ -46,7 +47,7 @@ const Episode: React.FC = () => {
   const playerRef = useRef<PlayerRef | null>(null);
   const playerContainerRef = useRef<HTMLDivElement>(null);
 
-  const { episode, comments, user, dataStatus, podcast, liveStream } =
+  const { episode, comments, user, dataStatus, podcast, liveStream, favouriteDataStatus, isFavourite } =
     useAppSelector(({ episode, auth, record }) => ({
       dataStatus: episode.dataStatus,
       episode: episode.episode,
@@ -54,6 +55,8 @@ const Episode: React.FC = () => {
       user: auth.user,
       podcast: episode.podcast,
       liveStream: record.liveStream,
+      favouriteDataStatus: episode.favouriteDataStatus,
+      isFavourite: episode.isFavourite,
     }));
 
   const [playerStatus, setPlayerStatus] = useState<DataStatus>(DataStatus.IDLE);
@@ -68,10 +71,12 @@ const Episode: React.FC = () => {
   const isPlayerLoaded = playerStatus === DataStatus.FULFILLED;
   const isAllowDelete = isOwner || isMaster;
   const isPlayerShow = Boolean(episode?.record?.fileUrl) || Boolean(liveStream);
+  const isLoading = dataStatus === DataStatus.PENDING || favouriteDataStatus === DataStatus.PENDING;
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisodePayload(Number(id)));
+    dispatch(episodeActions.checkEpisodeIsFavorite(Number(id)));
 
     return (): void => {
       dispatch(episodeActions.leaveEpisode(id));
@@ -116,7 +121,11 @@ const Episode: React.FC = () => {
     setIsConfirmPopupOpen(!isConfirmPopupOpen);
   };
 
-  if (dataStatus === DataStatus.PENDING) {
+  const handleToggleFavorite = (): void => {
+    dispatch(episodeActions.toggleFavourite());
+  };
+
+  if (isLoading) {
     return <Loader />;
   }
 
@@ -141,7 +150,7 @@ const Episode: React.FC = () => {
             />
             {isStaging && isOwner && (
               <Button
-                className={ isPlayerShow
+                className={isPlayerShow
                   ? getAllowedClasses(
                     styles.btnStartLive,
                     styles.btnWithPlayer,
@@ -149,6 +158,14 @@ const Episode: React.FC = () => {
                   : styles.btnStartLive}
                 label="Start Live"
                 href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}
+              />
+            )}
+            {hasUser && !isOwner && (
+              <Button
+                label={isFavourite ? 'In Favourites' : 'Favourite'}
+                buttonColor={isFavourite ? ButtonColor.LIGHT_PINK : ButtonColor.PINK}
+                onClick={handleToggleFavorite}
+                className={getAllowedClasses(styles.btnStartLive, styles.favouriteButton)}
               />
             )}
             <div className={styles.descriptionWrapper}>
