@@ -87,6 +87,10 @@ class Episode {
     return this.#episodeRepository.getAll();
   }
 
+  public getAllInRandomOrder(): Promise<TEpisode[]> {
+    return this.#episodeRepository.getAllInRandomOrder();
+  }
+
   public async getById(id: number): Promise<TEpisode> {
     const episode = await this.#episodeRepository.getById(id);
     if (!episode) {

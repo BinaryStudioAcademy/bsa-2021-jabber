@@ -5,6 +5,7 @@ import {
   useParams,
   useRef,
   useState,
+  useHistory,
 } from 'hooks/hooks';
 import {
   episode as episodeActions,
@@ -59,6 +60,7 @@ const Episode: React.FC = () => {
     }));
 
   const [playerStatus, setPlayerStatus] = useState<DataStatus>(DataStatus.IDLE);
+  const history = useHistory();
 
   const hasShownotes = Boolean(episode?.shownotes?.length);
   const hasUser = Boolean(user);
@@ -112,7 +114,7 @@ const Episode: React.FC = () => {
   };
 
   const handleCommentLikeToggle = (commentId: number): void => {
-    dispatch(episodeActions.toggleCommentLike(commentId));
+    hasUser ? dispatch(episodeActions.toggleCommentLike(commentId)) : history.push(AppRoute.SIGN_IN);
   };
 
   const handleShowPopup = (): void => {

@@ -38,6 +38,15 @@ const initEpisodesApi = ({ apiRouter, episodeService, userFavouriteEpisodeServic
   );
 
   episodeRouter.get(
+    EpisodesApiPath.POPULAR,
+    handleAsyncApi(async (_req, res) => {
+      return res
+        .json(await episodeService.getAllInRandomOrder())
+        .status(HttpCode.OK);
+    }),
+  );
+
+  episodeRouter.get(
     EpisodesApiPath.$ID,
     checkUserHasPermitToEpisodeMiddleware(),
     handleAsyncApi(async (req, res) => {
