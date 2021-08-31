@@ -130,7 +130,7 @@ const Header: React.FC = () => {
                       Podcasts
                     </Link>
                   </li>
-                  <li>
+                  <li className={styles.navigationItem}>
                     <Link to={`${AppRoute.USERS}/${user?.id}${AppRoute.FAVOURITES}`} className={styles.link}>
                       Favourites
                     </Link>
