@@ -3,7 +3,6 @@ import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import { getDistanceToDateNow } from 'helpers/date/date';
 import { getAllowedClasses, getTimeOffset } from 'helpers/helpers';
-import { DEFAULT_COMMENT_VALUE } from './common/constants';
 import ImageWrapper from '../image-wrapper/image-wrapper';
 import styles from './styles.module.scss';
 
@@ -29,6 +28,7 @@ const CommentItem: React.FC<Props> = ({
   onToggleCommentLike,
 }) => {
   const time = getTimeOffset(comment.timestamp);
+  const hasLikes = Boolean(comment.commentReactions?.length);
 
   const handleTimeLineJump = (): void => {
     onTimeClick?.(comment.timestamp);
@@ -50,6 +50,7 @@ const CommentItem: React.FC<Props> = ({
   const allowedClasses = getAllowedClasses(
     styles.likeButton,
     isLiked && styles.likeButtonField,
+    isOwner && styles.likeButtonOwner,
   );
 
   return (
@@ -111,7 +112,7 @@ const CommentItem: React.FC<Props> = ({
             disabled={isOwner}
           ></button>
           <span className={styles.likesCount}>
-            {comment.commentReactions?.length || DEFAULT_COMMENT_VALUE}
+            {hasLikes ? comment.commentReactions.length : ''}
           </span>
         </div>
       </div>

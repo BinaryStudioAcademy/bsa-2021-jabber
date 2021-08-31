@@ -1,3 +1,0 @@
-const DEFAULT_COMMENT_VALUE = '';
-
-export { DEFAULT_COMMENT_VALUE };
