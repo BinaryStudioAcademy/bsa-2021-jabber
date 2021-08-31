@@ -5,6 +5,7 @@ import {
   EpisodeEditDTOPayload,
   LoadEpisodesByPodcastIdPayload,
 } from '~/common/types/types';
+import { EpisodeType } from '~/common/enums/enums';
 
 type Constructor = {
   EpisodeModel: typeof EpisodeM;
@@ -19,6 +20,10 @@ class Episode {
 
   public getAll(): Promise<TEpisode[]> {
     return this.#EpisodeModel.query();
+  }
+
+  public getAllInRandomOrder(): Promise<TEpisode[]> {
+    return this.#EpisodeModel.query().where('type', EpisodeType.PUBLIC).orderByRaw('random()');
   }
 
   public getById(id: number): Promise<TEpisode> {
