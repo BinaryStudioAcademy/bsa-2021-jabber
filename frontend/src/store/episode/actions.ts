@@ -65,6 +65,25 @@ const deleteComment = createAsyncThunk <Comment, number, AsyncThunkConfig>
   return deletedComment;
 });
 
+const changeEpisodeStatus = createAsyncThunk <Episode, Episode, AsyncThunkConfig>
+(ActionType.CHANGE_EPISODE_STATUS, async (episode, { extra }) =>{
+  const { episodeApi } = extra;
+
+  const updatedEpisode = await episodeApi.update(episode.id, {
+    name: episode.name,
+    description: episode.description,
+    shownotes: episode.shownotes,
+    type: episode.type,
+    recordDataUrl: null,
+    imageDataUrl: null,
+    userId: episode.userId,
+    imageId: episode.imageId,
+    status: episode.status,
+  });
+
+  return updatedEpisode;
+});
+
 const updateComments = createAction<Comment>(ActionType.UPDATE_COMMENTS);
 const updateCommentsAfterDelete = createAction<Comment>(ActionType.UPDATE_COMMENTS_AFTER_DELETE);
 const updateCommentsAfterLike = createAction<Comment>(ActionType.UPDATE_COMMENTS_AFTER_LIKE);
@@ -80,4 +99,5 @@ export {
   updateCommentsAfterDelete,
   updateCommentsAfterLike,
   leaveEpisode,
+  changeEpisodeStatus,
 };

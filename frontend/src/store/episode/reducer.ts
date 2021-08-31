@@ -10,6 +10,7 @@ import {
   updateCommentsAfterDelete,
   toggleCommentLike,
   updateCommentsAfterLike,
+  changeEpisodeStatus,
 } from './actions';
 import { getSortedItems } from 'jabber-shared/helpers/helpers';
 
@@ -78,6 +79,16 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(deleteComment.rejected, (state) => {
     state.commentDataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(changeEpisodeStatus.pending, (state) => {
+    state.dataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(changeEpisodeStatus.fulfilled, (state, action) => {
+    state.dataStatus = DataStatus.FULFILLED;
+    state.episode = action.payload;
+  });
+  builder.addCase(changeEpisodeStatus.rejected, (state) => {
+    state.dataStatus = DataStatus.REJECTED;
   });
 
   builder.addCase(updateCommentsAfterLike, (state, action) => {
