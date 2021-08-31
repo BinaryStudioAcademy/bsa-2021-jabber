@@ -1,14 +1,10 @@
-.fieldset {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  border: none;
-  margin: 0;
-  padding: 0;
+.form {
+  margin: 0 0 27px;
 
-  label {
-    flex-grow: 1;
-    margin: -4px 30px 0 0;
-    width: 100%;
+  .fieldset {
+    max-width: 932px;
+    margin: 0;
+    padding: 0;
+    border: none;
   }
 }

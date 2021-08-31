@@ -1,115 +1,145 @@
-.wrapper {
+.commentWrapper {
   position: relative;
   display: flex;
   align-items: flex-start;
-  margin-top: 15px;
-  font-size: 12px;
-}
+  font-size: 14px;
 
-.avatarWrapper {
-  margin-right: 15px;
-  border-radius: 50%;
-  min-width: 40px;
-  cursor: pointer;
-}
-
-.intro {
-  max-width: 70%;
-  p {
-    margin: 0;
+  .deleteButton {
+    display: none;
+    width: 23px;
+    height: 23px;
+    margin-right: 19px;
+    background: url('../../../assets/img/comment/trash-bucket.svg') center
+      center / cover;
+    border: none;
+    cursor: pointer;
   }
-}
 
-.userName {
-  display: flex;
-  color: rgba(53, 53, 53, 0.5);
-  font-weight: 600;
-  a {
-    max-width: 70px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  &:hover .deleteButton {
+    display: block;
   }
-  span {
-    color: rgba(53, 53, 53, 0.3);
+
+  & + & {
+    margin-top: 22px;
   }
-}
 
-.text {
-  font-weight: 500;
-}
-
-.date {
-  width: 150px;
-  text-align: right;
-  margin-left: auto;
-  color: rgba(53, 53, 53, 0.5);
-  font-weight: 600;
-}
-
-.commentAtButton{
-  border: none;
-  background: transparent;
-  margin: 0;
-  padding: 0;
-  cursor: pointer;
-}
-
-.commentAtButton:hover{
-  color: var(--color-link-active);
-}
-
-.btnsWrapper{
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  position: absolute;
-  right: 10;
-  top: 20px;
-  width: 60px;
-  height: 15px;
-
-  .btnLikeWrapper{
+  .commentInfo {
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    align-items: flex-start;
+  }
 
-    .likeButton{
-      margin-right: 5px;
-      flex: 1;
-      width: 16px;
-      height: 16px;
-      background: url('../../../assets/img/comment/heart-regular.svg') center center / cover;
+  .avatarLink {
+    flex-shrink: 0;
+    margin-right: 10px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .avatarWrapper {
+    cursor: pointer;
+    min-width: 40px;
+  }
+
+  .content {
+    max-width: 860px;
+    margin-right: 15px;
+    color: var(--color-primary-dark);
+  }
+
+  .contentTop {
+    display: flex;
+    margin-bottom: 7px;
+    line-height: 16px;
+  }
+
+  .contentUser {
+    margin-right: 12px;
+    font-weight: 600;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+      color: var(--color-link-active);
+    }
+  }
+
+  .contentTimestamp {
+    margin-right: 12px;
+    span {
+      color: #929396;
+    }
+    .commentAtButton {
+      color: #ff9643;
       border: none;
+      background: transparent;
+      margin: 0;
+      padding: 0;
       cursor: pointer;
+    }
+  }
 
-      .likesCount{
-        margin-left: 10px;
+  .contentDate {
+    color: #929396;
+  }
+
+  .contentText {
+    line-height: 18px;
+    hyphens: auto;
+    word-break: break-word;
+    overflow: hidden;
+  }
+
+  .btnsWrapper {
+    display: flex;
+    margin-left: auto;
+
+    .btnLikeWrapper {
+      position: relative;
+      display: flex;
+
+      .likeButton {
+        width: 23px;
+        height: 23px;
+        margin-right: 10px;
+        background: url('../../../assets/img/comment/heart-regular.svg') center
+          center / cover;
+        border: none;
+        cursor: pointer;
+      }
+
+      .likeButtonField {
+        background: url('../../../assets/img/comment/heart-solid.svg');
+      }
+
+      .likeButtonOwner {
+        cursor: auto;
+      }
+
+      .likesCount {
+        position: absolute;
+        left: 30px;
+        top: 1px;
       }
     }
-    .likeButtonField{
-      background: url('../../../assets/img/comment/heart-solid.svg');
+  }
+}
+
+// Media
+@media screen and (max-width: 1024px) {
+  .commentWrapper {
+    .btnsWrapper .deleteButton {
+      display: block;
     }
   }
 }
 
-.deleteButton{
-  width: 14px;
-  height: 14px;
-  background: url('../../../assets/img/trash-bucket.svg') center center / cover;
-  border: none;
-  cursor: pointer;
+@media screen and (max-width: 420px) {
+  .commentWrapper {
+    flex-wrap: wrap;
 
-  margin-left: 10px;
-}
-
-
-.link {
-  color: rgba(53, 53, 53, 0.5);
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.link:hover {
-  color: var(--color-link-active);
+    .commentInfo {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+  }
 }
