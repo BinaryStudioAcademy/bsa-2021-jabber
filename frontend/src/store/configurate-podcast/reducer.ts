@@ -1,14 +1,15 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { Genre, ConfigurationPodcastPayload } from 'common/types/types';
+import { Genre, Podcast } from 'common/types/types';
 import { create, edit, loadPodcast, loadGenres, deletePodcast, resetState } from './actions';
 
 type State = {
   dataStatus: DataStatus;
   genresDataStatus: DataStatus;
   formDataStatus: DataStatus;
-  podcast: ConfigurationPodcastPayload | null;
+  podcast: Podcast | null;
   genres: Genre[];
+  invitationCode: string;
 };
 
 const initialState: State = {
@@ -17,6 +18,7 @@ const initialState: State = {
   formDataStatus: DataStatus.IDLE,
   podcast: null,
   genres: [],
+  invitationCode: '',
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -43,7 +45,8 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadPodcast.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
-    state.podcast = action.payload;
+    state.podcast = action.payload.podcast;
+    state.invitationCode = action.payload.invitationCode;
   });
   builder.addCase(loadPodcast.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;

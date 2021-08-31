@@ -1,3 +1,5 @@
+import { Podcast } from 'common/types/types';
+
 enum ActionType {
   CREATE_PODCAST = 'configurate-podcast/create-podcast',
   EDIT_PODCAST = 'configurate-podcast/edit-podcast',
@@ -7,4 +9,10 @@ enum ActionType {
   RESET_STATE = 'configurate-podcast/reset-state',
 }
 
+type LoadPodcastPayload = {
+  podcast: Podcast;
+  invitationCode: string;
+};
+
 export { ActionType };
+export type { LoadPodcastPayload };

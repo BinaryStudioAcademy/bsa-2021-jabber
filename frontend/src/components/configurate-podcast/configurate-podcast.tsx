@@ -12,11 +12,18 @@ const ConfiguratePodcast: React.FC = () => {
   const { id } = useParams<PageParams>();
   const dispatch = useDispatch();
 
-  const { podcast, dataStatus, genres, genresDataStatus } = useAppSelector(({ configuratePodcast }) => ({
+  const {
+    podcast,
+    dataStatus,
+    genres,
+    genresDataStatus,
+    invitationCode,
+  } = useAppSelector(({ configuratePodcast }) => ({
     podcast: configuratePodcast.podcast,
     dataStatus: configuratePodcast.dataStatus,
     genres: configuratePodcast.genres,
     genresDataStatus: configuratePodcast.genresDataStatus,
+    invitationCode: configuratePodcast.invitationCode,
   }));
 
   const isEdit = Boolean(id);
@@ -29,7 +36,7 @@ const ConfiguratePodcast: React.FC = () => {
       : dispatch(configuratePodcastActions.create(payload));
   };
 
-  const mappedPodcast = podcast ? mapPodcastToFormPayload(podcast) : undefined;
+  const mappedPodcast = podcast ? mapPodcastToFormPayload(podcast, invitationCode) : undefined;
   const mappedGenres = mapGenreToOptions(genres);
 
   useEffect(() => {
