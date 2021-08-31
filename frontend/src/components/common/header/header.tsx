@@ -16,8 +16,7 @@ const Header: React.FC = () => {
   const hasUser = Boolean(user);
   const dispatch = useDispatch();
 
-  const handleUserExit = (close: () => void) => (): void => {
-    close();
+  const handleUserExit = (): void => {
     dispatch(authActions.resetUser());
   };
 
@@ -72,12 +71,11 @@ const Header: React.FC = () => {
                     <div
                       className={styles.dropDown}
                     >
-                      <ul className={styles.dropDownList}>
+                      <ul className={styles.dropDownList} onClick={close}>
                         <li className={styles.dropDownListItem}>
                           <Link
                             to={`${AppRoute.USERS}/${user?.id}`}
                             className={styles.link}
-                            onClick={close}
                           >
                             My Profile
                           </Link>
@@ -86,7 +84,6 @@ const Header: React.FC = () => {
                           <Link
                             to={AppRoute.PODCASTS_EDIT}
                             className={styles.link}
-                            onClick={close}
                           >
                             + Create Podcast
                           </Link>
@@ -95,7 +92,7 @@ const Header: React.FC = () => {
                           <Link
                             to={AppRoute.ROOT}
                             className={styles.link}
-                            onClick={handleUserExit(close)}
+                            onClick={handleUserExit}
                           >
                             Exit
                           </Link>
@@ -115,18 +112,20 @@ const Header: React.FC = () => {
                   <span></span>
                 </div>
               }
-              renderContent={(close): JSX.Element => (<ul
-                className={getAllowedClasses(
-                  styles.navigation,
-                  styles.burgerNav,
-                )}
-              >
-                <li className={styles.navigationItem}>
-                  <Link to={AppRoute.ROOT} className={styles.link} onClick={close}>
-                    Podcasts
-                  </Link>
-                </li>
-              </ul>)}
+              renderContent={(close): JSX.Element => (
+                <ul
+                  className={getAllowedClasses(
+                    styles.navigation,
+                    styles.burgerNav,
+                  )}
+                  onClick={close}
+                >
+                  <li className={styles.navigationItem}>
+                    <Link to={AppRoute.ROOT} className={styles.link}>
+                      Podcasts
+                    </Link>
+                  </li>
+                </ul>)}
             />
           </>
         ) : (
