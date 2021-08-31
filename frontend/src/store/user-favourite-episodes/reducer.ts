@@ -1,18 +1,18 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { Episode } from 'common/types/types';
+import { EpisodeWithPodcast } from 'common/types/types';
 import { loadFavouriteEpisodes } from './actions';
 
 type State = {
   dataStatus: DataStatus;
-  episodes: Episode[];
-  episodesCount: number;
+  episodes: EpisodeWithPodcast[];
+  episodesTotalCount: number;
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
   episodes: [],
-  episodesCount: 0,
+  episodesTotalCount: 0,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -25,7 +25,7 @@ const reducer = createReducer(initialState, (builder) => {
     const { episodes, totalCount } = action.payload;
 
     state.episodes = episodes;
-    state.episodesCount = totalCount;
+    state.episodesTotalCount = totalCount;
   });
   builder.addCase(loadFavouriteEpisodes.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;

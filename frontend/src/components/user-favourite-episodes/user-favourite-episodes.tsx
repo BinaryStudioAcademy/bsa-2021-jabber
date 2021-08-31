@@ -14,10 +14,10 @@ const UserFavouriteEpisodesPage: React.FC = () => {
   const { id } = useParams<PageParams>();
   const [episodePagination, setEpisodePagination] = useState(DEFAULT_EPISODE_PAGINATION);
 
-  const { dataStatus, episodes, episodesCount } = useAppSelector(({ userFavouriteEpisodes }: RootState) => ({
+  const { dataStatus, episodes, episodesTotalCount } = useAppSelector(({ userFavouriteEpisodes }: RootState) => ({
     dataStatus: userFavouriteEpisodes.dataStatus,
     episodes: userFavouriteEpisodes.episodes,
-    episodesCount: userFavouriteEpisodes.episodesCount,
+    episodesTotalCount: userFavouriteEpisodes.episodesTotalCount,
   }));
 
   useEffect(() => {
@@ -49,22 +49,24 @@ const UserFavouriteEpisodesPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Favourite episodes:</h1>
       {episodes.length
-        ? <FavouriteEpisodeTable
-          episodes={episodes}
-          onSetRow={handleSetRowEpisodeFilter}
-          onSetPage={handleSetOffsetEpisodeFilter}
-          pageIndex={episodePagination.page}
-          pageSize={episodePagination.row}
-          totalCountEpisodes={episodesCount}
-        />
+        ? (<>
+          <h1 className={styles.title}>Favourite episodes:</h1>
+          <FavouriteEpisodeTable
+            episodes={episodes}
+            onSetRow={handleSetRowEpisodeFilter}
+            onSetPage={handleSetOffsetEpisodeFilter}
+            pageIndex={episodePagination.page}
+            pageSize={episodePagination.row}
+            episodesTotalCount={episodesTotalCount}
+          />
+        </>)
         : (
           <div className={styles.placeholder}>
             There are no episodes in favourites yet.
           </div>
         )}
-    </div>
+    </div >
   );
 };
 
