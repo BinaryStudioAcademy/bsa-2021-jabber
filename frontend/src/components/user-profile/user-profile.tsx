@@ -46,9 +46,6 @@ const UserPage: React.FC = () => {
 
   const [episodePagination, setEpisodePagination] = useState(DEFAULT_EPISODE_PAGINATION);
 
-  // eslint-disable-next-line no-console
-  console.log('episodePagination', episodePagination);
-
   useEffect(() => {
     dispatch(userProfileActions.loadFavouriteEpisodes({
       userId: Number(id),
@@ -57,8 +54,6 @@ const UserPage: React.FC = () => {
   }, [id, episodePagination]);
 
   const handleSetRowEpisodeFilter = (row: number): void => {
-    // eslint-disable-next-line no-console
-    console.log('row', row);
     setEpisodePagination({
       page: DEFAULT_EPISODE_PAGE,
       row,
@@ -207,8 +202,7 @@ const UserPage: React.FC = () => {
           </span>
         )}
       </div>
-      {isOwnPage && <div>
-        <hr/>
+      {isOwnPage && <div className={styles.favoriteEpisodes}>
         <h2 className={styles.podcastsByUserTitle}>Favorite episodes:</h2>
         {favoriteEpisodes.length
           ? <FavouriteEpisodeTable
