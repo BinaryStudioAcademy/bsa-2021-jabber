@@ -47,7 +47,8 @@ const Homepage: React.FC = () => {
   const history = useHistory();
 
   const hasPodcasts = Boolean(podcasts.length);
-  const isLoading = dataStatus === DataStatus.PENDING || popularUsersDataStatus === DataStatus.PENDING;
+  const isPodcastsLoading = dataStatus === DataStatus.PENDING;
+  const isPopularUsersLoading = popularUsersDataStatus === DataStatus.PENDING;
   const isGenresLoaded = genresDataStatus === DataStatus.FULFILLED;
 
   useEffect(() => {
@@ -110,14 +111,14 @@ const Homepage: React.FC = () => {
     setIsFilterPopupOpen(false);
   };
 
-  // const handleMorePodcastsLoad = (): void => {
-  //   history.push({
-  //     search: getStringifiedQuery({
-  //       ...podcastsFilter,
-  //       page: podcastsFilter.page + 1,
-  //     }),
-  //   });
-  // };
+  const handlePageChange = (selectedPage: number): void => {
+    history.push({
+      search: getStringifiedQuery({
+        ...podcastsFilter,
+        page: selectedPage,
+      }),
+    });
+  };
 
   const handleTogglePodcastFilter = (): void => {
     setIsFilterPopupOpen(!isFilterPopupOpen);
@@ -125,14 +126,12 @@ const Homepage: React.FC = () => {
 
   return (
     <main className={styles.main}>
-      <Pagination pageCount={totalPagesCount} currentPage={INITIAL_PAGE} onPageChange={(selected: number): void => {
-        // eslint-disable-next-line no-console
-        console.log(selected);
-      }}/>
       <Search onChange={handleChange} currentState={podcastsFilter.search} />
-      {isLoading
-        ? <Loader />
-        : <PopularUsers popularUsers={popularUsers} />}
+      {isPopularUsersLoading ? (
+        <Loader />
+      ) : (
+        <PopularUsers popularUsers={popularUsers} />
+      )}
       <div className={styles.titleWrapper}>
         <h2 className={styles.title}>All podcasts</h2>
         {isGenresLoaded && (
@@ -143,14 +142,23 @@ const Homepage: React.FC = () => {
         )}
       </div>
       {hasPodcasts ? (
-        <PodcastList podcasts={podcasts} />
-      ) : isLoading ? (
+        <>
+          <PodcastList podcasts={podcasts} />
+          {isPodcastsLoading && <Loader />}
+        </>
+      ) : isPodcastsLoading ? (
         <Loader />
       ) : (
         <span className={styles.oopsMessage}>
           Oops! There&apos;s nothing here
         </span>
       )}
+      <Pagination
+        pageCount={totalPagesCount}
+        currentPage={podcastsFilter.page}
+        onPageChange={handlePageChange}
+        className={styles.pagination}
+      />
       <PodcastFilterPopup
         isOpen={isFilterPopupOpen}
         genres={genres}
