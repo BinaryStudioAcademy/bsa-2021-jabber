@@ -13,6 +13,7 @@ enum ErrorMessage {
   NOT_YOURS_PODCAST = 'This podcast not yours',
   NOT_YOURS_EPISODE = 'This episode not yours',
   NOT_YOURS_COMMENT = 'This comment not yours',
+  NOT_YOURS_PLAYLIST = 'This playlist not yours',
   NO_PERMISSION_TO_EDIT_USER = 'You do not have permission to edit',
   ALREADY_FOLLOWING = 'Already following',
   THIS_IS_A_PRIVATE_PODCAST = 'This is a private podcast',

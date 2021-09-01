@@ -10,6 +10,7 @@ export {
   UserFollowersApiPath,
   PodcastsFollowersApiPath,
   NotificationsApiPath,
+  PlaylistsApiPath,
 } from './api/api';
 export {
   AppAsyncStorageKey,
@@ -36,6 +37,8 @@ export {
   CommentReactionDTOKey,
   InvitationCodeDTOKey,
   UserFavouriteEpisodeDTOKey,
+  PlaylistDTOKey,
+  PlaylistEpisodeDTOKey,
 } from './db/db';
 export { HttpCode, HttpMethod } from './http/http';
 export {
