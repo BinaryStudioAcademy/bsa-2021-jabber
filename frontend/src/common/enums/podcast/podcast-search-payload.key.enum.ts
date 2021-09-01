@@ -1,7 +1,7 @@
 enum PodcastSearchPayloadKey {
   SEARCH = 'search',
   GENRES = 'genres',
-  OFFSET = 'offset',
+  PAGE = 'page',
 }
 
 export { PodcastSearchPayloadKey };
