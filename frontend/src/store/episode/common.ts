@@ -12,7 +12,6 @@ enum ActionType {
   UPDATE_COMMENTS_AFTER_DELETE = 'comments/update-after-delete',
   UPDATE_COMMENTS_AFTER_LIKE = 'comments/update-after-like',
   LEAVE_EPISODE = 'episodes/leave-episode',
-  CHANGE_EPISODE_STATUS = 'episodes/change-status',
 }
 
 type LoadEpisodePayload  = {

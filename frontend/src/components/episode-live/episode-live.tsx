@@ -1,7 +1,6 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import {
   record as recordActions,
-  episode as episodeActions,
 } from 'store/actions';
 import { RecordStatus, DataStatus, EpisodeStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
@@ -23,11 +22,11 @@ const EpisodeLive: React.FC = () => {
   const { id } = useParams<PageParams>();
 
   const { recordStatus, user, episode, comments, recordInitStatus } = useAppSelector(
-    ({ record, auth, episode }) => ({
+    ({ record, auth }) => ({
       recordStatus: record.recordStatus,
       recordInitStatus: record.recordInitStatus,
-      episode: episode.episode,
-      comments: episode.comments,
+      episode: record.episode,
+      comments: record.comments,
       user: auth.user,
     }),
   );
@@ -41,8 +40,8 @@ const EpisodeLive: React.FC = () => {
   const isDisabledStartRecord = !isEpisodeStatusLive || !isInactive;
 
   useEffect(() => {
-    dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
-    dispatch(episodeActions.loadEpisodePayload(Number(id)));
+    dispatch(recordActions.loadCommentsByEpisodeId(Number(id)));
+    dispatch(recordActions.loadEpisodePayload(Number(id)));
   }, []);
 
   useEffect(() => {
@@ -51,7 +50,7 @@ const EpisodeLive: React.FC = () => {
 
   const handleClickStartLive = (): void => {
     if (episode && isOwner) {
-      dispatch(episodeActions.changeEpisodeStatus({
+      dispatch(recordActions.changeEpisodeStatus({
         ...episode,
         status: EpisodeStatus.LIVE,
       }));
@@ -77,15 +76,15 @@ const EpisodeLive: React.FC = () => {
   };
 
   const handleCreateComment = (payload: CommentFormCreatePayload): void => {
-    dispatch(episodeActions.createComment(payload));
+    dispatch(recordActions.createComment(payload));
   };
 
   const handleCommentDelete = (commentId: number): void => {
-    dispatch(episodeActions.deleteComment(commentId));
+    dispatch(recordActions.deleteComment(commentId));
   };
 
   const handleCommentLikeToggle = (commentId: number): void => {
-    dispatch(episodeActions.toggleCommentLike(commentId));
+    dispatch(recordActions.toggleCommentLike(commentId));
   };
 
   return (

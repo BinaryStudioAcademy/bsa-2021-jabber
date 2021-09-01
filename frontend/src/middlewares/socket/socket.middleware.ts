@@ -85,14 +85,17 @@ const socket: Middleware = ({ dispatch }) => (next): Next => {
 
   socket.on(SocketEvent.UPDATE_COMMENTS, (comment: Comment): void => {
     dispatch(episodeAction.updateComments(comment));
+    dispatch(recordAction.updateComments(comment));
   });
 
   socket.on(SocketEvent.UPDATE_COMMENTS_AFTER_DELETE, (comment: Comment): void => {
     dispatch(episodeAction.updateCommentsAfterDelete(comment));
+    dispatch(recordAction.updateCommentsAfterDelete(comment));
   });
 
   socket.on(SocketEvent.UPDATE_COMMENTS_AFTER_LIKE, (comment: Comment): void => {
     dispatch(episodeAction.updateCommentsAfterLike(comment));
+    dispatch(recordAction.updateCommentsAfterLike(comment));
   });
 
   return (action: AnyAction): void => {
@@ -126,6 +129,26 @@ const socket: Middleware = ({ dispatch }) => (next): Next => {
       }
       case `${RecordActionType.STOP_RECORD}/${DataStatus.FULFILLED}`: {
         socket.emit(SocketEvent.PEER_CLOSE, action.meta.arg);
+        break;
+      }
+      case `${RecordActionType.LOAD_COMMENTS_BY_EPISODE_ID}/${DataStatus.PENDING}`: {
+        socket.emit(SocketEvent.JOIN_ROOM, String(action.meta.arg));
+        break;
+      }
+      case `${RecordActionType.CREATE_COMMENT}/${DataStatus.FULFILLED}`: {
+        socket.emit(SocketEvent.UPDATE_COMMENTS, action.payload);
+        break;
+      }
+      case `${RecordActionType.LIKE_COMMENT}/${DataStatus.FULFILLED}`: {
+        socket.emit(SocketEvent.UPDATE_COMMENTS_AFTER_LIKE, action.payload);
+        break;
+      }
+      case `${RecordActionType.DELETE_COMMENT}/${DataStatus.FULFILLED}`: {
+        socket.emit(SocketEvent.UPDATE_COMMENTS_AFTER_DELETE, action.payload);
+        break;
+      }
+      case RecordActionType.LEAVE_EPISODE: {
+        socket.emit(SocketEvent.LEAVE_ROOM, action.payload);
         break;
       }
     }
