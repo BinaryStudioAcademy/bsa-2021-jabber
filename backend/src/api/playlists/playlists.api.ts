@@ -16,7 +16,7 @@ import {
   checkUserPlaylistOwner as checkUserPlaylistOwnerMiddleware,
 } from '~/middlewares/middlewares';
 import {
-  playlist as playlistValidationSchema,
+  createPlaylist as createPlaylistValidationSchema,
   playlistEpisode as playlistEpisodeValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 
@@ -34,7 +34,6 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
   playlistRouter.get(
     PlaylistsApiPath.$ID,
     checkAuthMiddleware(HttpMethod.GET),
-    checkUserPlaylistOwnerMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await playlistService.getById(Number(req.params.id)))
@@ -45,7 +44,6 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
   playlistRouter.get(
     PlaylistsApiPath.USERS_$USER_ID,
     checkAuthMiddleware(HttpMethod.GET),
-    checkUserPlaylistOwnerMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await playlistService.getAllByUserId(Number(req.params.userId)))
@@ -56,7 +54,7 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
   playlistRouter.post(
     PlaylistsApiPath.ROOT,
     checkAuthMiddleware(HttpMethod.POST),
-    validateSchemaMiddleware(playlistValidationSchema),
+    validateSchemaMiddleware(createPlaylistValidationSchema),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await playlistService.create(req.body))

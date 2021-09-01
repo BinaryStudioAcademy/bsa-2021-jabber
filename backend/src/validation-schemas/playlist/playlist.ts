@@ -1,1 +1,1 @@
-export { playlist } from 'jabber-shared/validation-schemas/validation-schemas';
+export { createPlaylist } from './create-playlist/create-playlist.validation-schema';

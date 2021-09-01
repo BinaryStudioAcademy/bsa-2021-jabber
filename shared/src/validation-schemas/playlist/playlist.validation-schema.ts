@@ -7,10 +7,6 @@ import {
 import { PlaylistPayload } from '~/common/types/types';
 
 const playlist = Joi.object<PlaylistPayload>({
-  [PlaylistPayloadKey.USER_ID]: Joi.number().integer().required().messages({
-    'number.required': PlaylistValidationMessage.USER_ID_REQUIRE,
-    'number.integer': PlaylistValidationMessage.USER_ID_NUMBER_FORMAT,
-  }),
   [PlaylistPayloadKey.NAME]: Joi.string()
     .trim()
     .min(PlaylistValidationRule.PLAYLIST_NAME_MIN_LENGTH)
