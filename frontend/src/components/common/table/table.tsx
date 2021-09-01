@@ -2,28 +2,16 @@ import { useTable } from 'hooks/hooks';
 import { Column, useSortBy } from 'react-table';
 import styles from './styles.module.scss';
 import { getAllowedClasses } from 'helpers/helpers';
-import { Pagination } from './components/components';
+// import { Pagination } from 'components/common/common';
 
 type Props = {
   columns: Column[];
   data: unknown[];
-  onSetRow?: (row: number) => void;
-  onSetPage?: (page: number) => void;
-  pageIndex?: number;
-  pageSize?: number;
-  totalCountItems?: number;
-  hasPagination?: boolean;
 };
 
 const Table: React.FC<Props> = ({
   columns,
   data = [],
-  pageSize,
-  onSetRow,
-  onSetPage,
-  pageIndex,
-  totalCountItems,
-  hasPagination= false,
 }) => {
   const tableInstance = useTable({
     columns: columns as Column<Record<string, string>>[],
@@ -70,13 +58,6 @@ const Table: React.FC<Props> = ({
           })}
         </tbody>
       </table>
-      { hasPagination && <Pagination
-        onSetRow={onSetRow as (row: number) => void}
-        onSetPage={onSetPage as (page: number) => void}
-        pageIndex={pageIndex as number }
-        pageSize={pageSize as number }
-        totalCountItems={totalCountItems as number}
-      /> }
     </div>
   );
 };

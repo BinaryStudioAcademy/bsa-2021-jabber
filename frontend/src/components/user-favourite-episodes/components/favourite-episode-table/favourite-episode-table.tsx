@@ -4,20 +4,10 @@ import { getColumns, getRows } from './helpers/helpers';
 
 type Props = {
   episodes: EpisodeWithPodcast[];
-  onSetRow: (row: number) => void;
-  onSetPage: (page: number) => void;
-  pageIndex: number;
-  pageSize: number;
-  episodesTotalCount: number;
 };
 
 const FavouriteEpisodeTable: React.FC<Props> = ({
-  episodes ,
-  pageSize,
-  onSetRow,
-  onSetPage,
-  pageIndex,
-  episodesTotalCount,
+  episodes,
 }) => {
   const columns = getColumns();
   const rows = getRows(episodes);
@@ -25,12 +15,6 @@ const FavouriteEpisodeTable: React.FC<Props> = ({
   return <Table
     columns={columns}
     data={rows}
-    onSetRow={onSetRow}
-    onSetPage={onSetPage}
-    pageIndex={pageIndex}
-    pageSize={pageSize}
-    totalCountItems={episodesTotalCount}
-    hasPagination
   />;
 };
 

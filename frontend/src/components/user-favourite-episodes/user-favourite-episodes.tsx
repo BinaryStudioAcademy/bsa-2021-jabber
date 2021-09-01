@@ -1,13 +1,13 @@
-import styles from './styles.module.scss';
 import { useAppSelector, useParams, useDispatch, useEffect, useState } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
 import { PageParams } from './common/types/types';
 import { DataStatus } from 'common/enums/enums';
-import { Loader } from 'components/common/common';
+import { Loader, Pagination } from 'components/common/common';
 import { FavouriteEpisodeTable } from './components/components';
 import { userFavouriteEpisodes as userFavouriteEpisodesActions } from 'store/actions';
 import { getFilterEpisode } from 'helpers/helpers';
-import { DEFAULT_EPISODE_PAGINATION, DEFAULT_EPISODE_PAGE } from './common/constants/constants';
+import { DEFAULT_EPISODE_PAGINATION } from './common/constants/constants';
+import styles from './styles.module.scss';
 
 const UserFavouriteEpisodesPage: React.FC = () => {
   const dispatch = useDispatch();
@@ -28,17 +28,11 @@ const UserFavouriteEpisodesPage: React.FC = () => {
   }, [id, episodePagination]);
 
   const isLoading = dataStatus === DataStatus.PENDING;
+  const totalPagesCount = Math.ceil(episodesTotalCount / episodePagination.row);
 
-  const handleSetRowEpisodeFilter = (row: number): void => {
+  const handlePageChange = (selectedPage: number): void => {
     setEpisodePagination({
-      page: DEFAULT_EPISODE_PAGE,
-      row,
-    });
-  };
-
-  const handleSetOffsetEpisodeFilter = (page: number): void => {
-    setEpisodePagination({
-      page,
+      page: selectedPage,
       row: episodePagination.row,
     });
   };
@@ -54,11 +48,12 @@ const UserFavouriteEpisodesPage: React.FC = () => {
           <h1 className={styles.title}>Favourite episodes:</h1>
           <FavouriteEpisodeTable
             episodes={episodes}
-            onSetRow={handleSetRowEpisodeFilter}
-            onSetPage={handleSetOffsetEpisodeFilter}
-            pageIndex={episodePagination.page}
-            pageSize={episodePagination.row}
-            episodesTotalCount={episodesTotalCount}
+          />
+          <Pagination
+            pageCount={totalPagesCount}
+            currentPage={episodePagination.page}
+            onPageChange={handlePageChange}
+            className={styles.pagination}
           />
         </>)
         : (
