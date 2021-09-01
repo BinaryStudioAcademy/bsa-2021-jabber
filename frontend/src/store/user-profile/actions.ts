@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Podcast, AsyncThunkConfig, User, UserFollowerPayload } from 'common/types/types';
+import { Podcast, AsyncThunkConfig, User, UserFollowerPayload, UserFavouriteEpisodeResponse, LoadFavouriteEpisodesPayload } from 'common/types/types';
 import { ActionType } from './common';
 
 const loadPodcasts = createAsyncThunk<Podcast[], number, AsyncThunkConfig>(
@@ -63,6 +63,15 @@ const loadFollowersByUserId = createAsyncThunk<User[], number, AsyncThunkConfig>
   },
 );
 
+const loadFavouriteEpisodes = createAsyncThunk<UserFavouriteEpisodeResponse, LoadFavouriteEpisodesPayload, AsyncThunkConfig>(
+  ActionType.LOAD_FAVOURITE_EPISODES,
+  (payload, { extra }) => {
+    const { episodeApi } = extra;
+
+    return episodeApi.getFavoriteEpisodesByUserId(payload);
+  },
+);
+
 export {
   loadPodcasts,
   loadUser,
@@ -70,4 +79,5 @@ export {
   checkIsFollowedUser,
   toggleFollowUser,
   loadFollowersByUserId,
+  loadFavouriteEpisodes,
 };

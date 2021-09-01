@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { Podcast, User } from 'common/types/types';
+import { Podcast, User, EpisodeWithPodcast } from 'common/types/types';
 import {
   loadPodcasts,
   loadUser,
@@ -8,6 +8,7 @@ import {
   checkIsFollowedUser,
   toggleFollowUser,
   loadFollowersByUserId,
+  loadFavouriteEpisodes,
 } from './actions';
 
 type State = {
@@ -18,6 +19,8 @@ type State = {
   isFollowed: boolean;
   followersCount: number;
   followers: User[];
+  favoriteEpisodes: EpisodeWithPodcast[];
+  favoriteEpisodesTotalCount: number;
 };
 
 const initialState: State = {
@@ -28,6 +31,8 @@ const initialState: State = {
   isFollowed: false,
   followersCount: 0,
   followers: [],
+  favoriteEpisodes: [],
+  favoriteEpisodesTotalCount: 0,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -86,6 +91,21 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadFollowersByUserId.rejected, (state) => {
     state.followersDataStatus = DataStatus.REJECTED;
+  });
+
+  builder.addCase(loadFavouriteEpisodes.pending, (state) => {
+    state.dataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(loadFavouriteEpisodes.fulfilled, (state, action) => {
+    state.dataStatus = DataStatus.FULFILLED;
+
+    const { episodes, totalCount } = action.payload;
+
+    state.favoriteEpisodes = episodes;
+    state.favoriteEpisodesTotalCount = totalCount;
+  });
+  builder.addCase(loadFavouriteEpisodes.rejected, (state) => {
+    state.dataStatus = DataStatus.REJECTED;
   });
 });
 

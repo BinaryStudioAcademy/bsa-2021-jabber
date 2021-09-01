@@ -2,7 +2,7 @@ import { Podcast } from './podcast';
 
 type PodcastQueryPayload = {
   results: Podcast[];
-  totalCount: number;
+  totalPagesCount: number;
 };
 
 export type { PodcastQueryPayload };

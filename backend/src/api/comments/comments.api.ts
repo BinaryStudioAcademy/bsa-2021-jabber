@@ -7,6 +7,7 @@ import {
   validateSchema as validateSchemaMiddleware,
   checkAuth as checkAuthMiddleware,
   checkUserCommentOwner as checkUserCommentOwnerMiddleware,
+  checkUserMatch as checkUserMatchMiddleware,
 } from '~/middlewares/middlewares';
 import { comment as commentService } from '~/services/services';
 import { handleAsyncApi } from '~/helpers/helpers';
@@ -31,6 +32,7 @@ const initCommentsApi = ({ apiRouter, commentService }: Args): Router => {
   commentRouter.post(
     CommentsApiPath.ROOT,
     checkAuthMiddleware(HttpMethod.POST),
+    checkUserMatchMiddleware(),
     validateSchemaMiddleware(commentCreateValidationSchema),
     handleAsyncApi(async (req, res) => {
       return res.json(await commentService.create(req.body)).status(HttpCode.CREATED);

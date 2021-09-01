@@ -2,7 +2,7 @@ import { Joi } from 'helpers/helpers';
 import { PodcastSearchPayloadKey } from 'common/enums/enums';
 
 const parsedQuery = Joi.object({
-  [PodcastSearchPayloadKey.OFFSET]: Joi.number()
+  [PodcastSearchPayloadKey.PAGE]: Joi.number()
     .integer()
     .allow(0)
     .positive()

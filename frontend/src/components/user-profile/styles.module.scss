@@ -130,12 +130,25 @@
 }
 
 .podcastsByUserContainer {
+  position: relative;
+  padding-bottom: 30px;
+
   .podcastsByUserTitle {
     font-weight: bold;
   }
 
   .podcasts {
     margin-top: 15px;
+  }
+
+  &::after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background-color: #dcdce0;
+    position: absolute;
+    bottom: 0px;
+    left: 0;
   }
 }
 
