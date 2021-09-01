@@ -42,6 +42,10 @@ const EpisodeLive: React.FC = () => {
   useEffect(() => {
     dispatch(recordActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(recordActions.loadEpisodePayload(Number(id)));
+
+    return (): void => {
+      dispatch(recordActions.leaveEpisode(id));
+    };
   }, []);
 
   useEffect(() => {

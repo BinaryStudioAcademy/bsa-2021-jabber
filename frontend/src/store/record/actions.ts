@@ -128,6 +128,7 @@ const changeEpisodeStatus = createAsyncThunk <Episode, Episode, AsyncThunkConfig
   return updatedEpisode;
 });
 
+const leaveEpisode = createAction<string>(ActionType.LEAVE_EPISODE);
 const updateComments = createAction<Comment>(ActionType.UPDATE_COMMENTS);
 const updateCommentsAfterDelete = createAction<Comment>(ActionType.UPDATE_COMMENTS_AFTER_DELETE);
 const updateCommentsAfterLike = createAction<Comment>(ActionType.UPDATE_COMMENTS_AFTER_LIKE);
@@ -149,4 +150,5 @@ export {
   updateCommentsAfterDelete,
   updateCommentsAfterLike,
   changeEpisodeStatus,
+  leaveEpisode,
 };
