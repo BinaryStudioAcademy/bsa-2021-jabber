@@ -14,6 +14,7 @@ import {
   notification as notificationService,
   userFollowerApi,
   podcastFollowerApi,
+  playlistApi,
 } from 'services/services';
 import {
   handleError as handleErrorMiddleware,
@@ -34,6 +35,7 @@ const extraArgument = {
   navigationService,
   userFollowerApi,
   podcastFollowerApi,
+  playlistApi,
 };
 
 const store = configureStore({
