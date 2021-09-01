@@ -45,9 +45,10 @@ const UserPage: React.FC = () => {
   const dispatch = useDispatch();
 
   const [episodePagination, setEpisodePagination] = useState(DEFAULT_EPISODE_PAGINATION);
+  const isOwner = currentUser?.id === user?.id;
 
   useEffect(() => {
-    if(currentUser?.id === user?.id) {
+    if(isOwner) {
       dispatch(userProfileActions.loadFavouriteEpisodes({
         userId: Number(id),
         filter: getFilterEpisode(episodePagination.page, episodePagination.row),
@@ -98,6 +99,7 @@ const UserPage: React.FC = () => {
   const isLoading =
     dataStatus === DataStatus.PENDING ||
     followersDataStatus === DataStatus.PENDING;
+  const hasFavoriteEpisodes = Boolean(favoriteEpisodes.length);
 
   const handleToggleFollow = (): void => {
     if (user && currentUser) {
@@ -204,9 +206,9 @@ const UserPage: React.FC = () => {
           </span>
         )}
       </div>
-      {isOwnPage && <div className={styles.favoriteEpisodes}>
+      {isOwner && <div className={styles.favoriteEpisodes}>
         <h2 className={styles.podcastsByUserTitle}>Favorite episodes:</h2>
-        {favoriteEpisodes.length
+        {hasFavoriteEpisodes
           ? <FavouriteEpisodeTable
             episodes={favoriteEpisodes}
             onSetRow={handleSetRowEpisodeFilter}
