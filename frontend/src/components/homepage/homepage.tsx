@@ -1,7 +1,6 @@
-import { DataStatus, ButtonColor, AppRoute } from 'common/enums/enums';
+import { DataStatus, AppRoute } from 'common/enums/enums';
 import { PodcastSearchPayload, PodcastLoadFilter, GenresFilter } from 'common/types/types';
-import { PODCAST_LOAD_LIMIT } from 'common/constants/constants';
-import { Loader, PodcastList, Button, PodcastFilterPopup, Pagination } from 'components/common/common';
+import { Loader, PodcastList, PodcastFilterPopup, Pagination } from 'components/common/common';
 import {
   useAppSelector,
   useCallback,
@@ -17,7 +16,7 @@ import { Search, PopularUsers } from './components/components';
 import {
   SEARCH_TIMEOUT,
   DEFAULT_PODCASTS_FILTER_VALUE,
-  INITIAL_PAGE_OFFSET,
+  INITIAL_PAGE,
   DEFAULT_USER_POPULAR_FILTER_VALUE,
 } from './common/constants';
 import { getSelectedGenres, getParsedQuery } from './helpers/helpers';
@@ -30,7 +29,7 @@ const Homepage: React.FC = () => {
     dataStatus,
     genres,
     genresDataStatus,
-    podcastsTotalCount,
+    totalPagesCount,
     popularUsers,
     popularUsersDataStatus,
   } = useAppSelector(({ homepage }) => ({
@@ -38,7 +37,7 @@ const Homepage: React.FC = () => {
     dataStatus: homepage.dataStatus,
     genres: homepage.genres,
     genresDataStatus: homepage.genresDataStatus,
-    podcastsTotalCount: homepage.podcastsTotalCount,
+    totalPagesCount: homepage.totalPagesCount,
     popularUsers: homepage.popularUsers,
     popularUsersDataStatus: homepage.popularUsersDataStatus,
   }));
@@ -50,7 +49,6 @@ const Homepage: React.FC = () => {
   const hasPodcasts = Boolean(podcasts.length);
   const isLoading = dataStatus === DataStatus.PENDING || popularUsersDataStatus === DataStatus.PENDING;
   const isGenresLoaded = genresDataStatus === DataStatus.FULFILLED;
-  const hasMorePodcasts = podcastsTotalCount > podcastsFilter.offset + PODCAST_LOAD_LIMIT;
 
   useEffect(() => {
     dispatch(homepageActions.loadGenres());
@@ -71,7 +69,7 @@ const Homepage: React.FC = () => {
         return;
       }
 
-      const isСonsistentLoad = parsedQuery.offset === podcastsFilter.offset + PODCAST_LOAD_LIMIT;
+      const isСonsistentLoad = parsedQuery.page === podcastsFilter.page + 1;
       setPodcastsFilter(parsedQuery);
 
       dispatch(isСonsistentLoad ? homepageActions.loadMorePodcasts(parsedQuery) : homepageActions.loadPodcasts(parsedQuery));
@@ -86,7 +84,7 @@ const Homepage: React.FC = () => {
       history.push({
         search: getStringifiedQuery({
           ...podcastsFilter,
-          offset: INITIAL_PAGE_OFFSET,
+          page: INITIAL_PAGE,
           search,
         }),
       });
@@ -100,7 +98,7 @@ const Homepage: React.FC = () => {
     history.push({
       search: getStringifiedQuery({
         ...podcastsFilter,
-        offset: INITIAL_PAGE_OFFSET,
+        page: INITIAL_PAGE,
         genres: selectedGenres,
       }),
     });
@@ -112,14 +110,14 @@ const Homepage: React.FC = () => {
     setIsFilterPopupOpen(false);
   };
 
-  const handleMorePodcastsLoad = (): void => {
-    history.push({
-      search: getStringifiedQuery({
-        ...podcastsFilter,
-        offset: podcastsFilter.offset + PODCAST_LOAD_LIMIT,
-      }),
-    });
-  };
+  // const handleMorePodcastsLoad = (): void => {
+  //   history.push({
+  //     search: getStringifiedQuery({
+  //       ...podcastsFilter,
+  //       page: podcastsFilter.page + 1,
+  //     }),
+  //   });
+  // };
 
   const handleTogglePodcastFilter = (): void => {
     setIsFilterPopupOpen(!isFilterPopupOpen);
@@ -127,7 +125,7 @@ const Homepage: React.FC = () => {
 
   return (
     <main className={styles.main}>
-      <Pagination pageCount={15} currentPage={2} onPageChange={(selected: number): void => {
+      <Pagination pageCount={totalPagesCount} currentPage={INITIAL_PAGE} onPageChange={(selected: number): void => {
         // eslint-disable-next-line no-console
         console.log(selected);
       }}/>
@@ -145,18 +143,7 @@ const Homepage: React.FC = () => {
         )}
       </div>
       {hasPodcasts ? (
-        <>
-          <PodcastList podcasts={podcasts} />
-          {isLoading
-            ? <Loader />
-            : hasMorePodcasts &&
-            <Button
-              className={styles.loadMoreBtn}
-              label="See more"
-              buttonColor={ButtonColor.LIGHT_PINK}
-              onClick={handleMorePodcastsLoad}
-            />}
-        </>
+        <PodcastList podcasts={podcasts} />
       ) : isLoading ? (
         <Loader />
       ) : (
