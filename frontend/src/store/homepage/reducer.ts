@@ -9,7 +9,7 @@ type State = {
   popularUsersDataStatus: DataStatus;
   podcasts: Podcast[];
   genres: Genre[];
-  podcastsTotalCount: number;
+  totalPagesCount: number;
   popularUsers: User[];
 };
 
@@ -19,7 +19,7 @@ const initialState: State = {
   popularUsersDataStatus: DataStatus.IDLE,
   podcasts: [],
   genres: [],
-  podcastsTotalCount: 0,
+  totalPagesCount: 0,
   popularUsers: [],
 };
 
@@ -30,7 +30,7 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(loadPodcasts.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.podcasts = action.payload.results;
-    state.podcastsTotalCount = action.payload.totalCount;
+    state.totalPagesCount = action.payload.totalPagesCount;
   });
   builder.addCase(loadPodcasts.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
@@ -42,7 +42,7 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(loadMorePodcasts.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.podcasts = state.podcasts.concat(action.payload.results);
-    state.podcastsTotalCount = action.payload.totalCount;
+    state.totalPagesCount = action.payload.totalPagesCount;
   });
   builder.addCase(loadMorePodcasts.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;

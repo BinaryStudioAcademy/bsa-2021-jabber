@@ -13,3 +13,5 @@ export { CommentReaction as CommentReactionModel } from './comment-reaction/comm
 export { UserFollower as UserFollowerModel } from './user-follower/user-follower.model';
 export { InvitationCode as InvitationCodeModel } from './invitation-code/invitation-code.model';
 export { UserFavouriteEpisode as UserFavouriteEpisodeModel } from './user-favourite-episode/user-favourite-episode.model';
+export { Playlist as PlaylistModel } from './playlist/playlist.model';
+export { PlaylistEpisode as PlaylistEpisodeModel } from './playlist-episode/playlist-episode.model';

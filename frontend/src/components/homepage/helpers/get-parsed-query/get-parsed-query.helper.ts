@@ -12,7 +12,7 @@ const getParsedQuery = (params: string): PodcastLoadFilter | null => {
   }
 
   return {
-    offset: Number(parsedValues.offset),
+    page: Number(parsedValues.page),
     search: parsedValues.search,
     genres: parsedValues.genres?.map((genreId) => Number(genreId)) ?? [],
   };
