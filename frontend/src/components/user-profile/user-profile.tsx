@@ -7,11 +7,14 @@ import {
 } from 'components/common/common';
 import { AppRoute, ButtonColor, DataStatus } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
-import { useAppSelector, useParams, useDispatch, useEffect } from 'hooks/hooks';
+import { useAppSelector, useParams, useDispatch, useEffect, useState } from 'hooks/hooks';
 import { userProfile as userProfileActions } from 'store/actions';
 import contactLogo from 'assets/img/user-profile/contact.svg';
 import emailLogo from 'assets/img/user-profile/email.svg';
 import { PageParams } from './common/types/types';
+import { getFilterEpisode } from 'helpers/helpers';
+import { FavouriteEpisodeTable } from './components/components';
+import { DEFAULT_EPISODE_PAGINATION, DEFAULT_EPISODE_PAGE } from './common/constants/constants';
 import styles from './styles.module.scss';
 
 const UserPage: React.FC = () => {
@@ -25,6 +28,8 @@ const UserPage: React.FC = () => {
     isFollowed,
     followersCount,
     followersDataStatus,
+    favoriteEpisodes,
+    favoriteEpisodesCount,
   } = useAppSelector(({ auth, userProfile }: RootState) => ({
     currentUser: auth.user,
     user: userProfile.user,
@@ -33,9 +38,39 @@ const UserPage: React.FC = () => {
     isFollowed: userProfile.isFollowed,
     followersCount: userProfile.followersCount,
     followersDataStatus: userProfile.followersDataStatus,
+    favoriteEpisodes: userProfile.favoriteEpisodes,
+    favoriteEpisodesCount: userProfile.favoriteEpisodesTotalCount,
   }));
 
   const dispatch = useDispatch();
+
+  const [episodePagination, setEpisodePagination] = useState(DEFAULT_EPISODE_PAGINATION);
+
+  // eslint-disable-next-line no-console
+  console.log('episodePagination', episodePagination);
+
+  useEffect(() => {
+    dispatch(userProfileActions.loadFavouriteEpisodes({
+      userId: Number(id),
+      filter: getFilterEpisode(episodePagination.page, episodePagination.row),
+    }));
+  }, [id, episodePagination]);
+
+  const handleSetRowEpisodeFilter = (row: number): void => {
+    // eslint-disable-next-line no-console
+    console.log('row', row);
+    setEpisodePagination({
+      page: DEFAULT_EPISODE_PAGE,
+      row,
+    });
+  };
+
+  const handleSetOffsetEpisodeFilter = (page: number): void => {
+    setEpisodePagination({
+      page,
+      row: episodePagination.row,
+    });
+  };
 
   useEffect(() => {
     dispatch(userProfileActions.loadUser(Number(id)));
@@ -172,6 +207,24 @@ const UserPage: React.FC = () => {
           </span>
         )}
       </div>
+      {isOwnPage && <div>
+        <hr/>
+        <h2 className={styles.podcastsByUserTitle}>Favorite episodes:</h2>
+        {favoriteEpisodes.length
+          ? <FavouriteEpisodeTable
+            episodes={favoriteEpisodes}
+            onSetRow={handleSetRowEpisodeFilter}
+            onSetPage={handleSetOffsetEpisodeFilter}
+            pageIndex={episodePagination.page}
+            pageSize={episodePagination.row}
+            episodesTotalCount={favoriteEpisodesCount}
+          />
+          : (
+            <div className={styles.placeholder}>
+              There are no episodes in favorites yet.
+            </div>
+          )}
+      </div>}
     </div>
   );
 };
