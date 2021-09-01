@@ -47,11 +47,13 @@ const UserPage: React.FC = () => {
   const [episodePagination, setEpisodePagination] = useState(DEFAULT_EPISODE_PAGINATION);
 
   useEffect(() => {
-    dispatch(userProfileActions.loadFavouriteEpisodes({
-      userId: Number(id),
-      filter: getFilterEpisode(episodePagination.page, episodePagination.row),
-    }));
-  }, [id, episodePagination]);
+    if(currentUser?.id === user?.id) {
+      dispatch(userProfileActions.loadFavouriteEpisodes({
+        userId: Number(id),
+        filter: getFilterEpisode(episodePagination.page, episodePagination.row),
+      }));
+    }
+  }, [id, episodePagination, user]);
 
   const handleSetRowEpisodeFilter = (row: number): void => {
     setEpisodePagination({
