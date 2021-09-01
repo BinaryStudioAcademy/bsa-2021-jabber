@@ -27,16 +27,19 @@ class Podcast {
       .withGraphJoined('[image, user]');
   }
 
-  public getPodcastsCount({ search = '', genres = [] }: PodcastLoadFilter): Promise<number> {
-    return this.#PodcastModel
+  public async getPodcastsPagesCount({ search = '', genres = [] }: PodcastLoadFilter): Promise<number> {
+    const podcastsCount = await this.#PodcastModel
       .query()
       .where('type', PodcastType.PUBLIC)
       .filterByGenres(genres)
       .filterBySearch(search)
       .resultSize();
+
+    return Math.ceil(podcastsCount / PODCAST_LOAD_LIMIT);
   }
 
-  public getByQuery({ offset = 0, search = '', genres = [] }: PodcastLoadFilter): Promise<TPodcast[]> {
+  public getByQuery({ page = 0, search = '', genres = [] }: PodcastLoadFilter): Promise<TPodcast[]> {
+    const offset = page * PODCAST_LOAD_LIMIT;
     return this.#PodcastModel
       .query()
       .where('type', PodcastType.PUBLIC)
