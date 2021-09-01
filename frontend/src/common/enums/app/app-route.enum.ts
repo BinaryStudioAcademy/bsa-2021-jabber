@@ -24,8 +24,8 @@ enum AppRoute {
   NOTIFICATIONS = '/notifications',
   USERS_$ID_FOLLOWERS = '/users/:id/followers',
   FOLLOWERS = '/followers',
-  USERS_$ID_FAVOURITES = '/users/:id/favourites',
-  FAVOURITES = '/favourites',
+  PLAYLISTS = '/playlists',
+  PLAYLISTS_EDIT_$ID = '/playlists/edit/:id?',
   ANY = '*',
 }
 

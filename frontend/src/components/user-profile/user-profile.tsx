@@ -4,14 +4,18 @@ import {
   ImageWrapper,
   Link,
   Button,
+  Pagination,
 } from 'components/common/common';
 import { AppRoute, ButtonColor, DataStatus } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
-import { useAppSelector, useParams, useDispatch, useEffect } from 'hooks/hooks';
+import { useAppSelector, useParams, useDispatch, useEffect, useState } from 'hooks/hooks';
 import { userProfile as userProfileActions } from 'store/actions';
 import contactLogo from 'assets/img/user-profile/contact.svg';
 import emailLogo from 'assets/img/user-profile/email.svg';
 import { PageParams } from './common/types/types';
+import { getFilterEpisode } from 'helpers/helpers';
+import { FavouriteEpisodeTable } from './components/components';
+import { DEFAULT_EPISODE_PAGINATION } from './common/constants/constants';
 import styles from './styles.module.scss';
 
 const UserPage: React.FC = () => {
@@ -25,6 +29,8 @@ const UserPage: React.FC = () => {
     isFollowed,
     followersCount,
     followersDataStatus,
+    favoriteEpisodes,
+    favoriteEpisodesCount,
   } = useAppSelector(({ auth, userProfile }: RootState) => ({
     currentUser: auth.user,
     user: userProfile.user,
@@ -33,9 +39,31 @@ const UserPage: React.FC = () => {
     isFollowed: userProfile.isFollowed,
     followersCount: userProfile.followersCount,
     followersDataStatus: userProfile.followersDataStatus,
+    favoriteEpisodes: userProfile.favoriteEpisodes,
+    favoriteEpisodesCount: userProfile.favoriteEpisodesTotalCount,
   }));
 
   const dispatch = useDispatch();
+
+  const [episodePagination, setEpisodePagination] = useState(DEFAULT_EPISODE_PAGINATION);
+  const isOwner = currentUser?.id === user?.id;
+  const totalPagesCount = Math.ceil(favoriteEpisodesCount / episodePagination.row);
+
+  useEffect(() => {
+    if (isOwner) {
+      dispatch(userProfileActions.loadFavouriteEpisodes({
+        userId: Number(id),
+        filter: getFilterEpisode(episodePagination.page, episodePagination.row),
+      }));
+    }
+  }, [id, episodePagination, user]);
+
+  const handlePageChange = (selectedPage: number): void => {
+    setEpisodePagination({
+      page: selectedPage,
+      row: episodePagination.row,
+    });
+  };
 
   useEffect(() => {
     dispatch(userProfileActions.loadUser(Number(id)));
@@ -66,6 +94,7 @@ const UserPage: React.FC = () => {
   const isLoading =
     dataStatus === DataStatus.PENDING ||
     followersDataStatus === DataStatus.PENDING;
+  const hasFavoriteEpisodes = Boolean(favoriteEpisodes.length);
 
   const handleToggleFollow = (): void => {
     if (user && currentUser) {
@@ -155,7 +184,7 @@ const UserPage: React.FC = () => {
               className={styles.followButton}
               label={isFollowed ? 'Unfollow' : 'Follow'}
               onClick={handleToggleFollow}
-              buttonColor={isFollowed ? ButtonColor.LIGHT_PINK : ButtonColor.PINK }
+              buttonColor={isFollowed ? ButtonColor.LIGHT_PINK : ButtonColor.PINK}
             />
           )}
         </div>
@@ -172,6 +201,26 @@ const UserPage: React.FC = () => {
           </span>
         )}
       </div>
+      {isOwner && <div className={styles.favoriteEpisodes}>
+        <h2 className={styles.podcastsByUserTitle}>Favorite episodes:</h2>
+        {hasFavoriteEpisodes
+          ? <>
+            <FavouriteEpisodeTable
+              episodes={favoriteEpisodes}
+            />
+            <Pagination
+              pageCount={totalPagesCount}
+              onPageChange={handlePageChange}
+              currentPage={episodePagination.page}
+              className={styles.pagination}
+            />
+          </>
+          : (
+            <div className={styles.placeholder}>
+              There are no episodes in favorites yet.
+            </div>
+          )}
+      </div>}
     </div>
   );
 };

@@ -35,11 +35,6 @@ const Header: React.FC = () => {
                   Podcasts
                 </Link>
               </li>
-              <li className={styles.navigationItem}>
-                <Link to={`${AppRoute.USERS}/${user?.id}${AppRoute.FAVOURITES}`} className={styles.link}>
-                  Favourites
-                </Link>
-              </li>
             </ul>
             <div className={styles.userInfo}>
               <Button
@@ -128,11 +123,6 @@ const Header: React.FC = () => {
                   <li className={styles.navigationItem}>
                     <Link to={AppRoute.ROOT} className={styles.link}>
                       Podcasts
-                    </Link>
-                  </li>
-                  <li className={styles.navigationItem}>
-                    <Link to={`${AppRoute.USERS}/${user?.id}${AppRoute.FAVOURITES}`} className={styles.link}>
-                      Favourites
                     </Link>
                   </li>
                 </ul>)}

@@ -10,4 +10,5 @@ export {
   UserFollowersApiPath,
   PodcastsFollowersApiPath,
   NotificationsApiPath,
+  PlaylistsApiPath,
 } from 'jabber-shared/common/enums/enums';
