@@ -1,12 +1,13 @@
 import { useAppSelector, useDispatch, useEffect, useParams, useState } from 'hooks/hooks';
 import { configuratePodcast as configuratePodcastActions, podcast as podcastActions } from 'store/actions';
-import { AppRoute, DataStatus, UserRole, PodcastType } from 'common/enums/enums';
+import { AppRoute, DataStatus, UserRole, PodcastType, PodcastPeriodicity } from 'common/enums/enums';
 import { Button, ConfirmPopup, ImageWrapper, Link, Loader } from 'components/common/common';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
-import styles from './styles.module.scss';
 import { getAllowedClasses, getFilterEpisode } from 'helpers/helpers';
+import { getPodcastPeriodicity } from './helpers/helpers';
 import { DEFAULT_EPISODE_PAGINATION, DEFAULT_EPISODE_PAGE } from './common/constatnts/constants';
+import styles from './styles.module.scss';
 
 const Podcast: React.FC = () => {
   const {
@@ -42,6 +43,8 @@ const Podcast: React.FC = () => {
   const isLoading = dataStatus === DataStatus.PENDING || followersDataStatus === DataStatus.PENDING;
   const isEpisodesLoading = episodesDataStatus === DataStatus.PENDING;
   const isPrivatePodcast = podcast?.type === PodcastType.PRIVATE;
+  const isAutoPeriodicity = podcast?.periodicity === PodcastPeriodicity.AUTO;
+  const estimatedPodcastPeriodicity = getPodcastPeriodicity(episodes);
 
   const [episodePagination, setEpisodePagination] = useState(DEFAULT_EPISODE_PAGINATION);
 
@@ -206,7 +209,7 @@ const Podcast: React.FC = () => {
                   >
                     Рeriodicity
                   </div>
-                  <p className={styles.infoInner}>{podcast.periodicity}</p>
+                  <p className={styles.infoInner}>{isAutoPeriodicity ? estimatedPodcastPeriodicity : podcast.periodicity}</p>
                 </li>
                 {podcast.genre && (
                   <li className={styles.infoItem}>
