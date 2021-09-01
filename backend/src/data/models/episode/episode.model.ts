@@ -7,6 +7,7 @@ import { Shownote } from '~/data/models/shownote/shownote.model';
 import { Record } from '~/data/models/record/record.model';
 import { Podcast } from '~/data/models/podcast/podcast.model';
 import { UserFavouriteEpisode } from '~/data/models/user-favourite-episode/user-favourite-episode.model';
+import { Comment } from '~/data/models/comment/comment.model';
 
 class Episode extends Abstract {
   [EpisodeDTOKey.NAME]: string;
@@ -74,6 +75,14 @@ class Episode extends Abstract {
       join: {
         from: 'episodes.podcast_id',
         to: 'podcasts.id',
+      },
+    },
+    popularEpisodes: {
+      relation: Model.HasManyRelation,
+      modelClass: Comment,
+      join: {
+        from: 'episodes.id',
+        to: 'comments.episode_id',
       },
     },
   };

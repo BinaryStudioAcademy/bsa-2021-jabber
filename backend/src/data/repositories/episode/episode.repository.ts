@@ -8,6 +8,7 @@ import {
   LoadFavouriteEpisodesPayload,
 } from '~/common/types/types';
 import { EpisodeType } from '~/common/enums/enums';
+import { POPULAR_EPISODE_LOAD_LIMIT } from '~/common/constants/constants';
 
 type Constructor = {
   EpisodeModel: typeof EpisodeM;
@@ -26,6 +27,21 @@ class Episode {
 
   public getAllInRandomOrder(): Promise<TEpisode[]> {
     return this.#EpisodeModel.query().where('type', EpisodeType.PUBLIC).orderByRaw('random()');
+  }
+
+  public getPopular():  Promise<TEpisode[]> {
+    return this.#EpisodeModel.query()
+      .where('type', EpisodeType.PUBLIC)
+      .withGraphJoined('[image]')
+      .select(
+        'episodes.*',
+        this.#EpisodeModel.relatedQuery('popularEpisodes')
+          .count()
+          .as('commentsCount'),
+      )
+      .orderBy('commentsCount', 'DESC')
+      .omit(['commentsCount'])
+      .limit(POPULAR_EPISODE_LOAD_LIMIT);
   }
 
   public getById(id: number): Promise<TEpisode> {
