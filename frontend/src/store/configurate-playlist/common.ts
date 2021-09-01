@@ -1,5 +1,5 @@
 enum ActionType {
-  CREATE_PLAYLIST = 'configurate-podcast/create-podcast',
+  CREATE_PLAYLIST = 'configurate-playlist/create-playlist',
 }
 
 export { ActionType };

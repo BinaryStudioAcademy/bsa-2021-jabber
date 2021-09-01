@@ -6,7 +6,7 @@ import {
   AppRoute,
   ButtonColor,
 } from 'common/enums/enums';
-import { PodcastFormPayload } from 'common/types/types';
+import { PlaylistFormPayload } from 'common/types/types';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
 import {
   Input,
@@ -17,7 +17,7 @@ import { playlist as playlistValidationSchema } from 'validation-schemas/validat
 import styles from './styles.module.scss';
 
 type Props = {
-  onSubmit: (payload: PodcastFormPayload) => void;
+  onSubmit: (payload: PlaylistFormPayload) => void;
 };
 
 const ConfiguratePlaylistForm: React.FC<Props> = ({
