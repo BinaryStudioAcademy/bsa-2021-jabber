@@ -11,6 +11,7 @@ import {
   checkUserPodcastOwner as checkUserPodcastOwnerMiddleware,
   validateSchema as validateSchemaMiddleware,
   checkUserHasPermitToPodcast as checkUserHasPermitToPodcastMiddleware,
+  checkUserMatch as checkUserMatchMiddleware,
 } from '~/middlewares/middlewares';
 import { podcast as podcastService } from '~/services/services';
 
@@ -53,6 +54,7 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
   podcastRouter.post(
     PodcastsApiPath.ROOT,
     checkAuthMiddleware(HttpMethod.POST),
+    checkUserMatchMiddleware(),
     validateSchemaMiddleware(podcastCreateValidationSchema),
     handleAsyncApi(async (req, res) => {
       return res
