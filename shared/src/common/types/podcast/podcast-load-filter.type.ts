@@ -1,5 +1,5 @@
 type PodcastLoadFilter = {
-  offset: number;
+  page: number;
   search: string;
   genres: number[];
 };
