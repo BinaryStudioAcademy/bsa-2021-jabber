@@ -57,7 +57,6 @@ const ConfiguratePlaylistForm: React.FC<Props> = ({
             className={styles.button}
             buttonColor={ButtonColor.LIGHT_PINK}
             label="Cancel"
-            type={ButtonType.SUBMIT}
             href={AppRoute.ROOT}
           />
         </div>
