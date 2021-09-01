@@ -15,6 +15,8 @@ enum TableName {
   COMMENT_REACTIONS = 'comment_reactions',
   INVITATION_CODES = 'invitation_codes',
   USERS_FAVOURITE_EPISODES = 'users_favourite_episodes',
+  USERS_PLAYLISTS = 'users_playlists',
+  PLAYLISTS_EPISODES = 'playlists_episodes',
 }
 
 export { TableName };
