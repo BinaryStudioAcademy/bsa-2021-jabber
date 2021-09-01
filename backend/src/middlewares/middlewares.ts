@@ -14,3 +14,4 @@ export { checkUserHasPermitToEdit } from './check-user-has-permit-to-edit/check-
 export { identifyUser } from './identify-user/identify-user.middleware';
 export { checkUserHasPermitToPodcast } from './check-user-has-permit-to-podcast/check-user-has-permit-to-podcast.middleware';
 export { checkUserHasPermitToEpisode } from './check-user-has-permit-to-episode/check-user-has-permit-to-episode.middleware';
+export { checkUserMatch } from './check-user-match/check-user-match.middleware';
