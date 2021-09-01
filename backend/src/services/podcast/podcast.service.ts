@@ -56,13 +56,13 @@ class Podcast {
   }
 
   public async getByQuery(filter: PodcastLoadFilter): Promise<PodcastQueryPayload> {
-    const [podcasts, totalCount] = await Promise.all([
+    const [podcasts, totalPagesCount] = await Promise.all([
       this.#podcastRepository.getByQuery(filter),
-      this.#podcastRepository.getPodcastsCount(filter),
+      this.#podcastRepository.getPodcastsPagesCount(filter),
     ]);
     return {
       results: podcasts,
-      totalCount: totalCount,
+      totalPagesCount: totalPagesCount,
     };
   }
 
