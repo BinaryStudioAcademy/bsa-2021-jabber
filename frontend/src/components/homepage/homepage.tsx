@@ -1,7 +1,7 @@
 import { DataStatus, ButtonColor, AppRoute } from 'common/enums/enums';
 import { PodcastSearchPayload, PodcastLoadFilter, GenresFilter } from 'common/types/types';
 import { PODCAST_LOAD_LIMIT } from 'common/constants/constants';
-import { Loader, PodcastList, Button, PodcastFilterPopup } from 'components/common/common';
+import { Loader, PodcastList, Button, PodcastFilterPopup, Pagination } from 'components/common/common';
 import {
   useAppSelector,
   useCallback,
@@ -127,6 +127,10 @@ const Homepage: React.FC = () => {
 
   return (
     <main className={styles.main}>
+      <Pagination pageCount={15} currentPage={2} onPageChange={(selected: number): void => {
+        // eslint-disable-next-line no-console
+        console.log(selected);
+      }}/>
       <Search onChange={handleChange} currentState={podcastsFilter.search} />
       {isLoading
         ? <Loader />
