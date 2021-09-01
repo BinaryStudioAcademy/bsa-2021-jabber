@@ -74,3 +74,8 @@ export {
   UserFavouriteEpisodePayloadKey,
   UserFavouriteEpisodeValidationMessage,
 } from './user-favourite-episode/user-favourite-episode';
+export {
+  PlaylistPayloadKey,
+  PlaylistValidationMessage,
+  PlaylistValidationRule,
+} from './playlist/playlist';

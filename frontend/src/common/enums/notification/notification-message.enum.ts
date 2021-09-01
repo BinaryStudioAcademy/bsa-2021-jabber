@@ -10,6 +10,7 @@ enum NotificationMessage {
   COMMENT_DELETED = 'Comment has been deleted successfully 🎉',
   PASSWORD_RESETED = 'A new password has been sent to your email 🎉',
   INVITATION_LINK_COPIED = 'Invitation link has been copied to clipboard 🎉',
+  PLAYLIST_CREATED = 'Playlist has been created successfully 🎉',
 }
 
 export { NotificationMessage };

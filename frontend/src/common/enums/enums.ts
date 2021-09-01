@@ -7,6 +7,7 @@ export {
   CommentsApiPath,
   NotificationsApiPath,
   GenresApiPath,
+  PlaylistsApiPath,
 } from './api/api';
 export { AppRoute, ENV, DataStatus, StorageKey, RainbowColor } from './app/app';
 export { HttpHeader, HttpMethod } from './http/http';
@@ -53,3 +54,4 @@ export {
 } from './notification/notification';
 export { UserNotificationStatus } from './user-notification/user-notification';
 export { FormEvent } from './form/form-event';
+export { PlaylistPayloadKey } from './playlist/playlist';
