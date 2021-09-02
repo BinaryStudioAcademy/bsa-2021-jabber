@@ -58,7 +58,9 @@ class Auth {
       });
     }
 
-    const isCryptsEqual = await checkIsCryptsEqual(password, user.password);
+    const hashPassword = await this.#userRepository.getPasswordByEmail(email);
+
+    const isCryptsEqual = await checkIsCryptsEqual(password, hashPassword);
 
     if (!isCryptsEqual) {
       throw new HttpError({

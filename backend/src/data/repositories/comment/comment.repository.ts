@@ -16,28 +16,33 @@ class Comment {
   }
 
   public getAll(): Promise<TComment[]> {
-    return this.#CommentModel.query().withGraphFetched('user');
+    return this.#CommentModel.query()
+      .withGraphFetched('user')
+      .omit(['password']);
   }
 
   public create(payload: CommentCreateDTOPayload): Promise<TComment> {
     return this.#CommentModel
       .query()
       .insert(payload)
-      .withGraphFetched('user.image');
+      .withGraphFetched('user.image')
+      .omit(['password']);
   }
 
   public getAllByEpisodeId(id: number): Promise<TComment[]> {
     return this.#CommentModel
       .query()
       .where('episode_id', id)
-      .withGraphFetched('[user.image, commentReactions]');
+      .withGraphFetched('[user.image, commentReactions]')
+      .omit(['password']);
   }
 
   public getById(id: number): Promise<TComment> {
     return this.#CommentModel
       .query()
       .findById(id)
-      .withGraphFetched('[user.image, commentReactions]');
+      .withGraphFetched('[user.image, commentReactions]')
+      .omit(['password']);
   }
 
   public deleteAllByEpisodeId(id: number): Promise<TComment[]> {
