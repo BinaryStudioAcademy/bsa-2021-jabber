@@ -2,11 +2,11 @@ import { useAppSelector, useDispatch, useEffect, useParams, useState } from 'hoo
 import { configuratePodcast as configuratePodcastActions, podcast as podcastActions } from 'store/actions';
 import { AppRoute, DataStatus, UserRole, PodcastType } from 'common/enums/enums';
 import { Button, ConfirmPopup, ImageWrapper, Link, Loader } from 'components/common/common';
+import { getAllowedClasses, getFilterEpisode } from 'helpers/helpers';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
+import { DEFAULT_EPISODE_PAGINATION } from './common/constatnts/constants';
 import styles from './styles.module.scss';
-import { getAllowedClasses, getFilterEpisode } from 'helpers/helpers';
-import { DEFAULT_EPISODE_PAGINATION, DEFAULT_EPISODE_PAGE } from './common/constatnts/constants';
 
 const Podcast: React.FC = () => {
   const {
@@ -44,6 +44,8 @@ const Podcast: React.FC = () => {
   const isPrivatePodcast = podcast?.type === PodcastType.PRIVATE;
 
   const [episodePagination, setEpisodePagination] = useState(DEFAULT_EPISODE_PAGINATION);
+
+  const totalPagesCount = Math.ceil(countEpisodes / episodePagination.row);
 
   useEffect(() => {
     dispatch(podcastActions.loadPodcast(Number(id)));
@@ -90,16 +92,9 @@ const Podcast: React.FC = () => {
     }
   };
 
-  const handleSetRowEpisodeFilter = (row: number): void => {
+  const handlePageChange = (selectedPage: number): void => {
     setEpisodePagination({
-      page: DEFAULT_EPISODE_PAGE,
-      row,
-    });
-  };
-
-  const handleSetOffsetEpisodeFilter = (page: number): void => {
-    setEpisodePagination({
-      page,
+      page: selectedPage,
       row: episodePagination.row,
     });
   };
@@ -113,7 +108,6 @@ const Podcast: React.FC = () => {
   if (isLoading) {
     return <Loader />;
   }
-
   return (
     <main className={styles.podcast}>
       {podcast && dataStatus === DataStatus.FULFILLED ? (
@@ -247,11 +241,10 @@ const Podcast: React.FC = () => {
               ? <Loader />
               : <EpisodeTable
                 episodes={episodes}
-                onSetRow={handleSetRowEpisodeFilter}
-                onSetPage={handleSetOffsetEpisodeFilter}
-                pageIndex={episodePagination.page}
-                pageSize={episodePagination.row}
-                totalCountEpisodes={countEpisodes}
+                pageCount={totalPagesCount}
+                currentPage={episodePagination.page}
+                onPageChange={handlePageChange}
+                totalEpisodesCount={countEpisodes}
               />
             : (
               <div className={styles.placeholder}>

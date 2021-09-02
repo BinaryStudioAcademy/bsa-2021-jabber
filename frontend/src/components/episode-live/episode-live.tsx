@@ -1,14 +1,14 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
 import {
   record as recordActions,
-  episode as episodeActions,
 } from 'store/actions';
-import { RecordStatus, DataStatus } from 'common/enums/enums';
+import { RecordStatus, DataStatus, EpisodeStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import {
   CreateCommentForm,
   CommentsList,
   ImageWrapper,
+  Button,
 } from 'components/common/common';
 import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
@@ -22,11 +22,11 @@ const EpisodeLive: React.FC = () => {
   const { id } = useParams<PageParams>();
 
   const { recordStatus, user, episode, comments, recordInitStatus } = useAppSelector(
-    ({ record, auth, episode }) => ({
+    ({ record, auth }) => ({
       recordStatus: record.recordStatus,
       recordInitStatus: record.recordInitStatus,
-      episode: episode.episode,
-      comments: episode.comments,
+      episode: record.episode,
+      comments: record.comments,
       user: auth.user,
     }),
   );
@@ -35,15 +35,31 @@ const EpisodeLive: React.FC = () => {
   const isInactive = recordStatus === RecordStatus.INACTIVE;
   const isPaused = recordStatus === RecordStatus.PAUSED;
   const hasUser = Boolean(user);
+  const isOwner = user?.id === episode?.userId;
+  const isEpisodeStatusLive = episode?.status === EpisodeStatus.LIVE;
+  const isDisabledStartRecord = !isEpisodeStatusLive || !isInactive;
 
   useEffect(() => {
-    dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
-    dispatch(episodeActions.loadEpisodePayload(Number(id)));
+    dispatch(recordActions.loadCommentsByEpisodeId(Number(id)));
+    dispatch(recordActions.loadEpisodePayload(Number(id)));
+
+    return (): void => {
+      dispatch(recordActions.leaveEpisode(id));
+    };
   }, []);
 
   useEffect(() => {
     dispatch(recordActions.initRecord());
   }, []);
+
+  const handleClickStartLive = (): void => {
+    if (episode && isOwner) {
+      dispatch(recordActions.changeEpisodeStatus({
+        ...episode,
+        status: EpisodeStatus.LIVE,
+      }));
+    }
+  };
 
   const handleStart = (): void => {
     isRecordAllowed
@@ -64,15 +80,15 @@ const EpisodeLive: React.FC = () => {
   };
 
   const handleCreateComment = (payload: CommentFormCreatePayload): void => {
-    dispatch(episodeActions.createComment(payload));
+    dispatch(recordActions.createComment(payload));
   };
 
   const handleCommentDelete = (commentId: number): void => {
-    dispatch(episodeActions.deleteComment(commentId));
+    dispatch(recordActions.deleteComment(commentId));
   };
 
   const handleCommentLikeToggle = (commentId: number): void => {
-    dispatch(episodeActions.toggleCommentLike(commentId));
+    dispatch(recordActions.toggleCommentLike(commentId));
   };
 
   return (
@@ -87,6 +103,11 @@ const EpisodeLive: React.FC = () => {
               alt={episode.name}
               label={episode.name}
               className={styles.imageWrapper}
+            />
+            <Button
+              className={ styles.btnChangeStatus }
+              label="Go to live"
+              onClick={handleClickStartLive}
             />
             <div className={styles.descriptionWrapper}>
               <h1 className={styles.title}>{episode.name}</h1>
@@ -103,7 +124,7 @@ const EpisodeLive: React.FC = () => {
                 styles.recordButton,
               )}
               onClick={handleStart}
-              disabled={!isInactive}
+              disabled={isDisabledStartRecord}
             />
             {!isPaused ? (
               <button
@@ -134,7 +155,7 @@ const EpisodeLive: React.FC = () => {
           </div>
         </div>
       </div>
-      <section className={styles.commentsWrapper}>
+      {isEpisodeStatusLive && <section className={styles.commentsWrapper}>
         <h2 className={styles.commentsCounter}>Comments ({comments.length})</h2>
         {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
         {comments.length ? (
@@ -147,7 +168,7 @@ const EpisodeLive: React.FC = () => {
         ) : (
           <div className={styles.placeholder}>There&apos;s no comment yet.</div>
         )}
-      </section>
+      </section>}
     </main>
   );
 };

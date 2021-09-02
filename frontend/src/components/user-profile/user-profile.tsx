@@ -14,7 +14,7 @@ import emailLogo from 'assets/img/user-profile/email.svg';
 import { PageParams } from './common/types/types';
 import { getFilterEpisode } from 'helpers/helpers';
 import { FavouriteEpisodeTable } from './components/components';
-import { DEFAULT_EPISODE_PAGINATION, DEFAULT_EPISODE_PAGE } from './common/constants/constants';
+import { DEFAULT_EPISODE_PAGINATION } from './common/constants/constants';
 import styles from './styles.module.scss';
 
 const UserPage: React.FC = () => {
@@ -46,9 +46,10 @@ const UserPage: React.FC = () => {
 
   const [episodePagination, setEpisodePagination] = useState(DEFAULT_EPISODE_PAGINATION);
   const isOwner = currentUser?.id === user?.id;
+  const totalPagesCount = Math.ceil(favoriteEpisodesCount / episodePagination.row);
 
   useEffect(() => {
-    if(isOwner) {
+    if (isOwner) {
       dispatch(userProfileActions.loadFavouriteEpisodes({
         userId: Number(id),
         filter: getFilterEpisode(episodePagination.page, episodePagination.row),
@@ -56,16 +57,9 @@ const UserPage: React.FC = () => {
     }
   }, [id, episodePagination, user]);
 
-  const handleSetRowEpisodeFilter = (row: number): void => {
+  const handlePageChange = (selectedPage: number): void => {
     setEpisodePagination({
-      page: DEFAULT_EPISODE_PAGE,
-      row,
-    });
-  };
-
-  const handleSetOffsetEpisodeFilter = (page: number): void => {
-    setEpisodePagination({
-      page,
+      page: selectedPage,
       row: episodePagination.row,
     });
   };
@@ -189,7 +183,7 @@ const UserPage: React.FC = () => {
               className={styles.followButton}
               label={isFollowed ? 'Unfollow' : 'Follow'}
               onClick={handleToggleFollow}
-              buttonColor={isFollowed ? ButtonColor.LIGHT_PINK : ButtonColor.PINK }
+              buttonColor={isFollowed ? ButtonColor.LIGHT_PINK : ButtonColor.PINK}
             />
           )}
         </div>
@@ -211,11 +205,10 @@ const UserPage: React.FC = () => {
         {hasFavoriteEpisodes
           ? <FavouriteEpisodeTable
             episodes={favoriteEpisodes}
-            onSetRow={handleSetRowEpisodeFilter}
-            onSetPage={handleSetOffsetEpisodeFilter}
-            pageIndex={episodePagination.page}
-            pageSize={episodePagination.row}
-            episodesTotalCount={favoriteEpisodesCount}
+            totalFavoriteCount={favoriteEpisodesCount}
+            pageCount={totalPagesCount}
+            onPageChange={handlePageChange}
+            currentPage={episodePagination.page}
           />
           : (
             <div className={styles.placeholder}>

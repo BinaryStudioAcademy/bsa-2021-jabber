@@ -27,7 +27,6 @@ import {
   DataStatus,
   EpisodeStatus,
   UserRole,
-  ButtonColor,
 } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
@@ -35,6 +34,7 @@ import {
   getCurrentTime,
   getCommentsTimelineDimensions,
   getSortedShownotes,
+  getSortedComments,
 } from './helpers/helpers';
 import { PageParams } from './common/types/types';
 import { ShownotesList, ComentsTimeline } from './components/components';
@@ -136,6 +136,7 @@ const Episode: React.FC = () => {
   const podcastDuration = playerRef.current?.getPodcastDuration();
 
   const sortedShownotes = getSortedShownotes(episode?.shownotes ?? []);
+  const sortedComments = getSortedComments(comments);
 
   return (
     <main className={styles.root}>
@@ -158,14 +159,6 @@ const Episode: React.FC = () => {
                   : styles.btnStartLive}
                 label="Start Live"
                 href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}
-              />
-            )}
-            {hasUser && !isOwner && (
-              <Button
-                label={isFavourite ? 'In Favourites' : 'Favourite'}
-                buttonColor={isFavourite ? ButtonColor.LIGHT_PINK : ButtonColor.PINK}
-                onClick={handleToggleFavorite}
-                className={getAllowedClasses(styles.btnStartLive, styles.favouriteButton)}
               />
             )}
             <div className={styles.descriptionWrapper}>
@@ -193,6 +186,15 @@ const Episode: React.FC = () => {
                     onConfirm={handleDeleteEpisode}
                   />
                 </>
+              )}
+              {hasUser && !isOwner && (
+                <button
+                  onClick={handleToggleFavorite}
+                  className={getAllowedClasses(styles.favouriteButton, isFavourite && styles.favouriteActive)}
+                  title={isFavourite ? 'Remove from favorites' : 'Add to favorites'}
+                >
+                  <span className="visually-hidden">Favorite</span>
+                </button>
               )}
               <Link
                 to={`${AppRoute.PODCASTS}/${episode?.podcastId}`}
@@ -267,7 +269,7 @@ const Episode: React.FC = () => {
             {comments.length ? (
               <CommentsList
                 hasTimestamps={hasRecord}
-                comments={comments}
+                comments={sortedComments}
                 user={user}
                 onTimeClick={handleJumpToTimeLine}
                 onCommentDelete={handleCommentDelete}
