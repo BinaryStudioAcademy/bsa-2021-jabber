@@ -66,13 +66,23 @@
 }
 
 .content {
-  padding: 75px 75px 20px 75px;
+  padding: 40px 40px 20px 40px;
   position: relative;
   background: linear-gradient(
     0deg,
     rgba(25, 34, 47, 0.4),
     rgba(25, 34, 47, 0.4)
   );
+
+  .btnChangeStatus {
+    font-size: 16px;
+    display: inline-block;
+    position: absolute;
+    top: 75px;
+    right: 75px;
+    padding: 12px 22px;
+    z-index: var(--z-index--level-two);
+  }
 }
 
 .actionWrapper {
@@ -165,6 +175,13 @@
 @media (max-width: 991px) {
   .content {
     padding: 40px 40px 20px 40px;
+
+    .btnChangeStatus {
+      top: auto;
+      left: 75px;
+      right: auto;
+      bottom: 140px;
+    }
   }
 
   .descriptionWrapper {
@@ -175,6 +192,10 @@
 @media (max-width: 768px) {
   .content {
     padding: 30px 30px 20px 30px;
+
+    .btnChangeStatus {
+      left: 50px;
+    }
   }
 
   .descriptionWrapper {
@@ -188,5 +209,12 @@
 
   .commentsWrapper {
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .btnChangeStatus {
+    left: 40px;
+    bottom: 70px;
   }
 }
