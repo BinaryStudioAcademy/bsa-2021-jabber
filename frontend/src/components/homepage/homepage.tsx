@@ -70,10 +70,8 @@ const Homepage: React.FC = () => {
         return;
       }
 
-      const isСonsistentLoad = parsedQuery.page === podcastsFilter.page + 1;
       setPodcastsFilter(parsedQuery);
-
-      dispatch(isСonsistentLoad ? homepageActions.loadMorePodcasts(parsedQuery) : homepageActions.loadPodcasts(parsedQuery));
+      dispatch(homepageActions.loadPodcasts(parsedQuery));
     } else {
       setPodcastsFilter(DEFAULT_PODCASTS_FILTER_VALUE);
       dispatch(homepageActions.loadPodcasts(DEFAULT_PODCASTS_FILTER_VALUE));

@@ -17,14 +17,6 @@ const loadPodcasts = createAsyncThunk<PodcastQueryPayload, PodcastLoadFilter, As
   return podcasts;
 });
 
-const loadMorePodcasts = createAsyncThunk<PodcastQueryPayload, PodcastLoadFilter, AsyncThunkConfig>
-(ActionType.LOAD_MORE_PODCASTS, async (podcastsFilter, { extra }) => {
-  const { podcastApi } = extra;
-  const podcasts = await podcastApi.getByQuery(podcastsFilter);
-
-  return podcasts;
-});
-
 const loadPopularUsers = createAsyncThunk<User[], UserPopularLoadFilter, AsyncThunkConfig>
 (ActionType.LOAD_POPULAR_USERS, async (filter, { extra }) => {
   const { userApi } = extra;
@@ -45,7 +37,6 @@ const leaveHomepage = createAction(ActionType.LEAVE_HOMEPAGE);
 
 export {
   loadPodcasts,
-  loadMorePodcasts,
   loadPopularUsers,
   loadGenres,
   leaveHomepage,

@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { Podcast, User, Genre } from 'common/types/types';
-import { loadPodcasts, loadMorePodcasts, loadPopularUsers, loadGenres, leaveHomepage } from './actions';
+import { loadPodcasts, loadPopularUsers, loadGenres, leaveHomepage } from './actions';
 
 type State = {
   dataStatus: DataStatus;
@@ -33,18 +33,6 @@ const reducer = createReducer(initialState, (builder) => {
     state.totalPagesCount = action.payload.totalPagesCount;
   });
   builder.addCase(loadPodcasts.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
-  });
-
-  builder.addCase(loadMorePodcasts.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
-  });
-  builder.addCase(loadMorePodcasts.fulfilled, (state, action) => {
-    state.dataStatus = DataStatus.FULFILLED;
-    state.podcasts = state.podcasts.concat(action.payload.results);
-    state.totalPagesCount = action.payload.totalPagesCount;
-  });
-  builder.addCase(loadMorePodcasts.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
 
