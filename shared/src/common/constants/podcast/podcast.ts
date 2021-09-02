@@ -1,3 +1,0 @@
-const PODCAST_LOAD_LIMIT = 18;
-
-export { PODCAST_LOAD_LIMIT };

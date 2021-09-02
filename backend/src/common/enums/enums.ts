@@ -10,6 +10,7 @@ export {
   UserFollowersApiPath,
   PodcastsFollowersApiPath,
   NotificationsApiPath,
+  PlaylistsApiPath,
 } from './api/api';
 export {
   AppAsyncStorageKey,
@@ -35,6 +36,9 @@ export {
   PodcastFollowerDTOKey,
   CommentReactionDTOKey,
   InvitationCodeDTOKey,
+  UserFavouriteEpisodeDTOKey,
+  PlaylistDTOKey,
+  PlaylistEpisodeDTOKey,
 } from './db/db';
 export { HttpCode, HttpMethod } from './http/http';
 export {
@@ -66,3 +70,12 @@ export {
 export { SocketEvent } from './socket/socket';
 export { UserNotificationStatus } from './user-notification/user-notification';
 export { NotificationTitle, NotificationCreatePayloadKey } from './notification/notification';
+export {
+  UserFavouriteEpisodePayloadKey,
+  UserFavouriteEpisodeValidationMessage,
+} from './user-favourite-episode/user-favourite-episode';
+export {
+  PlaylistPayloadKey,
+  PlaylistValidationMessage,
+  PlaylistValidationRule,
+} from './playlist/playlist';

@@ -12,10 +12,12 @@ enum ActionType {
   UPDATE_COMMENTS_AFTER_DELETE = 'comments/update-after-delete',
   UPDATE_COMMENTS_AFTER_LIKE = 'comments/update-after-like',
   LEAVE_EPISODE = 'episodes/leave-episode',
+  CHECK_EPISODE_IS_FAVOURITE = 'episodes/check-episode-is-favourite',
+  TOGGLE_FAVOURITE = 'episodes/toggle-favourite',
 }
 
-type LoadEpisodePayload  = {
-  episode : Episode;
+type LoadEpisodePayload = {
+  episode: Episode;
   podcast: Podcast;
 };
 

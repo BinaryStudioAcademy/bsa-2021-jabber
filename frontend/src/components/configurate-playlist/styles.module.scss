@@ -1,0 +1,17 @@
+.playlist {
+  width: 100%;
+
+  .title {
+    font-size: 24px;
+    margin: 0 0 25px;
+  }
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 715px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 30px 20px;
+  }
+}

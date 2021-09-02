@@ -5,8 +5,7 @@ import { Button, ConfirmPopup, ImageWrapper, Link, Loader } from 'components/com
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
 import styles from './styles.module.scss';
-import { getAllowedClasses } from 'helpers/helpers';
-import { getFilterEpisode } from './helpers/helpers';
+import { getAllowedClasses, getFilterEpisode } from 'helpers/helpers';
 import { DEFAULT_EPISODE_PAGINATION, DEFAULT_EPISODE_PAGE } from './common/constatnts/constants';
 
 const Podcast: React.FC = () => {
@@ -245,7 +244,7 @@ const Podcast: React.FC = () => {
           </div>
           {episodes.length
             ? isEpisodesLoading
-              ? <Loader/>
+              ? <Loader />
               : <EpisodeTable
                 episodes={episodes}
                 onSetRow={handleSetRowEpisodeFilter}

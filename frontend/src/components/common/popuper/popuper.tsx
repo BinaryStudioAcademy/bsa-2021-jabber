@@ -2,11 +2,12 @@ import Popup from 'reactjs-popup';
 
 type Props = {
   trigger: JSX.Element,
+  renderContent: (close: () => void) => JSX.Element,
 };
 
 const Popuper: React.FC<Props> = ({
   trigger,
-  children,
+  renderContent,
 }) => {
   return (
     <Popup
@@ -17,7 +18,7 @@ const Popuper: React.FC<Props> = ({
       mouseEnterDelay={0}
       arrow={false}
     >
-      {children}
+      {renderContent}
     </Popup>
   );
 };

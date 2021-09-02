@@ -30,6 +30,8 @@ export type {
   EpisodeLoadFilter,
   LoadEpisodesByPodcastIdPayload,
   EpisodeQueryPayload,
+  LoadFavouriteEpisodesPayload,
+  EpisodeWithPodcast,
 } from './episode/episode';
 export type {
   Shownote,
@@ -53,3 +55,10 @@ export type {
 } from './user-notification/user-notification';
 export type { InvitationCode, InvitationCodePayload } from './invitation-code/invitation-code';
 export type { MailTemplate } from './mail/mail';
+export type {
+  UserFavouriteEpisode,
+  UserFavouriteEpisodePayload,
+  UserFavouriteEpisodeResponse,
+} from './user-favourite-episode/user-favourite-episode';
+export type { Playlist, PlaylistPayload } from './playlist/playlist';
+export type { PlaylistEpisode, PlaylistEpisodePayload } from './playlist-episode/playlist-episode';
