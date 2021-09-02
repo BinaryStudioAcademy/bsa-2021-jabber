@@ -26,7 +26,13 @@ class PlaylistEpisode {
       .where('episode_id', episodeId)
       .returning('*')
       .first();
+  }
 
+  public getByPlaylistIdEpisodeId({ playlistId, episodeId }: PlaylistEpisodePayload): Promise<TPlaylistEpisode> {
+    return this.#PlaylistEpisodeModel.query()
+      .where('playlist_id', playlistId)
+      .where('episode_id', episodeId)
+      .first();
   }
 }
 
