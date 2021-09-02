@@ -131,7 +131,7 @@ const socket: Middleware = ({ dispatch }) => (next): Next => {
         socket.emit(SocketEvent.PEER_CLOSE, action.meta.arg);
         break;
       }
-      case `${RecordActionType.LOAD_COMMENTS_BY_EPISODE_ID}/${DataStatus.PENDING}`: {
+      case `${RecordActionType.LOAD_EPISODE_PAYLOAD}/${DataStatus.PENDING}`: {
         socket.emit(SocketEvent.JOIN_ROOM, String(action.meta.arg));
         break;
       }
