@@ -14,6 +14,8 @@ enum ActionType {
   LEAVE_EPISODE = 'episodes/leave-episode',
   CHECK_EPISODE_IS_FAVOURITE = 'episodes/check-episode-is-favourite',
   TOGGLE_FAVOURITE = 'episodes/toggle-favourite',
+  LOAD_PLAYLISTS = 'episodes/load-playlists',
+  ADD_EPISODE_TO_PLAYLIST = 'episodes/add-episode-to-playlist',
 }
 
 type LoadEpisodePayload = {

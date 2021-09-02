@@ -1,0 +1,96 @@
+.triggerButton {
+  padding: 12px 22px;
+}
+
+.dropDown {
+  width: 175px;
+  position: absolute;
+  top: 15px;
+  left: -87px;
+
+  &:before {
+    content: "";
+
+    width: 20px;
+    height: 20px;
+    display: block;
+
+    position: absolute;
+    top: -10px;
+    left: 50%;
+
+    background-color: var(--color-primary-light);
+    transform-origin: center center;
+    transform: translateX(-50%) rotate(45deg);
+    z-index: var(--z-index--level-two);
+  }
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+  }
+}
+
+.dropDownList {
+  width: 100%;
+  max-height: 230px;
+  padding: 10px;
+  margin: 0;
+
+  overflow-y: auto;
+
+  background-color: var(--color-primary-light);
+  border-radius: 5px;
+  box-shadow: 0px 5px 10px var(--color-primary-dark);
+
+  list-style: none;
+  z-index: var(--z-index--level-four);
+
+  li {
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+
+  &::-webkit-scrollbar {
+    height: 5px;
+    width: 10px;
+    background: #ffffff;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb:vertical {
+    background-color: rgba(62, 71, 82, 0.3);
+    border-radius: 5px;
+  }
+}
+
+.listButton {
+  flex-grow: 1;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  z-index: var(--z-index--level-four);
+
+  color: var(--color-primary-dark);
+  background-color: var(--color-primary-light);
+  border-radius: 5px;
+  padding: 10px;
+
+  &:hover {
+    filter: brightness(1.2);
+  }
+}
+
+.createPlaylist {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-button-background);
+}
