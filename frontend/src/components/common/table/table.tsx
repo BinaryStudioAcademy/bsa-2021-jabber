@@ -7,9 +7,9 @@ import Pagination from '../pagination/pagination';
 type Props = {
   columns: Column[];
   data: unknown[];
-  pageCount: number;
-  currentPage: number;
-  onPageChange: (page: number) => void;
+  pageCount?: number;
+  currentPage?: number;
+  onPageChange?: (page: number) => void;
   totalRowsCount?: number;
   defaultPaginationRows?: number;
   hasPagination?: boolean;
@@ -74,9 +74,9 @@ const Table: React.FC<Props> = ({
       {hasPagination &&
         <Pagination
           totalRowsCount={totalRowsCount}
-          pageCount={pageCount}
-          onPageChange={onPageChange}
-          currentPage={currentPage}
+          pageCount={pageCount as number}
+          onPageChange={onPageChange as (page: number)=> void}
+          currentPage={currentPage as number}
           defaultPaginationRows={defaultPaginationRows}
           className={styles.pagination}
         />}
