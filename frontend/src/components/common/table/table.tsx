@@ -12,6 +12,7 @@ type Props = {
   onPageChange: (page: number) => void;
   totalRowsCount?: number;
   defaultPaginationRows?: number;
+  hasPagination?: boolean;
 };
 
 const Table: React.FC<Props> = ({
@@ -22,6 +23,7 @@ const Table: React.FC<Props> = ({
   onPageChange,
   totalRowsCount,
   defaultPaginationRows,
+  hasPagination = false,
 }) => {
   const tableInstance = useTable({
     columns: columns as Column<Record<string, string>>[],
@@ -69,14 +71,15 @@ const Table: React.FC<Props> = ({
           </tbody>
         </table>
       </div>
-      <Pagination
-        totalRowsCount={totalRowsCount}
-        pageCount={pageCount}
-        onPageChange={onPageChange}
-        currentPage={currentPage}
-        defaultPaginationRows={defaultPaginationRows}
-        className={styles.pagination}
-      />
+      {hasPagination &&
+        <Pagination
+          totalRowsCount={totalRowsCount}
+          pageCount={pageCount}
+          onPageChange={onPageChange}
+          currentPage={currentPage}
+          defaultPaginationRows={defaultPaginationRows}
+          className={styles.pagination}
+        />}
     </>
   );
 };

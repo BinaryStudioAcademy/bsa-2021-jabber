@@ -29,6 +29,7 @@ const EpisodeTable: React.FC<Props> = ({
     onPageChange={onPageChange}
     totalRowsCount={totalEpisodesCount}
     defaultPaginationRows={DEFAULT_EPISODE_PAGINATION.row}
+    hasPagination
   />;
 };
 

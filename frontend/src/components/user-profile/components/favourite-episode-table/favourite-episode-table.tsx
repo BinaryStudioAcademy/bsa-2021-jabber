@@ -29,6 +29,7 @@ const FavouriteEpisodeTable: React.FC<Props> = ({
     currentPage={currentPage}
     onPageChange={onPageChange}
     totalRowsCount={totalFavoriteCount}
+    hasPagination
   />;
 };
 
