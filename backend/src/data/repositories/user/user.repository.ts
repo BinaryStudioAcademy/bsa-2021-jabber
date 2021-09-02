@@ -4,7 +4,6 @@ import {
   UserEditDTOPayload,
   UserPopularLoadFilter,
   UserUpdatePasswordDTOPayload,
-  UserWithPasswordPayload,
 } from '~/common/types/types';
 import { UserModel as UserM } from '~/data/models/models';
 
@@ -27,8 +26,17 @@ class User {
     return this.#UserModel.query().insert(payload).omit(['password']);
   }
 
-  public getByEmail(email: string): Promise<UserWithPasswordPayload> {
-    return this.#UserModel.query().findOne('email', email).withGraphJoined('[image]');
+  public getByEmail(email: string): Promise<TUser> {
+    return this.#UserModel.query()
+      .findOne('email', email)
+      .withGraphJoined('[image]')
+      .omit(['password']);
+  }
+
+  public async getPasswordByEmail(email: string): Promise<string> {
+    const result = await this.#UserModel.query().findOne('email', email);
+
+    return result.password;
   }
 
   public getById(id: number): Promise<TUser> {
