@@ -10,6 +10,9 @@ const PlaylistValidationMessage = {
   PLAYLIST_DESCRIPTION_MIN_LENGTH: `Playlist description must be at least ${PlaylistValidationRule.PLAYLIST_DESCRIPTION_MIN_LENGTH} character long`,
   PLAYLIST_DESCRIPTION_MAX_LENGTH: `Playlist description must be at most ${PlaylistValidationRule.PLAYLIST_DESCRIPTION_MAX_LENGTH} characters long`,
   FILE_EXTENSION_FORMAT: 'Cover image file must have valid type',
+  STATUS_REQUIRE: 'Playlist status is required',
+  INVALID_PLAYLIST_STATUS: 'Invalid playlist status',
+  DATA_URL_FORMAT: 'Cover image must be valid jpeg, png or svg file',
 } as const;
 
 export { PlaylistValidationMessage };

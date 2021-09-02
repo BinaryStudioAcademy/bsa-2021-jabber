@@ -29,7 +29,11 @@ const playlist = Joi.object({
       'string.min': PlaylistValidationMessage.PLAYLIST_DESCRIPTION_MIN_LENGTH,
       'string.max': PlaylistValidationMessage.PLAYLIST_DESCRIPTION_MAX_LENGTH,
     }),
-  [PlaylistPayloadKey.STATUS]: Joi.string().valid(...playlistStatus),
+  [PlaylistPayloadKey.STATUS]: Joi.string()
+    .valid(...playlistStatus)
+    .messages({
+      'string.empty': PlaylistValidationMessage.STATUS_REQUIRE,
+    }),
 });
 
 export { playlist };
