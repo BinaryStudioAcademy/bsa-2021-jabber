@@ -16,6 +16,9 @@ const create = createAsyncThunk<void, PlaylistFormPayload, AsyncThunkConfig>(
     const playlist = await playlistApi.create({
       userId: (<User>auth.user).id,
       name: payload.name,
+      description: payload.description,
+      status: payload.status,
+      coverDataUrl: null,
     });
 
     notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PLAYLIST_CREATED);
