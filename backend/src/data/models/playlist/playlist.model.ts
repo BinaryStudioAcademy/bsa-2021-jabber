@@ -29,7 +29,7 @@ class Playlist extends Abstract {
       relation: Model.HasOneRelation,
       modelClass: Image,
       join: {
-        from: 'podcasts.cover_id',
+        from: 'playlists.cover_id',
         to: 'images.id',
       },
     },
