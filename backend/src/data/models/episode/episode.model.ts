@@ -77,7 +77,7 @@ class Episode extends Abstract {
         to: 'podcasts.id',
       },
     },
-    popularEpisodes: {
+    comments: {
       relation: Model.HasManyRelation,
       modelClass: Comment,
       join: {

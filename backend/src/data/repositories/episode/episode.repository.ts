@@ -35,7 +35,7 @@ class Episode {
       .withGraphJoined('[image]')
       .select(
         'episodes.*',
-        this.#EpisodeModel.relatedQuery('popularEpisodes')
+        this.#EpisodeModel.relatedQuery('comments')
           .count()
           .as('commentsCount'),
       )
