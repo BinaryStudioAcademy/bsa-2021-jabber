@@ -92,13 +92,6 @@ const Podcast: React.FC = () => {
     }
   };
 
-  // const handleSelectRowCount = (evt: React.ChangeEvent<HTMLSelectElement>): void => {
-  //   setEpisodePagination({
-  //     page: episodePagination.page,
-  //     row: Number(evt.target.value),
-  //   });
-  // };
-
   const handlePageChange = (selectedPage: number): void => {
     setEpisodePagination({
       page: selectedPage,
