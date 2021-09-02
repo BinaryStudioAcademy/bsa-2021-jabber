@@ -8,7 +8,6 @@ type User = {
   imageId: number | null;
   email: string;
   nickname: string;
-  password: string;
   birthdate: string;
   bio: string;
   createdAt: string;
