@@ -1,23 +1,22 @@
 import { Table } from 'components/common/common';
 import { EpisodeWithPodcast } from 'common/types/types';
 import { getColumns, getRows } from './helpers/helpers';
+import { DEFAULT_EPISODE_PAGINATION } from 'components/user-profile/common/constants/constants';
 
 type Props = {
   episodes: EpisodeWithPodcast[];
-  onSetRow: (row: number) => void;
-  onSetPage: (page: number) => void;
-  pageIndex: number;
-  pageSize: number;
-  episodesTotalCount: number;
+  pageCount: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+  totalFavoriteCount: number;
 };
 
 const FavouriteEpisodeTable: React.FC<Props> = ({
-  episodes ,
-  pageSize,
-  onSetRow,
-  onSetPage,
-  pageIndex,
-  episodesTotalCount,
+  episodes,
+  pageCount,
+  currentPage,
+  onPageChange,
+  totalFavoriteCount,
 }) => {
   const columns = getColumns();
   const rows = getRows(episodes);
@@ -25,11 +24,11 @@ const FavouriteEpisodeTable: React.FC<Props> = ({
   return <Table
     columns={columns}
     data={rows}
-    onSetRow={onSetRow}
-    onSetPage={onSetPage}
-    pageIndex={pageIndex}
-    pageSize={pageSize}
-    totalCountItems={episodesTotalCount}
+    defaultPaginationRows={DEFAULT_EPISODE_PAGINATION.row}
+    pageCount={pageCount}
+    currentPage={currentPage}
+    onPageChange={onPageChange}
+    totalRowsCount={totalFavoriteCount}
     hasPagination
   />;
 };
