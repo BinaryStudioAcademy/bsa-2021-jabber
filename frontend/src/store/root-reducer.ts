@@ -9,12 +9,13 @@ import { reducer as record } from './record/reducer';
 import { reducer as userProfile } from './user-profile/reducer';
 import { reducer as notification } from './notification/reducer';
 import { reducer as configurateUser } from './configurate-user/reducer';
-import { reducer as userFavouriteEpisodes } from './user-favourite-episodes/reducer';
+import { reducer as configuratePlaylist } from './configurate-playlist/reducer';
 
 const rootReducer = {
   auth,
   configuratePodcast,
   configurateEpisode,
+  configuratePlaylist,
   homepage,
   episode,
   podcast,
@@ -22,7 +23,6 @@ const rootReducer = {
   userProfile,
   notification,
   configurateUser,
-  userFavouriteEpisodes,
   toastr: toastrReducer,
 };
 

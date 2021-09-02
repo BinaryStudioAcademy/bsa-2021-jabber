@@ -12,6 +12,8 @@ import {
   podcastFollower as podcastFollowerService,
   userFavouriteEpisode as userFavouriteEpisodeService,
   userNotification as userNotificationService,
+  playlist as playlistService,
+  playlistEpisode as playlistEpisodeService,
 } from '~/services/services';
 import { initAuthApi } from './auth/auth.api';
 import { initUsersApi } from './users/users.api';
@@ -23,6 +25,7 @@ import { initGenreApi } from './genre/genre.api';
 import { initUserFollowersApi } from './user-followers/user-followers.api';
 import { initPodcastFollowersApi } from './podcast-followers/podcast-followers.api';
 import { initNotificationApi } from './notification/notifications.api';
+import { initPlaylistsApi } from './playlists/playlists.api';
 
 const initApi = (app: Router): Router => {
   const apiRouter = Router();
@@ -78,6 +81,12 @@ const initApi = (app: Router): Router => {
   initNotificationApi({
     apiRouter,
     userNotificationService,
+  });
+
+  initPlaylistsApi({
+    apiRouter,
+    playlistService,
+    playlistEpisodeService,
   });
 
   return apiRouter;

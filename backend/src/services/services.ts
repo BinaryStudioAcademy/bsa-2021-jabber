@@ -18,6 +18,8 @@ import {
   notification as notificationRepository,
   userNotification as userNotificationRepository,
   userFavouriteEpisode as userFavouriteEpisodeRepository,
+  playlist as playlistRepository,
+  playlistEpisode as playlistEpisodeRepository,
 } from '~/data/repositories/repositories';
 import { AsyncLocalStorage } from './async-storage/async-storage.service';
 import { Logger } from './logger/logger.service';
@@ -40,6 +42,8 @@ import { Notification } from './notification/notification.service';
 import { Mailer } from './mailer/mailer.service';
 import { UserFavouriteEpisode } from './user-favourite-episode/user-favourite-episode.service';
 import { UserNotification } from './user-notification/user-notification.service';
+import { Playlist } from './playlist/playlist.service';
+import { PlaylistEpisode } from './playlist-episode/playlist-episode.service';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -149,6 +153,14 @@ const userNotification = new UserNotification({
   userNotificationRepository,
 });
 
+const playlist = new Playlist({
+  playlistRepository,
+});
+
+const playlistEpisode = new PlaylistEpisode({
+  playlistEpisodeRepository,
+});
+
 export {
   auth,
   appAsyncStorage,
@@ -171,4 +183,6 @@ export {
   mailer,
   userFavouriteEpisode,
   userNotification,
+  playlist,
+  playlistEpisode,
 };

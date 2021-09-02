@@ -14,6 +14,7 @@ import { UserNotificationApi } from './user-notification-api/user-notification.s
 import { GenreApi } from './genre-api/genre-api.service';
 import { UserFollowerApi } from './user-follower-api/user-follower-api.service';
 import { PodcastFollowerApi } from './podcast-follower-api/podcast-follower-api.service';
+import { PlaylistApi } from './playlist-api/playlist-api.service';
 
 const storage = new Storage({
   storage: localStorage,
@@ -76,6 +77,11 @@ const podcastFollowerApi = new PodcastFollowerApi({
   apiPrefix: ENV.API_PATH,
 });
 
+const playlistApi = new PlaylistApi({
+  http,
+  apiPrefix: ENV.API_PATH,
+});
+
 export {
   authApi,
   notification,
@@ -90,4 +96,5 @@ export {
   genreApi,
   userFollowerApi,
   podcastFollowerApi,
+  playlistApi,
 };
