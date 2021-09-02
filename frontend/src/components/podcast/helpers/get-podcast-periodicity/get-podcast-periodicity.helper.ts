@@ -14,22 +14,13 @@ const getPodcastPeriodicity = (episodes: Episode[]): PodcastPeriodicity => {
   );
 
   const [firstEpisode] = episodesSortedByDate;
-  const lastEpisode = episodesSortedByDate[episodesSortedByDate.length - 1];
 
   const averagePeriodicity = Math.round(
-    (new Date(lastEpisode.createdAt).getTime() -
-      new Date(firstEpisode.createdAt).getTime()) /
-      (episodesSortedByDate.length - 1),
+    (Date.now() - new Date(firstEpisode.createdAt).getTime()) /
+      (episodesSortedByDate.length),
   );
-  const periodFromLastPodcast =
-    Date.now() - new Date(lastEpisode.createdAt).getTime();
 
-  const estimatedPeriodicity =
-    episodesSortedByDate.length === 1
-      ? periodFromLastPodcast
-      : Math.max(averagePeriodicity, periodFromLastPodcast);
-
-  const differenceInDays = getDifferenceInDays(estimatedPeriodicity, 0);
+  const differenceInDays = getDifferenceInDays(averagePeriodicity, 0);
 
   if (differenceInDays <= ONE_DAY) {
     return PodcastPeriodicity.DAILY;
