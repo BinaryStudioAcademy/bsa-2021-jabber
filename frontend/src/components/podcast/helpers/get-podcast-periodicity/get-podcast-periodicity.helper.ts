@@ -5,7 +5,7 @@ import { getDifferenceInDays } from 'helpers/helpers';
 
 const getPodcastPeriodicity = (episodes: Episode[]): PodcastPeriodicity => {
   if (!episodes.length) {
-    return PodcastPeriodicity.MONTHLY;
+    return PodcastPeriodicity.WEEKLY;
   }
 
   const episodesSortedByDate = [...episodes].sort(

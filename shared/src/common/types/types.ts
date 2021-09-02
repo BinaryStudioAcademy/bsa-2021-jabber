@@ -49,3 +49,6 @@ export type {
   UserFavouriteEpisodePayload,
   UserFavouriteEpisodeResponse,
 } from './user-favourite-episode/user-favourite-episode';
+export type { Playlist, PlaylistPayload } from './playlist/playlist';
+export type { PlaylistEpisode, PlaylistEpisodePayload } from './playlist-episode/playlist-episode';
+

@@ -23,6 +23,7 @@ import { useDispatch, useEffect, useAppSelector } from 'hooks/hooks';
 import { storage } from 'services/services';
 import { auth as authActions } from 'store/actions';
 import UserFollowersPage from 'components/user-followers/user-followers';
+import ConfiguratePlaylist from 'components/configurate-playlist/configurate-playlist';
 
 const App: React.FC = () => {
   const { user } = useAppSelector(({ auth }) => ({
@@ -100,6 +101,11 @@ const App: React.FC = () => {
         <AuthPublicRouter
           path={AppRoute.USERS_$ID_FOLLOWERS}
           component={UserFollowersPage}
+          exact
+        />
+        <AuthPrivateRouter
+          path={AppRoute.PLAYLISTS_EDIT_$ID}
+          component={ConfiguratePlaylist}
           exact
         />
         <AuthPublicRouter path={AppRoute.ROOT} component={Homepage} exact />

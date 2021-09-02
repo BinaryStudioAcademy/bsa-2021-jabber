@@ -1,23 +1,22 @@
 import { Table } from 'components/common/common';
 import { Episode } from 'common/types/types';
 import { getColumns, getRows } from './helpers/helpers';
+import { DEFAULT_EPISODE_PAGINATION } from 'components/podcast/common/constatnts/constants';
 
 type Props = {
   episodes: Episode[];
-  onSetRow: (row: number) => void;
-  onSetPage: (page: number) => void;
-  pageIndex: number;
-  pageSize: number;
-  totalCountEpisodes: number;
+  pageCount: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+  totalEpisodesCount: number;
 };
 
 const EpisodeTable: React.FC<Props> = ({
-  episodes ,
-  pageSize,
-  onSetRow,
-  onSetPage,
-  pageIndex,
-  totalCountEpisodes,
+  episodes,
+  pageCount,
+  currentPage,
+  onPageChange,
+  totalEpisodesCount,
 }) => {
   const columns = getColumns();
   const rows = getRows(episodes);
@@ -25,11 +24,11 @@ const EpisodeTable: React.FC<Props> = ({
   return <Table
     columns={columns}
     data={rows}
-    onSetRow={onSetRow}
-    onSetPage={onSetPage}
-    pageIndex={pageIndex}
-    pageSize={pageSize}
-    totalCountItems={totalCountEpisodes}
+    pageCount={pageCount}
+    currentPage={currentPage}
+    onPageChange={onPageChange}
+    totalRowsCount={totalEpisodesCount}
+    defaultPaginationRows={DEFAULT_EPISODE_PAGINATION.row}
     hasPagination
   />;
 };

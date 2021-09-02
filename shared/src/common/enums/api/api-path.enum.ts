@@ -9,6 +9,7 @@ enum ApiPath {
   GENRES = '/genres',
   PODCAST_FOLLOWERS = '/podcast-followers',
   USER_FOLLOWERS = '/user-followers',
+  PLAYLISTS = '/playlists',
 }
 
 export { ApiPath };

@@ -55,10 +55,11 @@ class Passport {
               false,
             );
           }
+          const hashPassword = await this.#userRepository.getPasswordByEmail(email);
 
           const isCryptsEqual = await checkIsCryptsEqual(
             password,
-            user.password,
+            hashPassword,
           );
 
           return isCryptsEqual

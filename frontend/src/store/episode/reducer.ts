@@ -85,7 +85,6 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(deleteComment.rejected, (state) => {
     state.commentDataStatus = DataStatus.REJECTED;
   });
-
   builder.addCase(updateCommentsAfterLike, (state, action) => {
     const filtered = state.comments.filter((comment) => comment.id !== action.payload.id);
     const comments = getSortedItems(

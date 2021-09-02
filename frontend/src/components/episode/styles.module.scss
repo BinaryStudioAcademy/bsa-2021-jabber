@@ -61,7 +61,26 @@
 }
 
 .favouriteButton {
-  min-width: 141px;
+  position: absolute;
+  right: 35px;
+  top: 35px;
+  width: 25px;
+  height: 25px;
+  border: none;
+  cursor: pointer;
+  background-color: var(--color-button-background);
+  mask: url('../../assets/img/comment/heart-regular.svg') no-repeat 50% 50%;
+  mask-size: 25px;
+}
+
+.favouriteActive {
+  mask: url('../../assets/img/comment/heart-solid.svg') no-repeat 50% 50%;
+  mask-size: 25px;
+}
+
+.favoriteMaster {
+  right: 85px;
+  top: 35px;
 }
 
 .link {
@@ -231,11 +250,11 @@ h3 {
     bottom: 230px;
   }
 
-  .deleteButton {
+  .deleteButton, .favouriteButton {
     right: 20px;
   }
 
-  .editLink {
+  .editLink, .favoriteMaster {
     right: 55px;
   }
 
@@ -277,7 +296,7 @@ h3 {
     width: 100%;
   }
 
-  .deleteButton {
+  .deleteButton, .favouriteButton {
     top: auto;
     bottom: 35px;
   }
