@@ -1,32 +1,31 @@
-import { DateFormatType, PodcastPeriodicity } from 'common/enums/enums';
+import { PodcastPeriodicity } from 'common/enums/enums';
 import { Episode } from 'common/types/types';
 import { ONE_DAY, ONE_WEEK } from './common/constants';
-import { getDifferenceInDays, getFormattedDate } from 'helpers/helpers';
+import { getDifferenceInDays } from 'helpers/helpers';
 
 const getPodcastPeriodicity = (episodes: Episode[]): PodcastPeriodicity => {
   if (!episodes.length) {
     return PodcastPeriodicity.MONTHLY;
   }
 
-  const episodesDatesWithoutTime = episodes.map((episode) =>
-    getFormattedDate(new Date(episode.createdAt), DateFormatType.ISO_DATE_000Z),
-  );
-  const uniqueSortedEpisodesDates = [...new Set(episodesDatesWithoutTime)].sort(
-    (prev, next) => new Date(prev).getTime() - new Date(next).getTime(),
+  const episodesSortedByDate = [...episodes].sort(
+    (prev, next) =>
+      new Date(prev.createdAt).getTime() - new Date(next.createdAt).getTime(),
   );
 
-  const [firstDate] = uniqueSortedEpisodesDates;
-  const lastDate =
-    uniqueSortedEpisodesDates[uniqueSortedEpisodesDates.length - 1];
+  const [firstEpisode] = episodesSortedByDate;
+  const lastEpisode = episodesSortedByDate[episodesSortedByDate.length - 1];
 
   const averagePeriodicity = Math.round(
-    (new Date(lastDate).getTime() - new Date(firstDate).getTime()) /
-      (uniqueSortedEpisodesDates.length - 1),
+    (new Date(lastEpisode.createdAt).getTime() -
+      new Date(firstEpisode.createdAt).getTime()) /
+      (episodesSortedByDate.length - 1),
   );
-  const periodFromLastPodcast = Date.now() - new Date(lastDate).getTime();
+  const periodFromLastPodcast =
+    Date.now() - new Date(lastEpisode.createdAt).getTime();
 
   const estimatedPeriodicity =
-    uniqueSortedEpisodesDates.length === 1
+    episodesSortedByDate.length === 1
       ? periodFromLastPodcast
       : Math.max(averagePeriodicity, periodFromLastPodcast);
 
