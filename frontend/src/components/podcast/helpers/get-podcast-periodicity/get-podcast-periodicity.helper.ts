@@ -1,21 +1,11 @@
-import { DateFormatType } from 'common/enums/enums';
+import { DateFormatType, PodcastPeriodicity } from 'common/enums/enums';
 import { Episode } from 'common/types/types';
-import {
-  ONE_DAY,
-  ONE_WEEK,
-  ONE_MONTH,
-  MONTHS_IN_YEAR,
-} from './common/constants';
-import {
-  getDifferenceInDays,
-  getDifferenceInWeeks,
-  getDifferenceInMonths,
-  getFormattedDate,
-} from 'helpers/helpers';
+import { ONE_DAY, ONE_WEEK } from './common/constants';
+import { getDifferenceInDays, getFormattedDate } from 'helpers/helpers';
 
-const getPodcastPeriodicity = (episodes: Episode[]): string => {
+const getPodcastPeriodicity = (episodes: Episode[]): PodcastPeriodicity => {
   if (!episodes.length) {
-    return 'No data yet';
+    return PodcastPeriodicity.MONTHLY;
   }
 
   const episodesDatesWithoutTime = episodes.map((episode) =>
@@ -43,34 +33,14 @@ const getPodcastPeriodicity = (episodes: Episode[]): string => {
   const differenceInDays = getDifferenceInDays(estimatedPeriodicity, 0);
 
   if (differenceInDays <= ONE_DAY) {
-    return 'Daily';
+    return PodcastPeriodicity.DAILY;
   }
 
-  const differenceInWeeks = getDifferenceInWeeks(estimatedPeriodicity, 0);
-
-  if (differenceInWeeks < ONE_WEEK) {
-    return `Every ${differenceInDays} days`;
+  if (differenceInDays <= ONE_WEEK) {
+    return PodcastPeriodicity.WEEKLY;
   }
 
-  if (differenceInWeeks === ONE_WEEK) {
-    return 'Weekly';
-  }
-
-  const differenceInMonths = getDifferenceInMonths(estimatedPeriodicity, 0);
-
-  if (differenceInMonths < ONE_MONTH) {
-    return `Every ${differenceInWeeks} weeks`;
-  }
-
-  if (differenceInMonths === ONE_MONTH) {
-    return 'Monthly';
-  }
-
-  if (differenceInMonths < MONTHS_IN_YEAR) {
-    return `Every ${differenceInMonths} months`;
-  }
-
-  return 'More than a year 😢';
+  return PodcastPeriodicity.MONTHLY;
 };
 
 export { getPodcastPeriodicity };

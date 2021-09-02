@@ -4,8 +4,6 @@ export {
   getFormattedDate,
   getDistanceToDateNow,
   getDifferenceInDays,
-  getDifferenceInMonths,
-  getDifferenceInWeeks,
   getTimeOffset,
   getTimestamp,
 } from './date/date';

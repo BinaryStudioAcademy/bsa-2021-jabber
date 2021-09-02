@@ -5,8 +5,6 @@ export {
   getFormattedDate,
   getDistanceToDateNow,
   getDifferenceInDays,
-  getDifferenceInMonths,
-  getDifferenceInWeeks,
 } from './date/date';
 export { getRandomNumber } from './number/number';
 export { setDebounce } from './timeout/timeout';
