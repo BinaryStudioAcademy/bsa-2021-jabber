@@ -16,7 +16,9 @@ class Comment {
   }
 
   public getAll(): Promise<TComment[]> {
-    return this.#CommentModel.query().withGraphFetched('user');
+    return this.#CommentModel.query()
+      .withGraphFetched('user')
+      .omit(['password']);
   }
 
   public create(payload: CommentCreateDTOPayload): Promise<TComment> {

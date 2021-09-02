@@ -4,6 +4,7 @@ import {
   UserEditDTOPayload,
   UserPopularLoadFilter,
   UserUpdatePasswordDTOPayload,
+  UserWithPasswordPayload,
 } from '~/common/types/types';
 import { UserModel as UserM } from '~/data/models/models';
 
@@ -19,29 +20,30 @@ class User {
   }
 
   public getAll(): Promise<TUser[]> {
-    return this.#UserModel.query().withGraphJoined('[image]');
+    return this.#UserModel.query().withGraphJoined('[image]').omit(['password']);
   }
 
   public create(payload: UserCreatePayload): Promise<TUser> {
-    return this.#UserModel.query().insert(payload);
+    return this.#UserModel.query().insert(payload).omit(['password']);
   }
 
-  public getByEmail(email: string): Promise<TUser> {
+  public getByEmail(email: string): Promise<UserWithPasswordPayload> {
     return this.#UserModel.query().findOne('email', email).withGraphJoined('[image]');
   }
 
   public getById(id: number): Promise<TUser> {
     return this.#UserModel.query()
       .findById(id)
-      .withGraphJoined('[image]');
+      .withGraphJoined('[image]')
+      .omit(['password']);
   }
 
   public update(id: number, payload: UserEditDTOPayload): Promise<TUser> {
-    return this.#UserModel.query().updateAndFetchById(id, payload);
+    return this.#UserModel.query().updateAndFetchById(id, payload).omit(['password']);
   }
 
   public updatePassword(id: number, payload: UserUpdatePasswordDTOPayload): Promise<TUser> {
-    return this.#UserModel.query().patch(payload).findById(id);
+    return this.#UserModel.query().patch(payload).findById(id).omit(['password']);
   }
 
   public getPopular(filter: UserPopularLoadFilter): Promise<TUser[]> {
@@ -56,7 +58,7 @@ class User {
           .as('followersCount'),
       )
       .orderBy('followersCount', 'DESC')
-      .omit(['followersCount'])
+      .omit(['followersCount', 'password'])
       .limit(limit);
   }
 
@@ -64,7 +66,8 @@ class User {
     return this.#UserModel.query()
       .withGraphJoined('[image]')
       .joinRelated('[followers]')
-      .where('user_id', userId);
+      .where('user_id', userId)
+      .omit(['password']);
   }
 }
 
