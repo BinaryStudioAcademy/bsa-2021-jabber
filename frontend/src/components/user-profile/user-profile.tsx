@@ -4,7 +4,6 @@ import {
   ImageWrapper,
   Link,
   Button,
-  Pagination,
 } from 'components/common/common';
 import { AppRoute, ButtonColor, DataStatus } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
@@ -204,17 +203,13 @@ const UserPage: React.FC = () => {
       {isOwner && <div className={styles.favoriteEpisodes}>
         <h2 className={styles.podcastsByUserTitle}>Favorite episodes:</h2>
         {hasFavoriteEpisodes
-          ? <>
-            <FavouriteEpisodeTable
-              episodes={favoriteEpisodes}
-            />
-            <Pagination
-              pageCount={totalPagesCount}
-              onPageChange={handlePageChange}
-              currentPage={episodePagination.page}
-              className={styles.pagination}
-            />
-          </>
+          ? <FavouriteEpisodeTable
+            episodes={favoriteEpisodes}
+            totalFavoriteCount={favoriteEpisodesCount}
+            pageCount={totalPagesCount}
+            onPageChange={handlePageChange}
+            currentPage={episodePagination.page}
+          />
           : (
             <div className={styles.placeholder}>
               There are no episodes in favorites yet.

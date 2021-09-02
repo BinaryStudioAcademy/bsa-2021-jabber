@@ -1,11 +1,11 @@
 import { useAppSelector, useDispatch, useEffect, useParams, useState } from 'hooks/hooks';
 import { configuratePodcast as configuratePodcastActions, podcast as podcastActions } from 'store/actions';
 import { AppRoute, DataStatus, UserRole, PodcastType } from 'common/enums/enums';
-import { Button, ConfirmPopup, ImageWrapper, Link, Loader, Pagination } from 'components/common/common';
+import { Button, ConfirmPopup, ImageWrapper, Link, Loader } from 'components/common/common';
 import { getAllowedClasses, getFilterEpisode } from 'helpers/helpers';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
-import { DEFAULT_EPISODE_PAGINATION, ROW_COUNT } from './common/constatnts/constants';
+import { DEFAULT_EPISODE_PAGINATION } from './common/constatnts/constants';
 import styles from './styles.module.scss';
 
 const Podcast: React.FC = () => {
@@ -92,12 +92,12 @@ const Podcast: React.FC = () => {
     }
   };
 
-  const handleSelectRowCount = (evt: React.ChangeEvent<HTMLSelectElement>): void => {
-    setEpisodePagination({
-      page: episodePagination.page,
-      row: Number(evt.target.value),
-    });
-  };
+  // const handleSelectRowCount = (evt: React.ChangeEvent<HTMLSelectElement>): void => {
+  //   setEpisodePagination({
+  //     page: episodePagination.page,
+  //     row: Number(evt.target.value),
+  //   });
+  // };
 
   const handlePageChange = (selectedPage: number): void => {
     setEpisodePagination({
@@ -246,33 +246,13 @@ const Podcast: React.FC = () => {
           {episodes.length
             ? isEpisodesLoading
               ? <Loader />
-              : <>
-                <EpisodeTable
-                  episodes={episodes}
-                />
-                <div className={styles.paginationWrapper}>
-                  <div className={styles.showRowsWrapper}>
-                    Showing <select
-                      value={episodePagination.row}
-                      onChange={handleSelectRowCount}
-                      className={styles.showRowsInput}
-                    >
-                      {ROW_COUNT.map((totalPagesCount): JSX.Element => (
-                        <option key={totalPagesCount} value={totalPagesCount}>
-                          {totalPagesCount}
-                        </option>
-                      ))}
-                    </select>
-                    /{countEpisodes} row
-                  </div>
-                  <Pagination
-                    pageCount={totalPagesCount}
-                    currentPage={episodePagination.page}
-                    onPageChange={handlePageChange}
-                    className={styles.pagination}
-                  />
-                </div>
-              </>
+              : <EpisodeTable
+                episodes={episodes}
+                pageCount={totalPagesCount}
+                currentPage={episodePagination.page}
+                onPageChange={handlePageChange}
+                totalEpisodesCount={countEpisodes}
+              />
             : (
               <div className={styles.placeholder}>
                 There are no episodes in this podcast yet.
