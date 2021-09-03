@@ -8,6 +8,8 @@ type Props = {
   currentPage: number;
   onPageChange: (selected: number) => void;
   className?: string;
+  totalRowsCount?: number
+  defaultPaginationRows?: number
 };
 
 const Pagination: React.FC<Props> = ({
@@ -15,13 +17,21 @@ const Pagination: React.FC<Props> = ({
   currentPage,
   onPageChange,
   className,
+  totalRowsCount,
+  defaultPaginationRows,
 }) => {
+
+  const showingRows = totalRowsCount && defaultPaginationRows && (defaultPaginationRows < totalRowsCount) ? defaultPaginationRows : totalRowsCount;
+
   const handlePageChange = ({ selected }: { selected: number }): void => {
     onPageChange(selected);
   };
 
   return pageCount ? (
     <div className={getAllowedClasses(className)}>
+      {totalRowsCount && <div className={styles.showRowsWrapper}>
+        Showing <span className={styles.currentShowingRow}>{showingRows}</span>/{totalRowsCount} row
+      </div>}
       <ReactPaginate
         previousLabel={''}
         nextLabel={''}

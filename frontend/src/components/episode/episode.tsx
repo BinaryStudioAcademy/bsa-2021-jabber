@@ -34,6 +34,7 @@ import {
   getCurrentTime,
   getCommentsTimelineDimensions,
   getSortedShownotes,
+  getSortedComments,
 } from './helpers/helpers';
 import { PageParams } from './common/types/types';
 import { ShownotesList, ComentsTimeline } from './components/components';
@@ -135,6 +136,7 @@ const Episode: React.FC = () => {
   const podcastDuration = playerRef.current?.getPodcastDuration();
 
   const sortedShownotes = getSortedShownotes(episode?.shownotes ?? []);
+  const sortedComments = getSortedComments(comments);
 
   return (
     <main className={styles.root}>
@@ -188,7 +190,11 @@ const Episode: React.FC = () => {
               {hasUser && !isOwner && (
                 <button
                   onClick={handleToggleFavorite}
-                  className={getAllowedClasses(styles.favouriteButton, isFavourite && styles.favouriteActive)}
+                  className={getAllowedClasses(
+                    styles.favouriteButton,
+                    isFavourite && styles.favouriteActive,
+                    isMaster && styles.favoriteMaster,
+                  )}
                   title={isFavourite ? 'Remove from favorites' : 'Add to favorites'}
                 >
                   <span className="visually-hidden">Favorite</span>
@@ -267,7 +273,7 @@ const Episode: React.FC = () => {
             {comments.length ? (
               <CommentsList
                 hasTimestamps={hasRecord}
-                comments={comments}
+                comments={sortedComments}
                 user={user}
                 onTimeClick={handleJumpToTimeLine}
                 onCommentDelete={handleCommentDelete}

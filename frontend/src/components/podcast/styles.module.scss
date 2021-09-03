@@ -139,6 +139,27 @@
   cursor: pointer;
 }
 
+.paginationWrapper{
+  display: flex;
+  justify-content: space-between;
+}
+
+.showRowsInput{
+  position: relative;
+  cursor: pointer;
+  color: var(--color-link-active);
+  border: none;
+  background-color: inherit;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+
+  &:focus{
+    outline: none;
+  }
+}
+
 .host {
   background: url('../../assets/img/micro.svg') no-repeat left center / 15px;
 }
