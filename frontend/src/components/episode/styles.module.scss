@@ -78,6 +78,11 @@
   mask-size: 25px;
 }
 
+.favoriteMaster {
+  right: 85px;
+  top: 35px;
+}
+
 .link {
   color: var(--color-button-background);
   text-decoration: none;
@@ -253,7 +258,7 @@ h3 {
     right: 20px;
   }
 
-  .editLink {
+  .editLink, .favoriteMaster {
     right: 55px;
   }
 

@@ -1,6 +1,8 @@
 enum PlaylistValidationRule {
   PLAYLIST_NAME_MIN_LENGTH = 1,
   PLAYLIST_NAME_MAX_LENGTH = 25,
+  PLAYLIST_DESCRIPTION_MIN_LENGTH = 5,
+  PLAYLIST_DESCRIPTION_MAX_LENGTH = 200,
 }
 
 export { PlaylistValidationRule };

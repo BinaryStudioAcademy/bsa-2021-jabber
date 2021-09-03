@@ -7,7 +7,7 @@ import {
 import {
   Playlist,
   PlaylistEpisode,
-  PlaylistPayload,
+  PlaylistCreatePayload,
   PlaylistEpisodePayload,
 } from 'common/types/types';
 import { Http } from 'services/http/http.service';
@@ -44,7 +44,7 @@ class PlaylistApi {
     );
   }
 
-  public create(payload: PlaylistPayload): Promise<Playlist> {
+  public create(payload: PlaylistCreatePayload): Promise<Playlist> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.PLAYLISTS}${PlaylistsApiPath.ROOT}`,
       {
