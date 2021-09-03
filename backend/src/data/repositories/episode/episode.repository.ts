@@ -62,6 +62,7 @@ class Episode {
   public getByQueryByPodcastId({ podcastId, filter }: LoadEpisodesByPodcastIdPayload): Promise<TEpisode[]> {
     return this.#EpisodeModel.query()
       .where('podcast_id', podcastId)
+      .orderBy('updated_at', 'desc')
       .limit(filter.limit)
       .offset(filter.offset);
   }
