@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   AsyncThunkConfig,
   Playlist,
+  User,
 } from 'common/types/types';
 import { ActionType } from './common';
 
@@ -15,4 +16,13 @@ const loadPlaylists = createAsyncThunk<Playlist[], number, AsyncThunkConfig>(
   },
 );
 
-export { loadPlaylists };
+const loadPlaylistsOwner = createAsyncThunk<User, number, AsyncThunkConfig>(
+  ActionType.LOAD_PLAYLIST_OWNER,
+  async (userId, { extra }) => {
+    const { userApi } = extra;
+
+    return await userApi.getById(userId);
+  },
+);
+
+export { loadPlaylists, loadPlaylistsOwner };

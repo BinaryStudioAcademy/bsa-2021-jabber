@@ -14,10 +14,10 @@ const UserPlaylist: React.FC = () => {
     dataStatus,
     playlists,
     user,
-  } = useAppSelector(({ playlist, auth }: RootState) => ({
+  } = useAppSelector(({ playlist }: RootState) => ({
     dataStatus: playlist.dataStatus,
     playlists: playlist.playlists,
-    user: auth.user,
+    user: playlist.user,
   }));
   const { id } = useParams<PageParams>();
   const dispatch = useDispatch();
@@ -26,6 +26,7 @@ const UserPlaylist: React.FC = () => {
   const isLoading = dataStatus === DataStatus.PENDING;
 
   useEffect(() => {
+    dispatch(playlistActions.loadPlaylistsOwner(Number(id)));
     dispatch(playlistActions.loadPlaylists(Number(id)));
   }, []);
 
