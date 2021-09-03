@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { getDataUrl, getFileFromFileList } from 'helpers/helpers';
 import {
   AsyncThunkConfig,
   User,
@@ -9,13 +10,17 @@ import { AppRoute, NotificationMessage, NotificationTitle } from 'common/enums/e
 
 const create = createAsyncThunk<void, PlaylistFormPayload, AsyncThunkConfig>(
   ActionType.CREATE_PLAYLIST,
-  async (payload, { getState, extra }) => {
+  async (playlistPayload, { getState, extra }) => {
     const { playlistApi, notificationService, navigationService } = extra;
     const { auth } = getState();
+    const coverFile = getFileFromFileList(playlistPayload.cover);
 
     const playlist = await playlistApi.create({
       userId: (<User>auth.user).id,
-      name: payload.name,
+      name: playlistPayload.name,
+      description: playlistPayload.description,
+      status: playlistPayload.status,
+      coverDataUrl: coverFile ? await getDataUrl(coverFile) : null,
     });
 
     notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PLAYLIST_CREATED);
