@@ -1,0 +1,81 @@
+.wrapper {
+  position: relative;
+  display: flex;
+
+  .imgLink {
+    .imageWrapper {
+      margin: 0 0 10px;
+      position: relative;
+      font-size: 35px;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: transform 0.2s ease;
+      &::before {
+        display: block;
+        content: "";
+
+        width: 100px;
+        height: 100px;
+
+        position: absolute;
+
+        outline: 6px solid rgba(134, 134, 134, 0.55);
+        outline-offset: -6px;
+
+        z-index: var(--z-index--level-one);
+        transition: inherit;
+      }
+    }
+
+    &:before {
+      background-image: url("../../../assets/img/corner.svg");
+      background-position: right top;
+      background-repeat: no-repeat;
+      background-size: 0 0;
+      content: "";
+      pointer-events: none;
+      position: absolute;
+      margin: -1px 0 -36px 1px;
+      padding-bottom: 36px;
+      width: 100px;
+      transition: transform 0.2s ease, background-size 0.5s 0.15s ease;
+      z-index: var(--z-index--level-two);
+    }
+
+    &:hover {
+      color: var(--color-header-background);
+
+      &:before {
+        background-size: 36px 36px;
+        transform: translateY(-8px);
+      }
+
+      & .imageWrapper {
+        transform: translateY(-8px);
+
+        &::before {
+          outline: 10px solid rgba(134, 134, 134, 0.71);
+        }
+      }
+    }
+  }
+
+  .mainInformation {
+    margin-left: 10px;
+    .link {
+      font-size: 18px;
+    }
+    .link,
+    .linkUser {
+      width: 150px;
+      display: block;
+      text-decoration: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--color-primary-dark);
+      &:hover {
+        color: var(--color-header-background);
+      }
+    }
+  }
+}
