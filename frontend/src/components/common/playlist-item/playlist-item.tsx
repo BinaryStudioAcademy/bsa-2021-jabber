@@ -21,7 +21,7 @@ const PlaylistItem: React.FC<Props> = ({ playlist }) => (
           className={styles.imageWrapper}
         />
       </Link>
-      <div className={styles.mainInformation}>
+      <div className={styles.linksWrapper}>
         <Link to={`${AppRoute.PLAYLISTS}/${playlist.id}`} className={styles.link}>
           {playlist.name}
         </Link>
