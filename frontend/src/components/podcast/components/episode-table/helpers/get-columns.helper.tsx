@@ -1,8 +1,10 @@
 import { Column, Row } from 'react-table';
-import { INCREASE_CONT_FOR_IDX, VALUE_LESS, VALUE_EQUAL, VALUE_GREATER } from 'common/constants/constants';
+import { INCREASE_CONT_FOR_IDX } from 'common/constants/constants';
 import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import { EpisodeNameRow } from '../types/types';
+import { formatDate } from './get-formatted-date';
+import { sortCallback } from './sort-callback.healper';
 
 const getColumns = (): Column[] => {
   const columns: Column[] = [
@@ -22,13 +24,7 @@ const getColumns = (): Column[] => {
         };
       },
       sortType: (rowA: Row, rowB: Row, id: string): number => {
-        if (rowA.values[id].name > rowB.values[id].name) {
-          return VALUE_GREATER;
-        }
-        if (rowA.values[id].name < rowB.values[id].name) {
-          return VALUE_LESS;
-        }
-        return VALUE_EQUAL;
+        return sortCallback(rowA.values[id].name, rowB.values[id].name);
       },
       Cell: ({ value }): JSX.Element => (
         <Link to={`${AppRoute.EPISODES}/${value.episodeId}`}>{value.name}</Link>
@@ -37,16 +33,8 @@ const getColumns = (): Column[] => {
     {
       Header: 'Created At',
       accessor: 'createdAt',
-      sortType: (rowA: Row, rowB: Row, id: string): number => {
-        const dateA = new Date(rowA.values[id]);
-        const dateB = new Date(rowB.values[id]);
-        if (dateA > dateB) {
-          return VALUE_GREATER;
-        }
-        if (dateA < dateB) {
-          return VALUE_LESS;
-        }
-        return VALUE_EQUAL;
+      Cell: ({ value }): string => {
+        return formatDate(new Date(value));
       },
     },
   ];
