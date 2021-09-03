@@ -1,17 +1,14 @@
 import { PodcastPeriodicity } from 'common/enums/enums';
 import { Episode } from 'common/types/types';
 import { THREE_DAYS, TEN_DAYS } from './common/constants';
-import { getDifferenceInDays } from 'helpers/helpers';
+import { getDifferenceInDays, getSortedItems } from 'helpers/helpers';
 
 const getPodcastPeriodicity = (episodes: Episode[]): PodcastPeriodicity => {
   if (!episodes.length) {
     return PodcastPeriodicity.WEEKLY;
   }
 
-  const episodesSortedByDate = [...episodes].sort(
-    (prev, next) =>
-      new Date(prev.createdAt).getTime() - new Date(next.createdAt).getTime(),
-  );
+  const episodesSortedByDate = getSortedItems(episodes, (prev, next) => new Date(prev.createdAt).getTime() - new Date(next.createdAt).getTime());
 
   const [firstEpisode] = episodesSortedByDate;
 
