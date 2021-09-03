@@ -54,4 +54,8 @@ export {
 } from './notification/notification';
 export { UserNotificationStatus } from './user-notification/user-notification';
 export { FormEvent } from './form/form-event';
-export { PlaylistPayloadKey } from './playlist/playlist';
+export {
+  PlaylistPayloadKey,
+  PlaylistStatus,
+  PlaylistValidationMessage,
+} from './playlist/playlist';
