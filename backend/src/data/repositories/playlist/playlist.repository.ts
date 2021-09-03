@@ -1,6 +1,6 @@
 import {
   Playlist as TPlaylist,
-  PlaylistPayload,
+  PlaylistCreateDTOPayload,
 } from '~/common/types/types';
 import { PlaylistModel as PlaylistM } from '~/data/models/models';
 
@@ -15,8 +15,11 @@ class Playlist {
     this.#PlaylistModel = PlaylistModel;
   }
 
-  public create(payload: PlaylistPayload): Promise<TPlaylist> {
-    return this.#PlaylistModel.query().insert(payload);
+  public create(payload: PlaylistCreateDTOPayload): Promise<TPlaylist> {
+    return this.#PlaylistModel
+      .query()
+      .insert(payload)
+      .withGraphFetched('[cover]');
   }
 
   public getAllByUserId(userId: number): Promise<TPlaylist[]>{

@@ -190,7 +190,11 @@ const Episode: React.FC = () => {
               {hasUser && !isOwner && (
                 <button
                   onClick={handleToggleFavorite}
-                  className={getAllowedClasses(styles.favouriteButton, isFavourite && styles.favouriteActive)}
+                  className={getAllowedClasses(
+                    styles.favouriteButton,
+                    isFavourite && styles.favouriteActive,
+                    isMaster && styles.favoriteMaster,
+                  )}
                   title={isFavourite ? 'Remove from favorites' : 'Add to favorites'}
                 >
                   <span className="visually-hidden">Favorite</span>

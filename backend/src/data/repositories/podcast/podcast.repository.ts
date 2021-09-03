@@ -24,7 +24,8 @@ class Podcast {
     return this.#PodcastModel
       .query()
       .where('type', PodcastType.PUBLIC)
-      .withGraphJoined('[image, user]');
+      .withGraphJoined('[image, user]')
+      .omit(['password']);
   }
 
   public async getPodcastsPagesCount({ search = '', genres = [] }: PodcastLoadFilter): Promise<number> {
@@ -47,7 +48,8 @@ class Podcast {
       .filterBySearch(search)
       .limit(PODCAST_LOAD_LIMIT)
       .offset(offset)
-      .withGraphJoined('[image, user]');
+      .withGraphJoined('[image, user]')
+      .omit(['password']);
   }
 
   public create(payload: PodcastCreateDTOPayload): Promise<TPodcast> {
@@ -61,7 +63,8 @@ class Podcast {
     return this.#PodcastModel
       .query()
       .findById(id)
-      .withGraphJoined('[image, cover, user, genre]');
+      .withGraphJoined('[image, cover, user, genre]')
+      .omit(['password']);
   }
 
   public update(id: string, payload: PodcastEditDTOPayload): Promise<TPodcast> {
@@ -74,7 +77,8 @@ class Podcast {
     return this.#PodcastModel
       .query()
       .where(filterParams)
-      .withGraphJoined('[image, user]');
+      .withGraphJoined('[image, user]')
+      .omit(['password']);
   }
 
   public delete(id: number): Promise<TPodcast> {
