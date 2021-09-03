@@ -1,4 +1,4 @@
-import { Image } from '~/common/types/image/image.type';
+import { Image, User } from '~/common/types/types';
 import { PlaylistStatus } from '~/common/enums/enums';
 
 type Playlist = {
@@ -11,6 +11,7 @@ type Playlist = {
   status: PlaylistStatus;
   createdAt: string;
   updatedAt: string;
+  user: User;
 };
 
 export type { Playlist };
