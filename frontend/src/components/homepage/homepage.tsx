@@ -51,6 +51,7 @@ const Homepage: React.FC = () => {
   const isPodcastsLoading = dataStatus === DataStatus.PENDING;
   const isPopularUsersLoading = popularUsersDataStatus === DataStatus.PENDING;
   const isGenresLoaded = genresDataStatus === DataStatus.FULFILLED;
+  const hasEnoughPageCount = totalPagesCount > DEFAULT_PAGE_COUNT;
 
   useEffect(() => {
     dispatch(homepageActions.loadGenres());
@@ -152,13 +153,13 @@ const Homepage: React.FC = () => {
           Oops! There&apos;s nothing here
         </span>
       )}
-      {(totalPagesCount > DEFAULT_PAGE_COUNT)
-        ? <Pagination
+      {hasEnoughPageCount &&
+        <Pagination
           pageCount={totalPagesCount}
           currentPage={podcastsFilter.page}
           onPageChange={handlePageChange}
           className={styles.pagination}
-        /> : null
+        />
       }
       <PodcastFilterPopup
         isOpen={isFilterPopupOpen}

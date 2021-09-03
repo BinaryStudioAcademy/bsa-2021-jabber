@@ -31,6 +31,8 @@ const Table: React.FC<Props> = ({
     data: data as Record<string, string>[],
   }, useSortBy);
 
+  const hasEnoughPageCount = pageCount as number > DEFAULT_PAGE_COUNT;
+
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
   return (
     <>
@@ -73,7 +75,7 @@ const Table: React.FC<Props> = ({
         </table>
       </div>
       {hasPagination &&
-        pageCount as number > DEFAULT_PAGE_COUNT ?
+        hasEnoughPageCount &&
         <Pagination
           totalRowsCount={totalRowsCount}
           pageCount={pageCount as number}
@@ -81,7 +83,7 @@ const Table: React.FC<Props> = ({
           currentPage={currentPage as number}
           defaultPaginationRows={defaultPaginationRows}
           className={styles.pagination}
-        /> : null
+        />
       }
     </>
   );
