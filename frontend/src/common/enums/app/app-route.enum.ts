@@ -25,6 +25,7 @@ enum AppRoute {
   USERS_$ID_FOLLOWERS = '/users/:id/followers',
   FOLLOWERS = '/followers',
   PLAYLISTS = '/playlists',
+  PLAYLISTS_EDIT = '/playlists/edit',
   PLAYLISTS_EDIT_$ID = '/playlists/edit/:id?',
   ANY = '*',
 }
