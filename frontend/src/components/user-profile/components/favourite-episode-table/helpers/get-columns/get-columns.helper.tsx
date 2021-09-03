@@ -4,12 +4,14 @@ import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import { EpisodeNameRow, PodcastNameRow } from '../../types/types';
 
-const getColumns = (): Column[] => {
+const getColumns = (currentPage: number, rowsCount: number): Column[] => {
   const columns: Column[] = [
     {
       Header: '#',
       accessor: (_originalRow, rowIndex): number => {
-        return rowIndex + INCREASE_CONT_FOR_IDX;
+        return currentPage
+          ? rowIndex + INCREASE_CONT_FOR_IDX + rowsCount * currentPage
+          : rowIndex + INCREASE_CONT_FOR_IDX;
       },
     },
     {
