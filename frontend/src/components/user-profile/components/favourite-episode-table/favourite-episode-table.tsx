@@ -18,7 +18,7 @@ const FavouriteEpisodeTable: React.FC<Props> = ({
   onPageChange,
   totalFavoriteCount,
 }) => {
-  const columns = getColumns(currentPage, DEFAULT_EPISODE_PAGINATION.row);
+  const columns = getColumns(DEFAULT_EPISODE_PAGINATION.row, currentPage);
   const rows = getRows(episodes);
 
   return <Table
