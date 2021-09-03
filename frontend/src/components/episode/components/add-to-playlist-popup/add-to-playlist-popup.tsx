@@ -1,4 +1,5 @@
 import { Popuper, Button, Link } from 'components/common/common';
+import { PopupItem } from './components/components';
 import { Playlist } from 'common/types/types';
 import { AppRoute } from 'common/enums/enums';
 import { getAllowedClasses } from 'helpers/helpers';
@@ -36,15 +37,12 @@ const AddToPlaylistPopup: React.FC<Props> = ({ playlists, handleAddToPlaylist, t
                 + Create Playlist
               </Link>
             </li>
-            {sortedPlaylists.map(({ id, name }) => (
-              <li key={id}>
-                <button
-                  className={styles.listButton}
-                  onClick={(): void => handleAddToPlaylist(id)}
-                >
-                  {name}
-                </button>
-              </li>
+            {sortedPlaylists.map((playlist) => (
+              <PopupItem
+                key={playlist.id}
+                playlist={playlist}
+                onAddToPlaylist={handleAddToPlaylist}
+              />
             ))}
           </ul>
         </div>)}
