@@ -1,8 +1,9 @@
-import { PlaylistPayloadKey } from '~/common/enums/enums';
+import { PlaylistPayloadKey, PlaylistStatus } from '~/common/enums/enums';
 
 type PlaylistPayload = {
-  [PlaylistPayloadKey.USER_ID]: number;
   [PlaylistPayloadKey.NAME]: string;
+  [PlaylistPayloadKey.DESCRIPTION]: string;
+  [PlaylistPayloadKey.STATUS]: PlaylistStatus;
 };
 
 export type { PlaylistPayload };

@@ -3,6 +3,7 @@ export { checkIsOneOf } from './boolean/boolean';
 export {
   getFormattedDate,
   getDistanceToDateNow,
+  getDifferenceInDays,
   getTimeOffset,
   getTimestamp,
 } from './date/date';
@@ -25,3 +26,4 @@ export { getRandomId } from './string/string';
 export { getFilterEpisode } from './episode/episode';
 export { checkIsLiked } from './comment/comment';
 export { copyToClipboard } from './clipboard/clipboard';
+export { getNumberingRows } from './table/table';

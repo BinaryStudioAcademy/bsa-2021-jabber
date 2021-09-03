@@ -155,6 +155,8 @@ const userNotification = new UserNotification({
 
 const playlist = new Playlist({
   playlistRepository,
+  fileStorage,
+  imageRepository,
 });
 
 const playlistEpisode = new PlaylistEpisode({
