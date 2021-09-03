@@ -37,7 +37,7 @@ import {
   getSortedComments,
 } from './helpers/helpers';
 import { PageParams } from './common/types/types';
-import { ShownotesList, ComentsTimeline } from './components/components';
+import { ShownotesList, ComentsTimeline, AddToPlaylistPopup } from './components/components';
 import styles from './styles.module.scss';
 import { getAllowedClasses } from 'helpers/helpers';
 
@@ -47,7 +47,18 @@ const Episode: React.FC = () => {
   const playerRef = useRef<PlayerRef | null>(null);
   const playerContainerRef = useRef<HTMLDivElement>(null);
 
-  const { episode, comments, user, dataStatus, podcast, liveStream, favouriteDataStatus, isFavourite } =
+  const {
+    episode,
+    comments,
+    user,
+    dataStatus,
+    podcast,
+    liveStream,
+    favouriteDataStatus,
+    isFavourite,
+    playlists,
+    playlistsDataStatus,
+  } =
     useAppSelector(({ episode, auth, record }) => ({
       dataStatus: episode.dataStatus,
       episode: episode.episode,
@@ -57,6 +68,8 @@ const Episode: React.FC = () => {
       liveStream: record.liveStream,
       favouriteDataStatus: episode.favouriteDataStatus,
       isFavourite: episode.isFavourite,
+      playlists: episode.playlists,
+      playlistsDataStatus: episode.playlistsDataStatus,
     }));
 
   const [playerStatus, setPlayerStatus] = useState<DataStatus>(DataStatus.IDLE);
@@ -72,11 +85,13 @@ const Episode: React.FC = () => {
   const isAllowDelete = isOwner || isMaster;
   const isPlayerShow = Boolean(episode?.record?.fileUrl) || Boolean(liveStream);
   const isLoading = dataStatus === DataStatus.PENDING || favouriteDataStatus === DataStatus.PENDING;
+  const isAddToPLaylistsShow = playlistsDataStatus === DataStatus.FULFILLED && episode?.status === EpisodeStatus.PUBLISHED;
 
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisodePayload(Number(id)));
     dispatch(episodeActions.checkEpisodeIsFavorite(Number(id)));
+    dispatch(episodeActions.loadPlaylists());
 
     return (): void => {
       dispatch(episodeActions.leaveEpisode(id));
@@ -125,6 +140,10 @@ const Episode: React.FC = () => {
     dispatch(episodeActions.toggleFavourite());
   };
 
+  const handleAddToPlaylist = (id: number): void => {
+    dispatch(episodeActions.addEpisodeToPlaylist(id));
+  };
+
   if (isLoading) {
     return <Loader />;
   }
@@ -161,6 +180,18 @@ const Episode: React.FC = () => {
                 href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}
               />
             )}
+            {isAddToPLaylistsShow && (
+              <AddToPlaylistPopup
+                playlists={playlists}
+                handleAddToPlaylist={handleAddToPlaylist}
+                triggerClassName={isPlayerShow
+                  ? getAllowedClasses(
+                    styles.btnStartLive,
+                    styles.btnWithPlayer,
+                    styles.playlistTrigger,
+                  )
+                  : styles.btnStartLive}
+              />)}
             <div className={styles.descriptionWrapper}>
               {isOwner && (
                 <Link

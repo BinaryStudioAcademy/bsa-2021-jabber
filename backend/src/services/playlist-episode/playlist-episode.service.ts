@@ -1,5 +1,7 @@
 import { PlaylistEpisode as TPlaylistEpisode, PlaylistEpisodePayload } from '~/common/types/types';
 import { playlistEpisode as playlistEpisodeRep } from '~/data/repositories/repositories';
+import { ErrorMessage, HttpCode } from '~/common/enums/enums';
+import { HttpError } from '~/exceptions/exceptions';
 
 type Constructor = {
   playlistEpisodeRepository: typeof playlistEpisodeRep;
@@ -12,7 +14,16 @@ class PlaylistEpisode {
     this.#playlistEpisodeRepository = playlistEpisodeRepository;
   }
 
-  public create(payload: PlaylistEpisodePayload): Promise<TPlaylistEpisode> {
+  public async create(payload: PlaylistEpisodePayload): Promise<TPlaylistEpisode> {
+    const episode = await this.#playlistEpisodeRepository.getByPlaylistIdEpisodeId(payload);
+
+    if (episode) {
+      throw new HttpError({
+        status: HttpCode.BAD_REQUEST,
+        message: ErrorMessage.ALREADY_IN_PLAYLIST,
+      });
+    }
+
     return this.#playlistEpisodeRepository.create(payload);
   }
 
