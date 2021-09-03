@@ -15,6 +15,7 @@ const PlaylistItem: React.FC<Props> = ({ playlist }) => (
           width="100"
           height="100"
           loading="lazy"
+          src={playlist.cover?.url}
           alt={playlist.name}
           label={playlist.name}
           className={styles.imageWrapper}
