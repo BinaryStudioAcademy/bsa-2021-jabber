@@ -10,7 +10,6 @@ import {
   updateCommentsAfterDelete,
   checkEpisodeIsFavorite,
   toggleFavourite,
-  toggleCommentLike,
   updateCommentsAfterLike,
   loadPlaylists,
 } from './actions';
@@ -72,15 +71,6 @@ const reducer = createReducer(initialState, (builder) => {
     state.commentDataStatus = DataStatus.REJECTED;
   });
 
-  builder.addCase(toggleCommentLike.pending, (state) => {
-    state.commentDataStatus = DataStatus.PENDING;
-  });
-  builder.addCase(toggleCommentLike.fulfilled, (state) => {
-    state.commentDataStatus = DataStatus.FULFILLED;
-  });
-  builder.addCase(toggleCommentLike.rejected, (state) => {
-    state.commentDataStatus = DataStatus.REJECTED;
-  });
   builder.addCase(deleteComment.pending, (state) => {
     state.commentDataStatus = DataStatus.PENDING;
   });
