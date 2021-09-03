@@ -18,7 +18,7 @@ const EpisodeTable: React.FC<Props> = ({
   onPageChange,
   totalEpisodesCount,
 }) => {
-  const columns = getColumns();
+  const columns = getColumns(currentPage, DEFAULT_EPISODE_PAGINATION.row);
   const rows = getRows(episodes);
 
   return <Table
