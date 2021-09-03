@@ -14,7 +14,6 @@ import {
   deleteComment,
   loadCommentsByEpisodeId,
   loadEpisodePayload,
-  toggleCommentLike,
   updateComments,
   updateCommentsAfterDelete,
   updateCommentsAfterLike,
@@ -100,16 +99,6 @@ const reducer = createReducer(initialState, (builder) => {
     state.commentDataStatus = DataStatus.FULFILLED;
   });
   builder.addCase(createComment.rejected, (state) => {
-    state.commentDataStatus = DataStatus.REJECTED;
-  });
-
-  builder.addCase(toggleCommentLike.pending, (state) => {
-    state.commentDataStatus = DataStatus.PENDING;
-  });
-  builder.addCase(toggleCommentLike.fulfilled, (state) => {
-    state.commentDataStatus = DataStatus.FULFILLED;
-  });
-  builder.addCase(toggleCommentLike.rejected, (state) => {
     state.commentDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(deleteComment.pending, (state) => {
