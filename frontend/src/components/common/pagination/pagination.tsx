@@ -1,6 +1,6 @@
 import { getAllowedClasses } from 'helpers/helpers';
 import ReactPaginate from 'react-paginate';
-import { MARGIN_PAGES_DISPLAYED, PAGE_RANGE_DISPLAYED } from './common/constants/constants';
+import { DEFAULT_PAGE_COUNT, MARGIN_PAGES_DISPLAYED, PAGE_RANGE_DISPLAYED } from './common/constants/constants';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -27,7 +27,7 @@ const Pagination: React.FC<Props> = ({
     onPageChange(selected);
   };
 
-  return pageCount ? (
+  return (pageCount && pageCount > DEFAULT_PAGE_COUNT) ? (
     <div className={getAllowedClasses(className)}>
       {totalRowsCount && <div className={styles.showRowsWrapper}>
         Showing <span className={styles.currentShowingRow}>{showingRows}</span>/{totalRowsCount} row
