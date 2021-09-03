@@ -19,6 +19,7 @@ import {
   INITIAL_PAGE,
   DEFAULT_USER_POPULAR_FILTER_VALUE,
 } from './common/constants';
+import { DEFAULT_PAGE_COUNT } from 'common/constants/constants';
 import { getSelectedGenres, getParsedQuery } from './helpers/helpers';
 import { setDebounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
@@ -151,12 +152,14 @@ const Homepage: React.FC = () => {
           Oops! There&apos;s nothing here
         </span>
       )}
-      <Pagination
-        pageCount={totalPagesCount}
-        currentPage={podcastsFilter.page}
-        onPageChange={handlePageChange}
-        className={styles.pagination}
-      />
+      {(totalPagesCount > DEFAULT_PAGE_COUNT)
+        ? <Pagination
+          pageCount={totalPagesCount}
+          currentPage={podcastsFilter.page}
+          onPageChange={handlePageChange}
+          className={styles.pagination}
+        /> : null
+      }
       <PodcastFilterPopup
         isOpen={isFilterPopupOpen}
         genres={genres}
