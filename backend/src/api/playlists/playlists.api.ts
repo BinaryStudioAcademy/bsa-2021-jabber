@@ -32,6 +32,15 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
   apiRouter.use(ApiPath.PLAYLISTS, playlistRouter);
 
   playlistRouter.get(
+    PlaylistsApiPath.POPULAR,
+    handleAsyncApi(async (_req, res) => {
+      return res
+        .json(await playlistService.getPopular())
+        .status(HttpCode.OK);
+    }),
+  );
+
+  playlistRouter.get(
     PlaylistsApiPath.$ID,
     checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (req, res) => {

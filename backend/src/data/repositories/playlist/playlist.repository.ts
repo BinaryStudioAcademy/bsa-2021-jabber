@@ -3,6 +3,7 @@ import {
   PlaylistCreateDTOPayload,
 } from '~/common/types/types';
 import { PlaylistModel as PlaylistM } from '~/data/models/models';
+import { POPULAR_PLAYLIST_LOAD_LIMIT } from '~/common/constants/constants'
 
 type Constructor = {
   PlaylistModel: typeof PlaylistM;
@@ -29,6 +30,12 @@ class Playlist {
 
   public getById(id: number): Promise<TPlaylist>{
     return this.#PlaylistModel.query().findById(id);
+  }
+
+  public getPopular(): Promise<TPlaylist[]>{
+    return this.#PlaylistModel
+      .query()
+      .limit(POPULAR_PLAYLIST_LOAD_LIMIT);
   }
 }
 
