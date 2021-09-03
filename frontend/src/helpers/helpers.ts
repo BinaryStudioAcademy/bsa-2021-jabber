@@ -3,6 +3,7 @@ export { checkIsOneOf } from './boolean/boolean';
 export {
   getFormattedDate,
   getDistanceToDateNow,
+  getDifferenceInDays,
   getTimeOffset,
   getTimestamp,
 } from './date/date';
