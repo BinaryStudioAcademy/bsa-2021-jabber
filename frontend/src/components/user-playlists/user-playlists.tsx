@@ -4,6 +4,7 @@ import {
 } from 'store/actions';
 import { useAppSelector, useDispatch, useParams } from 'hooks/hooks';
 import { Loader, PlaylistsList } from 'components/common/common';
+import { RootState } from 'common/types/types';
 import { PageParams } from 'components/configurate-podcast/common/types/page-params.type';
 import { DataStatus } from 'common/enums/enums';
 import styles from './styles.module.scss';
@@ -12,9 +13,11 @@ const UserPlaylist: React.FC = () => {
   const {
     dataStatus,
     playlists,
-  } = useAppSelector(({ playlist }) => ({
+    user,
+  } = useAppSelector(({ playlist, auth }: RootState) => ({
     dataStatus: playlist.dataStatus,
     playlists: playlist.playlists,
+    user: auth.user,
   }));
   const { id } = useParams<PageParams>();
   const dispatch = useDispatch();
@@ -32,7 +35,7 @@ const UserPlaylist: React.FC = () => {
 
   return (
     <main className={styles.main}>
-      <h2 className={styles.title}>Playlists:</h2>
+      <h2 className={styles.title}>{user?.nickname} Playlists:</h2>
       {hasPlaylists ? (
         <PlaylistsList
           playlists={playlists}

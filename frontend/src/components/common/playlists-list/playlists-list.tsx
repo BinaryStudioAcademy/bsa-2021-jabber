@@ -1,9 +1,9 @@
-import { Playlist as TPlaylist } from 'common/types/types';
+import { Playlist } from 'common/types/types';
 import { PlaylistItem } from 'components/common/common';
 import styles from './styles.module.scss';
 
 type Props = {
-  playlists: TPlaylist[];
+  playlists: Playlist[];
 };
 
 const PlaylistsList: React.FC<Props> = ({ playlists }) => (

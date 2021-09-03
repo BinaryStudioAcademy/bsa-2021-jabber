@@ -1,10 +1,10 @@
 import { AppRoute } from 'common/enums/enums';
-import { Playlist as TPlaylist } from 'common/types/types';
+import { Playlist } from 'common/types/types';
 import { Link, ImageWrapper } from 'components/common/common';
 import styles from './styles.module.scss';
 
 type Props = {
-  playlist: TPlaylist;
+  playlist: Playlist;
 };
 
 const PlaylistItem: React.FC<Props> = ({ playlist }) => (
