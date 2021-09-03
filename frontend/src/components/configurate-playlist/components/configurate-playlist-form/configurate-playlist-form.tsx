@@ -11,9 +11,10 @@ import { useAppForm, useAppSelector } from 'hooks/hooks';
 import {
   Input,
   Button,
+  ImagePreviewControl,
 } from 'components/common/common';
 import { DEFAULT_PLAYLIST_PAYLOAD } from './common/constants';
-import { playlist as playlistValidationSchema } from 'validation-schemas/validation-schemas';
+import { playlistCreate as playlistCreateValidationSchema } from 'validation-schemas/validation-schemas';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -25,7 +26,7 @@ const ConfiguratePlaylistForm: React.FC<Props> = ({
 }) => {
 
   const { control, handleSubmit, errors } = useAppForm({
-    validationSchema: playlistValidationSchema,
+    validationSchema: playlistCreateValidationSchema,
     defaultValues: DEFAULT_PLAYLIST_PAYLOAD,
   });
 
@@ -40,12 +41,27 @@ const ConfiguratePlaylistForm: React.FC<Props> = ({
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisabled} className={styles.fieldset}>
+        <ImagePreviewControl
+          name={PlaylistPayloadKey.COVER}
+          control={control}
+          errors={errors}
+          imageUrl={undefined}
+          label="Playlist Cover"
+        />
         <Input
           name={PlaylistPayloadKey.NAME}
           control={control}
           errors={errors}
           label="Playlist Name"
           placeholder="Enter Name"
+        />
+        <Input
+          name={PlaylistPayloadKey.DESCRIPTION}
+          control={control}
+          errors={errors}
+          label="Description"
+          placeholder="Enter description podcast"
+          hasMultipleRows
         />
         <div className={styles.btnsWrapper}>
           <Button

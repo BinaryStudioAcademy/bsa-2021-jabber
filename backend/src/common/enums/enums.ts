@@ -76,6 +76,7 @@ export {
 } from './user-favourite-episode/user-favourite-episode';
 export {
   PlaylistPayloadKey,
+  PlaylistStatus,
   PlaylistValidationMessage,
   PlaylistValidationRule,
 } from './playlist/playlist';
