@@ -1,4 +1,4 @@
-const ONE_DAY = 1;
-const ONE_WEEK = 7;
+const THREE_DAYS = 3;
+const TEN_DAYS = 10;
 
-export { ONE_DAY, ONE_WEEK };
+export { THREE_DAYS, TEN_DAYS };

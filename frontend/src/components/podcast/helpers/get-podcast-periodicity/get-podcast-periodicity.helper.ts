@@ -1,6 +1,6 @@
 import { PodcastPeriodicity } from 'common/enums/enums';
 import { Episode } from 'common/types/types';
-import { ONE_DAY, ONE_WEEK } from './common/constants';
+import { THREE_DAYS, TEN_DAYS } from './common/constants';
 import { getDifferenceInDays } from 'helpers/helpers';
 
 const getPodcastPeriodicity = (episodes: Episode[]): PodcastPeriodicity => {
@@ -22,11 +22,11 @@ const getPodcastPeriodicity = (episodes: Episode[]): PodcastPeriodicity => {
 
   const differenceInDays = getDifferenceInDays(averagePeriodicity, 0);
 
-  if (differenceInDays <= ONE_DAY) {
+  if (differenceInDays <= THREE_DAYS) {
     return PodcastPeriodicity.DAILY;
   }
 
-  if (differenceInDays <= ONE_WEEK) {
+  if (differenceInDays <= TEN_DAYS) {
     return PodcastPeriodicity.WEEKLY;
   }
 
