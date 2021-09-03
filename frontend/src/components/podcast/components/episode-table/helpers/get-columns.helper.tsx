@@ -1,6 +1,6 @@
 import { Column } from 'react-table';
-import { Link } from 'components/common/common';
-import { AppRoute } from 'common/enums/enums';
+import LinkEpisode  from '../components/link-episode';
+import { EpisodeStatus } from 'common/enums/enums';
 import { EpisodeNameRow } from '../types/types';
 import { getNumberingRows } from 'helpers/helpers';
 
@@ -16,13 +16,15 @@ const getColumns = (rowsCount: number, currentPage: number): Column[] => {
       Header: 'Name',
       accessor: (originalRow): Record<string, unknown> => {
         const row = originalRow as EpisodeNameRow;
+        const isLive = row.status === EpisodeStatus.LIVE;
         return {
           name: row.name,
           episodeId: row.episodeId,
+          isLive,
         };
       },
       Cell: ({ value }): JSX.Element => (
-        <Link to={`${AppRoute.EPISODES}/${value.episodeId}`}>{value.name}</Link>
+        <LinkEpisode name={value.name} idEpisode={value.episodeId} isLive={value.isLive} />
       ),
     },
     {

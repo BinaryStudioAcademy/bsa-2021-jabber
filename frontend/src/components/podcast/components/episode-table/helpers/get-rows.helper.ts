@@ -7,6 +7,7 @@ const getRows = (episodes: Episode[]): Record<string, string >[] => {
     description: episode.description,
     createdAt: formatDate(new Date(episode.createdAt)),
     episodeId: String(episode.id),
+    status: episode.status,
   }));
 
   return rows;
