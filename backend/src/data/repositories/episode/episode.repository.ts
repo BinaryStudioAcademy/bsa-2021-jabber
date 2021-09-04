@@ -25,10 +25,6 @@ class Episode {
     return this.#EpisodeModel.query();
   }
 
-  public getAllInRandomOrder(): Promise<TEpisode[]> {
-    return this.#EpisodeModel.query().where('type', EpisodeType.PUBLIC).orderByRaw('random()');
-  }
-
   public getPopular():  Promise<TEpisode[]> {
     return this.#EpisodeModel.query()
       .where('type', EpisodeType.PUBLIC)
@@ -62,6 +58,7 @@ class Episode {
   public getByQueryByPodcastId({ podcastId, filter }: LoadEpisodesByPodcastIdPayload): Promise<TEpisode[]> {
     return this.#EpisodeModel.query()
       .where('podcast_id', podcastId)
+      .orderBy('updated_at', 'desc')
       .limit(filter.limit)
       .offset(filter.offset);
   }

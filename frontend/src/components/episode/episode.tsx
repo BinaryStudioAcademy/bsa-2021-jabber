@@ -72,9 +72,9 @@ const Episode: React.FC = () => {
   const isPlayerShow = Boolean(episode?.record?.fileUrl) || Boolean(liveStream);
   const isLoading = dataStatus === DataStatus.PENDING || favouriteDataStatus === DataStatus.PENDING;
   const isAddToPLaylistsShow = playlistsDataStatus === DataStatus.FULFILLED && episode?.status === EpisodeStatus.PUBLISHED;
+  const isLive = episode?.status === EpisodeStatus.LIVE;
   const isDisabledReactionComment = commentDataStatus === DataStatus.PENDING;
   const isDisabledCommentForm = loadCommentsDataStatus === DataStatus.PENDING;
-
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisodePayload(Number(id)));
@@ -227,7 +227,10 @@ const Episode: React.FC = () => {
               >
                 {podcast?.name}
               </Link>
-              <h1 className={styles.title}>{episode.name}</h1>
+              <h1 className={getAllowedClasses(
+                styles.title,
+                isLive && styles.live,
+              )}>{episode.name}</h1>
               <p className={styles.description}>{episode.description}</p>
               <dl className={styles.episodeInfo}>
                 <div className={styles.infoBlock}>
