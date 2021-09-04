@@ -4,6 +4,7 @@ import {
   UserNotificationEditDTOPayload,
 } from '~/common/types/types';
 import { UserNotificationModel as UserNotificationM } from '~/data/models/models';
+import {UserNotificationStatus} from "~/common/enums/enums";
 
 type Constructor = {
   UserNotificationModel: typeof UserNotificationM;
@@ -24,6 +25,13 @@ class UserNotification {
     return this.#UserNotificationModel.query()
       .where('user_id', id)
       .withGraphJoined('[notification]');
+  }
+
+  public getCountUncheckedByUserId(id: number): Promise<number>{
+    return this.#UserNotificationModel.query()
+      .where('user_id', id)
+      .where('status', UserNotificationStatus.UNCHECKED)
+      .resultSize();
   }
 
   public getById(id: number): Promise<TUserNotification>{
