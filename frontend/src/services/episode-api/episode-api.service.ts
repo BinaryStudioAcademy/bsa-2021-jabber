@@ -15,6 +15,8 @@ import {
   UserFavouriteEpisodePayload,
   UserFavouriteEpisodeResponse,
   LoadFavouriteEpisodesPayload,
+  LoadPlaylistEpisodesPayload,
+  PlaylistEpisodeResponse,
 } from 'common/types/types';
 
 type Constructor = {
@@ -52,6 +54,16 @@ class EpisodeApi {
   public getByQueryByPodcastId({ podcastId, filter }: LoadEpisodesByPodcastIdPayload): Promise<EpisodeQueryPayload> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.EPISODES}${EpisodesApiPath.PODCAST}/${podcastId}`,
+      {
+        method: HttpMethod.GET,
+        query: filter,
+      },
+    );
+  }
+
+  public getByQueryByPlaylistId({ playlistId, filter }: LoadPlaylistEpisodesPayload): Promise<PlaylistEpisodeResponse> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PLAYLISTS}/${playlistId}`,
       {
         method: HttpMethod.GET,
         query: filter,

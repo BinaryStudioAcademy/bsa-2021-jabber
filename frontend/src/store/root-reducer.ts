@@ -10,6 +10,7 @@ import { reducer as userProfile } from './user-profile/reducer';
 import { reducer as notification } from './notification/reducer';
 import { reducer as configurateUser } from './configurate-user/reducer';
 import { reducer as configuratePlaylist } from './configurate-playlist/reducer';
+import { reducer as playlist } from './playlist/reducer';
 
 const rootReducer = {
   auth,
@@ -23,6 +24,7 @@ const rootReducer = {
   userProfile,
   notification,
   configurateUser,
+  playlist,
   toastr: toastrReducer,
 };
 
