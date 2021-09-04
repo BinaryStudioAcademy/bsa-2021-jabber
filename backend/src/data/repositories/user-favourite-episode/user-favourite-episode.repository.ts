@@ -12,6 +12,11 @@ class UserFavouriteEpisode {
     this.#UserFavouriteEpisodeModel = UserFavouriteEpisodeModel;
   }
 
+  public getAllByEpisodeId(episodeId: number): Promise<TUserFavouriteEpisode[]> {
+    return this.#UserFavouriteEpisodeModel.query()
+      .where('episode_id', episodeId);
+  }
+
   public getByUserIdEpisodeId({ userId, episodeId }: UserFavouriteEpisodePayload): Promise<TUserFavouriteEpisode> {
     return this.#UserFavouriteEpisodeModel.query()
       .findOne({
@@ -22,6 +27,14 @@ class UserFavouriteEpisode {
 
   public create(payload: UserFavouriteEpisodePayload): Promise<TUserFavouriteEpisode> {
     return this.#UserFavouriteEpisodeModel.query().insert(payload);
+  }
+
+  public deleteAllByEpisodeId(episodeId: number): Promise<TUserFavouriteEpisode[]> {
+    return this.#UserFavouriteEpisodeModel
+      .query()
+      .delete()
+      .where('episode_id', episodeId)
+      .returning('*');
   }
 
   public delete({ episodeId, userId }: UserFavouriteEpisodePayload): Promise<TUserFavouriteEpisode> {

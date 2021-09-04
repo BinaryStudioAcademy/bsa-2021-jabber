@@ -6,3 +6,4 @@ export {
   VALUE_LESS,
 } from './array/array';
 export { MILLISECONDS_IN_SECOND, SECONDS_IN_MINUTE } from './time/time';
+export { DEFAULT_PAGE_COUNT } from './pagination/pagination';
