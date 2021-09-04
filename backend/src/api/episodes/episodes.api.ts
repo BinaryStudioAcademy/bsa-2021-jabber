@@ -41,7 +41,7 @@ const initEpisodesApi = ({ apiRouter, episodeService, userFavouriteEpisodeServic
     EpisodesApiPath.POPULAR,
     handleAsyncApi(async (_req, res) => {
       return res
-        .json(await episodeService.getAllInRandomOrder())
+        .json(await episodeService.getPopular())
         .status(HttpCode.OK);
     }),
   );
@@ -60,10 +60,13 @@ const initEpisodesApi = ({ apiRouter, episodeService, userFavouriteEpisodeServic
     EpisodesApiPath.PODCAST_$ID,
     handleAsyncApi(async (req, res) => {
       return res
-        .send(await episodeService.getByQueryByPodcastId({
-          podcastId: Number(req.params.id),
-          filter: req.query as unknown as EpisodeLoadFilter,
-        }))
+        .send(await episodeService.getByQueryByPodcastId(
+          req?.user,
+          {
+            podcastId: Number(req.params.id),
+            filter: req.query as unknown as EpisodeLoadFilter,
+          },
+        ))
         .status(HttpCode.OK);
     }),
   );

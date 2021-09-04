@@ -29,3 +29,4 @@ export { default as Popuper } from './popuper/popuper';
 export { default as PodcastFilterPopup } from './podcast-filter-popup/podcast-filter-popup';
 export { default as Pagination } from './pagination/pagination';
 export { default as PlaylistItem } from './playlist-item/playlist-item';
+export { default as PlaylistsList } from './playlists-list/playlists-list';

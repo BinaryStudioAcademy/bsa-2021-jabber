@@ -27,6 +27,7 @@ const CommentItem: React.FC<Props> = ({
   onCommentDelete,
   onToggleCommentLike,
 }) => {
+
   const time = getTimeOffset(comment.timestamp);
   const hasLikes = Boolean(comment.commentReactions?.length);
 

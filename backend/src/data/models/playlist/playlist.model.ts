@@ -4,8 +4,8 @@ import {
   PlaylistDTOKey,
   PlaylistStatus,
 } from '~/common/enums/enums';
-import { Image } from '~/data/models/image/image.model';
-import { User } from '~/data/models/user/user.model';
+import { User } from '../user/user.model';
+import { Image } from '../image/image.model';
 import { Abstract } from '../abstract/abstract.model';
 
 class Playlist extends Abstract {

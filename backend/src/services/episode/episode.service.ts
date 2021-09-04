@@ -4,6 +4,7 @@ import {
   UserNotificationStatus,
   NotificationTitle,
   EpisodeType,
+  UserRole,
 } from '~/common/enums/enums';
 import {
   Episode as TEpisode,
@@ -14,6 +15,7 @@ import {
   LoadEpisodesByPodcastIdPayload,
   UserFavouriteEpisodeResponse,
   LoadFavouriteEpisodesPayload,
+  User,
 } from '~/common/types/types';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
 import {
@@ -23,7 +25,15 @@ import {
   podcast as podcastRep,
   userNotification as userNotificationRep,
 } from '~/data/repositories/repositories';
-import { shownote, comment, record, image, podcastFollower, notification } from '~/services/services';
+import {
+  shownote,
+  comment,
+  record,
+  image,
+  podcastFollower,
+  notification,
+  userFavouriteEpisode,
+} from '~/services/services';
 import { HttpError } from '~/exceptions/exceptions';
 
 type Constructor = {
@@ -39,6 +49,7 @@ type Constructor = {
   imageService: typeof image;
   podcastFollowerService: typeof podcastFollower;
   notificationService: typeof notification;
+  userFavouriteEpisodeService: typeof userFavouriteEpisode;
 };
 
 class Episode {
@@ -51,6 +62,7 @@ class Episode {
   #commentService: typeof comment;
   #recordService: typeof record;
   #imageService: typeof image;
+  #userFavouriteEpisodeService: typeof userFavouriteEpisode;
   #podcastFollowerService: typeof podcastFollower;
   #notificationService: typeof notification;
   #userNotificationRepository: typeof userNotificationRep;
@@ -68,6 +80,7 @@ class Episode {
     podcastFollowerService,
     notificationService,
     userNotificationRepository,
+    userFavouriteEpisodeService,
   }: Constructor) {
     this.#episodeRepository = episodeRepository;
     this.#shownoteService = shownoteService;
@@ -81,14 +94,15 @@ class Episode {
     this.#podcastFollowerService = podcastFollowerService;
     this.#notificationService = notificationService;
     this.#userNotificationRepository = userNotificationRepository;
+    this.#userFavouriteEpisodeService = userFavouriteEpisodeService;
   }
 
   public getAll(): Promise<TEpisode[]> {
     return this.#episodeRepository.getAll();
   }
 
-  public getAllInRandomOrder(): Promise<TEpisode[]> {
-    return this.#episodeRepository.getAllInRandomOrder();
+  public getPopular(): Promise<TEpisode[]> {
+    return this.#episodeRepository.getPopular();
   }
 
   public async getById(id: number): Promise<TEpisode> {
@@ -266,13 +280,20 @@ class Episode {
     return episode;
   }
 
-  public getEpisodeCountByPodcastId(id: number): Promise<number> {
-    return this.#episodeRepository.getEpisodeCountByPodcastId(id);
+  public getEpisodeCountByPodcastId(isOwner: boolean, id: number): Promise<number> {
+    return this.#episodeRepository.getEpisodeCountByPodcastId(isOwner, id);
   }
 
-  public async getByQueryByPodcastId(loadEpisodesByPodcastIdPayload: LoadEpisodesByPodcastIdPayload): Promise<EpisodeQueryPayload> {
-    const results = await this.#episodeRepository.getByQueryByPodcastId(loadEpisodesByPodcastIdPayload);
-    const totalCount = await this.#episodeRepository.getEpisodeCountByPodcastId(loadEpisodesByPodcastIdPayload.podcastId);
+  public async getByQueryByPodcastId(
+    user: User | undefined,
+    loadEpisodesByPodcastIdPayload: LoadEpisodesByPodcastIdPayload,
+  ): Promise<EpisodeQueryPayload> {
+    const podcast = await this.#podcastRepository.getById(loadEpisodesByPodcastIdPayload.podcastId);
+
+    const isOwner = user?.id === podcast.userId || user?.role === UserRole.MASTER;
+
+    const results = await this.#episodeRepository.getByQueryByPodcastId(isOwner, loadEpisodesByPodcastIdPayload);
+    const totalCount = await this.#episodeRepository.getEpisodeCountByPodcastId(isOwner, loadEpisodesByPodcastIdPayload.podcastId);
 
     return {
       results,
@@ -290,9 +311,15 @@ class Episode {
       });
     }
 
+    const favoriteEpisodes = await this.#userFavouriteEpisodeService.getAllByEpisodeId(id);
+    const hasFavoriteEpisodes = Boolean(favoriteEpisodes.length);
+    if(hasFavoriteEpisodes){
+      await this.#userFavouriteEpisodeService.deleteAllByEpisodeId(id);
+    }
+
     const comments = await this.#commentService.getAllByEpisodeId(episode.id);
     const hasComments = Boolean(comments.length);
-    if(hasComments){
+    if (hasComments) {
       await Promise.all(comments.map((comment) => this.#commentService.delete(comment.id)));
     }
 

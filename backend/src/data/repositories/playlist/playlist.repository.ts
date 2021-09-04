@@ -25,7 +25,8 @@ class Playlist {
 
   public getAllByUserId(userId: number): Promise<TPlaylist[]>{
     return this.#PlaylistModel.query()
-      .where('user_id', userId);
+      .where('user_id', userId)
+      .withGraphFetched('[user, cover]');
   }
 
   public getById(id: number): Promise<TPlaylist>{
