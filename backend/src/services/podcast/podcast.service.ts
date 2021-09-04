@@ -250,7 +250,6 @@ class Podcast {
 
   public async delete(id: number): Promise<TPodcast> {
     const podcast = await this.#podcastRepository.getById(id);
-    const isOwner = true;
 
     if (!podcast) {
       throw new HttpError({
@@ -259,7 +258,7 @@ class Podcast {
       });
     }
 
-    const episodes = await this.#episodeService.getEpisodeCountByPodcastId(isOwner, id);
+    const episodes = await this.#episodeService.getEpisodeCountByPodcastId(true, id);
     const isEpisodesExist = Boolean(episodes);
 
     if (isEpisodesExist) {
