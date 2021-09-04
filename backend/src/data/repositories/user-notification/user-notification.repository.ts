@@ -4,7 +4,7 @@ import {
   UserNotificationEditDTOPayload,
 } from '~/common/types/types';
 import { UserNotificationModel as UserNotificationM } from '~/data/models/models';
-import {UserNotificationStatus} from "~/common/enums/enums";
+import { UserNotificationStatus } from '~/common/enums/enums';
 
 type Constructor = {
   UserNotificationModel: typeof UserNotificationM;
