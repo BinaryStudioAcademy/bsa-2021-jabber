@@ -64,6 +64,7 @@ class Episode {
     return this.#EpisodeModel.query()
       .where('podcast_id', podcastId)
       .where((builder) => isOwner || builder.where('type', EpisodeType.PUBLIC))
+      .orderBy('updated_at', 'desc')
       .limit(filter.limit)
       .offset(filter.offset);
   }

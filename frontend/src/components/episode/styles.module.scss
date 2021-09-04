@@ -122,6 +122,16 @@
   max-width: 80%;
 }
 
+.live::after {
+  content: "";
+  display: inline-block;
+  margin-left: 10px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #ff0000;
+}
+
 .description {
   font-size: 14px;
   margin: 20px 0;
