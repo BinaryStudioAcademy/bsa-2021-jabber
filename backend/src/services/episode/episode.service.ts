@@ -4,6 +4,7 @@ import {
   UserNotificationStatus,
   NotificationTitle,
   EpisodeType,
+  UserRole,
 } from '~/common/enums/enums';
 import {
   Episode as TEpisode,
@@ -14,6 +15,7 @@ import {
   LoadEpisodesByPodcastIdPayload,
   UserFavouriteEpisodeResponse,
   LoadFavouriteEpisodesPayload,
+  User,
 } from '~/common/types/types';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
 import {
@@ -266,13 +268,20 @@ class Episode {
     return episode;
   }
 
-  public getEpisodeCountByPodcastId(id: number): Promise<number> {
-    return this.#episodeRepository.getEpisodeCountByPodcastId(id);
+  public getEpisodeCountByPodcastId(isOwner: boolean, id: number): Promise<number> {
+    return this.#episodeRepository.getEpisodeCountByPodcastId(isOwner, id);
   }
 
-  public async getByQueryByPodcastId(loadEpisodesByPodcastIdPayload: LoadEpisodesByPodcastIdPayload): Promise<EpisodeQueryPayload> {
-    const results = await this.#episodeRepository.getByQueryByPodcastId(loadEpisodesByPodcastIdPayload);
-    const totalCount = await this.#episodeRepository.getEpisodeCountByPodcastId(loadEpisodesByPodcastIdPayload.podcastId);
+  public async getByQueryByPodcastId(
+    user: User | undefined,
+    loadEpisodesByPodcastIdPayload: LoadEpisodesByPodcastIdPayload,
+  ): Promise<EpisodeQueryPayload> {
+    const podcast = await this.#podcastRepository.getById(loadEpisodesByPodcastIdPayload.podcastId);
+
+    const isOwner = user?.id === podcast.userId || user?.role === UserRole.MASTER;
+
+    const results = await this.#episodeRepository.getByQueryByPodcastId(isOwner, loadEpisodesByPodcastIdPayload);
+    const totalCount = await this.#episodeRepository.getEpisodeCountByPodcastId(isOwner, loadEpisodesByPodcastIdPayload.podcastId);
 
     return {
       results,
@@ -292,7 +301,7 @@ class Episode {
 
     const comments = await this.#commentService.getAllByEpisodeId(episode.id);
     const hasComments = Boolean(comments.length);
-    if(hasComments){
+    if (hasComments) {
       await Promise.all(comments.map((comment) => this.#commentService.delete(comment.id)));
     }
 
