@@ -1,8 +1,9 @@
-import { useTable } from 'hooks/hooks';
 import { Column, useSortBy } from 'react-table';
-import styles from './styles.module.scss';
+import { useTable } from 'hooks/hooks';
 import { getAllowedClasses } from 'helpers/helpers';
 import Pagination from '../pagination/pagination';
+import { DEFAULT_PAGE_COUNT } from 'common/constants/constants';
+import styles from './styles.module.scss';
 
 type Props = {
   columns: Column[];
@@ -29,6 +30,8 @@ const Table: React.FC<Props> = ({
     columns: columns as Column<Record<string, string>>[],
     data: data as Record<string, string>[],
   }, useSortBy);
+
+  const hasEnoughPageCount = pageCount as number > DEFAULT_PAGE_COUNT;
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
   return (
@@ -72,14 +75,16 @@ const Table: React.FC<Props> = ({
         </table>
       </div>
       {hasPagination &&
+        hasEnoughPageCount &&
         <Pagination
           totalRowsCount={totalRowsCount}
           pageCount={pageCount as number}
-          onPageChange={onPageChange as (page: number)=> void}
+          onPageChange={onPageChange as (page: number) => void}
           currentPage={currentPage as number}
           defaultPaginationRows={defaultPaginationRows}
           className={styles.pagination}
-        />}
+        />
+      }
     </>
   );
 };
