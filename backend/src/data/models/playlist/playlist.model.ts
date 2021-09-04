@@ -4,6 +4,7 @@ import {
   PlaylistDTOKey,
   PlaylistStatus,
 } from '~/common/enums/enums';
+import { User } from '../user/user.model';
 import { Image } from '~/data/models/image/image.model';
 import { Abstract } from '../abstract/abstract.model';
 
@@ -11,6 +12,8 @@ class Playlist extends Abstract {
   [PlaylistDTOKey.USER_ID]: number;
 
   [PlaylistDTOKey.NAME]: string;
+
+  [PlaylistDTOKey.USER]: User;
 
   [PlaylistDTOKey.COVER_ID]: number | null;
 
@@ -25,6 +28,14 @@ class Playlist extends Abstract {
   }
 
   static relationMappings = {
+    user: {
+      relation: Model.HasOneRelation,
+      modelClass: User,
+      join: {
+        from: 'playlists.user_id',
+        to: 'users.id',
+      },
+    },
     cover: {
       relation: Model.HasOneRelation,
       modelClass: Image,
