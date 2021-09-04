@@ -24,6 +24,7 @@ import { storage } from 'services/services';
 import { auth as authActions } from 'store/actions';
 import UserFollowersPage from 'components/user-followers/user-followers';
 import ConfiguratePlaylist from 'components/configurate-playlist/configurate-playlist';
+import Playlist from 'components/user-playlists/user-playlists';
 
 const App: React.FC = () => {
   const { user } = useAppSelector(({ auth }) => ({
@@ -101,6 +102,11 @@ const App: React.FC = () => {
         <AuthPublicRouter
           path={AppRoute.USERS_$ID_FOLLOWERS}
           component={UserFollowersPage}
+          exact
+        />
+        <AuthPrivateRouter
+          path={AppRoute.PLAYLISTS_USERS_$ID}
+          component={Playlist}
           exact
         />
         <AuthPrivateRouter
