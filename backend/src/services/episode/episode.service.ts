@@ -23,7 +23,15 @@ import {
   podcast as podcastRep,
   userNotification as userNotificationRep,
 } from '~/data/repositories/repositories';
-import { shownote, comment, record, image, podcastFollower, notification } from '~/services/services';
+import {
+  shownote,
+  comment,
+  record,
+  image,
+  podcastFollower,
+  notification,
+  userFavouriteEpisode,
+} from '~/services/services';
 import { HttpError } from '~/exceptions/exceptions';
 
 type Constructor = {
@@ -39,6 +47,7 @@ type Constructor = {
   imageService: typeof image;
   podcastFollowerService: typeof podcastFollower;
   notificationService: typeof notification;
+  userFavouriteEpisodeService: typeof userFavouriteEpisode;
 };
 
 class Episode {
@@ -51,6 +60,7 @@ class Episode {
   #commentService: typeof comment;
   #recordService: typeof record;
   #imageService: typeof image;
+  #userFavouriteEpisodeService: typeof userFavouriteEpisode;
   #podcastFollowerService: typeof podcastFollower;
   #notificationService: typeof notification;
   #userNotificationRepository: typeof userNotificationRep;
@@ -68,6 +78,7 @@ class Episode {
     podcastFollowerService,
     notificationService,
     userNotificationRepository,
+    userFavouriteEpisodeService,
   }: Constructor) {
     this.#episodeRepository = episodeRepository;
     this.#shownoteService = shownoteService;
@@ -81,6 +92,7 @@ class Episode {
     this.#podcastFollowerService = podcastFollowerService;
     this.#notificationService = notificationService;
     this.#userNotificationRepository = userNotificationRepository;
+    this.#userFavouriteEpisodeService = userFavouriteEpisodeService;
   }
 
   public getAll(): Promise<TEpisode[]> {
@@ -290,9 +302,15 @@ class Episode {
       });
     }
 
+    const favoriteEpisodes = await this.#userFavouriteEpisodeService.getAllByEpisodeId(id);
+    const hasFavoriteEpisodes = Boolean(favoriteEpisodes.length);
+    if(hasFavoriteEpisodes){
+      await this.#userFavouriteEpisodeService.deleteAllByEpisodeId(id);
+    }
+
     const comments = await this.#commentService.getAllByEpisodeId(episode.id);
     const hasComments = Boolean(comments.length);
-    if(hasComments){
+    if (hasComments) {
       await Promise.all(comments.map((comment) => this.#commentService.delete(comment.id)));
     }
 
