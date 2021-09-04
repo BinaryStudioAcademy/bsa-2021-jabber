@@ -1,8 +1,9 @@
 import { Column } from 'react-table';
-import LinkEpisode  from '../components/link-episode';
-import { EpisodeStatus } from 'common/enums/enums';
+import { Link } from 'components/common/common';
+import { AppRoute, EpisodeStatus } from 'common/enums/enums';
 import { EpisodeNameRow } from '../types/types';
 import { getNumberingRows } from 'helpers/helpers';
+import styles from './styles.module.scss';
 
 const getColumns = (rowsCount: number, currentPage: number): Column[] => {
   const columns: Column[] = [
@@ -24,7 +25,9 @@ const getColumns = (rowsCount: number, currentPage: number): Column[] => {
         };
       },
       Cell: ({ value }): JSX.Element => (
-        <LinkEpisode name={value.name} idEpisode={value.episodeId} isLive={value.isLive} />
+        <Link to={`${AppRoute.EPISODES}/${value.episodeId}`}>
+          <span className={value.isLive && styles.live}>{value.name}</span>
+        </Link>
       ),
     },
     {

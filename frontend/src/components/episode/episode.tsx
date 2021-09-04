@@ -240,7 +240,7 @@ const Episode: React.FC = () => {
               </Link>
               <h1 className={getAllowedClasses(
                 styles.title,
-                isLive ? styles.live : null,
+                isLive && styles.live,
               )}>{episode.name}</h1>
               <p className={styles.description}>{episode.description}</p>
               <dl className={styles.episodeInfo}>
