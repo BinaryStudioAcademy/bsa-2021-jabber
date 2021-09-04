@@ -99,8 +99,8 @@ class Episode {
     return this.#episodeRepository.getAll();
   }
 
-  public getAllInRandomOrder(): Promise<TEpisode[]> {
-    return this.#episodeRepository.getAllInRandomOrder();
+  public getPopular(): Promise<TEpisode[]> {
+    return this.#episodeRepository.getPopular();
   }
 
   public async getById(id: number): Promise<TEpisode> {

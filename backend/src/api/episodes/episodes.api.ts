@@ -41,7 +41,7 @@ const initEpisodesApi = ({ apiRouter, episodeService, userFavouriteEpisodeServic
     EpisodesApiPath.POPULAR,
     handleAsyncApi(async (_req, res) => {
       return res
-        .json(await episodeService.getAllInRandomOrder())
+        .json(await episodeService.getPopular())
         .status(HttpCode.OK);
     }),
   );
