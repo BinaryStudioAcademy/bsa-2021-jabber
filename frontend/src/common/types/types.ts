@@ -31,7 +31,9 @@ export type {
   LoadEpisodesByPodcastIdPayload,
   EpisodeLoadFilter,
   EpisodeQueryPayload,
+  PlaylistEpisodeResponse,
   LoadFavouriteEpisodesPayload,
+  LoadPlaylistEpisodesPayload,
   EpisodeWithPodcast,
 } from './episode/episode';
 export type {

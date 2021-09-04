@@ -5,7 +5,9 @@ export type {
   LoadEpisodesByPodcastIdPayload,
   EpisodeLoadFilter,
   EpisodeQueryPayload,
+  PlaylistEpisodeResponse,
   LoadFavouriteEpisodesPayload,
+  LoadPlaylistEpisodesPayload,
   EpisodeWithPodcast,
 } from 'jabber-shared/common/types/types';
 export type { EpisodeFormPayload } from './episode-form-payload.type';

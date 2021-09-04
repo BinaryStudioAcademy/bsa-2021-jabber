@@ -24,7 +24,9 @@ export type {
   EpisodeLoadFilter,
   LoadEpisodesByPodcastIdPayload,
   EpisodeQueryPayload,
+  PlaylistEpisodeQueryPayload,
   LoadFavouriteEpisodesPayload,
+  LoadPlaylistEpisodesPayload,
   EpisodeWithPodcast,
 } from './episode/episode';
 export type {
@@ -50,5 +52,4 @@ export type {
   UserFavouriteEpisodeResponse,
 } from './user-favourite-episode/user-favourite-episode';
 export type { Playlist, PlaylistPayload, PlaylistCreatePayload } from './playlist/playlist';
-export type { PlaylistEpisode, PlaylistEpisodePayload } from './playlist-episode/playlist-episode';
-
+export type { PlaylistEpisode, PlaylistEpisodePayload, PlaylistEpisodeResponse } from './playlist-episode/playlist-episode';
