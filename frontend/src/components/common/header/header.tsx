@@ -1,16 +1,17 @@
-import { useAppSelector, useDispatch } from 'hooks/hooks';
+import { useAppSelector, useDispatch, useEffect } from 'hooks/hooks';
 import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
 import { Button, Link, ImageWrapper, Popuper } from 'components/common/common';
-import { auth as authActions } from 'store/actions';
+import { auth as authActions, notification as notificationAction } from 'store/actions';
 import logo from 'assets/img/logo.svg';
 import headerBell from 'assets/img/header-bell.svg';
 import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 const Header: React.FC = () => {
-  const { user } = useAppSelector(({ auth }: RootState) => ({
+  const { user, countUncheckedNotification } = useAppSelector(({ auth, notification }: RootState) => ({
     user: auth.user,
+    countUncheckedNotification: notification.countUncheckedNotification,
   }));
 
   const hasUser = Boolean(user);
@@ -19,6 +20,12 @@ const Header: React.FC = () => {
   const handleUserExit = (): void => {
     dispatch(authActions.resetUser());
   };
+
+  useEffect(() => {
+    dispatch(notificationAction.getCountUncheckedUserNotifications());
+  }, []);
+
+  const isShowNotificationIndicator = Boolean(countUncheckedNotification);
 
   return (
     <header className={styles.header}>
@@ -42,7 +49,7 @@ const Header: React.FC = () => {
                 href={AppRoute.PODCASTS_EDIT}
                 type={ButtonType.BUTTON}
               />
-              <Link to={AppRoute.NOTIFICATIONS}>
+              <Link to={AppRoute.NOTIFICATIONS} className={styles.notificationLink}>
                 <img
                   src={headerBell}
                   width="23"
@@ -51,6 +58,10 @@ const Header: React.FC = () => {
                   alt=""
                   className={styles.notification}
                 />
+                {isShowNotificationIndicator &&
+                <div className={styles.newNotificationIndicator}>
+                  {countUncheckedNotification}
+                </div>}
               </Link>
 
               <div className={styles.profile}>
