@@ -1,0 +1,27 @@
+.list {
+  margin: 0;
+  padding: 0;
+  display: flex;
+
+  .listButton {
+    flex-grow: 1;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: var(--z-index--level-four);
+
+    color: var(--color-primary-dark);
+    background-color: var(--color-primary-light);
+    border-radius: 5px;
+    padding: 10px;
+
+    &:hover {
+      filter: brightness(1.2);
+    }
+  }
+}

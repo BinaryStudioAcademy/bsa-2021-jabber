@@ -103,6 +103,10 @@ const notification = new Notification({
   notificationRepository,
 });
 
+const userFavouriteEpisode = new UserFavouriteEpisode({
+  userFavouriteEpisodeRepository,
+});
+
 const episode = new Episode({
   episodeRepository,
   shownoteService: shownote,
@@ -111,6 +115,7 @@ const episode = new Episode({
   imageService: image,
   podcastFollowerService: podcastFollower,
   notificationService: notification,
+  userFavouriteEpisodeService: userFavouriteEpisode,
   imageRepository,
   podcastRepository,
   recordRepository,
@@ -143,10 +148,6 @@ const socket = new Socket();
 
 const userFollower = new UserFollower({
   userFollowerRepository,
-});
-
-const userFavouriteEpisode = new UserFavouriteEpisode({
-  userFavouriteEpisodeRepository,
 });
 
 const userNotification = new UserNotification({

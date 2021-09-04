@@ -7,6 +7,7 @@ import {
   CommentFormCreatePayload,
   AsyncThunkConfig,
   UserFavouriteEpisodePayload,
+  Playlist,
 } from 'common/types/types';
 import { ActionType, LoadEpisodePayload } from './common';
 import { checkIsLiked } from 'helpers/helpers';
@@ -94,6 +95,30 @@ const toggleFavourite = createAsyncThunk<boolean, undefined, AsyncThunkConfig>(
   },
 );
 
+const loadPlaylists = createAsyncThunk<Playlist[], undefined, AsyncThunkConfig>
+(ActionType.LOAD_PLAYLISTS, async (_arg, { extra, getState }) => {
+  const { playlistApi } = extra;
+  const { auth } = getState();
+  const playlists = await playlistApi.getAllByUserId((<User>auth.user).id);
+
+  return playlists;
+});
+
+const addEpisodeToPlaylist = createAsyncThunk<void, number, AsyncThunkConfig>
+(ActionType.ADD_EPISODE_TO_PLAYLIST, async (playlistId, { extra, getState }) => {
+  const { playlistApi, notificationService } = extra;
+  const { episode } = getState();
+  const playlistEpisode = await playlistApi.addEpisodeToPlaylist({
+    playlistId,
+    episodeId: (<Episode>episode.episode).id,
+  });
+
+  if (playlistEpisode) {
+    notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.EPISODE_ADDED_TO_PLAYLIST);
+  }
+
+});
+
 const updateComments = createAction<Comment>(ActionType.UPDATE_COMMENTS);
 const updateCommentsAfterDelete = createAction<Comment>(ActionType.UPDATE_COMMENTS_AFTER_DELETE);
 const updateCommentsAfterLike = createAction<Comment>(ActionType.UPDATE_COMMENTS_AFTER_LIKE);
@@ -111,4 +136,6 @@ export {
   leaveEpisode,
   checkEpisodeIsFavorite,
   toggleFavourite,
+  loadPlaylists,
+  addEpisodeToPlaylist,
 };
