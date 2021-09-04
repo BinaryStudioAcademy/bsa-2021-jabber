@@ -17,6 +17,10 @@ class UserFavouriteEpisode {
     this.#userFavouriteEpisodeRepository = userFavouriteEpisodeRepository;
   }
 
+  public getAllByEpisodeId(episodeId: number): Promise<TUserFavouriteEpisode[]>{
+    return this.#userFavouriteEpisodeRepository.getAllByEpisodeId(episodeId);
+  }
+
   public async checkEpisodeIsFavorite(payload: UserFavouriteEpisodePayload): Promise<boolean> {
     const episode = await this.#userFavouriteEpisodeRepository.getByUserIdEpisodeId(payload);
 
@@ -38,6 +42,10 @@ class UserFavouriteEpisode {
 
   public delete(payload: UserFavouriteEpisodePayload): Promise<TUserFavouriteEpisode> {
     return this.#userFavouriteEpisodeRepository.delete(payload);
+  }
+
+  public deleteAllByEpisodeId(episodeId:number): Promise<TUserFavouriteEpisode[]>{
+    return this.#userFavouriteEpisodeRepository.deleteAllByEpisodeId(episodeId);
   }
 }
 

@@ -25,10 +25,6 @@ class Episode {
     return this.#EpisodeModel.query();
   }
 
-  public getAllInRandomOrder(): Promise<TEpisode[]> {
-    return this.#EpisodeModel.query().where('type', EpisodeType.PUBLIC).orderByRaw('random()');
-  }
-
   public getPopular():  Promise<TEpisode[]> {
     return this.#EpisodeModel.query()
       .where('type', EpisodeType.PUBLIC)

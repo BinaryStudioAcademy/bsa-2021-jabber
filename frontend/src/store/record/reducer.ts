@@ -28,6 +28,7 @@ type State = {
   liveRecordDataUrl: string | null;
   dataStatus: DataStatus;
   commentDataStatus: DataStatus;
+  loadCommentsDataStatus: DataStatus;
   episode: Episode | null;
   comments: Comment[];
 };
@@ -39,6 +40,7 @@ const initialState: State = {
   liveRecordDataUrl: null,
   dataStatus: DataStatus.IDLE,
   commentDataStatus: DataStatus.IDLE,
+  loadCommentsDataStatus: DataStatus.IDLE,
   episode: null,
   comments: [],
 };
@@ -84,25 +86,24 @@ const reducer = createReducer(initialState, (builder) => {
     state.dataStatus = DataStatus.REJECTED;
   });
   builder.addCase(loadCommentsByEpisodeId.pending, (state) => {
-    state.commentDataStatus = DataStatus.PENDING;
+    state.loadCommentsDataStatus = DataStatus.PENDING;
   });
   builder.addCase(loadCommentsByEpisodeId.fulfilled, (state, action) => {
-    state.commentDataStatus = DataStatus.FULFILLED;
+    state.loadCommentsDataStatus = DataStatus.FULFILLED;
     state.comments = action.payload.reverse();
   });
   builder.addCase(loadCommentsByEpisodeId.rejected, (state) => {
-    state.commentDataStatus = DataStatus.REJECTED;
+    state.loadCommentsDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(createComment.pending, (state) => {
-    state.commentDataStatus = DataStatus.PENDING;
+    state.loadCommentsDataStatus = DataStatus.PENDING;
   });
   builder.addCase(createComment.fulfilled, (state) => {
-    state.commentDataStatus = DataStatus.FULFILLED;
+    state.loadCommentsDataStatus = DataStatus.FULFILLED;
   });
   builder.addCase(createComment.rejected, (state) => {
-    state.commentDataStatus = DataStatus.REJECTED;
+    state.loadCommentsDataStatus = DataStatus.REJECTED;
   });
-
   builder.addCase(toggleCommentLike.pending, (state) => {
     state.commentDataStatus = DataStatus.PENDING;
   });
