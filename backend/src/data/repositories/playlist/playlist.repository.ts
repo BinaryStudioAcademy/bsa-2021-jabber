@@ -28,7 +28,10 @@ class Playlist {
   }
 
   public getById(id: number): Promise<TPlaylist>{
-    return this.#PlaylistModel.query().findById(id);
+    return this.#PlaylistModel
+      .query()
+      .findById(id)
+      .withGraphFetched('[cover, episodes.[podcast]]');
   }
 }
 

@@ -14,6 +14,8 @@ import {
   LoadEpisodesByPodcastIdPayload,
   UserFavouriteEpisodeResponse,
   LoadFavouriteEpisodesPayload,
+  LoadPlaylistEpisodesPayload,
+  PlaylistEpisodeResponse,
 } from '~/common/types/types';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
 import {
@@ -320,6 +322,16 @@ class Episode {
   public async getFavouriteByQueryByUserId(payload: LoadFavouriteEpisodesPayload): Promise<UserFavouriteEpisodeResponse> {
     const episodes = await this.#episodeRepository.getFavouriteByQueryByUserId(payload);
     const totalCount = await this.#episodeRepository.getFavouriteCountByUserId(payload.userId);
+
+    return {
+      episodes,
+      totalCount,
+    };
+  }
+
+  public async getPlaylistEpisodesByQueryByPLaylistId(payload: LoadPlaylistEpisodesPayload): Promise<PlaylistEpisodeResponse> {
+    const episodes = await this.#episodeRepository.getPlaylistEpisodesByQueryByPLaylistId(payload);
+    const totalCount = await this.#episodeRepository.getPlaylistEpisodesCountByUserId(payload.playlistId);
 
     return {
       episodes,

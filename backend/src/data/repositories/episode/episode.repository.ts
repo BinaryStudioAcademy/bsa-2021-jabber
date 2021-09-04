@@ -6,6 +6,7 @@ import {
   EpisodeEditDTOPayload,
   LoadEpisodesByPodcastIdPayload,
   LoadFavouriteEpisodesPayload,
+  LoadPlaylistEpisodesPayload,
 } from '~/common/types/types';
 import { EpisodeType } from '~/common/enums/enums';
 import { POPULAR_EPISODE_LOAD_LIMIT } from '~/common/constants/constants';
@@ -105,6 +106,26 @@ class Episode {
       .query()
       .joinRelated('[favourites]')
       .where('favourites.user_id', id)
+      .resultSize();
+  }
+
+  public getPlaylistEpisodesByQueryByPLaylistId({ playlistId, filter }: LoadPlaylistEpisodesPayload): Promise<TEpisodeWithPodcast[]> {
+    const { limit, offset } = filter;
+
+    return this.#EpisodeModel
+      .query()
+      .withGraphJoined('[podcast]')
+      .joinRelated('[playlistEpisodes]')
+      .where('playlists_episodes.playlist_id', playlistId)
+      .limit(limit)
+      .offset(offset);
+  }
+
+  public getPlaylistEpisodesCountByUserId(id: number): Promise<number> {
+    return this.#EpisodeModel
+      .query()
+      .joinRelated('[playlistEpisodes]')
+      .where('playlists_episodes.playlist_id', id)
       .resultSize();
   }
 }

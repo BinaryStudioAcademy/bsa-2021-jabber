@@ -8,6 +8,7 @@ import { Record } from '~/data/models/record/record.model';
 import { Podcast } from '~/data/models/podcast/podcast.model';
 import { UserFavouriteEpisode } from '~/data/models/user-favourite-episode/user-favourite-episode.model';
 import { Comment } from '~/data/models/comment/comment.model';
+import { PlaylistEpisode } from '~/data/models/playlist-episode/playlist-episode.model';
 
 class Episode extends Abstract {
   [EpisodeDTOKey.NAME]: string;
@@ -67,6 +68,14 @@ class Episode extends Abstract {
       join: {
         from: 'episodes.id',
         to: 'users_favourite_episodes.episode_id',
+      },
+    },
+    playlistEpisodes: {
+      relation: Model.HasManyRelation,
+      modelClass: PlaylistEpisode,
+      join: {
+        from: 'episodes.id',
+        to: 'playlists_episodes.episode_id',
       },
     },
     podcast: {
