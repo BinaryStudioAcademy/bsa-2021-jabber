@@ -9,11 +9,7 @@ const getShowingRows = (
   const realCurrentPage = currentPage + INCREASE_CONT_FOR_IDX;
 
   if (totalRowsCount && defaultPaginationRows) {
-    return (
-      totalRowsCount < defaultPaginationRows * realCurrentPage
-        ? totalRowsCount
-        : defaultPaginationRows * realCurrentPage
-    );
+    return Math.min(totalRowsCount, defaultPaginationRows * realCurrentPage);
   }
 
   return MIN_SHOWING_ROWS;
