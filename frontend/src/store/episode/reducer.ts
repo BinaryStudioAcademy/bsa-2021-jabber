@@ -10,6 +10,7 @@ import {
   updateCommentsAfterDelete,
   checkEpisodeIsFavorite,
   toggleFavourite,
+  toggleCommentLike,
   updateCommentsAfterLike,
   loadPlaylists,
 } from './actions';
@@ -20,6 +21,7 @@ type State = {
   commentDataStatus: DataStatus;
   favouriteDataStatus: DataStatus;
   playlistsDataStatus: DataStatus;
+  loadCommentsDataStatus: DataStatus;
   isFavourite: boolean;
   episode: Episode | null;
   comments: Comment[];
@@ -32,6 +34,7 @@ const initialState: State = {
   commentDataStatus: DataStatus.IDLE,
   favouriteDataStatus: DataStatus.IDLE,
   playlistsDataStatus: DataStatus.IDLE,
+  loadCommentsDataStatus: DataStatus.IDLE,
   isFavourite: false,
   episode: null,
   comments: [],
@@ -52,25 +55,33 @@ const reducer = createReducer(initialState, (builder) => {
     state.dataStatus = DataStatus.REJECTED;
   });
   builder.addCase(loadCommentsByEpisodeId.pending, (state) => {
-    state.commentDataStatus = DataStatus.PENDING;
+    state.loadCommentsDataStatus = DataStatus.PENDING;
   });
   builder.addCase(loadCommentsByEpisodeId.fulfilled, (state, action) => {
-    state.commentDataStatus = DataStatus.FULFILLED;
+    state.loadCommentsDataStatus = DataStatus.FULFILLED;
     state.comments = action.payload.reverse();
   });
   builder.addCase(loadCommentsByEpisodeId.rejected, (state) => {
-    state.commentDataStatus = DataStatus.REJECTED;
+    state.loadCommentsDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(createComment.pending, (state) => {
-    state.commentDataStatus = DataStatus.PENDING;
+    state.loadCommentsDataStatus = DataStatus.PENDING;
   });
   builder.addCase(createComment.fulfilled, (state) => {
-    state.commentDataStatus = DataStatus.FULFILLED;
+    state.loadCommentsDataStatus = DataStatus.FULFILLED;
   });
   builder.addCase(createComment.rejected, (state) => {
+    state.loadCommentsDataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(toggleCommentLike.pending, (state) => {
+    state.commentDataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(toggleCommentLike.fulfilled, (state) => {
+    state.commentDataStatus = DataStatus.FULFILLED;
+  });
+  builder.addCase(toggleCommentLike.rejected, (state) => {
     state.commentDataStatus = DataStatus.REJECTED;
   });
-
   builder.addCase(deleteComment.pending, (state) => {
     state.commentDataStatus = DataStatus.PENDING;
   });
