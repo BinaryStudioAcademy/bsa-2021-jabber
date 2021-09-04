@@ -6,3 +6,9 @@
   padding: 0;
   list-style: none;
 }
+
+@media screen and (max-width: 541px) {
+  .list {
+    justify-content: center;
+  }
+}
