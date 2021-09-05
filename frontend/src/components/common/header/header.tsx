@@ -1,8 +1,8 @@
-import { useAppSelector, useDispatch, useEffect } from 'hooks/hooks';
+import { useAppSelector, useDispatch } from 'hooks/hooks';
 import { AppRoute, ButtonType } from 'common/enums/enums';
 import { RootState } from 'common/types/types';
 import { Button, Link, ImageWrapper, Popuper } from 'components/common/common';
-import { auth as authActions, notification as notificationAction } from 'store/actions';
+import { auth as authActions } from 'store/actions';
 import logo from 'assets/img/logo.svg';
 import headerBell from 'assets/img/header-bell.svg';
 import { getAllowedClasses } from 'helpers/helpers';
@@ -20,10 +20,6 @@ const Header: React.FC = () => {
   const handleUserExit = (): void => {
     dispatch(authActions.resetUser());
   };
-
-  useEffect(() => {
-    dispatch(notificationAction.getCountUncheckedUserNotifications());
-  }, []);
 
   const isShowNotificationIndicator = Boolean(countUncheckedNotification);
 
