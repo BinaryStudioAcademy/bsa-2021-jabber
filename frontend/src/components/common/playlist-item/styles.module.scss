@@ -61,17 +61,26 @@
   }
 
   .linksWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 160px;
     margin-left: 10px;
     .link {
-      font-size: 18px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .linkUser {
+      color: var(--color-primary-dark);
+      opacity: 0.5;
     }
     .link,
     .linkUser {
-      width: 150px;
-      display: block;
+      max-width: 160px;
       text-decoration: none;
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
       color: var(--color-primary-dark);
       &:hover {
         color: var(--color-header-background);
