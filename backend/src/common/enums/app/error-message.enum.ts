@@ -22,6 +22,7 @@ enum ErrorMessage {
   EMAIL_SENDING_ERROR = 'Email sending error',
   ALREADY_IN_FAVOURITES = 'Already in favourites',
   INVITATION_CODE_DOES_NOT_EXIST = 'Invitation code does not exist',
+  ALREADY_IN_PLAYLIST = 'Already in playlist',
 }
 
 export { ErrorMessage };

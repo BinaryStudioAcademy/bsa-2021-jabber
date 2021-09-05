@@ -1,43 +1,25 @@
+import { useAppSelector, useDispatch, useEffect, useHistory, useParams, useRef, useState } from 'hooks/hooks';
 import {
-  useAppSelector,
-  useDispatch,
-  useEffect,
-  useParams,
-  useRef,
-  useState,
-  useHistory,
-} from 'hooks/hooks';
-import {
-  episode as episodeActions,
   configurateEpisode as configurateEpisodeActions,
+  episode as episodeActions,
   record as recordActions,
 } from 'store/actions';
 import {
-  Loader,
-  CreateCommentForm,
-  CommentsList,
-  Player,
   Button,
-  Link,
-  ImageWrapper,
+  CommentsList,
   ConfirmPopup,
+  CreateCommentForm,
+  ImageWrapper,
+  Link,
+  Loader,
+  Player,
 } from 'components/common/common';
-import {
-  AppRoute,
-  DataStatus,
-  EpisodeStatus,
-  UserRole,
-} from 'common/enums/enums';
+import { AppRoute, DataStatus, EpisodeStatus, UserRole } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
 import { PlayerRef } from 'components/common/player/player';
-import {
-  getCurrentTime,
-  getCommentsTimelineDimensions,
-  getSortedShownotes,
-  getSortedComments,
-} from './helpers/helpers';
+import { getCommentsTimelineDimensions, getCurrentTime, getSortedComments, getSortedShownotes } from './helpers/helpers';
 import { PageParams } from './common/types/types';
-import { ShownotesList, ComentsTimeline } from './components/components';
+import { AddToPlaylistPopup, ComentsTimeline, ShownotesList } from './components/components';
 import styles from './styles.module.scss';
 import { getAllowedClasses } from 'helpers/helpers';
 
@@ -47,7 +29,20 @@ const Episode: React.FC = () => {
   const playerRef = useRef<PlayerRef | null>(null);
   const playerContainerRef = useRef<HTMLDivElement>(null);
 
-  const { episode, comments, user, dataStatus, podcast, liveStream, favouriteDataStatus, isFavourite } =
+  const {
+    episode,
+    comments,
+    user,
+    dataStatus,
+    podcast,
+    liveStream,
+    favouriteDataStatus,
+    isFavourite,
+    playlists,
+    playlistsDataStatus,
+    commentDataStatus,
+    loadCommentsDataStatus,
+  } =
     useAppSelector(({ episode, auth, record }) => ({
       dataStatus: episode.dataStatus,
       episode: episode.episode,
@@ -57,6 +52,10 @@ const Episode: React.FC = () => {
       liveStream: record.liveStream,
       favouriteDataStatus: episode.favouriteDataStatus,
       isFavourite: episode.isFavourite,
+      playlists: episode.playlists,
+      playlistsDataStatus: episode.playlistsDataStatus,
+      commentDataStatus: episode.commentDataStatus,
+      loadCommentsDataStatus: episode.loadCommentsDataStatus,
     }));
 
   const [playerStatus, setPlayerStatus] = useState<DataStatus>(DataStatus.IDLE);
@@ -72,11 +71,15 @@ const Episode: React.FC = () => {
   const isAllowDelete = isOwner || isMaster;
   const isPlayerShow = Boolean(episode?.record?.fileUrl) || Boolean(liveStream);
   const isLoading = dataStatus === DataStatus.PENDING || favouriteDataStatus === DataStatus.PENDING;
-
+  const isAddToPLaylistsShow = playlistsDataStatus === DataStatus.FULFILLED && episode?.status === EpisodeStatus.PUBLISHED;
+  const isLive = episode?.status === EpisodeStatus.LIVE;
+  const isDisabledReactionComment = commentDataStatus === DataStatus.PENDING;
+  const isDisabledCommentForm = loadCommentsDataStatus === DataStatus.PENDING;
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisodePayload(Number(id)));
     dispatch(episodeActions.checkEpisodeIsFavorite(Number(id)));
+    dispatch(episodeActions.loadPlaylists());
 
     return (): void => {
       dispatch(episodeActions.leaveEpisode(id));
@@ -114,7 +117,9 @@ const Episode: React.FC = () => {
   };
 
   const handleCommentLikeToggle = (commentId: number): void => {
-    hasUser ? dispatch(episodeActions.toggleCommentLike(commentId)) : history.push(AppRoute.SIGN_IN);
+    hasUser
+      ? !isDisabledReactionComment && dispatch(episodeActions.toggleCommentLike(commentId))
+      : history.push(AppRoute.SIGN_IN);
   };
 
   const handleShowPopup = (): void => {
@@ -123,6 +128,10 @@ const Episode: React.FC = () => {
 
   const handleToggleFavorite = (): void => {
     dispatch(episodeActions.toggleFavourite());
+  };
+
+  const handleAddToPlaylist = (id: number): void => {
+    dispatch(episodeActions.addEpisodeToPlaylist(id));
   };
 
   if (isLoading) {
@@ -161,6 +170,18 @@ const Episode: React.FC = () => {
                 href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}
               />
             )}
+            {isAddToPLaylistsShow && (
+              <AddToPlaylistPopup
+                playlists={playlists}
+                handleAddToPlaylist={handleAddToPlaylist}
+                triggerClassName={isPlayerShow
+                  ? getAllowedClasses(
+                    styles.btnStartLive,
+                    styles.btnWithPlayer,
+                    styles.playlistTrigger,
+                  )
+                  : styles.btnStartLive}
+              />)}
             <div className={styles.descriptionWrapper}>
               {isOwner && (
                 <Link
@@ -206,7 +227,10 @@ const Episode: React.FC = () => {
               >
                 {podcast?.name}
               </Link>
-              <h1 className={styles.title}>{episode.name}</h1>
+              <h1 className={getAllowedClasses(
+                styles.title,
+                isLive && styles.live,
+              )}>{episode.name}</h1>
               <p className={styles.description}>{episode.description}</p>
               <dl className={styles.episodeInfo}>
                 <div className={styles.infoBlock}>
@@ -269,7 +293,7 @@ const Episode: React.FC = () => {
             <h2 className={styles.commentsCounter}>
               Comments ({comments.length})
             </h2>
-            {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
+            {hasUser && <CreateCommentForm onSubmit={handleCreateComment} isDisabled={isDisabledCommentForm} />}
             {comments.length ? (
               <CommentsList
                 hasTimestamps={hasRecord}

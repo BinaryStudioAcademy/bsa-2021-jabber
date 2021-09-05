@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { EpisodeWithPodcast, Playlist } from 'common/types/types';
-import { loadById, loadEpisodesByPlaylistId } from './actions';
+import { EpisodeWithPodcast, Playlist, User } from 'common/types/types';
+import { loadById, loadEpisodesByPlaylistId, loadPlaylists, loadPlaylistsOwner } from './actions';
 
 type State = {
   dataStatus: DataStatus;
@@ -9,6 +9,8 @@ type State = {
   episodes: EpisodeWithPodcast[];
   episodesDataStatus: DataStatus;
   totalCount: number;
+  playlists: Playlist[];
+  user: User | null;
 };
 
 const initialState: State = {
@@ -17,6 +19,8 @@ const initialState: State = {
   episodes: [],
   episodesDataStatus: DataStatus.IDLE,
   totalCount: 0,
+  playlists: [],
+  user: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -41,6 +45,27 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadEpisodesByPlaylistId.rejected, (state) => {
     state.episodesDataStatus = DataStatus.REJECTED;
+  });
+
+  builder.addCase(loadPlaylists.pending, (state) => {
+    state.dataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(loadPlaylists.fulfilled, (state, action) => {
+    state.dataStatus = DataStatus.FULFILLED;
+    state.playlists = action.payload;
+  });
+  builder.addCase(loadPlaylists.rejected, (state) => {
+    state.dataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(loadPlaylistsOwner.pending, (state) => {
+    state.dataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(loadPlaylistsOwner.fulfilled, (state, action) => {
+    state.dataStatus = DataStatus.FULFILLED;
+    state.user = action.payload;
+  });
+  builder.addCase(loadPlaylistsOwner.rejected, (state) => {
+    state.dataStatus = DataStatus.REJECTED;
   });
 
 });

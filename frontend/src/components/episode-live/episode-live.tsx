@@ -1,15 +1,8 @@
 import { useAppSelector, useDispatch, useEffect, useParams } from 'hooks/hooks';
-import {
-  record as recordActions,
-} from 'store/actions';
-import { RecordStatus, DataStatus, EpisodeStatus } from 'common/enums/enums';
+import { record as recordActions } from 'store/actions';
+import { DataStatus, EpisodeStatus, RecordStatus } from 'common/enums/enums';
 import { CommentFormCreatePayload } from 'common/types/types';
-import {
-  CreateCommentForm,
-  CommentsList,
-  ImageWrapper,
-  Button,
-} from 'components/common/common';
+import { Button, CommentsList, CreateCommentForm, ImageWrapper } from 'components/common/common';
 import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
@@ -21,13 +14,23 @@ const EpisodeLive: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
 
-  const { recordStatus, user, episode, comments, recordInitStatus } = useAppSelector(
+  const {
+    recordStatus,
+    user,
+    episode,
+    comments,
+    recordInitStatus,
+    commentDataStatus,
+    loadCommentsDataStatus,
+  } = useAppSelector(
     ({ record, auth }) => ({
       recordStatus: record.recordStatus,
       recordInitStatus: record.recordInitStatus,
       episode: record.episode,
       comments: record.comments,
       user: auth.user,
+      commentDataStatus: record.commentDataStatus,
+      loadCommentsDataStatus: record.loadCommentsDataStatus,
     }),
   );
 
@@ -38,6 +41,8 @@ const EpisodeLive: React.FC = () => {
   const isOwner = user?.id === episode?.userId;
   const isEpisodeStatusLive = episode?.status === EpisodeStatus.LIVE;
   const isDisabledStartRecord = !isEpisodeStatusLive || !isInactive;
+  const isDisabledReactionComment = commentDataStatus === DataStatus.PENDING;
+  const isDisabledCommentForm = loadCommentsDataStatus === DataStatus.PENDING;
 
   useEffect(() => {
     dispatch(recordActions.loadCommentsByEpisodeId(Number(id)));
@@ -88,7 +93,7 @@ const EpisodeLive: React.FC = () => {
   };
 
   const handleCommentLikeToggle = (commentId: number): void => {
-    dispatch(recordActions.toggleCommentLike(commentId));
+    !isDisabledReactionComment && dispatch(recordActions.toggleCommentLike(commentId));
   };
 
   return (
@@ -157,7 +162,7 @@ const EpisodeLive: React.FC = () => {
       </div>
       {isEpisodeStatusLive && <section className={styles.commentsWrapper}>
         <h2 className={styles.commentsCounter}>Comments ({comments.length})</h2>
-        {hasUser && <CreateCommentForm onSubmit={handleCreateComment} />}
+        {hasUser && <CreateCommentForm onSubmit={handleCreateComment} isDisabled={isDisabledCommentForm}/>}
         {comments.length ? (
           <CommentsList
             comments={comments}

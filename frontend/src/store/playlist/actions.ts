@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Playlist, AsyncThunkConfig, LoadPlaylistEpisodesPayload, PlaylistEpisodeResponse } from 'common/types/types';
+import { Playlist, User, AsyncThunkConfig, LoadPlaylistEpisodesPayload, PlaylistEpisodeResponse } from 'common/types/types';
 import { ActionType } from './common';
 
 const loadById = createAsyncThunk<Playlist, number, AsyncThunkConfig>(
@@ -18,4 +18,23 @@ const loadEpisodesByPlaylistId = createAsyncThunk<PlaylistEpisodeResponse, LoadP
     return result;
   });
 
-export { loadById, loadEpisodesByPlaylistId };
+const loadPlaylists = createAsyncThunk<Playlist[], number, AsyncThunkConfig>(
+  ActionType.LOAD_PLAYLISTS,
+  async (userId, { extra }) => {
+    const { playlistApi } = extra;
+    const playlist = await playlistApi.getAllByUserId(userId);
+
+    return playlist;
+  },
+);
+
+const loadPlaylistsOwner = createAsyncThunk<User, number, AsyncThunkConfig>(
+  ActionType.LOAD_PLAYLIST_OWNER,
+  async (userId, { extra }) => {
+    const { userApi } = extra;
+
+    return await userApi.getById(userId);
+  },
+);
+
+export { loadById, loadEpisodesByPlaylistId, loadPlaylists, loadPlaylistsOwner };

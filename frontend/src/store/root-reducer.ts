@@ -22,6 +22,7 @@ const rootReducer = {
   podcast,
   record,
   userProfile,
+  playlist,
   notification,
   configurateUser,
   playlist,

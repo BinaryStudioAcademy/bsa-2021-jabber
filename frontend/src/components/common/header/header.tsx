@@ -82,6 +82,14 @@ const Header: React.FC = () => {
                         </li>
                         <li className={styles.dropDownListItem}>
                           <Link
+                            to={`${AppRoute.PLAYLISTS_USERS}/${user?.id}`}
+                            className={styles.link}
+                          >
+                            My Playlists
+                          </Link>
+                        </li>
+                        <li className={styles.dropDownListItem}>
+                          <Link
                             to={AppRoute.PODCASTS_EDIT}
                             className={styles.link}
                           >

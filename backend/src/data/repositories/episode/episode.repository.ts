@@ -30,7 +30,7 @@ class Episode {
     return this.#EpisodeModel.query().where('type', EpisodeType.PUBLIC).orderByRaw('random()');
   }
 
-  public getPopular():  Promise<TEpisode[]> {
+  public getPopular(): Promise<TEpisode[]> {
     return this.#EpisodeModel.query()
       .where('type', EpisodeType.PUBLIC)
       .withGraphJoined('[image]')
@@ -53,16 +53,19 @@ class Episode {
     return this.#EpisodeModel.query().where('podcast_id', id);
   }
 
-  public getEpisodeCountByPodcastId(id: number): Promise<number> {
+  public getEpisodeCountByPodcastId(isOwner: boolean, id: number): Promise<number> {
     return this.#EpisodeModel
       .query()
       .where('podcast_id', id)
+      .where((builder) => isOwner || builder.where('type', EpisodeType.PUBLIC))
       .resultSize();
   }
 
-  public getByQueryByPodcastId({ podcastId, filter }: LoadEpisodesByPodcastIdPayload): Promise<TEpisode[]> {
+  public getByQueryByPodcastId(isOwner: boolean, { podcastId, filter }: LoadEpisodesByPodcastIdPayload): Promise<TEpisode[]> {
     return this.#EpisodeModel.query()
       .where('podcast_id', podcastId)
+      .where((builder) => isOwner || builder.where('type', EpisodeType.PUBLIC))
+      .orderBy('updated_at', 'desc')
       .limit(filter.limit)
       .offset(filter.offset);
   }
