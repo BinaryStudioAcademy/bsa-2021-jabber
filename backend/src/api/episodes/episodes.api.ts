@@ -82,6 +82,19 @@ const initEpisodesApi = ({ apiRouter, episodeService, userFavouriteEpisodeServic
   );
 
   episodeRouter.get(
+    EpisodesApiPath.PLAYLIST_$ID_EPISODES,
+    checkAuthMiddleware(HttpMethod.GET),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .send(await episodeService.getPlaylistEpisodesByQueryByPLaylistId({
+          playlistId: Number(req.params.playlistId),
+          filter: req.query as unknown as EpisodeLoadFilter,
+        }))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  episodeRouter.get(
     EpisodesApiPath.FAVOURITES_$ID_EPISODES,
     checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (req, res) => {

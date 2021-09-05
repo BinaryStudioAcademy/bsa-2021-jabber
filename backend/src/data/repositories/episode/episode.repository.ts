@@ -116,7 +116,7 @@ class Episode {
       .query()
       .withGraphJoined('[podcast]')
       .joinRelated('[playlistEpisodes]')
-      .where('playlists_episodes.playlist_id', playlistId)
+      .where('playlistEpisodes.playlist_id', playlistId)
       .limit(limit)
       .offset(offset);
   }
@@ -125,7 +125,7 @@ class Episode {
     return this.#EpisodeModel
       .query()
       .joinRelated('[playlistEpisodes]')
-      .where('playlists_episodes.playlist_id', id)
+      .where('playlistEpisodes.playlist_id', id)
       .resultSize();
   }
 }
