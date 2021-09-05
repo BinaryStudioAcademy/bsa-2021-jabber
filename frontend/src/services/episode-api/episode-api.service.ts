@@ -63,7 +63,7 @@ class EpisodeApi {
 
   public getByQueryByPlaylistId({ playlistId, filter }: LoadPlaylistEpisodesPayload): Promise<PlaylistEpisodeResponse> {
     return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.PLAYLISTS}/${playlistId}`,
+      `${this.#apiPrefix}${ApiPath.EPISODES}${ApiPath.PLAYLISTS}/${playlistId}${ApiPath.EPISODES}`,
       {
         method: HttpMethod.GET,
         query: filter,

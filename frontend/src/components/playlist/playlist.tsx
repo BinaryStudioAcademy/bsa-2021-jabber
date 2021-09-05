@@ -23,15 +23,21 @@ const Playlist: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
 
-  const { dataStatus, user, playlist, episodes } = useAppSelector(({ auth, playlist }: RootState) => ({
+  const { dataStatus, user, playlist, episodes, totalCount, episodesDataStatus } = useAppSelector(({ auth, playlist }: RootState) => ({
     user: auth.user,
     dataStatus: playlist.dataStatus,
     playlist: playlist.playlist,
     episodes: playlist.episodes,
+    episodesDataStatus: playlist.dataStatus,
+    totalCount: playlist.totalCount,
   }));
-
-  // eslint-disable-next-line no-console
-  console.log('episodes', episodes);
+  const isLoading = dataStatus === DataStatus.PENDING;
+  const isOwner = user?.id === playlist?.userId;
+  const isMaster = user?.role === UserRole.MASTER;
+  const isAllowDelete = isOwner || isMaster;
+  const isEpisodesLoading = episodesDataStatus === DataStatus.PENDING;
+  const [episodePagination, setEpisodePagination] = useState(DEFAULT_EPISODE_PAGINATION);
+  const totalPagesCount = Math.ceil(totalCount / episodePagination.row);
 
   useEffect( () => {
     dispatch(playlistActions.loadById(Number(id)));
@@ -39,17 +45,7 @@ const Playlist: React.FC = () => {
       playlistId: Number(id),
       filter: getFilterEpisode(episodePagination.page, episodePagination.row),
     }));
-  }, [id]);
-
-  const isLoading = dataStatus === DataStatus.PENDING;
-  // const hasUser = Boolean(user);
-  const isOwner = user?.id === playlist?.userId;
-  const isMaster = user?.role === UserRole.MASTER;
-  const isAllowDelete = isOwner || isMaster;
-
-  const [episodePagination, setEpisodePagination] = useState(DEFAULT_EPISODE_PAGINATION);
-  const countEpisodes = playlist?.episodes.length || 0;
-  const totalPagesCount = Math.ceil(countEpisodes / episodePagination.row);
+  }, [id, episodePagination]);
 
   if (isLoading) {
     return <Loader />;
@@ -97,19 +93,21 @@ const Playlist: React.FC = () => {
       </div>
       <div className={styles.tableWrapper}>
         <div className={styles.container}>
-          {playlist?.episodes.length
-            ? <EpisodeTable
-              episodes={playlist?.episodes}
-              pageCount={totalPagesCount}
-              currentPage={episodePagination.page}
-              onPageChange={handlePageChange}
-              totalEpisodesCount={countEpisodes}
-            />
-            : (
-              <div className={styles.placeholder}>
-                There are no episodes in this playlist yet.
-              </div>
-            )}
+          {isEpisodesLoading
+            ? <Loader />
+            : episodes.length
+              ? <EpisodeTable
+                episodes={episodes}
+                pageCount={totalPagesCount}
+                currentPage={episodePagination.page}
+                onPageChange={handlePageChange}
+                totalEpisodesCount={totalCount}
+              />
+              : (
+                <div className={styles.placeholder}>
+                  There are no episodes in this playlist yet.
+                </div>
+              ) }
         </div>
       </div>
     </>
