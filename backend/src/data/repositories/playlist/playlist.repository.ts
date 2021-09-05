@@ -31,7 +31,7 @@ class Playlist {
     return this.#PlaylistModel
       .query()
       .findById(id)
-      .withGraphFetched('[cover, episodes.[podcast]]');
+      .withGraphFetched('[cover]');
   }
 }
 
