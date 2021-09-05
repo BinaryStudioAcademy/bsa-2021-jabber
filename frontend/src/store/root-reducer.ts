@@ -25,7 +25,6 @@ const rootReducer = {
   playlist,
   notification,
   configurateUser,
-  playlist,
   toastr: toastrReducer,
 };
 
