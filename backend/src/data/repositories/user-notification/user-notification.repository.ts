@@ -24,6 +24,7 @@ class UserNotification {
   public getAllByUserId(id: number): Promise<TUserNotification[]>{
     return this.#UserNotificationModel.query()
       .where('user_id', id)
+      .orderBy('created_at', 'DESC')
       .withGraphJoined('[notification]');
   }
 
