@@ -10,3 +10,4 @@ export * as notification from './notification/actions';
 export * as configurateUser from './configurate-user/actions';
 export * as configuratePlaylist from './configurate-playlist/actions';
 export * as playlist from './playlist/actions';
+export * as userPlaylists from './user-playlists/actions';
