@@ -1,8 +1,10 @@
 .header {
+  position: sticky;
+  top: 0px;
   display: flex;
   min-height: 80px;
   background-color: var(--color-header-background);
-  z-index: var(--z-index--level-two);
+  z-index: var(--z-index--level-five);
 }
 
 .headerWrapper {
