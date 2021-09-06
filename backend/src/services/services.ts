@@ -20,6 +20,7 @@ import {
   userFavouriteEpisode as userFavouriteEpisodeRepository,
   playlist as playlistRepository,
   playlistEpisode as playlistEpisodeRepository,
+  playlistInvitationCode as playlistInvitationCodeRepository,
 } from '~/data/repositories/repositories';
 import { AsyncLocalStorage } from './async-storage/async-storage.service';
 import { Logger } from './logger/logger.service';
@@ -158,6 +159,7 @@ const playlist = new Playlist({
   playlistRepository,
   fileStorage,
   imageRepository,
+  playlistInvitationCodeRepository,
 });
 
 const playlistEpisode = new PlaylistEpisode({

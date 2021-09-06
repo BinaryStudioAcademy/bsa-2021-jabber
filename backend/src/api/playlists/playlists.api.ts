@@ -3,7 +3,7 @@ import {
   ApiPath,
   HttpCode,
   HttpMethod,
-  PlaylistsApiPath,
+  PlaylistsApiPath, PodcastsApiPath,
 } from '~/common/enums/enums';
 import { handleAsyncApi } from '~/helpers/helpers';
 import {
@@ -20,6 +20,7 @@ import {
   playlistCreate as playlistCreateValidationSchema,
   playlistEpisode as playlistEpisodeValidationSchema,
 } from '~/validation-schemas/validation-schemas';
+import {User} from "~/common/types/types";
 
 type Args = {
   apiRouter: Router;
@@ -72,6 +73,16 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
     handleAsyncApi(async (req, res) => {
       return res
         .json(await playlistEpisodeService.create(req.body))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  playlistRouter.get(
+    PodcastsApiPath.INVITE_$CODE,
+    checkAuthMiddleware(HttpMethod.GET),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await playlistService.invite(req.params.code))
         .status(HttpCode.OK);
     }),
   );
