@@ -11,6 +11,7 @@ enum NotificationMessage {
   PASSWORD_RESETED = 'A new password has been sent to your email 🎉',
   INVITATION_LINK_COPIED = 'Invitation link has been copied to clipboard 🎉',
   PLAYLIST_CREATED = 'Playlist has been created successfully 🎉',
+  PLAYLIST_UPDATED = 'Playlist has been updated successfully 🎉',
   EPISODE_ADDED_TO_PLAYLIST = 'Episode has been added to playlist successfully 🎉',
 }
 
