@@ -39,6 +39,7 @@ export {
   UserFavouriteEpisodeDTOKey,
   PlaylistDTOKey,
   PlaylistEpisodeDTOKey,
+  PlaylistInvitationCodeDTOKey,
 } from './db/db';
 export { HttpCode, HttpMethod } from './http/http';
 export {

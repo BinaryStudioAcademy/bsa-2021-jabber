@@ -23,6 +23,7 @@ enum ErrorMessage {
   ALREADY_IN_FAVOURITES = 'Already in favourites',
   INVITATION_CODE_DOES_NOT_EXIST = 'Invitation code does not exist',
   ALREADY_IN_PLAYLIST = 'Already in playlist',
+  PLAYLIST_NOT_FOUND = 'Playlist not found',
 }
 
 export { ErrorMessage };

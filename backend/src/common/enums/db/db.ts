@@ -17,3 +17,4 @@ export { InvitationCodeDTOKey } from './invitation-code-dto-key.enum';
 export { UserFavouriteEpisodeDTOKey } from './user-favourite-episode-dto-key.enum';
 export { PlaylistDTOKey } from './playlist-dto-key.enum';
 export { PlaylistEpisodeDTOKey } from './playlist-episode-dto-key.enum';
+export { PlaylistInvitationCodeDTOKey } from './playlist-invitation-code-dto-key.enum';
