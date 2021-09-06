@@ -65,5 +65,7 @@ export type {
   PlaylistPayload,
   PlaylistCreatePayload,
   PlaylistCreateDTOPayload,
+  PlaylistEditDTOPayload,
+  PlaylistEditPayload,
 } from './playlist/playlist';
 export type { PlaylistEpisode, PlaylistEpisodePayload } from './playlist-episode/playlist-episode';
