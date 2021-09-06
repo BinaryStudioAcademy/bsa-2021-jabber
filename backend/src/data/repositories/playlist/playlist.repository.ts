@@ -2,6 +2,7 @@ import { raw } from 'objection';
 import {
   Playlist as TPlaylist,
   PlaylistCreateDTOPayload,
+  PlaylistEditDTOPayload,
 } from '~/common/types/types';
 import { PodcastType } from '~/common/enums/enums';
 import { PlaylistModel as PlaylistM } from '~/data/models/models';
@@ -32,7 +33,9 @@ class Playlist {
   }
 
   public getById(id: number): Promise<TPlaylist> {
-    return this.#PlaylistModel.query().findById(id);
+    return this.#PlaylistModel.query()
+      .findById(id)
+      .withGraphFetched('[cover]');
   }
 
   public getPopular(): Promise<TPlaylist[]> {
@@ -48,6 +51,12 @@ class Playlist {
       .orderByRaw('commentsCount DESC')
       .withGraphFetched('[user, cover]')
       .limit(POPULAR_PLAYLIST_LOAD_LIMIT);
+  }
+
+  public update(id: string, payload: PlaylistEditDTOPayload): Promise<TPlaylist> {
+    return this.#PlaylistModel
+      .query()
+      .updateAndFetchById(id, payload);
   }
 }
 
