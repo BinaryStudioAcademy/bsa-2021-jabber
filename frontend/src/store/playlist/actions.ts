@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Playlist, User, AsyncThunkConfig, LoadPlaylistEpisodesPayload, PlaylistEpisodeResponse } from 'common/types/types';
+import { Playlist, User, AsyncThunkConfig, EpisodeWithPodcast } from 'common/types/types';
 import { ActionType } from './common';
 
 const loadById = createAsyncThunk<Playlist, number, AsyncThunkConfig>(
@@ -10,10 +10,10 @@ const loadById = createAsyncThunk<Playlist, number, AsyncThunkConfig>(
     return playlist;
   });
 
-const loadEpisodesByPlaylistId = createAsyncThunk<PlaylistEpisodeResponse, LoadPlaylistEpisodesPayload, AsyncThunkConfig>(
+const loadEpisodesByPlaylistId = createAsyncThunk<EpisodeWithPodcast[], number, AsyncThunkConfig>(
   ActionType.LOAD_PLAYLIST_EPISODES, async (id, { extra }) => {
     const { episodeApi } = extra;
-    const result = await episodeApi.getByQueryByPlaylistId(id);
+    const result = await episodeApi.getByPlaylistId(id);
 
     return result;
   });

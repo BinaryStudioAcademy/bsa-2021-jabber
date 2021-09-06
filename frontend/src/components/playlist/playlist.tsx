@@ -2,7 +2,6 @@ import {
   useAppSelector,
   useDispatch,
   useParams,
-  useState,
   useEffect,
 } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
@@ -13,8 +12,7 @@ import {
   ImageWrapper,
   Link,
 } from 'components/common/common';
-import { DEFAULT_EPISODE_PAGINATION } from './common/constants/constants';
-import { getAllowedClasses, getFilterEpisode } from 'helpers/helpers';
+import { getAllowedClasses } from 'helpers/helpers';
 import { PageParams } from './common/types/types';
 import { EpisodeTable } from './components/components';
 import styles from './styles.module.scss';
@@ -23,40 +21,27 @@ const Playlist: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
 
-  const { dataStatus, user, playlist, episodes, totalCount, episodesDataStatus } = useAppSelector(({ auth, playlist }: RootState) => ({
+  const { dataStatus, user, playlist, episodes, episodesDataStatus } = useAppSelector(({ auth, playlist }: RootState) => ({
     user: auth.user,
     dataStatus: playlist.dataStatus,
     playlist: playlist.playlist,
     episodes: playlist.episodes,
     episodesDataStatus: playlist.dataStatus,
-    totalCount: playlist.totalCount,
   }));
   const isLoading = dataStatus === DataStatus.PENDING;
   const isOwner = user?.id === playlist?.userId;
   const isMaster = user?.role === UserRole.MASTER;
   const isAllowDelete = isOwner || isMaster;
   const isEpisodesLoading = episodesDataStatus === DataStatus.PENDING;
-  const [episodePagination, setEpisodePagination] = useState(DEFAULT_EPISODE_PAGINATION);
-  const totalPagesCount = Math.ceil(totalCount / episodePagination.row);
 
   useEffect( () => {
     dispatch(playlistActions.loadById(Number(id)));
-    dispatch(playlistActions.loadEpisodesByPlaylistId({
-      playlistId: Number(id),
-      filter: getFilterEpisode(episodePagination.page, episodePagination.row),
-    }));
-  }, [id, episodePagination]);
+    dispatch(playlistActions.loadEpisodesByPlaylistId(Number(id)));
+  }, [id]);
 
   if (isLoading) {
     return <Loader />;
   }
-
-  const handlePageChange = (selectedPage: number): void => {
-    setEpisodePagination({
-      page: selectedPage,
-      row: episodePagination.row,
-    });
-  };
 
   return (
     <>
@@ -96,13 +81,7 @@ const Playlist: React.FC = () => {
           {isEpisodesLoading
             ? <Loader />
             : episodes.length
-              ? <EpisodeTable
-                episodes={episodes}
-                pageCount={totalPagesCount}
-                currentPage={episodePagination.page}
-                onPageChange={handlePageChange}
-                totalEpisodesCount={totalCount}
-              />
+              ? <EpisodeTable episodes={episodes}/>
               : (
                 <div className={styles.placeholder}>
                   There are no episodes in this playlist yet.

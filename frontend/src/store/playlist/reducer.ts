@@ -8,7 +8,6 @@ type State = {
   playlist: Playlist | null;
   episodes: EpisodeWithPodcast[];
   episodesDataStatus: DataStatus;
-  totalCount: number;
   playlists: Playlist[];
   user: User | null;
 };
@@ -18,7 +17,6 @@ const initialState: State = {
   playlist: null,
   episodes: [],
   episodesDataStatus: DataStatus.IDLE,
-  totalCount: 0,
   playlists: [],
   user: null,
 };
@@ -40,8 +38,7 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadEpisodesByPlaylistId.fulfilled, (state, action) => {
     state.episodesDataStatus = DataStatus.FULFILLED;
-    state.episodes = action.payload.episodes;
-    state.totalCount = action.payload.totalCount;
+    state.episodes = action.payload;
   });
   builder.addCase(loadEpisodesByPlaylistId.rejected, (state) => {
     state.episodesDataStatus = DataStatus.REJECTED;

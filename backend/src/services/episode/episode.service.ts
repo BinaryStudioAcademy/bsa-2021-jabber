@@ -15,8 +15,7 @@ import {
   LoadEpisodesByPodcastIdPayload,
   UserFavouriteEpisodeResponse,
   LoadFavouriteEpisodesPayload,
-  LoadPlaylistEpisodesPayload,
-  PlaylistEpisodeResponse,
+  EpisodeWithPodcast,
   User,
 } from '~/common/types/types';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
@@ -356,14 +355,9 @@ class Episode {
     };
   }
 
-  public async getPlaylistEpisodesByQueryByPLaylistId(payload: LoadPlaylistEpisodesPayload): Promise<PlaylistEpisodeResponse> {
-    const episodes = await this.#episodeRepository.getPlaylistEpisodesByQueryByPLaylistId(payload);
-    const totalCount = await this.#episodeRepository.getPlaylistEpisodesCountByUserId(payload.playlistId);
-
-    return {
-      episodes,
-      totalCount,
-    };
+  public async getAllByPLaylistId(playlistId: number): Promise<EpisodeWithPodcast[]> {
+    const episodes = await this.#episodeRepository.getAllByPLaylistId(playlistId);
+    return episodes;
   }
 }
 
