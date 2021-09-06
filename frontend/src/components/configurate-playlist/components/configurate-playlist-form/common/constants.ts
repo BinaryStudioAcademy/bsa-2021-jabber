@@ -6,6 +6,7 @@ const DEFAULT_PLAYLIST_PAYLOAD: PlaylistFormPayload = {
   [PlaylistPayloadKey.DESCRIPTION]: '',
   [PlaylistPayloadKey.STATUS]: PlaylistStatus.STAGING,
   [PlaylistPayloadKey.COVER]: null,
+  [PlaylistPayloadKey.INVITATION_CODE]: '',
 };
 
 export { DEFAULT_PLAYLIST_PAYLOAD };
