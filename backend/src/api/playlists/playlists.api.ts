@@ -97,6 +97,17 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
     }),
   );
 
+  playlistRouter.delete(
+    PlaylistsApiPath.$ID,
+    checkAuthMiddleware(HttpMethod.DELETE),
+    checkUserPlaylistOwnerMiddleware(),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await playlistService.delete(Number(req.params.id)))
+        .status(HttpCode.OK);
+    }),
+  );
+
   return playlistRouter;
 };
 

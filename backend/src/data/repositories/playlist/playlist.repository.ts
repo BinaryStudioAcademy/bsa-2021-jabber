@@ -49,6 +49,10 @@ class Playlist {
       .withGraphFetched('[user, cover]')
       .limit(POPULAR_PLAYLIST_LOAD_LIMIT);
   }
+
+  public delete(id: number): Promise<TPlaylist> {
+    return this.#PlaylistModel.query().deleteById(id).returning('*').first();
+  }
 }
 
 export { Playlist };
