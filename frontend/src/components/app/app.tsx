@@ -39,11 +39,8 @@ const App: React.FC = () => {
   useEffect(() => {
     if (hasToken) {
       dispatch(authActions.getCurrentUser());
+      dispatch(notificationAction.getCountUncheckedUserNotifications());
     }
-  }, []);
-
-  useEffect(() => {
-    dispatch(notificationAction.getCountUncheckedUserNotifications());
   }, []);
 
   if (!hasUser && hasToken) {
