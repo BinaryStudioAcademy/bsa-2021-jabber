@@ -31,8 +31,11 @@ class Playlist {
       .withGraphFetched('[user, cover]');
   }
 
-  public getById(id: number): Promise<TPlaylist> {
-    return this.#PlaylistModel.query().findById(id);
+  public getById(id: number): Promise<TPlaylist>{
+    return this.#PlaylistModel
+      .query()
+      .findById(id)
+      .withGraphFetched('[cover]');
   }
 
   public getPopular(): Promise<TPlaylist[]> {

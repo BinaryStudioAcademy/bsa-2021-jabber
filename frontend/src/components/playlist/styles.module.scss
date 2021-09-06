@@ -1,0 +1,147 @@
+.infoWrapper {
+  background-color: #fff;
+}
+
+.tableWrapper {
+  background-color: var(--color-primary-light);
+  min-height: 300px;
+  tbody tr  {
+    position: relative;
+    &::after {
+      content: '';
+      width: 100%;
+      height: 1px;
+      background-color: #DCDDE7;
+      display: block;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+    }
+    td {
+      height: 40px;
+    }
+    td:first-child {
+      &:hover {
+        color: transparent;
+        background-color: var(--color-button-background);
+        mask: url('../../assets/img/player/play.svg') no-repeat 15px 50%;
+        mask-size: 7px;
+      }
+    }
+  }
+}
+
+.container {
+  max-width: 1606px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 30px 15px;
+}
+
+.infoContainer {
+  display: flex;
+  gap: 25px;
+  padding-top: 45px;
+  padding-bottom: 45px;
+  position: relative;
+}
+
+.playlistImage {
+  position: relative;
+  width: 231px;
+  height: 231px;
+}
+
+.imageWrapper {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  & div {
+    background-color: #989ea6;
+  }
+
+  & span {
+    left: 80%;
+    top: calc((100% - 89px) / 2);
+
+    font-size: 120px;
+    color: #3e4752;
+    opacity: 0.1;
+  }
+}
+
+.descriptionWrapper {
+  width: 60%;
+  max-width: 831px;
+}
+
+.title {
+  font-size: 40px;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.description {
+  font-size: 14px;
+  margin: 20px 0;
+  line-height: 1.25;
+  letter-spacing: 1px;
+}
+
+.editLink {
+  display: block;
+  position: absolute;
+  right: 85px;
+  top: 45px;
+  width: 25px;
+  height: 25px;
+  background: url('../../assets/img/user-profile/edit.svg') center center / cover;
+}
+
+.deleteButton {
+  position: absolute;
+  right: 35px;
+  top: 45px;
+  width: 25px;
+  height: 25px;
+  background: url('../../assets/img/trash-bucket.svg') center center / cover;
+  border: none;
+  cursor: pointer;
+}
+
+.placeholder {
+  font-weight: 600;
+  color: var(--color-header-background);
+}
+
+// Media
+@media screen and (max-width: 768px) {
+  .infoContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+  .descriptionWrapper {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .title {
+    margin-bottom: 15px;
+    font-size: 25px;
+  }
+
+  .deleteButton {
+    top: auto;
+    bottom: 45px;
+    right: 40%;
+  }
+
+  .editLink {
+    top: auto;
+    bottom: 45px;
+    left: 40%;
+  }
+}
