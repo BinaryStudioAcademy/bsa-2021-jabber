@@ -21,6 +21,7 @@ const create = createAsyncThunk<void, PlaylistFormPayload, AsyncThunkConfig>(
       description: playlistPayload.description,
       status: playlistPayload.status,
       coverDataUrl: coverFile ? await getDataUrl(coverFile) : null,
+      invitationCode: playlistPayload.invitationCode,
     });
 
     notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PLAYLIST_CREATED);

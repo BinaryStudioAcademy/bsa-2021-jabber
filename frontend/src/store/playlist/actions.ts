@@ -5,6 +5,7 @@ import {
   User,
 } from 'common/types/types';
 import { ActionType } from './common';
+import { AppRoute, NotificationTitle } from 'common/enums/enums';
 
 const loadPlaylists = createAsyncThunk<Playlist[], number, AsyncThunkConfig>(
   ActionType.LOAD_PLAYLISTS,
@@ -25,4 +26,20 @@ const loadPlaylistsOwner = createAsyncThunk<User, number, AsyncThunkConfig>(
   },
 );
 
-export { loadPlaylists, loadPlaylistsOwner };
+const playlistInvite = createAsyncThunk<void, string, AsyncThunkConfig>(
+  ActionType.PLAYLIST_INVITE,
+  async (code, { extra }) => {
+    const { playlistApi, navigationService, notificationService } = extra;
+
+    try {
+      const playlist = await playlistApi.invite(code);
+
+      navigationService.push(`${AppRoute.PLAYLISTS}/${playlist.id}`);
+    } catch (err) {
+      navigationService.push(`${AppRoute.ROOT}`);
+      notificationService.error(NotificationTitle.ERROR, err.message);
+    }
+
+  });
+
+export { loadPlaylists, loadPlaylistsOwner, playlistInvite };
