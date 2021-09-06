@@ -10,6 +10,14 @@ const loadCurrentUserNotifications = createAsyncThunk<UserNotification[], undefi
   return notifications;
 });
 
+const getCountUncheckedUserNotifications = createAsyncThunk<number, undefined, AsyncThunkConfig>
+(ActionType.GET_COUNT_USER_NOTIFICATION, async (id, { extra }) => {
+  const { userNotificationApi } = extra;
+  const count = await userNotificationApi.getCountUncheckedById();
+
+  return count;
+});
+
 const changeStatus = createAsyncThunk<UserNotification, UserNotification, AsyncThunkConfig>
 (ActionType.CHANGE_STATUS, async (payload, { extra }) => {
   const { userNotificationApi } = extra;
@@ -18,4 +26,4 @@ const changeStatus = createAsyncThunk<UserNotification, UserNotification, AsyncT
   return notification;
 });
 
-export { loadCurrentUserNotifications, changeStatus };
+export { loadCurrentUserNotifications, changeStatus, getCountUncheckedUserNotifications };

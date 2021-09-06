@@ -27,6 +27,17 @@ class UserNotificationApi {
     );
   }
 
+  public getCountUncheckedById(): Promise<number> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.NOTIFICATIONS}${
+        NotificationsApiPath.COUNT
+      }`,
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
+
   public update(payload: UserNotification): Promise<UserNotification> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.NOTIFICATIONS}/${payload.id}`,
