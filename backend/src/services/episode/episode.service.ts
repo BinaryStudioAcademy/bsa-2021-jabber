@@ -15,6 +15,7 @@ import {
   LoadEpisodesByPodcastIdPayload,
   UserFavouriteEpisodeResponse,
   LoadFavouriteEpisodesPayload,
+  EpisodeWithPodcast,
   User,
 } from '~/common/types/types';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
@@ -352,6 +353,11 @@ class Episode {
       episodes,
       totalCount,
     };
+  }
+
+  public async getAllByPLaylistId(playlistId: number): Promise<EpisodeWithPodcast[]> {
+    const episodes = await this.#episodeRepository.getAllByPLaylistId(playlistId);
+    return episodes;
   }
 }
 

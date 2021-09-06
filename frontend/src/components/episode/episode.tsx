@@ -78,8 +78,11 @@ const Episode: React.FC = () => {
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisodePayload(Number(id)));
-    dispatch(episodeActions.checkEpisodeIsFavorite(Number(id)));
-    dispatch(episodeActions.loadPlaylists());
+
+    if (hasUser) {
+      dispatch(episodeActions.loadPlaylistsByUserId(Number(user?.id)));
+      dispatch(episodeActions.checkEpisodeIsFavorite(Number(id)));
+    }
 
     return (): void => {
       dispatch(episodeActions.leaveEpisode(id));

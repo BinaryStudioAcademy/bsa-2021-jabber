@@ -15,6 +15,7 @@ import {
   UserFavouriteEpisodePayload,
   UserFavouriteEpisodeResponse,
   LoadFavouriteEpisodesPayload,
+  EpisodeWithPodcast,
 } from 'common/types/types';
 
 type Constructor = {
@@ -59,6 +60,15 @@ class EpisodeApi {
     );
   }
 
+  public getByPlaylistId(playlistId: number): Promise<EpisodeWithPodcast[]> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.EPISODES}${ApiPath.PLAYLISTS}/${playlistId}${ApiPath.EPISODES}`,
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
+
   public create(payload: EpisodeCreatePayload): Promise<Episode> {
     return this.#http.load(`${this.#apiPrefix}${ApiPath.EPISODES}`, {
       method: HttpMethod.POST,
@@ -89,7 +99,7 @@ class EpisodeApi {
 
   public checkEpisodeIsFavourite(episodeId: number): Promise<boolean> {
     return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.EPISODES}/${EpisodesApiPath.FAVOURITES}/${episodeId}${ApiPath.EPISODES}`,
+      `${this.#apiPrefix}${ApiPath.EPISODES}${EpisodesApiPath.FAVOURITES}/${episodeId}${ApiPath.EPISODES}`,
       {
         method: HttpMethod.GET,
       },
@@ -98,7 +108,7 @@ class EpisodeApi {
 
   public getFavoriteEpisodesByUserId({ userId, filter }: LoadFavouriteEpisodesPayload): Promise<UserFavouriteEpisodeResponse> {
     return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.EPISODES}/${EpisodesApiPath.FAVOURITES}/${userId}`,
+      `${this.#apiPrefix}${ApiPath.EPISODES}${EpisodesApiPath.FAVOURITES}/${userId}`,
       {
         method: HttpMethod.GET,
         query: filter,
@@ -108,7 +118,7 @@ class EpisodeApi {
 
   public addEpisodeToFavourites(payload: UserFavouriteEpisodePayload): Promise<UserFavouriteEpisode> {
     return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.EPISODES}/${EpisodesApiPath.FAVOURITES}`,
+      `${this.#apiPrefix}${ApiPath.EPISODES}${EpisodesApiPath.FAVOURITES}`,
       {
         method: HttpMethod.POST,
         contentType: ContentType.JSON,

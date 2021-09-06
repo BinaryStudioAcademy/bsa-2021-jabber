@@ -1,16 +1,18 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { UserNotification } from 'common/types/types';
-import { loadCurrentUserNotifications, changeStatus } from './actions';
+import { loadCurrentUserNotifications, changeStatus, getCountUncheckedUserNotifications } from './actions';
 
 type State = {
   dataStatus: DataStatus;
   notifications: UserNotification[];
+  countUncheckedNotification: number;
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
   notifications: [],
+  countUncheckedNotification: 0,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -22,6 +24,16 @@ const reducer = createReducer(initialState, (builder) => {
     state.notifications = action.payload;
   });
   builder.addCase(loadCurrentUserNotifications.rejected, (state) => {
+    state.dataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(getCountUncheckedUserNotifications.pending, (state) => {
+    state.dataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(getCountUncheckedUserNotifications.fulfilled, (state, action) => {
+    state.dataStatus = DataStatus.FULFILLED;
+    state.countUncheckedNotification = action.payload;
+  });
+  builder.addCase(getCountUncheckedUserNotifications.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
   builder.addCase(changeStatus.pending, (state) => {

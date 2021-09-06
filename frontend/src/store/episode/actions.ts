@@ -95,11 +95,10 @@ const toggleFavourite = createAsyncThunk<boolean, undefined, AsyncThunkConfig>(
   },
 );
 
-const loadPlaylists = createAsyncThunk<Playlist[], undefined, AsyncThunkConfig>
-(ActionType.LOAD_PLAYLISTS, async (_arg, { extra, getState }) => {
+const loadPlaylistsByUserId = createAsyncThunk<Playlist[], number, AsyncThunkConfig>
+(ActionType.LOAD_PLAYLISTS, async (userId, { extra }) => {
   const { playlistApi } = extra;
-  const { auth } = getState();
-  const playlists = await playlistApi.getAllByUserId((<User>auth.user).id);
+  const playlists = await playlistApi.getAllByUserId(userId);
 
   return playlists;
 });
@@ -136,6 +135,6 @@ export {
   leaveEpisode,
   checkEpisodeIsFavorite,
   toggleFavourite,
-  loadPlaylists,
+  loadPlaylistsByUserId,
   addEpisodeToPlaylist,
 };
