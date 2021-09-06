@@ -23,6 +23,7 @@ import styles from './styles.module.scss';
 type Props = {
   onSubmit: (payload: PlaylistFormPayload) => void;
   payload?: PlaylistFormPayload;
+  isEdit: boolean;
 };
 
 const statusOptions: Option[] = getOptions(Object.values(PlaylistStatus));
@@ -30,6 +31,7 @@ const statusOptions: Option[] = getOptions(Object.values(PlaylistStatus));
 const ConfiguratePlaylistForm: React.FC<Props> = ({
   onSubmit,
   payload = DEFAULT_PLAYLIST_PAYLOAD,
+  isEdit,
 }) => {
 
   const { control, handleSubmit, errors } = useAppForm({
@@ -69,7 +71,7 @@ const ConfiguratePlaylistForm: React.FC<Props> = ({
           name={PlaylistPayloadKey.STATUS}
           control={control}
           errors={errors}
-          isDisabled={isFormDisabled}
+          isDisabled={isFormDisabled || !isEdit}
         />
         <Input
           name={PlaylistPayloadKey.DESCRIPTION}

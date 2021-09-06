@@ -56,6 +56,7 @@ const ConfiguratePlaylist: React.FC = () => {
         <ConfiguratePlaylistForm
           onSubmit={handleFormSubmit}
           payload={mappedPlaylist}
+          isEdit={isEdit}
         />
       </div>
     </main>
