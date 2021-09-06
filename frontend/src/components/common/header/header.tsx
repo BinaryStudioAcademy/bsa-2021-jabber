@@ -98,6 +98,14 @@ const Header: React.FC = () => {
                         </li>
                         <li className={styles.dropDownListItem}>
                           <Link
+                            to={AppRoute.PLAYLISTS_EDIT}
+                            className={styles.link}
+                          >
+                            + Create Playlist
+                          </Link>
+                        </li>
+                        <li className={styles.dropDownListItem}>
+                          <Link
                             to={AppRoute.ROOT}
                             className={styles.link}
                             onClick={handleUserExit}
