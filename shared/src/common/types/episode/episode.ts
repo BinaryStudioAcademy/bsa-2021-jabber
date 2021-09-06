@@ -7,5 +7,3 @@ export type { LoadEpisodesByPodcastIdPayload } from './load-episodes-by-podcast-
 export type { LoadFavouriteEpisodesPayload } from './load-favourite-episodes-payload.type';
 export type { EpisodeQueryPayload } from './episode-query-payload.type';
 export type { EpisodeWithPodcast } from './episode-with-podcast.type';
-export type { LoadPlaylistEpisodesPayload } from './load-playlist-episodes-payload.type';
-export type { PlaylistEpisodeQueryPayload } from './playlist-episode-query-payload.type';

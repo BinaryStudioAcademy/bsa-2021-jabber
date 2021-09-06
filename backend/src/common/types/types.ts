@@ -30,7 +30,6 @@ export type {
   EpisodeLoadFilter,
   LoadEpisodesByPodcastIdPayload,
   EpisodeQueryPayload,
-  LoadPlaylistEpisodesPayload,
   LoadFavouriteEpisodesPayload,
   EpisodeWithPodcast,
 } from './episode/episode';
@@ -67,4 +66,4 @@ export type {
   PlaylistCreatePayload,
   PlaylistCreateDTOPayload,
 } from './playlist/playlist';
-export type { PlaylistEpisode, PlaylistEpisodePayload, PlaylistEpisodeResponse } from './playlist-episode/playlist-episode';
+export type { PlaylistEpisode, PlaylistEpisodePayload } from './playlist-episode/playlist-episode';
