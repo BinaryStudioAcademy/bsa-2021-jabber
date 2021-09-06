@@ -6,10 +6,7 @@ import {
 } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
 import { DataStatus, UserRole } from 'common/enums/enums';
-import {
-  playlist as playlistActions,
-  configuratePlaylist as configuratePlaylistActions,
-} from 'store/actions';
+import { playlist as playlistActions } from 'store/actions';
 import {
   Loader,
   ImageWrapper,
@@ -49,7 +46,7 @@ const Playlist: React.FC = () => {
   const handleDeletePlaylist = (): void => {
     if (user) {
       dispatch(
-        configuratePlaylistActions.deletePlaylist({
+        playlistActions.deletePlaylist({
           playlistId: Number(id),
           userId: user?.id,
         }),

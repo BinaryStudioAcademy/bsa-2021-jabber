@@ -30,13 +30,13 @@ const ConfiguratePlaylistForm: React.FC<Props> = ({
     defaultValues: DEFAULT_PLAYLIST_PAYLOAD,
   });
 
-  const { dataStatus } = useAppSelector(
+  const { formDataStatus } = useAppSelector(
     ({ configuratePlaylist }) => ({
-      dataStatus: configuratePlaylist.dataStatus,
+      formDataStatus: configuratePlaylist.formDataStatus,
     }),
   );
 
-  const isFormDisabled = dataStatus === DataStatus.PENDING;
+  const isFormDisabled = formDataStatus === DataStatus.PENDING;
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
