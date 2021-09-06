@@ -66,6 +66,15 @@ class PlaylistApi {
     );
   }
 
+  public getPopular(): Promise<Playlist[]> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PLAYLISTS}${PlaylistsApiPath.POPULAR}`,
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
+
   public deleteEpisodeFromPlaylist(payload: PlaylistEpisodePayload): Promise<PlaylistEpisode> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.PLAYLISTS}${PlaylistsApiPath.EPISODES}`,
