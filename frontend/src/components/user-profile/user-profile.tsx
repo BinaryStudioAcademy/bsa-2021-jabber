@@ -12,7 +12,7 @@ import { userProfile as userProfileActions } from 'store/actions';
 import contactLogo from 'assets/img/user-profile/contact.svg';
 import emailLogo from 'assets/img/user-profile/email.svg';
 import { PageParams } from './common/types/types';
-import { getFilterEpisode } from 'helpers/helpers';
+import { getFilterEpisode, checkIsOneOf } from 'helpers/helpers';
 import { FavouriteEpisodeTable } from './components/components';
 import { DEFAULT_EPISODE_PAGINATION } from './common/constants/constants';
 import styles from './styles.module.scss';
@@ -94,11 +94,13 @@ const UserPage: React.FC = () => {
   const isShowFollowButton =
     Boolean(currentUser) && currentUser?.id !== user?.id;
   const isOwnPage = currentUser?.id === Number(id);
-  const isLoading =
-    userDataStatus === DataStatus.PENDING ||
-    podcastsDataStatus === DataStatus.PENDING ||
-    favoriteEpisodesDataStatus === DataStatus.PENDING ||
-    followersDataStatus === DataStatus.PENDING;
+  const isLoading = checkIsOneOf(
+    DataStatus.PENDING,
+    userDataStatus,
+    podcastsDataStatus,
+    favoriteEpisodesDataStatus,
+    followersDataStatus,
+  );
   const hasFavoriteEpisodes = Boolean(favoriteEpisodes.length);
 
   const handleToggleFollow = (): void => {
