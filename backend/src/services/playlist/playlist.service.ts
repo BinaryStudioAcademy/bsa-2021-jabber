@@ -95,13 +95,13 @@ class Playlist {
       });
     }
 
-    if (playlist.coverId) {
-      this.#imageService.delete(playlist.coverId);
-    }
-
     await this.#playlistEpisodeService.deleteAllByPlaylistId(playlist.id);
 
     await this.#playlistRepository.delete(id);
+
+    if (playlist.coverId) {
+      await this.#imageService.delete(playlist.coverId);
+    }
 
     return playlist;
   }

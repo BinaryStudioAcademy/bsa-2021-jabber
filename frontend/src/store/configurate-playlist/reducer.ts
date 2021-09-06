@@ -1,24 +1,37 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { create } from './actions';
+import { Playlist } from 'common/types/types';
+import { create, deletePlaylist } from './actions';
 
 type State = {
-  formDataStatus: DataStatus;
+  dataStatus: DataStatus;
+  playlist: Playlist | null;
 };
 
 const initialState: State = {
-  formDataStatus: DataStatus.IDLE,
+  dataStatus: DataStatus.IDLE,
+  playlist: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder.addCase(create.pending, (state) => {
-    state.formDataStatus = DataStatus.PENDING;
+    state.dataStatus = DataStatus.PENDING;
   });
   builder.addCase(create.fulfilled, (state) => {
     Object.assign(state, initialState);
   });
   builder.addCase(create.rejected, (state) => {
-    state.formDataStatus = DataStatus.REJECTED;
+    state.dataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(deletePlaylist.pending, (state) => {
+    state.dataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(deletePlaylist.fulfilled, (state) => {
+    state.dataStatus = DataStatus.FULFILLED;
+    state.playlist = null;
+  });
+  builder.addCase(deletePlaylist.rejected, (state) => {
+    state.dataStatus = DataStatus.REJECTED;
   });
 });
 
