@@ -51,7 +51,7 @@ class User {
   }
 
   public updatePassword(id: number, payload: UserUpdatePasswordDTOPayload): Promise<TUser> {
-    return this.#UserModel.query().patch(payload).findById(id).omit(['password']);
+    return this.#UserModel.query().patch(payload).findById(id);
   }
 
   public getPopular(filter: UserPopularLoadFilter): Promise<TUser[]> {

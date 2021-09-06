@@ -1,4 +1,4 @@
-import { Popuper, Button, Link } from 'components/common/common';
+import { Popuper, Link } from 'components/common/common';
 import { PopupItem } from './components/components';
 import { Playlist } from 'common/types/types';
 import { AppRoute } from 'common/enums/enums';
@@ -19,12 +19,7 @@ const AddToPlaylistPopup: React.FC<Props> = ({ playlists, handleAddToPlaylist, t
   return (
     <Popuper
       trigger={
-        <div className={triggerClassName}>
-          <Button
-            className={styles.triggerButton}
-            label="Add to Playlist"
-          />
-        </div>
+        <button className={triggerClassName}></button>
       }
       renderContent={(close): JSX.Element => (
         <div className={styles.dropDown}>

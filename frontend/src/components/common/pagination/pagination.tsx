@@ -1,6 +1,7 @@
 import { getAllowedClasses } from 'helpers/helpers';
 import ReactPaginate from 'react-paginate';
 import { MARGIN_PAGES_DISPLAYED, PAGE_RANGE_DISPLAYED } from './common/constants/constants';
+import { getShowingRows } from './helpers/helpers';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -20,8 +21,7 @@ const Pagination: React.FC<Props> = ({
   totalRowsCount,
   defaultPaginationRows,
 }) => {
-
-  const showingRows = totalRowsCount && defaultPaginationRows && (defaultPaginationRows < totalRowsCount) ? defaultPaginationRows : totalRowsCount;
+  const showingRows = getShowingRows(currentPage, totalRowsCount, defaultPaginationRows);
 
   const handlePageChange = ({ selected }: { selected: number }): void => {
     onPageChange(selected);

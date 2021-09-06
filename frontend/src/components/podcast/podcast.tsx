@@ -5,7 +5,7 @@ import { Button, ConfirmPopup, ImageWrapper, Link, Loader } from 'components/com
 import { getAllowedClasses, getFilterEpisode } from 'helpers/helpers';
 import { EpisodeTable } from './components/components';
 import { PageParams } from './common/types/types';
-import { getPodcastPeriodicity } from './helpers/helpers';
+import { getPodcastPeriodicity, getSortedEpisodes } from './helpers/helpers';
 import { DEFAULT_EPISODE_PAGINATION } from './common/constatnts/constants';
 import styles from './styles.module.scss';
 
@@ -45,7 +45,7 @@ const Podcast: React.FC = () => {
   const isPrivatePodcast = podcast?.type === PodcastType.PRIVATE;
   const isAutoPeriodicity = podcast?.periodicity === PodcastPeriodicity.AUTO;
   const estimatedPodcastPeriodicity = getPodcastPeriodicity(episodes);
-
+  const sortedEpisodes = getSortedEpisodes(episodes);
   const [episodePagination, setEpisodePagination] = useState(DEFAULT_EPISODE_PAGINATION);
 
   const totalPagesCount = Math.ceil(countEpisodes / episodePagination.row);
@@ -243,7 +243,7 @@ const Podcast: React.FC = () => {
             ? isEpisodesLoading
               ? <Loader />
               : <EpisodeTable
-                episodes={episodes}
+                episodes={sortedEpisodes}
                 pageCount={totalPagesCount}
                 currentPage={episodePagination.page}
                 onPageChange={handlePageChange}
