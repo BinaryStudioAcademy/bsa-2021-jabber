@@ -121,6 +121,7 @@ const episode = new Episode({
   recordRepository,
   fileStorage,
   userNotificationRepository,
+  playlistRepository,
 });
 
 const podcast = new Podcast({
