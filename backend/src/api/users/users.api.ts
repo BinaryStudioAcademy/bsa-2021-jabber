@@ -13,6 +13,7 @@ import {
   checkAuth as checkAuthMiddleware,
   checkUserHasPermitToEdit as checkUserHasPermitToEditMiddleware,
   validateSchema as validateSchemaMiddleware,
+  checkIsParamsValid as checkIsParamsValidMiddleware,
 } from '~/middlewares/middlewares';
 
 type Args = {
@@ -44,6 +45,7 @@ const initUsersApi = ({ apiRouter, userService }: Args): Router => {
 
   userRouter.get(
     UsersApiPath.$ID,
+    checkIsParamsValidMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await userService.getById(Number(req.params.id)))
@@ -53,6 +55,7 @@ const initUsersApi = ({ apiRouter, userService }: Args): Router => {
 
   userRouter.get(
     UsersApiPath.$USER_ID_FOLLOWERS,
+    checkIsParamsValidMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await userService.getFollowersByUserId(Number(req.params.userId)))

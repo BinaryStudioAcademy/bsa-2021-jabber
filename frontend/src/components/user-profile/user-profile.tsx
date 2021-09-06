@@ -106,7 +106,7 @@ const UserPage: React.FC = () => {
     }
   };
 
-  if (!hasUser && dataStatus === DataStatus.FULFILLED) {
+  if (!hasUser && dataStatus === DataStatus.FULFILLED || dataStatus === DataStatus.REJECTED) {
     return (
       <div className={styles.containerUserNotFound}>
         <h1>User Not Found</h1>

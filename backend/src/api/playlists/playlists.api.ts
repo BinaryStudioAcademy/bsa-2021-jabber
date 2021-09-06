@@ -15,6 +15,7 @@ import {
   validateSchema as validateSchemaMiddleware,
   checkUserPlaylistOwner as checkUserPlaylistOwnerMiddleware,
   checkUserMatch as checkUserMatchMiddleware,
+  checkIsParamsValid as checkIsParamsValidMiddleware,
 } from '~/middlewares/middlewares';
 import {
   playlistCreate as playlistCreateValidationSchema,
@@ -44,6 +45,7 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
 
   playlistRouter.get(
     PlaylistsApiPath.$ID,
+    checkIsParamsValidMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await playlistService.getById(Number(req.params.id)))
@@ -54,6 +56,7 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
   playlistRouter.get(
     PlaylistsApiPath.USERS_$USER_ID,
     checkAuthMiddleware(HttpMethod.GET),
+    checkIsParamsValidMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await playlistService.getAllByUserId(Number(req.params.userId)))

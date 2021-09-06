@@ -5,6 +5,7 @@ import { handleAsyncApi } from '~/helpers/helpers';
 import {
   checkAuth as checkAuthMiddleware,
   validateSchema as validateSchemaMiddleware,
+  checkIsParamsValid as checkIsParamsValidMiddleware,
 } from '~/middlewares/middlewares';
 import { podcastFollower as podcastFollowerValidationSchema } from '~/validation-schemas/validation-schemas';
 
@@ -20,6 +21,7 @@ const initPodcastFollowersApi = ({ apiRouter, podcastFollowerService }: Args): R
 
   podcastFollowerRouter.get(
     PodcastsFollowersApiPath.$ID,
+    checkIsParamsValidMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await podcastFollowerService.getCountByPodcastId(Number(req.params.id)))
@@ -29,6 +31,7 @@ const initPodcastFollowersApi = ({ apiRouter, podcastFollowerService }: Args): R
 
   podcastFollowerRouter.get(
     PodcastsFollowersApiPath.$PODCAST_ID_$FOLLOWER_ID,
+    checkIsParamsValidMiddleware(),
     checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (req, res) => {
       const isFollowed = await podcastFollowerService.checkIsFollowed({
