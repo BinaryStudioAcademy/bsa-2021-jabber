@@ -19,7 +19,10 @@ const AddToPlaylistPopup: React.FC<Props> = ({ playlists, handleAddToPlaylist, t
   return (
     <Popuper
       trigger={
-        <button className={triggerClassName}></button>
+        <button
+          className={triggerClassName}
+          title={'Add to playlist'}
+        ></button>
       }
       renderContent={(close): JSX.Element => (
         <div className={styles.dropDown}>
