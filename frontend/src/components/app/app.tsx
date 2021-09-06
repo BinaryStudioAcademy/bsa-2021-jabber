@@ -25,6 +25,7 @@ import { auth as authActions } from 'store/actions';
 import UserFollowersPage from 'components/user-followers/user-followers';
 import ConfiguratePlaylist from 'components/configurate-playlist/configurate-playlist';
 import Playlist from 'components/user-playlists/user-playlists';
+import PlaylistInvite from 'components/playlist-invite/playlist-invite';
 
 const App: React.FC = () => {
   const { user } = useAppSelector(({ auth }) => ({
@@ -67,6 +68,11 @@ const App: React.FC = () => {
         <AuthPrivateRouter
           path={AppRoute.PODCASTS_INVITE_$CODE}
           component={PodcastInvite}
+          exact
+        />
+        <AuthPrivateRouter
+          path={AppRoute.PLAYLISTS_INVITE_$CODE}
+          component={PlaylistInvite}
           exact
         />
         <AuthPublicRouter
