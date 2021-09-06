@@ -21,6 +21,10 @@ const Notifications: React.FC = () => {
     dispatch(notificationAction.loadCurrentUserNotifications());
   }, []);
 
+  useEffect(() => {
+    dispatch(notificationAction.getCountUncheckedUserNotifications());
+  }, [notifications]);
+
   if (!hasNotificaions) {
     return (
       <div className={styles.containerUserNotFound}>

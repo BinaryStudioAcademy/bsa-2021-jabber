@@ -16,6 +16,10 @@ class UserNotification {
     return this.#userNotificationRepository.getAllByUserId(id);
   }
 
+  public getCountUncheckedByUserId(id: number): Promise<number> {
+    return this.#userNotificationRepository.getCountUncheckedByUserId(id);
+  }
+
   public async update(id: number, { status }: TUserNotification):  Promise<TUserNotification> {
     const updateUserNotification: UserNotificationEditDTOPayload = { status };
     return this.#userNotificationRepository.update(id, updateUserNotification);
