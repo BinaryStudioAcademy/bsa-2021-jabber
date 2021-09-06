@@ -24,7 +24,9 @@ const UserPage: React.FC = () => {
     currentUser,
     user,
     podcasts,
-    dataStatus,
+    userDataStatus,
+    podcastsDataStatus,
+    favoriteEpisodesDataStatus,
     isFollowed,
     followersCount,
     followersDataStatus,
@@ -34,7 +36,9 @@ const UserPage: React.FC = () => {
     currentUser: auth.user,
     user: userProfile.user,
     podcasts: userProfile.podcasts,
-    dataStatus: userProfile.dataStatus,
+    userDataStatus: userProfile.userDataStatus,
+    podcastsDataStatus: userProfile.podcastsDataStatus,
+    favoriteEpisodesDataStatus: userProfile.favoriteEpisodesDataStatus,
     isFollowed: userProfile.isFollowed,
     followersCount: userProfile.followersCount,
     followersDataStatus: userProfile.followersDataStatus,
@@ -91,7 +95,9 @@ const UserPage: React.FC = () => {
     Boolean(currentUser) && currentUser?.id !== user?.id;
   const isOwnPage = currentUser?.id === Number(id);
   const isLoading =
-    dataStatus === DataStatus.PENDING ||
+    userDataStatus === DataStatus.PENDING ||
+    podcastsDataStatus === DataStatus.PENDING ||
+    favoriteEpisodesDataStatus === DataStatus.PENDING ||
     followersDataStatus === DataStatus.PENDING;
   const hasFavoriteEpisodes = Boolean(favoriteEpisodes.length);
 
@@ -106,16 +112,16 @@ const UserPage: React.FC = () => {
     }
   };
 
-  if (!hasUser && dataStatus === DataStatus.FULFILLED) {
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (!hasUser) {
     return (
       <div className={styles.containerUserNotFound}>
         <h1>User Not Found</h1>
       </div>
     );
-  }
-
-  if (isLoading) {
-    return <Loader />;
   }
 
   return (
