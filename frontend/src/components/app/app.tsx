@@ -19,6 +19,7 @@ import Notifications from 'components/notifications/notifications';
 import EpisodeLive from 'components/episode-live/episode-live';
 import EditUser from 'components/edit-user/edit-user';
 import PodcastInvite from 'components/podcast-invite/podcast-invite';
+import PlaylistID from 'components/playlist/playlist';
 import { useDispatch, useEffect, useAppSelector } from 'hooks/hooks';
 import { storage } from 'services/services';
 import { auth as authActions, notification as notificationAction } from 'store/actions';
@@ -113,6 +114,11 @@ const App: React.FC = () => {
         <AuthPrivateRouter
           path={AppRoute.PLAYLISTS_EDIT_$ID}
           component={ConfiguratePlaylist}
+          exact
+        />
+        <AuthPublicRouter
+          path={AppRoute.PLAYLISTS_$ID}
+          component={PlaylistID}
           exact
         />
         <AuthPublicRouter path={AppRoute.ROOT} component={Homepage} exact />
