@@ -46,10 +46,28 @@
   margin-left: auto;
 }
 
+.notificationLink {
+  position: relative;
+}
+
 .notification {
   width: 23px;
   height: 23px;
   margin-left: 42px;
+}
+
+.newNotificationIndicator {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: -5px;
+  right: -6px;
+  background: var(--color-link-active);
+  color: #ffffff;
+  border-radius: 50%;
+  text-align: center;
+  line-height: normal;
+  font-size: 10px;
 }
 
 .profile {
@@ -269,6 +287,12 @@
         }
       }
     }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .profile {
+    padding: 0 20px;
   }
 }
 

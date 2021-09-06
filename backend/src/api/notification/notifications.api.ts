@@ -26,6 +26,16 @@ const initNotificationApi = ({ apiRouter, userNotificationService }: Args): Rout
     }),
   );
 
+  notificationRouter.get(
+    NotificationsApiPath.COUNT,
+    checkAuthMiddleware(HttpMethod.GET),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await userNotificationService.getCountUncheckedByUserId(Number(req.user?.id)))
+        .status(HttpCode.OK);
+    }),
+  );
+
   notificationRouter.put(
     NotificationsApiPath.$ID,
     checkAuthMiddleware(HttpMethod.PUT),

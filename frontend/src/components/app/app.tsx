@@ -22,7 +22,7 @@ import PodcastInvite from 'components/podcast-invite/podcast-invite';
 import PlaylistID from 'components/playlist/playlist';
 import { useDispatch, useEffect, useAppSelector } from 'hooks/hooks';
 import { storage } from 'services/services';
-import { auth as authActions } from 'store/actions';
+import { auth as authActions, notification as notificationAction } from 'store/actions';
 import UserFollowersPage from 'components/user-followers/user-followers';
 import ConfiguratePlaylist from 'components/configurate-playlist/configurate-playlist';
 import Playlist from 'components/user-playlists/user-playlists';
@@ -40,6 +40,7 @@ const App: React.FC = () => {
   useEffect(() => {
     if (hasToken) {
       dispatch(authActions.getCurrentUser());
+      dispatch(notificationAction.getCountUncheckedUserNotifications());
     }
   }, []);
 
