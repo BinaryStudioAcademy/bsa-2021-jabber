@@ -44,7 +44,6 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
 
   playlistRouter.get(
     PlaylistsApiPath.$ID,
-    checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await playlistService.getById(Number(req.params.id)))
