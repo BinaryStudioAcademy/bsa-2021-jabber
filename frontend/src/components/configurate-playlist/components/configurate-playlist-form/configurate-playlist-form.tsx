@@ -5,34 +5,42 @@ import {
   DataStatus,
   AppRoute,
   ButtonColor,
+  PlaylistStatus,
 } from 'common/enums/enums';
-import { PlaylistFormPayload } from 'common/types/types';
+import { PlaylistFormPayload, Option } from 'common/types/types';
 import { useAppForm, useAppSelector } from 'hooks/hooks';
 import {
   Input,
   Button,
+  Select,
   ImagePreviewControl,
 } from 'components/common/common';
 import { DEFAULT_PLAYLIST_PAYLOAD } from './common/constants';
 import { playlistCreate as playlistCreateValidationSchema } from 'validation-schemas/validation-schemas';
+import { getOptions } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 type Props = {
   onSubmit: (payload: PlaylistFormPayload) => void;
+  payload?: PlaylistFormPayload;
 };
+
+const statusOptions: Option[] = getOptions(Object.values(PlaylistStatus));
 
 const ConfiguratePlaylistForm: React.FC<Props> = ({
   onSubmit,
+  payload = DEFAULT_PLAYLIST_PAYLOAD,
 }) => {
 
   const { control, handleSubmit, errors } = useAppForm({
     validationSchema: playlistCreateValidationSchema,
-    defaultValues: DEFAULT_PLAYLIST_PAYLOAD,
+    defaultValues: payload,
   });
 
-  const { formDataStatus } = useAppSelector(
+  const { formDataStatus, playlist } = useAppSelector(
     ({ configuratePlaylist }) => ({
       formDataStatus: configuratePlaylist.formDataStatus,
+      playlist: configuratePlaylist.playlist,
     }),
   );
 
@@ -45,7 +53,7 @@ const ConfiguratePlaylistForm: React.FC<Props> = ({
           name={PlaylistPayloadKey.COVER}
           control={control}
           errors={errors}
-          imageUrl={undefined}
+          imageUrl={playlist?.cover?.url}
           label="Playlist Cover"
         />
         <Input
@@ -54,6 +62,14 @@ const ConfiguratePlaylistForm: React.FC<Props> = ({
           errors={errors}
           label="Playlist Name"
           placeholder="Enter Name"
+        />
+        <Select
+          options={statusOptions}
+          label="Status"
+          name={PlaylistPayloadKey.STATUS}
+          control={control}
+          errors={errors}
+          isDisabled={isFormDisabled}
         />
         <Input
           name={PlaylistPayloadKey.DESCRIPTION}
