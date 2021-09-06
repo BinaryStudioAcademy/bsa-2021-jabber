@@ -3,6 +3,7 @@ import {
   Playlist as TPlaylist,
   PlaylistCreateDTOPayload,
 } from '~/common/types/types';
+import { PodcastType } from '~/common/enums/enums';
 import { PlaylistModel as PlaylistM } from '~/data/models/models';
 import { POPULAR_PLAYLIST_LOAD_LIMIT } from '~/common/constants/constants';
 
@@ -37,9 +38,11 @@ class Playlist {
   public getPopular(): Promise<TPlaylist[]> {
     return this.#PlaylistModel.query()
       .select(raw('playlists.*, count(*) as commentsCount'))
-      .from(raw('playlists, playlists_episodes, episodes, comments'))
+      .from(raw('playlists, playlists_episodes, episodes, comments, podcasts'))
       .whereRaw('playlists.id = playlists_episodes.playlist_id')
       .whereRaw('playlists_episodes.episode_id = episodes.id')
+      .whereRaw('podcasts.id = episodes.podcast_id')
+      .where('podcasts.type', PodcastType.PUBLIC)
       .whereRaw('episodes.id = comments.episode_id')
       .groupByRaw('playlists.id')
       .orderByRaw('commentsCount DESC')
