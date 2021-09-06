@@ -12,7 +12,7 @@ import {
 } from 'hooks/hooks';
 import { homepage as homepageActions } from 'store/actions';
 import { getStringifiedQuery } from 'helpers/helpers';
-import { Search, PopularUsers } from './components/components';
+import { Search, PopularUsers, PopularPlaylists } from './components/components';
 import {
   SEARCH_TIMEOUT,
   DEFAULT_PODCASTS_FILTER_VALUE,
@@ -33,6 +33,8 @@ const Homepage: React.FC = () => {
     totalPagesCount,
     popularUsers,
     popularUsersDataStatus,
+    popularPlaylists,
+    popularPlaylistsDataStatus,
   } = useAppSelector(({ homepage }) => ({
     podcasts: homepage.podcasts,
     dataStatus: homepage.dataStatus,
@@ -41,6 +43,8 @@ const Homepage: React.FC = () => {
     totalPagesCount: homepage.totalPagesCount,
     popularUsers: homepage.popularUsers,
     popularUsersDataStatus: homepage.popularUsersDataStatus,
+    popularPlaylists: homepage.popularPlaylists,
+    popularPlaylistsDataStatus: homepage.popularPlaylistsDataStatus,
   }));
   const [isFilterPopupOpen, setIsFilterPopupOpen] = useState<boolean>(false);
   const [podcastsFilter, setPodcastsFilter] = useState<PodcastLoadFilter>(DEFAULT_PODCASTS_FILTER_VALUE);
@@ -50,12 +54,14 @@ const Homepage: React.FC = () => {
   const hasPodcasts = Boolean(podcasts.length);
   const isPodcastsLoading = dataStatus === DataStatus.PENDING;
   const isPopularUsersLoading = popularUsersDataStatus === DataStatus.PENDING;
+  const isPopularPlaylistsLoading = popularPlaylistsDataStatus === DataStatus.PENDING;
   const isGenresLoaded = genresDataStatus === DataStatus.FULFILLED;
   const hasEnoughPageCount = totalPagesCount > DEFAULT_PAGE_COUNT;
 
   useEffect(() => {
     dispatch(homepageActions.loadGenres());
     dispatch(homepageActions.loadPopularUsers(DEFAULT_USER_POPULAR_FILTER_VALUE));
+    dispatch(homepageActions.loadPopularPlaylists());
     return (): void => {
       dispatch(homepageActions.leaveHomepage());
     };
@@ -127,6 +133,11 @@ const Homepage: React.FC = () => {
   return (
     <main className={styles.main}>
       <Search onChange={handleChange} currentState={podcastsFilter.search} />
+      {isPopularPlaylistsLoading ? (
+        <Loader />
+      ) : (
+        <PopularPlaylists popularPlaylists={popularPlaylists} />
+      )}
       {isPopularUsersLoading ? (
         <Loader />
       ) : (

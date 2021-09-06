@@ -32,7 +32,7 @@ class Episode {
   public getPopular(): Promise<TEpisode[]> {
     return this.#EpisodeModel.query()
       .where('type', EpisodeType.PUBLIC)
-      .withGraphJoined('[image]')
+      .withGraphJoined('[image, user]')
       .select(
         'episodes.*',
         this.#EpisodeModel.relatedQuery('comments')
@@ -109,6 +109,15 @@ class Episode {
       .joinRelated('[favourites]')
       .where('favourites.user_id', id)
       .resultSize();
+  }
+
+  public getAllByPLaylistId(playlistId: number): Promise<TEpisodeWithPodcast[]> {
+    return this.#EpisodeModel
+      .query()
+      .withGraphJoined('[podcast]')
+      .joinRelated('[playlistEpisodes]')
+      .where('playlistEpisodes.playlist_id', playlistId)
+      .where('episodes.type', EpisodeType.PUBLIC);
   }
 }
 

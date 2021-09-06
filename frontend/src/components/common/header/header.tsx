@@ -9,8 +9,9 @@ import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 const Header: React.FC = () => {
-  const { user } = useAppSelector(({ auth }: RootState) => ({
+  const { user, countUncheckedNotification } = useAppSelector(({ auth, notification }: RootState) => ({
     user: auth.user,
+    countUncheckedNotification: notification.countUncheckedNotification,
   }));
 
   const hasUser = Boolean(user);
@@ -19,6 +20,8 @@ const Header: React.FC = () => {
   const handleUserExit = (): void => {
     dispatch(authActions.resetUser());
   };
+
+  const isShowNotificationIndicator = Boolean(countUncheckedNotification);
 
   return (
     <header className={styles.header}>
@@ -42,7 +45,7 @@ const Header: React.FC = () => {
                 href={AppRoute.PODCASTS_EDIT}
                 type={ButtonType.BUTTON}
               />
-              <Link to={AppRoute.NOTIFICATIONS}>
+              <Link to={AppRoute.NOTIFICATIONS} className={styles.notificationLink}>
                 <img
                   src={headerBell}
                   width="23"
@@ -51,6 +54,10 @@ const Header: React.FC = () => {
                   alt=""
                   className={styles.notification}
                 />
+                {isShowNotificationIndicator &&
+                <div className={styles.newNotificationIndicator}>
+                  {countUncheckedNotification}
+                </div>}
               </Link>
 
               <div className={styles.profile}>
@@ -94,6 +101,14 @@ const Header: React.FC = () => {
                             className={styles.link}
                           >
                             + Create Podcast
+                          </Link>
+                        </li>
+                        <li className={styles.dropDownListItem}>
+                          <Link
+                            to={AppRoute.PLAYLISTS_EDIT}
+                            className={styles.link}
+                          >
+                            + Create Playlist
                           </Link>
                         </li>
                         <li className={styles.dropDownListItem}>

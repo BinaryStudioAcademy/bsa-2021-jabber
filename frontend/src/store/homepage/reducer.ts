@@ -1,25 +1,29 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { Podcast, User, Genre } from 'common/types/types';
-import { loadPodcasts, loadPopularUsers, loadGenres, leaveHomepage } from './actions';
+import { Podcast, User, Genre, Playlist } from 'common/types/types';
+import { loadPodcasts, loadPopularUsers, loadGenres, leaveHomepage, loadPopularPlaylists } from './actions';
 
 type State = {
   dataStatus: DataStatus;
   genresDataStatus: DataStatus;
+  popularPlaylistsDataStatus: DataStatus;
   popularUsersDataStatus: DataStatus;
   podcasts: Podcast[];
   genres: Genre[];
   totalPagesCount: number;
+  popularPlaylists: Playlist[];
   popularUsers: User[];
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
   genresDataStatus: DataStatus.IDLE,
+  popularPlaylistsDataStatus: DataStatus.IDLE,
   popularUsersDataStatus: DataStatus.IDLE,
   podcasts: [],
   genres: [],
   totalPagesCount: 0,
+  popularPlaylists: [],
   popularUsers: [],
 };
 
@@ -36,6 +40,16 @@ const reducer = createReducer(initialState, (builder) => {
     state.dataStatus = DataStatus.REJECTED;
   });
 
+  builder.addCase(loadPopularPlaylists.pending, (state) => {
+    state.popularPlaylistsDataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(loadPopularPlaylists.fulfilled, (state, action) => {
+    state.popularPlaylistsDataStatus = DataStatus.FULFILLED;
+    state.popularPlaylists = action.payload;
+  });
+  builder.addCase(loadPopularPlaylists.rejected, (state) => {
+    state.popularPlaylistsDataStatus = DataStatus.REJECTED;
+  });
   builder.addCase(loadPopularUsers.pending, (state) => {
     state.popularUsersDataStatus = DataStatus.PENDING;
   });

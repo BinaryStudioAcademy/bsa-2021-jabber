@@ -5,7 +5,7 @@ import {
   PlaylistStatus,
 } from '~/common/enums/enums';
 import { User } from '../user/user.model';
-import { Image } from '~/data/models/image/image.model';
+import { Image } from '../image/image.model';
 import { Abstract } from '../abstract/abstract.model';
 
 class Playlist extends Abstract {

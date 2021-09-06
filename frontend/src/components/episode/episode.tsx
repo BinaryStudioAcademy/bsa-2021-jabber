@@ -173,19 +173,17 @@ const Episode: React.FC = () => {
                 href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}
               />
             )}
-            {isAddToPLaylistsShow && (
-              <AddToPlaylistPopup
-                playlists={playlists}
-                handleAddToPlaylist={handleAddToPlaylist}
-                triggerClassName={isPlayerShow
-                  ? getAllowedClasses(
-                    styles.btnStartLive,
-                    styles.btnWithPlayer,
-                    styles.playlistTrigger,
-                  )
-                  : styles.btnStartLive}
-              />)}
             <div className={styles.descriptionWrapper}>
+              {isAddToPLaylistsShow && (
+                <AddToPlaylistPopup
+                  playlists={playlists}
+                  handleAddToPlaylist={handleAddToPlaylist}
+                  triggerClassName={getAllowedClasses(
+                    styles.btnAddToPlaylist,
+                    isOwner && styles.btnAddToPlaylistOwnerMaster,
+                    isMaster && styles.btnAddToPlaylistOwnerMaster,
+                  )}
+                />)}
               {isOwner && (
                 <Link
                   to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`}

@@ -6,6 +6,7 @@ import {
   User,
   UserPopularLoadFilter,
   Genre,
+  Playlist,
 } from 'common/types/types';
 import { ActionType } from './common';
 
@@ -25,6 +26,14 @@ const loadPopularUsers = createAsyncThunk<User[], UserPopularLoadFilter, AsyncTh
   return popularUsers;
 });
 
+const loadPopularPlaylists = createAsyncThunk<Playlist[], undefined, AsyncThunkConfig>
+(ActionType.LOAD_POPULAR_PLAYLISTS, async (_args, { extra }) => {
+  const { playlistApi } = extra;
+  const popularPlaylists = await playlistApi.getPopular();
+
+  return popularPlaylists;
+});
+
 const loadGenres = createAsyncThunk<Genre[], undefined, AsyncThunkConfig>
 (ActionType.LOAD_GENRES, async (_args, { extra }) => {
   const { genreApi } = extra;
@@ -39,5 +48,6 @@ export {
   loadPodcasts,
   loadPopularUsers,
   loadGenres,
+  loadPopularPlaylists,
   leaveHomepage,
 };
