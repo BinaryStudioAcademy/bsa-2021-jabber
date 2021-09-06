@@ -76,6 +76,15 @@ class PlaylistApi {
       },
     );
   }
+
+  public invite(code: string): Promise<Playlist> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PLAYLISTS}${PlaylistsApiPath.INVITE}/${code}`,
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
 }
 
 export { PlaylistApi };
