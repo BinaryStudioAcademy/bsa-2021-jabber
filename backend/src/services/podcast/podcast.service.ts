@@ -258,7 +258,7 @@ class Podcast {
       });
     }
 
-    const episodes = await this.#episodeService.getEpisodeCountByPodcastId(id);
+    const episodes = await this.#episodeService.getEpisodeCountByPodcastId(true, id);
     const isEpisodesExist = Boolean(episodes);
 
     if (isEpisodesExist) {

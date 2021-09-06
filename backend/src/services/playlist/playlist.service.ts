@@ -69,6 +69,10 @@ class Playlist {
 
     return this.#playlistRepository.create(newPlaylist);
   }
+
+  public getPopular(): Promise<TPlaylist[]> {
+    return this.#playlistRepository.getPopular();
+  }
 }
 
 export { Playlist };
