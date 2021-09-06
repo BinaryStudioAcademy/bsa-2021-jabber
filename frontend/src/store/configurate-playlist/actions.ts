@@ -36,7 +36,7 @@ const deletePlaylist = createAsyncThunk<void, DeleteActionPlaylistPayload, Async
     const { playlistApi, notificationService, navigationService } = extra;
     await playlistApi.delete(playlistId);
 
-    notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.EPISODE_DELETED);
+    notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PLAYLIST_DELETED);
     navigationService.push(`${AppRoute.PLAYLISTS_USERS}/${userId}`);
   });
 

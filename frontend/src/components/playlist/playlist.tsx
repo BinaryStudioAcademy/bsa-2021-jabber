@@ -6,7 +6,10 @@ import {
 } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
 import { DataStatus, UserRole } from 'common/enums/enums';
-import { playlist as playlistActions } from 'store/actions';
+import {
+  playlist as playlistActions,
+  configuratePlaylist as configuratePlaylistActions,
+} from 'store/actions';
 import {
   Loader,
   ImageWrapper,
@@ -43,6 +46,17 @@ const Playlist: React.FC = () => {
     return <Loader />;
   }
 
+  const handleDeletePlaylist = (): void => {
+    if (user) {
+      dispatch(
+        configuratePlaylistActions.deletePlaylist({
+          playlistId: Number(id),
+          userId: user?.id,
+        }),
+      );
+    }
+  };
+
   return (
     <>
       <div className={styles.infoWrapper}>
@@ -70,6 +84,7 @@ const Playlist: React.FC = () => {
           {isAllowDelete && (
             <button
               className={styles.deleteButton}
+              onClick={handleDeletePlaylist}
             >
               <span className="visually-hidden">Delete playlist</span>
             </button>

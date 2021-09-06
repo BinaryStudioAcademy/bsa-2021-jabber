@@ -8,6 +8,7 @@ enum NotificationMessage {
   EPISODE_UPDATED = 'Episode has been updated successfully 🎉',
   EPISODE_DELETED = 'Episode has been deleted successfully 🎉',
   COMMENT_DELETED = 'Comment has been deleted successfully 🎉',
+  PLAYLIST_DELETED = 'Playlist has been deleted successfully 🎉',
   PASSWORD_RESETED = 'A new password has been sent to your email 🎉',
   INVITATION_LINK_COPIED = 'Invitation link has been copied to clipboard 🎉',
   PLAYLIST_CREATED = 'Playlist has been created successfully 🎉',
