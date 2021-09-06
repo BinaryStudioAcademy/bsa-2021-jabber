@@ -5,7 +5,7 @@ import {
   useEffect,
 } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
-import { DataStatus, UserRole } from 'common/enums/enums';
+import { DataStatus, UserRole, AppRoute } from 'common/enums/enums';
 import { playlist as playlistActions } from 'store/actions';
 import {
   Loader,
@@ -72,7 +72,7 @@ const Playlist: React.FC = () => {
           </div>
           {isOwner && (
             <Link
-              to={'/'}
+              to={`${AppRoute.PLAYLISTS_EDIT}/${id}`}
               className={styles.editLink}
             >
               <span className="visually-hidden">Edit playlist</span>

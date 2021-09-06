@@ -3,6 +3,8 @@ import {
   Playlist as TPlaylist,
   PlaylistCreatePayload,
   PlaylistCreateDTOPayload,
+  PlaylistEditDTOPayload,
+  PlaylistEditPayload,
 } from '~/common/types/types';
 import {
   playlist as playlistRep,
@@ -83,6 +85,53 @@ class Playlist {
 
   public getPopular(): Promise<TPlaylist[]> {
     return this.#playlistRepository.getPopular();
+  }
+
+  public async update(
+    id: string,
+    {
+      name,
+      userId,
+      coverDataUrl,
+      coverId,
+      description,
+      status,
+    }: PlaylistEditPayload,
+  ): Promise<TPlaylist> {
+    const updatePlaylist: PlaylistEditDTOPayload = {
+      name,
+      coverId,
+      description,
+      status,
+    };
+
+    let deleteCoverId: number | null = null;
+
+    if (coverDataUrl) {
+      const { url, publicId } = await this.#fileStorage.upload({
+        dataUrl: coverDataUrl,
+        userId,
+      });
+
+      deleteCoverId = coverId;
+
+      const image = await this.#imageRepository.create({
+        url,
+        publicId,
+      });
+
+      updatePlaylist.coverId = image.id;
+    }
+
+    const playlist = await this.#playlistRepository.update(id, updatePlaylist);
+
+    if (deleteCoverId) {
+      const { publicId } = await this.#imageRepository.getById(deleteCoverId);
+      await this.#fileStorage.delete(publicId);
+      await this.#imageRepository.delete(deleteCoverId);
+    }
+
+    return playlist;
   }
 
   public async delete(id: number): Promise<TPlaylist> {
