@@ -32,7 +32,7 @@ class Episode {
   public getPopular(): Promise<TEpisode[]> {
     return this.#EpisodeModel.query()
       .where('type', EpisodeType.PUBLIC)
-      .withGraphJoined('[image]')
+      .withGraphJoined('[image, user]')
       .select(
         'episodes.*',
         this.#EpisodeModel.relatedQuery('comments')
