@@ -15,6 +15,7 @@ import {
   LoadEpisodesByPodcastIdPayload,
   UserFavouriteEpisodeResponse,
   LoadFavouriteEpisodesPayload,
+  EpisodeWithPodcast,
   User,
 } from '~/common/types/types';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
@@ -24,6 +25,7 @@ import {
   image as imageRep,
   podcast as podcastRep,
   userNotification as userNotificationRep,
+  playlist as playlistRep,
 } from '~/data/repositories/repositories';
 import {
   shownote,
@@ -43,6 +45,7 @@ type Constructor = {
   recordRepository: typeof recordRep;
   podcastRepository: typeof podcastRep;
   userNotificationRepository: typeof userNotificationRep;
+  playlistRepository: typeof playlistRep;
   fileStorage: FileStorage;
   commentService: typeof comment;
   recordService: typeof record;
@@ -66,6 +69,7 @@ class Episode {
   #podcastFollowerService: typeof podcastFollower;
   #notificationService: typeof notification;
   #userNotificationRepository: typeof userNotificationRep;
+  #playlistRepository: typeof playlistRep;
 
   constructor({
     episodeRepository,
@@ -81,6 +85,7 @@ class Episode {
     notificationService,
     userNotificationRepository,
     userFavouriteEpisodeService,
+    playlistRepository,
   }: Constructor) {
     this.#episodeRepository = episodeRepository;
     this.#shownoteService = shownoteService;
@@ -95,6 +100,7 @@ class Episode {
     this.#notificationService = notificationService;
     this.#userNotificationRepository = userNotificationRepository;
     this.#userFavouriteEpisodeService = userFavouriteEpisodeService;
+    this.#playlistRepository = playlistRepository;
   }
 
   public getAll(): Promise<TEpisode[]> {
@@ -313,7 +319,7 @@ class Episode {
 
     const favoriteEpisodes = await this.#userFavouriteEpisodeService.getAllByEpisodeId(id);
     const hasFavoriteEpisodes = Boolean(favoriteEpisodes.length);
-    if(hasFavoriteEpisodes){
+    if (hasFavoriteEpisodes) {
       await this.#userFavouriteEpisodeService.deleteAllByEpisodeId(id);
     }
 
@@ -352,6 +358,19 @@ class Episode {
       episodes,
       totalCount,
     };
+  }
+
+  public async getAllByPLaylistId(
+    user: User | undefined,
+    playlistId: number,
+  ): Promise<EpisodeWithPodcast[]> {
+    const playlist = await this.#playlistRepository.getById(playlistId);
+
+    const isOwner = user?.id === playlist.userId || user?.role === UserRole.MASTER;
+
+    const episodes = await this.#episodeRepository.getAllByPLaylistId(isOwner, playlistId);
+
+    return episodes;
   }
 }
 

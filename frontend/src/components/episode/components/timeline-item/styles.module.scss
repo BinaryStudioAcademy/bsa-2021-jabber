@@ -20,13 +20,16 @@
     bottom: 100%;
     visibility: hidden;
     display: flex;
+    align-items: center;
     color: var(--color-primary-light);
+    background-color: rgba(25, 34, 47, 0.7);
+    padding: 0 5px;
+    border-radius: 4px;
   }
 
   &:hover {
     .timelineItemContent {
       visibility: visible;
-
     }
   }
 

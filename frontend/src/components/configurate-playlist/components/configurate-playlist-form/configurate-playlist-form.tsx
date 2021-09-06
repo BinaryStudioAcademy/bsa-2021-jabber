@@ -1,4 +1,3 @@
-
 import {
   PlaylistPayloadKey,
   ButtonType,
@@ -12,7 +11,8 @@ import { useAppForm, useAppSelector, useEffect } from 'hooks/hooks';
 import {
   Input,
   Button,
-  ImagePreviewControl, Select,
+  Select,
+  ImagePreviewControl,
 } from 'components/common/common';
 import { DEFAULT_PLAYLIST_PAYLOAD } from './common/constants';
 import { playlistCreate as playlistCreateValidationSchema } from 'validation-schemas/validation-schemas';
@@ -21,25 +21,31 @@ import { getOptions, getRandomId } from 'helpers/helpers';
 
 type Props = {
   onSubmit: (payload: PlaylistFormPayload) => void;
+  payload?: PlaylistFormPayload;
+  isEdit: boolean;
 };
+
+const statusOptions: Option[] = getOptions(Object.values(PlaylistStatus));
 
 const ConfiguratePlaylistForm: React.FC<Props> = ({
   onSubmit,
+  payload = DEFAULT_PLAYLIST_PAYLOAD,
+  isEdit,
 }) => {
 
   const { control, handleSubmit, errors, setValue, watch } = useAppForm({
     validationSchema: playlistCreateValidationSchema,
-    defaultValues: DEFAULT_PLAYLIST_PAYLOAD,
+    defaultValues: payload,
   });
 
-  const { formDataStatus } = useAppSelector(
+  const { formDataStatus, playlist } = useAppSelector(
     ({ configuratePlaylist }) => ({
       formDataStatus: configuratePlaylist.formDataStatus,
+      playlist: configuratePlaylist.playlist,
     }),
   );
 
   const isFormDisabled = formDataStatus === DataStatus.PENDING;
-  const selectTypeOptions: Option[] = getOptions(Object.values(PlaylistStatus));
   const isPlaylistPrivate = watch(PlaylistPayloadKey.STATUS) === PlaylistStatus.PRIVATE;
 
   const handleGenerateCode = (): void => {
@@ -59,7 +65,7 @@ const ConfiguratePlaylistForm: React.FC<Props> = ({
           name={PlaylistPayloadKey.COVER}
           control={control}
           errors={errors}
-          imageUrl={undefined}
+          imageUrl={playlist?.cover?.url}
           label="Playlist Cover"
         />
         <Input
@@ -69,6 +75,14 @@ const ConfiguratePlaylistForm: React.FC<Props> = ({
           label="Playlist Name"
           placeholder="Enter Name"
         />
+        <Select
+          options={statusOptions}
+          label="Status"
+          name={PlaylistPayloadKey.STATUS}
+          control={control}
+          errors={errors}
+          isDisabled={isFormDisabled || !isEdit}
+        />
         <Input
           name={PlaylistPayloadKey.DESCRIPTION}
           control={control}
@@ -76,14 +90,6 @@ const ConfiguratePlaylistForm: React.FC<Props> = ({
           label="Description"
           placeholder="Enter description podcast"
           hasMultipleRows
-        />
-        <Select
-          options={selectTypeOptions}
-          label="Type"
-          name={PlaylistPayloadKey.STATUS}
-          control={control}
-          errors={errors}
-          isDisabled={isFormDisabled}
         />
         {isPlaylistPrivate &&
         (<div className={styles.invitationCode}>

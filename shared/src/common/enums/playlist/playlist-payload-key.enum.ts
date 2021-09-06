@@ -6,6 +6,7 @@ enum PlaylistPayloadKey {
   DESCRIPTION = 'description',
   STATUS = 'status',
   INVITATION_CODE = 'invitationCode',
+  COVER_ID = 'coverId',
 }
 
 export { PlaylistPayloadKey };

@@ -66,6 +66,15 @@ class PlaylistApi {
     );
   }
 
+  public getPopular(): Promise<Playlist[]> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PLAYLISTS}${PlaylistsApiPath.POPULAR}`,
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
+
   public deleteEpisodeFromPlaylist(payload: PlaylistEpisodePayload): Promise<PlaylistEpisode> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.PLAYLISTS}${PlaylistsApiPath.EPISODES}`,
@@ -82,6 +91,25 @@ class PlaylistApi {
       `${this.#apiPrefix}${ApiPath.PLAYLISTS}${PlaylistsApiPath.INVITE}/${code}`,
       {
         method: HttpMethod.GET,
+      });
+  }
+
+  public update(id: number, payload: PlaylistCreatePayload): Promise<Playlist> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PLAYLISTS}${PlaylistsApiPath.ROOT}/${id}`,
+      {
+        method: HttpMethod.PUT,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
+      },
+    );
+  }
+
+  public delete(id: number): Promise<Playlist> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PLAYLISTS}${PlaylistsApiPath.ROOT}${id}`,
+      {
+        method: HttpMethod.DELETE,
       },
     );
   }

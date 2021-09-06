@@ -78,8 +78,11 @@ const Episode: React.FC = () => {
   useEffect(() => {
     dispatch(episodeActions.loadCommentsByEpisodeId(Number(id)));
     dispatch(episodeActions.loadEpisodePayload(Number(id)));
-    dispatch(episodeActions.checkEpisodeIsFavorite(Number(id)));
-    dispatch(episodeActions.loadPlaylists());
+
+    if (hasUser) {
+      dispatch(episodeActions.loadPlaylistsByUserId(Number(user?.id)));
+      dispatch(episodeActions.checkEpisodeIsFavorite(Number(id)));
+    }
 
     return (): void => {
       dispatch(episodeActions.leaveEpisode(id));
@@ -170,19 +173,17 @@ const Episode: React.FC = () => {
                 href={`${AppRoute.EPISODES}/${id}${AppRoute.LIVE}`}
               />
             )}
-            {isAddToPLaylistsShow && (
-              <AddToPlaylistPopup
-                playlists={playlists}
-                handleAddToPlaylist={handleAddToPlaylist}
-                triggerClassName={isPlayerShow
-                  ? getAllowedClasses(
-                    styles.btnStartLive,
-                    styles.btnWithPlayer,
-                    styles.playlistTrigger,
-                  )
-                  : styles.btnStartLive}
-              />)}
             <div className={styles.descriptionWrapper}>
+              {isAddToPLaylistsShow && (
+                <AddToPlaylistPopup
+                  playlists={playlists}
+                  handleAddToPlaylist={handleAddToPlaylist}
+                  triggerClassName={getAllowedClasses(
+                    styles.btnAddToPlaylist,
+                    isOwner && styles.btnAddToPlaylistOwnerMaster,
+                    isMaster && styles.btnAddToPlaylistOwnerMaster,
+                  )}
+                />)}
               {isOwner && (
                 <Link
                   to={`${AppRoute.PODCASTS}/${episode.podcastId}${AppRoute.EPISODES_EDIT}/${episode.id}`}

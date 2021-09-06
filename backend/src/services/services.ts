@@ -122,6 +122,7 @@ const episode = new Episode({
   recordRepository,
   fileStorage,
   userNotificationRepository,
+  playlistRepository,
 });
 
 const podcast = new Podcast({
@@ -164,6 +165,8 @@ const playlist = new Playlist({
 
 const playlistEpisode = new PlaylistEpisode({
   playlistEpisodeRepository,
+  imageService: image,
+  playlistEpisodeService: playlistEpisode,
 });
 
 export {

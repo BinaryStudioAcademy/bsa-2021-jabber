@@ -26,7 +26,7 @@ const PlaylistItem: React.FC<Props> = ({ playlist }) => (
           {playlist.name}
         </Link>
         <Link
-          to={`${AppRoute.USERS}/${playlist.userId}`}
+          to={`${AppRoute.USERS}/${playlist.user.id}`}
           className={styles.linkUser}
         >
           {playlist.user.nickname}

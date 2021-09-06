@@ -6,6 +6,7 @@ enum PlaylistDTOKey {
   DESCRIPTION = 'description',
   STATUS = 'status',
   COVER = 'cover',
+  EPISODES = 'episodes',
 }
 
 export { PlaylistDTOKey };

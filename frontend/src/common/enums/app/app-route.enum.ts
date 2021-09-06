@@ -30,6 +30,7 @@ enum AppRoute {
   PLAYLISTS_EDIT = '/playlists/edit',
   PLAYLISTS_EDIT_$ID = '/playlists/edit/:id?',
   PLAYLISTS_INVITE_$CODE = '/playlist/invite/:code',
+  PLAYLISTS_$ID = '/playlists/:id',
   ANY = '*',
 }
 
