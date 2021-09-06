@@ -8,7 +8,7 @@ import {
   checkAuth as checkAuthMiddleware,
   checkUserCommentOwner as checkUserCommentOwnerMiddleware,
   checkUserMatch as checkUserMatchMiddleware,
-  checkIsParamsValid as checkIsParamsValidMiddleware,
+  checkParamsIsValid as checkParamsIsValidMiddleware,
 } from '~/middlewares/middlewares';
 import { comment as commentService } from '~/services/services';
 import { handleAsyncApi } from '~/helpers/helpers';
@@ -52,7 +52,7 @@ const initCommentsApi = ({ apiRouter, commentService }: Args): Router => {
 
   commentRouter.get(
     CommentsApiPath.EPISODE_ID,
-    checkIsParamsValidMiddleware(),
+    checkParamsIsValidMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await commentService.getAllByEpisodeId(Number(req.params.id)))
@@ -62,7 +62,7 @@ const initCommentsApi = ({ apiRouter, commentService }: Args): Router => {
 
   commentRouter.get(
     CommentsApiPath.$ID,
-    checkIsParamsValidMiddleware(),
+    checkParamsIsValidMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await commentService.getById(Number(req.params.id)))

@@ -2,7 +2,7 @@ import { RequestHandler } from 'express';
 import { HttpError } from '~/exceptions/exceptions';
 import { ErrorMessage, HttpCode } from '~/common/enums/enums';
 
-const checkIsParamsValid = (): RequestHandler => {
+const checkParamsIsValid = (): RequestHandler => {
   const handler: RequestHandler = (req, _res, next) => {
 
     const params = Object.values(req.params);
@@ -22,4 +22,4 @@ const checkIsParamsValid = (): RequestHandler => {
   return handler;
 };
 
-export { checkIsParamsValid };
+export { checkParamsIsValid };
