@@ -110,6 +110,15 @@ class Episode {
       .where('favourites.user_id', id)
       .resultSize();
   }
+
+  public getAllByPLaylistId(playlistId: number): Promise<TEpisodeWithPodcast[]> {
+    return this.#EpisodeModel
+      .query()
+      .withGraphJoined('[podcast]')
+      .joinRelated('[playlistEpisodes]')
+      .where('playlistEpisodes.playlist_id', playlistId)
+      .where('episodes.type', EpisodeType.PUBLIC);
+  }
 }
 
 export { Episode };
