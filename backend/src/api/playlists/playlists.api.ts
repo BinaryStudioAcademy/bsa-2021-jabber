@@ -19,6 +19,7 @@ import {
 import {
   playlistCreate as playlistCreateValidationSchema,
   playlistEpisode as playlistEpisodeValidationSchema,
+  playlistEdit as playlistEditValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 
 type Args = {
@@ -43,7 +44,6 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
 
   playlistRouter.get(
     PlaylistsApiPath.$ID,
-    checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await playlistService.getById(Number(req.params.id)))
@@ -85,6 +85,18 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
     }),
   );
 
+  playlistRouter.put(
+    PlaylistsApiPath.$ID,
+    checkAuthMiddleware(HttpMethod.PUT),
+    checkUserPlaylistOwnerMiddleware(),
+    validateSchemaMiddleware(playlistEditValidationSchema),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await playlistService.update(req.params.id, req.body))
+        .status(HttpCode.OK);
+    }),
+  );
+
   playlistRouter.delete(
     PlaylistsApiPath.EPISODES,
     checkAuthMiddleware(HttpMethod.DELETE),
@@ -93,6 +105,17 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
     handleAsyncApi(async (req, res) => {
       return res
         .json(await playlistEpisodeService.delete(req.body))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  playlistRouter.delete(
+    PlaylistsApiPath.$ID,
+    checkAuthMiddleware(HttpMethod.DELETE),
+    checkUserPlaylistOwnerMiddleware(),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await playlistService.delete(Number(req.params.id)))
         .status(HttpCode.OK);
     }),
   );
