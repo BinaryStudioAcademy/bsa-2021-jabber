@@ -85,6 +85,17 @@ class PlaylistApi {
       },
     );
   }
+
+  public update(id: number, payload: PlaylistCreatePayload): Promise<Playlist> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PLAYLISTS}${PlaylistsApiPath.ROOT}/${id}`,
+      {
+        method: HttpMethod.PUT,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
+      },
+    );
+  }
 }
 
 export { PlaylistApi };

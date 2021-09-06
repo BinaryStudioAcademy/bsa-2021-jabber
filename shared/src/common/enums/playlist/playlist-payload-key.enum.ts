@@ -5,6 +5,7 @@ enum PlaylistPayloadKey {
   COVER_DATA_URL = 'coverDataUrl',
   DESCRIPTION = 'description',
   STATUS = 'status',
+  COVER_ID = 'coverId',
 }
 
 export { PlaylistPayloadKey };

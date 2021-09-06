@@ -19,6 +19,7 @@ import {
 import {
   playlistCreate as playlistCreateValidationSchema,
   playlistEpisode as playlistEpisodeValidationSchema,
+  playlistEdit as playlistEditValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 
 type Args = {
@@ -81,6 +82,18 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
     handleAsyncApi(async (req, res) => {
       return res
         .json(await playlistEpisodeService.create(req.body))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  playlistRouter.put(
+    PlaylistsApiPath.$ID,
+    checkAuthMiddleware(HttpMethod.PUT),
+    checkUserPlaylistOwnerMiddleware(),
+    validateSchemaMiddleware(playlistEditValidationSchema),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await playlistService.update(req.params.id, req.body))
         .status(HttpCode.OK);
     }),
   );
