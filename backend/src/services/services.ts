@@ -155,14 +155,16 @@ const userNotification = new UserNotification({
   userNotificationRepository,
 });
 
+const playlistEpisode = new PlaylistEpisode({
+  playlistEpisodeRepository,
+});
+
 const playlist = new Playlist({
   playlistRepository,
   fileStorage,
   imageRepository,
-});
-
-const playlistEpisode = new PlaylistEpisode({
-  playlistEpisodeRepository,
+  imageService: image,
+  playlistEpisodeService: playlistEpisode,
 });
 
 export {

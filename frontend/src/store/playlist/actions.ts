@@ -1,6 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Playlist, User, AsyncThunkConfig, EpisodeWithPodcast } from 'common/types/types';
+import {
+  Playlist,
+  User,
+  AsyncThunkConfig,
+  EpisodeWithPodcast,
+  DeleteActionPlaylistPayload,
+} from 'common/types/types';
 import { ActionType } from './common';
+import { AppRoute, NotificationMessage, NotificationTitle } from 'common/enums/enums';
 
 const loadById = createAsyncThunk<Playlist, number, AsyncThunkConfig>(
   ActionType.LOAD_PLAYLIST, async (id, { extra }) => {
@@ -37,4 +44,14 @@ const loadPlaylistsOwner = createAsyncThunk<User, number, AsyncThunkConfig>(
   },
 );
 
-export { loadById, loadEpisodesByPlaylistId, loadPlaylists, loadPlaylistsOwner };
+const deletePlaylist = createAsyncThunk<void, DeleteActionPlaylistPayload, AsyncThunkConfig>(
+  ActionType.DELETE_PLAYLIST,
+  async ({ playlistId, userId }, { extra }) => {
+    const { playlistApi, notificationService, navigationService } = extra;
+    await playlistApi.delete(playlistId);
+
+    notificationService.success(NotificationTitle.SUCCESS, NotificationMessage.PLAYLIST_DELETED);
+    navigationService.push(`${AppRoute.PLAYLISTS_USERS}/${userId}`);
+  });
+
+export { loadById, loadEpisodesByPlaylistId, loadPlaylists, loadPlaylistsOwner, deletePlaylist };

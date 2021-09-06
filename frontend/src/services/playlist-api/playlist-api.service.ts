@@ -96,6 +96,15 @@ class PlaylistApi {
       },
     );
   }
+
+  public delete(id: number): Promise<Playlist> {
+    return this.#http.load(
+      `${this.#apiPrefix}${ApiPath.PLAYLISTS}${PlaylistsApiPath.ROOT}${id}`,
+      {
+        method: HttpMethod.DELETE,
+      },
+    );
+  }
 }
 
 export { PlaylistApi };

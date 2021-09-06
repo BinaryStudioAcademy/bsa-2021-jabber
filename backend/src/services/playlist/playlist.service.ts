@@ -1,3 +1,4 @@
+import { HttpCode, ErrorMessage } from '~/common/enums/enums';
 import {
   Playlist as TPlaylist,
   PlaylistCreatePayload,
@@ -10,26 +11,36 @@ import {
   image as imageRep,
 } from '~/data/repositories/repositories';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
+import { HttpError } from '~/exceptions/exceptions';
+import { image, playlistEpisode } from '~/services/services';
 
 type Constructor = {
   playlistRepository: typeof playlistRep;
   fileStorage: FileStorage;
   imageRepository: typeof imageRep;
+  imageService: typeof image;
+  playlistEpisodeService: typeof playlistEpisode;
 };
 
 class Playlist {
   #playlistRepository: typeof playlistRep;
   #fileStorage: FileStorage;
   #imageRepository: typeof imageRep;
+  #imageService: typeof image;
+  #playlistEpisodeService: typeof playlistEpisode;
 
   constructor({
     playlistRepository,
     fileStorage,
     imageRepository,
+    imageService,
+    playlistEpisodeService,
   }: Constructor) {
     this.#playlistRepository = playlistRepository;
     this.#fileStorage = fileStorage;
     this.#imageRepository = imageRepository;
+    this.#imageService = imageService;
+    this.#playlistEpisodeService = playlistEpisodeService;
   }
 
   public getAllByUserId(userId: number): Promise<TPlaylist[]> {
@@ -118,6 +129,27 @@ class Playlist {
       const { publicId } = await this.#imageRepository.getById(deleteCoverId);
       await this.#fileStorage.delete(publicId);
       await this.#imageRepository.delete(deleteCoverId);
+    }
+
+    return playlist;
+  }
+
+  public async delete(id: number): Promise<TPlaylist> {
+    const playlist = await this.#playlistRepository.getById(id);
+
+    if (!playlist) {
+      throw new HttpError({
+        status: HttpCode.NOT_FOUND,
+        message: ErrorMessage.PODCAST_NOT_FOUND,
+      });
+    }
+
+    await this.#playlistEpisodeService.deleteAllByPlaylistId(playlist.id);
+
+    await this.#playlistRepository.delete(id);
+
+    if (playlist.coverId) {
+      await this.#imageService.delete(playlist.coverId);
     }
 
     return playlist;

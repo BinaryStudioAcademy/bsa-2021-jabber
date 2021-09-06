@@ -28,6 +28,13 @@ class PlaylistEpisode {
       .first();
   }
 
+  public deleteAllByPlaylistId(id: number): Promise<TPlaylistEpisode[]> {
+    return this.#PlaylistEpisodeModel.query()
+      .delete()
+      .where('playlist_id', id)
+      .returning('*');
+  }
+
   public getByPlaylistIdEpisodeId({ playlistId, episodeId }: PlaylistEpisodePayload): Promise<TPlaylistEpisode> {
     return this.#PlaylistEpisodeModel.query()
       .where('playlist_id', playlistId)
