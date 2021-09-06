@@ -12,7 +12,7 @@ import {
   toggleFavourite,
   toggleCommentLike,
   updateCommentsAfterLike,
-  loadPlaylists,
+  loadPlaylistsByUserId,
 } from './actions';
 import { getSortedItems } from 'jabber-shared/helpers/helpers';
 
@@ -118,14 +118,14 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(toggleFavourite.fulfilled, (state, action) => {
     state.isFavourite = action.payload;
   });
-  builder.addCase(loadPlaylists.pending, (state) => {
+  builder.addCase(loadPlaylistsByUserId.pending, (state) => {
     state.playlistsDataStatus = DataStatus.PENDING;
   });
-  builder.addCase(loadPlaylists.fulfilled, (state, action) => {
+  builder.addCase(loadPlaylistsByUserId.fulfilled, (state, action) => {
     state.playlistsDataStatus = DataStatus.FULFILLED;
     state.playlists = action.payload;
   });
-  builder.addCase(loadPlaylists.rejected, (state) => {
+  builder.addCase(loadPlaylistsByUserId.rejected, (state) => {
     state.playlistsDataStatus = DataStatus.REJECTED;
   });
 });
