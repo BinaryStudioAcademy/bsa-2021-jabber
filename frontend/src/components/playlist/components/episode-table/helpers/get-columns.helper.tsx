@@ -7,7 +7,7 @@ import { EpisodeNameRow } from '../types/types';
 
 type HandleDeleteEpisode = (id: number) => void;
 
-const getColumns = (handleDeleteEpisode: HandleDeleteEpisode): Column[] => {
+const getColumns = (handleDeleteEpisode: HandleDeleteEpisode, isAllowDelete: boolean): Column[] => {
 
   const columns: Column[] = [
     {
@@ -37,7 +37,10 @@ const getColumns = (handleDeleteEpisode: HandleDeleteEpisode): Column[] => {
       Header: 'CreatedAt',
       accessor: 'createdAt',
     },
-    {
+  ];
+
+  if (isAllowDelete) {
+    columns.push({
       Header: 'Delete',
       accessor: (originalRow): Record<string, unknown> => {
         const row = originalRow as EpisodeNameRow;
@@ -51,8 +54,8 @@ const getColumns = (handleDeleteEpisode: HandleDeleteEpisode): Column[] => {
           onDeleteEpisode={handleDeleteEpisode}
         />
       ),
-    },
-  ];
+    });
+  }
 
   return columns;
 };

@@ -116,6 +116,7 @@ const Playlist: React.FC = () => {
               ? <EpisodeTable
                 episodes={episodes}
                 handleDeleteEpisode={handleDeleteEpisode}
+                isAllowDelete={isAllowDelete}
               />
               : (
                 <div className={styles.placeholder}>
