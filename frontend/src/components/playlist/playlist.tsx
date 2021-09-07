@@ -3,6 +3,7 @@ import {
   useDispatch,
   useParams,
   useEffect,
+  useState,
 } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
 import { DataStatus, UserRole, AppRoute } from 'common/enums/enums';
@@ -11,6 +12,7 @@ import {
   Loader,
   ImageWrapper,
   Link,
+  ConfirmPopup,
 } from 'components/common/common';
 import { getAllowedClasses } from 'helpers/helpers';
 import { PageParams } from './common/types/types';
@@ -20,6 +22,7 @@ import styles from './styles.module.scss';
 const Playlist: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<PageParams>();
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState<boolean>(false);
 
   const { dataStatus, user, playlist, episodes, episodesDataStatus } = useAppSelector(({ auth, playlist }: RootState) => ({
     user: auth.user,
@@ -34,7 +37,7 @@ const Playlist: React.FC = () => {
   const isAllowDelete = isOwner || isMaster;
   const isEpisodesLoading = episodesDataStatus === DataStatus.PENDING;
 
-  useEffect( () => {
+  useEffect(() => {
     dispatch(playlistActions.loadById(Number(id)));
     dispatch(playlistActions.loadEpisodesByPlaylistId(Number(id)));
   }, [id]);
@@ -52,6 +55,14 @@ const Playlist: React.FC = () => {
         }),
       );
     }
+  };
+
+  const handleTogglePopup = (): void => {
+    setIsConfirmPopupOpen(!isConfirmPopupOpen);
+  };
+
+  const handleDeleteEpisode = (id: number): void => {
+    dispatch(playlistActions.deleteEpisodeFromPlaylist(id));
   };
 
   return (
@@ -79,12 +90,21 @@ const Playlist: React.FC = () => {
             </Link>
           )}
           {isAllowDelete && (
-            <button
-              className={styles.deleteButton}
-              onClick={handleDeletePlaylist}
-            >
-              <span className="visually-hidden">Delete playlist</span>
-            </button>
+            <>
+              <button
+                className={styles.deleteButton}
+                onClick={handleTogglePopup}
+              >
+                <span className="visually-hidden">Delete playlist</span>
+              </button>
+              <ConfirmPopup
+                title="Delete Playlist"
+                description="You are going to delete the playlist. Are you sure about this?"
+                isOpen={isConfirmPopupOpen}
+                onClose={handleTogglePopup}
+                onConfirm={handleDeletePlaylist}
+              />
+            </>
           )}
         </div>
       </div>
@@ -93,12 +113,16 @@ const Playlist: React.FC = () => {
           {isEpisodesLoading
             ? <Loader />
             : episodes.length
-              ? <EpisodeTable episodes={episodes}/>
+              ? <EpisodeTable
+                episodes={episodes}
+                handleDeleteEpisode={handleDeleteEpisode}
+                isAllowDelete={isAllowDelete}
+              />
               : (
                 <div className={styles.placeholder}>
                   There are no episodes in this playlist yet.
                 </div>
-              ) }
+              )}
         </div>
       </div>
     </>

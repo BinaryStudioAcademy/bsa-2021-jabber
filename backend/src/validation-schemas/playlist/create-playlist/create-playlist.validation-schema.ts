@@ -6,6 +6,8 @@ import {
   PlaylistStatus,
 } from '~/common/enums/enums';
 
+const playlistStatus = Object.values(PlaylistStatus);
+
 const playlistCreate = playlist.keys({
   [PlaylistPayloadKey.USER_ID]: Joi.number()
     .integer()
@@ -21,7 +23,7 @@ const playlistCreate = playlist.keys({
     Joi.any().equal(null),
   ],
   [PlaylistPayloadKey.STATUS]: Joi.any()
-    .valid(PlaylistStatus.STAGING)
+    .valid(...playlistStatus)
     .messages({
       'any.only': PlaylistValidationMessage.INVALID_PLAYLIST_STATUS,
     }),

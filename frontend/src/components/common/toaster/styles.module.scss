@@ -1,0 +1,17 @@
+:global {
+  .redux-toastr .toastr .rrt-left-container .rrt-holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .redux-toastr .rrt-success .rrt-left-container .rrt-holder {
+    svg {
+      margin: 0;
+    }
+  }
+
+  .redux-toastr .rrt-error .rrt-left-container .rrt-holder {
+    padding-left: 12px;
+  }
+}

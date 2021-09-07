@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   Playlist,
-  User,
   AsyncThunkConfig,
   EpisodeWithPodcast,
   DeleteActionPlaylistPayload,
+  PlaylistEpisode,
 } from 'common/types/types';
 import { ActionType } from './common';
 import { AppRoute, NotificationMessage, NotificationTitle } from 'common/enums/enums';
@@ -25,25 +25,6 @@ const loadEpisodesByPlaylistId = createAsyncThunk<EpisodeWithPodcast[], number, 
     return result;
   });
 
-const loadPlaylists = createAsyncThunk<Playlist[], number, AsyncThunkConfig>(
-  ActionType.LOAD_PLAYLISTS,
-  async (userId, { extra }) => {
-    const { playlistApi } = extra;
-    const playlist = await playlistApi.getAllByUserId(userId);
-
-    return playlist;
-  },
-);
-
-const loadPlaylistsOwner = createAsyncThunk<User, number, AsyncThunkConfig>(
-  ActionType.LOAD_PLAYLIST_OWNER,
-  async (userId, { extra }) => {
-    const { userApi } = extra;
-
-    return await userApi.getById(userId);
-  },
-);
-
 const deletePlaylist = createAsyncThunk<void, DeleteActionPlaylistPayload, AsyncThunkConfig>(
   ActionType.DELETE_PLAYLIST,
   async ({ playlistId, userId }, { extra }) => {
@@ -54,4 +35,16 @@ const deletePlaylist = createAsyncThunk<void, DeleteActionPlaylistPayload, Async
     navigationService.push(`${AppRoute.PLAYLISTS_USERS}/${userId}`);
   });
 
-export { loadById, loadEpisodesByPlaylistId, loadPlaylists, loadPlaylistsOwner, deletePlaylist };
+const deleteEpisodeFromPlaylist = createAsyncThunk<PlaylistEpisode, number, AsyncThunkConfig>(
+  ActionType.DELETE_EPISODE_FROM_PLAYLIST,
+  async (episodeId, { extra, getState }) => {
+    const { playlistApi } = extra;
+    const { playlist } = getState();
+
+    return playlistApi.deleteEpisodeFromPlaylist({
+      playlistId: (<Playlist>playlist.playlist).id,
+      episodeId,
+    });
+  });
+
+export { loadById, loadEpisodesByPlaylistId, deletePlaylist, deleteEpisodeFromPlaylist };

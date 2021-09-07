@@ -1,12 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { EpisodeWithPodcast, Playlist, User } from 'common/types/types';
+import { EpisodeWithPodcast, Playlist } from 'common/types/types';
 import {
   loadById,
   loadEpisodesByPlaylistId,
-  loadPlaylists,
-  loadPlaylistsOwner,
   deletePlaylist,
+  deleteEpisodeFromPlaylist,
 } from './actions';
 
 type State = {
@@ -14,8 +13,6 @@ type State = {
   playlist: Playlist | null;
   episodes: EpisodeWithPodcast[];
   episodesDataStatus: DataStatus;
-  playlists: Playlist[];
-  user: User | null;
 };
 
 const initialState: State = {
@@ -23,8 +20,6 @@ const initialState: State = {
   playlist: null,
   episodes: [],
   episodesDataStatus: DataStatus.IDLE,
-  playlists: [],
-  user: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -50,26 +45,6 @@ const reducer = createReducer(initialState, (builder) => {
     state.episodesDataStatus = DataStatus.REJECTED;
   });
 
-  builder.addCase(loadPlaylists.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
-  });
-  builder.addCase(loadPlaylists.fulfilled, (state, action) => {
-    state.dataStatus = DataStatus.FULFILLED;
-    state.playlists = action.payload;
-  });
-  builder.addCase(loadPlaylists.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
-  });
-  builder.addCase(loadPlaylistsOwner.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
-  });
-  builder.addCase(loadPlaylistsOwner.fulfilled, (state, action) => {
-    state.dataStatus = DataStatus.FULFILLED;
-    state.user = action.payload;
-  });
-  builder.addCase(loadPlaylistsOwner.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
-  });
   builder.addCase(deletePlaylist.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
   });
@@ -79,6 +54,10 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(deletePlaylist.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
+  });
+
+  builder.addCase(deleteEpisodeFromPlaylist.fulfilled, (state, action) => {
+    state.episodes = state.episodes.filter((episode) => episode.id !== action.payload.episodeId);
   });
 });
 
