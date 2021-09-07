@@ -5,7 +5,6 @@ import {
   NotificationTitle,
   EpisodeType,
   UserRole,
-  PlaylistStatus,
 } from '~/common/enums/enums';
 import {
   Episode as TEpisode,
