@@ -34,6 +34,10 @@ class PlaylistEpisode {
   public deleteAllByPlaylistId(id: number): Promise<TPlaylistEpisode[]> {
     return this.#playlistEpisodeRepository.deleteAllByPlaylistId(id);
   }
+
+  public deleteAllByEpisodeId(id: number): Promise<TPlaylistEpisode[]> {
+    return this.#playlistEpisodeRepository.deleteAllByEpisodeId(id);
+  }
 }
 
 export { PlaylistEpisode };
