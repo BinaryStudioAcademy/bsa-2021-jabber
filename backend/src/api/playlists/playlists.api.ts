@@ -15,13 +15,13 @@ import {
   validateSchema as validateSchemaMiddleware,
   checkUserPlaylistOwner as checkUserPlaylistOwnerMiddleware,
   checkUserMatch as checkUserMatchMiddleware,
+  checkUserHasPermitToPlaylist as checkUserHasPermitToPlaylistMiddleware,
 } from '~/middlewares/middlewares';
 import {
   playlistCreate as playlistCreateValidationSchema,
   playlistEpisode as playlistEpisodeValidationSchema,
   playlistEdit as playlistEditValidationSchema,
 } from '~/validation-schemas/validation-schemas';
-import {checkUserHasPermitToPlaylist} from "~/middlewares/check-user-has-permit-to-playlist/check-user-has-permit-to-podcast.middleware";
 
 type Args = {
   apiRouter: Router;
@@ -45,7 +45,7 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
 
   playlistRouter.get(
     PlaylistsApiPath.$ID,
-    checkUserHasPermitToPlaylist(),
+    checkUserHasPermitToPlaylistMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await playlistService.getById(Number(req.params.id)))
