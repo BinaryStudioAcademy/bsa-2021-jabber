@@ -70,7 +70,3 @@ export type {
   UserPlaylistQueryParams,
 } from './playlist/playlist';
 export type { PlaylistEpisode, PlaylistEpisodePayload } from './playlist-episode/playlist-episode';
-export type {
-  PlaylistInvitationCode,
-  PlaylistInvitationCodePayload,
-} from './playlist-invitation-code/playlist-invitation-code';

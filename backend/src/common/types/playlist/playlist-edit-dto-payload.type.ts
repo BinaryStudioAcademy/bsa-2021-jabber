@@ -1,10 +1,6 @@
 import { PlaylistPayload } from '~/common/types/types';
-import { PlaylistStatus } from '~/common/enums/enums';
 
-type PlaylistEditDTOPayload = {
-  name: string;
-  description: string;
-  status: PlaylistStatus;
+type PlaylistEditDTOPayload = PlaylistPayload & {
   coverId: number | null;
 };
 

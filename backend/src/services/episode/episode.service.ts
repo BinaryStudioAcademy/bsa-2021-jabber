@@ -4,7 +4,8 @@ import {
   UserNotificationStatus,
   NotificationTitle,
   EpisodeType,
-  UserRole, PlaylistStatus,
+  UserRole,
+  PlaylistStatus,
 } from '~/common/enums/enums';
 import {
   Episode as TEpisode,

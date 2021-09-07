@@ -1,4 +1,4 @@
-import {HttpCode, ErrorMessage, PlaylistStatus} from '~/common/enums/enums';
+import { HttpCode, ErrorMessage, PlaylistStatus } from '~/common/enums/enums';
 import {
   Playlist as TPlaylist,
   PlaylistCreatePayload,
@@ -14,7 +14,6 @@ import {
 import { FileStorage } from '~/services/file-storage/file-storage.service';
 import { HttpError } from '~/exceptions/exceptions';
 import { image, playlistEpisode } from '~/services/services';
-
 
 type Constructor = {
   playlistRepository: typeof playlistRep;
@@ -94,7 +93,7 @@ class Playlist {
       newPlaylist.coverId = image.id;
     }
 
-    return await this.#playlistRepository.create(newPlaylist);
+    return this.#playlistRepository.create(newPlaylist);
   }
 
   public getPopular(): Promise<TPlaylist[]> {

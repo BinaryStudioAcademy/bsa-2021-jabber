@@ -7,7 +7,7 @@ import {
   LoadEpisodesByPodcastIdPayload,
   LoadFavouriteEpisodesPayload,
 } from '~/common/types/types';
-import {EpisodeType, PlaylistStatus} from '~/common/enums/enums';
+import { EpisodeType, PlaylistStatus } from '~/common/enums/enums';
 import { POPULAR_EPISODE_LOAD_LIMIT } from '~/common/constants/constants';
 
 type Constructor = {
