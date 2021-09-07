@@ -11,6 +11,7 @@ import { reducer as notification } from './notification/reducer';
 import { reducer as configurateUser } from './configurate-user/reducer';
 import { reducer as configuratePlaylist } from './configurate-playlist/reducer';
 import { reducer as playlist } from './playlist/reducer';
+import { reducer as userPlaylists } from './user-playlists/reducer';
 
 const rootReducer = {
   auth,
@@ -23,6 +24,7 @@ const rootReducer = {
   record,
   userProfile,
   playlist,
+  userPlaylists,
   notification,
   configurateUser,
   toastr: toastrReducer,
