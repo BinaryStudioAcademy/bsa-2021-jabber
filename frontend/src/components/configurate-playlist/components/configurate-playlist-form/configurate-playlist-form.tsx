@@ -1,4 +1,3 @@
-
 import {
   PlaylistPayloadKey,
   ButtonType,
@@ -17,13 +16,12 @@ import {
 } from 'components/common/common';
 import { DEFAULT_PLAYLIST_PAYLOAD } from './common/constants';
 import { playlistCreate as playlistCreateValidationSchema } from 'validation-schemas/validation-schemas';
-import { getOptions } from 'helpers/helpers';
 import styles from './styles.module.scss';
+import { getOptions } from 'helpers/helpers';
 
 type Props = {
   onSubmit: (payload: PlaylistFormPayload) => void;
   payload?: PlaylistFormPayload;
-  isEdit: boolean;
 };
 
 const statusOptions: Option[] = getOptions(Object.values(PlaylistStatus));
@@ -31,7 +29,6 @@ const statusOptions: Option[] = getOptions(Object.values(PlaylistStatus));
 const ConfiguratePlaylistForm: React.FC<Props> = ({
   onSubmit,
   payload = DEFAULT_PLAYLIST_PAYLOAD,
-  isEdit,
 }) => {
 
   const { control, handleSubmit, errors } = useAppForm({
@@ -71,7 +68,7 @@ const ConfiguratePlaylistForm: React.FC<Props> = ({
           name={PlaylistPayloadKey.STATUS}
           control={control}
           errors={errors}
-          isDisabled={isFormDisabled || !isEdit}
+          isDisabled={isFormDisabled}
         />
         <Input
           name={PlaylistPayloadKey.DESCRIPTION}

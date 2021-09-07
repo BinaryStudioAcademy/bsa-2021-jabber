@@ -7,7 +7,7 @@ import {
   LoadEpisodesByPodcastIdPayload,
   LoadFavouriteEpisodesPayload,
 } from '~/common/types/types';
-import { EpisodeType } from '~/common/enums/enums';
+import { EpisodeType, PlaylistStatus } from '~/common/enums/enums';
 import { POPULAR_EPISODE_LOAD_LIMIT } from '~/common/constants/constants';
 
 type Constructor = {
@@ -31,6 +31,7 @@ class Episode {
 
   public getPopular(): Promise<TEpisode[]> {
     return this.#EpisodeModel.query()
+      .where('status', PlaylistStatus.PUBLISHED)
       .where('type', EpisodeType.PUBLIC)
       .withGraphJoined('[image, user]')
       .select(

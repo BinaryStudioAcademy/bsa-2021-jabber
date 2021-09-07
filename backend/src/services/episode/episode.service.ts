@@ -5,6 +5,7 @@ import {
   NotificationTitle,
   EpisodeType,
   UserRole,
+  PlaylistStatus,
 } from '~/common/enums/enums';
 import {
   Episode as TEpisode,
@@ -374,6 +375,13 @@ class Episode {
     const playlist = await this.#playlistRepository.getById(playlistId);
 
     const isOwner = user?.id === playlist.userId || user?.role === UserRole.MASTER;
+
+    if (playlist.status !== PlaylistStatus.PUBLISHED && !isOwner) {
+      throw new HttpError({
+        status: HttpCode.FORBIDDEN,
+        message: ErrorMessage.THIS_IS_A_PRIVATE_PLAYLIST,
+      });
+    }
 
     const episodes = await this.#episodeRepository.getAllByPLaylistId(isOwner, playlistId);
 
