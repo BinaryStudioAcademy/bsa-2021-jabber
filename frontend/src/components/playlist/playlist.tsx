@@ -13,7 +13,6 @@ import {
   ImageWrapper,
   Link,
   ConfirmPopup,
-  NotFound,
 } from 'components/common/common';
 import { getAllowedClasses } from 'helpers/helpers';
 import { PageParams } from './common/types/types';
@@ -62,75 +61,75 @@ const Playlist: React.FC = () => {
     dispatch(playlistActions.deleteEpisodeFromPlaylist(id));
   };
 
-  if (!isLoading && !playlist) {
-    return <NotFound/>;
-  }
-
   if (isLoading) {
     return <Loader />;
   }
 
   return (
-    <>
-      <div className={styles.infoWrapper}>
-        <div className={getAllowedClasses(styles.container, styles.infoContainer)}>
-          <div className={styles.playlistImage}>
-            <ImageWrapper
-              src={playlist?.cover?.url}
-              alt={playlist?.name}
-              label={playlist?.name}
-              className={styles.imageWrapper}
-            />
-          </div>
-          <div className={styles.descriptionWrapper}>
-            <h1 className={styles.title}>{playlist?.name}</h1>
-            <p className={styles.description}>{playlist?.description}</p>
-          </div>
-          {isOwner && (
-            <Link
-              to={`${AppRoute.PLAYLISTS_EDIT}/${id}`}
-              className={styles.editLink}
-            >
-              <span className="visually-hidden">Edit playlist</span>
-            </Link>
-          )}
-          {isAllowDelete && (
-            <>
-              <button
-                className={styles.deleteButton}
-                onClick={handleTogglePopup}
+    playlist && dataStatus === DataStatus.FULFILLED ? (
+      <>
+        <div className={styles.infoWrapper}>
+          <div className={getAllowedClasses(styles.container, styles.infoContainer)}>
+            <div className={styles.playlistImage}>
+              <ImageWrapper
+                src={playlist?.cover?.url}
+                alt={playlist?.name}
+                label={playlist?.name}
+                className={styles.imageWrapper}
+              />
+            </div>
+            <div className={styles.descriptionWrapper}>
+              <h1 className={styles.title}>{playlist?.name}</h1>
+              <p className={styles.description}>{playlist?.description}</p>
+            </div>
+            {isOwner && (
+              <Link
+                to={`${AppRoute.PLAYLISTS_EDIT}/${id}`}
+                className={styles.editLink}
               >
-                <span className="visually-hidden">Delete playlist</span>
-              </button>
-              <ConfirmPopup
-                title="Delete Playlist"
-                description="You are going to delete the playlist. Are you sure about this?"
-                isOpen={isConfirmPopupOpen}
-                onClose={handleTogglePopup}
-                onConfirm={handleDeletePlaylist}
-              />
-            </>
-          )}
+                <span className="visually-hidden">Edit playlist</span>
+              </Link>
+            )}
+            {isAllowDelete && (
+              <>
+                <button
+                  className={styles.deleteButton}
+                  onClick={handleTogglePopup}
+                >
+                  <span className="visually-hidden">Delete playlist</span>
+                </button>
+                <ConfirmPopup
+                  title="Delete Playlist"
+                  description="You are going to delete the playlist. Are you sure about this?"
+                  isOpen={isConfirmPopupOpen}
+                  onClose={handleTogglePopup}
+                  onConfirm={handleDeletePlaylist}
+                />
+              </>
+            )}
+          </div>
         </div>
-      </div>
-      <div className={styles.tableWrapper}>
-        <div className={styles.container}>
-          {isEpisodesLoading
-            ? <Loader />
-            : episodes.length
-              ? <EpisodeTable
-                episodes={episodes}
-                handleDeleteEpisode={handleDeleteEpisode}
-                isAllowDelete={isAllowDelete}
-              />
-              : (
-                <div className={styles.placeholder}>
-                  There are no episodes in this playlist yet.
-                </div>
-              )}
+        <div className={styles.tableWrapper}>
+          <div className={styles.container}>
+            {isEpisodesLoading
+              ? <Loader />
+              : episodes.length
+                ? <EpisodeTable
+                  episodes={episodes}
+                  handleDeleteEpisode={handleDeleteEpisode}
+                  isAllowDelete={isAllowDelete}
+                />
+                : (
+                  <div className={styles.placeholder}>
+                    There are no episodes in this playlist yet.
+                  </div>
+                )}
+          </div>
         </div>
-      </div>
-    </>
+      </>
+    ) : (
+      <h1 className={styles.oopsMessage}>Oops. There&apos;s no such playlist</h1>
+    )
   );
 };
 
