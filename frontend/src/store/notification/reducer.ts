@@ -5,26 +5,28 @@ import { loadCurrentUserNotifications, changeStatus, getCountUncheckedUserNotifi
 
 type State = {
   dataStatus: DataStatus;
+  notificationsDataStatus: DataStatus;
   notifications: UserNotification[];
   countUncheckedNotification: number;
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
+  notificationsDataStatus: DataStatus.IDLE,
   notifications: [],
   countUncheckedNotification: 0,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder.addCase(loadCurrentUserNotifications.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
+    state.notificationsDataStatus = DataStatus.PENDING;
   });
   builder.addCase(loadCurrentUserNotifications.fulfilled, (state, action) => {
-    state.dataStatus = DataStatus.FULFILLED;
+    state.notificationsDataStatus = DataStatus.FULFILLED;
     state.notifications = action.payload;
   });
   builder.addCase(loadCurrentUserNotifications.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
+    state.notificationsDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(getCountUncheckedUserNotifications.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
