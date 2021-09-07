@@ -43,6 +43,17 @@ const Playlist: React.FC = () => {
     return <Loader />;
   }
 
+  const handleDeletePlaylist = (): void => {
+    if (user) {
+      dispatch(
+        playlistActions.deletePlaylist({
+          playlistId: Number(id),
+          userId: user?.id,
+        }),
+      );
+    }
+  };
+
   return (
     <>
       <div className={styles.infoWrapper}>
@@ -70,6 +81,7 @@ const Playlist: React.FC = () => {
           {isAllowDelete && (
             <button
               className={styles.deleteButton}
+              onClick={handleDeletePlaylist}
             >
               <span className="visually-hidden">Delete playlist</span>
             </button>

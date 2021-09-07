@@ -3,6 +3,7 @@ enum ActionType {
   LOAD_PLAYLIST_EPISODES = 'playlist/load-playlist-episodes',
   LOAD_PLAYLISTS = 'playlist/load-playlists',
   LOAD_PLAYLIST_OWNER = 'playlist/load-owner',
+  DELETE_PLAYLIST = 'playlist/delete-playlist',
 }
 
 export { ActionType };

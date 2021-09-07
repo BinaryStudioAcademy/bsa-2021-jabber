@@ -1,7 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { EpisodeWithPodcast, Playlist, User } from 'common/types/types';
-import { loadById, loadEpisodesByPlaylistId, loadPlaylists, loadPlaylistsOwner } from './actions';
+import {
+  loadById,
+  loadEpisodesByPlaylistId,
+  loadPlaylists,
+  loadPlaylistsOwner,
+  deletePlaylist,
+} from './actions';
 
 type State = {
   dataStatus: DataStatus;
@@ -64,7 +70,16 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(loadPlaylistsOwner.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
-
+  builder.addCase(deletePlaylist.pending, (state) => {
+    state.dataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(deletePlaylist.fulfilled, (state) => {
+    state.dataStatus = DataStatus.FULFILLED;
+    state.playlist = null;
+  });
+  builder.addCase(deletePlaylist.rejected, (state) => {
+    state.dataStatus = DataStatus.REJECTED;
+  });
 });
 
 export { reducer };

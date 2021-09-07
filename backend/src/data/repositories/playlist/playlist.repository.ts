@@ -58,6 +58,10 @@ class Playlist {
       .query()
       .updateAndFetchById(id, payload);
   }
+
+  public delete(id: number): Promise<TPlaylist> {
+    return this.#PlaylistModel.query().deleteById(id).returning('*').first();
+  }
 }
 
 export { Playlist };

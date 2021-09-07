@@ -44,7 +44,6 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
 
   playlistRouter.get(
     PlaylistsApiPath.$ID,
-    checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await playlistService.getById(Number(req.params.id)))
@@ -106,6 +105,17 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
     handleAsyncApi(async (req, res) => {
       return res
         .json(await playlistEpisodeService.delete(req.body))
+        .status(HttpCode.OK);
+    }),
+  );
+
+  playlistRouter.delete(
+    PlaylistsApiPath.$ID,
+    checkAuthMiddleware(HttpMethod.DELETE),
+    checkUserPlaylistOwnerMiddleware(),
+    handleAsyncApi(async (req, res) => {
+      return res
+        .json(await playlistService.delete(Number(req.params.id)))
         .status(HttpCode.OK);
     }),
   );

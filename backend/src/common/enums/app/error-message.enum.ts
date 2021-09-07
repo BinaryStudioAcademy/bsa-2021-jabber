@@ -10,6 +10,7 @@ enum ErrorMessage {
   PODCAST_NOT_FOUND = 'Podcast not found',
   EPISODE_NOT_FOUND = 'Episode not found',
   COMMENT_NOT_FOUND = 'Comment not found',
+  PLAYLIST_NOT_FOUND = 'Playlist not found',
   NOT_YOURS_PODCAST = 'This podcast not yours',
   NOT_YOURS_EPISODE = 'This episode not yours',
   NOT_YOURS_COMMENT = 'This comment not yours',
