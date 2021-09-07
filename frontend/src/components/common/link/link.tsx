@@ -5,10 +5,11 @@ type Props = {
   to: AppRoute | string;
   className?: string;
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  title?: string;
 };
 
-const Link: React.FC<Props> = ({ children, to, className, onClick }) => (
-  <AppLink to={to} className={className} onClick={onClick}>
+const Link: React.FC<Props> = ({ children, to, className, onClick, title }) => (
+  <AppLink to={to} className={className} onClick={onClick} title={title}>
     {children}
   </AppLink>
 );

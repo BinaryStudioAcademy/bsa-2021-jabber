@@ -5,6 +5,7 @@ import {
   NotificationTitle,
   EpisodeType,
   UserRole,
+  PlaylistStatus,
 } from '~/common/enums/enums';
 import {
   Episode as TEpisode,
@@ -35,6 +36,7 @@ import {
   podcastFollower,
   notification,
   userFavouriteEpisode,
+  playlistEpisode,
 } from '~/services/services';
 import { HttpError } from '~/exceptions/exceptions';
 
@@ -53,6 +55,7 @@ type Constructor = {
   podcastFollowerService: typeof podcastFollower;
   notificationService: typeof notification;
   userFavouriteEpisodeService: typeof userFavouriteEpisode;
+  playlistEpisodeService: typeof playlistEpisode;
 };
 
 class Episode {
@@ -70,6 +73,7 @@ class Episode {
   #notificationService: typeof notification;
   #userNotificationRepository: typeof userNotificationRep;
   #playlistRepository: typeof playlistRep;
+  #playlistEpisodeService: typeof playlistEpisode;
 
   constructor({
     episodeRepository,
@@ -82,6 +86,7 @@ class Episode {
     recordService,
     imageService,
     podcastFollowerService,
+    playlistEpisodeService,
     notificationService,
     userNotificationRepository,
     userFavouriteEpisodeService,
@@ -101,6 +106,7 @@ class Episode {
     this.#userNotificationRepository = userNotificationRepository;
     this.#userFavouriteEpisodeService = userFavouriteEpisodeService;
     this.#playlistRepository = playlistRepository;
+    this.#playlistEpisodeService = playlistEpisodeService;
   }
 
   public getAll(): Promise<TEpisode[]> {
@@ -323,6 +329,8 @@ class Episode {
       await this.#userFavouriteEpisodeService.deleteAllByEpisodeId(id);
     }
 
+    await this.#playlistEpisodeService.deleteAllByEpisodeId(id);
+
     const comments = await this.#commentService.getAllByEpisodeId(episode.id);
     const hasComments = Boolean(comments.length);
     if (hasComments) {
@@ -367,6 +375,13 @@ class Episode {
     const playlist = await this.#playlistRepository.getById(playlistId);
 
     const isOwner = user?.id === playlist.userId || user?.role === UserRole.MASTER;
+
+    if (playlist.status !== PlaylistStatus.PUBLISHED && !isOwner) {
+      throw new HttpError({
+        status: HttpCode.FORBIDDEN,
+        message: ErrorMessage.THIS_IS_A_PRIVATE_PLAYLIST,
+      });
+    }
 
     const episodes = await this.#episodeRepository.getAllByPLaylistId(isOwner, playlistId);
 
