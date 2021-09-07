@@ -53,19 +53,11 @@
 }
 
 .imageWrapper {
-  position: absolute;
-
-  left: 0;
-  top: 0;
-
   & div {
     background-color: #989ea6;
   }
 
   & span {
-    left: 80%;
-    top: calc((100% - 89px) / 2);
-
     font-size: 120px;
     color: #3e4752;
     opacity: 0.1;
