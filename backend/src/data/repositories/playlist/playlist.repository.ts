@@ -3,8 +3,9 @@ import {
   Playlist as TPlaylist,
   PlaylistCreateDTOPayload,
   PlaylistEditDTOPayload,
+  UserPlaylistQueryParams,
 } from '~/common/types/types';
-import { PodcastType } from '~/common/enums/enums';
+import {PlaylistStatus, PodcastType} from '~/common/enums/enums';
 import { PlaylistModel as PlaylistM } from '~/data/models/models';
 import { POPULAR_PLAYLIST_LOAD_LIMIT } from '~/common/constants/constants';
 
@@ -26,9 +27,9 @@ class Playlist {
       .withGraphFetched('[cover]');
   }
 
-  public getAllByUserId(userId: number): Promise<TPlaylist[]> {
+  public getAllByUserId(filterParams: UserPlaylistQueryParams): Promise<TPlaylist[]> {
     return this.#PlaylistModel.query()
-      .where('user_id', userId)
+      .where(filterParams)
       .withGraphFetched('[user, cover]');
   }
 
@@ -42,6 +43,7 @@ class Playlist {
     return this.#PlaylistModel.query()
       .select(raw('playlists.*, count(*) as commentsCount'))
       .from(raw('playlists, playlists_episodes, episodes, comments, podcasts'))
+      .where('playlists.status', PlaylistStatus.PUBLISHED)
       .whereRaw('playlists.id = playlists_episodes.playlist_id')
       .whereRaw('playlists_episodes.episode_id = episodes.id')
       .whereRaw('podcasts.id = episodes.podcast_id')

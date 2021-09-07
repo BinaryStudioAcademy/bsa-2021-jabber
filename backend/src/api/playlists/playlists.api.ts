@@ -3,7 +3,7 @@ import {
   ApiPath,
   HttpCode,
   HttpMethod,
-  PlaylistsApiPath, PodcastsApiPath,
+  PlaylistsApiPath,
 } from '~/common/enums/enums';
 import { handleAsyncApi } from '~/helpers/helpers';
 import {
@@ -21,7 +21,7 @@ import {
   playlistEpisode as playlistEpisodeValidationSchema,
   playlistEdit as playlistEditValidationSchema,
 } from '~/validation-schemas/validation-schemas';
-import {User} from "~/common/types/types";
+import {checkUserHasPermitToPlaylist} from "~/middlewares/check-user-has-permit-to-playlist/check-user-has-permit-to-podcast.middleware";
 
 type Args = {
   apiRouter: Router;
@@ -45,6 +45,7 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
 
   playlistRouter.get(
     PlaylistsApiPath.$ID,
+    checkUserHasPermitToPlaylist(),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await playlistService.getById(Number(req.params.id)))
@@ -57,7 +58,7 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
     checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (req, res) => {
       return res
-        .json(await playlistService.getAllByUserId(Number(req.params.userId)))
+        .json(await playlistService.getAllByUserId(Number(req.params.userId), Number(req.user?.id)))
         .status(HttpCode.OK);
     }),
   );
@@ -88,7 +89,7 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
 
 
   playlistRouter.get(
-    PodcastsApiPath.INVITE_$CODE,
+    PlaylistsApiPath.INVITE_$CODE,
     checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (req, res) => {
       return res

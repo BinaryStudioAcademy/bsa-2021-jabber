@@ -1,10 +1,11 @@
-import { HttpCode, ErrorMessage } from '~/common/enums/enums';
+import {HttpCode, ErrorMessage, PodcastType, PlaylistStatus} from '~/common/enums/enums';
 import {
   Playlist as TPlaylist,
   PlaylistCreatePayload,
   PlaylistCreateDTOPayload,
   PlaylistEditDTOPayload,
   PlaylistEditPayload,
+  UserPlaylistQueryParams,
 } from '~/common/types/types';
 import {
   playlist as playlistRep,
@@ -49,8 +50,20 @@ class Playlist {
     this.#playlistEpisodeService = playlistEpisodeService;
   }
 
-  public getAllByUserId(userId: number): Promise<TPlaylist[]> {
-    return this.#playlistRepository.getAllByUserId(userId);
+  public getAllByUserId(
+    searchedUserId: number,
+    requestUserId?: number,
+  ): Promise<TPlaylist[]> {
+    const filterParams: UserPlaylistQueryParams = {
+      user_id: searchedUserId,
+    };
+    const isRequestUserAuthorised = Boolean(requestUserId);
+
+    if (!isRequestUserAuthorised || searchedUserId !== requestUserId) {
+      filterParams.status = PlaylistStatus.PUBLISHED;
+    }
+
+    return this.#playlistRepository.getAllByUserId(filterParams);
   }
 
   public getById(id: number): Promise<TPlaylist> {
@@ -101,7 +114,6 @@ class Playlist {
 
   public async invite(code: string): Promise<TPlaylist> {
     const invitationCode = await this.#playlistInvitationCodeRepository.getByCode(code);
-
     if (!invitationCode) {
       throw new HttpError({
         status: HttpCode.BAD_REQUEST,
@@ -125,6 +137,7 @@ class Playlist {
       coverId,
       description,
       status,
+      invitationCode,
     }: PlaylistEditPayload,
   ): Promise<TPlaylist> {
     const updatePlaylist: PlaylistEditDTOPayload = {
@@ -152,6 +165,20 @@ class Playlist {
       updatePlaylist.coverId = image.id;
     }
 
+    if (invitationCode) {
+      const hasInvitationCode = await this.#playlistInvitationCodeRepository.getByPlaylistId(Number(id));
+
+      hasInvitationCode ?
+        await this.#playlistInvitationCodeRepository.update({
+          playlistId: Number(id),
+          code: invitationCode,
+        })
+        : await this.#playlistInvitationCodeRepository.create({
+          playlistId: Number(id),
+          code: invitationCode,
+        });
+    }
+
     const playlist = await this.#playlistRepository.update(id, updatePlaylist);
 
     if (deleteCoverId) {
@@ -174,6 +201,8 @@ class Playlist {
     }
 
     await this.#playlistEpisodeService.deleteAllByPlaylistId(playlist.id);
+
+    await this.#playlistInvitationCodeRepository.delete(id);
 
     await this.#playlistRepository.delete(id);
 
