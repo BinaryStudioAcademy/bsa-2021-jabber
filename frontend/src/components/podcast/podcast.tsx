@@ -144,7 +144,7 @@ const Podcast: React.FC = () => {
                 <Link
                   to={`${AppRoute.PODCASTS_EDIT}/${podcast.id}`}
                   className={styles.editLink}
-                  title={'Edit podcast'}
+                  title="Edit podcast"
                 />
               )}
               {isAllowDelete && (
@@ -152,7 +152,7 @@ const Podcast: React.FC = () => {
                   <button
                     onClick={handleShowPopup}
                     className={styles.deleteButton}
-                    title={'Delete podcast'}
+                    title="Delete podcast"
                   >
                     <span className="visually-hidden">Delete episode</span>
                   </button>
