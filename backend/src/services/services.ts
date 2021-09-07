@@ -107,6 +107,10 @@ const userFavouriteEpisode = new UserFavouriteEpisode({
   userFavouriteEpisodeRepository,
 });
 
+const playlistEpisode = new PlaylistEpisode({
+  playlistEpisodeRepository,
+});
+
 const episode = new Episode({
   episodeRepository,
   shownoteService: shownote,
@@ -122,6 +126,7 @@ const episode = new Episode({
   fileStorage,
   userNotificationRepository,
   playlistRepository,
+  playlistEpisodeService: playlistEpisode,
 });
 
 const podcast = new Podcast({
@@ -153,10 +158,6 @@ const userFollower = new UserFollower({
 
 const userNotification = new UserNotification({
   userNotificationRepository,
-});
-
-const playlistEpisode = new PlaylistEpisode({
-  playlistEpisodeRepository,
 });
 
 const playlist = new Playlist({

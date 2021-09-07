@@ -4,6 +4,7 @@ import ReduxToastr, {
   transitionOutType,
 } from 'react-redux-toastr';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
+import './styles.module.scss';
 
 type Props = {
   timeOut?: number;
