@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   Playlist,
-  User,
   AsyncThunkConfig,
   EpisodeWithPodcast,
   DeleteActionPlaylistPayload,
@@ -25,25 +24,6 @@ const loadEpisodesByPlaylistId = createAsyncThunk<EpisodeWithPodcast[], number, 
     return result;
   });
 
-const loadPlaylists = createAsyncThunk<Playlist[], number, AsyncThunkConfig>(
-  ActionType.LOAD_PLAYLISTS,
-  async (userId, { extra }) => {
-    const { playlistApi } = extra;
-    const playlist = await playlistApi.getAllByUserId(userId);
-
-    return playlist;
-  },
-);
-
-const loadPlaylistsOwner = createAsyncThunk<User, number, AsyncThunkConfig>(
-  ActionType.LOAD_PLAYLIST_OWNER,
-  async (userId, { extra }) => {
-    const { userApi } = extra;
-
-    return await userApi.getById(userId);
-  },
-);
-
 const deletePlaylist = createAsyncThunk<void, DeleteActionPlaylistPayload, AsyncThunkConfig>(
   ActionType.DELETE_PLAYLIST,
   async ({ playlistId, userId }, { extra }) => {
@@ -54,4 +34,4 @@ const deletePlaylist = createAsyncThunk<void, DeleteActionPlaylistPayload, Async
     navigationService.push(`${AppRoute.PLAYLISTS_USERS}/${userId}`);
   });
 
-export { loadById, loadEpisodesByPlaylistId, loadPlaylists, loadPlaylistsOwner, deletePlaylist };
+export { loadById, loadEpisodesByPlaylistId, deletePlaylist };
