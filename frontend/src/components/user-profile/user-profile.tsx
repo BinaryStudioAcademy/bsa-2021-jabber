@@ -12,7 +12,7 @@ import { userProfile as userProfileActions } from 'store/actions';
 import contactLogo from 'assets/img/user-profile/contact.svg';
 import emailLogo from 'assets/img/user-profile/email.svg';
 import { PageParams } from './common/types/types';
-import { getFilterEpisode } from 'helpers/helpers';
+import { getFilterEpisode, checkIsOneOf } from 'helpers/helpers';
 import { FavouriteEpisodeTable } from './components/components';
 import { DEFAULT_EPISODE_PAGINATION } from './common/constants/constants';
 import styles from './styles.module.scss';
@@ -24,7 +24,9 @@ const UserPage: React.FC = () => {
     currentUser,
     user,
     podcasts,
-    dataStatus,
+    userDataStatus,
+    podcastsDataStatus,
+    favoriteEpisodesDataStatus,
     isFollowed,
     followersCount,
     followersDataStatus,
@@ -34,7 +36,9 @@ const UserPage: React.FC = () => {
     currentUser: auth.user,
     user: userProfile.user,
     podcasts: userProfile.podcasts,
-    dataStatus: userProfile.dataStatus,
+    userDataStatus: userProfile.userDataStatus,
+    podcastsDataStatus: userProfile.podcastsDataStatus,
+    favoriteEpisodesDataStatus: userProfile.favoriteEpisodesDataStatus,
     isFollowed: userProfile.isFollowed,
     followersCount: userProfile.followersCount,
     followersDataStatus: userProfile.followersDataStatus,
@@ -90,9 +94,13 @@ const UserPage: React.FC = () => {
   const isShowFollowButton =
     Boolean(currentUser) && currentUser?.id !== user?.id;
   const isOwnPage = currentUser?.id === Number(id);
-  const isLoading =
-    dataStatus === DataStatus.PENDING ||
-    followersDataStatus === DataStatus.PENDING;
+  const isLoading = checkIsOneOf(
+    DataStatus.PENDING,
+    userDataStatus,
+    podcastsDataStatus,
+    favoriteEpisodesDataStatus,
+    followersDataStatus,
+  );
   const hasFavoriteEpisodes = Boolean(favoriteEpisodes.length);
 
   const handleToggleFollow = (): void => {
@@ -106,16 +114,16 @@ const UserPage: React.FC = () => {
     }
   };
 
-  if (!hasUser && dataStatus === DataStatus.FULFILLED) {
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (!hasUser) {
     return (
       <div className={styles.containerUserNotFound}>
         <h1>User Not Found</h1>
       </div>
     );
-  }
-
-  if (isLoading) {
-    return <Loader />;
   }
 
   return (

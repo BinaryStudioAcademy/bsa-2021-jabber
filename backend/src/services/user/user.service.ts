@@ -35,8 +35,16 @@ class User {
     return this.#userRepository.getAll();
   }
 
-  public getById(id: number): Promise<TUser> {
-    return this.#userRepository.getById(id);
+  public async getById(id: number): Promise<TUser> {
+    const user = await this.#userRepository.getById(id);
+    if (!user) {
+      throw new HttpError({
+        status: HttpCode.NOT_FOUND,
+        message: ErrorMessage.USER_NOT_FOUND,
+      });
+    }
+
+    return user;
   }
 
   public async update(id: number, payload: UserEditPayload): Promise<TUser> {
