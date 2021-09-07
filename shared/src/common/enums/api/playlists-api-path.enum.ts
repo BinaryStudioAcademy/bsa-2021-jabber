@@ -7,6 +7,7 @@ enum PlaylistsApiPath {
   INVITE = '/invite',
   $PLAYLIST_ID_EPISODES = '/:id/episodes',
   POPULAR = '/popular',
+  INVITE_$CODE = '/invite/:code'
 }
 
 export { PlaylistsApiPath };
