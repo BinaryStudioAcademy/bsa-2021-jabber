@@ -35,6 +35,7 @@ import {
   podcastFollower,
   notification,
   userFavouriteEpisode,
+  playlistEpisode,
 } from '~/services/services';
 import { HttpError } from '~/exceptions/exceptions';
 
@@ -53,6 +54,7 @@ type Constructor = {
   podcastFollowerService: typeof podcastFollower;
   notificationService: typeof notification;
   userFavouriteEpisodeService: typeof userFavouriteEpisode;
+  playlistEpisodeService: typeof playlistEpisode;
 };
 
 class Episode {
@@ -70,6 +72,7 @@ class Episode {
   #notificationService: typeof notification;
   #userNotificationRepository: typeof userNotificationRep;
   #playlistRepository: typeof playlistRep;
+  #playlistEpisodeService: typeof playlistEpisode;
 
   constructor({
     episodeRepository,
@@ -82,6 +85,7 @@ class Episode {
     recordService,
     imageService,
     podcastFollowerService,
+    playlistEpisodeService,
     notificationService,
     userNotificationRepository,
     userFavouriteEpisodeService,
@@ -101,6 +105,7 @@ class Episode {
     this.#userNotificationRepository = userNotificationRepository;
     this.#userFavouriteEpisodeService = userFavouriteEpisodeService;
     this.#playlistRepository = playlistRepository;
+    this.#playlistEpisodeService = playlistEpisodeService;
   }
 
   public getAll(): Promise<TEpisode[]> {
@@ -322,6 +327,8 @@ class Episode {
     if (hasFavoriteEpisodes) {
       await this.#userFavouriteEpisodeService.deleteAllByEpisodeId(id);
     }
+
+    await this.#playlistEpisodeService.deleteAllByEpisodeId(id);
 
     const comments = await this.#commentService.getAllByEpisodeId(episode.id);
     const hasComments = Boolean(comments.length);
