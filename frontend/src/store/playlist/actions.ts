@@ -41,7 +41,7 @@ const deleteEpisodeFromPlaylist = createAsyncThunk<PlaylistEpisode, number, Asyn
     const { playlistApi } = extra;
     const { playlist } = getState();
 
-    return await playlistApi.deleteEpisodeFromPlaylist({
+    return playlistApi.deleteEpisodeFromPlaylist({
       playlistId: (<Playlist>playlist.playlist).id,
       episodeId,
     });

@@ -1,1 +1,1 @@
-export { default as DeleteButton } from './delete-button/delete-button';
+export { default as ActionCell } from './action-cell/action-cell';

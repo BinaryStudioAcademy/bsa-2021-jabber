@@ -1,7 +1,7 @@
 import { Column } from 'react-table';
 import { INCREASE_CONT_FOR_IDX } from 'common/constants/constants';
 import { Link } from 'components/common/common';
-import { DeleteButton } from '../components/components';
+import { ActionCell } from '../components/components';
 import { AppRoute } from 'common/enums/enums';
 import { EpisodeNameRow } from '../types/types';
 
@@ -41,7 +41,7 @@ const getColumns = (handleDeleteEpisode: HandleDeleteEpisode, isAllowDelete: boo
 
   if (isAllowDelete) {
     columns.push({
-      Header: 'Delete',
+      Header: 'Actions',
       accessor: (originalRow): Record<string, unknown> => {
         const row = originalRow as EpisodeNameRow;
         return {
@@ -49,7 +49,7 @@ const getColumns = (handleDeleteEpisode: HandleDeleteEpisode, isAllowDelete: boo
         };
       },
       Cell: ({ value }): JSX.Element => (
-        <DeleteButton
+        <ActionCell
           value={value}
           onDeleteEpisode={handleDeleteEpisode}
         />

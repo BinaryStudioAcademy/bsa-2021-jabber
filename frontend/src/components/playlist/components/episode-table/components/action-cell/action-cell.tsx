@@ -6,7 +6,7 @@ type Props = {
   onDeleteEpisode: (id: number) => void;
 };
 
-const DeleteButton: React.FC<Props> = ({ value, onDeleteEpisode }) => {
+const ActionCell: React.FC<Props> = ({ value, onDeleteEpisode }) => {
 
   const handleDeleteEpisode = (): void => {
     onDeleteEpisode(Number(value.episodeId));
@@ -16,9 +16,10 @@ const DeleteButton: React.FC<Props> = ({ value, onDeleteEpisode }) => {
     <button
       onClick={handleDeleteEpisode}
       className={styles.button}
-      title="Delete"
-    />
+    >
+      <span className="visually-hidden">Delete episode</span>
+    </button>
   );
 };
 
-export default DeleteButton;
+export default ActionCell;
