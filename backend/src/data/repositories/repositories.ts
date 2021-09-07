@@ -16,7 +16,6 @@ import {
   UserFavouriteEpisodeModel,
   PlaylistModel,
   PlaylistEpisodeModel,
-  PlaylistInvitationCodeModel,
 } from '~/data/models/models';
 import { User } from './user/user.repository';
 import { Podcast } from './podcast/podcast.repository';
@@ -35,7 +34,6 @@ import { UserNotification } from './user-notification/user-notification.reposito
 import { UserFavouriteEpisode } from './user-favourite-episode/user-favourite-episode.repository';
 import { Playlist } from './playlist/playlist.repository';
 import { PlaylistEpisode } from './playlist-episode/playlist-episode.repository';
-import { PlaylistInvitationCode } from './playlist-invitation-code/playlist-invitation-code.repository';
 
 const user = new User({
   UserModel,
@@ -105,10 +103,6 @@ const playlistEpisode = new PlaylistEpisode({
   PlaylistEpisodeModel,
 });
 
-const playlistInvitationCode = new PlaylistInvitationCode({
-  PlaylistInvitationCodeModel,
-})
-
 export {
   user,
   episode,
@@ -127,5 +121,4 @@ export {
   commentReaction,
   playlist,
   playlistEpisode,
-  playlistInvitationCode,
 };

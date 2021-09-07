@@ -57,5 +57,4 @@ export { InvitationCodePayloadKey } from './invitation-code/invitation-code';
 export { UserFavouriteEpisodePayloadKey } from './user-favourite-episode/user-favourite-episode';
 export { PlaylistPayloadKey, PlaylistStatus } from './playlist/playlist';
 export { PlaylistEpisodePayloadKey } from './playlist-episode/playlist-episode';
-export { PlaylistInvitationCodePayloadKey } from './playlist-invitation-code/playlist-invitation-code';
 

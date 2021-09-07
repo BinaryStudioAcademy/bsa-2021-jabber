@@ -5,7 +5,7 @@ import {
   PlaylistEditDTOPayload,
   UserPlaylistQueryParams,
 } from '~/common/types/types';
-import {PlaylistStatus, PodcastType} from '~/common/enums/enums';
+import { PlaylistStatus, PodcastType } from '~/common/enums/enums';
 import { PlaylistModel as PlaylistM } from '~/data/models/models';
 import { POPULAR_PLAYLIST_LOAD_LIMIT } from '~/common/constants/constants';
 

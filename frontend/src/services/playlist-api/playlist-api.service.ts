@@ -86,14 +86,6 @@ class PlaylistApi {
     );
   }
 
-  public invite(code: string): Promise<Playlist> {
-    return this.#http.load(
-      `${this.#apiPrefix}${ApiPath.PLAYLISTS}${PlaylistsApiPath.INVITE}/${code}`,
-      {
-        method: HttpMethod.GET,
-      });
-  }
-
   public update(id: number, payload: PlaylistCreatePayload): Promise<Playlist> {
     return this.#http.load(
       `${this.#apiPrefix}${ApiPath.PLAYLISTS}${PlaylistsApiPath.ROOT}/${id}`,

@@ -34,7 +34,6 @@ const playlist = Joi.object({
     .messages({
       'string.empty': PlaylistValidationMessage.STATUS_REQUIRE,
     }),
-  [PlaylistPayloadKey.INVITATION_CODE]: Joi.string().allow(''),
 });
 
 export { playlist };

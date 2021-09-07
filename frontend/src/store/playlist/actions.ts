@@ -44,22 +44,6 @@ const loadPlaylistsOwner = createAsyncThunk<User, number, AsyncThunkConfig>(
   },
 );
 
-const playlistInvite = createAsyncThunk<void, string, AsyncThunkConfig>(
-  ActionType.PLAYLIST_INVITE,
-  async (code, { extra }) => {
-    const { playlistApi, navigationService, notificationService } = extra;
-
-    try {
-      const playlist = await playlistApi.invite(code);
-
-      navigationService.push(`${AppRoute.PLAYLISTS}/${playlist.id}`);
-    } catch (err) {
-      navigationService.push(`${AppRoute.ROOT}`);
-      notificationService.error(NotificationTitle.ERROR, err.message);
-    }
-
-  });
-
 const deletePlaylist = createAsyncThunk<void, DeleteActionPlaylistPayload, AsyncThunkConfig>(
   ActionType.DELETE_PLAYLIST,
   async ({ playlistId, userId }, { extra }) => {
@@ -70,4 +54,4 @@ const deletePlaylist = createAsyncThunk<void, DeleteActionPlaylistPayload, Async
     navigationService.push(`${AppRoute.PLAYLISTS_USERS}/${userId}`);
   });
 
-export { loadById, loadEpisodesByPlaylistId, loadPlaylists, loadPlaylistsOwner, deletePlaylist, playlistInvite };
+export { loadById, loadEpisodesByPlaylistId, loadPlaylists, loadPlaylistsOwner, deletePlaylist };

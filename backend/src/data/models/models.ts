@@ -15,4 +15,3 @@ export { InvitationCode as InvitationCodeModel } from './invitation-code/invitat
 export { UserFavouriteEpisode as UserFavouriteEpisodeModel } from './user-favourite-episode/user-favourite-episode.model';
 export { Playlist as PlaylistModel } from './playlist/playlist.model';
 export { PlaylistEpisode as PlaylistEpisodeModel } from './playlist-episode/playlist-episode.model';
-export { PlaylistInvitationCode as PlaylistInvitationCodeModel } from './playlist-invitation-code/playlist-invitation-code.model';

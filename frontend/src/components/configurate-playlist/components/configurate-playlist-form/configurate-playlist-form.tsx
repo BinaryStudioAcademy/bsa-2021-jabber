@@ -7,7 +7,7 @@ import {
   PlaylistStatus,
 } from 'common/enums/enums';
 import { PlaylistFormPayload, Option } from 'common/types/types';
-import { useAppForm, useAppSelector, useEffect } from 'hooks/hooks';
+import { useAppForm, useAppSelector } from 'hooks/hooks';
 import {
   Input,
   Button,
@@ -17,12 +17,11 @@ import {
 import { DEFAULT_PLAYLIST_PAYLOAD } from './common/constants';
 import { playlistCreate as playlistCreateValidationSchema } from 'validation-schemas/validation-schemas';
 import styles from './styles.module.scss';
-import { getOptions, getRandomId } from 'helpers/helpers';
+import { getOptions } from 'helpers/helpers';
 
 type Props = {
   onSubmit: (payload: PlaylistFormPayload) => void;
   payload?: PlaylistFormPayload;
-  isEdit: boolean;
 };
 
 const statusOptions: Option[] = getOptions(Object.values(PlaylistStatus));
@@ -30,10 +29,9 @@ const statusOptions: Option[] = getOptions(Object.values(PlaylistStatus));
 const ConfiguratePlaylistForm: React.FC<Props> = ({
   onSubmit,
   payload = DEFAULT_PLAYLIST_PAYLOAD,
-  isEdit,
 }) => {
 
-  const { control, handleSubmit, errors, setValue, watch } = useAppForm({
+  const { control, handleSubmit, errors } = useAppForm({
     validationSchema: playlistCreateValidationSchema,
     defaultValues: payload,
   });
@@ -46,21 +44,6 @@ const ConfiguratePlaylistForm: React.FC<Props> = ({
   );
 
   const isFormDisabled = formDataStatus === DataStatus.PENDING;
-  const isPlaylistPrivate = watch(PlaylistPayloadKey.STATUS) === PlaylistStatus.PRIVATE;
-
-  const handleGenerateCode = (): void => {
-    setValue(PlaylistPayloadKey.INVITATION_CODE, getRandomId());
-  };
-
-  useEffect(() => {
-    if (!isPlaylistPrivate) {
-      setValue(PlaylistPayloadKey.INVITATION_CODE, '');
-    }
-  }, [isPlaylistPrivate]);
-
-  /* eslint-disable no-console */
-  console.log(errors);
-  /* eslint-enable no-console */
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -85,19 +68,8 @@ const ConfiguratePlaylistForm: React.FC<Props> = ({
           name={PlaylistPayloadKey.STATUS}
           control={control}
           errors={errors}
-          isDisabled={isFormDisabled || !isEdit}
+          isDisabled={isFormDisabled}
         />
-        {isPlaylistPrivate &&
-        (<div className={styles.invitationCode}>
-          <Input
-            name={PlaylistPayloadKey.INVITATION_CODE}
-            control={control}
-            errors={errors}
-            label="Invitation code"
-            placeholder="Generate new code"
-          />
-          <Button label="Generate" onClick={handleGenerateCode} />
-        </div>)}
         <Input
           name={PlaylistPayloadKey.DESCRIPTION}
           control={control}

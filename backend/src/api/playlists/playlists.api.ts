@@ -87,16 +87,6 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
     }),
   );
 
-
-  playlistRouter.get(
-    PlaylistsApiPath.INVITE_$CODE,
-    checkAuthMiddleware(HttpMethod.GET),
-    handleAsyncApi(async (req, res) => {
-      return res
-        .json(await playlistService.invite(req.params.code));
-    }),
-  );
-
   playlistRouter.put(
     PlaylistsApiPath.$ID,
     checkAuthMiddleware(HttpMethod.PUT),

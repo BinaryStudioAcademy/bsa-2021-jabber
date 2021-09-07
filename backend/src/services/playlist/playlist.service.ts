@@ -1,4 +1,4 @@
-import {HttpCode, ErrorMessage, PodcastType, PlaylistStatus} from '~/common/enums/enums';
+import {HttpCode, ErrorMessage, PlaylistStatus} from '~/common/enums/enums';
 import {
   Playlist as TPlaylist,
   PlaylistCreatePayload,
@@ -10,7 +10,6 @@ import {
 import {
   playlist as playlistRep,
   image as imageRep,
-  playlistInvitationCode as playlistInvitationCodeRep,
 } from '~/data/repositories/repositories';
 import { FileStorage } from '~/services/file-storage/file-storage.service';
 import { HttpError } from '~/exceptions/exceptions';
@@ -21,7 +20,6 @@ type Constructor = {
   playlistRepository: typeof playlistRep;
   fileStorage: FileStorage;
   imageRepository: typeof imageRep;
-  playlistInvitationCodeRepository: typeof playlistInvitationCodeRep;
   imageService: typeof image;
   playlistEpisodeService: typeof playlistEpisode;
 };
@@ -30,7 +28,6 @@ class Playlist {
   #playlistRepository: typeof playlistRep;
   #fileStorage: FileStorage;
   #imageRepository: typeof imageRep;
-  #playlistInvitationCodeRepository: typeof playlistInvitationCodeRep;
   #imageService: typeof image;
   #playlistEpisodeService: typeof playlistEpisode;
 
@@ -38,14 +35,12 @@ class Playlist {
     playlistRepository,
     fileStorage,
     imageRepository,
-    playlistInvitationCodeRepository,
     imageService,
     playlistEpisodeService,
   }: Constructor) {
     this.#playlistRepository = playlistRepository;
     this.#fileStorage = fileStorage;
     this.#imageRepository = imageRepository;
-    this.#playlistInvitationCodeRepository = playlistInvitationCodeRepository;
     this.#imageService = imageService;
     this.#playlistEpisodeService = playlistEpisodeService;
   }
@@ -76,7 +71,6 @@ class Playlist {
     status,
     coverDataUrl,
     userId,
-    invitationCode,
   }: PlaylistCreatePayload): Promise<TPlaylist> {
     const newPlaylist: PlaylistCreateDTOPayload = {
       name,
@@ -100,28 +94,7 @@ class Playlist {
       newPlaylist.coverId = image.id;
     }
 
-    const playlist = await this.#playlistRepository.create(newPlaylist);
-
-    if (invitationCode) {
-      await this.#playlistInvitationCodeRepository.create({
-        playlistId: playlist.id,
-        code: invitationCode,
-      });
-    }
-
-    return playlist;
-  }
-
-  public async invite(code: string): Promise<TPlaylist> {
-    const invitationCode = await this.#playlistInvitationCodeRepository.getByCode(code);
-    if (!invitationCode) {
-      throw new HttpError({
-        status: HttpCode.BAD_REQUEST,
-        message: ErrorMessage.PLAYLIST_NOT_FOUND,
-      });
-    }
-
-    return this.#playlistRepository.getById(invitationCode.playlistId);
+    return await this.#playlistRepository.create(newPlaylist);
   }
 
   public getPopular(): Promise<TPlaylist[]> {
@@ -137,7 +110,6 @@ class Playlist {
       coverId,
       description,
       status,
-      invitationCode,
     }: PlaylistEditPayload,
   ): Promise<TPlaylist> {
     const updatePlaylist: PlaylistEditDTOPayload = {
@@ -165,20 +137,6 @@ class Playlist {
       updatePlaylist.coverId = image.id;
     }
 
-    if (invitationCode) {
-      const hasInvitationCode = await this.#playlistInvitationCodeRepository.getByPlaylistId(Number(id));
-
-      hasInvitationCode ?
-        await this.#playlistInvitationCodeRepository.update({
-          playlistId: Number(id),
-          code: invitationCode,
-        })
-        : await this.#playlistInvitationCodeRepository.create({
-          playlistId: Number(id),
-          code: invitationCode,
-        });
-    }
-
     const playlist = await this.#playlistRepository.update(id, updatePlaylist);
 
     if (deleteCoverId) {
@@ -196,13 +154,11 @@ class Playlist {
     if (!playlist) {
       throw new HttpError({
         status: HttpCode.NOT_FOUND,
-        message: ErrorMessage.PODCAST_NOT_FOUND,
+        message: ErrorMessage.PLAYLIST_NOT_FOUND,
       });
     }
 
     await this.#playlistEpisodeService.deleteAllByPlaylistId(playlist.id);
-
-    await this.#playlistInvitationCodeRepository.delete(id);
 
     await this.#playlistRepository.delete(id);
 
