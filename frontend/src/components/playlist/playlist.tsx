@@ -13,6 +13,7 @@ import {
   ImageWrapper,
   Link,
   ConfirmPopup,
+  NotFound,
 } from 'components/common/common';
 import { getAllowedClasses } from 'helpers/helpers';
 import { PageParams } from './common/types/types';
@@ -42,10 +43,6 @@ const Playlist: React.FC = () => {
     dispatch(playlistActions.loadEpisodesByPlaylistId(Number(id)));
   }, [id]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   const handleDeletePlaylist = (): void => {
     if (user) {
       dispatch(
@@ -64,6 +61,14 @@ const Playlist: React.FC = () => {
   const handleDeleteEpisode = (id: number): void => {
     dispatch(playlistActions.deleteEpisodeFromPlaylist(id));
   };
+
+  if (!isLoading && !playlist) {
+    return <NotFound/>;
+  }
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
