@@ -14,18 +14,18 @@ import styles from './styles.module.scss';
 const EditUser: React.FC = () => {
   const { id } = useParams<PageParams>();
 
-  const { currentUser, user, dataStatus, formDataStatus } = useAppSelector(
+  const { currentUser, user, userDataStatus, formDataStatus } = useAppSelector(
     ({ auth, userProfile, configurateUser }: RootState) => ({
       currentUser: auth.user,
       user: userProfile.user,
-      dataStatus: userProfile.dataStatus,
+      userDataStatus: userProfile.userDataStatus,
       formDataStatus: configurateUser.dataStatus,
     }),
   );
 
   const dispatch = useDispatch();
 
-  const isLoading = dataStatus === DataStatus.PENDING;
+  const isLoading = userDataStatus === DataStatus.PENDING;
   const isFormDisabled = formDataStatus === DataStatus.PENDING;
   const hasPermitToEdit = currentUser?.id === Number(id);
 

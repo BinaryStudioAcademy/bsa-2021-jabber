@@ -12,8 +12,10 @@ import {
 } from './actions';
 
 type State = {
-  dataStatus: DataStatus;
+  userDataStatus: DataStatus;
+  podcastsDataStatus: DataStatus;
   followersDataStatus: DataStatus;
+  favoriteEpisodesDataStatus: DataStatus;
   podcasts: Podcast[];
   user: User | null;
   isFollowed: boolean;
@@ -24,8 +26,10 @@ type State = {
 };
 
 const initialState: State = {
-  dataStatus: DataStatus.IDLE,
+  userDataStatus: DataStatus.IDLE,
+  podcastsDataStatus: DataStatus.IDLE,
   followersDataStatus: DataStatus.IDLE,
+  favoriteEpisodesDataStatus: DataStatus.IDLE,
   podcasts: [],
   user: null,
   isFollowed: false,
@@ -37,24 +41,25 @@ const initialState: State = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder.addCase(loadPodcasts.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
+    state.podcastsDataStatus = DataStatus.PENDING;
   });
   builder.addCase(loadPodcasts.fulfilled, (state, action) => {
-    state.dataStatus = DataStatus.FULFILLED;
+    state.podcastsDataStatus = DataStatus.FULFILLED;
     state.podcasts = action.payload;
   });
   builder.addCase(loadPodcasts.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
+    state.podcastsDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(loadUser.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
+    state.userDataStatus = DataStatus.PENDING;
   });
   builder.addCase(loadUser.fulfilled, (state, action) => {
-    state.dataStatus = DataStatus.FULFILLED;
+    state.userDataStatus = DataStatus.FULFILLED;
     state.user = action.payload;
   });
   builder.addCase(loadUser.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
+    state.userDataStatus = DataStatus.REJECTED;
+    state.user = null;
   });
   builder.addCase(getFollowersCount.pending, (state) => {
     state.followersDataStatus = DataStatus.PENDING;
@@ -94,10 +99,10 @@ const reducer = createReducer(initialState, (builder) => {
   });
 
   builder.addCase(loadFavouriteEpisodes.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
+    state.favoriteEpisodesDataStatus = DataStatus.PENDING;
   });
   builder.addCase(loadFavouriteEpisodes.fulfilled, (state, action) => {
-    state.dataStatus = DataStatus.FULFILLED;
+    state.favoriteEpisodesDataStatus = DataStatus.FULFILLED;
 
     const { episodes, totalCount } = action.payload;
 
@@ -105,7 +110,7 @@ const reducer = createReducer(initialState, (builder) => {
     state.favoriteEpisodesTotalCount = totalCount;
   });
   builder.addCase(loadFavouriteEpisodes.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
+    state.favoriteEpisodesDataStatus = DataStatus.REJECTED;
   });
 });
 
