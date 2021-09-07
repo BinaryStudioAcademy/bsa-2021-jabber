@@ -1,6 +1,5 @@
 import { Playlist } from 'common/types/types';
 import { PlaylistItem } from 'components/common/common';
-import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -14,9 +13,7 @@ const PopularPlaylists: React.FC<Props> = ({ popularPlaylists }: Props) => {
       <h2 className={styles.title}>Popular playlists</h2>
       {hasPopularPlaylists ? (
         <ul
-          className={getAllowedClasses(
-            styles.playlistsRow,
-          )}
+          className={styles.playlistsRow}
         >
           {popularPlaylists.map((playlist) => (
             <PlaylistItem key={playlist.id} playlist={playlist} />
