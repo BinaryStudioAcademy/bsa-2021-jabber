@@ -1,33 +1,36 @@
 import { useEffect } from 'react';
 import {
-  playlist as playlistActions,
+  userPlaylists as userPlaylistsActions,
 } from 'store/actions';
 import { useAppSelector, useDispatch, useParams } from 'hooks/hooks';
 import { Loader, PlaylistsList } from 'components/common/common';
 import { RootState } from 'common/types/types';
 import { PageParams } from 'components/configurate-podcast/common/types/page-params.type';
 import { DataStatus } from 'common/enums/enums';
+import { checkIsOneOf } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 const UserPlaylist: React.FC = () => {
   const {
-    dataStatus,
+    playlistsDataStatus,
+    userDataStatus,
     playlists,
     user,
-  } = useAppSelector(({ playlist }: RootState) => ({
-    dataStatus: playlist.dataStatus,
-    playlists: playlist.playlists,
-    user: playlist.user,
+  } = useAppSelector(({ userPlaylists }: RootState) => ({
+    playlistsDataStatus: userPlaylists.playlistsDataStatus,
+    userDataStatus: userPlaylists.userDataStatus,
+    playlists: userPlaylists.playlists,
+    user: userPlaylists.user,
   }));
   const { id } = useParams<PageParams>();
   const dispatch = useDispatch();
 
   const hasPlaylists = Boolean(playlists.length);
-  const isLoading = dataStatus === DataStatus.PENDING;
+  const isLoading = checkIsOneOf(DataStatus.PENDING, playlistsDataStatus, userDataStatus);
 
   useEffect(() => {
-    dispatch(playlistActions.loadPlaylistsOwner(Number(id)));
-    dispatch(playlistActions.loadPlaylists(Number(id)));
+    dispatch(userPlaylistsActions.loadPlaylistsOwner(Number(id)));
+    dispatch(userPlaylistsActions.loadPlaylists(Number(id)));
   }, []);
 
   if (isLoading) {
