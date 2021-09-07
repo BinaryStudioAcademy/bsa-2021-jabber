@@ -169,12 +169,18 @@ const UserPage: React.FC = () => {
               <span className={styles.bioText}>{user?.bio}</span>
             </div>
           )}
-
+          <Link
+            to={`${AppRoute.PLAYLISTS_USERS}/${id}`}
+            className={styles.link}
+          >
+            My playlists
+          </Link>
         </div>
         {isOwnPage && (
           <Link
             to={`${AppRoute.USERS_EDIT}/${id}`}
             className={styles.editLink}
+            title="Edit profile"
           />
         )}
         <div className={styles.followContainer}>
