@@ -37,7 +37,7 @@ const Playlist: React.FC = () => {
   const isAllowDelete = isOwner || isMaster;
   const isEpisodesLoading = episodesDataStatus === DataStatus.PENDING;
 
-  useEffect( () => {
+  useEffect(() => {
     dispatch(playlistActions.loadById(Number(id)));
     dispatch(playlistActions.loadEpisodesByPlaylistId(Number(id)));
   }, [id]);
@@ -59,6 +59,10 @@ const Playlist: React.FC = () => {
 
   const handleTogglePopup = (): void => {
     setIsConfirmPopupOpen(!isConfirmPopupOpen);
+  };
+
+  const handleDeleteEpisode = (id: number): void => {
+    dispatch(playlistActions.deleteEpisodeFromPlaylist(id));
   };
 
   return (
@@ -109,12 +113,16 @@ const Playlist: React.FC = () => {
           {isEpisodesLoading
             ? <Loader />
             : episodes.length
-              ? <EpisodeTable episodes={episodes}/>
+              ? <EpisodeTable
+                episodes={episodes}
+                handleDeleteEpisode={handleDeleteEpisode}
+                isAllowDelete={isAllowDelete}
+              />
               : (
                 <div className={styles.placeholder}>
                   There are no episodes in this playlist yet.
                 </div>
-              ) }
+              )}
         </div>
       </div>
     </>
