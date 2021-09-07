@@ -58,6 +58,10 @@ const ConfiguratePlaylistForm: React.FC<Props> = ({
     }
   }, [isPlaylistPrivate]);
 
+  /* eslint-disable no-console */
+  console.log(errors);
+  /* eslint-enable no-console */
+
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={isFormDisabled} className={styles.fieldset}>
@@ -83,14 +87,6 @@ const ConfiguratePlaylistForm: React.FC<Props> = ({
           errors={errors}
           isDisabled={isFormDisabled || !isEdit}
         />
-        <Input
-          name={PlaylistPayloadKey.DESCRIPTION}
-          control={control}
-          errors={errors}
-          label="Description"
-          placeholder="Enter description podcast"
-          hasMultipleRows
-        />
         {isPlaylistPrivate &&
         (<div className={styles.invitationCode}>
           <Input
@@ -102,6 +98,14 @@ const ConfiguratePlaylistForm: React.FC<Props> = ({
           />
           <Button label="Generate" onClick={handleGenerateCode} />
         </div>)}
+        <Input
+          name={PlaylistPayloadKey.DESCRIPTION}
+          control={control}
+          errors={errors}
+          label="Description"
+          placeholder="Enter description podcast"
+          hasMultipleRows
+        />
         <div className={styles.btnsWrapper}>
           <Button
             className={styles.button}

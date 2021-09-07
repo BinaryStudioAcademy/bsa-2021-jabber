@@ -5,6 +5,7 @@ const mapPlaylistToFormPayload = (playlist: Playlist): PlaylistFormPayload => ({
   description: playlist.description,
   cover: null,
   status: playlist.status,
+  invitationCode: '',
 });
 
 export { mapPlaylistToFormPayload };
