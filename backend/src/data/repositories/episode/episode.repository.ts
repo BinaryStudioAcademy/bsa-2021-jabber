@@ -112,13 +112,13 @@ class Episode {
       .resultSize();
   }
 
-  public getAllByPLaylistId(isOwner: boolean, playlistId: number): Promise<TEpisodeWithPodcast[]> {
+  public getAllByPLaylistId(playlistId: number): Promise<TEpisodeWithPodcast[]> {
     return this.#EpisodeModel
       .query()
       .withGraphJoined('[podcast]')
       .joinRelated('[playlistEpisodes]')
       .where('playlistEpisodes.playlist_id', playlistId)
-      .where((builder) => isOwner || builder.where('episodes.type', EpisodeType.PUBLIC));
+      .where((builder) => builder.where('episodes.type', EpisodeType.PUBLIC));
   }
 }
 
