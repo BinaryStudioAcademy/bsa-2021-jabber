@@ -4,12 +4,14 @@ import { getColumns, getRows } from './helpers/helpers';
 
 type Props = {
   episodes: EpisodeWithPodcast[];
+  handleDeleteEpisode: (id: number) => void;
 };
 
 const EpisodeTable: React.FC<Props> = ({
   episodes,
+  handleDeleteEpisode,
 }) => {
-  const columns = getColumns();
+  const columns = getColumns(handleDeleteEpisode);
   const rows = getRows(episodes);
 
   return <Table

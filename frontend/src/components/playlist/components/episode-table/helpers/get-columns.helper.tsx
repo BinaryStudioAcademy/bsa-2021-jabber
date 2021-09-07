@@ -1,10 +1,14 @@
 import { Column } from 'react-table';
 import { INCREASE_CONT_FOR_IDX } from 'common/constants/constants';
 import { Link } from 'components/common/common';
+import { DeleteButton } from '../components/components';
 import { AppRoute } from 'common/enums/enums';
 import { EpisodeNameRow } from '../types/types';
 
-const getColumns = (): Column[] => {
+type HandleDeleteEpisode = (id: number) => void;
+
+const getColumns = (handleDeleteEpisode: HandleDeleteEpisode): Column[] => {
+
   const columns: Column[] = [
     {
       Header: '#',
@@ -32,6 +36,21 @@ const getColumns = (): Column[] => {
     {
       Header: 'CreatedAt',
       accessor: 'createdAt',
+    },
+    {
+      Header: 'Delete',
+      accessor: (originalRow): Record<string, unknown> => {
+        const row = originalRow as EpisodeNameRow;
+        return {
+          episodeId: row.episodeId,
+        };
+      },
+      Cell: ({ value }): JSX.Element => (
+        <DeleteButton
+          value={value}
+          onDeleteEpisode={handleDeleteEpisode}
+        />
+      ),
     },
   ];
 
