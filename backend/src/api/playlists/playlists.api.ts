@@ -4,6 +4,7 @@ import {
   HttpCode,
   HttpMethod,
   PlaylistsApiPath,
+  RouterParams,
 } from '~/common/enums/enums';
 import { handleAsyncApi } from '~/helpers/helpers';
 import {
@@ -45,7 +46,7 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
 
   playlistRouter.get(
     PlaylistsApiPath.$ID,
-    checkParamsIsValidMiddleware(),
+    checkParamsIsValidMiddleware(RouterParams.ID),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await playlistService.getById(Number(req.params.id)))
@@ -56,7 +57,7 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
   playlistRouter.get(
     PlaylistsApiPath.USERS_$USER_ID,
     checkAuthMiddleware(HttpMethod.GET),
-    checkParamsIsValidMiddleware(),
+    checkParamsIsValidMiddleware(RouterParams.USER_ID),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await playlistService.getAllByUserId(Number(req.params.userId)))

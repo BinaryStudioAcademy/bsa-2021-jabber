@@ -4,7 +4,7 @@ import {
   episodeEdit as episodeEditValidationSchema,
   userFavouriteEpisode as userFavouriteEpisodeValidationSchema,
 } from '~/validation-schemas/validation-schemas';
-import { ApiPath, HttpCode, EpisodesApiPath, HttpMethod } from '~/common/enums/enums';
+import { ApiPath, HttpCode, EpisodesApiPath, HttpMethod, RouterParams } from '~/common/enums/enums';
 import {
   episode as episodeService,
   userFavouriteEpisode as userFavouriteEpisodeService,
@@ -49,7 +49,7 @@ const initEpisodesApi = ({ apiRouter, episodeService, userFavouriteEpisodeServic
 
   episodeRouter.get(
     EpisodesApiPath.$ID,
-    checkParamsIsValidMiddleware(),
+    checkParamsIsValidMiddleware(RouterParams.ID),
     checkUserHasPermitToEpisodeMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
@@ -60,7 +60,7 @@ const initEpisodesApi = ({ apiRouter, episodeService, userFavouriteEpisodeServic
 
   episodeRouter.get(
     EpisodesApiPath.PODCAST_$ID,
-    checkParamsIsValidMiddleware(),
+    checkParamsIsValidMiddleware(RouterParams.ID),
     handleAsyncApi(async (req, res) => {
       return res
         .send(await episodeService.getByQueryByPodcastId(
@@ -77,7 +77,7 @@ const initEpisodesApi = ({ apiRouter, episodeService, userFavouriteEpisodeServic
   episodeRouter.get(
     EpisodesApiPath.FAVOURITES_$USER_ID,
     checkAuthMiddleware(HttpMethod.GET),
-    checkParamsIsValidMiddleware(),
+    checkParamsIsValidMiddleware(RouterParams.USER_ID),
     handleAsyncApi(async (req, res) => {
       return res
         .send(await episodeService.getFavouriteByQueryByUserId({
@@ -90,7 +90,7 @@ const initEpisodesApi = ({ apiRouter, episodeService, userFavouriteEpisodeServic
 
   episodeRouter.get(
     EpisodesApiPath.PLAYLIST_$ID_EPISODES,
-    checkParamsIsValidMiddleware(),
+    checkParamsIsValidMiddleware(RouterParams.PLAYLIST_ID),
     handleAsyncApi(async (req, res) => {
       return res
         .send(await episodeService.getAllByPLaylistId(req?.user, Number(req.params.playlistId)))
@@ -101,7 +101,7 @@ const initEpisodesApi = ({ apiRouter, episodeService, userFavouriteEpisodeServic
   episodeRouter.get(
     EpisodesApiPath.FAVOURITES_$ID_EPISODES,
     checkAuthMiddleware(HttpMethod.GET),
-    checkParamsIsValidMiddleware(),
+    checkParamsIsValidMiddleware(RouterParams.ID),
     handleAsyncApi(async (req, res) => {
       return res
         .send(await userFavouriteEpisodeService.checkEpisodeIsFavorite({
