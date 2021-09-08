@@ -9,9 +9,9 @@ import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 const Header: React.FC = () => {
-  const { user, countUncheckedNotification } = useAppSelector(({ auth, notification }: RootState) => ({
+  const { user, countUncheckedNotification } = useAppSelector(({ auth, app }: RootState) => ({
     user: auth.user,
-    countUncheckedNotification: notification.countUncheckedNotification,
+    countUncheckedNotification: app.countUncheckedNotification,
   }));
 
   const hasUser = Boolean(user);
@@ -36,6 +36,14 @@ const Header: React.FC = () => {
               <li className={styles.navigationItem}>
                 <Link to={AppRoute.ROOT} className={styles.link}>
                   Podcasts
+                </Link>
+              </li>
+              <li className={styles.navigationItem}>
+                <Link
+                  to={`${AppRoute.PLAYLISTS_USERS}/${user?.id}`}
+                  className={styles.link}
+                >
+                  My Playlists
                 </Link>
               </li>
             </ul>
@@ -89,14 +97,6 @@ const Header: React.FC = () => {
                         </li>
                         <li className={styles.dropDownListItem}>
                           <Link
-                            to={`${AppRoute.PLAYLISTS_USERS}/${user?.id}`}
-                            className={styles.link}
-                          >
-                            My Playlists
-                          </Link>
-                        </li>
-                        <li className={styles.dropDownListItem}>
-                          <Link
                             to={AppRoute.PODCASTS_EDIT}
                             className={styles.link}
                           >
@@ -146,6 +146,13 @@ const Header: React.FC = () => {
                   <li className={styles.navigationItem}>
                     <Link to={AppRoute.ROOT} className={styles.link}>
                       Podcasts
+                    </Link>
+                  </li>
+                  <li className={styles.navigationItem}>
+                    <Link to={`${AppRoute.PLAYLISTS_USERS}/${user?.id}`}
+                      className={styles.link}
+                    >
+                      My Playlists
                     </Link>
                   </li>
                 </ul>)}
