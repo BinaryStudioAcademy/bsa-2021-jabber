@@ -173,7 +173,7 @@ const UserPage: React.FC = () => {
             to={`${AppRoute.PLAYLISTS_USERS}/${id}`}
             className={styles.link}
           >
-            My playlists
+            Playlists
           </Link>
         </div>
         {isOwnPage && (
