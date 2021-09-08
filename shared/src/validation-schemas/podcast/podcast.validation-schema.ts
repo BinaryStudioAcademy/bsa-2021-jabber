@@ -33,7 +33,12 @@ const podcast = Joi.object({
     }),
   [PodcastPayloadKey.TYPE]: Joi.string().valid(...podcastType),
   [PodcastPayloadKey.PERIODICITY]: Joi.string().valid(...podcastPeriodicity),
-  [PodcastPayloadKey.INVITATION_CODE]: Joi.string().allow(''),
+  [PodcastPayloadKey.INVITATION_CODE]: Joi.string().when(PodcastPayloadKey.TYPE, {
+    is: PodcastType.PRIVATE, then: Joi.required().messages({
+      'string.empty': PodcastValidationMessage.PODCAST_INVITATION_CODE_REQUIRE,
+    }),
+    otherwise: Joi.allow('')
+  }),
 });
 
 export { podcast };
