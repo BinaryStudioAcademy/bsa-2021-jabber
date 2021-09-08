@@ -1,10 +1,10 @@
 import { Model } from 'objection';
+import { join } from 'path';
 import { TableName, PodcastDTOKey, PodcastType, PodcastPeriodicity } from '~/common/enums/enums';
 import { Abstract } from '../abstract/abstract.model';
 import { Image } from '~/data/models/image/image.model';
 import { User } from '~/data/models/user/user.model';
 import { Genre } from '~/data/models/genre/genre.model';
-import { Episode } from '~/data/models/episode/episode.model';
 import { QueryBuilder } from './common/query-builder/query-builder';
 
 class Podcast extends Abstract {
@@ -74,7 +74,7 @@ class Podcast extends Abstract {
     },
     episodes: {
       relation: Model.HasManyRelation,
-      modelClass: Episode,
+      modelClass: join(__dirname, '../episode/episode.model'),
       join: {
         from: 'podcasts.id',
         to: 'episodes.podcast_id',
