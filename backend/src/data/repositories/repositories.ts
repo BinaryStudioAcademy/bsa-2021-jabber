@@ -41,6 +41,7 @@ const user = new User({
 
 const podcast = new Podcast({
   PodcastModel,
+  EpisodeModel
 });
 
 const image = new Image({

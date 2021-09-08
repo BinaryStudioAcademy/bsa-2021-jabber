@@ -4,6 +4,7 @@ import { Abstract } from '../abstract/abstract.model';
 import { Image } from '~/data/models/image/image.model';
 import { User } from '~/data/models/user/user.model';
 import { Genre } from '~/data/models/genre/genre.model';
+import { Episode } from '~/data/models/episode/episode.model';
 import { QueryBuilder } from './common/query-builder/query-builder';
 
 class Podcast extends Abstract {
@@ -69,6 +70,14 @@ class Podcast extends Abstract {
       join: {
         from: 'podcasts.genre_id',
         to: 'genres.id',
+      },
+    },
+    episodes: {
+      relation: Model.HasManyRelation,
+      modelClass: Episode,
+      join: {
+        from: 'podcasts.id',
+        to: 'episodes.podcast_id',
       },
     },
   };

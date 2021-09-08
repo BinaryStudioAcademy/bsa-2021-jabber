@@ -6,18 +6,22 @@ import {
   PodcastLoadFilter,
 } from '~/common/types/types';
 import { PodcastType } from '~/common/enums/enums';
-import { PODCAST_LOAD_LIMIT } from '~/common/constants/constants';
+import { PODCAST_LOAD_LIMIT, POPULAR_PODCAST_LOAD_LIMIT } from '~/common/constants/constants';
 import { PodcastModel as PodcastM } from '~/data/models/models';
+import { EpisodeModel as EpisodeM } from '~/data/models/models';
 
 type Constructor = {
   PodcastModel: typeof PodcastM;
+  EpisodeModel: typeof EpisodeM;
 };
 
 class Podcast {
   #PodcastModel: typeof PodcastM;
+  #EpisodeModel: typeof EpisodeM;
 
-  constructor({ PodcastModel }: Constructor) {
+  constructor({ PodcastModel, EpisodeModel }: Constructor) {
     this.#PodcastModel = PodcastModel;
+    this.#EpisodeModel = EpisodeModel;
   }
 
   public getAll(): Promise<TPodcast[]> {
@@ -26,6 +30,22 @@ class Podcast {
       .where('type', PodcastType.PUBLIC)
       .withGraphJoined('[image, user]')
       .omit(['password']);
+  }
+
+  public getPopular(): Promise<TPodcast[]> {
+    return this.#PodcastModel.query()
+      .where('podcasts.type', PodcastType.PUBLIC)
+      .withGraphJoined('[image, user, episodes]')
+      .select(
+        'episodes.*',
+          this.#EpisodeModel
+            .relatedQuery('comments')
+            .count()
+            .as('commentsCount'),
+      ).where('status', '=', 'published')
+      .orderBy('commentsCount', 'DESC')
+      .omit(['commentsCount'])
+      .limit(POPULAR_PODCAST_LOAD_LIMIT);
   }
 
   public async getPodcastsPagesCount({ search = '', genres = [] }: PodcastLoadFilter): Promise<number> {
