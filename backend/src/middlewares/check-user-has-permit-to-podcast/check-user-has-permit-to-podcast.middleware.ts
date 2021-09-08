@@ -11,19 +11,19 @@ const checkUserHasPermitToPodcast = (): RequestHandler => {
 
     const podcastId = Number(req.params.id);
     const userId = req.user?.id;
-    
-    try{
+
+    try {
       const podcast = await podcastService.getById(podcastId);
       if (podcast.type !== PodcastType.PRIVATE || podcast.userId === userId) {
         return next();
       }
-    }catch (err){
+    } catch (err) {
       return next(new HttpError({
         status: HttpCode.NOT_FOUND,
         message: err.message,
       }));
     }
-   
+
     if (userId) {
       const isFolowed = await podcastFollowerService.checkIsFollowed({
         podcastId,
