@@ -38,6 +38,14 @@ const Header: React.FC = () => {
                   Podcasts
                 </Link>
               </li>
+              <li className={styles.navigationItem}>
+                <Link
+                  to={`${AppRoute.PLAYLISTS_USERS}/${user?.id}`}
+                  className={styles.link}
+                >
+                  My Playlists
+                </Link>
+              </li>
             </ul>
             <div className={styles.userInfo}>
               <Button
@@ -85,14 +93,6 @@ const Header: React.FC = () => {
                             className={styles.link}
                           >
                             My Profile
-                          </Link>
-                        </li>
-                        <li className={styles.dropDownListItem}>
-                          <Link
-                            to={`${AppRoute.PLAYLISTS_USERS}/${user?.id}`}
-                            className={styles.link}
-                          >
-                            My Playlists
                           </Link>
                         </li>
                         <li className={styles.dropDownListItem}>
@@ -146,6 +146,13 @@ const Header: React.FC = () => {
                   <li className={styles.navigationItem}>
                     <Link to={AppRoute.ROOT} className={styles.link}>
                       Podcasts
+                    </Link>
+                  </li>
+                  <li className={styles.navigationItem}>
+                    <Link to={`${AppRoute.PLAYLISTS_USERS}/${user?.id}`}
+                      className={styles.link}
+                    >
+                      My Playlists
                     </Link>
                   </li>
                 </ul>)}
