@@ -3,7 +3,7 @@ import {
   podcastCreate as podcastCreateValidationSchema,
   podcastEdit as editPodcastValidationSchema,
 } from '~/validation-schemas/validation-schemas';
-import { ApiPath, HttpCode, PodcastsApiPath, HttpMethod, RouterParams } from '~/common/enums/enums';
+import { ApiPath, HttpCode, PodcastsApiPath, HttpMethod, RouterParam } from '~/common/enums/enums';
 import { PodcastLoadFilter, User } from '~/common/types/types';
 import { handleAsyncApi } from '~/helpers/helpers';
 import {
@@ -35,7 +35,7 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
 
   podcastRouter.get(
     PodcastsApiPath.USERS_$ID,
-    checkParamsIsValidMiddleware(RouterParams.ID),
+    checkParamsIsValidMiddleware(RouterParam.ID),
     handleAsyncApi(async (req, res) => {
       return res
         .send(await podcastService.getAllByUserId(Number(req.params.id), Number(req.user?.id)))
@@ -45,7 +45,7 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
 
   podcastRouter.get(
     PodcastsApiPath.$ID,
-    checkParamsIsValidMiddleware(RouterParams.ID),
+    checkParamsIsValidMiddleware(RouterParam.ID),
     checkUserHasPermitToPodcastMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
@@ -101,7 +101,7 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
 
   podcastRouter.get(
     PodcastsApiPath.INVITATION_CODE_$ID,
-    checkParamsIsValidMiddleware(RouterParams.ID),
+    checkParamsIsValidMiddleware(RouterParam.ID),
     checkUserHasPermitToPodcastMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res

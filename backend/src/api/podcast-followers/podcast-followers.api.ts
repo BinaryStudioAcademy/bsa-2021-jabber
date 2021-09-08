@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ApiPath, HttpCode, PodcastsFollowersApiPath, HttpMethod, RouterParams } from '~/common/enums/enums';
+import { ApiPath, HttpCode, PodcastsFollowersApiPath, HttpMethod, RouterParam } from '~/common/enums/enums';
 import { podcastFollower as podcastFollowerService } from '~/services/services';
 import { handleAsyncApi } from '~/helpers/helpers';
 import {
@@ -21,7 +21,7 @@ const initPodcastFollowersApi = ({ apiRouter, podcastFollowerService }: Args): R
 
   podcastFollowerRouter.get(
     PodcastsFollowersApiPath.$ID,
-    checkParamsIsValidMiddleware(RouterParams.ID),
+    checkParamsIsValidMiddleware(RouterParam.ID),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await podcastFollowerService.getCountByPodcastId(Number(req.params.id)))
@@ -31,7 +31,7 @@ const initPodcastFollowersApi = ({ apiRouter, podcastFollowerService }: Args): R
 
   podcastFollowerRouter.get(
     PodcastsFollowersApiPath.$PODCAST_ID_$FOLLOWER_ID,
-    checkParamsIsValidMiddleware(RouterParams.PODCAST_ID, RouterParams.FOLLOWER_ID),
+    checkParamsIsValidMiddleware(RouterParam.PODCAST_ID, RouterParam.FOLLOWER_ID),
     checkAuthMiddleware(HttpMethod.GET),
     handleAsyncApi(async (req, res) => {
       const isFollowed = await podcastFollowerService.checkIsFollowed({

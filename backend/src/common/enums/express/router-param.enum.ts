@@ -1,4 +1,4 @@
-enum RouterParams {
+enum RouterParam {
   ID = 'id',
   USER_ID = 'userId',
   PODCAST_ID = 'podcastId',
@@ -7,4 +7,4 @@ enum RouterParams {
   FOLLOWER_ID = 'followerId',
 }
 
-export { RouterParams };
+export { RouterParam };

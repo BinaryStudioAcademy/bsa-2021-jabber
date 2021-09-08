@@ -1,1 +1,1 @@
-export { RouterParams } from './router-params.enum';
+export { RouterParam } from './router-param.enum';

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ApiPath, HttpCode, UserFollowersApiPath, HttpMethod, RouterParams } from '~/common/enums/enums';
+import { ApiPath, HttpCode, UserFollowersApiPath, HttpMethod, RouterParam } from '~/common/enums/enums';
 import { userFollower as userFollowerService } from '~/services/services';
 import { handleAsyncApi } from '~/helpers/helpers';
 import {
@@ -21,7 +21,7 @@ const initUserFollowersApi = ({ apiRouter, userFollowerService }: Args): Router 
 
   userFollowerRouter.get(
     UserFollowersApiPath.$ID,
-    checkParamsIsValidMiddleware(RouterParams.ID),
+    checkParamsIsValidMiddleware(RouterParam.ID),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await userFollowerService.getCountByUserId(Number(req.params.id)))
