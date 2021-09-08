@@ -16,6 +16,7 @@ import {
   checkUserEpisodeOwner as checkUserEpisodeOwnerMiddleware,
   checkUserHasPermitToEpisode as checkUserHasPermitToEpisodeMiddleware,
   validateSchema as validateSchemaMiddleware,
+  checkUserHasPermitToPlaylist as checkUserHasPermitToPlaylistMiddleware,
 } from '~/middlewares/middlewares';
 import { EpisodeLoadFilter, User } from '~/common/types/types';
 
@@ -86,6 +87,7 @@ const initEpisodesApi = ({ apiRouter, episodeService, userFavouriteEpisodeServic
 
   episodeRouter.get(
     EpisodesApiPath.PLAYLIST_$ID_EPISODES,
+    checkUserHasPermitToPlaylistMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
         .send(await episodeService.getAllByPLaylistId(req?.user, Number(req.params.playlistId)))
