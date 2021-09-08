@@ -38,10 +38,10 @@ class Podcast {
       .withGraphJoined('[image, user, episodes]')
       .select(
         'episodes.*',
-          this.#EpisodeModel
-            .relatedQuery('comments')
-            .count()
-            .as('commentsCount'),
+        this.#EpisodeModel
+          .relatedQuery('comments')
+          .count()
+          .as('commentsCount'),
       ).where('status', '=', 'published')
       .orderBy('commentsCount', 'DESC')
       .omit(['commentsCount'])
