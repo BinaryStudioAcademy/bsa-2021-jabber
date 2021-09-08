@@ -37,7 +37,7 @@ const podcast = Joi.object({
     is: PodcastType.PRIVATE, then: Joi.required().messages({
       'string.empty': PodcastValidationMessage.PODCAST_INVITATION_CODE_REQUIRE,
     }),
-    otherwise: Joi.allow('')
+    otherwise: Joi.allow(''),
   }),
 });
 
