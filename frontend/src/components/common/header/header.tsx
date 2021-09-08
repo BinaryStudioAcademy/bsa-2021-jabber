@@ -9,9 +9,9 @@ import { getAllowedClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 const Header: React.FC = () => {
-  const { user, countUncheckedNotification } = useAppSelector(({ auth, notification }: RootState) => ({
+  const { user, countUncheckedNotification } = useAppSelector(({ auth, app }: RootState) => ({
     user: auth.user,
-    countUncheckedNotification: notification.countUncheckedNotification,
+    countUncheckedNotification: app.countUncheckedNotification,
   }));
 
   const hasUser = Boolean(user);

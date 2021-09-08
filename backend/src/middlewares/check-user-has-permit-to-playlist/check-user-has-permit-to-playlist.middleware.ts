@@ -9,12 +9,19 @@ const checkUserHasPermitToPlaylist = (): RequestHandler => {
       return next();
     }
 
-    const playlistId = Number(req.params.id);
+    const playlistId = Number(req.params.id ?? req.params.playlistId);
     const userId = req.user?.id;
-    const playlist = await playlistService.getById(playlistId);
 
-    if (playlist.status === PlaylistStatus.PUBLISHED || playlist.userId === userId) {
-      return next();
+    try {
+      const playlist = await playlistService.getById(playlistId);
+      if (playlist.status === PlaylistStatus.PUBLISHED || playlist.userId === userId) {
+        return next();
+      }
+    } catch (err) {
+      return next(new HttpError({
+        status: HttpCode.NOT_FOUND,
+        message: err.message,
+      }));
     }
 
     next(new HttpError({
