@@ -60,8 +60,17 @@ class Playlist {
     return this.#playlistRepository.getAllByUserId(filterParams);
   }
 
-  public getById(id: number): Promise<TPlaylist> {
-    return this.#playlistRepository.getById(id);
+  public async getById(id: number): Promise<TPlaylist> {
+    const playlist = await this.#playlistRepository.getById(id);
+
+    if (!playlist) {
+      throw new HttpError({
+        status: HttpCode.NOT_FOUND,
+        message: ErrorMessage.PLAYLIST_NOT_FOUND,
+      });
+    }
+
+    return playlist;
   }
 
   public async create({

@@ -132,11 +132,25 @@
 .live::after {
   content: '';
   display: inline-block;
-  margin-left: 10px;
-  width: 15px;
-  height: 15px;
+  margin-left: 15px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background-color: #ff0000;
+  animation: pulse 2s infinite;
+  vertical-align: middle;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 43, 43, 0.9);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(255, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
 }
 
 .description {
