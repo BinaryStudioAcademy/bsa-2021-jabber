@@ -367,8 +367,14 @@ class Episode {
     };
   }
 
-  public async getAllByPLaylistId(playlistId: number): Promise<EpisodeWithPodcast[]> {
-    const episodes = await this.#episodeRepository.getAllByPLaylistId(playlistId);
+  public async getAllByPLaylistId(
+    user: User | undefined,
+    playlistId: number,
+  ): Promise<EpisodeWithPodcast[]> {
+    const playlist = await this.#playlistRepository.getById(playlistId);
+    const isOwner = user?.id === playlist.userId || user?.role === UserRole.MASTER;
+
+    const episodes = await this.#episodeRepository.getAllByPLaylistId(isOwner, playlistId);
 
     return episodes;
   }

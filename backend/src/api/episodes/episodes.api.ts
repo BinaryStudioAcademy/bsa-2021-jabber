@@ -90,7 +90,7 @@ const initEpisodesApi = ({ apiRouter, episodeService, userFavouriteEpisodeServic
     checkUserHasPermitToPlaylistMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
-        .send(await episodeService.getAllByPLaylistId(Number(req.params.playlistId)))
+        .send(await episodeService.getAllByPLaylistId(req?.user, Number(req.params.playlistId)))
         .status(HttpCode.OK);
     }),
   );

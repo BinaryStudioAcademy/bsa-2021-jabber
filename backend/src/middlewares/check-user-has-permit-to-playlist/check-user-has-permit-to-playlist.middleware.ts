@@ -17,10 +17,10 @@ const checkUserHasPermitToPlaylist = (): RequestHandler => {
       if (playlist.status === PlaylistStatus.PUBLISHED || playlist.userId === userId) {
         return next();
       }
-    } catch (e) {
-      next(new HttpError({
+    } catch (err) {
+      return next(new HttpError({
         status: HttpCode.NOT_FOUND,
-        message: e.message,
+        message: err.message,
       }));
     }
 
