@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ApiPath, HttpCode, CommentsApiPath, HttpMethod } from '~/common/enums/enums';
+import { ApiPath, HttpCode, CommentsApiPath, HttpMethod, RouterParam } from '~/common/enums/enums';
 import {
   commentCreate as commentCreateValidationSchema,
 } from '~/validation-schemas/validation-schemas';
@@ -8,6 +8,7 @@ import {
   checkAuth as checkAuthMiddleware,
   checkUserCommentOwner as checkUserCommentOwnerMiddleware,
   checkUserMatch as checkUserMatchMiddleware,
+  checkParamsIsValid as checkParamsIsValidMiddleware,
 } from '~/middlewares/middlewares';
 import { comment as commentService } from '~/services/services';
 import { handleAsyncApi } from '~/helpers/helpers';
@@ -51,6 +52,7 @@ const initCommentsApi = ({ apiRouter, commentService }: Args): Router => {
 
   commentRouter.get(
     CommentsApiPath.EPISODE_ID,
+    checkParamsIsValidMiddleware(RouterParam.ID),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await commentService.getAllByEpisodeId(Number(req.params.id)))
@@ -60,6 +62,7 @@ const initCommentsApi = ({ apiRouter, commentService }: Args): Router => {
 
   commentRouter.get(
     CommentsApiPath.$ID,
+    checkParamsIsValidMiddleware(RouterParam.ID),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await commentService.getById(Number(req.params.id)))

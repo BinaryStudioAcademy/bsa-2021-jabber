@@ -16,4 +16,5 @@ export { checkUserHasPermitToPodcast } from './check-user-has-permit-to-podcast/
 export { checkUserHasPermitToEpisode } from './check-user-has-permit-to-episode/check-user-has-permit-to-episode.middleware';
 export { checkUserPlaylistOwner } from './check-user-owner/check-user-playlist-owner.middleware';
 export { checkUserMatch } from './check-user-match/check-user-match.middleware';
+export { checkParamsIsValid } from './check-params-is-valid/check-params-is-valid.middleware';
 export { checkUserHasPermitToPlaylist } from './check-user-has-permit-to-playlist/check-user-has-permit-to-playlist.middleware';
