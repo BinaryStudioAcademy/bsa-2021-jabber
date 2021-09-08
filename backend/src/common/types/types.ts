@@ -67,5 +67,6 @@ export type {
   PlaylistCreateDTOPayload,
   PlaylistEditDTOPayload,
   PlaylistEditPayload,
+  UserPlaylistQueryParams,
 } from './playlist/playlist';
 export type { PlaylistEpisode, PlaylistEpisodePayload } from './playlist-episode/playlist-episode';

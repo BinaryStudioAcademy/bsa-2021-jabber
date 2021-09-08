@@ -1,17 +1,21 @@
 import NotificationItem from './components/notification-item';
 import { RootState, UserNotification } from 'common/types/types';
+import { DataStatus } from 'common/enums/enums';
+import { Loader } from 'components/common/common';
 import { useAppSelector, useEffect, useDispatch } from 'hooks/hooks';
-import { notification as notificationAction } from 'store/actions';
+import { notification as notificationAction, app as appActions } from 'store/actions';
 import styles from './styles.module.scss';
 
 const Notifications: React.FC = () => {
-  const { notifications } = useAppSelector(({ notification }: RootState) => ({
+  const { notifications, notificationsDataStatus } = useAppSelector(({ notification }: RootState) => ({
     notifications: notification.notifications,
+    notificationsDataStatus: notification.notificationsDataStatus,
   }));
 
   const dispatch = useDispatch();
 
   const hasNotificaions = Boolean(notifications.length);
+  const isLoading = notificationsDataStatus === DataStatus.PENDING;
 
   const handleChangeNotificationStatus = (payload: UserNotification): void => {
     dispatch(notificationAction.changeStatus(payload));
@@ -22,18 +26,14 @@ const Notifications: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(notificationAction.getCountUncheckedUserNotifications());
+    dispatch(appActions.getCountUncheckedUserNotifications());
   }, [notifications]);
 
-  if (!hasNotificaions) {
-    return (
-      <div className={styles.containerUserNotFound}>
-        <h1>You haven`t received any notifications yet.</h1>
-      </div>
-    );
+  if (isLoading) {
+    return <Loader />;
   }
 
-  return (
+  return hasNotificaions ? (
     <ul className={styles.container}>
       {notifications.map((notification) => (
         <NotificationItem
@@ -43,6 +43,10 @@ const Notifications: React.FC = () => {
         />
       ))}
     </ul>
+  ) : (
+    <div className={styles.containerUserNotFound}>
+      <h1>You haven`t received any notifications yet.</h1>
+    </div>
   );
 };
 

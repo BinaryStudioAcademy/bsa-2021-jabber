@@ -5,6 +5,7 @@ import {
   loadById,
   loadEpisodesByPlaylistId,
   deletePlaylist,
+  deleteEpisodeFromPlaylist,
 } from './actions';
 
 type State = {
@@ -53,6 +54,10 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(deletePlaylist.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
+  });
+
+  builder.addCase(deleteEpisodeFromPlaylist.fulfilled, (state, action) => {
+    state.episodes = state.episodes.filter((episode) => episode.id !== action.payload.episodeId);
   });
 });
 

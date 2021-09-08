@@ -4,6 +4,7 @@ import {
   AsyncThunkConfig,
   EpisodeWithPodcast,
   DeleteActionPlaylistPayload,
+  PlaylistEpisode,
 } from 'common/types/types';
 import { ActionType } from './common';
 import { AppRoute, NotificationMessage, NotificationTitle } from 'common/enums/enums';
@@ -34,4 +35,16 @@ const deletePlaylist = createAsyncThunk<void, DeleteActionPlaylistPayload, Async
     navigationService.push(`${AppRoute.PLAYLISTS_USERS}/${userId}`);
   });
 
-export { loadById, loadEpisodesByPlaylistId, deletePlaylist };
+const deleteEpisodeFromPlaylist = createAsyncThunk<PlaylistEpisode, number, AsyncThunkConfig>(
+  ActionType.DELETE_EPISODE_FROM_PLAYLIST,
+  async (episodeId, { extra, getState }) => {
+    const { playlistApi } = extra;
+    const { playlist } = getState();
+
+    return playlistApi.deleteEpisodeFromPlaylist({
+      playlistId: (<Playlist>playlist.playlist).id,
+      episodeId,
+    });
+  });
+
+export { loadById, loadEpisodesByPlaylistId, deletePlaylist, deleteEpisodeFromPlaylist };

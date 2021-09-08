@@ -1,10 +1,11 @@
-import { HttpCode, ErrorMessage } from '~/common/enums/enums';
+import { HttpCode, ErrorMessage, PlaylistStatus } from '~/common/enums/enums';
 import {
   Playlist as TPlaylist,
   PlaylistCreatePayload,
   PlaylistCreateDTOPayload,
   PlaylistEditDTOPayload,
   PlaylistEditPayload,
+  UserPlaylistQueryParams,
 } from '~/common/types/types';
 import {
   playlist as playlistRep,
@@ -43,12 +44,33 @@ class Playlist {
     this.#playlistEpisodeService = playlistEpisodeService;
   }
 
-  public getAllByUserId(userId: number): Promise<TPlaylist[]> {
-    return this.#playlistRepository.getAllByUserId(userId);
+  public getAllByUserId(
+    searchedUserId: number,
+    requestUserId?: number,
+  ): Promise<TPlaylist[]> {
+    const filterParams: UserPlaylistQueryParams = {
+      user_id: searchedUserId,
+    };
+    const isRequestUserAuthorised = Boolean(requestUserId);
+
+    if (!isRequestUserAuthorised || searchedUserId !== requestUserId) {
+      filterParams.status = PlaylistStatus.PUBLISHED;
+    }
+
+    return this.#playlistRepository.getAllByUserId(filterParams);
   }
 
-  public getById(id: number): Promise<TPlaylist> {
-    return this.#playlistRepository.getById(id);
+  public async getById(id: number): Promise<TPlaylist> {
+    const playlist = await this.#playlistRepository.getById(id);
+
+    if (!playlist) {
+      throw new HttpError({
+        status: HttpCode.NOT_FOUND,
+        message: ErrorMessage.PLAYLIST_NOT_FOUND,
+      });
+    }
+
+    return playlist;
   }
 
   public async create({
@@ -140,7 +162,7 @@ class Playlist {
     if (!playlist) {
       throw new HttpError({
         status: HttpCode.NOT_FOUND,
-        message: ErrorMessage.PODCAST_NOT_FOUND,
+        message: ErrorMessage.PLAYLIST_NOT_FOUND,
       });
     }
 
