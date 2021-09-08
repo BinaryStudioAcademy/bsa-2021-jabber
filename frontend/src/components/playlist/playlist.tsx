@@ -81,32 +81,64 @@ const Playlist: React.FC = () => {
             <div className={styles.descriptionWrapper}>
               <h1 className={styles.title}>{playlist?.name}</h1>
               <p className={styles.description}>{playlist?.description}</p>
+              <ul className={styles.infoList}>
+                <li className={styles.infoItem}>
+                  <div
+                    className={getAllowedClasses(styles.infoName, styles.host)}
+                  >
+                    Author
+                  </div>
+                  <Link
+                    className={styles.infoInner}
+                    to={`${AppRoute.USERS}/${playlist.userId}`}
+                  >
+                    {playlist.user.nickname}
+                  </Link>
+                </li>
+                <li className={styles.infoItem}>
+                  <div
+                    className={getAllowedClasses(
+                      styles.infoName,
+                      styles.status,
+                    )}
+                  >
+                    Status
+                  </div>
+                  <p className={styles.infoInner}>{playlist.status}</p>
+                </li>
+              </ul>
             </div>
-            {isOwner && (
+            <div className={styles.buttonsGroup}>
               <Link
-                to={`${AppRoute.PLAYLISTS_EDIT}/${id}`}
-                className={styles.editLink}
+                to={`${AppRoute.PLAYLISTS_USERS}/${user?.id}`}
+                className={getAllowedClasses(styles.userPlaylistsLink, styles.playlistButton)}
               >
-                <span className="visually-hidden">Edit playlist</span>
+                <span className="visually-hidden">User playlists</span>
               </Link>
-            )}
-            {isAllowDelete && (
-              <>
+              {isOwner && (
+                <Link
+                  to={`${AppRoute.PLAYLISTS_EDIT}/${id}`}
+                  className={getAllowedClasses(styles.editLink, styles.playlistButton)}
+                >
+                  <span className="visually-hidden">Edit playlist</span>
+                </Link>
+              )}
+              {isAllowDelete && (
                 <button
-                  className={styles.deleteButton}
+                  className={getAllowedClasses(styles.deleteButton, styles.playlistButton)}
                   onClick={handleTogglePopup}
                 >
                   <span className="visually-hidden">Delete playlist</span>
                 </button>
-                <ConfirmPopup
-                  title="Delete Playlist"
-                  description="You are going to delete the playlist. Are you sure about this?"
-                  isOpen={isConfirmPopupOpen}
-                  onClose={handleTogglePopup}
-                  onConfirm={handleDeletePlaylist}
-                />
-              </>
-            )}
+              )}
+              <ConfirmPopup
+                title="Delete Playlist"
+                description="You are going to delete the playlist. Are you sure about this?"
+                isOpen={isConfirmPopupOpen}
+                onClose={handleTogglePopup}
+                onConfirm={handleDeletePlaylist}
+              />
+            </div>
           </div>
         </div>
         <div className={styles.tableWrapper}>
