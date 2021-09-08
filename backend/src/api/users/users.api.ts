@@ -3,6 +3,7 @@ import {
   ApiPath,
   HttpCode,
   HttpMethod,
+  RouterParam,
   UsersApiPath,
 } from '~/common/enums/enums';
 import { UserPopularLoadFilter } from '~/common/types/types';
@@ -13,6 +14,7 @@ import {
   checkAuth as checkAuthMiddleware,
   checkUserHasPermitToEdit as checkUserHasPermitToEditMiddleware,
   validateSchema as validateSchemaMiddleware,
+  checkParamsIsValid as checkParamsIsValidMiddleware,
 } from '~/middlewares/middlewares';
 
 type Args = {
@@ -44,6 +46,7 @@ const initUsersApi = ({ apiRouter, userService }: Args): Router => {
 
   userRouter.get(
     UsersApiPath.$ID,
+    checkParamsIsValidMiddleware(RouterParam.ID),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await userService.getById(Number(req.params.id)))
@@ -53,6 +56,7 @@ const initUsersApi = ({ apiRouter, userService }: Args): Router => {
 
   userRouter.get(
     UsersApiPath.$USER_ID_FOLLOWERS,
+    checkParamsIsValidMiddleware(RouterParam.USER_ID),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await userService.getFollowersByUserId(Number(req.params.userId)))
