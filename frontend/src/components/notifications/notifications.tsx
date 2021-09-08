@@ -3,7 +3,7 @@ import { RootState, UserNotification } from 'common/types/types';
 import { DataStatus } from 'common/enums/enums';
 import { Loader } from 'components/common/common';
 import { useAppSelector, useEffect, useDispatch } from 'hooks/hooks';
-import { notification as notificationAction } from 'store/actions';
+import { notification as notificationAction, app as appActions } from 'store/actions';
 import styles from './styles.module.scss';
 
 const Notifications: React.FC = () => {
@@ -26,7 +26,7 @@ const Notifications: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(notificationAction.getCountUncheckedUserNotifications());
+    dispatch(appActions.getCountUncheckedUserNotifications());
   }, [notifications]);
 
   if (isLoading) {

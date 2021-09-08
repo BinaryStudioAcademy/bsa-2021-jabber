@@ -1,20 +1,18 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { UserNotification } from 'common/types/types';
-import { loadCurrentUserNotifications, changeStatus, getCountUncheckedUserNotifications } from './actions';
+import { loadCurrentUserNotifications, changeStatus } from './actions';
 
 type State = {
-  dataStatus: DataStatus;
   notificationsDataStatus: DataStatus;
+  changeStatusDataStatus: DataStatus;
   notifications: UserNotification[];
-  countUncheckedNotification: number;
 };
 
 const initialState: State = {
-  dataStatus: DataStatus.IDLE,
   notificationsDataStatus: DataStatus.IDLE,
+  changeStatusDataStatus: DataStatus.IDLE,
   notifications: [],
-  countUncheckedNotification: 0,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -28,21 +26,11 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(loadCurrentUserNotifications.rejected, (state) => {
     state.notificationsDataStatus = DataStatus.REJECTED;
   });
-  builder.addCase(getCountUncheckedUserNotifications.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
-  });
-  builder.addCase(getCountUncheckedUserNotifications.fulfilled, (state, action) => {
-    state.dataStatus = DataStatus.FULFILLED;
-    state.countUncheckedNotification = action.payload;
-  });
-  builder.addCase(getCountUncheckedUserNotifications.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
-  });
   builder.addCase(changeStatus.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
+    state.changeStatusDataStatus = DataStatus.PENDING;
   });
   builder.addCase(changeStatus.fulfilled, (state, action) => {
-    state.dataStatus = DataStatus.FULFILLED;
+    state.changeStatusDataStatus = DataStatus.FULFILLED;
     state.notifications = state.notifications.map((notification) => {
       if (notification.id === action.payload.id) {
         return action.payload;
@@ -51,7 +39,7 @@ const reducer = createReducer(initialState, (builder) => {
     });
   });
   builder.addCase(changeStatus.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
+    state.changeStatusDataStatus = DataStatus.REJECTED;
   });
 });
 
