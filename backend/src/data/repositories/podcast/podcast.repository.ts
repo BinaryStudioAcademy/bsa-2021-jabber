@@ -5,7 +5,7 @@ import {
   UserPodcastQueryParams,
   PodcastLoadFilter,
 } from '~/common/types/types';
-import { PodcastType } from '~/common/enums/enums';
+import { EpisodeDTOKey, EpisodeStatus, PodcastType } from '~/common/enums/enums';
 import { PODCAST_LOAD_LIMIT, POPULAR_PODCAST_LOAD_LIMIT } from '~/common/constants/constants';
 import { PodcastModel as PodcastM } from '~/data/models/models';
 import { EpisodeModel as EpisodeM } from '~/data/models/models';
@@ -42,7 +42,7 @@ class Podcast {
           .relatedQuery('comments')
           .count()
           .as('commentsCount'),
-      ).where('status', '=', 'published')
+      ).where(EpisodeDTOKey.STATUS, '=', EpisodeStatus.PUBLISHED)
       .orderBy('commentsCount', 'DESC')
       .omit(['commentsCount'])
       .limit(POPULAR_PODCAST_LOAD_LIMIT);
