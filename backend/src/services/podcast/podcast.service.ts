@@ -66,6 +66,10 @@ class Podcast {
     };
   }
 
+  public getPopular(): Promise<TPodcast[]> {
+    return this.#podcastRepository.getPopular();
+  }
+
   public async create({
     name,
     userId,

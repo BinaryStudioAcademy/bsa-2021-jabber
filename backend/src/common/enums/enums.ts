@@ -80,3 +80,4 @@ export {
   PlaylistValidationMessage,
   PlaylistValidationRule,
 } from './playlist/playlist';
+export { RouterParam } from './express/express';

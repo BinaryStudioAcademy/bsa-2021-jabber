@@ -3,7 +3,7 @@ import {
   podcastCreate as podcastCreateValidationSchema,
   podcastEdit as editPodcastValidationSchema,
 } from '~/validation-schemas/validation-schemas';
-import { ApiPath, HttpCode, PodcastsApiPath, HttpMethod } from '~/common/enums/enums';
+import { ApiPath, HttpCode, PodcastsApiPath, HttpMethod, RouterParam } from '~/common/enums/enums';
 import { PodcastLoadFilter, User } from '~/common/types/types';
 import { handleAsyncApi } from '~/helpers/helpers';
 import {
@@ -12,6 +12,7 @@ import {
   validateSchema as validateSchemaMiddleware,
   checkUserHasPermitToPodcast as checkUserHasPermitToPodcastMiddleware,
   checkUserMatch as checkUserMatchMiddleware,
+  checkParamsIsValid as checkParamsIsValidMiddleware,
 } from '~/middlewares/middlewares';
 import { podcast as podcastService } from '~/services/services';
 
@@ -33,7 +34,17 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
   );
 
   podcastRouter.get(
+    PodcastsApiPath.POPULAR,
+    handleAsyncApi(async (_req, res) => {
+      return res
+        .json(await podcastService.getPopular())
+        .status(HttpCode.OK);
+    }),
+  );
+
+  podcastRouter.get(
     PodcastsApiPath.USERS_$ID,
+    checkParamsIsValidMiddleware(RouterParam.ID),
     handleAsyncApi(async (req, res) => {
       return res
         .send(await podcastService.getAllByUserId(Number(req.params.id), Number(req.user?.id)))
@@ -43,6 +54,7 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
 
   podcastRouter.get(
     PodcastsApiPath.$ID,
+    checkParamsIsValidMiddleware(RouterParam.ID),
     checkUserHasPermitToPodcastMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
@@ -98,6 +110,7 @@ const initPodcastsApi = ({ apiRouter, podcastService }: Args): Router => {
 
   podcastRouter.get(
     PodcastsApiPath.INVITATION_CODE_$ID,
+    checkParamsIsValidMiddleware(RouterParam.ID),
     checkUserHasPermitToPodcastMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res

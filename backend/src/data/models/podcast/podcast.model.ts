@@ -1,4 +1,5 @@
 import { Model } from 'objection';
+import { join } from 'path';
 import { TableName, PodcastDTOKey, PodcastType, PodcastPeriodicity } from '~/common/enums/enums';
 import { Abstract } from '../abstract/abstract.model';
 import { Image } from '~/data/models/image/image.model';
@@ -69,6 +70,14 @@ class Podcast extends Abstract {
       join: {
         from: 'podcasts.genre_id',
         to: 'genres.id',
+      },
+    },
+    episodes: {
+      relation: Model.HasManyRelation,
+      modelClass: join(__dirname, '../episode/episode.model'),
+      join: {
+        from: 'podcasts.id',
+        to: 'episodes.podcast_id',
       },
     },
   };

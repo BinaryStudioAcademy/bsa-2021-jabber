@@ -301,7 +301,7 @@ class Episode {
   ): Promise<EpisodeQueryPayload> {
     const podcast = await this.#podcastRepository.getById(loadEpisodesByPodcastIdPayload.podcastId);
 
-    const isOwner = user?.id === podcast.userId || user?.role === UserRole.MASTER;
+    const isOwner = user?.id === podcast?.userId || user?.role === UserRole.MASTER;
 
     const results = await this.#episodeRepository.getByQueryByPodcastId(isOwner, loadEpisodesByPodcastIdPayload);
     const totalCount = await this.#episodeRepository.getEpisodeCountByPodcastId(isOwner, loadEpisodesByPodcastIdPayload.podcastId);

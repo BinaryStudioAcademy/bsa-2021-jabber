@@ -13,6 +13,7 @@ const PodcastValidationMessage = {
   FILE_EXTENSION_FORMAT: 'Cover image file must have valid type',
   GENRE_ID_NUMBER_FORMAT: 'Genre id must be an integer',
   GENRE_REQUIRE: 'Genre is required',
+  PODCAST_INVITATION_CODE_REQUIRE: 'Podcast invitation code is required',
 } as const;
 
 export { PodcastValidationMessage };

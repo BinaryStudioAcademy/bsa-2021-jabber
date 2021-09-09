@@ -4,6 +4,7 @@ import {
   HttpCode,
   HttpMethod,
   PlaylistsApiPath,
+  RouterParam,
 } from '~/common/enums/enums';
 import { handleAsyncApi } from '~/helpers/helpers';
 import {
@@ -15,6 +16,7 @@ import {
   validateSchema as validateSchemaMiddleware,
   checkUserPlaylistOwner as checkUserPlaylistOwnerMiddleware,
   checkUserMatch as checkUserMatchMiddleware,
+  checkParamsIsValid as checkParamsIsValidMiddleware,
   checkUserHasPermitToPlaylist as checkUserHasPermitToPlaylistMiddleware,
 } from '~/middlewares/middlewares';
 import {
@@ -45,6 +47,7 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
 
   playlistRouter.get(
     PlaylistsApiPath.$ID,
+    checkParamsIsValidMiddleware(RouterParam.ID),
     checkUserHasPermitToPlaylistMiddleware(),
     handleAsyncApi(async (req, res) => {
       return res
@@ -56,6 +59,7 @@ const initPlaylistsApi = ({ apiRouter, playlistService, playlistEpisodeService }
   playlistRouter.get(
     PlaylistsApiPath.USERS_$USER_ID,
     checkAuthMiddleware(HttpMethod.GET),
+    checkParamsIsValidMiddleware(RouterParam.USER_ID),
     handleAsyncApi(async (req, res) => {
       return res
         .json(await playlistService.getAllByUserId(Number(req.params.userId), Number(req.user?.id)))
