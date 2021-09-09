@@ -109,12 +109,6 @@ const Playlist: React.FC = () => {
               </ul>
             </div>
             <div className={styles.buttonsGroup}>
-              <Link
-                to={`${AppRoute.PLAYLISTS_USERS}/${user?.id}`}
-                className={getAllowedClasses(styles.userPlaylistsLink, styles.playlistButton)}
-              >
-                <span className="visually-hidden">User playlists</span>
-              </Link>
               {isOwner && (
                 <Link
                   to={`${AppRoute.PLAYLISTS_EDIT}/${id}`}
