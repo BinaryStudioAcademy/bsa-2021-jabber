@@ -8,7 +8,7 @@ import {
   User,
 } from 'common/types/types';
 import { AppRoute, NotificationMessage, NotificationTitle } from 'common/enums/enums';
-import { checkIsLiked, getDataUrl } from 'helpers/helpers';
+import { checkIsLiked, getDataUrl, mapShownoteToShownotePayload } from 'helpers/helpers';
 import { ActionType } from './common';
 
 const initRecord = createAsyncThunk<void, undefined, AsyncThunkConfig>
@@ -116,7 +116,7 @@ const changeEpisodeStatus = createAsyncThunk <Episode, Episode, AsyncThunkConfig
   const updatedEpisode = await episodeApi.update(episode.id, {
     name: episode.name,
     description: episode.description,
-    shownotes: episode.shownotes,
+    shownotes: episode.shownotes.map(mapShownoteToShownotePayload),
     type: episode.type,
     recordDataUrl: null,
     imageDataUrl: null,
