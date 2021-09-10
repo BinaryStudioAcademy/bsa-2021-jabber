@@ -1,5 +1,5 @@
 enum NotificationTitle {
-  NEW_EPISODE = 'New episod!',
+  NEW_EPISODE = 'New episode!',
 }
 
 export { NotificationTitle };
